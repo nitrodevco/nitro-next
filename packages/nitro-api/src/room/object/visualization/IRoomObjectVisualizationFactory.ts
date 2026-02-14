@@ -1,0 +1,8 @@
+import type { IAssetData } from '../../../asset';
+import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';
+import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
+
+export interface IRoomObjectVisualizationFactory {
+    getVisualization(type: string): IRoomObjectGraphicVisualization;
+    getVisualizationData(type: string, visualization: string, asset: IAssetData): IObjectVisualizationData;
+}
