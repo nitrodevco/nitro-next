@@ -1,0 +1,39 @@
+{
+    "name": "nitro-next",
+    "packageManager": "yarn@4.12.0",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
+        "typecheck": "yarn workspaces foreach --all -pt run typecheck",
+        "lint": "yarn workspaces foreach --all -pt run lint",
+        "clean": "yarn workspaces foreach --all -pt run clean",
+        "dev": "concurrently -n api,packets,storage,react,renderer -c auto \"yarn workspace @nitrodevco/nitro-api dev\" \"yarn workspace @nitrodevco/nitro-packets dev\" \"yarn workspace @nitrodevco/nitro-shared dev\" \"yarn workspace @nitrodevco/nitro-react dev\" \"yarn workspace @nitrodevco/nitro-renderer dev\""
+    },
+    "dependencies": {
+        "pixi.js": "^8.16.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.2",
+        "@types/node": "^25.2.3",
+        "@vitejs/plugin-react": "5.1.4",
+        "concurrently": "^9.2.1",
+        "eslint": "^9.39.2",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^7.0.1",
+        "eslint-plugin-react-refresh": "^0.5.0",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "eslint-plugin-unused-imports": "^4.4.1",
+        "globals": "^17.3.0",
+        "prettier": "^3.8.1",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.55.0",
+        "vite": "^7.3.1",
+        "vite-tsconfig-paths": "^6.1.1"
+    }
+}

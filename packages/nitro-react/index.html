@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <base href="./" />
+    <title>Nitro</title>
+    <!-- <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script> -->
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" class="w-full h-full overflow-hidden text-base bg-black"></div>
+    <script>
+        window.NitroConfig = {
+            "nitro.config.url": "/config/nitro-config.json",
+            "config.urls": ["/config/renderer-config.json", "/config/ui-config.json"],
+            "forward.type": new URLSearchParams(window.location.search).get(
+                "room",
+            )
+                ? 2
+                : -1,
+            "forward.id":
+                new URLSearchParams(window.location.search).get("room") ||
+                0,
+            "friend.id":
+                new URLSearchParams(window.location.search).get("friend") ||
+                0,
+        };
+    </script>
+    <script type="module" src="./src/index.tsx"></script>
+</body>
+
+</html>

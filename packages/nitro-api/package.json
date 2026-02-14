@@ -1,0 +1,24 @@
+{
+    "name": "@nitrodevco/nitro-api",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc -b",
+        "dev": "tsc -b -w --preserveWatchOutput",
+        "clean": "rimraf dist *.tsbuildinfo"
+    },
+    "peerDependencies": {
+        "pixi.js": "^8.16.0"
+    },
+    "devDependencies": {
+        "rimraf": "^6.0.1",
+        "typescript": "^5.9.3"
+    }
+}

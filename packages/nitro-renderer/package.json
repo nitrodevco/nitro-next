@@ -1,0 +1,28 @@
+{
+    "name": "@nitrodevco/nitro-renderer",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "build": "vite build",
+        "clean": "rimraf dist .vite *.tsbuildinfo"
+    },
+    "dependencies": {
+        "@nitrodevco/nitro-api": "workspace:*",
+        "@nitrodevco/nitro-shared": "workspace:*",
+        "@pixi/gif": "^3.0.1",
+        "howler": "^2.2.4",
+        "pako": "^2.1.0",
+        "pixi-filters": "^6.1.5",
+        "pixi.js": "^8.16.0"
+    },
+    "devDependencies": {
+        "@types/howler": "^2.2.12",
+        "@types/pako": "^2.0.4",
+        "rimraf": "^6.1.2",
+        "typescript": "^5.9.3",
+        "vite": "^7.3.1"
+    }
+}

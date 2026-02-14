@@ -1,0 +1,37 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "types": [
+            "vite/client"
+        ],
+        "paths": {
+            "#base/*": [
+                "./src/*"
+            ],
+            "#themes/*": [
+                "./themes/*"
+            ]
+        },
+    },
+    "references": [
+        {
+            "path": "../nitro-api"
+        },
+        {
+            "path": "../nitro-renderer"
+        },
+        {
+            "path": "../nitro-shared"
+        },
+    ],
+    "include": [
+        "src/**/*",
+        "themes/**/*"
+    ],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}
