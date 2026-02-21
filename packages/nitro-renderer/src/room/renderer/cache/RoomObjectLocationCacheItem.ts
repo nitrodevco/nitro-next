@@ -1,48 +1,39 @@
-﻿import { IRoomGeometry, IRoomObject, IVector3D } from '#renderer/api';
-import { Vector3d } from '#renderer/utils';
+﻿import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
-export class RoomObjectLocationCacheItem
-{
+export class RoomObjectLocationCacheItem {
     private _roomObjectVariableAccurateZ: string;
 
-    private _location: Vector3d;
-    private _screenLocation: Vector3d;
-    private _locationChanged: boolean;
+    private _location: Vector3d = new Vector3d();
+    private _screenLocation: Vector3d = new Vector3d();
+    private _locationChanged: boolean = false;
 
-    private _geometryUpdateId: number;
-    private _objectUpdateId: number;
+    private _geometryUpdateId: number = -1;
+    private _objectUpdateId: number = -1;
 
-    constructor(accurateZ: string)
-    {
+    constructor(accurateZ: string) {
         this._roomObjectVariableAccurateZ = accurateZ || '';
-
-        this._location = new Vector3d();
-        this._screenLocation = new Vector3d();
-        this._locationChanged = false;
-
-        this._geometryUpdateId = -1;
-        this._objectUpdateId = -1;
     }
 
-    public dispose(): void
-    {
-        this._screenLocation = null;
+    public dispose(): void {
+        this._screenLocation = undefined!;
     }
 
-    public updateLocation(object: IRoomObject, geometry: IRoomGeometry): IVector3D
-    {
-        if (!object || !geometry) return null;
+    public updateLocation(object: IRoomObject, geometry: IRoomGeometry): IVector3D | undefined {
+        if (!object || !geometry) return undefined;
 
         let locationChanged = false;
 
         const location = object.getLocation();
 
-        if ((geometry.updateId !== this._geometryUpdateId) || (object.updateCounter !== this._objectUpdateId))
-        {
+        if (geometry.updateId !== this._geometryUpdateId || object.updateCounter !== this._objectUpdateId) {
             this._objectUpdateId = object.updateCounter;
 
-            if ((geometry.updateId !== this._geometryUpdateId) || (location.x !== this._location.x) || (location.y !== this._location.y) || (location.z !== this._location.z))
-            {
+            if (
+                geometry.updateId !== this._geometryUpdateId ||
+                location.x !== this._location.x ||
+                location.y !== this._location.y ||
+                location.z !== this._location.z
+            ) {
                 this._geometryUpdateId = geometry.updateId;
                 this._location.assign(location);
 
@@ -52,33 +43,26 @@ export class RoomObjectLocationCacheItem
 
         this._locationChanged = locationChanged;
 
-        if (this._locationChanged)
-        {
+        if (this._locationChanged) {
             const screenLocation = geometry.getScreenPosition(location);
 
-            if (!screenLocation) return null;
+            if (!screenLocation) return undefined;
 
             const accurateZ = object.model.getValue<number>(this._roomObjectVariableAccurateZ);
 
-            if (isNaN(accurateZ) || (accurateZ === 0))
-            {
+            if (isNaN(accurateZ) || accurateZ === 0) {
                 const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);
 
-                if ((rounded.x !== location.x) || (rounded.y !== location.y))
-                {
+                if (rounded.x !== location.x || rounded.y !== location.y) {
                     const roundedScreen = geometry.getScreenPosition(rounded);
 
                     this._screenLocation.assign(screenLocation);
 
                     if (roundedScreen) this._screenLocation.z = roundedScreen.z;
-                }
-                else
-                {
+                } else {
                     this._screenLocation.assign(screenLocation);
                 }
-            }
-            else
-            {
+            } else {
                 this._screenLocation.assign(screenLocation);
             }
 
@@ -89,8 +73,7 @@ export class RoomObjectLocationCacheItem
         return this._screenLocation;
     }
 
-    public get locationChanged(): boolean
-    {
+    public get locationChanged(): boolean {
         return this._locationChanged;
     }
 }

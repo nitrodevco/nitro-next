@@ -20,6 +20,9 @@
             "path": "../nitro-api"
         },
         {
+            "path": "../nitro-events"
+        },
+        {
             "path": "../nitro-renderer"
         },
         {

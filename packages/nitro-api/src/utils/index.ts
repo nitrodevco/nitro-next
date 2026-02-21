@@ -4,3 +4,6 @@ export * from './IBinaryWriter';
 export * from './IEventDispatcher';
 export * from './INitroEvent';
 export * from './IVector3D';
+export * from './MouseEventType';
+export * from './NitroLogger';
+export * from './Vector3d';

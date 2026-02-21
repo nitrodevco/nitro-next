@@ -7,7 +7,7 @@ export interface IRoomObjectSprite {
     name: string;
     type: string;
     spriteType: number;
-    texture: Texture;
+    texture: Texture | undefined;
     width: number;
     height: number;
     offsetX: number;
@@ -20,11 +20,11 @@ export interface IRoomObjectSprite {
     color: number;
     relativeDepth: number;
     varyingDepth: boolean;
-    libraryAssetName: string;
+    libraryAssetName: string | undefined;
     clickHandling: boolean;
     visible: boolean;
     tag: string;
-    posture: string;
+    posture: string | undefined;
     alphaTolerance: number;
     filters: Filter[];
     updateCounter: number;

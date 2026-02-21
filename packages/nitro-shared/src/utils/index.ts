@@ -3,6 +3,7 @@ export * from './ArrayBufferToBase64';
 export * from './BinaryReader';
 export * from './BinaryWriter';
 export * from './Byte';
+export * from './ColorConverter';
 export * from './EvaWireDataWrapper';
 export * from './EvaWireFormat';
 export * from './Int32';

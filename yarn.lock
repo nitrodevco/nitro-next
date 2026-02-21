@@ -627,11 +627,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@nitrodevco/nitro-events@workspace:*, @nitrodevco/nitro-events@workspace:packages/nitro-events":
+  version: 0.0.0-use.local
+  resolution: "@nitrodevco/nitro-events@workspace:packages/nitro-events"
+  dependencies:
+    "@nitrodevco/nitro-api": "workspace:*"
+    pixi.js: "npm:^8.16.0"
+    rimraf: "npm:^6.0.1"
+    typescript: "npm:^5.9.3"
+  peerDependencies:
+    pixi.js: ^8.16.0
+  languageName: unknown
+  linkType: soft
+
 "@nitrodevco/nitro-react@workspace:packages/nitro-react":
   version: 0.0.0-use.local
   resolution: "@nitrodevco/nitro-react@workspace:packages/nitro-react"
   dependencies:
     "@nitrodevco/nitro-api": "workspace:*"
+    "@nitrodevco/nitro-events": "workspace:*"
     "@nitrodevco/nitro-renderer": "workspace:*"
     "@nitrodevco/nitro-shared": "workspace:*"
     "@tailwindcss/forms": "npm:^0.5.11"
@@ -662,6 +676,7 @@ __metadata:
   resolution: "@nitrodevco/nitro-renderer@workspace:packages/nitro-renderer"
   dependencies:
     "@nitrodevco/nitro-api": "workspace:*"
+    "@nitrodevco/nitro-events": "workspace:*"
     "@nitrodevco/nitro-shared": "workspace:*"
     "@pixi/gif": "npm:^3.0.1"
     "@types/howler": "npm:^2.2.12"

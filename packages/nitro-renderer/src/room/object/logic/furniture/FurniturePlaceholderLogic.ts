@@ -1,0 +1,13 @@
+import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
+
+import { FurnitureLogic } from './FurnitureLogic';
+
+export class FurniturePlaceholderLogic extends FurnitureLogic {
+    public override getEventTypes(): string[] {
+        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.PLACEHOLDER]);
+    }
+
+    public override useObject(): void {
+        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PLACEHOLDER, this.object));
+    }
+}

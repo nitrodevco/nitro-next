@@ -1,8 +1,8 @@
-﻿import { RoomObjectSpriteType } from '@nitrodevco/nitro-api';
+﻿import { type IRoomObjectSprite, type IRoomObjectSpriteData, RoomObjectSpriteType } from '@nitrodevco/nitro-api';
 
+import { RoomObjectSpriteData } from '../RoomObjectSpriteData';
 import type { SortableSprite } from '../utils';
 import { RoomObjectCacheItem } from './RoomObjectCacheItem';
-import { RoomObjectSpriteData } from './RoomObjectSpriteData';
 
 export class RoomObjectCache {
     private static MAX_SIZE_FOR_AVG_COLOR: number = 200;
@@ -24,34 +24,34 @@ export class RoomObjectCache {
                 item.dispose();
             }
 
-            this._data = null;
+            this._data = null!;
         }
     }
 
-    public getObjectCache(k: string): RoomObjectCacheItem {
-        let existing = this._data.get(k);
+    public getObjectCache(key: string): RoomObjectCacheItem {
+        let existing = this._data.get(key);
 
         if (!existing) {
             existing = new RoomObjectCacheItem(this._roomObjectVariableAccurateZ);
 
-            this._data.set(k, existing);
+            this._data.set(key, existing);
         }
 
         return existing;
     }
 
-    public removeObjectCache(k: string): void {
-        const existing = this._data.get(k);
+    public removeObjectCache(key: string): void {
+        const existing = this._data.get(key);
 
         if (!existing) return;
 
-        this._data.delete(k);
+        this._data.delete(key);
 
         existing.dispose();
     }
 
-    public getSortableSpriteList(): RoomObjectSpriteData[] {
-        const spriteData: RoomObjectSpriteData[] = [];
+    public getSortableSpriteList(): IRoomObjectSpriteData[] {
+        const spriteData: IRoomObjectSpriteData[] = [];
 
         for (const item of this._data.values()) {
             if (!item) continue;
@@ -103,17 +103,15 @@ export class RoomObjectCache {
             }
         }
 
-        if (!spriteData || !spriteData.length) return null;
-
         return spriteData;
     }
 
-    private isSkewedSprite(k: IRoomObjectSprite): boolean {
-        if (!k.type) return false;
+    private isSkewedSprite(sprite: IRoomObjectSprite): boolean {
+        if (!sprite.type) return false;
 
-        if (k.type.indexOf('external_image_wallitem') === 0 && k.tag === 'THUMBNAIL') return true;
+        if (sprite.type.indexOf('external_image_wallitem') === 0 && sprite.tag === 'THUMBNAIL') return true;
 
-        if (k.type.indexOf('guild_forum') === 0 && k.tag === 'THUMBNAIL') return true;
+        if (sprite.type.indexOf('guild_forum') === 0 && sprite.tag === 'THUMBNAIL') return true;
 
         return false;
     }

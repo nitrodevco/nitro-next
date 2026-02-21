@@ -6,9 +6,9 @@ import type { IAssetVisualizationLayer } from './IAssetVisualizationLayer';
 import type { IAssetPosture } from './postures/IAssetPosture';
 
 export interface IAssetVisualizationData {
-    size?: number;
-    layerCount?: number;
-    angle?: number;
+    size: number;
+    layerCount: number;
+    angle: number;
     layers?: { [index: string]: IAssetVisualizationLayer };
     colors?: { [index: string]: IAssetColor };
     directions?: { [index: string]: IAssetVisualizationDirection };

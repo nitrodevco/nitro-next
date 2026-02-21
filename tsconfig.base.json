@@ -18,5 +18,6 @@
         "esModuleInterop": true,
         "allowJs": true,
         "composite": true,
+        "noImplicitOverride": true
     }
 }

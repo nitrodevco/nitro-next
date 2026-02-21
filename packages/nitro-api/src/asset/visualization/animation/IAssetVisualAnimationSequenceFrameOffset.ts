@@ -1,5 +1,5 @@
 export interface IAssetVisualAnimationSequenceFrameOffset {
-    direction?: number;
-    x?: number;
-    y?: number;
+    direction: number;
+    x: number;
+    y: number;
 }

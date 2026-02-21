@@ -14,6 +14,6 @@ export interface IRoomObjectEventHandler extends IRoomObjectMouseHandler {
     tearDown(): void;
     object: IRoomObjectController;
     eventDispatcher: IEventDispatcher;
-    widget: string;
-    contextMenu: string;
+    widget: string | undefined;
+    contextMenu: string | undefined;
 }

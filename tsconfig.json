@@ -4,6 +4,9 @@
             "@nitrodevco/nitro-api": [
                 "./packages/nitro-api/src"
             ],
+            "@nitrodevco/nitro-events": [
+                "./packages/nitro-events/src"
+            ],
             "@nitrodevco/nitro-react": [
                 "./packages/nitro-react/src"
             ],
@@ -19,6 +22,9 @@
     "references": [
         {
             "path": "./packages/nitro-api"
+        },
+        {
+            "path": "./packages/nitro-events"
         },
         {
             "path": "./packages/nitro-react"

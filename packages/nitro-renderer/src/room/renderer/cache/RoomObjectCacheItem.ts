@@ -1,52 +1,43 @@
 ﻿import { RoomObjectLocationCacheItem } from './RoomObjectLocationCacheItem';
 import { RoomObjectSortableSpriteCacheItem } from './RoomObjectSortableSpriteCacheItem';
 
-export class RoomObjectCacheItem
-{
+export class RoomObjectCacheItem {
     private _objectId: number;
     private _location: RoomObjectLocationCacheItem;
     private _sprites: RoomObjectSortableSpriteCacheItem;
 
-    constructor(accurateZ: string)
-    {
+    constructor(accurateZ: string) {
         this._location = new RoomObjectLocationCacheItem(accurateZ);
         this._sprites = new RoomObjectSortableSpriteCacheItem();
     }
 
-    public dispose(): void
-    {
-        if(this._location)
-        {
+    public dispose(): void {
+        if (this._location) {
             this._location.dispose();
 
-            this._location = null;
+            this._location = undefined!;
         }
 
-        if(this._sprites)
-        {
+        if (this._sprites) {
             this._sprites.dispose();
 
-            this._sprites = null;
+            this._sprites = undefined!;
         }
     }
 
-    public get objectId(): number
-    {
+    public get objectId(): number {
         return this._objectId;
     }
 
-    public set objectId(k: number)
-    {
-        this._objectId = k;
+    public set objectId(objectId: number) {
+        this._objectId = objectId;
     }
 
-    public get location(): RoomObjectLocationCacheItem
-    {
+    public get location(): RoomObjectLocationCacheItem {
         return this._location;
     }
 
-    public get sprites(): RoomObjectSortableSpriteCacheItem
-    {
+    public get sprites(): RoomObjectSortableSpriteCacheItem {
         return this._sprites;
     }
 }

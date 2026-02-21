@@ -1,0 +1,25 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "src",
+        "outDir": "dist",
+        "paths": {
+            "#api/*": [
+                "./src/*"
+            ]
+        }
+    },
+    "references": [
+        {
+            "path": "../nitro-api"
+        }
+    ],
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}

@@ -2,8 +2,8 @@ import type { INitroEvent } from './INitroEvent';
 
 export interface IEventDispatcher {
     dispose(): void;
-    addEventListener<T extends INitroEvent>(type: string, callback: (event: T) => void): void;
-    removeEventListener(type: string, callback: () => void): void;
+    addEventListener<T extends INitroEvent>(type: string, cb: (event: T) => void): (() => void) | undefined;
+    removeEventListener(type: string, cb: (event: INitroEvent) => void): void;
     removeAllListeners(): void;
-    dispatchEvent<T extends INitroEvent>(event: T): boolean;
+    dispatchEvent(event: INitroEvent): boolean;
 }
