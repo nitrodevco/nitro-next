@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, Vector3d } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomObjectFloorHoleEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -61,7 +61,7 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
     }
 
     private handleAutomaticStateUpdate(): void {
-        const stateIndex = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_AUTOMATIC_STATE_INDEX);
+        const stateIndex = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex);
 
         if (!isNaN(stateIndex)) this.handleStateUpdate(stateIndex % 2);
     }

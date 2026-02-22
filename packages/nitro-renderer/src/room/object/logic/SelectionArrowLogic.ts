@@ -1,12 +1,12 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectVisibilityUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
 
 export class SelectionArrowLogic extends RoomObjectLogicBase {
     public override initialize(data: IAssetData): void {
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
 
         this.object.setState(1, 0);
     }

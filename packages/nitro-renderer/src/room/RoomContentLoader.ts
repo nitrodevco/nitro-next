@@ -13,7 +13,7 @@ import {
     NitroLogger,
     RoomObjectCategory,
     RoomObjectUserType,
-    RoomObjectVariable,
+    RoomObjectVariableEnum,
     RoomObjectVisualizationType,
 } from '@nitrodevco/nitro-api';
 import { RoomContentLoadedEvent } from '@nitrodevco/nitro-events';
@@ -432,7 +432,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public setRoomObjectRoomId(object: IRoomObject, roomId: string): void {
-        object.model.setValue(RoomObjectVariable.OBJECT_ROOM_ID, roomId);
+        object.model.setValue(RoomObjectVariableEnum.ObjectRoomId, roomId);
     }
 
     public setIconListener(listener: IRoomContentListener): void {

@@ -1,4 +1,8 @@
-import { type IRoomObjectUpdateMessage, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import {
+    type IRoomObjectUpdateMessage,
+    RoomObjectVariableEnum,
+    RoomWidgetEnumItemExtradataParameter,
+} from '@nitrodevco/nitro-api';
 import {
     RoomObjectFurnitureActionEvent,
     RoomObjectStateChangedEvent,
@@ -37,7 +41,7 @@ export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
         if (!this._isInitialized) this.requestInit();
 
         this.object.model.setValue<string>(
-            RoomWidgetEnumItemExtradataParameter.INFOSTAND_EXTRA_PARAM,
+            RoomObjectVariableEnum.InfostandExtraParam,
             RoomWidgetEnumItemExtradataParameter.JUKEBOX,
         );
 

@@ -7,7 +7,7 @@ import type {
     IRoomSpriteMouseEvent,
     IVector3D,
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariable, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import {
     RoomObjectMouseEvent,
     RoomObjectRoomAdEvent,
@@ -104,19 +104,19 @@ export class FurnitureLogic extends MovingObjectLogic {
                 const variables = asset.logic.customVars.variables;
 
                 if (variables && variables.length) {
-                    this.object.model.setValue(RoomObjectVariable.FURNITURE_CUSTOM_VARIABLES, variables);
+                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureCustomVariables, variables);
                 }
             }
         }
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_SIZE_X, this._sizeX);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_SIZE_Y, this._sizeY);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_SIZE_Z, this._sizeZ);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_CENTER_X, this._centerX);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_CENTER_Y, this._centerY);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_CENTER_Z, this._centerZ);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_ALLOWED_DIRECTIONS, this._directions);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeX, this._sizeX);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeY, this._sizeY);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeZ, this._sizeZ);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterX, this._centerX);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterY, this._centerY);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterZ, this._centerZ);
+        this.object.model.setValue(RoomObjectVariableEnum.PetAllowedDirections, this._directions);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
     }
 
     public override dispose(): void {
@@ -153,20 +153,20 @@ export class FurnitureLogic extends MovingObjectLogic {
 
             if (message.data) message.data.writeRoomObjectModel(this.object.model);
 
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_EXTRAS, message.extra.toString());
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_STATE_UPDATE_TIME, this.lastUpdateTime);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtras, message.extra.toString());
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureStateUpdateTime, this.lastUpdateTime);
 
             return;
         }
 
         if (message instanceof ObjectHeightUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_SIZE_Z, message.height);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeZ, message.height);
 
             return;
         }
 
         if (message instanceof ObjectItemDataUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_ITEMDATA, message.data);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureItemdata, message.data);
 
             return;
         }
@@ -378,7 +378,7 @@ export class FurnitureLogic extends MovingObjectLogic {
     }
 
     protected getAdClickUrl(model: IRoomObjectModel): string {
-        return model.getValue<string>(RoomObjectVariable.FURNITURE_AD_URL);
+        return model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -387,7 +387,7 @@ export class FurnitureLogic extends MovingObjectLogic {
     }
 
     protected isRealRoomObject(): boolean {
-        return this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_REAL_ROOM_OBJECT) === 1;
+        return this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureRealRoomObject) === 1;
     }
 
     protected override getLocationOffset(): IVector3D | undefined {

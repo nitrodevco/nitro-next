@@ -1,5 +1,5 @@
 import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, NumberDataType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { MouseEventType, NumberDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectHSLColorEnableEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -71,9 +71,9 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
         const lightness = numberData.getValue(3);
 
         if (state > -1 && hue > -1 && saturation > -1 && lightness > -1) {
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_ROOM_BACKGROUND_COLOR_HUE, hue);
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_ROOM_BACKGROUND_COLOR_SATURATION, saturation);
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_ROOM_BACKGROUND_COLOR_LIGHTNESS, lightness);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureRoomBackgroundColorHue, hue);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureRoomBackgroundColorSaturation, saturation);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureRoomBackgroundColorLightness, lightness);
 
             this.object.setState(state, 0);
 

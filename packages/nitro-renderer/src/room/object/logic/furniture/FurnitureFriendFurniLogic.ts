@@ -1,5 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage, StringDataType } from '@nitrodevco/nitro-api';
-import { ContextMenuEnum, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { ContextMenuEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -19,7 +19,7 @@ export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
     public override initialize(asset: IAssetData): void {
         super.initialize(asset);
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_FRIENDFURNI_ENGRAVING, this.engravingDialogType);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureFriendfurniEngraving, this.engravingDialogType);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

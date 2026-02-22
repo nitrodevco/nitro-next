@@ -1,5 +1,5 @@
 import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, RoomObjectVariable, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
 import { ColorData, LayerData } from '../data';
@@ -170,13 +170,13 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         if (this.updateModelCounter === model.updateCounter) return false;
 
-        this._selectedColor = model.getValue<number>(RoomObjectVariable.FURNITURE_COLOR);
-        this._clickUrl = model.getValue<string>(RoomObjectVariable.FURNITURE_AD_URL);
+        this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
+        this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
         this._clickHandling =
             (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
-        this._furnitureLift = model.getValue<number>(RoomObjectVariable.FURNITURE_LIFT_AMOUNT) || 0;
+        this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
 
-        let alphaMultiplier = model.getValue<number>(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER);
+        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
 
         if (isNaN(alphaMultiplier)) alphaMultiplier = 1;
 

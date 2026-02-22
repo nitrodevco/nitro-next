@@ -1,4 +1,4 @@
-﻿import { type IRoomObjectSprite, type IRoomObjectSpriteData, RoomObjectSpriteType } from '@nitrodevco/nitro-api';
+﻿import { type IRoomObjectSprite, type IRoomObjectSpriteData, RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
 
 import { RoomObjectSpriteData } from '../RoomObjectSpriteData';
 import type { SortableSprite } from '../utils';
@@ -63,7 +63,7 @@ export class RoomObjectCache {
             for (const sprite of sprites) {
                 if (!sprite) continue;
 
-                if (sprite.sprite.spriteType !== RoomObjectSpriteType.ROOM_PLANE && sprite.sprite.name !== '') {
+                if (sprite.sprite.spriteType !== RoomObjectSpriteTypeEnum.RoomPlane && sprite.sprite.name !== '') {
                     const data = new RoomObjectSpriteData();
 
                     data.objectId = item.objectId;
@@ -121,7 +121,7 @@ export class RoomObjectCache {
 
         for (const item of this._data.values()) {
             for (const sprite of item.sprites.sprites) {
-                if (sprite.sprite.spriteType === RoomObjectSpriteType.ROOM_PLANE) sprites.push(sprite);
+                if (sprite.sprite.spriteType === RoomObjectSpriteTypeEnum.RoomPlane) sprites.push(sprite);
             }
         }
 

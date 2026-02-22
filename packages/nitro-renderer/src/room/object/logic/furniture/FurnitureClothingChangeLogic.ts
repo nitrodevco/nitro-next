@@ -1,5 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -13,7 +13,7 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
     public override initialize(asset: IAssetData): void {
         super.initialize(asset);
 
-        this.updateClothingData(this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_DATA));
+        this.updateClothingData(this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData));
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
@@ -31,8 +31,8 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
 
         const [male, female] = data.split(',');
 
-        if (male && male.length) this.object.model.setValue<string>(RoomObjectVariable.FURNITURE_CLOTHING_BOY, male);
+        if (male && male.length) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingBoy, male);
         if (female && female.length)
-            this.object.model.setValue<string>(RoomObjectVariable.FURNITURE_CLOTHING_GIRL, female);
+            this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingGirl, female);
     }
 }

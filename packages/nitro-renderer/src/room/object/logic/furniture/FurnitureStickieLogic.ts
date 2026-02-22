@@ -1,5 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectItemDataUpdateMessage } from '../../../messages';
@@ -20,7 +20,7 @@ export class FurnitureStickieLogic extends FurnitureLogic {
 
         this.updateColor();
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_IS_STICKIE, '');
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureIsStickie, '');
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
@@ -37,12 +37,12 @@ export class FurnitureStickieLogic extends FurnitureLogic {
     }
 
     protected updateColor(): void {
-        const furnitureData = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_DATA);
+        const furnitureData = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
 
         let colorIndex = FurnitureStickieLogic.STICKIE_COLORS.indexOf(furnitureData);
 
         if (colorIndex < 0) colorIndex = 3;
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_COLOR, colorIndex + 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureColor, colorIndex + 1);
     }
 }

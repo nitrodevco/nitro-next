@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, StringDataType } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, StringDataType } from '@nitrodevco/nitro-api';
 import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { GetTickerTime } from '../../../../utils';
@@ -27,8 +27,8 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
 
         if (message instanceof ObjectGroupBadgeUpdateMessage) {
             if (message.assetName !== 'loading_icon') {
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_BADGE_ASSET_NAME, message.assetName);
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_BADGE_IMAGE_STATUS, 1);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureBadgeAssetName, message.assetName);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureBadgeImageStatus, 1);
 
                 this.update(GetTickerTime());
             }
@@ -46,7 +46,7 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
     protected updateBadge(badgeId: string): void {
         if (badgeId === '') return;
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_BADGE_IMAGE_STATUS, -1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureBadgeImageStatus, -1);
 
         this.dispatchEvent(
             new RoomObjectBadgeAssetEvent(RoomObjectBadgeAssetEvent.LOAD_BADGE, this.object, badgeId, false),

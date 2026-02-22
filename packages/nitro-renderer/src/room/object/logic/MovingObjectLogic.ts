@@ -1,5 +1,5 @@
 import type { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, Vector3d } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { ObjectMoveUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
@@ -30,12 +30,12 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
             if (this._liftAmount !== locationOffset.z) {
                 this._liftAmount = locationOffset.z;
 
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_LIFT_AMOUNT, this._liftAmount);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureLiftAmount, this._liftAmount);
             }
         } else if (this._liftAmount !== 0) {
             this._liftAmount = 0;
 
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_LIFT_AMOUNT, this._liftAmount);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureLiftAmount, this._liftAmount);
         }
 
         if (this._locationDelta.length > 0 || locationOffset) {

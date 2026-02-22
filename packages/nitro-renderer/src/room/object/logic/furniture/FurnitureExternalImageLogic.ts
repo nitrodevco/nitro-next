@@ -1,4 +1,4 @@
-import { type IAssetData, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
@@ -16,8 +16,8 @@ export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
         if (asset.logic && asset.logic.maskType && asset.logic.maskType !== '' && asset.logic.maskType.length > 0)
             maskType = asset.logic.maskType;
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_USES_PLANE_MASK, 0);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_PLANE_MASK_TYPE, maskType);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, 0);
+        this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);
     }
 
     public override useObject(): void {

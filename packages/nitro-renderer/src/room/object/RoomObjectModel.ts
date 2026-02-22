@@ -1,7 +1,7 @@
-import type { IRoomObjectModel } from '@nitrodevco/nitro-api';
+import type { IRoomObjectModel, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 export class RoomObjectModel implements IRoomObjectModel {
-    private _map: Map<string, unknown> = new Map();
+    private _map: Map<RoomObjectVariableEnum, unknown> = new Map();
     private _updateCounter: number = 0;
 
     public dispose(): void {
@@ -10,13 +10,11 @@ export class RoomObjectModel implements IRoomObjectModel {
         this._updateCounter = 0;
     }
 
-    public getValue<T>(key: string): T {
-        const existing = this._map.get(key);
-
-        return existing as T;
+    public getValue<T>(key: RoomObjectVariableEnum): T {
+        return this._map.get(key) as T;
     }
 
-    public setValue<T>(key: string, value: T): void {
+    public setValue<T>(key: RoomObjectVariableEnum, value: T): void {
         if (this._map.has(key)) {
             if (this._map.get(key) === value) return;
         }
@@ -26,10 +24,8 @@ export class RoomObjectModel implements IRoomObjectModel {
         this._updateCounter++;
     }
 
-    public removeKey(key: string): void {
-        if (!key) return;
-
-        this._map.delete(key);
+    public removeKey(key: RoomObjectVariableEnum): void {
+        if (!this._map.delete(key)) return;
 
         this._updateCounter++;
     }

@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { type IAssetData, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectTileCursorUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
@@ -13,7 +13,7 @@ export class TileCursorLogic extends RoomObjectLogicBase {
     private _isHidden: boolean = false;
 
     public override initialize(data: IAssetData): void {
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
 
         this.object.setState(TileCursorLogic.CURSOR_HIDDEN_STATE, 0);
     }
@@ -35,7 +35,7 @@ export class TileCursorLogic extends RoomObjectLogicBase {
         } else if (!message.visible) {
             this.object.setState(TileCursorLogic.CURSOR_HIDDEN_STATE, 0);
         } else {
-            this.object.model.setValue(RoomObjectVariable.TILE_CURSOR_HEIGHT, message.height);
+            this.object.model.setValue(RoomObjectVariableEnum.TileCursorHeight, message.height);
 
             this.object.setState(
                 message.height > 0.8 ? TileCursorLogic.CURSOR_HEIGHT_STATE : TileCursorLogic.CURSOR_VISIBLE_STATE,

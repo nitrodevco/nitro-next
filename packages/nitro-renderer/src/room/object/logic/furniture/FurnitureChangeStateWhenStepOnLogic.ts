@@ -1,5 +1,5 @@
 import type { IAssetData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -14,8 +14,8 @@ export class FurnitureChangeStateWhenStepOnLogic extends FurnitureLogic {
 
             if (!targetLocation) return;
 
-            let sizeX = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_SIZE_X);
-            let sizeY = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_SIZE_Y);
+            let sizeX = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeX);
+            let sizeY = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeY);
 
             const direction = ((Math.floor(this.object.getDirection().x) + 45) % 360) / 90;
 

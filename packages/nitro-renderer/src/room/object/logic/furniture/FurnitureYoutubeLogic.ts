@@ -1,4 +1,4 @@
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -14,7 +14,7 @@ export class FurnitureYoutubeLogic extends FurnitureLogic {
     public override update(time: number): void {
         super.update(time);
 
-        if (!this.object.model.getValue<string>(RoomObjectVariable.SESSION_URL_PREFIX))
+        if (!this.object.model.getValue<string>(RoomObjectVariableEnum.SessionUrlPrefix))
             this.dispatchEvent(
                 new RoomObjectDataRequestEvent(RoomObjectDataRequestEvent.RODRE_URL_PREFIX, this.object),
             );

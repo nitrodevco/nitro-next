@@ -5,7 +5,7 @@ import {
     type IRoomObjectModel,
     type IVector3D,
     MouseEventType,
-    RoomObjectVariable,
+    RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-events';
@@ -111,14 +111,14 @@ export class AvatarLogic extends MovingObjectLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectAvatarPostureUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_POSTURE, message.postureType);
-            this.object.model.setValue(RoomObjectVariable.FIGURE_POSTURE_PARAMETER, message.parameter);
+            this.object.model.setValue(RoomObjectVariableEnum.FigurePosture, message.postureType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigurePostureParameter, message.parameter);
 
             return;
         }
 
         if (message instanceof ObjectAvatarChatUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_TALK, 1);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureTalk, 1);
 
             this._talkingEndTimestamp = this.time + message.numberOfWords * 1000;
 
@@ -126,39 +126,39 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarTypingUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_IS_TYPING, message.isTyping ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureIsTyping, message.isTyping ? 1 : 0);
 
             return;
         }
 
         if (message instanceof ObjectAvatarMutedUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_IS_MUTED, message.isMuted ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureIsMuted, message.isMuted ? 1 : 0);
 
             return;
         }
 
         if (message instanceof ObjectAvatarPlayingGameUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_IS_PLAYING_GAME, message.isPlayingGame ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureIsPlayingGame, message.isPlayingGame ? 1 : 0);
 
             return;
         }
 
         if (message instanceof ObjectAvatarUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.HEAD_DIRECTION, message.headDirection);
-            this.object.model.setValue(RoomObjectVariable.FIGURE_CAN_STAND_UP, message.canStandUp);
-            this.object.model.setValue(RoomObjectVariable.FIGURE_VERTICAL_OFFSET, message.baseY);
+            this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirection);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureCanStandUp, message.canStandUp);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureVerticalOffset, message.baseY);
 
             return;
         }
 
         if (message instanceof ObjectAvatarDirectionUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.HEAD_DIRECTION, message.headDirction);
+            this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirction);
 
             return;
         }
 
         if (message instanceof ObjectAvatarGestureUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_GESTURE, message.gesture);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureGesture, message.gesture);
 
             this._gestureEndTimestamp = this.time + 3000;
 
@@ -166,10 +166,10 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarExpressionUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_EXPRESSION, message.expressionType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureExpression, message.expressionType);
 
             this._animationEndTimestamp = AvatarAction.getExpressionTimeout(
-                this.object.model.getValue<number>(RoomObjectVariable.FIGURE_EXPRESSION),
+                this.object.model.getValue<number>(RoomObjectVariableEnum.FigureExpression),
             );
 
             if (this._animationEndTimestamp > -1) this._animationEndTimestamp += this.time;
@@ -178,13 +178,13 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarDanceUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_DANCE, message.danceStyle);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureDance, message.danceStyle);
 
             return;
         }
 
         if (message instanceof ObjectAvatarSleepUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_SLEEP, message.isSleeping ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureSleep, message.isSleeping ? 1 : 0);
 
             if (message.isSleeping) this._blinkingStartTimestamp = -1;
             else this._blinkingStartTimestamp = this.time + this.randomBlinkStartTimestamp();
@@ -193,7 +193,7 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarPlayerValueUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_NUMBER_VALUE, message.value);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureNumberValue, message.value);
 
             this._numberValueEndTimestamp = this.time + 3000;
 
@@ -207,8 +207,8 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarCarryObjectUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_CARRY_OBJECT, message.itemType);
-            this.object.model.setValue(RoomObjectVariable.FIGURE_USE_OBJECT, 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureCarryObject, message.itemType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureUseObject, 0);
 
             if (message.itemType === 0) {
                 this._carryObjectStartTimestamp = 0;
@@ -230,13 +230,13 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarUseObjectUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_USE_OBJECT, message.itemType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureUseObject, message.itemType);
 
             return;
         }
 
         if (message instanceof ObjectAvatarSignUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_SIGN, message.signType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureSign, message.signType);
 
             this._signEndTimestamp = this.time + 5000;
 
@@ -244,14 +244,14 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarFlatControlUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_FLAT_CONTROL, message.level);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureFlatControl, message.level);
 
             return;
         }
 
         if (message instanceof ObjectAvatarFigureUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE, message.figure);
-            this.object.model.setValue(RoomObjectVariable.GENDER, message.gender);
+            this.object.model.setValue(RoomObjectVariableEnum.Figure, message.figure);
+            this.object.model.setValue(RoomObjectVariableEnum.Gender, message.gender);
 
             return;
         }
@@ -264,7 +264,7 @@ export class AvatarLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarOwnMessage) {
-            this.object.model.setValue(RoomObjectVariable.OWN_USER, 1);
+            this.object.model.setValue(RoomObjectVariableEnum.OwnUser, 1);
 
             return;
         }
@@ -285,7 +285,7 @@ export class AvatarLogic extends MovingObjectLogic {
             case MouseEventType.ROLL_OVER:
                 eventType = RoomObjectMouseEvent.MOUSE_ENTER;
 
-                this.object.model.setValue(RoomObjectVariable.FIGURE_HIGHLIGHT, 1);
+                this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 1);
 
                 this.dispatchEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_BUTTON, this.object), // this is used to change cursor
@@ -294,7 +294,7 @@ export class AvatarLogic extends MovingObjectLogic {
             case MouseEventType.ROLL_OUT:
                 eventType = RoomObjectMouseEvent.MOUSE_LEAVE;
 
-                this.object.model.setValue(RoomObjectVariable.FIGURE_HIGHLIGHT, 0);
+                this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 0);
 
                 this.dispatchEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, this.object), // this is used to change cursor
@@ -318,7 +318,7 @@ export class AvatarLogic extends MovingObjectLogic {
     private updateModel(time: number, model: IRoomObjectModel): void {
         if (this._talkingEndTimestamp > 0) {
             if (time > this._talkingEndTimestamp) {
-                model.setValue(RoomObjectVariable.FIGURE_TALK, 0);
+                model.setValue(RoomObjectVariableEnum.FigureTalk, 0);
 
                 this._talkingEndTimestamp = 0;
                 this._talkingPauseStartTimestamp = 0;
@@ -328,38 +328,38 @@ export class AvatarLogic extends MovingObjectLogic {
                 this._talkingPauseEndTimestamp =
                     this._talkingPauseStartTimestamp + this.randomTalkingPauseEndTimestamp();
             } else if (this._talkingPauseStartTimestamp > 0 && time > this._talkingPauseStartTimestamp) {
-                model.setValue(RoomObjectVariable.FIGURE_TALK, 0);
+                model.setValue(RoomObjectVariableEnum.FigureTalk, 0);
 
                 this._talkingPauseStartTimestamp = 0;
             } else if (this._talkingPauseEndTimestamp > 0 && time > this._talkingPauseEndTimestamp) {
-                model.setValue(RoomObjectVariable.FIGURE_TALK, 1);
+                model.setValue(RoomObjectVariableEnum.FigureTalk, 1);
 
                 this._talkingPauseEndTimestamp = 0;
             }
         }
 
         if (this._animationEndTimestamp > 0 && time > this._animationEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_EXPRESSION, 0);
+            model.setValue(RoomObjectVariableEnum.FigureExpression, 0);
 
             this._animationEndTimestamp = 0;
         }
 
         if (this._gestureEndTimestamp > 0 && time > this._gestureEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_GESTURE, 0);
+            model.setValue(RoomObjectVariableEnum.FigureGesture, 0);
 
             this._gestureEndTimestamp = 0;
         }
 
         if (this._signEndTimestamp > 0 && time > this._signEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_SIGN, -1);
+            model.setValue(RoomObjectVariableEnum.FigureSign, -1);
 
             this._signEndTimestamp = 0;
         }
 
         if (this._carryObjectEndTimestamp > 0) {
             if (time > this._carryObjectEndTimestamp) {
-                model.setValue(RoomObjectVariable.FIGURE_CARRY_OBJECT, 0);
-                model.setValue(RoomObjectVariable.FIGURE_USE_OBJECT, 0);
+                model.setValue(RoomObjectVariableEnum.FigureCarryObject, 0);
+                model.setValue(RoomObjectVariableEnum.FigureUseObject, 0);
 
                 this._carryObjectStartTimestamp = 0;
                 this._carryObjectEndTimestamp = 0;
@@ -370,34 +370,34 @@ export class AvatarLogic extends MovingObjectLogic {
         if (this._allowUseCarryObject) {
             if (time - this._carryObjectStartTimestamp > 5000) {
                 if ((time - this._carryObjectStartTimestamp) % 10000 < 1000) {
-                    model.setValue(RoomObjectVariable.FIGURE_USE_OBJECT, 1);
+                    model.setValue(RoomObjectVariableEnum.FigureUseObject, 1);
                 } else {
-                    model.setValue(RoomObjectVariable.FIGURE_USE_OBJECT, 0);
+                    model.setValue(RoomObjectVariableEnum.FigureUseObject, 0);
                 }
             }
         }
 
         if (this._blinkingStartTimestamp > -1 && time > this._blinkingStartTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_BLINK, 1);
+            model.setValue(RoomObjectVariableEnum.FigureBlink, 1);
 
             this._blinkingStartTimestamp = time + this.randomBlinkStartTimestamp();
             this._blinkingEndTimestamp = time + this.randomBlinkEndTimestamp();
         }
 
         if (this._blinkingEndTimestamp > 0 && time > this._blinkingEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_BLINK, 0);
+            model.setValue(RoomObjectVariableEnum.FigureBlink, 0);
 
             this._blinkingEndTimestamp = 0;
         }
 
         if (this._effectChangeTimeStamp > 0 && time > this._effectChangeTimeStamp) {
-            model.setValue(RoomObjectVariable.FIGURE_EFFECT, this._newEffect);
+            model.setValue(RoomObjectVariableEnum.FigureEffect, this._newEffect);
 
             this._effectChangeTimeStamp = 0;
         }
 
         if (this._numberValueEndTimestamp > 0 && time > this._numberValueEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_NUMBER_VALUE, 0);
+            model.setValue(RoomObjectVariableEnum.FigureNumberValue, 0);
 
             this._numberValueEndTimestamp = 0;
         }
@@ -410,12 +410,12 @@ export class AvatarLogic extends MovingObjectLogic {
         } else if (effect === AvatarLogic.EFFECT_TYPE_SPLASH_DARK) {
             this._effectChangeTimeStamp = GetTickerTime() + AvatarLogic.EFFECT_SPLASH_LENGTH;
             this._newEffect = AvatarLogic.EFFECT_TYPE_SWIM_DARK;
-        } else if (model.getValue<number>(RoomObjectVariable.FIGURE_EFFECT) === AvatarLogic.EFFECT_TYPE_SWIM) {
+        } else if (model.getValue<number>(RoomObjectVariableEnum.FigureEffect) === AvatarLogic.EFFECT_TYPE_SWIM) {
             this._effectChangeTimeStamp = GetTickerTime() + AvatarLogic.EFFECT_SPLASH_LENGTH;
             this._newEffect = effect;
 
             effect = AvatarLogic.EFFECT_TYPE_SPLASH;
-        } else if (model.getValue<number>(RoomObjectVariable.FIGURE_EFFECT) === AvatarLogic.EFFECT_TYPE_SWIM_DARK) {
+        } else if (model.getValue<number>(RoomObjectVariableEnum.FigureEffect) === AvatarLogic.EFFECT_TYPE_SWIM_DARK) {
             this._effectChangeTimeStamp = GetTickerTime() + AvatarLogic.EFFECT_SPLASH_LENGTH;
             this._newEffect = effect;
 
@@ -429,7 +429,7 @@ export class AvatarLogic extends MovingObjectLogic {
             return;
         }
 
-        model.setValue(RoomObjectVariable.FIGURE_EFFECT, effect);
+        model.setValue(RoomObjectVariableEnum.FigureEffect, effect);
     }
 
     private randomTalkingPauseStartTimestamp(): number {

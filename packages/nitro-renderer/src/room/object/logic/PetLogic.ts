@@ -6,7 +6,7 @@ import type {
     IRoomSpriteMouseEvent,
     IVector3D,
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, PetType, RoomObjectVariable, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, PetType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-events';
 
 import { PetFigureData } from '../../../session';
@@ -56,7 +56,7 @@ export class PetLogic extends MovingObjectLogic {
             }
         }
 
-        this.object.model.setValue(RoomObjectVariable.PET_ALLOWED_DIRECTIONS, this._directions);
+        this.object.model.setValue(RoomObjectVariableEnum.PetAllowedDirections, this._directions);
     }
 
     public override dispose(): void {
@@ -96,13 +96,13 @@ export class PetLogic extends MovingObjectLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectAvatarUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.HEAD_DIRECTION, message.headDirection);
+            this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirection);
 
             return;
         }
 
         if (message instanceof ObjectAvatarDirectionUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.HEAD_DIRECTION, message.headDirction);
+            this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirction);
 
             return;
         }
@@ -110,27 +110,27 @@ export class PetLogic extends MovingObjectLogic {
         if (message instanceof ObjectAvatarFigureUpdateMessage) {
             const petFigureData = new PetFigureData(message.figure);
 
-            this.object.model.setValue(RoomObjectVariable.FIGURE, message.figure);
-            this.object.model.setValue(RoomObjectVariable.RACE, message.subType);
-            this.object.model.setValue(RoomObjectVariable.PET_PALETTE_INDEX, petFigureData.paletteId);
-            this.object.model.setValue(RoomObjectVariable.PET_COLOR, petFigureData.color);
-            this.object.model.setValue(RoomObjectVariable.PET_TYPE, petFigureData.typeId);
-            this.object.model.setValue(RoomObjectVariable.PET_CUSTOM_LAYER_IDS, petFigureData.customLayerIds);
-            this.object.model.setValue(RoomObjectVariable.PET_CUSTOM_PARTS_IDS, petFigureData.customPartIds);
-            this.object.model.setValue(RoomObjectVariable.PET_CUSTOM_PALETTE_IDS, petFigureData.customPaletteIds);
-            this.object.model.setValue(RoomObjectVariable.PET_IS_RIDING, message.isRiding ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.Figure, message.figure);
+            this.object.model.setValue(RoomObjectVariableEnum.Race, message.subType);
+            this.object.model.setValue(RoomObjectVariableEnum.PetPaletteIndex, petFigureData.paletteId);
+            this.object.model.setValue(RoomObjectVariableEnum.PetColor, petFigureData.color);
+            this.object.model.setValue(RoomObjectVariableEnum.PetType, petFigureData.typeId);
+            this.object.model.setValue(RoomObjectVariableEnum.PetCustomLayerIds, petFigureData.customLayerIds);
+            this.object.model.setValue(RoomObjectVariableEnum.PetCustomPartsIds, petFigureData.customPartIds);
+            this.object.model.setValue(RoomObjectVariableEnum.PetCustomPaletteIds, petFigureData.customPaletteIds);
+            this.object.model.setValue(RoomObjectVariableEnum.PetIsRiding, message.isRiding ? 1 : 0);
 
             return;
         }
 
         if (message instanceof ObjectAvatarPostureUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_POSTURE, message.postureType);
+            this.object.model.setValue(RoomObjectVariableEnum.FigurePosture, message.postureType);
 
             return;
         }
 
         if (message instanceof ObjectAvatarChatUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_TALK, 1);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureTalk, 1);
 
             this._talkingEndTimestamp = this.time + message.numberOfWords * 1000;
 
@@ -138,13 +138,13 @@ export class PetLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarSleepUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_SLEEP, message.isSleeping ? 1 : 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureSleep, message.isSleeping ? 1 : 0);
 
             return;
         }
 
         if (message instanceof ObjectAvatarPetGestureUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_GESTURE, message.gesture);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureGesture, message.gesture);
 
             this._gestureEndTimestamp = this.time + 3000;
 
@@ -159,8 +159,8 @@ export class PetLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarExperienceUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.FIGURE_EXPERIENCE_TIMESTAMP, this.time);
-            this.object.model.setValue(RoomObjectVariable.FIGURE_GAINED_EXPERIENCE, message.gainedExperience);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureExperienceTimestamp, this.time);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureGainedExperience, message.gainedExperience);
 
             return;
         }
@@ -178,7 +178,7 @@ export class PetLogic extends MovingObjectLogic {
             case MouseEventType.DOUBLE_CLICK:
                 break;
             case MouseEventType.MOUSE_DOWN: {
-                const petType = this.object.model.getValue<number>(RoomObjectVariable.PET_TYPE);
+                const petType = this.object.model.getValue<number>(RoomObjectVariableEnum.PetType);
 
                 if (petType === PetType.MONSTERPLANT)
                     this.dispatchEvent(
@@ -212,21 +212,21 @@ export class PetLogic extends MovingObjectLogic {
 
     private updateModel(time: number, model: IRoomObjectModel): void {
         if (this._gestureEndTimestamp > 0 && time > this._gestureEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_GESTURE, null);
+            model.setValue(RoomObjectVariableEnum.FigureGesture, null);
 
             this._gestureEndTimestamp = 0;
         }
 
         if (this._talkingEndTimestamp > 0) {
             if (time > this._talkingEndTimestamp) {
-                model.setValue(RoomObjectVariable.FIGURE_TALK, 0);
+                model.setValue(RoomObjectVariableEnum.FigureTalk, 0);
 
                 this._talkingEndTimestamp = 0;
             }
         }
 
         if (this._expressionEndTimestamp > 0 && time > this._expressionEndTimestamp) {
-            model.setValue(RoomObjectVariable.FIGURE_EXPRESSION, 0);
+            model.setValue(RoomObjectVariableEnum.FigureExpression, 0);
 
             this._expressionEndTimestamp = 0;
         }

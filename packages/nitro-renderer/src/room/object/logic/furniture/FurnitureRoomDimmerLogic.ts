@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectDimmerStateUpdateEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -35,10 +35,10 @@ export class FurnitureRoomDimmerLogic extends FurnitureLogic {
         super.update(time);
 
         if (this.isRealRoomObject()) {
-            const data = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_DATA);
+            const data = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
 
             if (data && data.length > 0) {
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_DATA, '');
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureData, '');
 
                 this.processDimmerData(data);
             }

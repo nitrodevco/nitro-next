@@ -1,4 +1,4 @@
-import { type IAssetData, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -20,7 +20,7 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
             asset.logic.action.link !== '' &&
             asset.logic.action.link.length > 0
         )
-            this.object.model.setValue<string>(RoomObjectVariable.FURNITURE_INTERNAL_LINK, asset.logic.action.link);
+            this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureInternalLink, asset.logic.action.link);
     }
 
     public override dispose(): void {
@@ -52,6 +52,6 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     }
 
     private setAutomaticStateIndex(state: number): void {
-        this.object.model.setValue<number>(RoomObjectVariable.FURNITURE_AUTOMATIC_STATE_INDEX, state);
+        this.object.model.setValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, state);
     }
 }

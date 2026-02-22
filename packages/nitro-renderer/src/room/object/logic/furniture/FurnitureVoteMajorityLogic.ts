@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, VoteDataType } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, VoteDataType } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
@@ -12,7 +12,7 @@ export class FurnitureVoteMajorityLogic extends FurnitureMultiStateLogic {
             const data = message.data;
 
             if (data instanceof VoteDataType)
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_VOTE_MAJORITY_RESULT, data.result);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureVoteMajorityResult, data.result);
         }
     }
 }

@@ -1,4 +1,4 @@
-import { type IRoomObjectUpdateMessage, MapDataType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -24,15 +24,15 @@ export class FurnitureMannequinLogic extends FurnitureLogic {
             data.initializeFromRoomObjectModel(this.object.model);
 
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_MANNEQUIN_GENDER,
+                RoomObjectVariableEnum.FurnitureMannequinGender,
                 data.getValue(FurnitureMannequinLogic.GENDER),
             );
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_MANNEQUIN_FIGURE,
+                RoomObjectVariableEnum.FurnitureMannequinFigure,
                 data.getValue(FurnitureMannequinLogic.FIGURE),
             );
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_MANNEQUIN_NAME,
+                RoomObjectVariableEnum.FurnitureMannequinName,
                 data.getValue(FurnitureMannequinLogic.OUTFIT_NAME),
             );
         }

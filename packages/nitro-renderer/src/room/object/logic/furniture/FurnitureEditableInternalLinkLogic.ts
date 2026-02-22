@@ -1,5 +1,5 @@
 import type { IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { type IAssetData, MouseEventType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IAssetData, MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -51,7 +51,7 @@ export class FurnitureEditableInternalLinkLogic extends FurnitureLogic {
         if (!this.object) return;
 
         if (this.object.model) {
-            this.object.model.setValue<number>(RoomObjectVariable.FURNITURE_AUTOMATIC_STATE_INDEX, state);
+            this.object.model.setValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, state);
         }
     }
 }

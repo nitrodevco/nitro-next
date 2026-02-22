@@ -1,5 +1,5 @@
 import type { IRoomObjectModel } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
@@ -12,7 +12,7 @@ export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic {
     }
 
     protected override getAdClickUrl(model: IRoomObjectModel): string {
-        return model.getValue<string>(RoomObjectVariable.FURNITURE_BRANDING_URL);
+        return model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl);
     }
 
     protected override handleAdClick(objectId: number, objectType: string, clickUrl: string): void {

@@ -1,5 +1,5 @@
 import type { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -17,7 +17,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
 
         if (asset.logic && asset.logic.action) {
             this.object.model.setValue<string>(
-                RoomObjectVariable.FURNITURE_INTERNAL_LINK,
+                RoomObjectVariableEnum.FurnitureInternalLink,
                 asset.logic.action.link ?? '',
             );
 
@@ -54,6 +54,6 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
     }
 
     private setAutomaticStateIndex(state: number): void {
-        this.object.model.setValue<number>(RoomObjectVariable.FURNITURE_AUTOMATIC_STATE_INDEX, state);
+        this.object.model.setValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, state);
     }
 }

@@ -2,7 +2,7 @@ import type { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMo
 import {
     MapDataType,
     MouseEventType,
-    RoomObjectVariable,
+    RoomObjectVariableEnum,
     RoomWidgetEnumItemExtradataParameter,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-events';
@@ -30,7 +30,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         super.initialize(asset);
 
         if (this._disableFurnitureSelection)
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_SELECTION_DISABLED, 1);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureSelectionDisabled, 1);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
@@ -45,10 +45,10 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         if (message instanceof ObjectAdUpdateMessage) {
             switch (message.type) {
                 case ObjectAdUpdateMessage.IMAGE_LOADED:
-                    this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_STATUS, 1);
+                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageStatus, 1);
                     break;
                 case ObjectAdUpdateMessage.IMAGE_LOADING_FAILED:
-                    this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_STATUS, -1);
+                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageStatus, -1);
                     break;
             }
 
@@ -74,11 +74,11 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         if (!isNaN(state) && this.object.getState(0) !== state) this.object.setState(state, 0);
 
         const imageUrl = objectData.getValue(FurnitureRoomBrandingLogic.IMAGEURL_KEY);
-        const existingUrl = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_URL);
+        const existingUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
 
         if (!existingUrl || existingUrl !== imageUrl) {
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_URL, imageUrl);
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_STATUS, 0);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageUrl, imageUrl);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageStatus, 0);
 
             void this.downloadBackground();
         }
@@ -86,10 +86,11 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         const clickUrl = objectData.getValue(FurnitureRoomBrandingLogic.CLICKURL_KEY);
 
         if (clickUrl) {
-            const existingUrl = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_BRANDING_URL);
+            const existingUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl);
 
             if (!existingUrl || existingUrl !== clickUrl) {
-                if (this.object.model) this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_URL, clickUrl);
+                if (this.object.model)
+                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingUrl, clickUrl);
             }
         }
 
@@ -97,9 +98,9 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         const offsetY = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.OFFSETY_KEY));
         const offsetZ = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.OFFSETZ_KEY));
 
-        if (!isNaN(offsetX)) this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_OFFSET_X, offsetX);
-        if (!isNaN(offsetY)) this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_OFFSET_Y, offsetY);
-        if (!isNaN(offsetZ)) this.object.model.setValue(RoomObjectVariable.FURNITURE_BRANDING_OFFSET_Z, offsetZ);
+        if (!isNaN(offsetX)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetX, offsetX);
+        if (!isNaN(offsetY)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetY, offsetY);
+        if (!isNaN(offsetZ)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetZ, offsetZ);
 
         let options = FurnitureRoomBrandingLogic.IMAGEURL_KEY + '=' + (imageUrl !== null ? imageUrl : '') + '\t';
 
@@ -112,7 +113,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         options = options + (FurnitureRoomBrandingLogic.OFFSETZ_KEY + '=' + offsetZ + '\t');
 
         this.object.model.setValue(
-            RoomWidgetEnumItemExtradataParameter.INFOSTAND_EXTRA_PARAM,
+            RoomObjectVariableEnum.InfostandExtraParam,
             RoomWidgetEnumItemExtradataParameter.BRANDING_OPTIONS + options,
         );
     }
@@ -122,8 +123,8 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
 
         if (!model) return;
 
-        const imageUrl = model.getValue<string>(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_URL);
-        const imageStatus = model.getValue<number>(RoomObjectVariable.FURNITURE_BRANDING_IMAGE_STATUS);
+        const imageUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
+        const imageStatus = model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingImageStatus);
 
         if (!imageUrl || imageUrl === '' || imageStatus === 1) return;
 

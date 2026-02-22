@@ -1,4 +1,4 @@
-import { RoomObjectVariable, RoomWidgetEnum } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectDataRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -11,13 +11,13 @@ export class FurnitureRentableSpaceLogic extends FurnitureLogic {
     public override update(time: number): void {
         super.update(time);
 
-        if (!this.object.model.getValue<number>(RoomObjectVariable.SESSION_CURRENT_USER_ID))
+        if (!this.object.model.getValue<number>(RoomObjectVariableEnum.SessionCurrentUserId))
             this.dispatchEvent(
                 new RoomObjectDataRequestEvent(RoomObjectDataRequestEvent.RODRE_CURRENT_USER_ID, this.object),
             );
 
-        const renterId = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_DATA)['renterId'];
-        const userId = this.object.model.getValue<number>(RoomObjectVariable.SESSION_CURRENT_USER_ID);
+        const renterId = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData)['renterId'];
+        const userId = this.object.model.getValue<number>(RoomObjectVariableEnum.SessionCurrentUserId);
 
         if (renterId) {
             if (parseInt(renterId) === userId) this.object.setState(2, 0);

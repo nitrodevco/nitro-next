@@ -1,4 +1,4 @@
-import { type IRoomObjectUpdateMessage, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { type IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectGroupBadgeUpdateMessage, ObjectSelectedMessage } from '../../../messages';
@@ -27,7 +27,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
         if (message instanceof ObjectGroupBadgeUpdateMessage) {
             if (message.assetName !== 'loading_icon') {
                 this.object.model.setValue(
-                    RoomObjectVariable.FURNITURE_BADGE_VISIBLE_IN_STATE,
+                    RoomObjectVariableEnum.FurnitureBadgeVisibleInState,
                     FurnitureAchievementResolutionLogic.BADGE_VISIBLE_IN_STATE,
                 );
             }

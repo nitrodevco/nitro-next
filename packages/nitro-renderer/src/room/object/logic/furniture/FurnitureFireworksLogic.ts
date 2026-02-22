@@ -1,5 +1,5 @@
 import type { IAssetData, IParticleSystem, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -14,7 +14,7 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
 
         if (asset.logic && asset.logic.particleSystems && asset.logic.particleSystems.length)
             this.object.model.setValue<IParticleSystem[]>(
-                RoomObjectVariable.FURNITURE_FIREWORKS_DATA,
+                RoomObjectVariableEnum.FurnitureFireworksData,
                 asset.logic.particleSystems,
             );
     }

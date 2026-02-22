@@ -5,7 +5,7 @@ import type {
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
 } from '@nitrodevco/nitro-api';
-import { MapDataType, MouseEventType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { MapDataType, MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage, ObjectModelDataUpdateMessage } from '../../../messages';
@@ -27,7 +27,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
 
         if (asset.logic && asset.logic.particleSystems && asset.logic.particleSystems.length)
             this.object.model.setValue<IParticleSystem[]>(
-                RoomObjectVariable.FURNITURE_FIREWORKS_DATA,
+                RoomObjectVariableEnum.FurnitureFireworksData,
                 asset.logic.particleSystems,
             );
     }
@@ -43,34 +43,37 @@ export class FurniturePresentLogic extends FurnitureLogic {
             stuffData.initializeFromRoomObjectModel(this.object.model);
 
             const presentMessage = stuffData.getValue(FurniturePresentLogic.MESSAGE);
-            const data = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_DATA);
+            const data = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
 
             if (!presentMessage && typeof data === 'string') {
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_DATA, data.substr(1));
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureData, data.substr(1));
             } else {
                 this.object.model.setValue(
-                    RoomObjectVariable.FURNITURE_DATA,
+                    RoomObjectVariableEnum.FurnitureData,
                     stuffData.getValue(FurniturePresentLogic.MESSAGE),
                 );
             }
 
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_TYPE_ID,
+                RoomObjectVariableEnum.FurnitureTypeId,
                 stuffData.getValue(FurniturePresentLogic.PRODUCT_CODE),
             );
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_PURCHASER_NAME,
+                RoomObjectVariableEnum.FurniturePurchaserName,
                 stuffData.getValue(FurniturePresentLogic.PURCHASER_NAME),
             );
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_PURCHASER_FIGURE,
+                RoomObjectVariableEnum.FurniturePurchaserFigure,
                 stuffData.getValue(FurniturePresentLogic.PURCHASER_FIGURE),
             );
         }
 
         if (message instanceof ObjectModelDataUpdateMessage) {
-            if (message.numberKey === RoomObjectVariable.FURNITURE_DISABLE_PICKING_ANIMATION) {
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_DISABLE_PICKING_ANIMATION, message.numberValue);
+            if (message.numberKey === RoomObjectVariableEnum.FurnitureDisablePickingAnimation.toString()) {
+                this.object.model.setValue(
+                    RoomObjectVariableEnum.FurnitureDisablePickingAnimation,
+                    message.numberValue,
+                );
             }
         }
     }

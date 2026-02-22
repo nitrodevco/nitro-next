@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -8,11 +8,11 @@ export class FurnitureSongDiskLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (this.isRealRoomObject()) {
-            const extras = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_EXTRAS);
+            const extras = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
             const diskId = parseInt(extras);
 
             this.object.model.setValue<string>(
-                RoomWidgetEnumItemExtradataParameter.INFOSTAND_EXTRA_PARAM,
+                RoomObjectVariableEnum.InfostandExtraParam,
                 RoomWidgetEnumItemExtradataParameter.SONGDISK + diskId,
             );
         }

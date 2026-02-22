@@ -1,5 +1,5 @@
 import type { IAssetData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
@@ -14,7 +14,7 @@ export class FurnitureWindowLogic extends FurnitureMultiStateLogic {
                 maskType = asset.logic.maskType;
         }
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_USES_PLANE_MASK, 1);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_PLANE_MASK_TYPE, maskType);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);
     }
 }

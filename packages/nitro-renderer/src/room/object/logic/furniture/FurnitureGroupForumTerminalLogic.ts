@@ -1,4 +1,4 @@
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureGuildCustomizedLogic } from './FurnitureGuildCustomizedLogic';
@@ -17,6 +17,6 @@ export class FurnitureGroupForumTerminalLogic extends FurnitureGuildCustomizedLo
     protected override updateGroupId(id: string): void {
         super.updateGroupId(id);
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_INTERNAL_LINK, `groupforum/${id}`);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureInternalLink, `groupforum/${id}`);
     }
 }

@@ -1,4 +1,5 @@
-import { AlphaTolerance, type IRoomObjectSprite, RoomObjectSpriteType } from '@nitrodevco/nitro-api';
+import { RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
 export class RoomObjectSprite implements IRoomObjectSprite {
@@ -7,7 +8,7 @@ export class RoomObjectSprite implements IRoomObjectSprite {
     private _id: number = RoomObjectSprite.SPRITE_COUNTER++;
     private _name: string = '';
     private _type: string = '';
-    private _spriteType: number = RoomObjectSpriteType.DEFAULT;
+    private _spriteType: RoomObjectSpriteTypeEnum = RoomObjectSpriteTypeEnum.Default;
     private _texture: Texture | undefined = undefined;
 
     private _width: number = 0;

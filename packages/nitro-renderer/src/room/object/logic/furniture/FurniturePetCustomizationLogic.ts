@@ -1,4 +1,8 @@
-import { type IRoomObjectUpdateMessage, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import {
+    type IRoomObjectUpdateMessage,
+    RoomObjectVariableEnum,
+    RoomWidgetEnumItemExtradataParameter,
+} from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -13,7 +17,7 @@ export class FurniturePetCustomizationLogic extends FurnitureLogic {
 
         if (this.isRealRoomObject())
             this.object.model.setValue(
-                RoomWidgetEnumItemExtradataParameter.INFOSTAND_EXTRA_PARAM,
+                RoomObjectVariableEnum.InfostandExtraParam,
                 RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT,
             );
     }

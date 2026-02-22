@@ -1,12 +1,14 @@
 import type { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
+import type { RoomObjectSpriteTypeEnum } from '../RoomObjectSpriteTypeEnum';
+
 export interface IRoomObjectSprite {
     dispose(): void;
     increaseUpdateCounter(): void;
     id: number;
     name: string;
     type: string;
-    spriteType: number;
+    spriteType: RoomObjectSpriteTypeEnum;
     texture: Texture | undefined;
     width: number;
     height: number;

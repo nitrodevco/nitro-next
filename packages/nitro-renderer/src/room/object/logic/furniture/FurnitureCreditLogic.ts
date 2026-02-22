@@ -1,5 +1,5 @@
 import type { IAssetData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { FurnitureLogic } from './FurnitureLogic';
@@ -17,7 +17,7 @@ export class FurnitureCreditLogic extends FurnitureLogic {
         if (asset.logic && asset.logic.credits && asset.logic.credits !== '' && asset.logic.credits.length > 0)
             creditValue = parseInt(asset.logic.credits);
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_CREDIT_VALUE, creditValue);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCreditValue, creditValue);
     }
 
     public override useObject(): void {

@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -9,7 +9,7 @@ export class FurnitureCrackableLogic extends FurnitureLogic {
 
         if (this.isRealRoomObject())
             this.object.model.setValue(
-                RoomWidgetEnumItemExtradataParameter.INFOSTAND_EXTRA_PARAM,
+                RoomObjectVariableEnum.InfostandExtraParam,
                 RoomWidgetEnumItemExtradataParameter.CRACKABLE_FURNI,
             );
     }

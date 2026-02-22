@@ -1,5 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectSamplePlaybackEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -32,7 +32,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
             this._noPitch = asset.logic.soundSample.noPitch as boolean;
         }
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_SOUNDBLOCK_RELATIVE_ANIMATION_SPEED, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed, 1);
     }
 
     public override dispose(): void {
@@ -88,7 +88,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
     private playSoundAt(height: number): void {
         const pitch: number = this.getPitchForHeight(height);
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_SOUNDBLOCK_RELATIVE_ANIMATION_SPEED, pitch);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed, pitch);
 
         this.dispatchEvent(
             new RoomObjectSamplePlaybackEvent(

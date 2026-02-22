@@ -1,5 +1,5 @@
 import type { IObjectVisualizationData, IRoomGeometry } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../../../assets';
 import { AnimationData, AnimationStateData, DirectionData, LayerData } from '../data';
@@ -20,54 +20,31 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
     private static GESTURE_ANIMATION_INDEX: number = 1;
     private static ANIMATION_INDEX_COUNT: number = 2;
 
-    private _posture: string;
-    private _gesture: string;
-    private _isSleeping: boolean;
-    private _headDirection: number;
-    private _headOnly: boolean;
-    private _nonHeadSprites: boolean[];
-    private _headSprites: boolean[];
-    private _saddleSprites: boolean[];
-    private _animationOver: boolean;
-    private _paletteIndex: number;
-    private _paletteName: string;
-    private _customLayerIds: number[];
-    private _customPartIds: number[];
-    private _customPaletteIds: number[];
-    private _isRiding: boolean;
-    private _color: number;
-    private _experience: number;
-    private _experienceTimestamp: number;
-    private _experienceData: ExperienceData;
+    private _posture: string = '';
+    private _gesture: string = '';
+    private _isSleeping: boolean = false;
+    private _headDirection: number = -1;
+    private _headOnly: boolean = false;
+    private _nonHeadSprites: boolean[] = [];
+    private _headSprites: boolean[] = [];
+    private _saddleSprites: boolean[] = [];
+    private _animationOver: boolean = false;
+    private _paletteIndex: number = -1;
+    private _paletteName: string = '';
+    private _customLayerIds: number[] = [];
+    private _customPartIds: number[] = [];
+    private _customPaletteIds: number[] = [];
+    private _isRiding: boolean = false;
+    private _color: number = 0xffffff;
+    private _experience: number = 0;
+    private _experienceTimestamp: number = 0;
+    private _experienceData: ExperienceData | undefined = undefined;
 
-    private _previousAnimationDirection: number;
-    private _animationStates: AnimationStateData[];
+    private _previousAnimationDirection: number = -1;
+    private _animationStates: AnimationStateData[] = [];
 
     constructor() {
         super();
-
-        this._posture = '';
-        this._gesture = '';
-        this._isSleeping = false;
-        this._headDirection = -1;
-        this._headOnly = false;
-        this._nonHeadSprites = [];
-        this._headSprites = [];
-        this._saddleSprites = [];
-        this._animationOver = false;
-        this._paletteIndex = -1;
-        this._paletteName = '';
-        this._customLayerIds = [];
-        this._customPartIds = [];
-        this._customPaletteIds = [];
-        this._isRiding = false;
-        this._color = 0xffffff;
-        this._experience = 0;
-        this._experienceTimestamp = 0;
-        this._experienceData = null;
-
-        this._previousAnimationDirection = -1;
-        this._animationStates = [];
 
         while (this._animationStates.length < PetVisualization.ANIMATION_INDEX_COUNT)
             this._animationStates.push(new AnimationStateData());
@@ -157,12 +134,12 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
         if (this.updateModelCounter === model.updateCounter) return false;
 
-        const posture = model.getValue<string>(RoomObjectVariable.FIGURE_POSTURE);
-        const gesture = model.getValue<string>(RoomObjectVariable.FIGURE_GESTURE);
+        const posture = model.getValue<string>(RoomObjectVariableEnum.FIGURE_POSTURE);
+        const gesture = model.getValue<string>(RoomObjectVariableEnum.FIGURE_GESTURE);
 
         this.setPostureAndGesture(posture, gesture);
 
-        let alphaMultiplier = model.getValue<number>(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER) || null;
+        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FURNITURE_ALPHA_MULTIPLIER) || null;
 
         if (alphaMultiplier === null || isNaN(alphaMultiplier)) alphaMultiplier = 1;
 
@@ -172,9 +149,9 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
             this._alphaChanged = true;
         }
 
-        this._isSleeping = model.getValue<number>(RoomObjectVariable.FIGURE_SLEEP) > 0;
+        this._isSleeping = model.getValue<number>(RoomObjectVariableEnum.FIGURE_SLEEP) > 0;
 
-        const headDirection = model.getValue<number>(RoomObjectVariable.HEAD_DIRECTION);
+        const headDirection = model.getValue<number>(RoomObjectVariableEnum.HEAD_DIRECTION);
 
         if (!isNaN(headDirection) && this.data.isAllowedToTurnHead) {
             this._headDirection = headDirection;
@@ -182,16 +159,16 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
             this._headDirection = this.object.getDirection().x;
         }
 
-        this._experience = model.getValue<number>(RoomObjectVariable.FIGURE_GAINED_EXPERIENCE);
-        this._experienceTimestamp = model.getValue<number>(RoomObjectVariable.FIGURE_EXPERIENCE_TIMESTAMP);
+        this._experience = model.getValue<number>(RoomObjectVariableEnum.FIGURE_GAINED_EXPERIENCE);
+        this._experienceTimestamp = model.getValue<number>(RoomObjectVariableEnum.FIGURE_EXPERIENCE_TIMESTAMP);
 
-        const customPaletteIndex = model.getValue<number>(RoomObjectVariable.PET_PALETTE_INDEX);
-        const customLayerIds = model.getValue<number[]>(RoomObjectVariable.PET_CUSTOM_LAYER_IDS);
-        const customPartIds = model.getValue<number[]>(RoomObjectVariable.PET_CUSTOM_PARTS_IDS);
-        const customPaletteIds = model.getValue<number[]>(RoomObjectVariable.PET_CUSTOM_PALETTE_IDS);
-        const isRiding = model.getValue<number>(RoomObjectVariable.PET_IS_RIDING);
-        const headOnly = model.getValue<number>(RoomObjectVariable.PET_HEAD_ONLY);
-        const color = model.getValue<number>(RoomObjectVariable.PET_COLOR);
+        const customPaletteIndex = model.getValue<number>(RoomObjectVariableEnum.PET_PALETTE_INDEX);
+        const customLayerIds = model.getValue<number[]>(RoomObjectVariableEnum.PET_CUSTOM_LAYER_IDS);
+        const customPartIds = model.getValue<number[]>(RoomObjectVariableEnum.PET_CUSTOM_PARTS_IDS);
+        const customPaletteIds = model.getValue<number[]>(RoomObjectVariableEnum.PET_CUSTOM_PALETTE_IDS);
+        const isRiding = model.getValue<number>(RoomObjectVariableEnum.PET_IS_RIDING);
+        const headOnly = model.getValue<number>(RoomObjectVariableEnum.PET_HEAD_ONLY);
+        const color = model.getValue<number>(RoomObjectVariableEnum.PET_COLOR);
 
         if (customPaletteIndex !== this._paletteIndex) {
             this._paletteIndex = customPaletteIndex;

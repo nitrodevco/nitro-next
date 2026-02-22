@@ -1,5 +1,5 @@
 import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariable, StringDataType } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum, StringDataType } from '@nitrodevco/nitro-api';
 import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { GetTickerTime } from '../../../../utils';
@@ -40,7 +40,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
 
         if (message instanceof ObjectGroupBadgeUpdateMessage) {
             if (message.assetName !== 'loading_icon') {
-                this.object.model.setValue(RoomObjectVariable.FURNITURE_GUILD_CUSTOMIZED_ASSET_NAME, message.assetName);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName, message.assetName);
 
                 this.update(GetTickerTime());
             }
@@ -73,7 +73,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
     }
 
     protected updateGroupId(id: string): void {
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_GUILD_CUSTOMIZED_GUILD_ID, parseInt(id));
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureGuildCustomizedGuildId, parseInt(id));
     }
 
     private updateBadge(badge: string): void {
@@ -83,8 +83,8 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
     }
 
     public updateColors(color1: string, color2: string): void {
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_GUILD_CUSTOMIZED_COLOR_1, parseInt(color1, 16));
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_GUILD_CUSTOMIZED_COLOR_2, parseInt(color2, 16));
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureGuildCustomizedColor1, parseInt(color1, 16));
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureGuildCustomizedColor2, parseInt(color2, 16));
     }
 
     private openContextMenu(): void {

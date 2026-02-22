@@ -1,5 +1,5 @@
 import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariable, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-events';
 import { ColorConverter } from '@nitrodevco/nitro-shared';
 import { Point } from 'pixi.js';
@@ -58,11 +58,11 @@ export class RoomLogic extends RoomObjectLogicBase {
     public override initialize(roomMap: RoomMapData): void {
         if (!(roomMap instanceof RoomMapData) || !this._planeParser.initializeFromMapData(roomMap)) return;
 
-        this.object.model.setValue(RoomObjectVariable.ROOM_MAP_DATA, roomMap);
-        this.object.model.setValue(RoomObjectVariable.ROOM_BACKGROUND_COLOR, 0xffffff);
-        this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_VISIBILITY, 1);
-        this.object.model.setValue(RoomObjectVariable.ROOM_WALL_VISIBILITY, 1);
-        this.object.model.setValue(RoomObjectVariable.ROOM_LANDSCAPE_VISIBILITY, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.RoomMapData, roomMap);
+        this.object.model.setValue(RoomObjectVariableEnum.RoomBackgroundColor, 0xffffff);
+        this.object.model.setValue(RoomObjectVariableEnum.RoomFloorVisibility, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.RoomWallVisibility, 1);
+        this.object.model.setValue(RoomObjectVariableEnum.RoomLandscapeVisibility, 1);
 
         // this._skipColorTransition = GetConfigValue<boolean>('renderer.skipColorTransition') === true;
     }
@@ -77,8 +77,8 @@ export class RoomLogic extends RoomObjectLogicBase {
 
             const mapData = this._planeParser.getMapData();
 
-            this.object.model.setValue(RoomObjectVariable.ROOM_MAP_DATA, mapData);
-            this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_HOLE_UPDATE_TIME, time);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomMapData, mapData);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomFloorHoleUpdateTime, time);
 
             this._planeParser.initializeFromMapData(mapData);
 
@@ -93,13 +93,13 @@ export class RoomLogic extends RoomObjectLogicBase {
         if (message instanceof ObjectRoomUpdateMessage) {
             switch (message.type) {
                 case ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_TYPE, message.value);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomFloorType, message.value);
                     return;
                 case ObjectRoomUpdateMessage.ROOM_WALL_UPDATE:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_WALL_TYPE, message.value);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomWallType, message.value);
                     return;
                 case ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_LANDSCAPE_TYPE, message.value);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomLandscapeType, message.value);
                     return;
             }
 
@@ -133,7 +133,7 @@ export class RoomLogic extends RoomObjectLogicBase {
 
             if (update)
                 this.object.model.setValue(
-                    RoomObjectVariable.ROOM_PLANE_MASK_XML,
+                    RoomObjectVariableEnum.RoomPlaneMaskXml,
                     this._planeBitmapMaskParser.getXML(),
                 );
 
@@ -143,11 +143,11 @@ export class RoomLogic extends RoomObjectLogicBase {
         if (message instanceof ObjectRoomPlaneVisibilityUpdateMessage) {
             switch (message.type) {
                 case ObjectRoomPlaneVisibilityUpdateMessage.FLOOR_VISIBILITY:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_VISIBILITY, message.visible ? 1 : 0);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomFloorVisibility, message.visible ? 1 : 0);
                     return;
                 case ObjectRoomPlaneVisibilityUpdateMessage.WALL_VISIBILITY:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_WALL_VISIBILITY, message.visible ? 1 : 0);
-                    this.object.model.setValue(RoomObjectVariable.ROOM_LANDSCAPE_VISIBILITY, message.visible ? 1 : 0);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomWallVisibility, message.visible ? 1 : 0);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomLandscapeVisibility, message.visible ? 1 : 0);
                     return;
             }
 
@@ -157,10 +157,10 @@ export class RoomLogic extends RoomObjectLogicBase {
         if (message instanceof ObjectRoomPlanePropertyUpdateMessage) {
             switch (message.type) {
                 case ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_THICKNESS, message.value);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomFloorThickness, message.value);
                     return;
                 case ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS:
-                    this.object.model.setValue(RoomObjectVariable.ROOM_WALL_THICKNESS, message.value);
+                    this.object.model.setValue(RoomObjectVariableEnum.RoomWallThickness, message.value);
                     return;
             }
 
@@ -194,14 +194,14 @@ export class RoomLogic extends RoomObjectLogicBase {
             if (this._skipColorTransition) this._colorTransitionLength = 0;
             else this._colorTransitionLength = 1500;
 
-            this.object.model.setValue(RoomObjectVariable.ROOM_COLORIZE_BG_ONLY, message.backgroundOnly);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomColorizeBgOnly, message.backgroundOnly);
 
             return;
         }
 
         if (message instanceof ObjectRoomMapUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariable.ROOM_MAP_DATA, message.mapData);
-            this.object.model.setValue(RoomObjectVariable.ROOM_FLOOR_HOLE_UPDATE_TIME, this.time);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomMapData, message.mapData);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomFloorHoleUpdateTime, this.time);
 
             this._planeParser.initializeFromMapData(message.mapData);
 
@@ -220,7 +220,7 @@ export class RoomLogic extends RoomObjectLogicBase {
 
         if (planeId < 1 || planeId > this._planeParser.planeCount) {
             if (event.type === MouseEventType.ROLL_OUT) {
-                this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_PLANE, 0);
+                this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedPlane, 0);
             }
 
             return;
@@ -248,7 +248,7 @@ export class RoomLogic extends RoomObjectLogicBase {
         const planePosition = geometry.getPlanePosition(screenPoint, planeLocation, planeLeftSide, planeRightSide);
 
         if (!planePosition) {
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_PLANE, 0);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedPlane, 0);
 
             return;
         }
@@ -268,12 +268,12 @@ export class RoomLogic extends RoomObjectLogicBase {
             planePosition.y >= 0 &&
             planePosition.y < rightSideLength
         ) {
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_X, tileX);
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_Y, tileY);
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_Z, tileZ);
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_PLANE, planeId + 1);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedX, tileX);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedY, tileY);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedZ, tileZ);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedPlane, planeId + 1);
         } else {
-            this.object.model.setValue(RoomObjectVariable.ROOM_SELECTED_PLANE, 0);
+            this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedPlane, 0);
 
             return;
         }
@@ -374,7 +374,7 @@ export class RoomLogic extends RoomObjectLogicBase {
         }
 
         this.object.model.setValue(
-            RoomObjectVariable.ROOM_BACKGROUND_COLOR,
+            RoomObjectVariableEnum.RoomBackgroundColor,
             ColorConverter.hslToRGB((ColorConverter.rgbToHSL(color) & 0xffff00) + newColor),
         );
     }

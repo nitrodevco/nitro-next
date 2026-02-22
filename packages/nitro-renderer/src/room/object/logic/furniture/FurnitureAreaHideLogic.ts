@@ -1,5 +1,5 @@
 import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, NumberDataType, RoomObjectVariable } from '@nitrodevco/nitro-api';
+import { MouseEventType, NumberDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectStateChangedEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -16,8 +16,7 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
         if (message instanceof ObjectDataUpdateMessage) {
             message.data.writeRoomObjectModel(this.object.model);
 
-            if (this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_REAL_ROOM_OBJECT) === 1)
-                this.setupObject();
+            if (this.isRealRoomObject()) this.setupObject();
         }
     }
 
@@ -62,13 +61,13 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
         const wallItems = numberData.getValue(6) === 1;
         const invert = numberData.getValue(7) === 1;
 
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_ROOT_X, rootX);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_ROOT_Y, rootY);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_WIDTH, width);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_LENGTH, length);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_INVISIBILITY, invisibility ? 1 : 0);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_WALL_ITEMS, wallItems ? 1 : 0);
-        this.object.model.setValue(RoomObjectVariable.FURNITURE_AREA_HIDE_INVERT, invert ? 1 : 0);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideRootX, rootX);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideRootY, rootY);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideWidth, width);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideLength, length);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideInvisibility, invisibility ? 1 : 0);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideWallItems, wallItems ? 1 : 0);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAreaHideInvert, invert ? 1 : 0);
         this.object.setState(state, 0);
     }
 }

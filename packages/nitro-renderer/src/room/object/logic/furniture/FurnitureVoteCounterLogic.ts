@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, VoteDataType } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, VoteDataType } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '../../../../utils';
 import { ObjectDataUpdateMessage } from '../../../messages';
@@ -27,7 +27,7 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
                 _local_3 = _local_4 * (this._total - this.currentTotal);
 
             this.object.model.setValue(
-                RoomObjectVariable.FURNITURE_VOTE_COUNTER_COUNT,
+                RoomObjectVariableEnum.FurnitureVoteCounterCount,
                 this.currentTotal + _local_4 * _local_3,
             );
 
@@ -49,7 +49,7 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
         this._total = total;
 
         if (!this._lastUpdate) {
-            this.object.model.setValue(RoomObjectVariable.FURNITURE_VOTE_COUNTER_COUNT, total);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureVoteCounterCount, total);
 
             this._lastUpdate = GetTickerTime();
 
@@ -70,6 +70,6 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
     }
 
     private get currentTotal(): number {
-        return this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_VOTE_COUNTER_COUNT);
+        return this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteCounterCount);
     }
 }

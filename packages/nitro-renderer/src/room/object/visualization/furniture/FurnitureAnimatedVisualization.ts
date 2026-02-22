@@ -1,5 +1,5 @@
 import type { IObjectVisualizationData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariable, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
 import { AnimationData, AnimationFrame, AnimationStateData } from '../data';
 import { FurnitureAnimatedVisualizationData } from './FurnitureAnimatedVisualizationData';
@@ -62,7 +62,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
             this._state = state;
 
             this._animationChangeTime =
-                this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_STATE_UPDATE_TIME) || 0;
+                this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureStateUpdateTime) || 0;
         }
 
         return true;
@@ -72,7 +72,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         if (!super.updateModel(scale)) return false;
 
         if (this.usesAnimationResetting()) {
-            const updateTime = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_STATE_UPDATE_TIME);
+            const updateTime = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureStateUpdateTime);
 
             if (updateTime > this._animationChangeTime) {
                 this._animationChangeTime = updateTime;
@@ -81,7 +81,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
             }
         }
 
-        const state = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_AUTOMATIC_STATE_INDEX);
+        const state = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex);
 
         if (!isNaN(state)) {
             const animationId = this.data.getAnimationId(this._animationScale, state);
