@@ -8,23 +8,23 @@ import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 export class EmptyDataType extends ObjectDataBase implements IObjectData {
     private _state = '';
 
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         this._state = '';
 
         super.parseWrapper(wrapper);
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Empty);
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         return this._state;
     }
 
-    public compare(data: IObjectData): boolean {
+    public override compare(data: IObjectData): boolean {
         return super.compare(data);
     }
 }

@@ -7,21 +7,12 @@ import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 import { HighScoreData } from './HighScoreData';
 
 export class HighScoreDataType extends ObjectDataBase implements IObjectData {
-    private _state: string;
-    private _scoreType: number;
-    private _clearType: number;
-    private _entries: HighScoreData[];
+    private _state: string = '';
+    private _scoreType: number = -1;
+    private _clearType: number = -1;
+    private _entries: HighScoreData[] = [];
 
-    constructor() {
-        super();
-
-        this._state = '';
-        this._scoreType = -1;
-        this._clearType = -1;
-        this._entries = [];
-    }
-
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         if (!wrapper) return;
 
         this._state = wrapper.readString();
@@ -51,7 +42,7 @@ export class HighScoreDataType extends ObjectDataBase implements IObjectData {
         super.parseWrapper(wrapper);
     }
 
-    public initializeFromRoomObjectModel(model: IRoomObjectModel): void {
+    public override initializeFromRoomObjectModel(model: IRoomObjectModel): void {
         this._scoreType = model.getValue<number>(RoomObjectVariableEnum.FurnitureHighscoreScoreType);
         this._clearType = model.getValue<number>(RoomObjectVariableEnum.FurnitureHighscoreClearType);
         this._entries = [];
@@ -63,8 +54,12 @@ export class HighScoreDataType extends ObjectDataBase implements IObjectData {
         while (i < totalEntries) {
             const data = new HighScoreData();
 
-            data.score = model.getValue<number>(RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseScore + i);
-            data.users = model.getValue<string[]>(RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseUsers + i);
+            data.score = model.getValue<number>(
+                (RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseScore + i) as RoomObjectVariableEnum,
+            );
+            data.users = model.getValue<string[]>(
+                (RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseUsers + i) as RoomObjectVariableEnum,
+            );
 
             this._entries.push(data);
 
@@ -74,7 +69,7 @@ export class HighScoreDataType extends ObjectDataBase implements IObjectData {
         super.initializeFromRoomObjectModel(model);
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Highscore);
@@ -89,15 +84,21 @@ export class HighScoreDataType extends ObjectDataBase implements IObjectData {
             while (i < this._entries.length) {
                 const entry = this._entries[i];
 
-                model.setValue(RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseScore + i, entry.score);
-                model.setValue(RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseUsers + i, entry.users);
+                model.setValue(
+                    (RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseScore + i) as RoomObjectVariableEnum,
+                    entry.score,
+                );
+                model.setValue(
+                    (RoomObjectVariableEnum.FurnitureHighscoreDataEntryBaseUsers + i) as RoomObjectVariableEnum,
+                    entry.users,
+                );
 
                 i++;
             }
         }
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         return this._state;
     }
 

@@ -10,7 +10,7 @@ export class CrackableDataType extends ObjectDataBase implements IObjectData {
     private _hits = 0;
     private _target = 0;
 
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         this._state = wrapper.readString();
         this._hits = wrapper.readInt();
         this._target = wrapper.readInt();
@@ -18,7 +18,7 @@ export class CrackableDataType extends ObjectDataBase implements IObjectData {
         super.parseWrapper(wrapper);
     }
 
-    public initializeFromRoomObjectModel(model: IRoomObjectModel): void {
+    public override initializeFromRoomObjectModel(model: IRoomObjectModel): void {
         super.initializeFromRoomObjectModel(model);
 
         this._state = model.getValue<string>(RoomObjectVariableEnum.FurnitureCrackableState);
@@ -26,7 +26,7 @@ export class CrackableDataType extends ObjectDataBase implements IObjectData {
         this._target = model.getValue<number>(RoomObjectVariableEnum.FurnitureCrackableTarget);
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Crackable);
@@ -35,11 +35,11 @@ export class CrackableDataType extends ObjectDataBase implements IObjectData {
         model.setValue(RoomObjectVariableEnum.FurnitureCrackableTarget, this._target);
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         return this._state;
     }
 
-    public compare(data: IObjectData): boolean {
+    public override compare(data: IObjectData): boolean {
         return true;
     }
 

@@ -5,15 +5,9 @@ import type { IObjectData } from './IObjectData';
 import { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 
 export class ObjectDataBase implements IObjectData {
-    private _flags: ObjectDataFlagsEnum;
-    private _uniqueNumber: number;
-    private _uniqueSeries: number;
-
-    constructor() {
-        this._flags = 0;
-        this._uniqueNumber = 0;
-        this._uniqueSeries = 0;
-    }
+    private _flags: ObjectDataFlagsEnum = 0;
+    private _uniqueNumber: number = 0;
+    private _uniqueSeries: number = 0;
 
     public parseWrapper(wrapper: IMessageDataWrapper): void {
         if ((this._flags & ObjectDataFlagsEnum.UniqueSet) > 0) {

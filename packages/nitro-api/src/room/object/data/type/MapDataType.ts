@@ -11,7 +11,7 @@ export class MapDataType extends ObjectDataBase {
 
     private _data: Record<string, string> = {};
 
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         if (!wrapper) return;
 
         this._data = {};
@@ -23,20 +23,20 @@ export class MapDataType extends ObjectDataBase {
         super.parseWrapper(wrapper);
     }
 
-    public initializeFromRoomObjectModel(model: IRoomObjectModel): void {
+    public override initializeFromRoomObjectModel(model: IRoomObjectModel): void {
         super.initializeFromRoomObjectModel(model);
 
         this._data = model.getValue<Record<string, string>>(RoomObjectVariableEnum.FurnitureData) || {};
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Map);
         model.setValue(RoomObjectVariableEnum.FurnitureData, this._data);
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         if (!this._data) return '';
 
         const state = this._data[MapDataType.STATE];
@@ -46,7 +46,7 @@ export class MapDataType extends ObjectDataBase {
         return state;
     }
 
-    public compare(data: IObjectData): boolean {
+    public override compare(data: IObjectData): boolean {
         return false;
     }
 
@@ -54,7 +54,7 @@ export class MapDataType extends ObjectDataBase {
         return this._data[key];
     }
 
-    public get rarityLevel(): number {
+    public override get rarityLevel(): number {
         if (!this._data) return -1;
 
         const state = this._data[MapDataType.RARITY];

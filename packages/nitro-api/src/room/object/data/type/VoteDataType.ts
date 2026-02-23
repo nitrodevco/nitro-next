@@ -9,7 +9,7 @@ export class VoteDataType extends ObjectDataBase {
     private _state = '';
     private _result = 0;
 
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         if (!wrapper) return;
 
         this._state = wrapper.readString();
@@ -18,7 +18,7 @@ export class VoteDataType extends ObjectDataBase {
         super.parseWrapper(wrapper);
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Vote);
@@ -31,11 +31,11 @@ export class VoteDataType extends ObjectDataBase {
         model.setValue(RoomObjectVariableEnum.FurnitureData, data);
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         return this._state;
     }
 
-    public compare(data: IObjectData): boolean {
+    public override compare(data: IObjectData): boolean {
         return true;
     }
 

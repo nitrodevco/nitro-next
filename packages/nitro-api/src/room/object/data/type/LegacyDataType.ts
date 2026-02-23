@@ -8,30 +8,30 @@ import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 export class LegacyDataType extends ObjectDataBase implements IObjectData {
     private _data = '';
 
-    public parseWrapper(wrapper: IMessageDataWrapper): void {
+    public override parseWrapper(wrapper: IMessageDataWrapper): void {
         this._data = wrapper.readString();
 
         super.parseWrapper(wrapper);
     }
 
-    public initializeFromRoomObjectModel(model: IRoomObjectModel): void {
+    public override initializeFromRoomObjectModel(model: IRoomObjectModel): void {
         super.initializeFromRoomObjectModel(model);
 
         this._data = model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
     }
 
-    public writeRoomObjectModel(model: IRoomObjectModel): void {
+    public override writeRoomObjectModel(model: IRoomObjectModel): void {
         super.writeRoomObjectModel(model);
 
         model.setValue(RoomObjectVariableEnum.FurnitureDataFormat, ObjectDataFlagsEnum.Legacy);
         model.setValue(RoomObjectVariableEnum.FurnitureData, this._data);
     }
 
-    public getLegacyString(): string {
+    public override getLegacyString(): string {
         return this._data;
     }
 
-    public compare(data: IObjectData): boolean {
+    public override compare(data: IObjectData): boolean {
         return this._data === data.getLegacyString();
     }
 
