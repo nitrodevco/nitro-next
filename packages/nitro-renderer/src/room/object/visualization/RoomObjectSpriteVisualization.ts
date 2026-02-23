@@ -5,6 +5,7 @@ import type {
     IRoomObjectController,
     IRoomObjectSprite,
     IRoomObjectSpriteVisualization,
+    RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 import { Container, Point, Rectangle, Sprite } from 'pixi.js';
@@ -41,28 +42,24 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     public dispose(): void {
         if (this._sprites) {
             while (this._sprites.length) {
-                const sprite = this._sprites[0] as RoomObjectSprite;
-
-                if (sprite) sprite.dispose();
+                this._sprites[0]?.dispose();
 
                 this._sprites.shift();
             }
-
-            this._sprites = null;
         }
 
-        this._object = null;
-        this._asset = null;
+        this._object = undefined!;
+        this._asset = undefined!;
     }
 
-    public getSprite(index: number): IRoomObjectSprite {
+    public getSprite(index: number): IRoomObjectSprite | undefined {
         if (index >= 0 && index < this._sprites.length) return this._sprites[index];
 
-        return null;
+        return undefined;
     }
 
     public getSpriteList(): RoomObjectSpriteData[] {
-        return null;
+        return [];
     }
 
     public createSprite(): IRoomObjectSprite {
@@ -95,7 +92,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
         }
     }
 
-    public get image(): Texture {
+    public get image(): Texture | undefined {
         return this.getImage();
     }
 

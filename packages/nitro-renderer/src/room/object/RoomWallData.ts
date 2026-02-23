@@ -42,13 +42,13 @@ export class RoomWallData {
         this._count = 0;
     }
 
-    public addWall(k: Point, _arg_2: number, _arg_3: number, _arg_4: boolean, _arg_5: boolean): void {
-        if (this._addDuplicates || this.checkIsNotDuplicate(k, _arg_2, _arg_3, _arg_4, _arg_5)) {
-            this._corners.push(k);
-            this._directions.push(_arg_2);
-            this._lengths.push(_arg_3);
-            this._borders.push(_arg_4);
-            this._leftTurns.push(_arg_5);
+    public addWall(corner: Point, direction: number, length: number, border: boolean, leftTurn: boolean): void {
+        if (this._addDuplicates || this.checkIsNotDuplicate(corner, direction, length, border, leftTurn)) {
+            this._corners.push(corner);
+            this._directions.push(direction);
+            this._lengths.push(length);
+            this._borders.push(border);
+            this._leftTurns.push(leftTurn);
             this._hideWalls.push(false);
             this._manuallyLeftCut.push(false);
             this._manuallyRightCut.push(false);
@@ -56,17 +56,23 @@ export class RoomWallData {
         }
     }
 
-    private checkIsNotDuplicate(k: Point, _arg_2: number, _arg_3: number, _arg_4: boolean, _arg_5: boolean): boolean {
+    private checkIsNotDuplicate(
+        corner: Point,
+        direction: number,
+        length: number,
+        border: boolean,
+        leftTurn: boolean,
+    ): boolean {
         let _local_6 = 0;
 
         while (_local_6 < this._count) {
             if (
-                this._corners[_local_6].x == k.x &&
-                this._corners[_local_6].y == k.y &&
-                this._directions[_local_6] == _arg_2 &&
-                this._lengths[_local_6] == _arg_3 &&
-                this._borders[_local_6] == _arg_4 &&
-                this._leftTurns[_local_6] == _arg_5
+                this._corners[_local_6].x == corner.x &&
+                this._corners[_local_6].y == corner.y &&
+                this._directions[_local_6] == direction &&
+                this._lengths[_local_6] == length &&
+                this._borders[_local_6] == border &&
+                this._leftTurns[_local_6] == leftTurn
             ) {
                 return false;
             }

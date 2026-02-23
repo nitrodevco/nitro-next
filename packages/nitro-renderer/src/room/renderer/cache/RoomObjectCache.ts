@@ -1,6 +1,10 @@
-﻿import { type IRoomObjectSprite, type IRoomObjectSpriteData, RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
+﻿import {
+    type IRoomObjectSprite,
+    type IRoomObjectSpriteData,
+    RoomObjectSpriteData,
+    RoomObjectSpriteTypeEnum,
+} from '@nitrodevco/nitro-api';
 
-import { RoomObjectSpriteData } from '../RoomObjectSpriteData';
 import type { SortableSprite } from '../utils';
 import { RoomObjectCacheItem } from './RoomObjectCacheItem';
 
@@ -78,7 +82,7 @@ export class RoomObjectCache {
                     data.width = sprite.sprite.width;
                     data.height = sprite.sprite.height;
                     data.type = sprite.sprite.type;
-                    data.posture = sprite.sprite.posture;
+                    data.posture = sprite.sprite.posture ?? '';
 
                     const isSkewed = this.isSkewedSprite(sprite.sprite);
 

@@ -18,7 +18,13 @@ export class RoomPlaneData {
     private _secondaryNormals: Vector3d[] = [];
     private _masks: RoomPlaneMaskData[] = [];
 
-    constructor(type: number, loc: IVector3D, leftSideLoc: IVector3D, rightSideLoc: IVector3D, _arg_5: IVector3D[]) {
+    constructor(
+        type: number,
+        loc: IVector3D,
+        leftSideLoc: IVector3D,
+        rightSideLoc: IVector3D,
+        secondaryNormals: IVector3D[],
+    ) {
         this._type = type;
         this._loc.assign(loc);
         this._leftSide.assign(leftSideLoc);
@@ -52,16 +58,16 @@ export class RoomPlaneData {
             this._normalDirection = new Vector3d(normalX, normalY, 0);
         }
 
-        if (!(_arg_5 == null) && _arg_5.length > 0) {
+        if (secondaryNormals && secondaryNormals.length > 0) {
             let i = 0;
 
-            while (i < _arg_5.length) {
-                const _local_12 = _arg_5[i];
+            while (i < secondaryNormals.length) {
+                const secondaryNormal = secondaryNormals[i];
 
-                if (_local_12 && _local_12.length > 0) {
+                if (secondaryNormal && secondaryNormal.length > 0) {
                     const normal = new Vector3d();
 
-                    normal.assign(_local_12);
+                    normal.assign(secondaryNormal);
                     normal.multiply(1 / normal.length);
 
                     this._secondaryNormals.push(normal);

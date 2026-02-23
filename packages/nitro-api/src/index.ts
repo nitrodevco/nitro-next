@@ -171,6 +171,7 @@ export * from './room/renderer/IRoomRenderer';
 export * from './room/renderer/IRoomRendererBase';
 export * from './room/renderer/IRoomRenderingCanvas';
 export * from './room/renderer/IRoomSpriteCanvasContainer';
+export * from './room/renderer/RoomObjectSpriteData';
 export * from './session/enum/FurnitureType';
 export * from './session/IFurnitureData';
 export * from './session/pet/IPetCustomPart';

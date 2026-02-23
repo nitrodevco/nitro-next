@@ -1,3 +1,8 @@
+export * from './mask/PlaneMask';
+export * from './mask/PlaneMaskBitmap';
+export * from './mask/PlaneMaskFilter';
+export * from './mask/PlaneMaskManager';
+export * from './mask/PlaneMaskVisualization';
 export * from './PlaneDrawingData';
 export * from './RoomPlane';
 export * from './RoomPlaneBitmapMask';
@@ -5,5 +10,5 @@ export * from './RoomPlaneRectangleMask';
 export * from './RoomVisualization';
 export * from './RoomVisualizationData';
 export * from './TileCursorVisualization';
-export * from './mask';
-export * from './utils';
+export * from './utils/PlaneBitmapData';
+export * from './utils/Randomizer';

@@ -189,7 +189,8 @@ export class AvatarVisualization
                 let index = this._extraSpritesStartIndex;
 
                 for (const addition of this._additions.values()) {
-                    addition.update(this.getSprite(index++), scale);
+                    const sprite = this.getSprite(index++);
+                    if (sprite) addition.update(sprite, scale);
                 }
             }
 
@@ -202,7 +203,8 @@ export class AvatarVisualization
             let index = this._extraSpritesStartIndex;
 
             for (const addition of this._additions.values()) {
-                if (addition.animate(this.getSprite(index++))) this.updateSpriteCounter++;
+                const sprite = this.getSprite(index++);
+                if (sprite && addition.animate(sprite)) this.updateSpriteCounter++;
             }
         }
 

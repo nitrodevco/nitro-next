@@ -21,7 +21,7 @@ export class FurnitureParticleSystem {
     private _offsetY: number = 0;
     private _currentEmitter: FurnitureParticleSystemEmitter | undefined = undefined;
     private _canvasTexture: Texture | undefined = undefined;
-    private _roomSprite: IRoomObjectSprite;
+    private _roomSprite: IRoomObjectSprite | undefined = undefined;
     private _hasIgnited: boolean = false;
     private _centerX: number = 0;
     private _centerY: number = 0;
@@ -124,8 +124,10 @@ export class FurnitureParticleSystem {
         }
 
         if (this._hasIgnited) {
-            if (this._currentEmitter.roomObjectSpriteId >= 0)
-                this._visualization.getSprite(this._currentEmitter.roomObjectSpriteId).visible = false;
+            if (this._currentEmitter.roomObjectSpriteId >= 0) {
+                const sprite = this._visualization.getSprite(this._currentEmitter.roomObjectSpriteId);
+                if (sprite) sprite.visible = false;
+            }
         }
     }
 
@@ -142,7 +144,8 @@ export class FurnitureParticleSystem {
 
         if (this._hasIgnited) {
             if (this._currentEmitter.roomObjectSpriteId >= 0) {
-                this._visualization.getSprite(this._currentEmitter.roomObjectSpriteId).visible = false;
+                const sprite = this._visualization.getSprite(this._currentEmitter.roomObjectSpriteId);
+                if (sprite) sprite.visible = false;
             }
 
             if (!this._canvasTexture) this.updateCanvas();
@@ -299,7 +302,8 @@ export class FurnitureParticleSystem {
         }
 
         if (!this._canvasTexture) {
-            this._canvasTexture = TextureUtils.createRenderTexture(this._roomSprite.width, this._roomSprite.height);
+            if (this._roomSprite)
+                this._canvasTexture = TextureUtils.createRenderTexture(this._roomSprite.width, this._roomSprite.height);
         } else {
             TextureUtils.writeToTexture(this._emptySprite, this._canvasTexture, true);
         }

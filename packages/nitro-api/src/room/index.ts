@@ -67,3 +67,4 @@ export * from './renderer/IRoomRenderer';
 export * from './renderer/IRoomRendererBase';
 export * from './renderer/IRoomRenderingCanvas';
 export * from './renderer/IRoomSpriteCanvasContainer';
+export * from './renderer/RoomObjectSpriteData';

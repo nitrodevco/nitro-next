@@ -1,36 +1,31 @@
-﻿import { IAssetPlaneMaskData, IAssetPlaneTextureBitmap, IGraphicAssetCollection, IVector3D } from '#renderer/api';
-import { GetRenderer } from '#renderer/utils';
-import { Container, Matrix, Point, Sprite, Texture } from 'pixi.js';
+﻿import type {
+    IAssetPlaneMaskData,
+    IAssetPlaneTextureBitmap,
+    IGraphicAssetCollection,
+    IVector3D,
+} from '@nitrodevco/nitro-api';
+import type { Container, Texture } from 'pixi.js';
+import { Matrix, Point, Sprite } from 'pixi.js';
+
+import { GetRenderer } from '../../../../../utils';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
-export class PlaneMaskManager
-{
-    private _assetCollection: IGraphicAssetCollection;
-    private _masks: Map<string, PlaneMask>;
-    private _data: IAssetPlaneMaskData;
+export class PlaneMaskManager {
+    private _assetCollection: IGraphicAssetCollection | undefined = undefined;
+    private _masks: Map<string, PlaneMask> = new Map();
+    private _data: IAssetPlaneMaskData | undefined = undefined;
 
-    constructor()
-    {
-        this._assetCollection = null;
-        this._masks = new Map();
-        this._data = null;
-    }
-
-    public get data(): IAssetPlaneMaskData
-    {
+    public get data(): IAssetPlaneMaskData | undefined {
         return this._data;
     }
 
-    public dispose(): void
-    {
-        this._assetCollection = null;
-        this._data = null;
+    public dispose(): void {
+        this._assetCollection = undefined;
+        this._data = undefined;
 
-        if (this._masks && this._masks.size)
-        {
-            for (const mask of this._masks.values())
-            {
+        if (this._masks && this._masks.size) {
+            for (const mask of this._masks.values()) {
                 if (!mask) continue;
 
                 mask.dispose();
@@ -40,13 +35,11 @@ export class PlaneMaskManager
         }
     }
 
-    public initialize(k: IAssetPlaneMaskData): void
-    {
+    public initialize(k: IAssetPlaneMaskData): void {
         this._data = k;
     }
 
-    public initializeAssetCollection(k: IGraphicAssetCollection): void
-    {
+    public initializeAssetCollection(k: IGraphicAssetCollection): void {
         if (!this.data) return;
 
         this._assetCollection = k;
@@ -54,95 +47,97 @@ export class PlaneMaskManager
         this.parseMasks(this.data, k);
     }
 
-    private parseMasks(maskData: IAssetPlaneMaskData, _arg_2: IGraphicAssetCollection): void
-    {
-        if (!maskData || !_arg_2) return;
+    private parseMasks(maskData: IAssetPlaneMaskData, assets: IGraphicAssetCollection): void {
+        if (!maskData || !assets || !maskData.masks || !maskData.masks.length) return;
 
-        if (maskData.masks && maskData.masks.length)
-        {
-            let index = 0;
+        let index = 0;
 
-            while (index < maskData.masks.length)
-            {
-                const mask = maskData.masks[index];
+        while (index < maskData.masks.length) {
+            const mask = maskData.masks[index];
 
-                if (mask)
-                {
-                    const id = mask.id;
-                    const existing = this._masks.get(id);
+            if (mask) {
+                const id = mask.id;
+                const existing = this._masks.get(id);
 
-                    if (existing) continue;
+                if (existing) continue;
 
-                    const newMask = new PlaneMask();
+                const newMask = new PlaneMask();
 
-                    if (mask.visualizations && mask.visualizations.length)
-                    {
-                        let visualIndex = 0;
+                if (mask.visualizations && mask.visualizations.length) {
+                    let visualIndex = 0;
 
-                        while (visualIndex < mask.visualizations.length)
-                        {
-                            const visualization = mask.visualizations[visualIndex];
+                    while (visualIndex < mask.visualizations.length) {
+                        const visualization = mask.visualizations[visualIndex];
 
-                            if (visualization)
-                            {
-                                const size = visualization.size;
-                                const maskVisualization = newMask.createMaskVisualization(size);
+                        if (visualization) {
+                            const size = visualization.size;
+                            const maskVisualization = newMask.createMaskVisualization(size);
 
-                                if (maskVisualization)
-                                {
-                                    const assetName = this.parseMaskBitmaps(visualization.bitmaps, maskVisualization, _arg_2);
+                            if (maskVisualization) {
+                                const assetName = this.parseMaskBitmaps(
+                                    visualization.bitmaps,
+                                    maskVisualization,
+                                    assets,
+                                );
 
-                                    newMask.setAssetName(size, assetName);
-                                }
+                                if (assetName !== undefined) newMask.setAssetName(size, assetName);
                             }
-
-                            visualIndex++;
                         }
-                    }
 
-                    this._masks.set(id, newMask);
+                        visualIndex++;
+                    }
                 }
 
-                index++;
+                this._masks.set(id, newMask);
             }
+
+            index++;
         }
     }
 
-    private parseMaskBitmaps(bitmaps: IAssetPlaneTextureBitmap[], maskVisualization: PlaneMaskVisualization, assetCollection: IGraphicAssetCollection): string
-    {
-        if (!bitmaps || !bitmaps.length) return null;
+    private parseMaskBitmaps(
+        bitmaps: IAssetPlaneTextureBitmap[],
+        maskVisualization: PlaneMaskVisualization,
+        assetCollection: IGraphicAssetCollection,
+    ): string | undefined {
+        let graphicName: string | undefined = undefined;
 
-        let graphicName: string = null;
+        if (bitmaps && bitmaps.length > 0) {
+            for (const bitmap of bitmaps) {
+                if (!bitmap) continue;
 
-        for (const bitmap of bitmaps)
-        {
-            if (!bitmap) continue;
+                const assetName = bitmap.assetName;
+                const asset = assetCollection.getAsset(assetName);
 
-            const assetName = bitmap.assetName;
-            const asset = assetCollection.getAsset(assetName);
+                if (!asset) continue;
 
-            if (!asset) continue;
+                let normalMinX = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
+                let normalMaxX = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
+                let normalMinY = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
+                let normalMaxY = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
 
-            let normalMinX = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
-            let normalMaxX = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
-            let normalMinY = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
-            let normalMaxY = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
+                if (bitmap.normalMinX !== undefined) normalMinX = bitmap.normalMinX;
+                if (bitmap.normalMaxX !== undefined) normalMaxX = bitmap.normalMaxX;
+                if (bitmap.normalMinY !== undefined) normalMinY = bitmap.normalMinY;
+                if (bitmap.normalMaxY !== undefined) normalMaxY = bitmap.normalMaxY;
 
-            if (bitmap.normalMinX !== undefined) normalMinX = bitmap.normalMinX;
-            if (bitmap.normalMaxX !== undefined) normalMaxX = bitmap.normalMaxX;
-            if (bitmap.normalMinY !== undefined) normalMinY = bitmap.normalMinY;
-            if (bitmap.normalMaxY !== undefined) normalMaxY = bitmap.normalMaxY;
+                if (!asset.flipH) graphicName = assetName;
 
-            if (!asset.flipH) graphicName = assetName;
-
-            maskVisualization.addBitmap(asset, normalMinX, normalMaxX, normalMinY, normalMaxY);
+                maskVisualization.addBitmap(asset, normalMinX, normalMaxX, normalMinY, normalMaxY);
+            }
         }
 
         return graphicName;
     }
 
-    public addMaskToContainer(container: Container, type: string, scale: number, normal: IVector3D, posX: number, posY: number): boolean
-    {
+    public addMaskToContainer(
+        container: Container,
+        type: string,
+        scale: number,
+        normal: IVector3D,
+        posX: number,
+        posY: number,
+    ): boolean {
         const mask = this._masks.get(type);
 
         if (!mask) return true;
@@ -155,7 +150,7 @@ export class PlaneMaskManager
 
         if (!texture) return true;
 
-        const point = new Point((posX + asset.offsetX), (posY + asset.offsetY));
+        const point = new Point(posX + asset.offsetX, posY + asset.offsetY);
 
         const matrix = new Matrix();
 
@@ -163,23 +158,21 @@ export class PlaneMaskManager
         let ySkew = 1;
         let xSkew = 0;
         let yScale = 0;
-        let tx = (point.x + xSkew);
-        let ty = (point.y + yScale);
+        let tx = point.x + xSkew;
+        let ty = point.y + yScale;
 
-        if (asset.flipH)
-        {
+        if (asset.flipH) {
             xScale = -1;
             xSkew = texture.width;
 
-            tx = ((point.x + xSkew) - texture.width);
+            tx = point.x + xSkew - texture.width;
         }
 
-        if (asset.flipV)
-        {
+        if (asset.flipV) {
             ySkew = -1;
             yScale = texture.height;
 
-            ty = ((point.y + yScale) - texture.height);
+            ty = point.y + yScale - texture.height;
         }
 
         matrix.scale(xScale, ySkew);
@@ -194,8 +187,14 @@ export class PlaneMaskManager
         return true;
     }
 
-    public writeMaskToTexture(targetTexture: Texture, type: string, scale: number, normal: IVector3D, posX: number, posY: number): boolean
-    {
+    public writeMaskToTexture(
+        targetTexture: Texture,
+        type: string,
+        scale: number,
+        normal: IVector3D,
+        posX: number,
+        posY: number,
+    ): boolean {
         const mask = this._masks.get(type);
 
         if (!mask) return true;
@@ -208,7 +207,7 @@ export class PlaneMaskManager
 
         if (!texture) return true;
 
-        const point = new Point((posX + asset.offsetX), (posY + asset.offsetY));
+        const point = new Point(posX + asset.offsetX, posY + asset.offsetY);
 
         const matrix = new Matrix();
 
@@ -216,23 +215,21 @@ export class PlaneMaskManager
         let ySkew = 1;
         let xSkew = 0;
         let yScale = 0;
-        let tx = (point.x + xSkew);
-        let ty = (point.y + yScale);
+        let tx = point.x + xSkew;
+        let ty = point.y + yScale;
 
-        if (asset.flipH)
-        {
+        if (asset.flipH) {
             xScale = -1;
             xSkew = texture.width;
 
-            tx = ((point.x + xSkew) - texture.width);
+            tx = point.x + xSkew - texture.width;
         }
 
-        if (asset.flipV)
-        {
+        if (asset.flipV) {
             ySkew = -1;
             yScale = texture.height;
 
-            ty = ((point.y + yScale) - texture.height);
+            ty = point.y + yScale - texture.height;
         }
 
         matrix.scale(xScale, ySkew);
@@ -242,16 +239,13 @@ export class PlaneMaskManager
             target: targetTexture,
             container: new Sprite(texture),
             clear: false,
-            transform: matrix
+            transform: matrix,
         });
 
         return true;
     }
 
-    public getMask(k: string): PlaneMask
-    {
-        if (!this._masks || !this._masks.size) return null;
-
-        return this._masks.get(k) || null;
+    public getMask(k: string): PlaneMask | undefined {
+        return this._masks.get(k);
     }
 }

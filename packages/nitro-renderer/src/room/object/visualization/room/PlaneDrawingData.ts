@@ -1,8 +1,7 @@
-﻿import { IPlaneDrawingData } from '#renderer/api';
-import { Point } from 'pixi.js';
+﻿import type { IPlaneDrawingData } from '@nitrodevco/nitro-api';
+import type { Point } from 'pixi.js';
 
-export class PlaneDrawingData implements IPlaneDrawingData
-{
+export class PlaneDrawingData implements IPlaneDrawingData {
     private _z: number;
     private _points: Point[];
     private _color: number;
@@ -13,91 +12,76 @@ export class PlaneDrawingData implements IPlaneDrawingData
     private _alignBottom: boolean;
     private _assetNames: string[][];
 
-    constructor(k: PlaneDrawingData = null, _arg_2: number = 0, _arg_3: boolean = false)
-    {
+    constructor(data: PlaneDrawingData | undefined = undefined, color: number = 0, alignBottom: boolean = false) {
         this._assetNames = [];
         this._maskAssetNames = [];
         this._maskAssetLocations = [];
         this._maskAssetFlipHs = [];
         this._maskAssetFlipVs = [];
 
-        if (k != null)
-        {
-            this._maskAssetNames = k._maskAssetNames;
-            this._maskAssetLocations = k._maskAssetLocations;
-            this._maskAssetFlipHs = k._maskAssetFlipHs;
-            this._maskAssetFlipVs = k._maskAssetFlipVs;
+        if (data) {
+            this._maskAssetNames = data._maskAssetNames;
+            this._maskAssetLocations = data._maskAssetLocations;
+            this._maskAssetFlipHs = data._maskAssetFlipHs;
+            this._maskAssetFlipVs = data._maskAssetFlipVs;
         }
 
-        this._color = _arg_2;
-        this._alignBottom = _arg_3;
+        this._color = color;
+        this._alignBottom = alignBottom;
     }
 
-    public addMask(k: string, _arg_2: Point, _arg_3: boolean, _arg_4: boolean): void
-    {
-        this._maskAssetNames.push(k);
-        this._maskAssetLocations.push(_arg_2);
-        this._maskAssetFlipHs.push(_arg_3);
-        this._maskAssetFlipVs.push(_arg_4);
+    public addMask(name: string, location: Point, flipH: boolean, flipV: boolean): void {
+        this._maskAssetNames.push(name);
+        this._maskAssetLocations.push(location);
+        this._maskAssetFlipHs.push(flipH);
+        this._maskAssetFlipVs.push(flipV);
     }
 
-    public addAssetColumn(k: string[]): void
-    {
+    public addAssetColumn(k: string[]): void {
         this._assetNames.push(k);
     }
 
-    public set z(k: number)
-    {
+    public set z(k: number) {
         this._z = k;
     }
 
-    public get z(): number
-    {
+    public get z(): number {
         return this._z;
     }
 
-    public set cornerPoints(k: Point[])
-    {
+    public set cornerPoints(k: Point[]) {
         this._points = k;
     }
 
-    public get cornerPoints(): Point[]
-    {
+    public get cornerPoints(): Point[] {
         return this._points;
     }
 
-    public get color(): number
-    {
+    public get color(): number {
         return this._color;
     }
 
-    public get maskAssetNames(): string[]
-    {
+    public get maskAssetNames(): string[] {
         return this._maskAssetNames;
     }
 
-    public get maskAssetLocations(): Point[]
-    {
+    public get maskAssetLocations(): Point[] {
         return this._maskAssetLocations;
     }
 
-    public get maskAssetFlipHs(): boolean[]
-    {
+    public get maskAssetFlipHs(): boolean[] {
         return this._maskAssetFlipHs;
     }
 
-    public get maskAssetFlipVs(): boolean[]
-    {
+    public get maskAssetFlipVs(): boolean[] {
         return this._maskAssetFlipVs;
     }
 
-    public isBottomAligned(): boolean
-    {
+    public isBottomAligned(): boolean {
         return this._alignBottom;
     }
 
-    public get assetNameColumns(): string[][]
-    {
+    public get assetNameColumns(): string[][] {
         return this._assetNames;
     }
 }

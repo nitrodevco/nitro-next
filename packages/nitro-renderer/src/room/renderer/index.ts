@@ -2,7 +2,6 @@ export * from './cache/RoomObjectCache';
 export * from './cache/RoomObjectCacheItem';
 export * from './cache/RoomObjectLocationCacheItem';
 export * from './cache/RoomObjectSortableSpriteCacheItem';
-export * from './RoomObjectSpriteData';
 export * from './RoomRenderer';
 export * from './RoomSpriteCanvas';
 export * from './utils/ExtendedSprite';
