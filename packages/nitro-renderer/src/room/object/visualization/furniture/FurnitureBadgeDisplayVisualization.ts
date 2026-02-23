@@ -1,8 +1,8 @@
-import { RoomObjectVariable } from '#renderer/api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
-export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisualization
-{
+export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisualization {
     private static BADGE: string = 'BADGE';
 
     private _badgeId: string = '';
@@ -10,27 +10,25 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
     private _badgeAssetNameSmallScale: string = '';
     private _badgeVisibleInState: number = -1;
 
-    protected updateModel(scale: number): boolean
-    {
+    protected override updateModel(scale: number): boolean {
         let updateModel = super.updateModel(scale);
 
-        const badgeStatus = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_BADGE_IMAGE_STATUS);
-        const badgeId = this.object.model.getValue<string>(RoomObjectVariable.FURNITURE_BADGE_ASSET_NAME);
+        const badgeStatus = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBadgeImageStatus);
+        const badgeId = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBadgeAssetName);
 
-        if (badgeStatus === -1)
-        {
+        if (badgeStatus === -1) {
             this._badgeAssetNameNormalScale = '';
             this._badgeAssetNameSmallScale = '';
-        }
-
-        else if ((badgeStatus === 1) && (badgeId !== this._badgeId))
-        {
+        } else if (badgeStatus === 1 && badgeId !== this._badgeId) {
             this._badgeId = badgeId;
             this._badgeAssetNameNormalScale = this._badgeId;
 
-            if (this._badgeAssetNameSmallScale === '') this._badgeAssetNameSmallScale = this._badgeAssetNameNormalScale + '_32';
+            if (this._badgeAssetNameSmallScale === '')
+                this._badgeAssetNameSmallScale = this._badgeAssetNameNormalScale + '_32';
 
-            const visibleInState = this.object.model.getValue<number>(RoomObjectVariable.FURNITURE_BADGE_VISIBLE_IN_STATE);
+            const visibleInState = this.object.model.getValue<number>(
+                RoomObjectVariableEnum.FurnitureBadgeVisibleInState,
+            );
 
             if (!isNaN(visibleInState)) this._badgeVisibleInState = visibleInState;
 
@@ -40,47 +38,50 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         return updateModel;
     }
 
-    protected getSpriteAssetName(scale: number, layerId: number): string
-    {
+    protected override getSpriteAssetName(scale: number, layerId: number): string {
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
-        if ((tag !== FurnitureBadgeDisplayVisualization.BADGE) || ((this._badgeVisibleInState !== -1) && (this.object.getState(0) !== this._badgeVisibleInState))) return super.getSpriteAssetName(scale, layerId);
+        if (
+            tag !== FurnitureBadgeDisplayVisualization.BADGE ||
+            (this._badgeVisibleInState !== -1 && this.object.getState(0) !== this._badgeVisibleInState)
+        )
+            return super.getSpriteAssetName(scale, layerId);
 
         if (scale === 32) return this._badgeAssetNameSmallScale;
 
         return this._badgeAssetNameNormalScale;
     }
 
-    protected getLayerXOffset(scale: number, direction: number, layerId: number): number
-    {
+    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
         let offset = super.getLayerXOffset(scale, direction, layerId);
 
-        if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE)
-        {
-            const asset = this.getAsset(((scale === 32) ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale), layerId);
+        if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE) {
+            const asset = this.getAsset(
+                scale === 32 ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
+                layerId,
+            );
 
-            if (asset)
-            {
-                if (scale === 64) offset += ((40 - asset.width) / 2);
-                else offset += ((20 - asset.width) / 2);
+            if (asset) {
+                if (scale === 64) offset += (40 - asset.width) / 2;
+                else offset += (20 - asset.width) / 2;
             }
         }
 
         return offset;
     }
 
-    protected getLayerYOffset(scale: number, direction: number, layerId: number): number
-    {
+    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
         let offset = super.getLayerYOffset(scale, direction, layerId);
 
-        if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE)
-        {
-            const asset = this.getAsset(((scale === 32) ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale), layerId);
+        if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE) {
+            const asset = this.getAsset(
+                scale === 32 ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
+                layerId,
+            );
 
-            if (asset)
-            {
-                if (scale === 64) offset += ((40 - asset.height) / 2);
-                else offset += ((20 - asset.height) / 2);
+            if (asset) {
+                if (scale === 64) offset += (40 - asset.height) / 2;
+                else offset += (20 - asset.height) / 2;
             }
         }
 

@@ -56,8 +56,6 @@ export class TextureUtils {
         container: Container,
         transform: Matrix | undefined = undefined,
     ): Texture | undefined {
-        if (width < 0 || height < 0) return undefined;
-
         const renderTexture = this.createRenderTexture(width, height);
 
         if (renderTexture) {

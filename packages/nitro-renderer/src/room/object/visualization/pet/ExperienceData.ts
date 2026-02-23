@@ -1,75 +1,64 @@
-import { TextureUtils } from '#renderer/utils';
-import { Container, Sprite, Text, TextStyle, Texture } from 'pixi.js';
+import type { Texture } from 'pixi.js';
+import { Container, Sprite, Text, TextStyle } from 'pixi.js';
 
-export class ExperienceData
-{
+import { TextureUtils } from '../../../../utils';
+
+export class ExperienceData {
     private _sprite: Sprite;
-    private _texture: Texture;
-    private _amount: number;
-    private _alpha: number;
+    private _texture: Texture | undefined = undefined;
+    private _amount: number = -1;
+    private _alpha: number = 0;
 
-    constructor(texture: Texture)
-    {
+    constructor(texture: Texture) {
         this._sprite = new Sprite(texture);
-        this._texture = null;
-        this._amount = -1;
-        this._alpha = 0;
     }
 
-    public renderBubble(amount: number): Texture
-    {
-        if (!this._sprite || (this._amount === amount)) return null;
+    public renderBubble(amount: number): Texture | undefined {
+        if (!this._sprite || this._amount === amount) return undefined;
 
         const container = new Container();
 
         container.addChild(this._sprite);
 
         const text = new Text({
-            text: ('+' + amount),
+            text: '+' + amount,
             style: new TextStyle({
                 fontFamily: 'Arial',
                 fontSize: 9,
-                fill: 0xFFFFFF,
-                align: 'center'
-            })
+                fill: 0xffffff,
+                align: 'center',
+            }),
         });
 
         text.anchor.x = 0.5;
 
-        text.x = (this._sprite.width / 2);
+        text.x = this._sprite.width / 2;
         text.y = 19;
 
         container.addChild(text);
 
-        if (!this._texture)
-        {
+        if (!this._texture) {
             this._texture = TextureUtils.generateTexture(container);
-        }
-        else
-        {
+        } else {
             TextureUtils.writeToTexture(container, this._texture, true);
         }
 
         return this._texture;
     }
 
-    public get amount(): number
-    {
+    public get amount(): number {
         return this._amount;
     }
 
-    public set amount(amount: number)
-    {
+    public set amount(amount: number) {
         this._amount = amount;
     }
 
-    public get alpha(): number
-    {
+    public get alpha(): number {
         return this._alpha;
     }
 
-    public set alpha(alpha: number)
-    {
+    public set alpha(alpha: number) {
         this._alpha = alpha;
     }
 }

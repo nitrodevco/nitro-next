@@ -1,4 +1,13 @@
-import type { IAssetData, IObjectVisualizationData } from '@nitrodevco/nitro-api';
+import {
+    AvatarScaleType,
+    type IAssetData,
+    type IAvatarEffectListener,
+    type IAvatarImage,
+    type IAvatarImageListener,
+    type IObjectVisualizationData,
+} from '@nitrodevco/nitro-api';
+
+import { GetAvatarRenderManager } from '../../../../avatar';
 
 export class AvatarVisualizationData implements IObjectVisualizationData {
     public initialize(asset: IAssetData): boolean {
@@ -10,11 +19,11 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
     public createAvatarImage(
         figure: string,
         size: number,
-        gender: string = null,
-        avatarListener: IAvatarImageListener = null,
-        effectListener: IAvatarEffectListener = null,
+        gender?: string,
+        avatarListener?: IAvatarImageListener,
+        effectListener?: IAvatarEffectListener,
     ): IAvatarImage {
-        let avatarImage: IAvatarImage = null;
+        let avatarImage: IAvatarImage;
 
         if (size > 48)
             avatarImage = GetAvatarRenderManager().createAvatarImage(

@@ -1,32 +1,18 @@
-import { IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '#renderer/api';
+import type { IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '@nitrodevco/nitro-api';
+
 import { AvatarVisualizationData } from '../avatar';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
 
-export class FurnitureMannequinVisualizationData extends FurnitureVisualizationData
-{
-    private _avatarData: AvatarVisualizationData;
+export class FurnitureMannequinVisualizationData extends FurnitureVisualizationData {
+    private _avatarData: AvatarVisualizationData = new AvatarVisualizationData();
 
-    constructor()
-    {
-        super();
-
-        this._avatarData = new AvatarVisualizationData();
-    }
-
-    public dispose(): void
-    {
-        super.dispose();
-
-        if (this._avatarData)
-        {
-            this._avatarData.dispose();
-
-            this._avatarData = null;
-        }
-    }
-
-    public createAvatarImage(figure: string, size: number, gender: string = null, avatarListener: IAvatarImageListener = null, effectListener: IAvatarEffectListener = null): IAvatarImage
-    {
+    public createAvatarImage(
+        figure: string,
+        size: number,
+        gender?: string,
+        avatarListener?: IAvatarImageListener,
+        effectListener?: IAvatarEffectListener,
+    ): IAvatarImage {
         return this._avatarData.createAvatarImage(figure, size, gender, avatarListener, effectListener);
     }
 }

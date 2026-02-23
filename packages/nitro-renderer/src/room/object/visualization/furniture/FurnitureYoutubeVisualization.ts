@@ -1,18 +1,17 @@
-import { RoomObjectVariable } from '#renderer/api';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+
 import { FurnitureDynamicThumbnailVisualization } from './FurnitureDynamicThumbnailVisualization';
 
-export class FurnitureYoutubeVisualization extends FurnitureDynamicThumbnailVisualization
-{
+export class FurnitureYoutubeVisualization extends FurnitureDynamicThumbnailVisualization {
     protected static THUMBNAIL_URL: string = 'THUMBNAIL_URL';
 
-    protected getThumbnailURL(): string
-    {
-        if (!this.object) return null;
+    protected override getThumbnailURL(): string | undefined {
+        const furnitureData = this.object.model.getValue<{ [index: string]: string }>(
+            RoomObjectVariableEnum.FurnitureData,
+        );
 
-        const furnitureData = this.object.model.getValue<{ [index: string]: string }>(RoomObjectVariable.FURNITURE_DATA);
+        if (furnitureData) return furnitureData[FurnitureYoutubeVisualization.THUMBNAIL_URL] || undefined;
 
-        if (furnitureData) return (furnitureData[FurnitureYoutubeVisualization.THUMBNAIL_URL] || null);
-
-        return null;
+        return undefined;
     }
 }

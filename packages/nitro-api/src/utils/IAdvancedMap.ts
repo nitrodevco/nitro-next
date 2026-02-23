@@ -1,4 +1,4 @@
-export interface IAdvancedMap<T = any, U = any> {
+export interface IAdvancedMap<T, U> {
     dispose(): void;
     reset(): void;
     unshift(key: T, value: U): boolean;

@@ -2,7 +2,7 @@ import type { IParticleSystemParticle } from './IParticleSystemParticle';
 import type { IParticleSystemSimulation } from './IParticleSystemSimulation';
 
 export interface IParticleSystemEmitter {
-    id?: number;
+    id: number;
     name?: string;
     spriteId?: number;
     maxNumParticles?: number;

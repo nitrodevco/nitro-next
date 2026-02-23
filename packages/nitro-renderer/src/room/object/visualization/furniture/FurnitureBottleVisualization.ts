@@ -1,41 +1,25 @@
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
-export class FurnitureBottleVisualization extends FurnitureAnimatedVisualization
-{
+export class FurnitureBottleVisualization extends FurnitureAnimatedVisualization {
     private static ANIMATION_ID_OFFSET_SLOW1: number = 20;
     private static ANIMATION_ID_OFFSET_SLOW2: number = 9;
     private static ANIMATION_ID_ROLL: number = -1;
 
-    private _stateQueue: number[];
-    private _running: boolean;
+    private _stateQueue: number[] = [];
+    private _running: boolean = false;
 
-    constructor()
-    {
-        super();
+    protected override setAnimation(animationId: number): void {
+        if (animationId === -1 && !this._running) {
+            this._running = true;
+            this._stateQueue = [];
 
-        this._stateQueue = [];
-        this._running = false;
-    }
+            this._stateQueue.push(FurnitureBottleVisualization.ANIMATION_ID_ROLL);
 
-    protected setAnimation(animationId: number): void
-    {
-        if(animationId === -1)
-        {
-            if(!this._running)
-            {
-                this._running = true;
-                this._stateQueue = [];
-
-                this._stateQueue.push(FurnitureBottleVisualization.ANIMATION_ID_ROLL);
-
-                return;
-            }
+            return;
         }
 
-        if((animationId >= 0) && (animationId <= 7))
-        {
-            if(this._running)
-            {
+        if (animationId >= 0 && animationId <= 7) {
+            if (this._running) {
                 this._running = false;
                 this._stateQueue = [];
 
@@ -50,12 +34,9 @@ export class FurnitureBottleVisualization extends FurnitureAnimatedVisualization
         }
     }
 
-    protected updateAnimation(scale: number): number
-    {
-        if(this.getLastFramePlayed(0))
-        {
-            if(this._stateQueue.length) super.setAnimation(this._stateQueue.shift());
-        }
+    protected override updateAnimation(scale: number): number {
+        if (this.getLastFramePlayed(0) && this._stateQueue.length > 0)
+            super.setAnimation(this._stateQueue.shift() as number);
 
         return super.updateAnimation(scale);
     }

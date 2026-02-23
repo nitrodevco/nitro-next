@@ -1,12 +1,13 @@
-import { AvatarAction, IRoomObjectSprite } from '#renderer/api';
-import { GetAssetManager } from '#renderer/assets';
-import { Texture } from 'pixi.js';
-import { AvatarVisualization } from '../AvatarVisualization';
-import { IAvatarAddition } from './IAvatarAddition';
+import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { AvatarAction } from '@nitrodevco/nitro-api';
+import type { Texture } from 'pixi.js';
 
-export class NumberBubbleAddition implements IAvatarAddition
-{
-    private _asset: Texture = null;
+import { GetAssetManager } from '../../../../../assets';
+import type { AvatarVisualization } from '../AvatarVisualization';
+import type { IAvatarAddition } from './IAvatarAddition';
+
+export class NumberBubbleAddition implements IAvatarAddition {
+    private _asset: Texture | undefined = undefined;
     private _scale: number = 0;
     private _numberValueFadeDirection: number = 0;
     private _numberValueMoving: boolean = false;
@@ -15,18 +16,16 @@ export class NumberBubbleAddition implements IAvatarAddition
     constructor(
         private _id: number,
         private _number: number,
-        private _visualization: AvatarVisualization)
-    { }
+        private _visualization: AvatarVisualization | undefined,
+    ) {}
 
-    public dispose(): void
-    {
-        this._visualization = null;
-        this._asset = null;
+    public dispose(): void {
+        this._visualization = undefined;
+        this._asset = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void
-    {
-        if (!sprite) return;
+    public update(sprite: IRoomObjectSprite, scale: number): void {
+        if (!sprite || !this._visualization) return;
 
         this._scale = scale;
 
@@ -34,36 +33,27 @@ export class NumberBubbleAddition implements IAvatarAddition
         let offsetX = 0;
         let offsetY = 0;
 
-        if (this._number > 0)
-        {
-            if (scale < 48)
-            {
+        if (this._number > 0) {
+            if (scale < 48) {
                 this._asset = GetAssetManager().getTexture('avatar_addition_number_' + this._number + '_small');
 
                 additionScale = 32;
                 offsetX = -6;
                 offsetY = -52;
-            }
-            else
-            {
+            } else {
                 this._asset = GetAssetManager().getTexture('avatar_addition_number_' + this._number);
 
                 offsetX = -8;
                 offsetY = -105;
             }
 
-            if (this._visualization.posture === AvatarAction.POSTURE_SIT)
-            {
-                offsetY += (additionScale / 2);
-            }
-
-            else if (this._visualization.posture === AvatarAction.POSTURE_LAY)
-            {
+            if (this._visualization.posture === AvatarAction.POSTURE_SIT) {
+                offsetY += additionScale / 2;
+            } else if (this._visualization.posture === AvatarAction.POSTURE_LAY) {
                 offsetY += scale;
             }
 
-            if (this._asset)
-            {
+            if (this._asset) {
                 sprite.visible = true;
                 sprite.texture = this._asset;
                 sprite.offsetX = offsetX;
@@ -74,55 +64,39 @@ export class NumberBubbleAddition implements IAvatarAddition
                 this._numberValueFadeDirection = 1;
                 this._numberValueMoving = true;
                 this._numberValueMoveCounter = 0;
-            }
-            else
-            {
+            } else {
                 sprite.visible = false;
             }
-        }
-        else
-        {
-            if (sprite.visible) this._numberValueFadeDirection = -1;
-        }
+        } else if (sprite.visible) this._numberValueFadeDirection = -1;
     }
 
-    public animate(sprite: IRoomObjectSprite): boolean
-    {
+    public animate(sprite: IRoomObjectSprite): boolean {
         if (!sprite) return false;
 
-        if (this._asset)
-        {
+        if (this._asset) {
             sprite.texture = this._asset;
         }
 
         let alpha = sprite.alpha;
         let didAnimate = false;
 
-        if (this._numberValueMoving)
-        {
+        if (this._numberValueMoving) {
             this._numberValueMoveCounter++;
 
             if (this._numberValueMoveCounter < 10) return false;
 
-            if (this._numberValueFadeDirection < 0)
-            {
-                if (this._scale < 48)
-                {
+            if (this._numberValueFadeDirection < 0) {
+                if (this._scale < 48) {
                     sprite.offsetY -= 2;
-                }
-                else
-                {
+                } else {
                     sprite.offsetY -= 4;
                 }
-            }
-            else
-            {
+            } else {
                 let count = 4;
 
                 if (this._scale < 48) count = 8;
 
-                if (!(this._numberValueMoveCounter % count))
-                {
+                if (!(this._numberValueMoveCounter % count)) {
                     sprite.offsetY--;
 
                     didAnimate = true;
@@ -130,12 +104,10 @@ export class NumberBubbleAddition implements IAvatarAddition
             }
         }
 
-        if (this._numberValueFadeDirection > 0)
-        {
+        if (this._numberValueFadeDirection > 0) {
             if (alpha < 255) alpha += 32;
 
-            if (alpha >= 255)
-            {
+            if (alpha >= 255) {
                 alpha = 255;
 
                 this._numberValueFadeDirection = 0;
@@ -146,12 +118,10 @@ export class NumberBubbleAddition implements IAvatarAddition
             return true;
         }
 
-        if (this._numberValueFadeDirection < 0)
-        {
+        if (this._numberValueFadeDirection < 0) {
             if (alpha >= 0) alpha -= 32;
 
-            if (alpha <= 0)
-            {
+            if (alpha <= 0) {
                 this._numberValueFadeDirection = 0;
                 this._numberValueMoving = false;
 
@@ -168,8 +138,7 @@ export class NumberBubbleAddition implements IAvatarAddition
         return didAnimate;
     }
 
-    public get id(): number
-    {
+    public get id(): number {
         return this._id;
     }
 }

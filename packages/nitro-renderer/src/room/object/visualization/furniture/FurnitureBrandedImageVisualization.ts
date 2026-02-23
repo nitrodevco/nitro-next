@@ -37,28 +37,20 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         return true;
     }
 
-    protected updateModel(scale: number): boolean {
+    protected override updateModel(scale: number): boolean {
         const flag = super.updateModel(scale);
 
-        if (flag) {
-            this._offsetX = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetX) || 0;
-            this._offsetY = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetY) || 0;
-            this._offsetZ = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetZ) || 0;
-        }
+        this._offsetX = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetX) || 0;
+        this._offsetY = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetY) || 0;
+        this._offsetZ = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetZ) || 0;
 
         if (!this._imageReady) {
             this._imageReady = this.checkIfImageReady();
 
-            if (this._imageReady) {
-                this.checkAndCreateImageForCurrentState();
-
-                return true;
-            }
+            if (this._imageReady) this.checkAndCreateImageForCurrentState();
         } else if (this.checkIfImageChanged()) {
+            this._imageUrl = undefined;
             this._imageReady = false;
-            this._imageUrl = null;
-
-            return true;
         }
 
         return flag;
@@ -67,48 +59,36 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
     private checkIfImageChanged(): boolean {
         const imageUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
 
-        if (imageUrl && imageUrl === this._imageUrl) return false;
+        if (imageUrl === this._imageUrl) return false;
 
-        this.asset && this.asset.disposeAsset(this._imageUrl);
+        if (this._imageUrl !== undefined) this.asset.disposeAsset(this._imageUrl);
 
         return true;
     }
 
     protected checkIfImageReady(): boolean {
-        const model = this.object && this.object.model;
-
-        if (!model) return false;
-
         const imageUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
 
         if (!imageUrl) return false;
 
-        if (this._imageUrl && this._imageUrl === imageUrl) return false;
+        if (!imageUrl || (this._imageUrl && this._imageUrl === imageUrl)) return false;
 
         const imageStatus = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingImageStatus);
 
         if (imageStatus === 1) {
-            let texture: Texture = null;
+            const texture = GetAssetManager().getTexture(imageUrl);
 
-            texture = GetAssetManager().getTexture(imageUrl);
+            if (texture) {
+                this.imageReady(texture, imageUrl);
 
-            if (!texture) return false;
-
-            this.imageReady(texture, imageUrl);
-
-            return true;
+                return true;
+            }
         }
 
         return false;
     }
 
     protected imageReady(texture: Texture, imageUrl: string): void {
-        if (!texture) {
-            this._imageUrl = null;
-
-            return;
-        }
-
         this._imageUrl = imageUrl;
     }
 
@@ -160,7 +140,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         this.asset.addAsset(`${this._imageUrl}_${frame}`, texture, true, x, y, flipH, flipV);
     }
 
-    protected getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: number, layerId: number): string {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         if (tag === FurnitureBrandedImageVisualization.BRANDED_IMAGE && this._imageUrl) {

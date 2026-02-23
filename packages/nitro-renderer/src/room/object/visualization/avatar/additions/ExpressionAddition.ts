@@ -1,42 +1,36 @@
-import { IRoomObjectSprite } from '#renderer/api';
-import { AvatarVisualization } from '../AvatarVisualization';
-import { IExpressionAddition } from './IExpressionAddition';
+import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
 
-export class ExpressionAddition implements IExpressionAddition
-{
+import type { AvatarVisualization } from '../AvatarVisualization';
+import type { IExpressionAddition } from './IExpressionAddition';
+
+export class ExpressionAddition implements IExpressionAddition {
     constructor(
         private _id: number,
         private _type: number,
-        private _visualization: AvatarVisualization)
-    { }
+        private _visualization: AvatarVisualization | undefined,
+    ) {}
 
-    public dispose(): void
-    {
-        this._visualization = null;
+    public dispose(): void {
+        this._visualization = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void
-    {
+    public update(sprite: IRoomObjectSprite, scale: number): void {
         return;
     }
 
-    public animate(sprite: IRoomObjectSprite): boolean
-    {
+    public animate(sprite: IRoomObjectSprite): boolean {
         return false;
     }
 
-    public get id(): number
-    {
+    public get id(): number {
         return this._id;
     }
 
-    public get type(): number
-    {
+    public get type(): number {
         return this._type;
     }
 
-    public get visualization(): AvatarVisualization
-    {
+    public get visualization(): AvatarVisualization | undefined {
         return this._visualization;
     }
 }

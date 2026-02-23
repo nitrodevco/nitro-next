@@ -1,7 +1,6 @@
-import { IRoomObjectSprite } from '#renderer/api';
+import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
 
-export interface IAvatarAddition
-{
+export interface IAvatarAddition {
     dispose(): void;
     update(sprite: IRoomObjectSprite, scale: number): void;
     animate(sprite: IRoomObjectSprite): boolean;
