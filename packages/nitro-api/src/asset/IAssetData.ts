@@ -10,8 +10,8 @@ import type { IAssetVisualizationData } from './visualization';
 export interface IAssetData {
     type?: string;
     name: string;
-    visualizationType?: string;
-    logicType?: string;
+    visualizationType: string;
+    logicType: string;
     spritesheet?: ISpritesheetData;
     logic?: IAssetLogicData;
     assets?: { [index: string]: IAsset };

@@ -9,11 +9,12 @@ import type {
     IRoomObjectManager,
 } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-api';
-import { RoomContentLoadedEvent } from '@nitrodevco/nitro-events';
+import type { RoomContentLoadedEvent } from '@nitrodevco/nitro-events';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
+import { RoomInstance } from './RoomInstance';
 import { RoomObjectManager } from './RoomObjectManager';
 
 export class RoomManager implements IRoomManager, IRoomInstanceContainer {
@@ -25,7 +26,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
     private _pendingContentTypes: string[] = [];
     private _skipContentProcessing: boolean = false;
 
-    public async init(listener: IRoomManagerListener): Promise<void> {
+    public init(listener: IRoomManagerListener): Promise<void> {
         this._listener = listener;
 
         const onRoomContentLoadedEvent = (event: RoomContentLoadedEvent) => {
@@ -36,9 +37,17 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
             this._pendingContentTypes.push(contentType);
         };
 
-        EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_SUCCESS, onRoomContentLoadedEvent);
-        EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_FAILURE, onRoomContentLoadedEvent);
-        EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_CANCEL, onRoomContentLoadedEvent);
+        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_SUCCESS, onRoomContentLoadedEvent);
+        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_FAILURE, onRoomContentLoadedEvent);
+        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_CANCEL, onRoomContentLoadedEvent);
+
+        return Promise.resolve();
+    }
+
+    public update(time: number, update: boolean = false): void {
+        this.processPendingContentTypes(time);
+
+        for (const room of this._rooms.values()) room?.update(time, update);
     }
 
     public getRoomInstance(roomId: string): IRoomInstance | undefined {
@@ -75,20 +84,40 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         return true;
     }
 
-    public createRoomObjectAndInitalize(
+    public addUpdateCategory(category: number): void {
+        const index = this._updateCategories.indexOf(category);
+
+        if (index >= 0) return;
+
+        this._updateCategories.push(category);
+
+        for (const room of this._rooms.values()) room?.addUpdateCategory(category);
+    }
+
+    public removeUpdateCategory(category: number): void {
+        const index = this._updateCategories.indexOf(category);
+
+        if (index === -1) return;
+
+        this._updateCategories.splice(index, 1);
+
+        for (const room of this._rooms.values()) room?.removeUpdateCategory(category);
+    }
+
+    public async createRoomObjectAndInitalize(
         roomId: string,
         objectId: number,
         type: string,
         category: number,
-    ): IRoomObject | undefined {
+    ): Promise<IRoomObject | undefined> {
         const instance = this.getRoomInstance(roomId);
 
-        if (!instance) return null;
+        if (!instance) return undefined;
 
-        let visualization = type;
-        let logic = type;
+        let visualizationType = type;
+        let logicType = type;
         let assetName = type;
-        let asset: IGraphicAssetCollection | undefined;
+        let asset: IGraphicAssetCollection | undefined = undefined;
         let isLoading = false;
 
         if (GetRoomContentLoader().isLoaderType(type)) {
@@ -97,71 +126,72 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
             if (!asset) {
                 isLoading = true;
 
-                GetRoomContentLoader().downloadAssetSync(type);
+                try {
+                    await GetRoomContentLoader().downloadAsset(type);
 
-                assetName = GetRoomContentLoader().getPlaceholderName(type);
-                asset = GetRoomContentLoader().getCollection(assetName);
+                    isLoading = false;
+                } catch {
+                    assetName = GetRoomContentLoader().getPlaceholderName(type);
+                }
             }
 
-            if (!asset) return undefined;
+            asset = GetRoomContentLoader().getCollection(assetName);
 
-            visualization = asset.data.visualizationType ?? '';
-            logic = asset.data.logicType ?? '';
+            if (asset) {
+                visualizationType = asset.data.visualizationType;
+                logicType = asset.data.logicType;
+            }
         }
 
-        if (!asset) return undefined;
+        if (asset) {
+            const visualization = GetRoomObjectVisualizationFactory().getVisualization(visualizationType);
+            const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
+                assetName,
+                visualizationType,
+                asset.data,
+            );
 
-        const visualizationInstance = GetRoomObjectVisualizationFactory().getVisualization(visualization);
-        const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
-            assetName,
-            visualization,
-            asset.data,
-        );
-        const logicInstance = GetRoomObjectLogicFactory().getLogic(logic);
+            if (visualization) {
+                visualization.asset = asset;
 
-        if (visualizationInstance) visualizationInstance.asset = asset;
+                if (!visualizationData || !visualization.initialize(visualizationData)) return undefined;
 
-        if (
-            !visualizationInstance ||
-            !visualizationData ||
-            !visualizationInstance.initialize(visualizationData) ||
-            !logicInstance
-        )
-            return undefined;
+                const object = instance.createRoomObject(objectId, 1, type, category) as IRoomObjectController;
 
-        const object = instance.createRoomObject(objectId, 1, type, category) as IRoomObjectController;
+                if (object) {
+                    object.setVisualization(visualization);
 
-        if (object) {
-            object.setVisualization(visualizationInstance);
-            object.setLogic(logicInstance);
+                    const logic = GetRoomObjectLogicFactory().getLogic(logicType);
+
+                    if (logic) {
+                        object.setLogic(logic);
+                        object.logic.initialize(asset.data);
+                    }
+
+                    if (!isLoading) object.isReady = true;
+
+                    GetRoomContentLoader().setRoomObjectRoomId(object, roomId);
+
+                    return object;
+                }
+            }
         }
 
-        if (!object) return undefined;
-
-        object.setVisualization(visualizationInstance);
-        object.setLogic(logicInstance);
-
-        object.logic?.initialize(asset.data);
-
-        if (!isLoading) object.isReady = true;
-
-        GetRoomContentLoader().setRoomObjectRoomId(object, roomId);
-
-        return object;
+        return undefined;
     }
 
     private reinitializeRoomObjectsByType(type: string): void {
-        if (!type || !GetRoomContentLoader()) return;
+        if (!type || !type.length) return;
 
         const asset = GetRoomContentLoader().getCollection(type);
 
         if (!asset) return;
 
-        const visualization = asset.data.visualizationType;
-        const logic = asset.data.logicType;
+        const visualizationType = asset.data.visualizationType;
+        const logicType = asset.data.logicType;
         const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
             type,
-            visualization,
+            visualizationType,
             asset.data,
         );
 
@@ -174,22 +204,21 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
                 for (const object of manager.objects.getValues()) {
                     if (!object || object.type !== type) continue;
 
-                    const visualizationInstance = GetRoomObjectVisualizationFactory().getVisualization(visualization);
+                    const visualization = GetRoomObjectVisualizationFactory().getVisualization(visualizationType);
 
-                    if (visualizationInstance) {
-                        visualizationInstance.asset = asset;
+                    if (visualization) {
+                        visualization.asset = asset;
 
-                        if (!visualizationData || !visualizationInstance.initialize(visualizationData)) {
+                        if (!visualizationData || !visualization.initialize(visualizationData)) {
                             manager.removeObject(object.id);
                         } else {
-                            object.setVisualization(visualizationInstance);
+                            object.setVisualization(visualization);
 
-                            const logicInstance = GetRoomObjectLogicFactory().getLogic(logic);
+                            const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
-                            object.setLogic(logicInstance);
-
-                            if (logicInstance) {
-                                logicInstance.initialize(asset.data);
+                            if (logic) {
+                                object.setLogic(logic);
+                                logic.initialize(asset.data);
                             }
 
                             object.isReady = true;
@@ -204,38 +233,6 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         }
     }
 
-    public addUpdateCategory(category: number): void {
-        const index = this._updateCategories.indexOf(category);
-
-        if (index >= 0) return;
-
-        this._updateCategories.push(category);
-
-        if (!this._rooms.size) return;
-
-        for (const room of this._rooms.values()) {
-            if (!room) continue;
-
-            room.addUpdateCategory(category);
-        }
-    }
-
-    public removeUpdateCategory(category: number): void {
-        const index = this._updateCategories.indexOf(category);
-
-        if (index === -1) return;
-
-        this._updateCategories.splice(index, 1);
-
-        if (!this._rooms.size) return;
-
-        for (const room of this._rooms.values()) {
-            if (!room) continue;
-
-            room.removeUpdateCategory(category);
-        }
-    }
-
     private processPendingContentTypes(time: number): void {
         if (this._skipContentProcessing) {
             this._skipContentProcessing = false;
@@ -246,30 +243,22 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         while (this._pendingContentTypes.length) {
             const type = this._pendingContentTypes.shift();
 
-            const collection = GetRoomContentLoader().getCollection(type);
+            if (type) {
+                const collection = GetRoomContentLoader().getCollection(type);
 
-            if (!collection) {
-                if (this._listener) {
-                    this._listener.initalizeTemporaryObjectsByType(type, false);
+                if (!collection) {
+                    if (this._listener) this._listener.initalizeTemporaryObjectsByType(type, false);
+
+                    NitroLogger.log('Invalid Collection', type);
+
+                    continue;
                 }
 
-                NitroLogger.log('Invalid Collection', type);
+                this.reinitializeRoomObjectsByType(type);
 
-                continue;
+                if (this._listener) this._listener.initalizeTemporaryObjectsByType(type, true);
             }
-
-            this.reinitializeRoomObjectsByType(type);
-
-            if (this._listener) this._listener.initalizeTemporaryObjectsByType(type, true);
         }
-    }
-
-    public update(time: number, update: boolean = false): void {
-        this.processPendingContentTypes(time);
-
-        if (!this._rooms.size) return;
-
-        for (const room of this._rooms.values()) room && room.update(time, update);
     }
 
     public createRoomObjectManager(category: number): IRoomObjectManager {

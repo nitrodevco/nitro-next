@@ -118,7 +118,11 @@ export class RoomInstance implements IRoomInstance {
         return object;
     }
 
-    public createRoomObjectAndInitalize(objectId: number, type: string, category: number): IRoomObject {
+    public createRoomObjectAndInitalize(
+        objectId: number,
+        type: string,
+        category: number,
+    ): Promise<IRoomObject | undefined> {
         return this._container.createRoomObjectAndInitalize(this._id, objectId, type, category);
     }
 

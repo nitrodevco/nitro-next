@@ -12,7 +12,7 @@ export interface IRoomInstance {
     getRoomObjectsForCategory(category: number): IRoomObject[];
     getRoomObjectByIndex(index: number, category: number): IRoomObject | undefined;
     createRoomObject(id: number, stateCount: number, type: string, category: number): IRoomObject | undefined;
-    createRoomObjectAndInitalize(objectId: number, type: string, category: number): IRoomObject;
+    createRoomObjectAndInitalize(objectId: number, type: string, category: number): Promise<IRoomObject | undefined>;
     removeRoomObject(id: number, category: number): void;
     removeAllManagers(): void;
     addUpdateCategory(category: number): void;
