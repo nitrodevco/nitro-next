@@ -29,7 +29,7 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
             avatarImage = GetAvatarRenderManager().createAvatarImage(
                 figure,
                 AvatarScaleType.LARGE,
-                gender,
+                gender ?? 'm', // TODO FIX
                 avatarListener,
                 effectListener,
             );
@@ -37,7 +37,7 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
             avatarImage = GetAvatarRenderManager().createAvatarImage(
                 figure,
                 AvatarScaleType.SMALL,
-                gender,
+                gender ?? 'm', // TODO FIX
                 avatarListener,
                 effectListener,
             );

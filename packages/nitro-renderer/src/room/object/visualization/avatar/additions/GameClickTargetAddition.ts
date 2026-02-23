@@ -28,11 +28,13 @@ export class GameClickTargetAddition implements IAvatarAddition {
         if (!this._asset)
             this._asset = GetTexturePool().getTexture(GameClickTargetAddition.WIDTH, GameClickTargetAddition.HEIGHT);
 
-        sprite.visible = true;
-        sprite.texture = this._asset;
-        sprite.offsetX = GameClickTargetAddition.OFFSET_X;
-        sprite.offsetY = GameClickTargetAddition.OFFSET_Y;
-        sprite.alphaTolerance = AlphaTolerance.MATCH_ALL_PIXELS;
+        if (this._asset) {
+            sprite.visible = true;
+            sprite.texture = this._asset;
+            sprite.offsetX = GameClickTargetAddition.OFFSET_X;
+            sprite.offsetY = GameClickTargetAddition.OFFSET_Y;
+            sprite.alphaTolerance = AlphaTolerance.MATCH_ALL_PIXELS;
+        }
     }
 
     public animate(sprite: IRoomObjectSprite): boolean {

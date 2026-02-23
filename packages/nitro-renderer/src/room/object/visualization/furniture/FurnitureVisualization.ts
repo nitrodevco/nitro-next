@@ -1,6 +1,7 @@
 import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { AlphaTolerance, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
-import type { BLEND_MODES, Filter, Texture } from 'pixi.js';
+import type { BLEND_MODES, Filter } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
 import { ColorData, LayerData } from '../data';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
@@ -281,7 +282,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     private resetSprite(sprite: IRoomObjectSprite): void {
         if (!sprite) return;
 
-        sprite.texture = undefined;
+        sprite.texture = Texture.EMPTY;
         sprite.libraryAssetName = '';
         sprite.posture = '';
         sprite.tag = '';
@@ -490,8 +491,8 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return this.asset?.getAsset(name);
     }
 
-    public getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture | undefined {
-        return asset?.texture ?? undefined;
+    public getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture {
+        return asset?.texture || Texture.EMPTY;
     }
 
     public set lookThrough(flag: boolean) {

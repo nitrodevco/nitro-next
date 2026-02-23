@@ -98,7 +98,8 @@ export class FurnitureParticleSystem {
 
             this._centerX = -this._roomSprite.offsetX;
             this._centerY = -this._roomSprite.offsetY;
-            this._roomSprite.texture = this._canvasTexture;
+
+            if (this._canvasTexture) this._roomSprite.texture = this._canvasTexture;
         }
     }
 

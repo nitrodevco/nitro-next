@@ -349,7 +349,7 @@ export class AvatarVisualization
 
                         const asset = GetAssetManager().getAsset(assetName);
 
-                        if (!asset) continue;
+                        if (!asset || !asset.texture) continue;
 
                         sprite.texture = asset.texture;
                         sprite.offsetX = asset.offsetX - scale / 2 + offsetX;
@@ -937,7 +937,7 @@ export class AvatarVisualization
                     offsetY = this._canStandUp ? 10 : -7;
                 }
 
-                if (this._shadow) {
+                if (this._shadow && this._shadow.texture) {
                     sprite.texture = this._shadow.texture;
                     sprite.offsetX = offsetX;
                     sprite.offsetY = offsetY;

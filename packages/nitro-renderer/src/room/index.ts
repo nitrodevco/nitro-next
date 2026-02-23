@@ -229,4 +229,7 @@ export * from './RoomManager';
 export * from './RoomObjectLogicFactory';
 export * from './RoomObjectManager';
 export * from './RoomObjectVisualizationFactory';
+export * from './utils/RoomEnterEffect';
 export * from './utils/RoomGeometry';
+export * from './utils/RoomRotatingEffect';
+export * from './utils/RoomShakingEffect';

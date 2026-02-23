@@ -26,15 +26,15 @@ export interface IRoomRenderingCanvas {
         buttonDown: boolean,
     ): boolean;
     getSortableSpriteList(): RoomObjectSpriteData[];
-    getDisplayAsTexture(): Texture;
+    getDisplayAsTexture(): Texture | undefined;
     moveLeft(): void;
     moveRight(): void;
     moveUp(): void;
     moveDown(): void;
     id: number;
     geometry: IRoomGeometry;
-    master: Container;
-    display: Container;
+    master: Container | undefined;
+    display: Container | undefined;
     screenOffsetX: number;
     screenOffsetY: number;
     scale: number;

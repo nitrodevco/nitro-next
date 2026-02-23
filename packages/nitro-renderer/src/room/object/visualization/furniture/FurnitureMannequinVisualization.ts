@@ -107,7 +107,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         return super.getLayerYOffset(scale, direction, layerId);
     }
 
-    public override getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture | undefined {
+    public override getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture {
         if (
             this.getLayerTag(scale, this.direction, layerId) ===
                 FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&

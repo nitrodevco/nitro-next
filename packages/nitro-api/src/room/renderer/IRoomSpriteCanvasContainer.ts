@@ -1,7 +1,7 @@
 import type { IRoomObject } from '../object';
 
 export interface IRoomSpriteCanvasContainer {
-    getRoomObject(instanceId: number): IRoomObject;
+    getRoomObject(instanceId: number): IRoomObject | undefined;
     objects: Map<number, IRoomObject>;
     roomObjectVariableAccurateZ: string;
 }

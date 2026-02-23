@@ -9,7 +9,7 @@ export interface IRoomObjectSprite {
     name: string;
     type: string;
     spriteType: RoomObjectSpriteTypeEnum;
-    texture: Texture | undefined;
+    texture: Texture;
     width: number;
     height: number;
     offsetX: number;
