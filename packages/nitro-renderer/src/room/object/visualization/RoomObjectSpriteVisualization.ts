@@ -17,8 +17,8 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     private static VISUALIZATION_COUNTER: number = 0;
 
     private _id: number = RoomObjectSpriteVisualization.VISUALIZATION_COUNTER++;
-    private _object: IRoomObjectController = null;
-    private _asset: IGraphicAssetCollection = null;
+    private _object: IRoomObjectController;
+    private _asset: IGraphicAssetCollection;
     private _sprites: IRoomObjectSprite[] = [];
 
     protected _scale: number = -1;
@@ -53,9 +53,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     }
 
     public getSprite(index: number): IRoomObjectSprite | undefined {
-        if (index >= 0 && index < this._sprites.length) return this._sprites[index];
-
-        return undefined;
+        return this._sprites[index];
     }
 
     public getSpriteList(): RoomObjectSpriteData[] {

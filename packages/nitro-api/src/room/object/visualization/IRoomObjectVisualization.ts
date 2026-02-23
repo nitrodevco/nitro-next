@@ -9,9 +9,8 @@ export interface IRoomObjectVisualization {
     dispose(): void;
     update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void;
     getBoundingRectangle(): Rectangle;
-    getImage(): Texture;
+    getImage(): Texture | undefined;
     instanceId: number;
     object: IRoomObject;
-    image: Texture;
     updateSpriteCounter: number;
 }

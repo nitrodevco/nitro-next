@@ -131,6 +131,11 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
 
         const object = instance.createRoomObject(objectId, 1, type, category) as IRoomObjectController;
 
+        if (object) {
+            object.setVisualization(visualizationInstance);
+            object.setLogic(logicInstance);
+        }
+
         if (!object) return undefined;
 
         object.setVisualization(visualizationInstance);

@@ -3,7 +3,7 @@ import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisual
 import type { IRoomObjectSprite } from './IRoomObjectSprite';
 
 export interface IRoomObjectSpriteVisualization extends IRoomObjectGraphicVisualization {
-    getSprite(index: number): IRoomObjectSprite;
+    getSprite(index: number): IRoomObjectSprite | undefined;
     getSpriteList(): RoomObjectSpriteData[];
     sprites: IRoomObjectSprite[];
     updateObjectCounter: number;
