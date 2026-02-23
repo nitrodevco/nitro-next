@@ -16,10 +16,12 @@
         "pixi.js": "^8.16.0"
     },
     "peerDependencies": {
-        "pixi.js": "^8.16.0"
+        "pixi.js": "^8.16.0",
+        "zustand": "^5.0.11"
     },
     "devDependencies": {
         "rimraf": "^6.0.1",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "zustand": "^5.0.11"
     }
 }

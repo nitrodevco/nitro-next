@@ -7,16 +7,14 @@ import type {
     IRoomObject,
 } from '@nitrodevco/nitro-api';
 import {
-    EventStore,
     FurnitureType,
-    GetConfigValue,
     NitroLogger,
     RoomObjectCategory,
     RoomObjectUserType,
     RoomObjectVariableEnum,
     RoomObjectVisualizationType,
 } from '@nitrodevco/nitro-api';
-import { RoomContentLoadedEvent } from '@nitrodevco/nitro-events';
+import { FurnitureDataStore, GetConfigValue } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
@@ -59,9 +57,11 @@ export class RoomContentLoader implements IRoomContentLoader {
     private _pendingContentTypes: string[] = [];
 
     public async init(): Promise<void> {
-        this.processFurnitureData(GetSessionDataManager().getAllFurnitureData());
+        this.processFurnitureData(FurnitureDataStore.getState().allItems);
 
-        for (const [index, name] of GetConfigValue<string[]>('renderer.petTypes').entries()) this._pets[name] = index;
+        const petTypes = GetConfigValue<string[]>('renderer.petTypes');
+
+        if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
         await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
     }
@@ -237,8 +237,8 @@ export class RoomContentLoader implements IRoomContentLoader {
         return RoomObjectCategory.MINIMUM;
     }
 
-    public getPetNameForType(type: number): string {
-        return GetConfigValue<string[]>('renderer.petTypes')[type] || null;
+    public getPetNameForType(type: number): string | undefined {
+        return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
     }
 
     public isLoaderType(type: string): boolean {
@@ -303,7 +303,7 @@ export class RoomContentLoader implements IRoomContentLoader {
         this._pendingContentTypes.push(type);
 
         if (!(await GetAssetManager().downloadAsset(assetUrl))) {
-            EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
+            //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
 
             return;
         }
@@ -338,7 +338,7 @@ export class RoomContentLoader implements IRoomContentLoader {
             this._petColors.set(petIndex, palettes);
         }
 
-        EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
+        //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
     }
 
     public getAssetAliasName(name: string): string {
@@ -416,19 +416,19 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.generic').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.furni').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.icons.furni').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.icons.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.pet').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public setRoomObjectRoomId(object: IRoomObject, roomId: string): void {

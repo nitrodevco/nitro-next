@@ -23,7 +23,7 @@ export interface IRoomContentLoader {
     getImage(name: string): HTMLImageElement;
     getAssetIconUrl(type: string, colorIndex: string): string | undefined;
     addAssetToCollection(collectionName: string, assetName: string, texture: Texture, override?: boolean): boolean;
-    getPetNameForType(type: number): string;
+    getPetNameForType(type: number): string | undefined;
     downloadImage(id: number, type: string, param: string, events?: IEventDispatcher): boolean;
     getRoomObjectAdUrl(type: string): string;
     getPetColorResult(petIndex: number, paletteIndex: number): IPetColorResult | undefined;
