@@ -55,8 +55,10 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
     }
 
     public createRoomInstance(roomId: string): IRoomInstance | undefined {
-        if (!this._rooms.get(roomId)) {
-            const instance = new RoomInstance(roomId, this);
+        let instance = this.getRoomInstance(roomId);
+
+        if (!instance) {
+            instance = new RoomInstance(roomId, this);
 
             this._rooms.set(instance.id, instance);
 
@@ -65,11 +67,9 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
                     instance.addUpdateCategory(category);
                 }
             }
-
-            return instance;
         }
 
-        return undefined;
+        return instance;
     }
 
     public removeRoomInstance(roomId: string): boolean {

@@ -1,4 +1,4 @@
-import type { IRoom, IRoomEngine, IRoomMapData, IRoomObject } from '@nitrodevco/nitro-api';
+import type { IRoom, IRoomEngine, IRoomObject } from '@nitrodevco/nitro-api';
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
@@ -20,6 +20,8 @@ export class RoomEngine implements IRoomEngine {
     public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
 
     private _rooms: Map<number, IRoom> = new Map();
+
+    private _isPlayingGame: boolean = false;
 
     public async init(): Promise<void> {
         GetRoomObjectLogicFactory().registerEventFunction(event =>
@@ -64,18 +66,22 @@ export class RoomEngine implements IRoomEngine {
         RoomEnterEffect.turnVisualizationOff();
     }
 
-    public async createRoom(roomId: number, roomMap: IRoomMapData): Promise<IRoom> {
+    public async createRoom(roomId: number): Promise<IRoom> {
         const instance = GetRoomManager().createRoomInstance(this.getRoomId(roomId));
 
         if (!instance) throw new Error('invalid_instance');
 
         const room = new Room(roomId, instance);
 
-        if (!(await room.prepareRoom(roomMap))) throw new Error('invalid_room_instance');
+        await room.prepareRoom();
 
         this._rooms.set(roomId, room);
 
         return room;
+    }
+
+    public getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum {
+        return GetRoomContentLoader().getCategoryForType(type);
     }
 
     private processRoomObjectEvent(event: RoomObjectEvent): void {
@@ -104,5 +110,9 @@ export class RoomEngine implements IRoomEngine {
 
     public getRoomId(id: number): string {
         return id.toString();
+    }
+
+    public get isPlayingGame() {
+        return this._isPlayingGame;
     }
 }

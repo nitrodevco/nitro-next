@@ -5,7 +5,7 @@ import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 export class ObjectAvatarDirectionUpdateMessage extends RoomObjectUpdateMessage {
     private _headDirction: number;
 
-    constructor(location: IVector3D, direction: IVector3D, headDirction: number) {
+    constructor(location: IVector3D | undefined, direction: IVector3D | undefined, headDirction: number) {
         super(location, direction);
 
         this._headDirction = headDirction;

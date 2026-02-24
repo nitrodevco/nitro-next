@@ -75,6 +75,7 @@ export const App: FC = () => {
                     autoDensity: true,
                     backgroundAlpha: 0,
                     roundPixels: true,
+                    preference: 'webgpu',
                 });
 
                 await Promise.all([

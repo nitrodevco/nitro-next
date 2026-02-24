@@ -6,7 +6,12 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
     private _targetLocation: IVector3D;
     private _isSlide: boolean;
 
-    constructor(location: IVector3D, targetLocation: IVector3D, direction: IVector3D, isSlide: boolean = false) {
+    constructor(
+        location: IVector3D | undefined,
+        targetLocation: IVector3D,
+        direction: IVector3D | undefined,
+        isSlide: boolean = false,
+    ) {
         super(location, direction);
 
         this._targetLocation = targetLocation;
