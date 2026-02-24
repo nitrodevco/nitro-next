@@ -194,43 +194,26 @@ export class RoomGeometry implements IRoomGeometry {
         }
     }
 
-    public dispose(): void {
-        this._x = null;
-        this._y = null;
-        this._z = null;
-        this._loc = null;
-        this._dir = null;
-        this._directionAxis = null;
-        this._location = null;
-        if (this._displacements != null) {
-            this._displacements.clear();
-            this._displacements = null;
-        }
-    }
+    public dispose(): void {}
 
     public setDisplacement(k: IVector3D, _arg_2: IVector3D): void {
-        if (k == null || _arg_2 == null) {
-            return;
-        }
-        if (this._displacements != null) {
-            const key =
-                Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z));
-            this._displacements.delete(key);
-            const _local_4 = new Vector3d();
-            _local_4.assign(_arg_2);
-            this._displacements.set(key, _local_4);
-            this._updateId++;
-        }
+        if (!k || !_arg_2) return;
+
+        const key = Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z));
+
+        this._displacements.delete(key);
+
+        const point = new Vector3d();
+        point.assign(_arg_2);
+
+        this._displacements.set(key, point);
+        this._updateId++;
     }
 
-    private getDisplacenent(k: IVector3D): IVector3D {
-        let _local_2: string;
-        if (this._displacements != null) {
-            _local_2 =
-                Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z));
-            return this._displacements.get(_local_2);
-        }
-        return null;
+    private getDisplacenent(k: IVector3D): IVector3D | undefined {
+        return this._displacements.get(
+            Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z)),
+        );
     }
 
     public setDepthVector(k: IVector3D): void {
@@ -290,51 +273,58 @@ export class RoomGeometry implements IRoomGeometry {
     }
 
     public getCoordinatePosition(k: IVector3D): IVector3D {
-        if (k == null) {
-            return null;
+        let _local_2 = -1;
+        let _local_3 = -1;
+        let _local_4 = -1;
+
+        if (k) {
+            _local_2 = Vector3d.scalarProjection(k, this._x);
+            _local_3 = Vector3d.scalarProjection(k, this._y);
+            _local_4 = Vector3d.scalarProjection(k, this._z);
         }
-        const _local_2: number = Vector3d.scalarProjection(k, this._x);
-        const _local_3: number = Vector3d.scalarProjection(k, this._y);
-        const _local_4: number = Vector3d.scalarProjection(k, this._z);
-        const _local_5: IVector3D = new Vector3d(_local_2, _local_3, _local_4);
-        return _local_5;
+
+        return new Vector3d(_local_2, _local_3, _local_4);
     }
 
     public getScreenPosition(k: IVector3D): IVector3D {
         let _local_2: IVector3D = Vector3d.dif(k, this._loc);
+
         _local_2.x = _local_2.x * this._x_scale;
         _local_2.y = _local_2.y * this._y_scale;
         _local_2.z = _local_2.z * this._z_scale;
+
         let _local_3: number = Vector3d.scalarProjection(_local_2, this._depth);
-        if (_local_3 < this._clipNear || _local_3 > this._clipFar) {
-            return null;
-        }
+
+        if (_local_3 < this._clipNear || _local_3 > this._clipFar) return new Vector3d();
+
         let _local_4: number = Vector3d.scalarProjection(_local_2, this._x);
         let _local_5: number = -Vector3d.scalarProjection(_local_2, this._y);
+
         _local_4 = _local_4 * this._scale;
         _local_5 = _local_5 * this._scale;
-        const _local_6: IVector3D = this.getDisplacenent(k);
-        if (_local_6 != null) {
+
+        const displacement = this.getDisplacenent(k);
+
+        if (displacement) {
             _local_2 = Vector3d.dif(k, this._loc);
-            _local_2.add(_local_6);
+            _local_2.add(displacement);
             _local_2.x = _local_2.x * this._x_scale;
             _local_2.y = _local_2.y * this._y_scale;
             _local_2.z = _local_2.z * this._z_scale;
             _local_3 = Vector3d.scalarProjection(_local_2, this._depth);
         }
+
         _local_2.x = _local_4;
         _local_2.y = _local_5;
         _local_2.z = _local_3;
+
         return _local_2;
     }
 
     public getScreenPoint(k: IVector3D): Point {
-        const _local_2: IVector3D = this.getScreenPosition(k);
-        if (_local_2 == null) {
-            return null;
-        }
-        const _local_3: Point = new Point(_local_2.x, _local_2.y);
-        return _local_3;
+        const pos = this.getScreenPosition(k);
+
+        return new Point(pos.x, pos.y);
     }
 
     public getPlanePosition(k: Point, _arg_2: IVector3D, _arg_3: IVector3D, _arg_4: IVector3D): Point {

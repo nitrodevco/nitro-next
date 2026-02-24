@@ -149,4 +149,12 @@ export enum RoomObjectVariableEnum {
     SessionUrlPrefix = 'session_url_prefix',
     SessionCurrentUserId = 'session_current_user_id',
     InfostandExtraParam = 'RWEIEP_INFOSTAND_EXTRA_PARAM',
+    RoomMinX = 'room_min_x',
+    RoomMaxX = 'room_max_x',
+    RoomMinY = 'room_min_y',
+    RoomMaxY = 'room_max_y',
+    RoomIsPublic = 'room_is_public',
+    RoomZScale = 'room_z_scale',
+    AdDisplayDelay = 'ad_display_delay',
+    IsPlayingGame = 'is_playing_game',
 }
