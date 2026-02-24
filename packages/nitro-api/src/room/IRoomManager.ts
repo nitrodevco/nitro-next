@@ -16,5 +16,6 @@ export interface IRoomManager {
         type: string,
         category: number,
     ): Promise<IRoomObject | undefined>;
+    processPendingContentTypes(time: number): void;
     rooms: Map<string, IRoomInstance>;
 }

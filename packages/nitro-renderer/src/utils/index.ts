@@ -1,4 +1,5 @@
 export * from './GetRenderer';
+export * from './GetStage';
 export * from './GetTexturePool';
 export * from './GetTicker';
 export * from './GetTickerTime';

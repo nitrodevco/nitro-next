@@ -1,13 +1,15 @@
-import type { IRoomInstance, IRoomObjectController, IRoomRenderer, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectCategory, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetConfigValue } from '@nitrodevco/nitro-shared';
-import { Container } from 'pixi.js';
+import type { IRoom, IRoomEngine, IRoomMapData, IRoomObject } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import type { RoomObjectEvent } from '@nitrodevco/nitro-events';
+import type { Ticker } from 'pixi.js';
 
-import { ObjectRoomMaskUpdateMessage, ObjectRoomUpdateMessage } from './messages';
-import { RoomLogic, type RoomMapData } from './object';
-import { RoomRenderer } from './renderer';
+import { GetRoomContentLoader } from './GetRoomContentLoader';
+import { GetRoomManager } from './GetRoomManager';
+import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
+import { Room } from './Room';
+import { RoomEnterEffect } from './utils';
 
-export class RoomEngine {
+export class RoomEngine implements IRoomEngine {
     public static ROOM_OBJECT_ID: number = -1;
     public static ROOM_OBJECT_TYPE: string = 'room';
     public static CURSOR_OBJECT_ID: number = -2;
@@ -17,181 +19,90 @@ export class RoomEngine {
     public static OVERLAY: string = 'overlay';
     public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
 
-    private _roomId: number;
-    private _instance: IRoomInstance;
+    private _rooms: Map<number, IRoom> = new Map();
 
-    constructor(roomId: number, instance: IRoomInstance) {
-        this._roomId = roomId;
-        this._instance = instance;
-    }
-
-    public async prepareRoom(roomMap: RoomMapData): Promise<boolean> {
-        const floorType = '111';
-        const wallType = '201';
-        const landscapeType = '1';
-
-        const roomObject = (await this._instance.createRoomObjectAndInitalize(
-            RoomEngine.ROOM_OBJECT_ID,
-            RoomEngine.ROOM_OBJECT_TYPE,
-            RoomObjectCategory.ROOM,
-        )) as IRoomObjectController;
-
-        if (!roomObject) return false;
-
-        this._instance.model.setValue(RoomObjectVariableEnum.RoomIsPublic, 0);
-        this._instance.model.setValue(RoomObjectVariableEnum.RoomZScale, 1);
-
-        if (!(roomObject.logic instanceof RoomLogic)) return false;
-
-        if (roomMap) {
-            const dimensions = roomMap.dimensions;
-
-            if (dimensions) {
-                const minX = roomMap.dimensions.minX;
-                const maxX = roomMap.dimensions.maxX;
-                const minY = roomMap.dimensions.minY;
-                const maxY = roomMap.dimensions.maxY;
-
-                this._instance.model.setValue(RoomObjectVariableEnum.RoomMinX, minX);
-                this._instance.model.setValue(RoomObjectVariableEnum.RoomMaxX, maxX);
-                this._instance.model.setValue(RoomObjectVariableEnum.RoomMinY, minY);
-                this._instance.model.setValue(RoomObjectVariableEnum.RoomMaxY, maxY);
-
-                const seed = Math.trunc(minX * 423 + maxX * 671 + minY * 913 + maxY * 7509);
-
-                roomObject.model.setValue(RoomObjectVariableEnum.RoomRandomSeed, seed);
-            }
-
-            roomObject.logic.initialize(roomMap);
-
-            if (roomMap.doors.length) {
-                let doorIndex = 0;
-
-                while (doorIndex < roomMap.doors.length) {
-                    const door = roomMap.doors[doorIndex];
-
-                    if (door) {
-                        const doorX = door.x;
-                        const doorY = door.y;
-                        const doorZ = door.z;
-                        const doorDir = door.dir;
-                        const maskType = ObjectRoomMaskUpdateMessage.DOOR;
-                        const maskId = 'door_' + doorIndex;
-                        const maskLocation = new Vector3d(doorX, doorY, doorZ);
-
-                        roomObject.logic.processUpdateMessage(
-                            new ObjectRoomMaskUpdateMessage(
-                                ObjectRoomMaskUpdateMessage.ADD_MASK,
-                                maskId,
-                                maskType,
-                                maskLocation,
-                                ObjectRoomMaskUpdateMessage.HOLE,
-                            ),
-                        );
-
-                        if (doorDir === 90 || doorDir === 180) {
-                            if (doorDir === 90) {
-                                this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorX, doorX - 0.5);
-                                this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorY, doorY);
-                            }
-
-                            if (doorDir === 180) {
-                                this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorX, doorX);
-                                this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorY, doorY - 0.5);
-                            }
-
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorZ, doorZ);
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorDir, doorDir);
-                        }
-                    }
-
-                    doorIndex++;
-                }
-            }
-        }
-
-        if (floorType) {
-            roomObject.logic.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType),
-            );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomFloorType, floorType);
-        }
-
-        if (wallType) {
-            roomObject.logic.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType),
-            );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomWallType, wallType);
-        }
-
-        if (landscapeType) {
-            roomObject.logic.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType),
-            );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
-        }
-
-        await this._instance.createRoomObjectAndInitalize(
-            RoomEngine.CURSOR_OBJECT_ID,
-            RoomEngine.CURSOR_OBJECT_TYPE,
-            RoomObjectCategory.CURSOR,
+    public async init(): Promise<void> {
+        GetRoomObjectLogicFactory().registerEventFunction(event =>
+            this.processRoomObjectEvent(event as RoomObjectEvent),
         );
 
-        if (GetConfigValue('renderer.avatarArrowEnabled', false))
-            await this._instance.createRoomObjectAndInitalize(
-                RoomEngine.ARROW_OBJECT_ID,
-                RoomEngine.ARROW_OBJECT_TYPE,
-                RoomObjectCategory.CURSOR,
-            );
+        /* EventStore.getState().subscribe<RoomSessionEvent>(RoomSessionEvent.STARTED, event =>
+            this.onRoomSessionEvent(event),
+        );
+        EventStore.getState().subscribe<RoomSessionEvent>(RoomSessionEvent.ENDED, event =>
+            this.onRoomSessionEvent(event),
+        ); */
 
-        return true;
+        await GetRoomContentLoader().init();
+        //await GetRoomManager().init(this);
+
+        //GetRoomContentLoader().setIconListener(this);
+
+        GetRoomManager().addUpdateCategory(RoomObjectCategoryEnum.Floor);
+        GetRoomManager().addUpdateCategory(RoomObjectCategoryEnum.Wall);
+        GetRoomManager().addUpdateCategory(RoomObjectCategoryEnum.Unit);
+        GetRoomManager().addUpdateCategory(RoomObjectCategoryEnum.Cursor);
+        GetRoomManager().addUpdateCategory(RoomObjectCategoryEnum.Room);
     }
 
-    public getRoomDisplay(canvasId: number, width: number, height: number, scale: number): Container | undefined {
-        let renderer = this._instance.renderer as IRoomRenderer;
+    public update(ticker: Ticker): void {
+        const time = ticker.lastTime;
+        const update = false;
 
-        if (!renderer) {
-            renderer = new RoomRenderer();
-        }
+        RoomEnterEffect.turnVisualizationOn();
 
-        renderer.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
+        //this.processPendingFurniture();
 
-        this._instance.setRenderer(renderer);
+        GetRoomManager().processPendingContentTypes(time);
 
-        const canvas = renderer.createCanvas(canvasId, width, height, scale);
+        for (const room of this._rooms.values()) room.update(time, update);
 
-        if (canvas) {
-            //canvas.setMouseListener(this._room); TODO MOUSE
+        //this.updateRoomCameras(time);
 
-            if (canvas.geometry) {
-                canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
+        //if (this._mouseCursorUpdate) this.setPointer();
 
-                const doorX = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorX);
-                const doorY = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorY);
-                const doorZ = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorZ);
-                const doorDirection = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorDir);
-                const vector = new Vector3d(doorX, doorY, doorZ);
+        RoomEnterEffect.turnVisualizationOff();
+    }
 
-                let direction: IVector3D | undefined = undefined;
+    public async createRoom(roomId: number, roomMap: IRoomMapData): Promise<IRoom> {
+        const instance = GetRoomManager().createRoomInstance(this.getRoomId(roomId));
 
-                if (doorDirection === 90) direction = new Vector3d(-2000, 0, 0);
+        if (!instance) throw new Error('invalid_instance');
 
-                if (doorDirection === 180) direction = new Vector3d(0, -2000, 0);
+        const room = new Room(roomId, instance);
 
-                if (direction) canvas.geometry.setDisplacement(vector, direction);
+        if (!(await room.prepareRoom(roomMap))) throw new Error('invalid_room_instance');
 
-                const displayObject = canvas.master;
+        this._rooms.set(roomId, room);
 
-                if (displayObject) {
-                    const overlay = new Container();
+        return room;
+    }
 
-                    overlay.label = RoomEngine.OVERLAY;
+    private processRoomObjectEvent(event: RoomObjectEvent): void {
+        const roomIdString = this.getRoomObjectRoomId(event.object);
 
-                    displayObject.addChild(overlay);
-                }
-            }
-        }
+        if (!roomIdString) return;
 
-        return canvas?.master;
+        const roomId = this.getRoomIdFromString(this.getRoomObjectRoomId(event.object) ?? '');
+
+        //GetRoomObjectEventHandler().handleRoomObjectEvent(event, roomId);
+    }
+
+    private getRoomIdFromString(roomId: string): number {
+        if (!roomId || !roomId.length) return -1;
+
+        const split = roomId.split('_');
+
+        if (split.length <= 0) return -1;
+
+        return parseInt(split[0]) || 0;
+    }
+
+    private getRoomObjectRoomId(object: IRoomObject): string | undefined {
+        return object.model.getValue<string>(RoomObjectVariableEnum.ObjectRoomId) ?? undefined;
+    }
+
+    public getRoomId(id: number): string {
+        return id.toString();
     }
 }

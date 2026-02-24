@@ -18,6 +18,7 @@ const initialState: State = {
 
 export const ConfigurationStore = createStore<State & Actions>(set => ({
     ...initialState,
+
     setConfig: (config: {}) => set({ config, configNeedsUpdate: false }),
     setConfigValue: <T = unknown>(key: string, value: T) =>
         set(state => {

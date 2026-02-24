@@ -1,4 +1,9 @@
-import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+import type {
+    IRoomGeometry,
+    IRoomMapData,
+    IRoomObjectUpdateMessage,
+    IRoomSpriteMouseEvent,
+} from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-events';
 import { ColorConverter } from '@nitrodevco/nitro-shared';
@@ -55,7 +60,7 @@ export class RoomLogic extends RoomObjectLogicBase {
         }
     }
 
-    public override initialize(roomMap: RoomMapData): void {
+    public override initialize(roomMap: IRoomMapData): void {
         if (!(roomMap instanceof RoomMapData) || !this._planeParser.initializeFromMapData(roomMap)) return;
 
         this.object.model.setValue(RoomObjectVariableEnum.RoomMapData, roomMap);

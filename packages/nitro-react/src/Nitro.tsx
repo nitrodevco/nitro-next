@@ -1,3 +1,5 @@
+import { App } from './App';
+
 export const Nitro = () => {
-    return null;
+    return <App />;
 };

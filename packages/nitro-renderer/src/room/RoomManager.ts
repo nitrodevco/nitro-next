@@ -121,10 +121,13 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         let isLoading = false;
 
         if (GetRoomContentLoader().isLoaderType(type)) {
+            console.log('ok', type);
             asset = GetRoomContentLoader().getCollection(type);
 
             if (!asset) {
                 isLoading = true;
+
+                console.log('load it');
 
                 try {
                     await GetRoomContentLoader().downloadAsset(type);
@@ -233,7 +236,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         }
     }
 
-    private processPendingContentTypes(time: number): void {
+    public processPendingContentTypes(time: number): void {
         if (this._skipContentProcessing) {
             this._skipContentProcessing = false;
 

@@ -1,4 +1,5 @@
 export * from './GetRoomContentLoader';
+export * from './GetRoomEngine';
 export * from './GetRoomManager';
 export * from './GetRoomObjectLogicFactory';
 export * from './GetRoomObjectVisualizationFactory';
@@ -223,7 +224,9 @@ export * from './renderer/RoomSpriteCanvas';
 export * from './renderer/utils/ExtendedSprite';
 export * from './renderer/utils/ObjectMouseData';
 export * from './renderer/utils/SortableSprite';
+export * from './Room';
 export * from './RoomContentLoader';
+export * from './RoomEngine';
 export * from './RoomInstance';
 export * from './RoomManager';
 export * from './RoomObjectLogicFactory';

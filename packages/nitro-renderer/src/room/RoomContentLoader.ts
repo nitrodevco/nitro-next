@@ -9,7 +9,7 @@ import type {
 import {
     FurnitureType,
     NitroLogger,
-    RoomObjectCategory,
+    RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectVariableEnum,
     RoomObjectVisualizationType,
@@ -22,18 +22,18 @@ import { PetColorResult } from './PetColorResult';
 
 export class RoomContentLoader implements IRoomContentLoader {
     private static PLACE_HOLDER: string = 'place_holder';
-    private static PLACE_HOLDER_WALL: string = 'place_holder_wall';
+    private static PLACE_HOLDER_Wall: string = 'place_holder_wall';
     private static PLACE_HOLDER_PET: string = 'place_holder_pet';
     private static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
-    private static ROOM: string = 'room';
+    private static Room: string = 'room';
     private static TILE_CURSOR: string = 'tile_cursor';
     private static SELECTION_ARROW: string = 'selection_arrow';
 
     public static MANDATORY_LIBRARIES: string[] = [
         RoomContentLoader.PLACE_HOLDER,
-        RoomContentLoader.PLACE_HOLDER_WALL,
+        RoomContentLoader.PLACE_HOLDER_Wall,
         RoomContentLoader.PLACE_HOLDER_PET,
-        RoomContentLoader.ROOM,
+        RoomContentLoader.Room,
         RoomContentLoader.TILE_CURSOR,
         RoomContentLoader.SELECTION_ARROW,
     ];
@@ -199,10 +199,10 @@ export class RoomContentLoader implements IRoomContentLoader {
         const category = this.getCategoryForType(type);
 
         switch (category) {
-            case RoomObjectCategory.FLOOR:
+            case RoomObjectCategoryEnum.Floor:
                 return RoomContentLoader.PLACE_HOLDER;
-            case RoomObjectCategory.WALL:
-                return RoomContentLoader.PLACE_HOLDER_WALL;
+            case RoomObjectCategoryEnum.Wall:
+                return RoomContentLoader.PLACE_HOLDER_Wall;
             default:
                 if (this._pets[type] !== undefined) return RoomContentLoader.PLACE_HOLDER_PET;
 
@@ -210,31 +210,31 @@ export class RoomContentLoader implements IRoomContentLoader {
         }
     }
 
-    public getCategoryForType(type: string): number {
-        if (!type) return RoomObjectCategory.MINIMUM;
+    public getCategoryForType(type: string): RoomObjectCategoryEnum {
+        if (!type) return RoomObjectCategoryEnum.Minimum;
 
-        if (this._activeObjects[type] !== undefined) return RoomObjectCategory.FLOOR;
+        if (this._activeObjects[type] !== undefined) return RoomObjectCategoryEnum.Floor;
 
-        if (this._wallItems[type] !== undefined) return RoomObjectCategory.WALL;
+        if (this._wallItems[type] !== undefined) return RoomObjectCategoryEnum.Wall;
 
-        if (this._pets[type] !== undefined) return RoomObjectCategory.UNIT;
+        if (this._pets[type] !== undefined) return RoomObjectCategoryEnum.Unit;
 
-        if (type.indexOf('poster') === 0) return RoomObjectCategory.WALL;
+        if (type.indexOf('poster') === 0) return RoomObjectCategoryEnum.Wall;
 
-        if (type === 'room') return RoomObjectCategory.ROOM;
+        if (type === 'room') return RoomObjectCategoryEnum.Room;
 
-        if (type === RoomObjectUserType.USER) return RoomObjectCategory.UNIT;
+        if (type === RoomObjectUserType.USER) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.PET) return RoomObjectCategory.UNIT;
+        if (type === RoomObjectUserType.PET) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.BOT) return RoomObjectCategory.UNIT;
+        if (type === RoomObjectUserType.BOT) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.RENTABLE_BOT) return RoomObjectCategory.UNIT;
+        if (type === RoomObjectUserType.RENTABLE_BOT) return RoomObjectCategoryEnum.Unit;
 
         if (type === RoomContentLoader.TILE_CURSOR || type === RoomContentLoader.SELECTION_ARROW)
-            return RoomObjectCategory.CURSOR;
+            return RoomObjectCategoryEnum.Cursor;
 
-        return RoomObjectCategory.MINIMUM;
+        return RoomObjectCategoryEnum.Minimum;
     }
 
     public getPetNameForType(type: number): string | undefined {
@@ -302,6 +302,8 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         this._pendingContentTypes.push(type);
 
+        console.log(assetUrl);
+
         if (!(await GetAssetManager().downloadAsset(assetUrl))) {
             //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
 
@@ -358,11 +360,11 @@ export class RoomContentLoader implements IRoomContentLoader {
         switch (type) {
             case RoomContentLoader.PLACE_HOLDER:
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER)];
-            case RoomContentLoader.PLACE_HOLDER_WALL:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_WALL)];
+            case RoomContentLoader.PLACE_HOLDER_Wall:
+                return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_Wall)];
             case RoomContentLoader.PLACE_HOLDER_PET:
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_PET)];
-            case RoomContentLoader.ROOM:
+            case RoomContentLoader.Room:
                 return [this.getAssetUrlWithGenericBase('room')];
             case RoomContentLoader.TILE_CURSOR:
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.TILE_CURSOR)];
@@ -371,7 +373,7 @@ export class RoomContentLoader implements IRoomContentLoader {
             default: {
                 const category = this.getCategoryForType(type);
 
-                if (category === RoomObjectCategory.FLOOR || category === RoomObjectCategory.WALL) {
+                if (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall) {
                     const name = this.getAssetAliasName(type);
 
                     let assetUrl = icon ? this.getAssetUrlWithFurniIconBase(name) : this.getAssetUrlWithFurniBase(type);
@@ -385,7 +387,7 @@ export class RoomContentLoader implements IRoomContentLoader {
                     return [assetUrl];
                 }
 
-                if (category === RoomObjectCategory.UNIT) {
+                if (category === RoomObjectCategoryEnum.Unit) {
                     return [this.getAssetUrlWithPetBase(type)];
                 }
             }
