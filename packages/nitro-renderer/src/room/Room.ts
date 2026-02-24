@@ -44,8 +44,6 @@ export class Room implements IRoom {
             RoomObjectCategoryEnum.Room,
         )) as IRoomObjectController;
 
-        console.log(roomObject);
-
         if (!roomObject) return false;
 
         this._instance.model.setValue(RoomObjectVariableEnum.RoomIsPublic, 0);

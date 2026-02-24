@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
 import { GetRoomEngine } from '../../nitro-renderer/src/room/GetRoomEngine';
+import { useConfigLoader } from './hooks/logic/useConfigLoader';
 import { useLocalizationLoader } from './hooks/logic/useLocalizationLoader';
 import { RoomView } from './RoomView';
 
@@ -11,7 +12,7 @@ export const App: FC = () => {
     const [isReady, setIsReady] = useState(false);
     //const preloadAssetUrls = useConfigValue<string[]>('asset.urls.preload') || [];
 
-    //useConfigLoader();
+    useConfigLoader();
     useLocalizationLoader();
     // useWebsocket();
 

@@ -302,8 +302,6 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         this._pendingContentTypes.push(type);
 
-        console.log(assetUrl);
-
         if (!(await GetAssetManager().downloadAsset(assetUrl))) {
             //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
 
