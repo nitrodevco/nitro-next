@@ -17,7 +17,7 @@ export default defineConfig({
             fileName: () => 'index.js',
         },
         rollupOptions: {
-            external: ['pixi.js', '@nitrodevco/nitro-api', '@nitrodevco/nitro-events', '@nitrodevco/nitro-shared'],
+            external: ['pixi.js', '@nitrodevco/nitro-api', '@nitrodevco/nitro-shared'],
             output: {
                 exports: 'named',
             },
@@ -28,7 +28,6 @@ export default defineConfig({
         dedupe: ['pixi.js'],
         alias: {
             '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src'),
-            '@nitrodevco/nitro-events': path.resolve(__dirname, '../nitro-events/src'),
             '@nitrodevco/nitro-shared': path.resolve(__dirname, '../nitro-shared/src'),
         },
     },

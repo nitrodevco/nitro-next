@@ -5,8 +5,8 @@ import type {
     IRoomObjectLogicFactory,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectLogicType } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent } from '@nitrodevco/nitro-events';
-import { EventDispatcher } from '@nitrodevco/nitro-events';
+import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
+import { EventDispatcher } from '@nitrodevco/nitro-shared';
 
 import type { RoomObjectLogicBase } from './object';
 import {

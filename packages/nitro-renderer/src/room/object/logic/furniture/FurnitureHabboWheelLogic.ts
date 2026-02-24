@@ -1,4 +1,4 @@
-import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-shared';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

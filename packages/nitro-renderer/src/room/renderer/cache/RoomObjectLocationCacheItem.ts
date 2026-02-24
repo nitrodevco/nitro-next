@@ -1,4 +1,5 @@
-﻿import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import type { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomObjectLocationCacheItem {
     private _roomObjectVariableAccurateZ: string;
@@ -48,7 +49,9 @@ export class RoomObjectLocationCacheItem {
 
             if (!screenLocation) return undefined;
 
-            const accurateZ = object.model.getValue<number>(this._roomObjectVariableAccurateZ);
+            const accurateZ = object.model.getValue<number>(
+                this._roomObjectVariableAccurateZ as RoomObjectVariableEnum,
+            );
 
             if (isNaN(accurateZ) || accurateZ === 0) {
                 const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);

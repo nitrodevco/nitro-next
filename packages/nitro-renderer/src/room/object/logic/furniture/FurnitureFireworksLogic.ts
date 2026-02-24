@@ -1,6 +1,6 @@
 import type { IAssetData, IParticleSystem, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-shared';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

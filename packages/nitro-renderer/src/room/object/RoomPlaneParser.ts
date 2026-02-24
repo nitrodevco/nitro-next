@@ -1409,6 +1409,8 @@ export class RoomPlaneParser {
     }
 
     private static expandFloorTiles(k: number[][]): number[][] {
+        if (!k || !k.length) return [];
+
         const _local_2 = k.length;
         const _local_3: number = k[0].length;
         const _local_4: number[][] = [];
@@ -1486,6 +1488,8 @@ export class RoomPlaneParser {
     }
 
     private static addTileTypes(k: number[][]): void {
+        if (!k || !k.length) return;
+
         const width: number = k.length - 1;
         const height: number = k[0].length - 1;
 
@@ -1538,6 +1542,8 @@ export class RoomPlaneParser {
     }
 
     private static padHeightMap(k: number[][]): void {
+        if (!k || !k.length) return;
+
         const _local_2: number[] = [];
         const _local_3: number[] = [];
 

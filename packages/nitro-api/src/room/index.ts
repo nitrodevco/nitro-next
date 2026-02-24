@@ -66,7 +66,6 @@ export * from './object/visualization/IRoomPlane';
 export * from './object/visualization/ISortableSprite';
 export * from './renderer/IRoomCanvasMouseListener';
 export * from './renderer/IRoomRenderer';
-export * from './renderer/IRoomRendererBase';
 export * from './renderer/IRoomRenderingCanvas';
 export * from './renderer/IRoomSpriteCanvasContainer';
 export * from './renderer/RoomObjectSpriteData';

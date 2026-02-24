@@ -5,7 +5,7 @@ import {
     RoomObjectVariableEnum,
     RoomWidgetEnumItemExtradataParameter,
 } from '@nitrodevco/nitro-api';
-import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-shared';
 
 import { GetAssetManager } from '../../../../assets';
 import { ObjectAdUpdateMessage, ObjectDataUpdateMessage } from '../../../messages';

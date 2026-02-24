@@ -11,7 +11,6 @@
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",
-        "@nitrodevco/nitro-events": "workspace:*",
         "@nitrodevco/nitro-shared": "workspace:*",
         "@pixi/gif": "^3.0.1",
         "howler": "^2.2.4",

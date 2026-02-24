@@ -11,7 +11,7 @@
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
         "lint": "yarn workspaces foreach --all -pt run lint",
         "clean": "yarn workspaces foreach --all -pt run clean",
-        "dev": "concurrently -n api,packets,storage,react,renderer -c auto \"yarn workspace @nitrodevco/nitro-api dev\" \"yarn workspace @nitrodevco/nitro-packets dev\" \"yarn workspace @nitrodevco/nitro-shared dev\" \"yarn workspace @nitrodevco/nitro-react dev\" \"yarn workspace @nitrodevco/nitro-renderer dev\""
+        "dev": "yarn workspace @nitrodevco/nitro-react dev"
     },
     "dependencies": {
         "pixi.js": "^8.16.0"

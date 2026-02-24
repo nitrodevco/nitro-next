@@ -8,8 +8,8 @@ import type {
     IRoomObjectController,
     IRoomObjectManager,
 } from '@nitrodevco/nitro-api';
-import { NitroLogger } from '@nitrodevco/nitro-api';
-import type { RoomContentLoadedEvent } from '@nitrodevco/nitro-events';
+import type { RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
+import { NitroLogger } from '@nitrodevco/nitro-shared';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';

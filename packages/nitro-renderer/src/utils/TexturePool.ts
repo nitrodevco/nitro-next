@@ -1,4 +1,4 @@
-import { NitroLogger } from '@nitrodevco/nitro-api';
+import { NitroLogger } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { TextureUtils } from './TextureUtils';

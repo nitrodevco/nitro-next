@@ -587,7 +587,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
             if (type === RoomPlaneData.PLANE_LANDSCAPE) {
                 const vector = this._roomPlaneParser.getPlaneLeftSide(index);
 
-                length += vector.length;
+                if (vector) length += vector.length;
             }
 
             index++;
@@ -606,7 +606,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
             if (type === RoomPlaneData.PLANE_LANDSCAPE) {
                 const vector = this._roomPlaneParser.getPlaneRightSide(index);
 
-                if (vector.length > length) length = vector.length;
+                if (vector && vector.length > length) length = vector.length;
             }
 
             index++;
@@ -682,8 +682,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         timeSinceStartMs: number,
         needsUpdate: boolean = false,
     ): boolean {
-        if (!geometry || !this.object) return false;
-
         this._assetUpdateCounter++;
 
         if (geometryUpdate) {

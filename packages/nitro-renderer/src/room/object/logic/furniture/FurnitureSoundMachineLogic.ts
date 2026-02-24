@@ -1,6 +1,6 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-shared';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

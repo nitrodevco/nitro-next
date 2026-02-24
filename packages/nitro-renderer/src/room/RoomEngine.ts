@@ -1,6 +1,6 @@
 import type { IRoom, IRoomEngine, IRoomMapData, IRoomObject } from '@nitrodevco/nitro-api';
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent } from '@nitrodevco/nitro-events';
+import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';

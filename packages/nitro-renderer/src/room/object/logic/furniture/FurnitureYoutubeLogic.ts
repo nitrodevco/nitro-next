@@ -1,5 +1,5 @@
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

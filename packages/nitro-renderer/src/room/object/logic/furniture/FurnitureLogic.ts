@@ -13,7 +13,7 @@ import {
     RoomObjectRoomAdEvent,
     RoomObjectStateChangedEvent,
     RoomObjectWidgetRequestEvent,
-} from '@nitrodevco/nitro-events';
+} from '@nitrodevco/nitro-shared';
 
 import {
     ObjectDataUpdateMessage,

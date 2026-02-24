@@ -8,13 +8,12 @@ import type {
 } from '@nitrodevco/nitro-api';
 import {
     FurnitureType,
-    NitroLogger,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectVariableEnum,
     RoomObjectVisualizationType,
 } from '@nitrodevco/nitro-api';
-import { FurnitureDataStore, GetConfigValue } from '@nitrodevco/nitro-shared';
+import { FurnitureDataStore, GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';

@@ -31,7 +31,8 @@ export class RoomGeometry implements IRoomGeometry {
         this._z_scale_internal = Math.sqrt(1 / 2) / Math.sqrt(3 / 4);
 
         this.location.assign(location);
-        this.direction.assign(direction);
+        this.location = new Vector3d(location.x, location.y, location.z);
+        this.direction = new Vector3d(direction.x, direction.y, direction.z);
 
         this.setDepthVector(depth ?? direction);
     }

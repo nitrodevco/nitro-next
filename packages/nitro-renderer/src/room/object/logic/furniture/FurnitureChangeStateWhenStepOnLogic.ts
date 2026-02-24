@@ -1,6 +1,6 @@
 import type { IAssetData } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-events';
+import { RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-shared';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

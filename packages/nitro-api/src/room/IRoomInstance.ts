@@ -1,11 +1,11 @@
 import type { IRoomInstanceContainer } from './IRoomInstanceContainer';
 import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomObject, IRoomObjectModel } from './object';
-import type { IRoomRendererBase } from './renderer';
+import type { IRoomRenderer } from './renderer';
 
 export interface IRoomInstance {
     dispose(): void;
-    setRenderer(renderer: IRoomRendererBase): void;
+    setRenderer(renderer: IRoomRenderer): void;
     getManager(category: number): IRoomObjectManager | undefined;
     getTotalObjectsForManager(category: number): number;
     getRoomObject(id: number, category: number): IRoomObject | undefined;
@@ -20,7 +20,7 @@ export interface IRoomInstance {
     update(time: number, update?: boolean): void;
     id: string;
     container: IRoomInstanceContainer;
-    renderer: IRoomRendererBase;
+    renderer: IRoomRenderer;
     managers: Map<number, IRoomObjectManager>;
     model: IRoomObjectModel;
 }

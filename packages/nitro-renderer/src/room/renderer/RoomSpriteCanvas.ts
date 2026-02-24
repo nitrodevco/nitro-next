@@ -10,7 +10,7 @@ import type {
     RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-events';
+import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { GetTicker, TextureUtils } from '../../utils';
@@ -29,6 +29,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _master: Container | undefined = undefined;
     private _display: Container | undefined = undefined;
     private _mask: Sprite | undefined = undefined;
+    private _background: Sprite | undefined = undefined;
 
     private _sortableSprites: SortableSprite[] = [];
     private _spriteCount: number = 0;
@@ -158,6 +159,19 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     public initialize(width: number, height: number): void {
         width = width < 1 ? 1 : width;
         height = height < 1 ? 1 : height;
+
+        if (!this._background) {
+            this._background = new Sprite(Texture.WHITE);
+
+            this._background.tint = 0;
+            this._background.width = width;
+            this._background.height = height;
+
+            if (this._master) this._master.addChildAt(this._background, 0);
+        } else {
+            this._background.width = width;
+            this._background.height = height;
+        }
 
         if (this._usesMask) {
             if (!this._mask) {

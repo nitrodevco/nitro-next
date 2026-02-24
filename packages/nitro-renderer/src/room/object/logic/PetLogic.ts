@@ -7,7 +7,7 @@ import type {
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { MouseEventType, PetType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-events';
+import { RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-shared';
 
 import { PetFigureData } from '../../../session';
 import {

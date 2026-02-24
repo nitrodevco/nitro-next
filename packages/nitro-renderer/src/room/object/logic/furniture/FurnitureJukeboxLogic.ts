@@ -7,7 +7,7 @@ import {
     RoomObjectFurnitureActionEvent,
     RoomObjectStateChangedEvent,
     RoomObjectWidgetRequestEvent,
-} from '@nitrodevco/nitro-events';
+} from '@nitrodevco/nitro-shared';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

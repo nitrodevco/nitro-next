@@ -4,19 +4,69 @@ import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
 import { GetRoomEngine } from '../../nitro-renderer/src/room/GetRoomEngine';
-import { useConfigLoader } from './hooks/logic/useConfigLoader';
 import { useLocalizationLoader } from './hooks/logic/useLocalizationLoader';
 import { RoomView } from './RoomView';
+import { useConfigurationStore } from './stores/useConfigurationStore';
 
 export const App: FC = () => {
     const [isReady, setIsReady] = useState(false);
+    const setConfigValue = useConfigurationStore(state => state.setConfigValue);
     //const preloadAssetUrls = useConfigValue<string[]>('asset.urls.preload') || [];
 
-    useConfigLoader();
+    //useConfigLoader();
     useLocalizationLoader();
     // useWebsocket();
 
     useEffect(() => {
+        setConfigValue('asset.urls.generic', 'https://assets.nitrodev.co/bundled/generic/%libname%.nitro');
+        setConfigValue('asset.urls.furni', 'https://assets.nitrodev.co/bundled/furniture/%libname%.nitro');
+        setConfigValue(
+            'asset.urls.icons.furni',
+            'https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png',
+        );
+        setConfigValue('asset.urls.pet', 'https://assets.nitrodev.co/bundled/pet/%libname%.nitro');
+        setConfigValue('renderer.petTypes', [
+            'dog',
+            'cat',
+            'croco',
+            'terrier',
+            'bear',
+            'pig',
+            'lion',
+            'rhino',
+            'spider',
+            'turtle',
+            'chicken',
+            'frog',
+            'dragon',
+            'monster',
+            'monkey',
+            'horse',
+            'monsterplant',
+            'bunnyeaster',
+            'bunnyevil',
+            'bunnydepressed',
+            'bunnylove',
+            'pigeongood',
+            'pigeonevil',
+            'demonmonkey',
+            'bearbaby',
+            'terrierbaby',
+            'gnome',
+            'gnome',
+            'kittenbaby',
+            'puppybaby',
+            'pigletbaby',
+            'haloompa',
+            'fools',
+            'pterosaur',
+            'velociraptor',
+            'cow',
+            'LeetPen',
+            'bbwibb',
+            'elephants',
+        ]);
+
         const setup = async (width: number, height: number) => {
             try {
                 const renderer = await PrepareRenderer({
@@ -24,7 +74,6 @@ export const App: FC = () => {
                     height,
                     autoDensity: true,
                     backgroundAlpha: 0,
-                    preference: 'webgl',
                     roundPixels: true,
                 });
 

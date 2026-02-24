@@ -13,20 +13,11 @@ export default defineConfig({
         outDir: 'dist',
         emptyOutDir: true,
         rollupOptions: {
-            external: [
-                'pixi.js',
-                '@nitrodevco/nitro-api',
-                '@nitrodevco/nitro-events',
-                '@nitrodevco/nitro-renderer',
-                '@nitrodevco/nitro-shared',
-            ],
+            external: ['pixi.js', '@nitrodevco/nitro-api', '@nitrodevco/nitro-renderer', '@nitrodevco/nitro-shared'],
             output: {
                 manualChunks: id => {
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
-                    }
-                    if (id.includes('/packages/nitro-events/')) {
-                        return 'nitro-events';
                     }
                     if (id.includes('/packages/nitro-render/')) {
                         return 'nitro-render';
@@ -48,7 +39,6 @@ export default defineConfig({
             '#base': r('base'),
             '#themes': r('themes'),
             '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src'),
-            '@nitrodevco/nitro-events': path.resolve(__dirname, '../nitro-events/src'),
             '@nitrodevco/nitro-renderer': path.resolve(__dirname, '../nitro-renderer/src'),
             '@nitrodevco/nitro-shared': path.resolve(__dirname, '../nitro-shared/src'),
         },

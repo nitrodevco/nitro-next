@@ -18,4 +18,5 @@ export interface IRoomGeometry {
     scale: number;
     directionAxis: IVector3D;
     direction: IVector3D;
+    location: IVector3D;
 }

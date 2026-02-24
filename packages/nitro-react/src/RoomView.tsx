@@ -1,5 +1,5 @@
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetRoomEngine, GetStage, RoomGeometry, RoomMapData } from '@nitrodevco/nitro-renderer';
+import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { GetRenderer, GetRoomEngine, GetStage, RoomGeometry, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef } from 'react';
 
 import { classNames } from './utils/classNames';
@@ -16,8 +16,31 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
         const height = Math.floor(window.innerHeight);
         const renderer = GetRenderer();
 
+        if (renderer) renderer.resize(width, height);
+
         const createRoom = async () => {
-            const room = await roomEngine.createRoom(roomId, new RoomMapData());
+            const size = 10;
+            const planeParser = new RoomPlaneParser();
+
+            planeParser.initializeTileMap(size + 2, size + 2);
+
+            let y = 1;
+
+            while (y < 1 + size) {
+                let x = 1;
+
+                while (x < 1 + size) {
+                    planeParser.setTileHeight(x, y, 0);
+
+                    x++;
+                }
+
+                y++;
+            }
+
+            planeParser.initializeFromTileData();
+
+            const room = await roomEngine.createRoom(roomId, planeParser.getMapData());
             const canvas = room.getRoomDisplay(canvasId, width, height, RoomGeometry.SCALE_ZOOMED_IN);
 
             if (canvas) {
@@ -39,10 +62,12 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
 
                     const z = Math.sqrt(offset * offset + offset * offset) * Math.tan((30 / 180) * Math.PI);
 
-                    //geometry.location = new Vector3d(x, y, z);
+                    geometry.location = new Vector3d(x, y, z);
                 }
 
                 GetStage().addChild(canvas);
+                GetRenderer().render(GetStage());
+                //GetRenderer().resize(width, height, window.devicePixelRatio);
             }
         };
 

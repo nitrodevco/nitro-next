@@ -5,7 +5,7 @@ import type {
     IRoomObjectController,
     IRoomObjectManager,
     IRoomObjectModel,
-    IRoomRendererBase,
+    IRoomRenderer,
 } from '@nitrodevco/nitro-api';
 
 import { RoomObjectModel } from './object';
@@ -13,7 +13,7 @@ import { RoomObjectModel } from './object';
 export class RoomInstance implements IRoomInstance {
     private _id: string;
     private _container: IRoomInstanceContainer;
-    private _renderer: IRoomRendererBase;
+    private _renderer: IRoomRenderer;
     private _managers: Map<number, IRoomObjectManager> = new Map();
     private _updateCategories: number[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
@@ -33,7 +33,7 @@ export class RoomInstance implements IRoomInstance {
         this._model.dispose();
     }
 
-    public setRenderer(renderer: IRoomRendererBase): void {
+    public setRenderer(renderer: IRoomRenderer): void {
         if (renderer === this._renderer) return;
 
         if (this._renderer) this.destroyRenderer();
@@ -214,7 +214,7 @@ export class RoomInstance implements IRoomInstance {
         return this._container;
     }
 
-    public get renderer(): IRoomRendererBase {
+    public get renderer(): IRoomRenderer {
         return this._renderer;
     }
 

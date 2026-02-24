@@ -19,7 +19,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     private _id: number = RoomObjectSpriteVisualization.VISUALIZATION_COUNTER++;
     private _object: IRoomObjectController;
     private _asset: IGraphicAssetCollection;
-    private _sprites: IRoomObjectSprite[] = [];
+    protected _sprites: IRoomObjectSprite[] = [];
 
     protected _scale: number = -1;
 

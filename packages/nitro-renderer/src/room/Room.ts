@@ -4,12 +4,11 @@ import type {
     IRoomInstance,
     IRoomMapData,
     IRoomObjectController,
-    IRoomRenderer,
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetConfigValue } from '@nitrodevco/nitro-shared';
-import { Container } from 'pixi.js';
+import type { Container } from 'pixi.js';
 
 import { ObjectRoomMaskUpdateMessage, ObjectRoomUpdateMessage } from './messages';
 import { RoomLogic } from './object';
@@ -156,57 +155,40 @@ export class Room implements IRoom {
     }
 
     public getRoomDisplay(canvasId: number, width: number, height: number, scale: number): Container | undefined {
-        let renderer = this._instance.renderer as IRoomRenderer;
+        let renderer = this._instance.renderer;
 
-        if (!renderer) {
-            renderer = new RoomRenderer();
-        }
+        if (!renderer) renderer = new RoomRenderer();
 
         renderer.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
 
         this._instance.setRenderer(renderer);
 
         const canvas = renderer.createCanvas(canvasId, width, height, scale);
+        //canvas.setMouseListener(this._room); TODO MOUSE
 
-        if (canvas) {
-            //canvas.setMouseListener(this._room); TODO MOUSE
+        if (canvas.geometry) {
+            canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
 
-            if (canvas.geometry) {
-                canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
+            const doorX = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorX);
+            const doorY = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorY);
+            const doorZ = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorZ);
+            const doorDirection = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorDir);
+            const vector = new Vector3d(doorX, doorY, doorZ);
 
-                const doorX = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorX);
-                const doorY = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorY);
-                const doorZ = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorZ);
-                const doorDirection = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorDir);
-                const vector = new Vector3d(doorX, doorY, doorZ);
+            let direction: IVector3D | undefined = undefined;
 
-                let direction: IVector3D | undefined = undefined;
+            if (doorDirection === 90) direction = new Vector3d(-2000, 0, 0);
 
-                if (doorDirection === 90) direction = new Vector3d(-2000, 0, 0);
+            if (doorDirection === 180) direction = new Vector3d(0, -2000, 0);
 
-                if (doorDirection === 180) direction = new Vector3d(0, -2000, 0);
-
-                if (direction) canvas.geometry.setDisplacement(vector, direction);
-
-                const displayObject = canvas.master;
-
-                if (displayObject) {
-                    const overlay = new Container();
-
-                    overlay.label = Room.OVERLAY;
-
-                    displayObject.addChild(overlay);
-                }
-            }
+            if (direction) canvas.geometry.setDisplacement(vector, direction);
         }
 
-        return canvas?.master;
+        return canvas.master;
     }
 
     public getGeometry(canvasId: number = -1): IRoomGeometry | undefined {
-        const renderer = this._instance?.renderer as IRoomRenderer;
-
-        return renderer?.getCanvas(canvasId)?.geometry;
+        return this._instance?.renderer?.getCanvas(canvasId)?.geometry;
     }
 
     public getObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
