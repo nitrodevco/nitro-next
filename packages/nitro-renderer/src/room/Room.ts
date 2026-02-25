@@ -79,12 +79,6 @@ export class Room implements IRoom {
         this._instance.model.setValue(RoomObjectVariableEnum.RoomZScale, 1);
 
         await this._instance.createRoomObjectAndInitalize(
-            Room.ROOM_OBJECT_ID,
-            Room.ROOM_OBJECT_TYPE,
-            RoomObjectCategoryEnum.Room,
-        );
-
-        await this._instance.createRoomObjectAndInitalize(
             Room.CURSOR_OBJECT_ID,
             Room.CURSOR_OBJECT_TYPE,
             RoomObjectCategoryEnum.Cursor,
@@ -135,13 +129,22 @@ export class Room implements IRoom {
         return canvas.master;
     }
 
-    public applyRoomMap(roomMap: IRoomMapData): void {
+    public async applyRoomMap(roomMap: IRoomMapData): Promise<void> {
         if (!roomMap) return;
 
-        const roomObject = this._instance.getRoomObject(
+        let roomObject = this._instance.getRoomObject(
             Room.ROOM_OBJECT_ID,
             RoomObjectCategoryEnum.Room,
         ) as IRoomObjectController;
+
+        if (roomObject) this._instance.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
+
+        if (!roomObject)
+            roomObject = (await this._instance.createRoomObjectAndInitalize(
+                Room.ROOM_OBJECT_ID,
+                Room.ROOM_OBJECT_TYPE,
+                RoomObjectCategoryEnum.Room,
+            )) as IRoomObjectController;
 
         if (!roomObject || !(roomObject.logic instanceof RoomLogic)) return;
 

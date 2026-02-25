@@ -19,7 +19,7 @@ import type {
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
     getRoomDisplay(canvasId: number, width: number, height: number, scale: number): Container | undefined;
-    applyRoomMap(roomMap: IRoomMapData): void;
+    applyRoomMap(roomMap: IRoomMapData): Promise<void>;
     dispatchMouseEvent(
         x: number,
         y: number,
