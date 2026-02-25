@@ -3,7 +3,6 @@ import { FurnitureType } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
 import { FurnitureData } from './FurnitureData';
-import { LocalizationStore } from './LocalizationStore';
 
 type State = {
     floorItems: Map<number, IFurnitureData>;
@@ -13,7 +12,6 @@ type State = {
 };
 
 type Actions = {
-    loadAsync: (url: string) => Promise<void>;
     parseFloorItems: (data: any) => void;
     parseWallItems: (data: any) => void;
 };
@@ -27,34 +25,6 @@ const initialState: State = {
 
 export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
     ...initialState,
-    loadAsync: async (...urls: string[]) => {
-        if (!urls || !urls.length) return;
-
-        try {
-            for (const url of urls) {
-                if (!url || !url.length) continue;
-
-                const response = await fetch(url);
-
-                if (response.status !== 200) throw new Error('Invalid furnidata url');
-
-                const responseData = await response.json();
-
-                if (responseData.roomitemtypes) get().parseFloorItems(responseData.roomitemtypes);
-                if (responseData.wallitemtypes) get().parseWallItems(responseData.wallitemtypes);
-            }
-
-            const items = [...get().floorItems.values(), ...get().wallItems.values()];
-
-            if (!items.length) return;
-
-            LocalizationStore.getState().setLocalizationForFurniture(items);
-
-            set({ allItems: items, furnitureLoaded: true });
-        } catch (e) {
-            throw new Error(`Failed to load furni data: ${e}`);
-        }
-    },
     parseFloorItems: (data: any) => {
         if (!data || !data.furnitype) return;
 

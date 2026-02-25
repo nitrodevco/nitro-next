@@ -302,7 +302,7 @@ export class Room implements IRoom {
         return this._instance?.renderer?.getCanvas(canvasId)?.geometry;
     }
 
-    public getObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
+    public getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
         const roomObject = this._instance.getRoomObject(objectId, category) as IRoomObjectController;
 
         if (!roomObject) {
@@ -321,6 +321,14 @@ export class Room implements IRoom {
         return this._instance.getRoomObject(objectId, category) as IRoomObjectController;
     }
 
+    public removeRoomObject(objectId: number, category: number): void {
+        this._instance.removeRoomObject(objectId, category);
+
+        /* EventStore.getState().emit(
+            new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, roomId, objectId, category),
+        ); */
+    }
+
     public async createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined> {
         return this._instance.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
     }
@@ -333,7 +341,7 @@ export class Room implements IRoom {
         data: IObjectData,
         extra: number = -1,
     ): boolean {
-        const object = this.getObject(objectId, RoomObjectCategoryEnum.Floor);
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
 
         if (!object) return false;
 
@@ -344,7 +352,7 @@ export class Room implements IRoom {
     }
 
     public updateRoomObjectFloorHeight(objectId: number, height: number): boolean {
-        const object = this.getObject(objectId, RoomObjectCategoryEnum.Floor);
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
 
         if (!object) return false;
 
@@ -353,7 +361,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public async addFurnitureFloor(
+    public async addFurnitureByTypeId(
         id: number,
         typeId: number,
         location: IVector3D,

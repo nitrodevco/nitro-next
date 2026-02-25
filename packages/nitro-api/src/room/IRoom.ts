@@ -30,7 +30,8 @@ export interface IRoom {
         buttonDown: boolean,
     ): void;
     getGeometry(canvasId: number): IRoomGeometry | undefined;
-    getObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
+    getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
+    removeRoomObject(objectId: number, category: number): void;
     setSelectedObject(data: ISelectedRoomObjectData): void;
     setPlacedObject(data: ISelectedRoomObjectData): void;
     setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
@@ -39,7 +40,7 @@ export interface IRoom {
     hasButtonMouseCursorOwners(): boolean;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     update(time: number, update?: boolean): void;
-    addFurnitureFloor(
+    addFurnitureByTypeId(
         id: number,
         typeId: number,
         location: IVector3D,
@@ -54,6 +55,23 @@ export interface IRoom {
         synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
+    ): Promise<boolean>;
+    addFurnitureFloorByTypeName(
+        id: number,
+        typeName: string,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        objectData: IObjectData,
+        extra?: number,
+        expires?: number,
+        usagePolicy?: number,
+        ownerId?: number,
+        ownerName?: string,
+        synchronized?: boolean,
+        realRoomObject?: boolean,
+        sizeZ?: number,
+        typeId?: number,
     ): Promise<boolean>;
     roomId: number;
     modelName: string;

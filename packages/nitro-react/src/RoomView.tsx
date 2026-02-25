@@ -1,5 +1,11 @@
 import type { IRoom } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import {
+    LegacyDataType,
+    MouseEventType,
+    RoomObjectCategoryEnum,
+    RoomObjectVariableEnum,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 import { GetRenderer, GetRoomEngine, GetStage, RoomGeometry, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -90,6 +96,35 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
     }, [room, width, height]);
 
     useEffect(() => {
+        if (!room) return;
+
+        void (async () => {
+            await room.addFurnitureByTypeId(
+                1,
+                26,
+                new Vector3d(5, 7, 0),
+                new Vector3d(90, 0, 0),
+                0,
+                new LegacyDataType(),
+            );
+
+            await room.addFurnitureFloorByTypeName(
+                2,
+                'tv_luxus',
+                new Vector3d(6, 4, 0),
+                new Vector3d(90, 0, 0),
+                1,
+                new LegacyDataType(),
+            );
+        })();
+
+        return () => {
+            room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
+            room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
+        };
+    }, [room]);
+
+    useEffect(() => {
         if (!roomId) return;
 
         let cancelled = false;
@@ -100,8 +135,6 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
             const room = await GetRoomEngine().createRoom(roomId);
 
             if (cancelled) return;
-
-            setRoom(room);
 
             let didMouseMove = false;
             let lastClick = 0;
@@ -164,6 +197,8 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
             canvas.onmousemove = handler;
             canvas.onmousedown = handler;
             canvas.onmouseup = handler;
+
+            setRoom(room);
         };
 
         void createRoom();

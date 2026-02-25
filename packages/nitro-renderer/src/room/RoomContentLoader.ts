@@ -13,7 +13,7 @@ import {
     RoomObjectVariableEnum,
     RoomObjectVisualizationType,
 } from '@nitrodevco/nitro-api';
-import { FurnitureDataStore, GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
+import { GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
@@ -56,13 +56,13 @@ export class RoomContentLoader implements IRoomContentLoader {
     private _pendingContentTypes: string[] = [];
 
     public async init(): Promise<void> {
-        this.processFurnitureData(FurnitureDataStore.getState().allItems);
+        //this.processFurnitureData(FurnitureDataStore.getState().allItems);
 
         const petTypes = GetConfigValue<string[]>('renderer.petTypes');
 
         if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
-        await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
+        //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
     }
 
     public processFurnitureData(furnitureData: IFurnitureData[]): void {
