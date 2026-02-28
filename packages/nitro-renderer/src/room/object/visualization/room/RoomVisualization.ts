@@ -411,8 +411,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         randomSeed,
                     );
 
-                    if (leftSide.length < 1 || rightSide.length < 1) plane.hasTexture = false;
-
                     plane.color =
                         _local_14.x === 0 && _local_14.y === 0
                             ? RoomVisualization.WALL_COLOR_BORDER
@@ -436,8 +434,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         maxX,
                         maxY,
                     );
-
-                    if (leftSide.length < 1 || rightSide.length < 1) plane.hasTexture = false;
 
                     plane.color =
                         _local_14.y > 0

@@ -12,6 +12,7 @@ export class RoomPlaneParser {
     private static FLOOR_THICKNESS: number = 0.25;
     private static WALL_THICKNESS: number = 0.25;
     private static MAX_WALL_ADDITIONAL_HEIGHT: number = 20;
+
     private _tileMatrix: number[][] = [];
     private _tileMatrixOriginal: number[][] = [];
     private _width: number = 0;
@@ -23,7 +24,15 @@ export class RoomPlaneParser {
     private _floorHolesInverted: Map<number, RoomFloorHole> = new Map();
     private _floorHoleMatrix: boolean[][] = [];
     private floorTiles: number[][] = [];
+
     private _minX: number = 0;
+    private _maxX: number = 0;
+    private _minY: number = 0;
+    private _maxY: number = 0;
+    private _wallHeight: number = 3.6;
+    private _wallThicknessMultiplier: number = 1;
+    private _floorThicknessMultiplier: number = 1;
+    private _floorHeight: number = 0;
 
     public dispose(): void {
         this._planes = [];
@@ -1221,25 +1230,17 @@ export class RoomPlaneParser {
         return this._minX;
     }
 
-    private _maxX: number = 0;
-
     public get maxX(): number {
         return this._maxX;
     }
-
-    private _minY: number = 0;
 
     public get minY(): number {
         return this._minY;
     }
 
-    private _maxY: number = 0;
-
     public get maxY(): number {
         return this._maxY;
     }
-
-    private _wallHeight: number;
 
     public get wallHeight(): number {
         if (this._fixedWallHeight != -1) {
@@ -1255,8 +1256,6 @@ export class RoomPlaneParser {
         this._wallHeight = k;
     }
 
-    private _wallThicknessMultiplier: number;
-
     public get wallThicknessMultiplier(): number {
         return this._wallThicknessMultiplier;
     }
@@ -1267,8 +1266,6 @@ export class RoomPlaneParser {
         }
         this._wallThicknessMultiplier = k;
     }
-
-    private _floorThicknessMultiplier: number;
 
     public get floorThicknessMultiplier(): number {
         return this._floorThicknessMultiplier;
@@ -1281,43 +1278,11 @@ export class RoomPlaneParser {
         this._floorThicknessMultiplier = k;
     }
 
-    private _floorHeight: number = 0;
-
     public get floorHeight(): number {
         if (this._fixedWallHeight != -1) {
             return this._fixedWallHeight;
         }
         return this._floorHeight;
-    }
-
-    private _restrictsDragging: boolean;
-
-    public get restrictsDragging(): boolean {
-        return this._restrictsDragging;
-    }
-
-    public set restrictsDragging(flag: boolean) {
-        this._restrictsDragging = flag;
-    }
-
-    private _restrictsScaling: boolean = false;
-
-    public get restrictsScaling(): boolean {
-        return this._restrictsScaling;
-    }
-
-    public set restrictsScaling(flag: boolean) {
-        this._restrictsScaling = flag;
-    }
-
-    private _restrictedScale: number = 1;
-
-    public get restrictedScale(): number {
-        return this._restrictedScale;
-    }
-
-    public set restrictedScale(scale: number) {
-        this._restrictedScale = scale;
     }
 
     public get tileMapWidth(): number {

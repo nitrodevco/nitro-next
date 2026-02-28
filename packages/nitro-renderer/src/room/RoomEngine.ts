@@ -67,11 +67,15 @@ export class RoomEngine implements IRoomEngine {
     }
 
     public async createRoom(roomId: number): Promise<IRoom> {
+        let room = this._rooms.get(roomId);
+
+        if (room) return room;
+
         const instance = GetRoomManager().createRoomInstance(this.getRoomId(roomId));
 
         if (!instance) throw new Error('invalid_instance');
 
-        const room = new Room(roomId, instance);
+        room = new Room(roomId, instance);
 
         await room.prepareRoom();
 

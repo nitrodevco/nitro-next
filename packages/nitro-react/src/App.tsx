@@ -22,8 +22,9 @@ export const App: FC = () => {
                     width,
                     height,
                     autoDensity: true,
+                    resolution: devicePixelRatio,
                     backgroundAlpha: 0,
-                    roundPixels: true,
+                    roundPixels: false,
                     preference: 'webgpu',
                 });
 
@@ -41,7 +42,7 @@ export const App: FC = () => {
             }
         };
 
-        void setup(window.innerWidth, window.innerHeight);
+        void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
     }, []);
 
     return (

@@ -4,15 +4,12 @@
     IGraphicAssetCollection,
     IVector3D,
 } from '@nitrodevco/nitro-api';
-import type { Container, Texture } from 'pixi.js';
-import { Matrix, Point, Sprite } from 'pixi.js';
 
-import { GetRenderer } from '../../../../../utils';
+import type { MaskEntry } from '../utils/MergeMasks';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
 export class PlaneMaskManager {
-    private _assetCollection: IGraphicAssetCollection | undefined = undefined;
     private _masks: Map<string, PlaneMask> = new Map();
     private _data: IAssetPlaneMaskData | undefined = undefined;
 
@@ -21,7 +18,6 @@ export class PlaneMaskManager {
     }
 
     public dispose(): void {
-        this._assetCollection = undefined;
         this._data = undefined;
 
         if (this._masks && this._masks.size) {
@@ -41,8 +37,6 @@ export class PlaneMaskManager {
 
     public initializeAssetCollection(k: IGraphicAssetCollection): void {
         if (!this.data) return;
-
-        this._assetCollection = k;
 
         this.parseMasks(this.data, k);
     }
@@ -130,119 +124,30 @@ export class PlaneMaskManager {
         return graphicName;
     }
 
-    public addMaskToContainer(
-        container: Container,
+    public getMaskEntry(
         type: string,
         scale: number,
         normal: IVector3D,
         posX: number,
         posY: number,
-    ): boolean {
+    ): MaskEntry | undefined {
         const mask = this._masks.get(type);
 
-        if (!mask) return true;
+        if (!mask) return undefined;
 
         const asset = mask.getGraphicAsset(scale, normal);
 
-        if (!asset) return true;
+        if (!asset) return undefined;
 
         const texture = asset.texture;
 
-        if (!texture) return true;
+        if (!texture) return undefined;
 
-        const point = new Point(posX + asset.offsetX, posY + asset.offsetY);
-
-        const matrix = new Matrix();
-
-        let xScale = 1;
-        let ySkew = 1;
-        let xSkew = 0;
-        let yScale = 0;
-        let tx = point.x + xSkew;
-        let ty = point.y + yScale;
-
-        if (asset.flipH) {
-            xScale = -1;
-            xSkew = texture.width;
-
-            tx = point.x + xSkew - texture.width;
-        }
-
-        if (asset.flipV) {
-            ySkew = -1;
-            yScale = texture.height;
-
-            ty = point.y + yScale - texture.height;
-        }
-
-        matrix.scale(xScale, ySkew);
-        matrix.translate(tx, ty);
-
-        const sprite = new Sprite(texture);
-
-        sprite.setFromMatrix(matrix);
-
-        container.addChild(sprite);
-
-        return true;
-    }
-
-    public writeMaskToTexture(
-        targetTexture: Texture,
-        type: string,
-        scale: number,
-        normal: IVector3D,
-        posX: number,
-        posY: number,
-    ): boolean {
-        const mask = this._masks.get(type);
-
-        if (!mask) return true;
-
-        const asset = mask.getGraphicAsset(scale, normal);
-
-        if (!asset) return true;
-
-        const texture = asset.texture;
-
-        if (!texture) return true;
-
-        const point = new Point(posX + asset.offsetX, posY + asset.offsetY);
-
-        const matrix = new Matrix();
-
-        let xScale = 1;
-        let ySkew = 1;
-        let xSkew = 0;
-        let yScale = 0;
-        let tx = point.x + xSkew;
-        let ty = point.y + yScale;
-
-        if (asset.flipH) {
-            xScale = -1;
-            xSkew = texture.width;
-
-            tx = point.x + xSkew - texture.width;
-        }
-
-        if (asset.flipV) {
-            ySkew = -1;
-            yScale = texture.height;
-
-            ty = point.y + yScale - texture.height;
-        }
-
-        matrix.scale(xScale, ySkew);
-        matrix.translate(tx, ty);
-
-        GetRenderer().render({
-            target: targetTexture,
-            container: new Sprite(texture),
-            clear: false,
-            transform: matrix,
-        });
-
-        return true;
+        return {
+            texture: texture,
+            position: { x: posX + asset.offsetX, y: posY + asset.offsetY },
+            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 },
+        };
     }
 
     public getMask(k: string): PlaneMask | undefined {
