@@ -1,6 +1,4 @@
 import type {
-    IFurnitureStackingHeightMap,
-    ILegacyWallGeometry,
     IObjectData,
     IRoom,
     IRoomGeometry,
@@ -8,16 +6,21 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
-    ISelectedRoomObjectData,
-    ITileObjectMap,
     IVector3D,
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetConfigValue } from '@nitrodevco/nitro-shared';
-import type { Container } from 'pixi.js';
+import {
+    GetObjectDataForFlags,
+    MouseEventType,
+    RoomControllerLevelEnum,
+    RoomObjectCategoryEnum,
+    RoomObjectVariableEnum,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
+import { GetConfigValue, SessionStore } from '@nitrodevco/nitro-shared';
+import type { Container, PointData } from 'pixi.js';
 import { Point } from 'pixi.js';
 
-import { GetTickerTime } from '../utils';
+import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import {
     ObjectDataUpdateMessage,
@@ -29,7 +32,7 @@ import {
 import { RoomLogic } from './object';
 import { RoomRenderer } from './renderer';
 import { RoomCamera } from './utils';
-import { type RoomFurnitureData, TileObjectMap } from './utils';
+import { type RoomFurnitureData } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -47,15 +50,9 @@ export class Room implements IRoom {
     private _instance: IRoomInstance;
 
     private _modelName: string;
-    private _legacyGeometry: ILegacyWallGeometry;
-    private _tileObjectMap: ITileObjectMap;
-    private _selectedObject: ISelectedRoomObjectData;
-    private _placedObject: ISelectedRoomObjectData;
-    private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
 
     private _floorStack: Map<number, RoomFurnitureData> = new Map();
     private _wallStack: Map<number, RoomFurnitureData> = new Map();
-    private _mouseButtonCursorOwners: string[] = [];
 
     private _camera: RoomCamera = new RoomCamera();
     private _canvasMouseX: number = 0;
@@ -68,6 +65,7 @@ export class Room implements IRoom {
     private _dragY: number = 0;
     private _canDrag: boolean = true;
     private _roomDraggingAlwaysCenters: boolean = false;
+    private _mouseCursorUpdate: boolean = false;
 
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
@@ -318,7 +316,7 @@ export class Room implements IRoom {
             }
         }
 
-        return this._instance.getRoomObject(objectId, category) as IRoomObjectController;
+        return roomObject;
     }
 
     public removeRoomObject(objectId: number, category: number): void {
@@ -379,7 +377,7 @@ export class Room implements IRoom {
     ): Promise<boolean> {
         return this.addFurnitureFloorByTypeName(
             id,
-            this.getFurnitureFloorName(typeId),
+            GetRoomContentLoader().getFurnitureFloorNameForTypeId(typeId),
             location,
             direction,
             state,
@@ -416,7 +414,10 @@ export class Room implements IRoom {
         const roomObject = await this.createRoomObjectFloor(id, typeName);
 
         if (roomObject) {
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureColor, this.getFurnitureFloorColorIndex(typeId));
+            roomObject.model.setValue(
+                RoomObjectVariableEnum.FurnitureColor,
+                GetRoomContentLoader().getFurnitureFloorColorIndex(typeId),
+            );
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureTypeId, typeId);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, '');
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, realRoomObject ? 1 : 0);
@@ -435,7 +436,7 @@ export class Room implements IRoom {
 
         //EventStore.getState().emit(new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, roomId, id, RoomObjectCategory.FLOOR));
 
-        const selectedRoomObjectData = this._placedObject;
+        const selectedRoomObjectData = this._instance.placedObject;
 
         if (
             selectedRoomObjectData &&
@@ -450,63 +451,71 @@ export class Room implements IRoom {
         return true;
     }
 
-    public setSelectedObject(data: ISelectedRoomObjectData): void {
-        if (this._selectedObject) {
-            this._selectedObject.dispose();
+    public removeRoomObjectFloor(objectId: number, userId: number = -1, _arg_4: boolean = false): void {
+        if (SessionStore.getState().userId === userId && !FurniId.isBuilderClubId(objectId)) {
+            const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+            if (roomObject) {
+                const screenLocation = this.getRoomObjectScreenLocation(objectId, RoomObjectCategoryEnum.Floor);
+
+                if (screenLocation) {
+                    const disabledPickingAnimation =
+                        roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDisablePickingAnimation) ===
+                        1;
+
+                    if (!disabledPickingAnimation) {
+                        const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
+                        const extras = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
+                        const dataKey = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDataFormat);
+                        const objectData = GetObjectDataForFlags(dataKey);
+                        /* const icon = this.getFurnitureFloorIcon(typeId, null, extras, objectData).data;
+
+                        if (icon) {
+                            (async () => {
+                                const image = await TextureUtils.generateImage(icon);
+                                const event = new NitroToolbarAnimateIconEvent(
+                                    image,
+                                    screenLocation.x,
+                                    screenLocation.y,
+                                );
+
+                                event.iconName = ToolbarIconEnum.INVENTORY;
+
+                                EventStore.getState().emit(event);
+                            })();
+                        } */
+                    }
+                }
+            }
         }
 
-        this._selectedObject = data;
-    }
+        this.removeRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+        this.setMouseDefault(objectId, RoomObjectCategoryEnum.Floor);
 
-    public setPlacedObject(data: ISelectedRoomObjectData): void {
-        if (this._placedObject) {
-            this._placedObject.dispose();
-        }
-
-        this._placedObject = data;
-    }
-
-    public setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void {
-        if (this._furnitureStackingHeightMap) this._furnitureStackingHeightMap.dispose();
-
-        this._furnitureStackingHeightMap = heightMap;
-
-        if (this._tileObjectMap) this._tileObjectMap.dispose();
-
-        if (this._furnitureStackingHeightMap) {
-            this._tileObjectMap = new TileObjectMap(
-                this._furnitureStackingHeightMap.width,
-                this._furnitureStackingHeightMap.height,
+        if (_arg_4)
+            this._instance.tileObjectMap?.populate(
+                this._instance.getRoomObjectsForCategory(RoomObjectCategoryEnum.Floor),
             );
-        }
     }
 
-    public addButtonMouseCursorOwner(k: string): boolean {
-        const _local_2 = this._mouseButtonCursorOwners.indexOf(k);
+    public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
+        const canvas = this._instance.renderer?.getCanvas(1);
+        const roomObject = this.getRoomObject(objectId, category);
 
-        if (_local_2 === -1) {
-            this._mouseButtonCursorOwners.push(k);
+        if (!canvas || !roomObject) return undefined;
 
-            return true;
-        }
+        const screenPoint = canvas.geometry.getScreenPoint(roomObject.getLocation());
 
-        return false;
-    }
+        screenPoint.x = screenPoint.x * canvas.scale;
+        screenPoint.y = screenPoint.y * canvas.scale;
 
-    public removeButtonMouseCursorOwner(k: string): boolean {
-        const _local_2 = this._mouseButtonCursorOwners.indexOf(k);
+        screenPoint.x += canvas.width / 2 + canvas.screenOffsetX;
+        screenPoint.y += canvas.height / 2 + canvas.screenOffsetY;
 
-        if (_local_2 > -1) {
-            this._mouseButtonCursorOwners.splice(_local_2, 1);
+        screenPoint.x = Math.round(screenPoint.x);
+        screenPoint.y = Math.round(screenPoint.y);
 
-            return true;
-        }
-
-        return false;
-    }
-
-    public hasButtonMouseCursorOwners(): boolean {
-        return this._mouseButtonCursorOwners.length > 0;
+        return screenPoint;
     }
 
     public getRoomValue<T>(key: RoomObjectVariableEnum): T {
@@ -534,12 +543,42 @@ export class Room implements IRoom {
         }
     }
 
-    public getFurnitureFloorName(typeId: number): string {
-        return GetRoomContentLoader().getFurnitureFloorNameForTypeId(typeId);
+    private setPointer(): void {
+        this._mouseCursorUpdate = false;
+
+        document.body.style.cursor = this._instance.hasButtonMouseCursorOwners() ? 'pointer' : 'auto';
     }
 
-    public getFurnitureFloorColorIndex(typeId: number): number {
-        return GetRoomContentLoader().getFurnitureFloorColorIndex(typeId);
+    public updateMousePointer(type: string, objectId: number, objectType: string): void {
+        /* const category = this.getRoomObjectCategoryForType(objectType);
+
+        switch (type) {
+            case RoomObjectFurnitureActionEvent.MOUSE_BUTTON:
+                this.setMouseButton(category, objectId);
+                return;
+            default:
+                this.setMouseDefault(this._activeRoomId, category, objectId);
+                return;
+        } */
+    }
+
+    private setMouseButton(objectId: number, category: RoomObjectCategoryEnum): void {
+        const sessionControllerLevel = RoomControllerLevelEnum.Guest;
+
+        if (
+            (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
+            sessionControllerLevel >= RoomControllerLevelEnum.Guest
+        ) {
+            this._instance.addButtonMouseCursorOwner(`${category}_${objectId}`);
+
+            this._mouseCursorUpdate = true;
+        }
+    }
+
+    private setMouseDefault(objectId: number, category: RoomObjectCategoryEnum): void {
+        this._instance.removeButtonMouseCursorOwner(`${category}_${objectId}`);
+
+        this._mouseCursorUpdate = true;
     }
 
     public get roomId(): number {
@@ -550,24 +589,8 @@ export class Room implements IRoom {
         return this._modelName;
     }
 
-    public get legacyGeometry(): ILegacyWallGeometry {
-        return this._legacyGeometry;
-    }
-
-    public get tileObjectMap(): ITileObjectMap {
-        return this._tileObjectMap;
-    }
-
-    public get selectedObject(): ISelectedRoomObjectData {
-        return this._selectedObject;
-    }
-
-    public get placedObject(): ISelectedRoomObjectData {
-        return this._placedObject;
-    }
-
-    public get furnitureStackingHeightMap(): IFurnitureStackingHeightMap {
-        return this._furnitureStackingHeightMap;
+    public get instance(): IRoomInstance {
+        return this._instance;
     }
 
     public get isDecorating(): boolean {

@@ -1,4 +1,5 @@
-import type { Rectangle, Texture } from 'pixi.js';
+import type { Rectangle } from 'pixi.js';
+import type { ImageLike } from 'pixi.js';
 
 import type { IRoomGeometry } from '../../IRoomGeometry';
 import type { IRoomObject } from '../IRoomObject';
@@ -9,7 +10,7 @@ export interface IRoomObjectVisualization {
     dispose(): void;
     update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void;
     getBoundingRectangle(): Rectangle;
-    getImage(): Texture | undefined;
+    getImage(): Promise<ImageLike | undefined>;
     instanceId: number;
     object: IRoomObject;
     updateSpriteCounter: number;

@@ -1,4 +1,6 @@
 import type {
+    IFurnitureStackingHeightMap,
+    ILegacyWallGeometry,
     IRoomInstance,
     IRoomInstanceContainer,
     IRoomObject,
@@ -6,19 +8,31 @@ import type {
     IRoomObjectManager,
     IRoomObjectModel,
     IRoomRenderer,
+    ISelectedRoomObjectData,
+    ITileObjectMap,
+    RoomObjectCategoryEnum,
 } from '@nitrodevco/nitro-api';
 
 import { RoomObjectModel } from './object';
+import { RoomObjectManager } from './RoomObjectManager';
+import { TileObjectMap } from './utils';
 
 export class RoomInstance implements IRoomInstance {
-    private _id: string;
+    private _id: number;
     private _container: IRoomInstanceContainer;
     private _renderer: IRoomRenderer;
-    private _managers: Map<number, IRoomObjectManager> = new Map();
-    private _updateCategories: number[] = [];
+    private _managers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
+    private _updateCategories: RoomObjectCategoryEnum[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
 
-    constructor(id: string, container: IRoomInstanceContainer) {
+    private _legacyGeometry: ILegacyWallGeometry;
+    private _tileObjectMap: ITileObjectMap;
+    private _selectedObject: ISelectedRoomObjectData;
+    private _placedObject: ISelectedRoomObjectData;
+    private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
+    private _mouseButtonCursorOwners: string[] = [];
+
+    constructor(id: number, container: IRoomInstanceContainer) {
         this._id = id;
         this._container = container;
     }
@@ -69,15 +83,11 @@ export class RoomInstance implements IRoomInstance {
         this._renderer = null!;
     }
 
-    public getManager(category: number): IRoomObjectManager | undefined {
-        return this._managers.get(category);
-    }
-
-    private getManagerOrCreate(category: number): IRoomObjectManager {
-        let manager = this.getManager(category);
+    public getObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager {
+        let manager = this._managers.get(category);
 
         if (!manager) {
-            manager = this._container.createRoomObjectManager(category);
+            manager = new RoomObjectManager();
 
             this._managers.set(category, manager);
         }
@@ -85,24 +95,20 @@ export class RoomInstance implements IRoomInstance {
         return manager;
     }
 
-    public getTotalObjectsForManager(category: number): number {
-        const manager = this.getManager(category);
-
-        if (!manager) return 0;
-
-        return manager.totalObjects;
+    public getTotalObjectsForManager(category: RoomObjectCategoryEnum): number {
+        return this.getObjectManager(category).totalObjects;
     }
 
-    public getRoomObject(id: number, category: number): IRoomObject | undefined {
-        return this.getManager(category)?.getObject(id);
+    public getRoomObject(id: number, category: RoomObjectCategoryEnum): IRoomObject | undefined {
+        return this.getObjectManager(category).getObject(id);
     }
 
-    public getRoomObjectsForCategory(category: number): IRoomObject[] {
-        return this.getManager(category)?.objects.getValues() ?? [];
+    public getRoomObjectByIndex(index: number, category: RoomObjectCategoryEnum): IRoomObject | undefined {
+        return this.getObjectManager(category)?.getObjectByIndex(index);
     }
 
-    public getRoomObjectByIndex(index: number, category: number): IRoomObject | undefined {
-        return this.getManager(category)?.getObjectByIndex(index);
+    public getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[] {
+        return this.getObjectManager(category).objects.getValues() ?? [];
     }
 
     public createRoomObject(
@@ -111,7 +117,7 @@ export class RoomInstance implements IRoomInstance {
         type: string,
         category: number,
     ): IRoomObjectController | undefined {
-        const object = this.getManagerOrCreate(category)?.createObject(id, stateCount, type);
+        const object = this.getObjectManager(category).createObject(id, stateCount, type);
 
         if (object && this._renderer) this._renderer.addObject(object);
 
@@ -127,7 +133,7 @@ export class RoomInstance implements IRoomInstance {
     }
 
     public removeRoomObject(id: number, category: number): void {
-        const manager = this.getManager(category);
+        const manager = this.getObjectManager(category);
 
         if (!manager) return;
 
@@ -182,7 +188,7 @@ export class RoomInstance implements IRoomInstance {
 
     public update(time: number, update: boolean = false): void {
         for (const category of this._updateCategories) {
-            const objects = this.getManager(category)?.objects;
+            const objects = this.getObjectManager(category)?.objects;
 
             if (!objects || !objects.length) continue;
 
@@ -206,7 +212,66 @@ export class RoomInstance implements IRoomInstance {
         return false;
     }
 
-    public get id(): string {
+    public setSelectedObject(data: ISelectedRoomObjectData): void {
+        if (this._selectedObject) {
+            this._selectedObject.dispose();
+        }
+
+        this._selectedObject = data;
+    }
+
+    public setPlacedObject(data: ISelectedRoomObjectData): void {
+        if (this._placedObject) {
+            this._placedObject.dispose();
+        }
+
+        this._placedObject = data;
+    }
+
+    public setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void {
+        if (this._furnitureStackingHeightMap) this._furnitureStackingHeightMap.dispose();
+
+        this._furnitureStackingHeightMap = heightMap;
+
+        if (this._tileObjectMap) this._tileObjectMap.dispose();
+
+        if (this._furnitureStackingHeightMap) {
+            this._tileObjectMap = new TileObjectMap(
+                this._furnitureStackingHeightMap.width,
+                this._furnitureStackingHeightMap.height,
+            );
+        }
+    }
+
+    public addButtonMouseCursorOwner(key: string): boolean {
+        const i = this._mouseButtonCursorOwners.indexOf(key);
+
+        if (i === -1) {
+            this._mouseButtonCursorOwners.push(key);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public removeButtonMouseCursorOwner(key: string): boolean {
+        const i = this._mouseButtonCursorOwners.indexOf(key);
+
+        if (i > -1) {
+            this._mouseButtonCursorOwners.splice(i, 1);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public hasButtonMouseCursorOwners(): boolean {
+        return this._mouseButtonCursorOwners.length > 0;
+    }
+
+    public get id(): number {
         return this._id;
     }
 
@@ -224,5 +289,25 @@ export class RoomInstance implements IRoomInstance {
 
     public get model(): IRoomObjectModel {
         return this._model;
+    }
+
+    public get legacyGeometry(): ILegacyWallGeometry {
+        return this._legacyGeometry;
+    }
+
+    public get tileObjectMap(): ITileObjectMap {
+        return this._tileObjectMap;
+    }
+
+    public get selectedObject(): ISelectedRoomObjectData {
+        return this._selectedObject;
+    }
+
+    public get placedObject(): ISelectedRoomObjectData {
+        return this._placedObject;
+    }
+
+    public get furnitureStackingHeightMap(): IFurnitureStackingHeightMap {
+        return this._furnitureStackingHeightMap;
     }
 }

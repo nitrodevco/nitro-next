@@ -8,5 +8,6 @@ export interface IRoomEngine {
     update(ticker: Ticker): void;
     createRoom(roomId: number): Promise<IRoom>;
     getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
+    whereYouClickIsWhereYouGo(): boolean;
     isPlayingGame: boolean;
 }

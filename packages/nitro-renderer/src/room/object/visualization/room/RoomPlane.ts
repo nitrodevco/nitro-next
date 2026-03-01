@@ -95,6 +95,7 @@ export class RoomPlane implements IRoomPlane {
 
     private _planeSprite?: TilingSprite;
     private _planeTexture?: Texture;
+    private _maskTexture: RenderTexture | undefined = undefined;
 
     private _planeOffsetX = 0;
     private _planeOffsetY = 0;
@@ -154,8 +155,6 @@ export class RoomPlane implements IRoomPlane {
             this._planeTexture = undefined;
         }
 
-        // We keep vectors allocated; they’re small and some codepaths might still reference getters.
-        // Marking disposed is enough to prevent further usage.
         this._disposed = true;
     }
 
@@ -255,14 +254,14 @@ export class RoomPlane implements IRoomPlane {
                 tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
                 tint: color,
             });
+        }
 
-            if (
-                !this._planeTexture ||
-                this._planeTexture.width !== this._width ||
-                this._planeTexture.height !== this._height
-            ) {
-                this._planeTexture = GetTexturePool().getTexture(this._width, this._height);
-            }
+        if (
+            !this._planeTexture ||
+            this._planeTexture.width !== this._width ||
+            this._planeTexture.height !== this._height
+        ) {
+            this._planeTexture = GetTexturePool().getTexture(this._width, this._height);
         }
 
         if (this._planeTexture) this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
@@ -488,13 +487,21 @@ export class RoomPlane implements IRoomPlane {
         return true;
     }
 
-    private getMergedMasks(geometry: IRoomGeometry): RenderTexture | null {
-        if (!this._useMask || (!this._bitmapMasks.length && !this._rectangleMasks.length) || !this._maskManager)
-            return null;
+    private getMergedMasks(geometry: IRoomGeometry): RenderTexture | undefined {
+        if (
+            !this._useMask ||
+            (!this._bitmapMasks.length && !this._rectangleMasks.length) ||
+            !this._maskChanged ||
+            !this._maskManager
+        )
+            return this._maskTexture;
+
+        this._maskChanged = false;
 
         const width = this._planeSprite?.width ?? 0;
         const height = this._planeSprite?.height ?? 0;
-        if (width <= 0 || height <= 0) return null;
+
+        if (width <= 0 || height <= 0) return undefined;
 
         const normal = geometry.getCoordinatePosition(this._normal);
         const masks: MaskEntry[] = [];
@@ -532,7 +539,10 @@ export class RoomPlane implements IRoomPlane {
             } as unknown as MaskEntry);
         }
 
-        return MergeMasks(GetRenderer(), width, height, masks);
+        if (!masks.length) this._maskTexture = undefined;
+        else this._maskTexture = MergeMasks(GetRenderer(), width, height, masks, this._maskTexture);
+
+        return this._maskTexture;
     }
 
     public get canBeVisible(): boolean {

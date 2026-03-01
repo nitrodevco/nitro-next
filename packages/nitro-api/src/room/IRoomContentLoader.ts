@@ -1,11 +1,10 @@
 import type { Texture } from 'pixi.js';
 
 import type { IGraphicAssetCollection } from '../asset';
+import type { IEventDispatcher } from '../events';
 import type { IFurnitureData } from '../session';
-import type { IEventDispatcher } from '../utils';
 import type { IPetColorResult } from './IPetColorResult';
 import type { IRoomContentListener } from './IRoomContentListener';
-import type { IRoomObject } from './object/IRoomObject';
 
 export interface IRoomContentLoader {
     init(): Promise<void>;
@@ -15,7 +14,6 @@ export interface IRoomContentLoader {
     getCollection(name: string): IGraphicAssetCollection | undefined;
     getPlaceholderName(type: string): string;
     getCategoryForType(type: string): number;
-    setRoomObjectRoomId(object: IRoomObject, roomId: string): void;
     getFurnitureFloorNameForTypeId(typeId: number): string;
     getFurnitureWallNameForTypeId(typeId: number, extra?: string): string;
     getFurnitureFloorColorIndex(typeId: number): number;

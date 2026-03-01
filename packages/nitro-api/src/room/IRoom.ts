@@ -2,6 +2,7 @@ import type { Container } from 'pixi.js';
 
 import type { IVector3D } from '../utils';
 import type { IRoomGeometry } from './IRoomGeometry';
+import type { IRoomInstance } from './IRoomInstance';
 import type {
     IObjectData,
     IRoomMapData,
@@ -9,12 +10,6 @@ import type {
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
-import type {
-    IFurnitureStackingHeightMap,
-    ILegacyWallGeometry,
-    ISelectedRoomObjectData,
-    ITileObjectMap,
-} from './utils';
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
@@ -32,12 +27,6 @@ export interface IRoom {
     getGeometry(canvasId: number): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
     removeRoomObject(objectId: number, category: number): void;
-    setSelectedObject(data: ISelectedRoomObjectData): void;
-    setPlacedObject(data: ISelectedRoomObjectData): void;
-    setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
-    addButtonMouseCursorOwner(k: string): boolean;
-    removeButtonMouseCursorOwner(k: string): boolean;
-    hasButtonMouseCursorOwners(): boolean;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     update(time: number, update?: boolean): void;
     addFurnitureByTypeId(
@@ -73,11 +62,7 @@ export interface IRoom {
         sizeZ?: number,
         typeId?: number,
     ): Promise<boolean>;
-    roomId: number;
-    modelName: string;
-    legacyGeometry: ILegacyWallGeometry;
-    tileObjectMap: ITileObjectMap;
-    selectedObject: ISelectedRoomObjectData;
-    placedObject: ISelectedRoomObjectData;
-    furnitureStackingHeightMap: IFurnitureStackingHeightMap;
+    readonly roomId: number;
+    readonly modelName: string;
+    readonly instance: IRoomInstance;
 }

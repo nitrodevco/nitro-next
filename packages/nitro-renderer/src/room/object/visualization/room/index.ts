@@ -1,6 +1,5 @@
 export * from './mask/PlaneMask';
 export * from './mask/PlaneMaskBitmap';
-export * from './mask/PlaneMaskFilter';
 export * from './mask/PlaneMaskManager';
 export * from './mask/PlaneMaskVisualization';
 export * from './PlaneDrawingData';

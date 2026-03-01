@@ -19,7 +19,7 @@ export class RoomGeometry implements IRoomGeometry {
     private _z_scale: number = 1;
     private _x_scale_internal: number = 1;
     private _y_scale_internal: number = 1;
-    private _z_scale_internal: number = 1;
+    private _z_scale_internal: number = Math.sqrt(1 / 2) / Math.sqrt(3 / 4);
     private _loc: IVector3D;
     private _dir: IVector3D;
     private _clipNear: number = -500;
@@ -28,7 +28,6 @@ export class RoomGeometry implements IRoomGeometry {
 
     constructor(scale: number, direction: IVector3D, location: IVector3D, depth: IVector3D | undefined = undefined) {
         this.scale = scale;
-        this._z_scale_internal = Math.sqrt(1 / 2) / Math.sqrt(3 / 4);
 
         this.location.assign(location);
         this.location = new Vector3d(location.x, location.y, location.z);
@@ -288,6 +287,8 @@ export class RoomGeometry implements IRoomGeometry {
     }
 
     public getScreenPosition(k: IVector3D): IVector3D {
+        if (!k) k = new Vector3d();
+
         let _local_2: IVector3D = Vector3d.dif(k, this._loc);
 
         _local_2.x = _local_2.x * this._x_scale;
@@ -322,8 +323,8 @@ export class RoomGeometry implements IRoomGeometry {
         return _local_2;
     }
 
-    public getScreenPoint(k: IVector3D): Point {
-        const pos = this.getScreenPosition(k);
+    public getScreenPoint(location: IVector3D): Point {
+        const pos = this.getScreenPosition(location);
 
         return new Point(pos.x, pos.y);
     }

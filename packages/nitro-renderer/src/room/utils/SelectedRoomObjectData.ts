@@ -1,10 +1,16 @@
-import type { IObjectData, ISelectedRoomObjectData, IVector3D, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import type {
+    IObjectData,
+    ISelectedRoomObjectData,
+    IVector3D,
+    RoomObjectCategoryEnum,
+    RoomObjectOperationType,
+} from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
 export class SelectedRoomObjectData implements ISelectedRoomObjectData {
     private _id: number;
     private _category: RoomObjectCategoryEnum;
-    private _operation: string;
+    private _operation: RoomObjectOperationType;
     private _loc: IVector3D = new Vector3d();
     private _dir: IVector3D = new Vector3d();
     private _typeId: number;
@@ -16,8 +22,8 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
 
     constructor(
         id: number,
-        category: number,
-        operation: string,
+        category: RoomObjectCategoryEnum,
+        operation: RoomObjectOperationType,
         location: IVector3D,
         direction: IVector3D,
         typeId: number = 0,
@@ -46,11 +52,11 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
         return this._id;
     }
 
-    public get category(): number {
+    public get category(): RoomObjectCategoryEnum {
         return this._category;
     }
 
-    public get operation(): string {
+    public get operation(): RoomObjectOperationType {
         return this._operation;
     }
 

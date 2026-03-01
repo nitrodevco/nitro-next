@@ -1,12 +1,13 @@
-import type {
-    IGraphicAssetCollection,
-    IRoomInstance,
-    IRoomInstanceContainer,
-    IRoomManager,
-    IRoomManagerListener,
-    IRoomObject,
-    IRoomObjectController,
-    IRoomObjectManager,
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import {
+    type IGraphicAssetCollection,
+    type IRoomInstance,
+    type IRoomInstanceContainer,
+    type IRoomManager,
+    type IRoomManagerListener,
+    type IRoomObject,
+    type IRoomObjectController,
+    RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
 import type { RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
@@ -15,11 +16,16 @@ import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
 import { RoomInstance } from './RoomInstance';
-import { RoomObjectManager } from './RoomObjectManager';
 
 export class RoomManager implements IRoomManager, IRoomInstanceContainer {
-    private _rooms: Map<string, IRoomInstance> = new Map();
-    private _updateCategories: number[] = [];
+    private _rooms: Map<number, IRoomInstance> = new Map();
+    private _updateCategories: number[] = [
+        RoomObjectCategoryEnum.Floor,
+        RoomObjectCategoryEnum.Wall,
+        RoomObjectCategoryEnum.Unit,
+        RoomObjectCategoryEnum.Cursor,
+        RoomObjectCategoryEnum.Room,
+    ];
 
     private _listener: IRoomManagerListener;
 
@@ -50,11 +56,11 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         for (const room of this._rooms.values()) room?.update(time, update);
     }
 
-    public getRoomInstance(roomId: string): IRoomInstance | undefined {
+    public getRoomInstance(roomId: number): IRoomInstance | undefined {
         return this._rooms.get(roomId);
     }
 
-    public createRoomInstance(roomId: string): IRoomInstance | undefined {
+    public createRoomInstance(roomId: number): IRoomInstance | undefined {
         let instance = this.getRoomInstance(roomId);
 
         if (!instance) {
@@ -72,7 +78,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         return instance;
     }
 
-    public removeRoomInstance(roomId: string): boolean {
+    public removeRoomInstance(roomId: number): boolean {
         const existing = this._rooms.get(roomId);
 
         if (!existing) return false;
@@ -84,7 +90,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         return true;
     }
 
-    public addUpdateCategory(category: number): void {
+    public addUpdateCategory(category: RoomObjectCategoryEnum): void {
         const index = this._updateCategories.indexOf(category);
 
         if (index >= 0) return;
@@ -94,7 +100,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         for (const room of this._rooms.values()) room?.addUpdateCategory(category);
     }
 
-    public removeUpdateCategory(category: number): void {
+    public removeUpdateCategory(category: RoomObjectCategoryEnum): void {
         const index = this._updateCategories.indexOf(category);
 
         if (index === -1) return;
@@ -105,10 +111,10 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
     }
 
     public async createRoomObjectAndInitalize(
-        roomId: string,
+        roomId: number,
         objectId: number,
         type: string,
-        category: number,
+        category: RoomObjectCategoryEnum,
     ): Promise<IRoomObject | undefined> {
         const instance = this.getRoomInstance(roomId);
 
@@ -170,7 +176,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
 
                     if (!isLoading) object.isReady = true;
 
-                    GetRoomContentLoader().setRoomObjectRoomId(object, roomId);
+                    object.model.setValue(RoomObjectVariableEnum.ObjectRoomId, roomId);
 
                     return object;
                 }
@@ -261,11 +267,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
         }
     }
 
-    public createRoomObjectManager(category: number): IRoomObjectManager {
-        return new RoomObjectManager();
-    }
-
-    public get rooms(): Map<string, IRoomInstance> {
+    public get rooms(): Map<number, IRoomInstance> {
         return this._rooms;
     }
 }

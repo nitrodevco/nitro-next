@@ -23,20 +23,6 @@ export class RoomObjectManager implements IRoomObjectManager {
         return this.addObject(id, type, new RoomObject(id, stateCount, type));
     }
 
-    private addObject(id: number, type: string, object: IRoomObjectController): IRoomObjectController | undefined {
-        if (this._objects.getValue(id)) {
-            object.dispose();
-
-            return undefined;
-        }
-
-        this._objects.add(id, object);
-
-        this.getTypeMap(type)?.add(id, object);
-
-        return object;
-    }
-
     public removeObject(id: number): void {
         const removed = this._objects.remove(id);
 
@@ -69,13 +55,27 @@ export class RoomObjectManager implements IRoomObjectManager {
         this._objectsPerType.reset();
     }
 
-    private getTypeMap(k: string, _arg_2: boolean = true): IAdvancedMap<number, IRoomObjectController> | undefined {
-        let existing = this._objectsPerType.getValue(k);
+    private addObject(id: number, type: string, object: IRoomObjectController): IRoomObjectController | undefined {
+        if (this._objects.getValue(id)) {
+            object.dispose();
 
-        if (!existing && _arg_2) {
+            return undefined;
+        }
+
+        this._objects.add(id, object);
+
+        this.getTypeMap(type).add(id, object);
+
+        return object;
+    }
+
+    private getTypeMap(type: string): IAdvancedMap<number, IRoomObjectController> {
+        let existing = this._objectsPerType.getValue(type);
+
+        if (!existing) {
             existing = new AdvancedMap();
 
-            this._objectsPerType.add(k, existing);
+            this._objectsPerType.add(type, existing);
         }
 
         return existing;

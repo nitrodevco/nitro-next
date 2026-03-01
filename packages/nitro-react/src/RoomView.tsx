@@ -15,85 +15,166 @@ type RoomViewProps = { roomId: number };
 
 export const RoomView = ({ roomId }: RoomViewProps) => {
     const [room, setRoom] = useState<IRoom | undefined>(undefined);
-    const [width, setWidth] = useState(-1);
-    const [height, setHeight] = useState(-1);
+    const [size, setSize] = useState<{ width: number; height: number; resolution: number } | undefined>(undefined);
     const elementRef = useRef<HTMLDivElement>(null);
 
     const mapData = useMemo(() => {
-        const size = 10;
-        const wallHeight = 1;
-        const planeParser = new RoomPlaneParser();
+        const parseMapData = (
+            modelString: string,
+            wallHeight: number,
+            doorX: number = -1,
+            doorY: number = -1,
+            doorDir: number = 0,
+            scale: boolean = true,
+        ) => {
+            const model = modelString.split(/\r?\n/);
 
-        planeParser.initializeTileMap(size + 2, size + 2);
+            let width = 0;
+            const height = model.length;
 
-        let y = 1;
+            let i = 0;
 
-        while (y < 1 + size) {
-            let x = 1;
+            while (i < height) {
+                const row = model[i];
 
-            while (x < 1 + size) {
-                planeParser.setTileHeight(x, y, 0);
+                if (row.length > width) {
+                    width = row.length;
+                }
 
-                x++;
+                i++;
             }
 
-            y++;
-        }
+            const heightMap: number[][] = [];
 
-        planeParser.initializeFromTileData(wallHeight);
-        const mapData = planeParser.getMapData();
+            i = 0;
 
-        mapData.doors.push({ x: 3, y: 1, z: 1, dir: 4 });
+            while (i < height) {
+                const subHeightMap: number[] = [];
 
-        return mapData;
+                let subIterator = 0;
+
+                while (subIterator < width) {
+                    subHeightMap.push(RoomPlaneParser.TILE_BLOCKED);
+
+                    subIterator++;
+                }
+
+                heightMap.push(subHeightMap);
+
+                i++;
+            }
+
+            i = 0;
+
+            while (i < height) {
+                const map = heightMap[i];
+                const text = model[i];
+
+                if (text.length > 0) {
+                    let subIterator = 0;
+
+                    while (subIterator < text.length) {
+                        const char = text.charAt(subIterator);
+                        let height = RoomPlaneParser.TILE_BLOCKED;
+
+                        if (char !== 'x' && char !== 'X') height = parseInt(char, 36);
+
+                        map[subIterator] = height;
+
+                        subIterator++;
+                    }
+                }
+
+                i++;
+            }
+
+            const hasEntryTile = false;
+            const entryX = 0;
+            const entryY = 5;
+            let doorZ = 0;
+
+            const planeParser = new RoomPlaneParser();
+
+            planeParser.initializeTileMap(width, height);
+
+            let y = 0;
+
+            while (y < height) {
+                let x = 0;
+
+                while (x < width) {
+                    const tileHeight = heightMap[y]?.[x] ?? RoomPlaneParser.TILE_BLOCKED;
+
+                    if (
+                        ((y > 0 && y < height - 1) || (x > 0 && x < width - 1)) &&
+                        !(tileHeight === RoomPlaneParser.TILE_BLOCKED) &&
+                        (!hasEntryTile || (x === entryX && y === entryY))
+                    ) {
+                        if (
+                            (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
+                            (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
+                            (heightMap[y + 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        ) {
+                            doorX = x + 0.5;
+                            doorY = y;
+                            doorZ = tileHeight;
+                            doorDir = 90;
+                        }
+
+                        if (
+                            (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
+                            (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
+                            (heightMap[y]?.[x + 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        ) {
+                            doorX = x;
+                            doorY = y + 0.5;
+                            doorZ = tileHeight;
+                            doorDir = 180;
+                        }
+                    }
+
+                    planeParser.setTileHeight(x, y, tileHeight);
+
+                    x++;
+                }
+
+                y++;
+            }
+
+            planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ);
+            planeParser.initializeFromTileData(-1);
+            planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + wallHeight);
+
+            const mapData = planeParser.getMapData();
+
+            mapData.doors.push({ x: doorX, y: doorY, z: doorZ, dir: doorDir });
+
+            return mapData;
+        };
+
+        return parseMapData(
+            `xxxxxxxxxxxx
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxx000000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxx00000000
+xxxxxxxxxxxx
+xxxxxxxxxxxx`,
+            1,
+            3,
+            5,
+            2,
+        );
     }, []);
-
-    useEffect(() => {
-        if (!room || !mapData) return;
-
-        void (async () => await room.applyRoomMap(mapData))();
-    }, [room, mapData]);
-
-    useEffect(() => {
-        if (width === -1 || height === -1) {
-            setWidth(Math.floor(window.innerWidth));
-            setHeight(Math.floor(window.innerHeight));
-
-            return;
-        }
-
-        if (!room) return;
-
-        const canvas = room.getRoomDisplay(1, width, height, RoomGeometry.SCALE_ZOOMED_IN);
-
-        if (canvas) {
-            const geometry = room.getGeometry(1);
-
-            if (geometry) {
-                const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;
-                const maxX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) ?? 0;
-                const minY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) ?? 0;
-                const maxY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) ?? 0;
-
-                let x = (minX + maxX) / 2;
-                let y = (minY + maxY) / 2;
-
-                const offset = 20;
-
-                x = x + (offset - 1);
-                y = y + (offset - 1);
-
-                const z = Math.sqrt(offset * offset + offset * offset) * Math.tan((30 / 180) * Math.PI);
-
-                geometry.location = new Vector3d(x, y, z);
-            }
-
-            if (!canvas.parent) GetStage().addChild(canvas);
-        }
-
-        GetRenderer().render(GetStage());
-        GetRenderer().resize(width, height, window.devicePixelRatio);
-    }, [room, width, height]);
 
     useEffect(() => {
         if (!room) return;
@@ -125,20 +206,57 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
     }, [room]);
 
     useEffect(() => {
+        if (!room || !size) return;
+
+        const { width, height, resolution } = size;
+
+        const canvas = room.getRoomDisplay(1, width, height, RoomGeometry.SCALE_ZOOMED_IN);
+
+        if (canvas) {
+            const geometry = room.getGeometry(1);
+
+            if (geometry) {
+                const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;
+                const maxX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) ?? 0;
+                const minY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) ?? 0;
+                const maxY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) ?? 0;
+
+                let x = (minX + maxX) / 2;
+                let y = (minY + maxY) / 2;
+
+                const offset = 20;
+
+                x = x + (offset - 1);
+                y = y + (offset - 1);
+
+                const z = Math.sqrt(offset * offset + offset * offset) * Math.tan((30 / 180) * Math.PI);
+
+                geometry.location = new Vector3d(x, y, z);
+            }
+
+            if (!canvas.parent) GetStage().addChild(canvas);
+        }
+
+        GetRenderer().render(GetStage());
+        GetRenderer().resize(width, height, resolution);
+    }, [room, size]);
+
+    useEffect(() => {
         if (!roomId) return;
 
-        let cancelled = false;
         const canvas = GetRenderer().canvas;
-        let handler: ((event: MouseEvent) => void) | undefined = undefined;
+        let didMouseMove = false;
+        let lastClick = 0;
+        let clickCount = 0;
+        let cancelled = false;
+        let handler: (event: MouseEvent) => void;
 
-        const createRoom = async () => {
+        void (async () => {
             const room = await GetRoomEngine().createRoom(roomId);
 
-            if (cancelled) return;
+            if (cancelled || !room) return;
 
-            let didMouseMove = false;
-            let lastClick = 0;
-            let clickCount = 0;
+            if (mapData) await room.applyRoomMap(mapData);
 
             handler = (event: MouseEvent) => {
                 const x = event.clientX;
@@ -182,15 +300,16 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
                         return;
                 }
 
-                room.dispatchMouseEvent(
-                    x,
-                    y,
-                    eventType,
-                    event.altKey,
-                    event.ctrlKey || event.metaKey,
-                    event.shiftKey,
-                    false,
-                );
+                if (room)
+                    room.dispatchMouseEvent(
+                        x,
+                        y,
+                        eventType,
+                        event.altKey,
+                        event.ctrlKey || event.metaKey,
+                        event.shiftKey,
+                        false,
+                    );
             };
 
             canvas.onclick = handler;
@@ -198,22 +317,27 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
             canvas.onmousedown = handler;
             canvas.onmouseup = handler;
 
-            setRoom(room);
-        };
+            setRoom(prev => {
+                if (prev === room) return prev;
 
-        void createRoom();
+                return room;
+            });
+            setSize({
+                width: Math.floor(window.innerWidth),
+                height: Math.floor(window.innerHeight),
+                resolution: window.devicePixelRatio,
+            });
+        })();
 
         return () => {
             cancelled = true;
 
-            if (handler) {
-                canvas.onclick = null;
-                canvas.onmousemove = null;
-                canvas.onmousedown = null;
-                canvas.onmouseup = null;
-            }
+            canvas.onclick = null;
+            canvas.onmousemove = null;
+            canvas.onmousedown = null;
+            canvas.onmouseup = null;
         };
-    }, [roomId]);
+    }, [roomId, mapData]);
 
     useEffect(() => {
         const canvas = GetRenderer().canvas;
@@ -224,15 +348,25 @@ export const RoomView = ({ roomId }: RoomViewProps) => {
             elementRef?.current?.appendChild(canvas);
         }
 
-        const resize = (event: UIEvent) => {
-            setWidth(Math.floor(window.innerWidth));
-            setHeight(Math.floor(window.innerHeight));
+        let resizeTimer: ReturnType<typeof setTimeout>;
+
+        const handleResize = (event: UIEvent) => {
+            clearTimeout(resizeTimer);
+
+            resizeTimer = setTimeout(() => {
+                setSize({
+                    width: Math.floor(window.innerWidth),
+                    height: Math.floor(window.innerHeight),
+                    resolution: window.devicePixelRatio,
+                });
+            }, 10);
         };
 
-        window.addEventListener('resize', resize);
+        window.addEventListener('resize', handleResize);
 
         return () => {
-            window.removeEventListener('resize', resize);
+            clearTimeout(resizeTimer);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 

@@ -4,13 +4,11 @@ import type {
     IPetColorResult,
     IRoomContentListener,
     IRoomContentLoader,
-    IRoomObject,
 } from '@nitrodevco/nitro-api';
 import {
     FurnitureType,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
-    RoomObjectVariableEnum,
     RoomObjectVisualizationType,
 } from '@nitrodevco/nitro-api';
 import { GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
@@ -63,6 +61,8 @@ export class RoomContentLoader implements IRoomContentLoader {
         if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
         //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
+
+        return Promise.resolve();
     }
 
     public processFurnitureData(furnitureData: IFurnitureData[]): void {
@@ -428,10 +428,6 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public getAssetUrlWithPetBase(assetName: string): string {
         return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
-    }
-
-    public setRoomObjectRoomId(object: IRoomObject, roomId: string): void {
-        object.model.setValue(RoomObjectVariableEnum.ObjectRoomId, roomId);
     }
 
     public setIconListener(listener: IRoomContentListener): void {

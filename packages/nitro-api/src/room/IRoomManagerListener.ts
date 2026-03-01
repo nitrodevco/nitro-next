@@ -1,4 +1,6 @@
+import type { RoomObjectCategoryEnum } from './object';
+
 export interface IRoomManagerListener {
-    objectInitialized(roomId: string, objectId: number, category: number): void;
+    objectInitialized(roomId: number, objectId: number, category: RoomObjectCategoryEnum): void;
     initalizeTemporaryObjectsByType(type: string, _arg_2: boolean): void;
 }

@@ -7,7 +7,7 @@ import type {
     IRoomObjectSpriteVisualization,
     RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import type { ImageLike } from 'pixi.js';
 import { Container, Point, Rectangle, Sprite } from 'pixi.js';
 
 import { TextureUtils } from '../../../utils';
@@ -90,11 +90,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
         }
     }
 
-    public get image(): Texture | undefined {
-        return this.getImage();
-    }
-
-    public getImage(): Texture | undefined {
+    public async getImage(): Promise<ImageLike | undefined> {
         const boundingRectangle = this.getBoundingRectangle();
 
         if (boundingRectangle.width * boundingRectangle.height === 0) return undefined;
@@ -142,9 +138,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
             index++;
         }
 
-        return TextureUtils.generateTexture({
-            target: container,
-        });
+        return TextureUtils.generateImage({ target: container });
     }
 
     public getBoundingRectangle(): Rectangle {

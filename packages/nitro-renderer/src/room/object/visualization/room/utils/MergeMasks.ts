@@ -14,8 +14,7 @@ export const MergeMasks = (
     height: number,
     masks: MaskEntry[],
     existing?: RenderTexture,
-): RenderTexture | null => {
-    if (!masks.length) return null;
+): RenderTexture => {
     const rt = existing ?? RenderTexture.create({ width, height, antialias: true });
 
     if (existing) {

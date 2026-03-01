@@ -1,5 +1,6 @@
 export * from './enum/FurnitureType';
 export * from './IFurnitureData';
+export * from './IUserInfo';
 export * from './pet/IPetCustomPart';
 export * from './pet/PetType';
 export * from './polls/IPollChoice';
