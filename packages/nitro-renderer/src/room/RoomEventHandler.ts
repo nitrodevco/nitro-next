@@ -1,4 +1,4 @@
-import type { IEventDispatcher, IRoomEventHandler, IRoomGeometry, IRoomObject } from '@nitrodevco/nitro-api';
+import type { IEventDispatcher, IRoom, IRoomEventHandler, IRoomGeometry, IRoomObject } from '@nitrodevco/nitro-api';
 import {
     MouseEventType,
     NitroLogger,
@@ -14,10 +14,9 @@ import { ObjectTileCursorUpdateMessage } from './messages';
 import { RoomEnterEffect } from './utils';
 
 export class RoomEventHandler implements IRoomEventHandler {
-    private _eventDispatcher: IEventDispatcher;
     private _eventIds: Map<RoomObjectCategoryEnum, Map<string, number>> = new Map();
 
-    constructor(private _roomId: number) {}
+    constructor(private _room: IRoom) {}
 
     public handleRoomObjectEvent(event: RoomObjectEvent): void {
         if (!event) return;
@@ -67,7 +66,7 @@ export class RoomEventHandler implements IRoomEventHandler {
     }
 
     public get eventDispatcher(): IEventDispatcher {
-        return this._eventDispatcher;
+        return this._room.eventDispatcher;
     }
 
     private handleRoomObjectMouseEvent(event: RoomObjectMouseEvent): void {
@@ -121,7 +120,7 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         const category = GetRoomEngine().getRoomObjectCategoryForType(event.objectType);
 
-        const roomCursor = GetRoomEngine().getRoomObjectCursor(this._roomId);
+        const roomCursor = this._room.getRoomObjectCursor();
 
         if (roomCursor && roomCursor.logic) {
             let newEvent: ObjectTileCursorUpdateMessage | undefined = undefined;

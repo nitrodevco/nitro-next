@@ -1,9 +1,7 @@
 import type {
     IFurnitureStackingHeightMap,
     ILegacyWallGeometry,
-    IRoomEventHandler,
     IRoomInstance,
-    IRoomInstanceContainer,
     IRoomObject,
     IRoomObjectController,
     IRoomObjectManager,
@@ -15,18 +13,15 @@ import type {
 } from '@nitrodevco/nitro-api';
 
 import { RoomObjectModel } from './object';
-import { RoomEventHandler } from './RoomEventHandler';
 import { RoomObjectManager } from './RoomObjectManager';
 import { TileObjectMap } from './utils';
 
 export class RoomInstance implements IRoomInstance {
     private _id: number;
-    private _container: IRoomInstanceContainer;
     private _renderer: IRoomRenderer;
     private _managers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
     private _updateCategories: RoomObjectCategoryEnum[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
-    private _eventHandler: IRoomEventHandler;
 
     private _legacyGeometry: ILegacyWallGeometry;
     private _tileObjectMap: ITileObjectMap;
@@ -35,18 +30,14 @@ export class RoomInstance implements IRoomInstance {
     private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
     private _mouseButtonCursorOwners: string[] = [];
 
-    constructor(id: number, container: IRoomInstanceContainer) {
+    constructor(id: number) {
         this._id = id;
-        this._container = container;
-        this._eventHandler = new RoomEventHandler(id);
     }
 
     public dispose(): void {
         this.removeAllManagers();
 
         this.destroyRenderer();
-
-        this._container = undefined!;
 
         this._model.dispose();
     }
@@ -126,14 +117,6 @@ export class RoomInstance implements IRoomInstance {
         if (object && this._renderer) this._renderer.addObject(object);
 
         return object;
-    }
-
-    public createRoomObjectAndInitalize(
-        objectId: number,
-        type: string,
-        category: number,
-    ): Promise<IRoomObject | undefined> {
-        return this._container.createRoomObjectAndInitalize(this._id, objectId, type, category);
     }
 
     public removeRoomObject(id: number, category: number): void {
@@ -279,10 +262,6 @@ export class RoomInstance implements IRoomInstance {
         return this._id;
     }
 
-    public get container(): IRoomInstanceContainer {
-        return this._container;
-    }
-
     public get renderer(): IRoomRenderer {
         return this._renderer;
     }
@@ -293,10 +272,6 @@ export class RoomInstance implements IRoomInstance {
 
     public get model(): IRoomObjectModel {
         return this._model;
-    }
-
-    public get eventHandler(): IRoomEventHandler {
-        return this._eventHandler;
     }
 
     public get legacyGeometry(): ILegacyWallGeometry {

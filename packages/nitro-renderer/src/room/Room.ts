@@ -1,6 +1,9 @@
 import type {
+    IEventDispatcher,
+    IGraphicAssetCollection,
     IObjectData,
     IRoom,
+    IRoomEventHandler,
     IRoomGeometry,
     IRoomInstance,
     IRoomMapData,
@@ -16,12 +19,20 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { GetConfigValue, RoomEngineObjectEvent, RoomObjectMouseEvent, SessionStore } from '@nitrodevco/nitro-shared';
+import {
+    EventDispatcher,
+    GetConfigValue,
+    RoomEngineObjectEvent,
+    RoomObjectMouseEvent,
+    SessionStore,
+} from '@nitrodevco/nitro-shared';
 import type { Container, PointData } from 'pixi.js';
 import { Point } from 'pixi.js';
 
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
+import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
+import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
 import {
     ObjectDataUpdateMessage,
     ObjectHeightUpdateMessage,
@@ -31,6 +42,7 @@ import {
 } from './messages';
 import { RoomLogic } from './object';
 import { RoomRenderer } from './renderer';
+import { RoomEventHandler } from './RoomEventHandler';
 import { RoomCamera } from './utils';
 import { type RoomFurnitureData } from './utils';
 
@@ -48,6 +60,8 @@ export class Room implements IRoom {
 
     private _roomId: number;
     private _instance: IRoomInstance;
+    private _eventDispatcher: IEventDispatcher;
+    private _eventHandler: IRoomEventHandler;
 
     private _modelName: string;
 
@@ -70,20 +84,22 @@ export class Room implements IRoom {
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
         this._instance = instance;
+        this._eventDispatcher = new EventDispatcher();
+        this._eventHandler = new RoomEventHandler(this);
     }
 
     public async prepareRoom(): Promise<boolean> {
         this._instance.model.setValue(RoomObjectVariableEnum.RoomIsPublic, 0);
         this._instance.model.setValue(RoomObjectVariableEnum.RoomZScale, 1);
 
-        await this._instance.createRoomObjectAndInitalize(
+        await this.createRoomObjectAndInitalize(
             Room.CURSOR_OBJECT_ID,
             Room.CURSOR_OBJECT_TYPE,
             RoomObjectCategoryEnum.Cursor,
         );
 
         if (GetConfigValue('renderer.avatarArrowEnabled', false))
-            await this._instance.createRoomObjectAndInitalize(
+            await this.createRoomObjectAndInitalize(
                 Room.ARROW_OBJECT_ID,
                 Room.ARROW_OBJECT_TYPE,
                 RoomObjectCategoryEnum.Cursor,
@@ -105,7 +121,7 @@ export class Room implements IRoom {
 
         const canvas = renderer.createCanvas(width, height, scale);
 
-        canvas.setEventHandler(this._instance.eventHandler);
+        canvas.setEventHandler(this._eventHandler);
 
         if (canvas.geometry) {
             canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
@@ -139,7 +155,7 @@ export class Room implements IRoom {
         if (roomObject) this._instance.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
         if (!roomObject)
-            roomObject = (await this._instance.createRoomObjectAndInitalize(
+            roomObject = (await this.createRoomObjectAndInitalize(
                 Room.ROOM_OBJECT_ID,
                 Room.ROOM_OBJECT_TYPE,
                 RoomObjectCategoryEnum.Room,
@@ -268,7 +284,7 @@ export class Room implements IRoom {
             let eventType: string = '';
 
             if (type === MouseEventType.MOUSE_CLICK) {
-                this._instance.eventHandler.eventDispatcher.dispatchEvent(
+                this._eventDispatcher.dispatchEvent(
                     new RoomEngineObjectEvent(
                         RoomEngineObjectEvent.DESELECTED,
                         this._roomId,
@@ -283,7 +299,7 @@ export class Room implements IRoom {
             else if (type === MouseEventType.MOUSE_DOWN_LONG) eventType = RoomObjectMouseEvent.MOUSE_DOWN_LONG;
             else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
 
-            this._instance.eventHandler.handleRoomObjectEvent(
+            this._eventHandler.handleRoomObjectEvent(
                 new RoomObjectMouseEvent(
                     eventType,
                     this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
@@ -331,8 +347,81 @@ export class Room implements IRoom {
         ); */
     }
 
+    public async createRoomObjectAndInitalize(
+        objectId: number,
+        type: string,
+        category: RoomObjectCategoryEnum,
+    ): Promise<IRoomObject | undefined> {
+        let visualizationType = type;
+        let logicType = type;
+        let assetName = type;
+        let asset: IGraphicAssetCollection | undefined = undefined;
+        let isLoading = false;
+
+        if (GetRoomContentLoader().isLoaderType(type)) {
+            asset = GetRoomContentLoader().getCollection(type);
+
+            if (!asset) {
+                isLoading = true;
+
+                try {
+                    await GetRoomContentLoader().downloadAsset(type);
+
+                    isLoading = false;
+                } catch {
+                    assetName = GetRoomContentLoader().getPlaceholderName(type);
+                }
+            }
+
+            asset = GetRoomContentLoader().getCollection(assetName);
+
+            if (asset) {
+                visualizationType = asset.data.visualizationType;
+                logicType = asset.data.logicType;
+            }
+        }
+
+        if (asset) {
+            const visualization = GetRoomObjectVisualizationFactory().getVisualization(visualizationType);
+            const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
+                assetName,
+                visualizationType,
+                asset.data,
+            );
+
+            if (visualization) {
+                visualization.asset = asset;
+
+                if (!visualizationData || !visualization.initialize(visualizationData)) return undefined;
+
+                const object = this._instance.createRoomObject(objectId, 1, type, category) as IRoomObjectController;
+
+                if (object) {
+                    object.setVisualization(visualization);
+
+                    const logic = GetRoomObjectLogicFactory().getLogic(logicType);
+
+                    if (logic) {
+                        logic.eventHandler = this._eventHandler;
+
+                        object.setLogic(logic);
+                        object.logic.initialize(asset.data);
+                    }
+
+                    if (!isLoading) object.isReady = true;
+
+                    object.model.setValue(RoomObjectVariableEnum.ObjectRoomId, this._roomId);
+
+                    return object;
+                }
+            }
+        }
+
+        return undefined;
+    }
+
     public async createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined> {
-        return this._instance.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
+        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
     }
 
     public updateRoomObjectFloor(
@@ -547,6 +636,10 @@ export class Room implements IRoom {
         }
     }
 
+    public getRoomObjectCursor(): IRoomObjectController {
+        return this.getRoomObject(Room.CURSOR_OBJECT_ID, RoomObjectCategoryEnum.Cursor);
+    }
+
     private setPointer(): void {
         this._mouseCursorUpdate = false;
 
@@ -595,6 +688,14 @@ export class Room implements IRoom {
 
     public get instance(): IRoomInstance {
         return this._instance;
+    }
+
+    public get eventDispatcher(): IEventDispatcher {
+        return this._eventDispatcher;
+    }
+
+    public get eventHandler(): IRoomEventHandler {
+        return this._eventHandler;
     }
 
     public get isDecorating(): boolean {

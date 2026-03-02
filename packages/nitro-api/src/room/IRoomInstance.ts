@@ -1,5 +1,3 @@
-import type { IRoomEventHandler } from './IRoomEventHandler';
-import type { IRoomInstanceContainer } from './IRoomInstanceContainer';
 import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
 import type { IRoomRenderer } from './renderer';
@@ -24,11 +22,6 @@ export interface IRoomInstance {
         type: string,
         category: RoomObjectCategoryEnum,
     ): IRoomObject | undefined;
-    createRoomObjectAndInitalize(
-        objectId: number,
-        type: string,
-        category: RoomObjectCategoryEnum,
-    ): Promise<IRoomObject | undefined>;
     removeRoomObject(id: number, category: RoomObjectCategoryEnum): void;
     removeAllManagers(): void;
     addUpdateCategory(category: RoomObjectCategoryEnum): void;
@@ -41,11 +34,9 @@ export interface IRoomInstance {
     removeButtonMouseCursorOwner(key: string): boolean;
     hasButtonMouseCursorOwners(): boolean;
     readonly id: number;
-    readonly container: IRoomInstanceContainer;
     readonly renderer: IRoomRenderer;
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly model: IRoomObjectModel;
-    readonly eventHandler: IRoomEventHandler;
     legacyGeometry: ILegacyWallGeometry;
     tileObjectMap: ITileObjectMap;
     selectedObject: ISelectedRoomObjectData;

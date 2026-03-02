@@ -236,7 +236,6 @@ export * from './room/RoomEngine';
 export * from './room/RoomEventHandler';
 export * from './room/RoomInstance';
 export * from './room/RoomManager';
-export * from './room/RoomObjectEventHandler';
 export * from './room/RoomObjectLogicFactory';
 export * from './room/RoomObjectManager';
 export * from './room/RoomObjectVisualizationFactory';

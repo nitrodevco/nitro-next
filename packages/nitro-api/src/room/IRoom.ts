@@ -1,6 +1,8 @@
 import type { Container, PointData } from 'pixi.js';
 
+import type { IEventDispatcher } from '../events';
 import type { IVector3D } from '../utils';
+import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomInstance } from './IRoomInstance';
 import type {
@@ -28,6 +30,11 @@ export interface IRoom {
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
     removeRoomObject(objectId: number, category: number): void;
+    createRoomObjectAndInitalize(
+        objectId: number,
+        type: string,
+        category: RoomObjectCategoryEnum,
+    ): Promise<IRoomObject | undefined>;
     createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined>;
     updateRoomObjectFloor(
         objectId: number,
@@ -75,8 +82,11 @@ export interface IRoom {
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     update(time: number, update?: boolean): void;
+    getRoomObjectCursor(): IRoomObjectController;
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
+    readonly eventDispatcher: IEventDispatcher;
+    readonly eventHandler: IRoomEventHandler;
     readonly isDecorating: boolean;
 }
