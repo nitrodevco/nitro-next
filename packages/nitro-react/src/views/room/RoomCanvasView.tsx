@@ -2,7 +2,7 @@ import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/ni
 import { GetRenderer, GetStage, RoomGeometry } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRoomContext } from '../../context/useRoomContext';
+import { useRoomContext } from '../../context/room/useRoomContext';
 
 export const RoomCanvasView = () => {
     const { room } = useRoomContext();

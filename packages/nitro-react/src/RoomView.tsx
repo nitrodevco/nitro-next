@@ -2,7 +2,7 @@ import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/ni
 import { GetRoomEngine, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
 import { useEffect, useMemo } from 'react';
 
-import { useRoomContext } from './context/useRoomContext';
+import { useRoomContext } from './context/room/useRoomContext';
 import { RoomCanvasView } from './views/room/RoomCanvasView';
 
 export const RoomView = () => {

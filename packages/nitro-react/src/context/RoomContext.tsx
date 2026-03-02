@@ -2,7 +2,7 @@ import type { IRoom } from '@nitrodevco/nitro-api';
 import type { Dispatch, SetStateAction } from 'react';
 import { createContext } from 'react';
 
-interface RoomContextType {
+export interface RoomContextType {
     roomId: number | undefined;
     room: IRoom | undefined;
     setRoom: Dispatch<SetStateAction<IRoom | undefined>>;
