@@ -1,123 +1,6 @@
-const lightenHexColor = (hex, percent) => {
-    // Remove the hash symbol if present
-    hex = hex.replace(/^#/, '');
+const colors = {};
 
-    // Convert hex to RGB
-    let r = parseInt(hex.substring(0, 2), 16);
-    let g = parseInt(hex.substring(2, 4), 16);
-    let b = parseInt(hex.substring(4, 6), 16);
-
-    // Adjust RGB values
-    r = Math.round(Math.min(255, r + 255 * percent));
-    g = Math.round(Math.min(255, g + 255 * percent));
-    b = Math.round(Math.min(255, b + 255 * percent));
-
-    // Convert RGB back to hex
-    const result = ((r << 16) | (g << 8) | b).toString(16);
-
-    // Make sure result has 6 digits
-    return '#' + result.padStart(6, '0');
-};
-
-const darkenHexColor = (hex, percent) => {
-    // Remove the hash symbol if present
-    hex = hex.replace(/^#/, '');
-
-    // Convert hex to RGB
-    let r = parseInt(hex.substring(0, 2), 16);
-    let g = parseInt(hex.substring(2, 4), 16);
-    let b = parseInt(hex.substring(4, 6), 16);
-
-    // Calculate the darkened RGB values
-    r = Math.round(Math.max(0, r - 255 * percent));
-    g = Math.round(Math.max(0, g - 255 * percent));
-    b = Math.round(Math.max(0, b - 255 * percent));
-
-    // Convert RGB back to hex
-    const result = ((r << 16) | (g << 8) | b).toString(16);
-
-    // Make sure result has 6 digits
-    return '#' + result.padStart(6, '0');
-};
-
-const generateShades = colors => {
-    for (const color in colors) {
-        const hex = colors[color];
-        const extended = {};
-        const shades = [50, 100, 200, 300, 400, 500, 600, 700, 900, 950];
-
-        for (let i = 0; i < shades.length; i++) {
-            const shade = shades[i];
-            extended[shade] = lightenHexColor(hex, shades[shades.length - 1 - i] / 950);
-            extended[-shade] = darkenHexColor(hex, shades[shades.length - 1 - i] / 950);
-        }
-
-        colors[color] = {
-            DEFAULT: hex,
-            ...extended,
-        };
-    }
-
-    return colors;
-};
-
-const colors = {
-    toolbar: '#1C1C20',
-    'card-header': '#1E7295',
-    'card-close': '#921911',
-    'card-tabs': '#185D79',
-    'card-border': '#283F5D',
-    'card-tab-item': '#B6BEC5',
-    'card-tab-item-active': '#DFDFDF',
-    'card-content-area': '#DFDFDF',
-
-    'card-grid-item': '#CDD3D9',
-    'card-grid-item-border': '#95A7BB',
-    'card-grid-item-active': '#ECECEC',
-    'card-grid-item-active-border': '#FFFFFF',
-
-    loading: '#393A85',
-    //muted: 'rgba(182, 190, 197)',
-    blue: '#0d6efd',
-    indigo: '#6610f2',
-    pink: '#d63384',
-    red: '#a81a12',
-    orange: '#fd7e14',
-    yellow: '#ffc107',
-    green: '#00800b',
-    teal: '#20c997',
-    cyan: '#0dcaf0',
-    gray: '#6c757d',
-    'gray-dark': '#343a40',
-    'gray-100': '#f8f9fa',
-    'gray-200': '#e9ecef',
-    'gray-300': '#dee2e6',
-    'gray-400': '#ced4da',
-    'gray-500': '#adb5bd',
-    'gray-600': '#6c757d',
-    'gray-700': '#495057',
-    'gray-800': '#343a40',
-    'gray-900': '#212529',
-    primary: '#1E7295',
-    secondary: '#185D79',
-    success: '#00800b',
-    info: '#0dcaf0',
-    warning: '#ffc107',
-    danger: '#a81a12',
-    light: '#DFDFDF',
-    dark: 'rgba(28, 28, 32, .9803921569)',
-    'light-dark': '#343a40',
-    white: '#fff',
-    black: '#000',
-    muted: '#B6BEC5',
-    purple: '#6f42c1',
-    gainsboro: '#d9d9d9',
-};
-
-const boxShadow = {
-    inner1px: 'inset 0 0 0 1px rgba(255,255,255,.3)',
-    'room-previewer': '-2px -2px rgba(0, 0, 0, 0.4), inset 3px 3px rgba(0, 0, 0, 0.2);',
-};
+const boxShadow = {};
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -135,7 +18,7 @@ module.exports = {
             fontFamily: {
                 sans: ['Ubuntu'],
             },
-            colors: generateShades(colors),
+            colors: colors,
             boxShadow,
             backgroundImage: {
                 'button-gradient-gray': 'linear-gradient(to bottom, #e2e2e2 50%, #c8c8c8 50%)',
