@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
 import { GetRoomEngine } from '../../nitro-renderer/src/room/GetRoomEngine';
+import { RoomContextProvider } from './context/RoomContextProvider';
 import { useConfigLoader } from './hooks/logic/useConfigLoader';
 import { useFurnitureDataLoader } from './hooks/logic/useFurnitureDataLoader';
 import { RoomView } from './RoomView';
@@ -57,7 +58,11 @@ export const App: FC = () => {
                     ></motion.div>
                 )}
             </AnimatePresence>
-            {isReady && <RoomView roomId={1} />}
+            {isReady && (
+                <RoomContextProvider roomId={1}>
+                    <RoomView />
+                </RoomContextProvider>
+            )}
             <div
                 id="draggable-windows-container"
                 className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden"

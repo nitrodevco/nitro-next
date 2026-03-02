@@ -1,11 +1,11 @@
-import type { IRoom } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, RoomGeometry } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
-type RoomCanvasViewProps = { room: IRoom };
+import { useRoomContext } from '../../context/useRoomContext';
 
-export const RoomCanvasView = ({ room }: RoomCanvasViewProps) => {
+export const RoomCanvasView = () => {
+    const { room } = useRoomContext();
     const [size, setSize] = useState<{ width: number; height: number; resolution: number } | undefined>(undefined);
     const elementRef = useRef<HTMLDivElement>(null);
 

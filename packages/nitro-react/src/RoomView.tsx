@@ -1,14 +1,12 @@
-import type { IRoom } from '@nitrodevco/nitro-api';
 import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
+import { useRoomContext } from './context/useRoomContext';
 import { RoomCanvasView } from './views/room/RoomCanvasView';
 
-type RoomViewProps = { roomId: number };
-
-export const RoomView = ({ roomId }: RoomViewProps) => {
-    const [room, setRoom] = useState<IRoom | undefined>(undefined);
+export const RoomView = () => {
+    const { roomId, room, setRoom } = useRoomContext();
 
     const mapData = useMemo(() => {
         const parseMapData = (
@@ -225,9 +223,9 @@ xxxxxxxxxxxx`,
         return () => {
             cancelled = true;
         };
-    }, [roomId, mapData]);
+    }, [roomId, setRoom, mapData]);
 
     if (!room) return null;
 
-    return <RoomCanvasView room={room} />;
+    return <RoomCanvasView />;
 };
