@@ -9,7 +9,7 @@ export class TileCursorLogic extends RoomObjectLogicBase {
     private static CURSOR_HIDDEN_STATE: number = 1;
     private static CURSOR_HEIGHT_STATE: number = 6;
 
-    private _lastEventId: string = '';
+    private _lastEventId: number = -1;
     private _isHidden: boolean = false;
 
     public override initialize(data: IAssetData): void {

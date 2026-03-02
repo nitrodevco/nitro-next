@@ -26,7 +26,7 @@ export class RoomInstance implements IRoomInstance {
     private _managers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
     private _updateCategories: RoomObjectCategoryEnum[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
-    private _eventHandler: IRoomEventHandler = new RoomEventHandler();
+    private _eventHandler: IRoomEventHandler;
 
     private _legacyGeometry: ILegacyWallGeometry;
     private _tileObjectMap: ITileObjectMap;
@@ -38,6 +38,7 @@ export class RoomInstance implements IRoomInstance {
     constructor(id: number, container: IRoomInstanceContainer) {
         this._id = id;
         this._container = container;
+        this._eventHandler = new RoomEventHandler(id);
     }
 
     public dispose(): void {

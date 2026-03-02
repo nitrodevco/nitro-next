@@ -4,7 +4,7 @@ import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectTileCursorUpdateMessage extends RoomObjectUpdateMessage {
     private _height: number;
-    private _sourceEventId: string;
+    private _sourceEventId: number;
     private _visible: boolean;
     private _toggleVisibility: boolean;
 
@@ -12,7 +12,7 @@ export class ObjectTileCursorUpdateMessage extends RoomObjectUpdateMessage {
         location: IVector3D | undefined,
         height: number,
         visible: boolean,
-        sourceEventId: string,
+        sourceEventId: number,
         toggleVisibility: boolean = false,
     ) {
         super(location, undefined);
@@ -31,7 +31,7 @@ export class ObjectTileCursorUpdateMessage extends RoomObjectUpdateMessage {
         return this._visible;
     }
 
-    public get sourceEventId(): string {
+    public get sourceEventId(): number {
         return this._sourceEventId;
     }
 

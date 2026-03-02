@@ -199,6 +199,14 @@ export class RoomEngine implements IRoomEngine {
         return this.createRoom(RoomEngine.TEMORARY_ROOM_ID);
     }
 
+    public getRoomObjectCursor(roomId: number): IRoomObjectController | undefined {
+        const room = this._rooms.get(roomId);
+
+        if (!room) return undefined;
+
+        return room.getRoomObject(RoomEngine.CURSOR_OBJECT_ID, RoomObjectCategoryEnum.Cursor);
+    }
+
     private processRoomObjectEvent(event: RoomObjectEvent): void {
         const roomId = this.getRoomObjectRoomId(event.object);
 
