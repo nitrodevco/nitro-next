@@ -29,7 +29,7 @@ export interface IRoom {
     ): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
-    removeRoomObject(objectId: number, category: number): void;
+    removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void;
     createRoomObjectAndInitalize(
         objectId: number,
         type: string,

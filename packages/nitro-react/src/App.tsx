@@ -21,7 +21,7 @@ export const App: FC = () => {
                 const renderer = await PrepareRenderer({
                     width,
                     height,
-                    autoDensity: true,
+                    autoDensity: false,
                     resolution: devicePixelRatio,
                     backgroundAlpha: 0,
                     roundPixels: false,

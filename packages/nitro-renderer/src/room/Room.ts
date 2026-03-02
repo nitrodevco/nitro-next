@@ -263,7 +263,7 @@ export class Room implements IRoom {
         shiftKey: boolean,
         buttonDown: boolean,
     ): void {
-        const canvas = this._instance.renderer.canvas;
+        const canvas = this._instance?.renderer?.canvas;
 
         if (!canvas) return;
 
@@ -339,12 +339,12 @@ export class Room implements IRoom {
         return roomObject;
     }
 
-    public removeRoomObject(objectId: number, category: number): void {
+    public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
         this._instance.removeRoomObject(objectId, category);
 
-        /* EventStore.getState().emit(
-            new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, roomId, objectId, category),
-        ); */
+        this._eventDispatcher.dispatchEvent(
+            new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, this._roomId, objectId, category),
+        );
     }
 
     public async createRoomObjectAndInitalize(

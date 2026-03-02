@@ -1,6 +1,5 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import { type IRoomInstance, type IRoomManager, type IRoomManagerListener } from '@nitrodevco/nitro-api';
-import type { RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
@@ -23,18 +22,6 @@ export class RoomManager implements IRoomManager {
 
     public init(listener: IRoomManagerListener): Promise<void> {
         this._listener = listener;
-
-        const onRoomContentLoadedEvent = (event: RoomContentLoadedEvent) => {
-            const contentType = event.contentType;
-
-            if (this._pendingContentTypes.indexOf(contentType) >= 0) return;
-
-            this._pendingContentTypes.push(contentType);
-        };
-
-        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_SUCCESS, onRoomContentLoadedEvent);
-        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_FAILURE, onRoomContentLoadedEvent);
-        //EventStore.getState().subscribe(RoomContentLoadedEvent.RCLE_CANCEL, onRoomContentLoadedEvent);
 
         return Promise.resolve();
     }
