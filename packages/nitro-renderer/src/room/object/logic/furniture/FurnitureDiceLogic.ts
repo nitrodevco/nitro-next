@@ -59,7 +59,7 @@ export class FurnitureDiceLogic extends FurnitureLogic {
                     );
                 }
 
-                if (objectEvent) this.dispatchEvent(objectEvent);
+                if (objectEvent) this.handleRoomObjectEvent(objectEvent);
 
                 return;
         }

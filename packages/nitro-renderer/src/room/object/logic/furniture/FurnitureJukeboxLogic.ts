@@ -58,16 +58,18 @@ export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.JUKEBOX_PLAYLIST_EDITOR, this.object),
         );
-        this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, -1));
+        this.handleRoomObjectEvent(
+            new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, -1),
+        );
     }
 
     private requestInit(): void {
         this._disposeEventsAllowed = true;
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.JUKEBOX_INIT, this.object),
         );
 
@@ -77,13 +79,13 @@ export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
     private requestPlayList(): void {
         this._disposeEventsAllowed = true;
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.JUKEBOX_START, this.object),
         );
     }
 
     private requestStopPlaying(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.JUKEBOX_MACHINE_STOP, this.object),
         );
     }
@@ -91,7 +93,7 @@ export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
     private requestDispose(): void {
         if (!this._disposeEventsAllowed) return;
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.JUKEBOX_DISPOSE, this.object),
         );
     }

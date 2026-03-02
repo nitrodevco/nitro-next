@@ -16,12 +16,12 @@ export class FurnitureMultiStateLogic extends FurnitureLogic {
 
         switch (event.type) {
             case MouseEventType.ROLL_OVER:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_BUTTON, this.object),
                 );
                 break;
             case MouseEventType.ROLL_OUT:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, this.object),
                 );
                 break;

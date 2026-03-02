@@ -34,7 +34,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
         }
 
         if (message instanceof ObjectSelectedMessage) {
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.CLOSE_FURNI_CONTEXT_MENU, this.object),
             );
         }
@@ -44,7 +44,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
         switch (this.object.getState(0)) {
             case FurnitureAchievementResolutionLogic.STATE_RESOLUTION_NOT_STARTED:
             case FurnitureAchievementResolutionLogic.STATE_RESOLUTION_IN_PROGRESS:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(
                         RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_OPEN,
                         this.object,
@@ -52,7 +52,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
                 );
                 break;
             case FurnitureAchievementResolutionLogic.STATE_RESOLUTION_ACHIEVED:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(
                         RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_ENGRAVING,
                         this.object,
@@ -60,7 +60,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
                 );
                 break;
             case FurnitureAchievementResolutionLogic.STATE_RESOLUTION_FAILED:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(
                         RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_FAILED,
                         this.object,

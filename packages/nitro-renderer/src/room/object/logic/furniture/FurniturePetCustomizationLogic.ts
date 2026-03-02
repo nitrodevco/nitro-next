@@ -23,7 +23,7 @@ export class FurniturePetCustomizationLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU, this.object),
         );
     }

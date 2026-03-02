@@ -54,17 +54,7 @@ export class RoomEngine implements IRoomEngine {
             this.processRoomObjectEvent(event as RoomObjectEvent),
         );
 
-        /* EventStore.getState().subscribe<RoomSessionEvent>(RoomSessionEvent.STARTED, event =>
-            this.onRoomSessionEvent(event),
-        );
-        EventStore.getState().subscribe<RoomSessionEvent>(RoomSessionEvent.ENDED, event =>
-            this.onRoomSessionEvent(event),
-        ); */
-
         await GetRoomContentLoader().init();
-        //await GetRoomManager().init(this);
-
-        //GetRoomContentLoader().setIconListener(this);
     }
 
     public update(ticker: Ticker): void {
@@ -210,11 +200,13 @@ export class RoomEngine implements IRoomEngine {
     }
 
     private processRoomObjectEvent(event: RoomObjectEvent): void {
-        const roomIdString = this.getRoomObjectRoomId(event.object);
+        const roomId = this.getRoomObjectRoomId(event.object);
 
-        if (!roomIdString) return;
+        if (roomId === undefined) return;
 
-        //GetRoomObjectEventHandler().handleRoomObjectEvent(event, roomId);
+        const room = this._rooms.get(roomId);
+
+        room?.instance?.eventHandler.handleRoomObjectEvent(event);
     }
 
     private getRoomObjectRoomId(object: IRoomObject): number | undefined {

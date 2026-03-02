@@ -27,13 +27,17 @@ export class FurnitureStickieLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectItemDataUpdateMessage)
-            this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.STICKIE, this.object));
+            this.handleRoomObjectEvent(
+                new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.STICKIE, this.object),
+            );
 
         this.updateColor();
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.STICKIE, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.STICKIE, this.object),
+        );
     }
 
     protected updateColor(): void {

@@ -75,7 +75,7 @@ export class AvatarLogic extends MovingObjectLogic {
 
     public override dispose(): void {
         if (this._selected)
-            this.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.OBJECT_REMOVED, this.object));
+            this.handleRoomObjectEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.OBJECT_REMOVED, this.object));
 
         super.dispose();
 
@@ -98,7 +98,7 @@ export class AvatarLogic extends MovingObjectLogic {
 
                 this._reportedLocation.assign(location);
 
-                this.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.POSITION_CHANGED, this.object));
+                this.handleRoomObjectEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.POSITION_CHANGED, this.object));
             }
         }
 
@@ -287,7 +287,7 @@ export class AvatarLogic extends MovingObjectLogic {
 
                 this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 1);
 
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_BUTTON, this.object), // this is used to change cursor
                 );
                 break;
@@ -296,13 +296,13 @@ export class AvatarLogic extends MovingObjectLogic {
 
                 this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 0);
 
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, this.object), // this is used to change cursor
                 );
                 break;
         }
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectMouseEvent(
                 eventType,
                 this.object,

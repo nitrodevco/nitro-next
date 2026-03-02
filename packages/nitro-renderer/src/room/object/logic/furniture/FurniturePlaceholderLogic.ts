@@ -8,6 +8,8 @@ export class FurniturePlaceholderLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PLACEHOLDER, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PLACEHOLDER, this.object),
+        );
     }
 }

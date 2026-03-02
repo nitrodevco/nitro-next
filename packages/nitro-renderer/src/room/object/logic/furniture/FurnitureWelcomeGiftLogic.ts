@@ -9,7 +9,9 @@ export class FurnitureWelcomeGiftLogic extends FurnitureMultiStateLogic {
         if (!event || !geometry) return;
 
         if (event.type === MouseEventType.DOUBLE_CLICK)
-            this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object));
+            this.handleRoomObjectEvent(
+                new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object),
+            );
 
         super.mouseEvent(event, geometry);
     }

@@ -290,13 +290,13 @@ export class RoomLogic extends RoomObjectLogicBase {
         else if (eventType === MouseEventType.MOUSE_CLICK) eventType = RoomObjectMouseEvent.CLICK;
         else if (eventType === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
 
-        switch (eventType) {
+        switch (event.type) {
             case MouseEventType.MOUSE_MOVE:
             case MouseEventType.ROLL_OVER:
             case MouseEventType.MOUSE_DOWN:
             case MouseEventType.MOUSE_CLICK: {
                 if (planeType === RoomPlaneData.PLANE_FLOOR) {
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectTileMouseEvent(
                             eventType,
                             this.object,
@@ -323,7 +323,7 @@ export class RoomLogic extends RoomObjectLogicBase {
                         if (direction > 360) direction -= 360;
                     }
 
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectWallMouseEvent(
                             eventType,
                             this.object,

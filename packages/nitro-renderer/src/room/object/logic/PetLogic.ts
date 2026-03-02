@@ -61,7 +61,7 @@ export class PetLogic extends MovingObjectLogic {
 
     public override dispose(): void {
         if (this._selected)
-            this.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.OBJECT_REMOVED, this.object));
+            this.handleRoomObjectEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.OBJECT_REMOVED, this.object));
 
         this._directions = null!;
         this._reportedLocation = null!;
@@ -83,7 +83,7 @@ export class PetLogic extends MovingObjectLogic {
 
                 this._reportedLocation.assign(location);
 
-                this.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.POSITION_CHANGED, this.object));
+                this.handleRoomObjectEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.POSITION_CHANGED, this.object));
             }
         }
 
@@ -181,7 +181,7 @@ export class PetLogic extends MovingObjectLogic {
                 const petType = this.object.model.getValue<number>(RoomObjectVariableEnum.PetType);
 
                 if (petType === PetType.MONSTERPLANT)
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectMouseEvent(
                             RoomObjectMouseEvent.MOUSE_DOWN,
                             this.object,
@@ -197,7 +197,7 @@ export class PetLogic extends MovingObjectLogic {
             }
         }
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectMouseEvent(
                 eventType,
                 this.object,

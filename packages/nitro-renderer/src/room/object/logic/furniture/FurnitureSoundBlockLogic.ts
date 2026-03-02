@@ -37,7 +37,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
 
     public override dispose(): void {
         if (this._state !== FurnitureSoundBlockLogic.STATE_UNINITIALIZED)
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectSamplePlaybackEvent(
                     RoomObjectSamplePlaybackEvent.ROOM_OBJECT_DISPOSED,
                     this.object,
@@ -56,7 +56,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
                 if (this._state === FurnitureSoundBlockLogic.STATE_UNINITIALIZED) {
                     this._lastLocZ = this.object.location.z;
 
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectSamplePlaybackEvent(
                             RoomObjectSamplePlaybackEvent.ROOM_OBJECT_INITIALIZED,
                             this.object,
@@ -67,7 +67,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
                 } else if (this._lastLocZ !== this.object.location.z) {
                     this._lastLocZ = this.object.location.z;
 
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectSamplePlaybackEvent(
                             RoomObjectSamplePlaybackEvent.CHANGE_PITCH,
                             this.object,
@@ -90,7 +90,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed, pitch);
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectSamplePlaybackEvent(
                 RoomObjectSamplePlaybackEvent.PLAY_SAMPLE,
                 this.object,

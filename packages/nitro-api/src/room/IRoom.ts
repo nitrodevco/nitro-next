@@ -1,4 +1,4 @@
-import type { Container } from 'pixi.js';
+import type { Container, PointData } from 'pixi.js';
 
 import type { IVector3D } from '../utils';
 import type { IRoomGeometry } from './IRoomGeometry';
@@ -6,6 +6,7 @@ import type { IRoomInstance } from './IRoomInstance';
 import type {
     IObjectData,
     IRoomMapData,
+    IRoomObject,
     IRoomObjectController,
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
@@ -13,7 +14,7 @@ import type {
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
-    getRoomDisplay(canvasId: number, width: number, height: number, scale: number): Container | undefined;
+    getRoomDisplay(width: number, height: number, scale: number): Container | undefined;
     applyRoomMap(roomMap: IRoomMapData): Promise<void>;
     dispatchMouseEvent(
         x: number,
@@ -24,11 +25,19 @@ export interface IRoom {
         shiftKey: boolean,
         buttonDown: boolean,
     ): void;
-    getGeometry(canvasId: number): IRoomGeometry | undefined;
+    getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
     removeRoomObject(objectId: number, category: number): void;
-    getRoomValue<T>(key: RoomObjectVariableEnum): T;
-    update(time: number, update?: boolean): void;
+    createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined>;
+    updateRoomObjectFloor(
+        objectId: number,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        data: IObjectData,
+        extra?: number,
+    ): boolean;
+    updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
     addFurnitureByTypeId(
         id: number,
         typeId: number,
@@ -62,7 +71,12 @@ export interface IRoom {
         sizeZ?: number,
         typeId?: number,
     ): Promise<boolean>;
+    removeRoomObjectFloor(objectId: number, userId?: number, _arg_4?: boolean): void;
+    getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
+    getRoomValue<T>(key: RoomObjectVariableEnum): T;
+    update(time: number, update?: boolean): void;
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
+    readonly isDecorating: boolean;
 }

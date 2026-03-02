@@ -24,7 +24,7 @@ export class FurnitureCuckooClockLogic extends FurnitureMultiStateLogic {
     private dispatchSoundEvent(height: number): void {
         const pitch = Math.pow(2, height - 1.2);
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectPlaySoundIdEvent(
                 RoomObjectPlaySoundIdEvent.PLAY_SOUND_AT_PITCH,
                 this.object,

@@ -48,7 +48,9 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
             this._timer = null;
         }, 2500);
 
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.ROOM_LINK, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.ROOM_LINK, this.object),
+        );
     }
 
     private setAutomaticStateIndex(state: number): void {

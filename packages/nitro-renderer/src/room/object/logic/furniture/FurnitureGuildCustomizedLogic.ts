@@ -50,7 +50,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
 
         if (message instanceof ObjectSelectedMessage) {
             if (!message.selected)
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(
                         RoomObjectWidgetRequestEvent.CLOSE_FURNI_CONTEXT_MENU,
                         this.object,
@@ -77,7 +77,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
     }
 
     private updateBadge(badge: string): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectBadgeAssetEvent(RoomObjectBadgeAssetEvent.LOAD_BADGE, this.object, badge, true),
         );
     }
@@ -88,7 +88,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
     }
 
     private openContextMenu(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU, this.object),
         );
     }

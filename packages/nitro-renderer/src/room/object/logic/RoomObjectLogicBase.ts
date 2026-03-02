@@ -1,6 +1,6 @@
 import type {
-    IEventDispatcher,
     INitroEvent,
+    IRoomEventHandler,
     IRoomGeometry,
     IRoomObjectController,
     IRoomObjectEventHandler,
@@ -9,7 +9,7 @@ import type {
 } from '@nitrodevco/nitro-api';
 
 export class RoomObjectLogicBase implements IRoomObjectEventHandler {
-    private _eventDispatcher: IEventDispatcher;
+    private _eventHandler: IRoomEventHandler;
     private _events: (() => void)[] = [];
     private _object: IRoomObjectController;
     private _time: number = 0;
@@ -75,27 +75,27 @@ export class RoomObjectLogicBase implements IRoomObjectEventHandler {
     }
 
     protected addEventListener<T extends INitroEvent>(type: string, cb: (event: T) => void) {
-        const disposable = this.eventDispatcher?.addEventListener(type, cb);
+        const disposable = this.eventHandler?.eventDispatcher.addEventListener(type, cb);
 
         if (disposable) this._events.push(disposable);
     }
 
-    protected dispatchEvent(event: INitroEvent): void {
+    protected handleRoomObjectEvent(event: INitroEvent): void {
         if (!event) return;
 
-        this.eventDispatcher.dispatchEvent(event);
+        this._eventHandler?.handleRoomObjectEvent(event);
     }
 
     public get object(): IRoomObjectController {
         return this._object;
     }
 
-    public get eventDispatcher(): IEventDispatcher {
-        return this._eventDispatcher;
+    public get eventHandler(): IRoomEventHandler {
+        return this._eventHandler;
     }
 
-    public set eventDispatcher(events: IEventDispatcher) {
-        this._eventDispatcher = events;
+    public set eventHandler(handler: IRoomEventHandler) {
+        this._eventHandler = handler;
     }
 
     public get widget(): string | undefined {

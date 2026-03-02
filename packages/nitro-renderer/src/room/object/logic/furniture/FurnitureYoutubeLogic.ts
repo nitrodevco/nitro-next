@@ -15,12 +15,12 @@ export class FurnitureYoutubeLogic extends FurnitureLogic {
         super.update(time);
 
         if (!this.object.model.getValue<string>(RoomObjectVariableEnum.SessionUrlPrefix))
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectDataRequestEvent(RoomObjectDataRequestEvent.RODRE_URL_PREFIX, this.object),
             );
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.YOUTUBE, this.object));
+        this.handleRoomObjectEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.YOUTUBE, this.object));
     }
 }

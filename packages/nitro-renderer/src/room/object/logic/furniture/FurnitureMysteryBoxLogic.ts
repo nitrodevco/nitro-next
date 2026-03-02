@@ -9,7 +9,7 @@ export class FurnitureMysteryBoxLogic extends FurnitureMultiStateLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.MYSTERYBOX_OPEN_DIALOG, this.object),
         );
     }

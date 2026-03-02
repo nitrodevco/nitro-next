@@ -18,7 +18,7 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
     public override dispose(): void {
         if (this._roomColorUpdated) {
             if (this.isRealRoomObject())
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectHSLColorEnableEvent(
                         RoomObjectHSLColorEnableEvent.ROOM_BACKGROUND_COLOR,
                         this.object,
@@ -50,7 +50,7 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
 
         switch (event.type) {
             case MouseEventType.DOUBLE_CLICK:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.BACKGROUND_COLOR, this.object),
                 );
 
@@ -77,7 +77,7 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
 
             this.object.setState(state, 0);
 
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectHSLColorEnableEvent(
                     RoomObjectHSLColorEnableEvent.ROOM_BACKGROUND_COLOR,
                     this.object,

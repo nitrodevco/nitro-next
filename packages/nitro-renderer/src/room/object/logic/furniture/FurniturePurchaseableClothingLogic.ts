@@ -11,7 +11,7 @@ export class FurniturePurchaseableClothingLogic extends FurnitureMultiStateLogic
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(
                 RoomObjectWidgetRequestEvent.PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG,
                 this.object,

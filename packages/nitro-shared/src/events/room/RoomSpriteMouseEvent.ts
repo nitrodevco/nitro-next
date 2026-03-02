@@ -2,8 +2,7 @@ import type { IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 
 export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent {
     private _type: string;
-    private _eventId: string;
-    private _canvasId: string;
+    private _eventId: number;
     private _spriteTag: string;
     private _screenX: number;
     private _screenY: number;
@@ -18,8 +17,7 @@ export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent {
 
     constructor(
         type: string,
-        eventId: string,
-        canvasId: string,
+        eventId: number,
         spriteTag: string,
         screenX: number,
         screenY: number,
@@ -32,7 +30,6 @@ export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent {
     ) {
         this._type = type;
         this._eventId = eventId;
-        this._canvasId = canvasId;
         this._spriteTag = spriteTag;
         this._screenX = screenX;
         this._screenY = screenY;
@@ -50,12 +47,8 @@ export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent {
         return this._type;
     }
 
-    public get eventId(): string {
+    public get eventId(): number {
         return this._eventId;
-    }
-
-    public get canvasId(): string {
-        return this._canvasId;
     }
 
     public get spriteTag(): string {

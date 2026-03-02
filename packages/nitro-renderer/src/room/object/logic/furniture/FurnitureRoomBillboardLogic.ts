@@ -22,7 +22,7 @@ export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic {
             return;
         }
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_FURNI_CLICK, this.object, '', clickUrl),
         );
     }

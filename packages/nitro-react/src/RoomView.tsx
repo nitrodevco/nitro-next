@@ -210,10 +210,10 @@ xxxxxxxxxxxx`,
 
         const { width, height, resolution } = size;
 
-        const canvas = room.getRoomDisplay(1, width, height, RoomGeometry.SCALE_ZOOMED_IN);
+        const canvas = room.getRoomDisplay(width, height, RoomGeometry.SCALE_ZOOMED_IN);
 
         if (canvas) {
-            const geometry = room.getGeometry(1);
+            const geometry = room.getGeometry();
 
             if (geometry) {
                 const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;

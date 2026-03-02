@@ -23,7 +23,9 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.CLOTHING_CHANGE, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.CLOTHING_CHANGE, this.object),
+        );
     }
 
     private updateClothingData(data: string): void {

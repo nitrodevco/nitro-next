@@ -170,6 +170,8 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
                     const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
                     if (logic) {
+                        logic.eventHandler = instance.eventHandler;
+
                         object.setLogic(logic);
                         object.logic.initialize(asset.data);
                     }
@@ -223,6 +225,8 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer {
                             const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
                             if (logic) {
+                                logic.eventHandler = room.eventHandler;
+
                                 object.setLogic(logic);
                                 logic.initialize(asset.data);
                             }

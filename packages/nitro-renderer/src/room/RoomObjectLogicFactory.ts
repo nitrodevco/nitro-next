@@ -91,8 +91,6 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
 
         const instance = new logic() as IRoomObjectEventHandler;
 
-        instance.eventDispatcher = this._events;
-
         if (!this._cachedEvents.get(type)) {
             this._cachedEvents.set(type, true);
 

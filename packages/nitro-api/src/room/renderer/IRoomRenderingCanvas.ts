@@ -1,8 +1,8 @@
 import type { Container, Point, Texture } from 'pixi.js';
 
+import type { IRoomEventHandler } from '../IRoomEventHandler';
 import type { IRoomGeometry } from '../IRoomGeometry';
 import type { ISortableSprite } from '../object';
-import type { IRoomCanvasMouseListener } from './IRoomCanvasMouseListener';
 import type { RoomObjectSpriteData } from './RoomObjectSpriteData';
 
 export interface IRoomRenderingCanvas {
@@ -12,7 +12,7 @@ export interface IRoomRenderingCanvas {
     setScale(scale: number, point?: Point, offsetPoint?: Point, isFlipForced?: boolean): void;
     render(time: number, update?: boolean): void;
     update(): void;
-    setMouseListener(listener: IRoomCanvasMouseListener): void;
+    setEventHandler(handler: IRoomEventHandler): void;
     skipSpriteVisibilityChecking(): void;
     resumeSpriteVisibilityChecking(): void;
     getPlaneSortableSprites(): ISortableSprite[];
@@ -31,6 +31,7 @@ export interface IRoomRenderingCanvas {
     moveRight(): void;
     moveUp(): void;
     moveDown(): void;
+    removeFromCache(identifier: string): void;
     id: number;
     geometry: IRoomGeometry;
     master: Container | undefined;

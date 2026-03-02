@@ -14,7 +14,7 @@ export class RoomObjectWallMouseEvent extends RoomObjectMouseEvent {
     constructor(
         type: string,
         object: IRoomObject,
-        eventId: string,
+        eventId: number,
         wallLocation: IVector3D,
         wallWidth: IVector3D,
         wallHeight: IVector3D,

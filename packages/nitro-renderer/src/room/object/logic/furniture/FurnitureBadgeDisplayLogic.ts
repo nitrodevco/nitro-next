@@ -38,7 +38,7 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.BADGE_DISPLAY_ENGRAVING, this.object),
         );
     }
@@ -48,7 +48,7 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureBadgeImageStatus, -1);
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectBadgeAssetEvent(RoomObjectBadgeAssetEvent.LOAD_BADGE, this.object, badgeId, false),
         );
     }

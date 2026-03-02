@@ -9,23 +9,15 @@ import { RoomSpriteCanvas } from './RoomSpriteCanvas';
 
 export class RoomRenderer implements IRoomRenderer, IRoomSpriteCanvasContainer {
     private _objects: Map<number, IRoomObject> = new Map();
-    private _canvases: Map<number, IRoomRenderingCanvas> = new Map();
-
+    private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _disposed: boolean = false;
     private _roomObjectVariableAccurateZ: string = '';
 
     public dispose(): void {
         if (this._disposed) return;
 
-        if (this._canvases) {
-            for (const [key, canvas] of this._canvases.entries()) {
-                this._canvases.delete(key);
-
-                canvas?.dispose();
-            }
-        }
-
-        if (this._objects) this._objects.clear();
+        this._canvas?.dispose();
+        this._objects?.clear();
 
         this._disposed = true;
     }
@@ -53,67 +45,36 @@ export class RoomRenderer implements IRoomRenderer, IRoomSpriteCanvasContainer {
 
         this._objects.delete(instanceId);
 
-        for (const canvas of this._canvases.values()) {
-            if (!canvas) continue;
-
-            const spriteCanvas = canvas as RoomSpriteCanvas;
-
-            spriteCanvas.removeFromCache(instanceId.toString());
-        }
-    }
-
-    public render(time: number, update: boolean = false): void {
-        if (!this._canvases || !this._canvases.size) return;
-
-        for (const canvas of this._canvases.values()) canvas?.render(time, update);
+        this._canvas?.removeFromCache(instanceId.toString());
     }
 
     public update(time: number, update: boolean = false): void {
-        if (!this._canvases || !this._canvases.size) return;
-
-        this.render(time, update);
-
-        for (const canvas of this._canvases.values()) canvas?.update();
+        this._canvas?.render(time, update);
+        this._canvas?.update();
     }
 
-    public getCanvas(id: number): IRoomRenderingCanvas | undefined {
-        return this._canvases.get(id);
-    }
+    public createCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
+        if (this._canvas) {
+            this._canvas.initialize(width, height);
 
-    public createCanvas(id: number, width: number, height: number, scale: number): IRoomRenderingCanvas {
-        const existing = this._canvases.get(id);
-
-        if (existing) {
-            existing.initialize(width, height);
-
-            if (existing.geometry) existing.geometry.scale = scale;
-
-            return existing;
+            if (this._canvas.geometry) this._canvas.geometry.scale = scale;
+        } else {
+            this._canvas = new RoomSpriteCanvas(1, this, width, height, scale);
         }
 
-        const canvas = this.createSpriteCanvas(id, width, height, scale);
-
-        this._canvases.set(id, canvas);
-
-        return canvas;
+        return this._canvas;
     }
 
-    private createSpriteCanvas(id: number, width: number, height: number, scale: number): IRoomRenderingCanvas {
-        return new RoomSpriteCanvas(id, this, width, height, scale);
-    }
-
-    public removeCanvas(id: number): void {
-        const existing = this._canvases.get(id);
-
-        if (!existing) return;
-
-        this._canvases.delete(id);
-
-        existing.dispose();
+    public removeCanvas(): void {
+        this._canvas?.dispose();
     }
 
     public get objects(): Map<number, IRoomObject> {
         return this._objects;
+    }
+
+    public get canvas(): IRoomRenderingCanvas | undefined {
+        return this._canvas;
     }
 
     public get disposed(): boolean {

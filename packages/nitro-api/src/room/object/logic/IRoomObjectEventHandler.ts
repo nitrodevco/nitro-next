@@ -1,4 +1,4 @@
-import type { IEventDispatcher } from '../../../utils';
+import type { IRoomEventHandler } from '../../IRoomEventHandler';
 import type { IRoomObjectController } from '../IRoomObjectController';
 import type { IRoomObjectUpdateMessage } from '../IRoomObjectUpdateMessage';
 import type { IRoomObjectMouseHandler } from './IRoomObjectMouseHandler';
@@ -13,7 +13,7 @@ export interface IRoomObjectEventHandler extends IRoomObjectMouseHandler {
     setObject(object: IRoomObjectController): void;
     tearDown(): void;
     object: IRoomObjectController;
-    eventDispatcher: IEventDispatcher;
+    eventHandler: IRoomEventHandler;
     widget: string | undefined;
     contextMenu: string | undefined;
 }

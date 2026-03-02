@@ -19,8 +19,8 @@ export class FurnitureRoomDimmerLogic extends FurnitureLogic {
     public override dispose(): void {
         if (this._roomColorUpdated) {
             if (this.isRealRoomObject()) {
-                this.dispatchEvent(new RoomObjectDimmerStateUpdateEvent(this.object, 0, 1, 1, 0xffffff, 0xff));
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(new RoomObjectDimmerStateUpdateEvent(this.object, 0, 1, 1, 0xffffff, 0xff));
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.WIDGET_REMOVE_DIMMER, this.object),
                 );
             }
@@ -66,7 +66,7 @@ export class FurnitureRoomDimmerLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.DIMMER, this.object));
+        this.handleRoomObjectEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.DIMMER, this.object));
     }
 
     private getStateFromDimmerData(data: string): number {
@@ -98,7 +98,7 @@ export class FurnitureRoomDimmerLogic extends FurnitureLogic {
                 brightness = 0xff;
             }
 
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectDimmerStateUpdateEvent(this.object, state, presetId, effectId, colorCode, brightness),
             );
 

@@ -26,12 +26,12 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
             case MouseEventType.DOUBLE_CLICK:
                 switch (event.spriteTag) {
                     case 'start_stop':
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 1),
                         );
                         return;
                     case 'reset':
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 2),
                         );
                         return;
@@ -43,6 +43,8 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 0));
+        this.handleRoomObjectEvent(
+            new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 0),
+        );
     }
 }

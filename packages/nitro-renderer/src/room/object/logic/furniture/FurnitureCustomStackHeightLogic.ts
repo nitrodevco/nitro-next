@@ -16,7 +16,9 @@ export class FurnitureCustomStackHeightLogic extends FurnitureMultiStateLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.STACK_HEIGHT, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.STACK_HEIGHT, this.object),
+        );
 
         super.useObject();
     }

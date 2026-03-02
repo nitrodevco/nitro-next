@@ -11,7 +11,7 @@ export class FurnitureMonsterplantSeedLogic extends FurnitureMultiStateLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(
                 RoomObjectWidgetRequestEvent.MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG,
                 this.object,

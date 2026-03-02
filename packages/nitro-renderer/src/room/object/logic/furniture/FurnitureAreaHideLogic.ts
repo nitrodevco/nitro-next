@@ -26,13 +26,13 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
         switch (event.type) {
             case MouseEventType.DOUBLE_CLICK: {
                 if (event.spriteTag === 'turn_on' || event.spriteTag === 'turn_off') {
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object),
                     );
                     return;
                 }
 
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.AREA_HIDE, this.object),
                 );
 
@@ -44,7 +44,9 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.AREA_HIDE, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.AREA_HIDE, this.object),
+        );
     }
 
     private setupObject(): void {

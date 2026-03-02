@@ -20,7 +20,7 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
 
     public override dispose(): void {
         if (this._currentState === FurnitureFloorHoleLogic.STATE_HOLE)
-            this.dispatchEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.REMOVE_HOLE, this.object));
+            this.handleRoomObjectEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.REMOVE_HOLE, this.object));
 
         super.dispose();
     }
@@ -42,7 +42,9 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
 
         if (location.x !== this._currentLocation.x || location.y !== this._currentLocation.y) {
             if (this._currentState === FurnitureFloorHoleLogic.STATE_HOLE)
-                this.dispatchEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.ADD_HOLE, this.object));
+                this.handleRoomObjectEvent(
+                    new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.ADD_HOLE, this.object),
+                );
         }
 
         this._currentLocation.assign(location);
@@ -52,9 +54,9 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
         if (state === this._currentState) return;
 
         if (state === FurnitureFloorHoleLogic.STATE_HOLE) {
-            this.dispatchEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.ADD_HOLE, this.object));
+            this.handleRoomObjectEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.ADD_HOLE, this.object));
         } else if (this._currentState === FurnitureFloorHoleLogic.STATE_HOLE) {
-            this.dispatchEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.REMOVE_HOLE, this.object));
+            this.handleRoomObjectEvent(new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.REMOVE_HOLE, this.object));
         }
 
         this._currentState = state;

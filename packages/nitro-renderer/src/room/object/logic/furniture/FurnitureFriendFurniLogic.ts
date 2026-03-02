@@ -38,7 +38,7 @@ export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
 
     public override useObject(): void {
         if (this._state === FurnitureFriendFurniLogic.STATE_LOCKED) {
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING, this.object),
             );
 

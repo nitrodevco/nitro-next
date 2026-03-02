@@ -9,7 +9,7 @@ export class FurnitureEffectBoxLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.EFFECTBOX_OPEN_DIALOG, this.object),
         );
     }

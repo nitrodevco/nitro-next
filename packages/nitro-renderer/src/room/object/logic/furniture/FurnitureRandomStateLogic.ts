@@ -8,6 +8,8 @@ export class FurnitureRandomStateLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_RANDOM, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_RANDOM, this.object),
+        );
     }
 }

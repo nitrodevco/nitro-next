@@ -15,7 +15,7 @@ export class FurnitureHockeyScoreLogic extends FurnitureLogic {
             case MouseEventType.DOUBLE_CLICK:
                 switch (event.spriteTag) {
                     case 'off':
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 3),
                         );
                         return;
@@ -24,12 +24,12 @@ export class FurnitureHockeyScoreLogic extends FurnitureLogic {
             case MouseEventType.MOUSE_CLICK:
                 switch (event.spriteTag) {
                     case 'inc':
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 2),
                         );
                         return;
                     case 'dec':
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 1),
                         );
                         return;
@@ -41,6 +41,8 @@ export class FurnitureHockeyScoreLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 3));
+        this.handleRoomObjectEvent(
+            new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object, 3),
+        );
     }
 }

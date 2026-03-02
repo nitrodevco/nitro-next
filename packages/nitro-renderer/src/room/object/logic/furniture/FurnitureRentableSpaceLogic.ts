@@ -12,7 +12,7 @@ export class FurnitureRentableSpaceLogic extends FurnitureLogic {
         super.update(time);
 
         if (!this.object.model.getValue<number>(RoomObjectVariableEnum.SessionCurrentUserId))
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectDataRequestEvent(RoomObjectDataRequestEvent.RODRE_CURRENT_USER_ID, this.object),
             );
 

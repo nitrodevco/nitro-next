@@ -12,7 +12,7 @@ export class RoomObjectMouseEvent extends RoomObjectEvent {
     public static MOUSE_ENTER: string = 'ROE_MOUSE_ENTER';
     public static MOUSE_LEAVE: string = 'ROE_MOUSE_LEAVE';
 
-    private _eventId: string;
+    private _eventId: number;
     private _altKey: boolean;
     private _ctrlKey: boolean;
     private _shiftKey: boolean;
@@ -26,7 +26,7 @@ export class RoomObjectMouseEvent extends RoomObjectEvent {
     constructor(
         type: string,
         object: IRoomObject,
-        eventId: string,
+        eventId: number,
         altKey: boolean = false,
         ctrlKey: boolean = false,
         shiftKey: boolean = false,
@@ -41,7 +41,7 @@ export class RoomObjectMouseEvent extends RoomObjectEvent {
         this._buttonDown = buttonDown;
     }
 
-    public get eventId(): string {
+    public get eventId(): number {
         return this._eventId;
     }
 

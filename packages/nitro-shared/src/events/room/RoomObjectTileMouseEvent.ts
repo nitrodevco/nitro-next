@@ -10,7 +10,7 @@ export class RoomObjectTileMouseEvent extends RoomObjectMouseEvent {
     constructor(
         type: string,
         object: IRoomObject,
-        eventId: string,
+        eventId: number,
         tileX: number,
         tileY: number,
         tileZ: number,

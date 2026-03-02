@@ -52,7 +52,7 @@ export class FurnitureSoundMachineLogic extends FurnitureMultiStateLogic {
     private requestInit(): void {
         this._disposeEventsAllowed = true;
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.SOUND_MACHINE_INIT, this.object),
         );
 
@@ -62,19 +62,19 @@ export class FurnitureSoundMachineLogic extends FurnitureMultiStateLogic {
     private requestPlayList(): void {
         this._disposeEventsAllowed = true;
 
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.SOUND_MACHINE_START, this.object),
         );
     }
 
     private requestStopPlaying(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.SOUND_MACHINE_STOP, this.object),
         );
     }
 
     private requestDispose(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.SOUND_MACHINE_DISPOSE, this.object),
         );
     }

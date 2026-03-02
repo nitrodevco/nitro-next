@@ -8,7 +8,7 @@ export class FurnitureHabboWheelLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.USE_HABBOWHEEL, this.object),
         );
     }

@@ -1,7 +1,6 @@
 export interface IRoomSpriteMouseEvent {
     readonly type: string;
-    readonly eventId: string;
-    readonly canvasId: string;
+    readonly eventId: number;
     readonly spriteTag: string;
     readonly screenX: number;
     readonly screenY: number;

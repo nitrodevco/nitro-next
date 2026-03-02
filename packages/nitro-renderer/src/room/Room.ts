@@ -16,7 +16,7 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { GetConfigValue, SessionStore } from '@nitrodevco/nitro-shared';
+import { GetConfigValue, RoomEngineObjectEvent, RoomObjectMouseEvent, SessionStore } from '@nitrodevco/nitro-shared';
 import type { Container, PointData } from 'pixi.js';
 import { Point } from 'pixi.js';
 
@@ -92,7 +92,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public getRoomDisplay(canvasId: number, width: number, height: number, scale: number): Container | undefined {
+    public getRoomDisplay(width: number, height: number, scale: number): Container | undefined {
         let renderer = this._instance.renderer;
 
         if (!renderer) {
@@ -103,8 +103,9 @@ export class Room implements IRoom {
             this._instance.setRenderer(renderer);
         }
 
-        const canvas = renderer.createCanvas(canvasId, width, height, scale);
-        //canvas.setMouseListener(this._room); TODO MOUSE
+        const canvas = renderer.createCanvas(width, height, scale);
+
+        canvas.setEventHandler(this._instance.eventHandler);
 
         if (canvas.geometry) {
             canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
@@ -246,7 +247,7 @@ export class Room implements IRoom {
         shiftKey: boolean,
         buttonDown: boolean,
     ): void {
-        const canvas = this._instance.renderer.getCanvas(1);
+        const canvas = this._instance.renderer.canvas;
 
         if (!canvas) return;
 
@@ -264,10 +265,10 @@ export class Room implements IRoom {
             !this.handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
             !canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
         ) {
-            /* let eventType: string = null;
+            let eventType: string = '';
 
             if (type === MouseEventType.MOUSE_CLICK) {
-                EventStore.getState().emit(
+                this._instance.eventHandler.eventDispatcher.dispatchEvent(
                     new RoomEngineObjectEvent(
                         RoomEngineObjectEvent.DESELECTED,
                         this._roomId,
@@ -280,24 +281,27 @@ export class Room implements IRoom {
             } else if (type === MouseEventType.MOUSE_MOVE) eventType = RoomObjectMouseEvent.MOUSE_MOVE;
             else if (type === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
             else if (type === MouseEventType.MOUSE_DOWN_LONG) eventType = RoomObjectMouseEvent.MOUSE_DOWN_LONG;
-            else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP; */
-            /* this._roomObjectEventHandler.handleRoomObjectEvent(
+            else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
+
+            this._instance.eventHandler.handleRoomObjectEvent(
                 new RoomObjectMouseEvent(
                     eventType,
-                    this.getRoomObject(this._activeRoomId, RoomEngine.ROOM_OBJECT_ID, RoomObjectCategory.ROOM),
-                    null,
+                    this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
+                    -1,
                     altKey,
+                    ctrlKey,
+                    shiftKey,
+                    buttonDown,
                 ),
-                this._activeRoomId,
-            ); */
+            );
         }
 
         this._canvasMouseX = x;
         this._canvasMouseY = y;
     }
 
-    public getGeometry(canvasId: number = -1): IRoomGeometry | undefined {
-        return this._instance?.renderer?.getCanvas(canvasId)?.geometry;
+    public getGeometry(): IRoomGeometry | undefined {
+        return this._instance?.renderer?.canvas?.geometry;
     }
 
     public getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
@@ -337,7 +341,7 @@ export class Room implements IRoom {
         direction: IVector3D,
         state: number,
         data: IObjectData,
-        extra: number = -1,
+        extra: number = NaN,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
 
@@ -499,7 +503,7 @@ export class Room implements IRoom {
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
-        const canvas = this._instance.renderer?.getCanvas(1);
+        const canvas = this._instance.renderer?.canvas;
         const roomObject = this.getRoomObject(objectId, category);
 
         if (!canvas || !roomObject) return undefined;
@@ -526,7 +530,7 @@ export class Room implements IRoom {
         this._instance.update(time, update);
 
         if (this._wasDragged) {
-            const canvas = this._instance.renderer.getCanvas(1);
+            const canvas = this._instance.renderer.canvas;
 
             if (!canvas) return;
 
@@ -614,7 +618,9 @@ export class Room implements IRoom {
             return false;
         } */
 
-        const canvas = this._instance.renderer.getCanvas(1)!;
+        const canvas = this._instance.renderer?.canvas;
+
+        if (!canvas) return false;
 
         let offsetX = x - this._canvasMouseX;
         let offsetY = y - this._canvasMouseY;

@@ -8,7 +8,7 @@ export class FurnitureOneWayDoorLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(
+        this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.ENTER_ONEWAYDOOR, this.object),
         );
     }

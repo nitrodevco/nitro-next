@@ -1,3 +1,4 @@
+import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomInstanceContainer } from './IRoomInstanceContainer';
 import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
@@ -44,6 +45,7 @@ export interface IRoomInstance {
     readonly renderer: IRoomRenderer;
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly model: IRoomObjectModel;
+    readonly eventHandler: IRoomEventHandler;
     legacyGeometry: ILegacyWallGeometry;
     tileObjectMap: ITileObjectMap;
     selectedObject: ISelectedRoomObjectData;

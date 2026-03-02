@@ -128,7 +128,7 @@ export class FurnitureLogic extends MovingObjectLogic {
 
     public override tearDown(): void {
         if (this.widget && this.isRealRoomObject())
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.CLOSE_WIDGET, this.object),
             );
 
@@ -203,7 +203,7 @@ export class FurnitureLogic extends MovingObjectLogic {
                     ? RoomObjectWidgetRequestEvent.OPEN_FURNI_CONTEXT_MENU
                     : RoomObjectWidgetRequestEvent.CLOSE_FURNI_CONTEXT_MENU;
 
-                this.dispatchEvent(new RoomObjectWidgetRequestEvent(eventType, this.object));
+                this.handleRoomObjectEvent(new RoomObjectWidgetRequestEvent(eventType, this.object));
             }
         }
 
@@ -232,14 +232,14 @@ export class FurnitureLogic extends MovingObjectLogic {
                 mouseEvent.spriteOffsetX = event.spriteOffsetX;
                 mouseEvent.spriteOffsetY = event.spriteOffsetY;
 
-                this.dispatchEvent(mouseEvent);
+                this.handleRoomObjectEvent(mouseEvent);
 
                 return;
             }
             case MouseEventType.ROLL_OVER: {
                 if (!this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_SHOW, this.object),
                         );
 
@@ -258,7 +258,7 @@ export class FurnitureLogic extends MovingObjectLogic {
                     mouseEvent.spriteOffsetX = event.spriteOffsetX;
                     mouseEvent.spriteOffsetY = event.spriteOffsetY;
 
-                    this.dispatchEvent(mouseEvent);
+                    this.handleRoomObjectEvent(mouseEvent);
 
                     this._mouseOver = true;
                 }
@@ -268,7 +268,7 @@ export class FurnitureLogic extends MovingObjectLogic {
             case MouseEventType.ROLL_OUT: {
                 if (this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
-                        this.dispatchEvent(
+                        this.handleRoomObjectEvent(
                             new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_HIDE, this.object),
                         );
 
@@ -287,7 +287,7 @@ export class FurnitureLogic extends MovingObjectLogic {
                     mouseEvent.spriteOffsetX = event.spriteOffsetX;
                     mouseEvent.spriteOffsetY = event.spriteOffsetY;
 
-                    this.dispatchEvent(mouseEvent);
+                    this.handleRoomObjectEvent(mouseEvent);
 
                     this._mouseOver = false;
                 }
@@ -313,10 +313,10 @@ export class FurnitureLogic extends MovingObjectLogic {
                 mouseEvent.spriteOffsetX = event.spriteOffsetX;
                 mouseEvent.spriteOffsetY = event.spriteOffsetY;
 
-                this.dispatchEvent(mouseEvent);
+                this.handleRoomObjectEvent(mouseEvent);
 
                 if (adUrl && adUrl.indexOf('http') === 0)
-                    this.dispatchEvent(
+                    this.handleRoomObjectEvent(
                         new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_HIDE, this.object),
                     );
 
@@ -325,7 +325,7 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.MOUSE_DOWN: {
-                this.eventDispatcher.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectMouseEvent(
                         RoomObjectMouseEvent.MOUSE_DOWN,
                         this.object,
@@ -340,7 +340,7 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.MOUSE_DOWN_LONG: {
-                this.eventDispatcher.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectMouseEvent(
                         RoomObjectMouseEvent.MOUSE_DOWN_LONG,
                         this.object,
@@ -361,14 +361,18 @@ export class FurnitureLogic extends MovingObjectLogic {
         const clickUrl = this.getAdClickUrl(this.object.model);
 
         if (clickUrl && clickUrl.length)
-            this.dispatchEvent(
+            this.handleRoomObjectEvent(
                 new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_FURNI_DOUBLE_CLICK, this.object, '', clickUrl),
             );
 
         if (this.widget)
-            this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.OPEN_WIDGET, this.object));
+            this.handleRoomObjectEvent(
+                new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.OPEN_WIDGET, this.object),
+            );
 
-        this.dispatchEvent(new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectStateChangedEvent(RoomObjectStateChangedEvent.STATE_CHANGE, this.object),
+        );
     }
 
     public override setObject(object: IRoomObjectController): void {
@@ -383,7 +387,7 @@ export class FurnitureLogic extends MovingObjectLogic {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected handleAdClick(objectId: number, objectType: string, clickUrl: string): void {
-        this.dispatchEvent(new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_FURNI_CLICK, this.object));
+        this.handleRoomObjectEvent(new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_FURNI_CLICK, this.object));
     }
 
     protected isRealRoomObject(): boolean {

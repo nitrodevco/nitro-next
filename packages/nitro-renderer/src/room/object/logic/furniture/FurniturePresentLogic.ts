@@ -83,12 +83,12 @@ export class FurniturePresentLogic extends FurnitureLogic {
 
         switch (event.type) {
             case MouseEventType.ROLL_OVER:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_BUTTON, this.object),
                 );
                 break;
             case MouseEventType.ROLL_OUT:
-                this.dispatchEvent(
+                this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, this.object),
                 );
                 break;
@@ -98,6 +98,6 @@ export class FurniturePresentLogic extends FurnitureLogic {
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PRESENT, this.object));
+        this.handleRoomObjectEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.PRESENT, this.object));
     }
 }

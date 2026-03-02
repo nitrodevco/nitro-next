@@ -1,5 +1,5 @@
 import type {
-    IRoomCanvasMouseListener,
+    IRoomEventHandler,
     IRoomGeometry,
     IRoomObject,
     IRoomObjectSprite,
@@ -69,7 +69,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     private _objectCache: RoomObjectCache;
 
-    private _mouseListener: IRoomCanvasMouseListener | undefined = undefined;
+    private _eventHandler: IRoomEventHandler | undefined = undefined;
 
     constructor(
         private _id: number,
@@ -153,7 +153,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (this._eventCache) this._eventCache.clear();
 
-        this._mouseListener = undefined;
+        this._eventHandler = undefined;
     }
 
     public initialize(width: number, height: number): void {
@@ -657,8 +657,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         this._eventId++;
     }
 
-    public setMouseListener(listener: IRoomCanvasMouseListener): void {
-        this._mouseListener = listener;
+    public setEventHandler(handler: IRoomEventHandler): void {
+        this._eventHandler = handler;
     }
 
     private getCacheItem(id: string): RoomObjectCacheItem {
@@ -885,12 +885,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     ): IRoomSpriteMouseEvent {
         const screenX: number = x - this._width / 2;
         const screenY: number = y - this._height / 2;
-        const canvasName = `canvas_${this._id}`;
 
         return new RoomSpriteMouseEvent(
             type,
-            canvasName + '_' + this._eventId,
-            canvasName,
+            this._eventId,
             tag,
             screenX,
             screenY,
@@ -922,8 +920,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!roomObject) continue;
 
-            if (this._mouseListener) {
-                this._mouseListener.processRoomCanvasMouseEvent(event, roomObject, this._geometry);
+            if (this._eventHandler) {
+                this._eventHandler.handleRoomCanvasMouseEvent(event, roomObject, this._geometry);
             } else {
                 const logic = roomObject.mouseHandler;
 

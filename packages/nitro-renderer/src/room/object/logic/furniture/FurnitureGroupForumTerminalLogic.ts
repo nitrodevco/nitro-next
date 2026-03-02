@@ -9,7 +9,9 @@ export class FurnitureGroupForumTerminalLogic extends FurnitureGuildCustomizedLo
     }
 
     public override useObject(): void {
-        this.dispatchEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INERNAL_LINK, this.object));
+        this.handleRoomObjectEvent(
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INERNAL_LINK, this.object),
+        );
 
         super.useObject();
     }
