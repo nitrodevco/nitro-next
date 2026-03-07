@@ -7,7 +7,8 @@ import type {
 } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 import type { RenderTexture } from 'pixi.js';
-import { Container, Matrix, Point, Sprite, Texture, TilingSprite } from 'pixi.js';
+import { TilingSprite } from 'pixi.js';
+import { Container, Matrix, Point, Sprite, Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';
 import { GetRenderer, GetTexturePool } from '../../../../utils';
@@ -93,7 +94,7 @@ export class RoomPlane implements IRoomPlane {
     private _rectangleMasks: RoomPlaneRectangleMask[] = [];
     private _maskChanged = false;
 
-    private _planeSprite?: TilingSprite;
+    private _planeSprite?: TilingSprite | Sprite;
     private _planeTexture?: Texture;
     private _maskTexture: RenderTexture | undefined = undefined;
 
@@ -443,6 +444,7 @@ export class RoomPlane implements IRoomPlane {
 
         for (const mask of this._bitmapMasks) {
             if (!mask) continue;
+
             if (mask.type === maskType && mask.leftSideLoc === leftSideLoc && mask.rightSideLoc === rightSideLoc)
                 return false;
         }

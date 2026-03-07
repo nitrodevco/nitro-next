@@ -1,6 +1,6 @@
 import type { IRoomObjectManager } from './IRoomObjectManager';
+import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
-import type { IRoomRenderer } from './renderer';
 import type {
     IFurnitureStackingHeightMap,
     ILegacyWallGeometry,
@@ -10,12 +10,14 @@ import type {
 
 export interface IRoomInstance {
     dispose(): void;
-    setRenderer(renderer: IRoomRenderer): void;
+    createCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
     getObjectManager(category: number): IRoomObjectManager | undefined;
     getTotalObjectsForManager(category: RoomObjectCategoryEnum): number;
+    getObjectInstanceId(object: IRoomObject): number;
     getRoomObject(id: number, category: RoomObjectCategoryEnum): IRoomObject | undefined;
     getRoomObjectByIndex(index: number, category: RoomObjectCategoryEnum): IRoomObject | undefined;
     getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[];
+    getRoomObjectByInstanceId(instanceId: number): IRoomObject | undefined;
     createRoomObject(
         id: number,
         stateCount: number,
@@ -27,6 +29,7 @@ export interface IRoomInstance {
     addUpdateCategory(category: RoomObjectCategoryEnum): void;
     removeUpdateCategory(category: RoomObjectCategoryEnum): void;
     update(time: number, update?: boolean): void;
+    hasUninitializedObjects(): boolean;
     setSelectedObject(data: ISelectedRoomObjectData): void;
     setPlacedObject(data: ISelectedRoomObjectData): void;
     setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
@@ -34,9 +37,11 @@ export interface IRoomInstance {
     removeButtonMouseCursorOwner(key: string): boolean;
     hasButtonMouseCursorOwners(): boolean;
     readonly id: number;
-    readonly renderer: IRoomRenderer;
-    readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
+    readonly canvas: IRoomRenderingCanvas | undefined;
+    readonly objects: Map<number, IRoomObject>;
+    readonly managers: Map<number, IRoomObjectManager>;
     readonly model: IRoomObjectModel;
+    roomObjectVariableAccurateZ: string;
     legacyGeometry: ILegacyWallGeometry;
     tileObjectMap: ITileObjectMap;
     selectedObject: ISelectedRoomObjectData;

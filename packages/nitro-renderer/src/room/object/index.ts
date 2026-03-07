@@ -1,3 +1,7 @@
+export * from './cache/RoomObjectCache';
+export * from './cache/RoomObjectCacheItem';
+export * from './cache/RoomObjectLocationCacheItem';
+export * from './cache/RoomObjectSortableSpriteCacheItem';
 export * from './logic/AvatarLogic';
 export * from './logic/furniture/FurnitureAchievementResolutionLogic';
 export * from './logic/furniture/FurnitureAreaHideLogic';

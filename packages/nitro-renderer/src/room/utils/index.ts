@@ -1,3 +1,5 @@
+export * from './ExtendedSprite';
+export * from './ObjectMouseData';
 export * from './RoomCamera';
 export * from './RoomEnterEffect';
 export * from './RoomFurnitureData';
@@ -5,4 +7,5 @@ export * from './RoomGeometry';
 export * from './RoomRotatingEffect';
 export * from './RoomShakingEffect';
 export * from './SelectedRoomObjectData';
+export * from './SortableSprite';
 export * from './TileObjectMap';

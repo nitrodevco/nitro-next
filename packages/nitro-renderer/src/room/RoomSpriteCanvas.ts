@@ -1,11 +1,11 @@
 import type {
     IRoomEventHandler,
     IRoomGeometry,
+    IRoomInstance,
     IRoomObject,
     IRoomObjectSprite,
     IRoomObjectSpriteVisualization,
     IRoomRenderingCanvas,
-    IRoomSpriteCanvasContainer,
     IRoomSpriteMouseEvent,
     RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
@@ -13,11 +13,18 @@ import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/
 import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
-import { GetTicker, TextureUtils } from '../../utils';
-import { RoomEnterEffect, RoomGeometry, RoomRotatingEffect, RoomShakingEffect } from '../utils';
-import type { RoomObjectCacheItem } from './cache';
-import { RoomObjectCache } from './cache';
-import { ExtendedSprite, ObjectMouseData, SortableSprite } from './utils';
+import { GetTicker, TextureUtils } from '../utils';
+import type { RoomObjectCacheItem } from './object';
+import { RoomObjectCache } from './object';
+import {
+    ExtendedSprite,
+    ObjectMouseData,
+    RoomEnterEffect,
+    RoomGeometry,
+    RoomRotatingEffect,
+    RoomShakingEffect,
+    SortableSprite,
+} from './utils';
 
 export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _geometry: RoomGeometry;
@@ -73,7 +80,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     constructor(
         private _id: number,
-        private _container: IRoomSpriteCanvasContainer,
+        private _instance: IRoomInstance,
         width: number,
         height: number,
         scale: number,
@@ -86,7 +93,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         );
         //this._animationFPS = GetConfigValue<number>('renderer.animationFps', 24);
         this._animationFPS = 24;
-        this._objectCache = new RoomObjectCache(this._container.roomObjectVariableAccurateZ);
+        this._objectCache = new RoomObjectCache(this._instance.roomObjectVariableAccurateZ);
 
         this.setupCanvas();
         this.initialize(width, height);
@@ -258,7 +265,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (time === -1) time = this._renderTimestamp + 1;
 
-        if (!this._container || !this._geometry) return;
+        if (!this._instance || !this._geometry) return;
 
         if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) update = true;
 
@@ -291,7 +298,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         let spriteCount = 0;
 
-        const objects = this._container.objects;
+        const objects = this._instance.objects;
 
         if (objects.size) {
             for (const object of objects.values()) {
@@ -299,7 +306,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
                 spriteCount =
                     spriteCount +
-                    this.renderObject(object, object.instanceId.toString(), time, update, updateVisuals, spriteCount);
+                    this.renderObject(
+                        object,
+                        this._instance.getObjectInstanceId(object).toString(),
+                        time,
+                        update,
+                        updateVisuals,
+                        spriteCount,
+                    );
             }
         }
 
@@ -909,25 +923,21 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     protected processMouseEvents(): void {
-        if (!this._container || !this._eventCache) return;
+        if (!this._instance || !this._eventCache) return;
 
         for (const [key, event] of this._eventCache.entries()) {
             if (!this._eventCache) return;
 
             if (!event) continue;
 
-            const roomObject = this._container.getRoomObject(parseInt(key));
+            const roomObject = this._instance.getRoomObjectByInstanceId(parseInt(key));
 
             if (!roomObject) continue;
 
             if (this._eventHandler) {
                 this._eventHandler.handleRoomCanvasMouseEvent(event, roomObject, this._geometry);
             } else {
-                const logic = roomObject.mouseHandler;
-
-                if (logic) {
-                    logic.mouseEvent(event, this._geometry);
-                }
+                roomObject.mouseHandler?.mouseEvent(event, this._geometry);
             }
         }
 

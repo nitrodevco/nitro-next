@@ -2,7 +2,7 @@ import { AlphaTolerance } from '@nitrodevco/nitro-api';
 import type { TextureSource } from 'pixi.js';
 import { Point, Sprite, Texture } from 'pixi.js';
 
-import { TextureUtils } from '../../../utils';
+import { TextureUtils } from '../../utils';
 
 export class ExtendedSprite extends Sprite {
     private _offsetX: number = 0;
@@ -37,7 +37,7 @@ export class ExtendedSprite extends Sprite {
         this.texture = texture;
     }
 
-    public containsPoint(point: Point): boolean {
+    public override containsPoint(point: Point): boolean {
         if (!point || this.alphaTolerance > 255 || !this.texture || this.texture === Texture.EMPTY) return false;
 
         point = new Point(point.x * this.scale.x, point.y * this.scale.y);

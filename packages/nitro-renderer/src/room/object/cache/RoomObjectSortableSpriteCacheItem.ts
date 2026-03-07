@@ -1,4 +1,4 @@
-﻿import type { SortableSprite } from '../utils';
+﻿import type { SortableSprite } from '../../utils';
 
 export class RoomObjectSortableSpriteCacheItem {
     private _sprites: SortableSprite[] = [];

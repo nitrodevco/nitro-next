@@ -6,7 +6,7 @@ import type {
     IRoomObjectController,
     IRoomObjectManager,
     IRoomObjectModel,
-    IRoomRenderer,
+    IRoomRenderingCanvas,
     ISelectedRoomObjectData,
     ITileObjectMap,
     RoomObjectCategoryEnum,
@@ -14,11 +14,13 @@ import type {
 
 import { RoomObjectModel } from './object';
 import { RoomObjectManager } from './RoomObjectManager';
+import { RoomSpriteCanvas } from './RoomSpriteCanvas';
 import { TileObjectMap } from './utils';
 
 export class RoomInstance implements IRoomInstance {
     private _id: number;
-    private _renderer: IRoomRenderer;
+    private _canvas: IRoomRenderingCanvas | undefined = undefined;
+    private _objects: Map<number, IRoomObject> = new Map();
     private _managers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
     private _updateCategories: RoomObjectCategoryEnum[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
@@ -29,6 +31,7 @@ export class RoomInstance implements IRoomInstance {
     private _placedObject: ISelectedRoomObjectData;
     private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
     private _mouseButtonCursorOwners: string[] = [];
+    private _roomObjectVariableAccurateZ: string = '';
 
     constructor(id: number) {
         this._id = id;
@@ -37,45 +40,25 @@ export class RoomInstance implements IRoomInstance {
     public dispose(): void {
         this.removeAllManagers();
 
-        this.destroyRenderer();
+        if (this._canvas) {
+            this._canvas.dispose();
+
+            this._canvas = undefined;
+        }
 
         this._model.dispose();
     }
 
-    public setRenderer(renderer: IRoomRenderer): void {
-        if (renderer === this._renderer) return;
+    public createCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
+        if (this._canvas) {
+            this._canvas.initialize(width, height);
 
-        if (this._renderer) this.destroyRenderer();
-
-        this._renderer = renderer;
-
-        if (!this._renderer) return;
-
-        this._renderer.reset();
-
-        if (this._managers.size) {
-            for (const manager of this._managers.values()) {
-                if (!manager) continue;
-
-                const objects = manager.objects;
-
-                if (!objects.length) continue;
-
-                for (const object of objects.getValues()) {
-                    if (!object) continue;
-
-                    this._renderer.addObject(object);
-                }
-            }
+            if (this._canvas.geometry) this._canvas.geometry.scale = scale;
+        } else {
+            this._canvas = new RoomSpriteCanvas(1, this, width, height, scale);
         }
-    }
 
-    private destroyRenderer(): void {
-        if (!this._renderer) return;
-
-        this._renderer.dispose();
-
-        this._renderer = null!;
+        return this._canvas;
     }
 
     public getObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager {
@@ -94,6 +77,10 @@ export class RoomInstance implements IRoomInstance {
         return this.getObjectManager(category).totalObjects;
     }
 
+    public getObjectInstanceId(object: IRoomObject): number {
+        return object?.instanceId ?? -1;
+    }
+
     public getRoomObject(id: number, category: RoomObjectCategoryEnum): IRoomObject | undefined {
         return this.getObjectManager(category).getObject(id);
     }
@@ -106,6 +93,10 @@ export class RoomInstance implements IRoomInstance {
         return this.getObjectManager(category).objects.getValues() ?? [];
     }
 
+    public getRoomObjectByInstanceId(instanceId: number): IRoomObject | undefined {
+        return this._objects.get(instanceId);
+    }
+
     public createRoomObject(
         id: number,
         stateCount: number,
@@ -114,7 +105,7 @@ export class RoomInstance implements IRoomInstance {
     ): IRoomObjectController | undefined {
         const object = this.getObjectManager(category).createObject(id, stateCount, type);
 
-        if (object && this._renderer) this._renderer.addObject(object);
+        if (object) this._objects.set(this.getObjectInstanceId(object), object);
 
         return object;
     }
@@ -128,9 +119,12 @@ export class RoomInstance implements IRoomInstance {
 
         if (!object) return;
 
+        const instanceId = this.getObjectInstanceId(object);
+
         object.tearDown();
 
-        if (this._renderer) this._renderer.removeObject(object);
+        this._objects.delete(instanceId);
+        this._canvas?.removeFromCache(instanceId.toString());
 
         manager.removeObject(id);
     }
@@ -139,16 +133,15 @@ export class RoomInstance implements IRoomInstance {
         for (const manager of this._managers.values()) {
             if (!manager) continue;
 
-            if (this._renderer) {
-                const objects = manager.objects;
+            for (const object of manager.objects.getValues()) {
+                if (!object) continue;
 
-                if (objects.length) {
-                    for (const object of objects.getValues()) {
-                        if (!object) continue;
+                const instanceId = this.getObjectInstanceId(object);
 
-                        this._renderer.removeObject(object);
-                    }
-                }
+                object.tearDown();
+
+                this._objects.delete(instanceId);
+                this._canvas?.removeFromCache(instanceId.toString());
             }
 
             manager.dispose();
@@ -182,7 +175,8 @@ export class RoomInstance implements IRoomInstance {
             for (const object of objects.getValues()) object?.logic?.update(time);
         }
 
-        this._renderer?.update(time, update);
+        this._canvas?.render(time, update);
+        this._canvas?.update();
     }
 
     public hasUninitializedObjects(): boolean {
@@ -262,8 +256,12 @@ export class RoomInstance implements IRoomInstance {
         return this._id;
     }
 
-    public get renderer(): IRoomRenderer {
-        return this._renderer;
+    public get canvas(): IRoomRenderingCanvas | undefined {
+        return this._canvas;
+    }
+
+    public get objects(): Map<number, IRoomObject> {
+        return this._objects;
     }
 
     public get managers(): Map<number, IRoomObjectManager> {
@@ -272,6 +270,14 @@ export class RoomInstance implements IRoomInstance {
 
     public get model(): IRoomObjectModel {
         return this._model;
+    }
+
+    public get roomObjectVariableAccurateZ(): string {
+        return this._roomObjectVariableAccurateZ;
+    }
+
+    public set roomObjectVariableAccurateZ(z: string) {
+        this._roomObjectVariableAccurateZ = z;
     }
 
     public get legacyGeometry(): ILegacyWallGeometry {

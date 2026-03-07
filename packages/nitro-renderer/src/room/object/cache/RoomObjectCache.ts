@@ -5,7 +5,7 @@
     RoomObjectSpriteTypeEnum,
 } from '@nitrodevco/nitro-api';
 
-import type { SortableSprite } from '../utils';
+import type { SortableSprite } from '../../utils';
 import { RoomObjectCacheItem } from './RoomObjectCacheItem';
 
 export class RoomObjectCache {

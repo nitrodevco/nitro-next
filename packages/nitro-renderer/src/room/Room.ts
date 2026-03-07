@@ -41,7 +41,6 @@ import {
     RoomObjectUpdateMessage,
 } from './messages';
 import { RoomLogic } from './object';
-import { RoomRenderer } from './renderer';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomCamera } from './utils';
 import { type RoomFurnitureData } from './utils';
@@ -109,17 +108,13 @@ export class Room implements IRoom {
     }
 
     public getRoomDisplay(width: number, height: number, scale: number): Container | undefined {
-        let renderer = this._instance.renderer;
-
-        if (!renderer) {
-            renderer = new RoomRenderer();
-
-            renderer.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
-
-            this._instance.setRenderer(renderer);
+        if (!this._instance.canvas) {
+            this._instance.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
         }
 
-        const canvas = renderer.createCanvas(width, height, scale);
+        this._instance.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
+
+        const canvas = this._instance.createCanvas(width, height, scale);
 
         canvas.setEventHandler(this._eventHandler);
 
@@ -263,10 +258,6 @@ export class Room implements IRoom {
         shiftKey: boolean,
         buttonDown: boolean,
     ): void {
-        const canvas = this._instance?.renderer?.canvas;
-
-        if (!canvas) return;
-
         /*  const overlay = this.getRenderingCanvasOverlay(canvas);
         const sprite = this.getOverlayIconSprite(overlay, RoomEngine.OBJECT_ICON_SPRITE);
 
@@ -279,7 +270,7 @@ export class Room implements IRoom {
 
         if (
             !this.handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
-            !canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+            !this._instance.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
         ) {
             let eventType: string = '';
 
@@ -317,7 +308,7 @@ export class Room implements IRoom {
     }
 
     public getGeometry(): IRoomGeometry | undefined {
-        return this._instance?.renderer?.canvas?.geometry;
+        return this._instance?.canvas?.geometry;
     }
 
     public getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
@@ -592,7 +583,7 @@ export class Room implements IRoom {
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
-        const canvas = this._instance.renderer?.canvas;
+        const canvas = this._instance?.canvas;
         const roomObject = this.getRoomObject(objectId, category);
 
         if (!canvas || !roomObject) return undefined;
@@ -619,7 +610,7 @@ export class Room implements IRoom {
         this._instance.update(time, update);
 
         if (this._wasDragged) {
-            const canvas = this._instance.renderer.canvas;
+            const canvas = this._instance.canvas;
 
             if (!canvas) return;
 
@@ -719,7 +710,7 @@ export class Room implements IRoom {
             return false;
         } */
 
-        const canvas = this._instance.renderer?.canvas;
+        const canvas = this._instance?.canvas;
 
         if (!canvas) return false;
 

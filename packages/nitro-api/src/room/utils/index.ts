@@ -3,3 +3,4 @@ export * from './ILegacyWallGeometry';
 export * from './IRoomAreaSelectionManager';
 export * from './ISelectedRoomObjectData';
 export * from './ITileObjectMap';
+export * from './RoomObjectSpriteData';
