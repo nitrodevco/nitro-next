@@ -119,12 +119,10 @@ export class RoomInstance implements IRoomInstance {
 
         if (!object) return;
 
-        const instanceId = this.getObjectInstanceId(object);
-
         object.tearDown();
 
-        this._objects.delete(instanceId);
-        this._canvas?.removeFromCache(instanceId.toString());
+        this._objects.delete(object.instanceId);
+        this._canvas?.removeFromCache(object.instanceId);
 
         manager.removeObject(id);
     }
@@ -136,12 +134,10 @@ export class RoomInstance implements IRoomInstance {
             for (const object of manager.objects.getValues()) {
                 if (!object) continue;
 
-                const instanceId = this.getObjectInstanceId(object);
-
                 object.tearDown();
 
-                this._objects.delete(instanceId);
-                this._canvas?.removeFromCache(instanceId.toString());
+                this._objects.delete(object.instanceId);
+                this._canvas?.removeFromCache(object.instanceId);
             }
 
             manager.dispose();

@@ -1,5 +1,5 @@
 import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRoomEngine, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
+import { FurnitureStackingHeightMap, GetRoomEngine, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
 import { useEffect, useMemo } from 'react';
 
 import { useRoomContext } from './context/room/useRoomContext';
@@ -191,6 +191,15 @@ xxxxxxxxxxxx`,
                 1,
                 new LegacyDataType(),
             );
+
+            await room.addFurnitureFloorByTypeName(
+                3,
+                'tv_luxus1',
+                new Vector3d(7, 5, 0),
+                new Vector3d(90, 0, 0),
+                1,
+                new LegacyDataType(),
+            );
         })();
 
         return () => {
@@ -212,6 +221,8 @@ xxxxxxxxxxxx`,
             if (cancelled || !room) return;
 
             if (mapData) await room.applyRoomMap(mapData);
+
+            room.instance.setFurnitureStackingHeightMap(new FurnitureStackingHeightMap(mapData.width, mapData.height));
 
             setRoom(prev => {
                 if (prev === room) return prev;

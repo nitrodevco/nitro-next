@@ -355,13 +355,10 @@ export class Room implements IRoom {
             if (!asset) {
                 isLoading = true;
 
-                try {
-                    await GetRoomContentLoader().downloadAsset(type);
-
-                    isLoading = false;
-                } catch {
+                if (!(await GetRoomContentLoader().downloadAsset(type)))
                     assetName = GetRoomContentLoader().getPlaceholderName(type);
-                }
+
+                isLoading = false;
             }
 
             asset = GetRoomContentLoader().getCollection(assetName);
@@ -530,7 +527,7 @@ export class Room implements IRoom {
             //this.selectRoomObject(roomId, id, RoomObjectCategory.FLOOR);
         }
 
-        //if (roomObject.isReady && data.synchronized) this.addObjectToTileMap(roomId, object);
+        if (roomObject?.isReady && synchronized) this._instance.tileObjectMap.addRoomObject(roomObject);
 
         return true;
     }

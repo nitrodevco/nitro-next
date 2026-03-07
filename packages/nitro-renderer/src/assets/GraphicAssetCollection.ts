@@ -14,7 +14,7 @@ import { GraphicAssetPalette } from './GraphicAssetPalette';
 export class GraphicAssetCollection implements IGraphicAssetCollection {
     private static PALETTE_ASSET_DISPOSE_THRESHOLD: number = 10;
 
-    private _referenceCount: number;
+    private _referenceCount: number = 0;
 
     private _name: string;
     private _textureSource: TextureSource | undefined;

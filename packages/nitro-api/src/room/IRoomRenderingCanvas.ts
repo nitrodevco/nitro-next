@@ -1,9 +1,9 @@
 import type { Container, Point, Texture } from 'pixi.js';
 
-import type { IRoomEventHandler } from '../IRoomEventHandler';
-import type { IRoomGeometry } from '../IRoomGeometry';
-import type { ISortableSprite } from '../object';
-import type { RoomObjectSpriteData } from './RoomObjectSpriteData';
+import type { IRoomEventHandler } from './IRoomEventHandler';
+import type { IRoomGeometry } from './IRoomGeometry';
+import type { ISortableSprite } from './object';
+import type { RoomObjectSpriteData } from './utils';
 
 export interface IRoomRenderingCanvas {
     dispose(): void;
@@ -31,7 +31,7 @@ export interface IRoomRenderingCanvas {
     moveRight(): void;
     moveUp(): void;
     moveDown(): void;
-    removeFromCache(identifier: string): void;
+    removeFromCache(identifier: number): void;
     id: number;
     geometry: IRoomGeometry;
     master: Container | undefined;

@@ -230,6 +230,7 @@ export * from './RoomObjectManager';
 export * from './RoomObjectVisualizationFactory';
 export * from './RoomSpriteCanvas';
 export * from './utils/ExtendedSprite';
+export * from './utils/FurnitureStackingHeightMap';
 export * from './utils/ObjectMouseData';
 export * from './utils/RoomCamera';
 export * from './utils/RoomEnterEffect';

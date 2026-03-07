@@ -8,8 +8,8 @@ import { useConfigurationStore } from '../../stores/useConfigurationStore';
 
 export const useFurnitureDataLoader = () => {
     const [needsUpdate, setNeedsUpdate] = useState(true);
-    const [floorItems, setFloorItems] = useState<IFurnitureData[]>([]);
-    const [wallItems, setWallItems] = useState<IFurnitureData[]>([]);
+    const [floorItems, setFloorItems] = useState<Map<string, IFurnitureData>>(new Map());
+    const [wallItems, setWallItems] = useState<Map<string, IFurnitureData>>(new Map());
     const [allItems, setAllItems] = useState<IFurnitureData[]>([]);
     const furnidataUrl = useConfigurationStore(state => state.config['furnituredata.url']) as string | undefined;
 
@@ -148,9 +148,15 @@ export const useFurnitureDataLoader = () => {
 
                 const floorItems = responseData.roomitemtypes ? parseFloorItems(responseData.roomitemtypes) : [];
                 const wallItems = responseData.wallitemtypes ? parseWallItems(responseData.wallitemtypes) : [];
+                const floorMap: Map<string, IFurnitureData> = new Map();
+                const wallMap: Map<string, IFurnitureData> = new Map();
 
-                setFloorItems(floorItems);
-                setWallItems(wallItems);
+                for (const floorItem of floorItems) floorMap.set(floorItem.type, floorItem);
+
+                for (const wallItem of wallItems) wallMap.set(wallItem.type, wallItem);
+
+                setFloorItems(floorMap);
+                setWallItems(wallMap);
                 setAllItems([...floorItems, ...wallItems]);
             } catch (e) {
                 throw new Error(`Failed to load furni data: ${e}`);

@@ -18,10 +18,11 @@ import { GetAssetManager } from '../assets';
 import { PetColorResult } from './PetColorResult';
 
 export class RoomContentLoader implements IRoomContentLoader {
-    private static PLACE_HOLDER: string = 'place_holder';
-    private static PLACE_HOLDER_Wall: string = 'place_holder_wall';
-    private static PLACE_HOLDER_PET: string = 'place_holder_pet';
-    private static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
+    public static PLACE_HOLDER: string = 'place_holder';
+    public static PLACE_HOLDER_Wall: string = 'place_holder_wall';
+    public static PLACE_HOLDER_PET: string = 'place_holder_pet';
+    public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
+
     private static Room: string = 'room';
     private static TILE_CURSOR: string = 'tile_cursor';
     private static SELECTION_ARROW: string = 'selection_arrow';
@@ -292,20 +293,16 @@ export class RoomContentLoader implements IRoomContentLoader {
         return false;
     }
 
-    public async downloadAsset(type: string): Promise<void> {
+    public async downloadAsset(type: string): Promise<boolean> {
         const assetUrl: string = this.getAssetUrls(type)?.[0];
 
-        if (!assetUrl || !assetUrl.length) return;
+        if (!assetUrl || !assetUrl.length) return false;
 
-        if (this._pendingContentTypes.indexOf(type) >= 0) return;
+        if (this._pendingContentTypes.indexOf(type) >= 0) return false;
 
         this._pendingContentTypes.push(type);
 
-        if (!(await GetAssetManager().downloadAsset(assetUrl))) {
-            //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
-
-            return;
-        }
+        if (!(await GetAssetManager().downloadAsset(assetUrl))) return false;
 
         const petIndex = this._pets[type];
         const collection = this.getCollection(type);
@@ -337,7 +334,7 @@ export class RoomContentLoader implements IRoomContentLoader {
             this._petColors.set(petIndex, palettes);
         }
 
-        //EventStore.getState().emit(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
+        return true;
     }
 
     public getAssetAliasName(name: string): string {

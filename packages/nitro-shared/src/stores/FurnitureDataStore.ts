@@ -5,8 +5,8 @@ import { createStore } from 'zustand';
 import { FurnitureData } from './FurnitureData';
 
 type State = {
-    floorItems: Map<number, IFurnitureData>;
-    wallItems: Map<number, IFurnitureData>;
+    floorItems: Map<string, IFurnitureData>;
+    wallItems: Map<string, IFurnitureData>;
     allItems: IFurnitureData[];
     furnitureLoaded: boolean;
 };
@@ -95,7 +95,7 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
             const map = new Map(state.floorItems);
 
             for (const item of addedFloorItems) {
-                map.set(item.id, item);
+                map.set(item.type, item);
             }
 
             return { floorItems: map };
@@ -150,7 +150,7 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
             const map = new Map(state.wallItems);
 
             for (const item of addedWallItems) {
-                map.set(item.id, item);
+                map.set(item.type, item);
             }
 
             return { wallItems: map };

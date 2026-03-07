@@ -304,16 +304,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             for (const object of objects.values()) {
                 if (!object) continue;
 
-                spriteCount =
-                    spriteCount +
-                    this.renderObject(
-                        object,
-                        this._instance.getObjectInstanceId(object).toString(),
-                        time,
-                        update,
-                        updateVisuals,
-                        spriteCount,
-                    );
+                spriteCount = spriteCount + this.renderObject(object, time, update, updateVisuals, spriteCount);
             }
         }
 
@@ -358,13 +349,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         return this._objectCache.getPlaneSortableSprites();
     }
 
-    public removeFromCache(identifier: string): void {
+    public removeFromCache(identifier: number): void {
         this._objectCache.removeObjectCache(identifier);
     }
 
     private renderObject(
         object: IRoomObject,
-        identifier: string,
         time: number,
         update: boolean,
         updateVisuals: boolean,
@@ -375,12 +365,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         const visualization = object.visualization as IRoomObjectSpriteVisualization;
 
         if (!visualization) {
-            this.removeFromCache(identifier);
+            this.removeFromCache(object.instanceId);
 
             return 0;
         }
 
-        const cache = this.getCacheItem(identifier);
+        const cache = this.getCacheItem(object.instanceId);
         cache.objectId = object.instanceId;
 
         const locationCache = cache.location;
@@ -389,7 +379,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         const vector = locationCache.updateLocation(object, this._geometry);
 
         if (!vector) {
-            this.removeFromCache(identifier);
+            this.removeFromCache(object.instanceId);
 
             return 0;
         }
@@ -450,7 +440,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
                 this._sortableSprites.push(sortableSprite);
 
-                sortableSprite.name = identifier;
+                sortableSprite.name = `${object.instanceId}`;
             }
 
             sortableSprite.sprite = sprite;
@@ -675,7 +665,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         this._eventHandler = handler;
     }
 
-    private getCacheItem(id: string): RoomObjectCacheItem {
+    private getCacheItem(id: number): RoomObjectCacheItem {
         return this._objectCache.getObjectCache(id);
     }
 
@@ -735,7 +725,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         shiftKey: boolean = false,
         buttonDown: boolean = false,
     ): boolean {
-        const checkedSprites: string[] = [];
+        const checkedSprites = new Set<string>();
 
         let didHitSprite = false;
         let mouseEvent: IRoomSpriteMouseEvent | undefined = undefined;
@@ -744,7 +734,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         while (spriteId >= 0) {
             const extendedSprite = this.getExtendedSprite(spriteId);
 
-            if (extendedSprite && extendedSprite.containsPoint(new Point(x - extendedSprite.x, y - extendedSprite.y))) {
+            if (extendedSprite && extendedSprite.containsXY(x - extendedSprite.x, y - extendedSprite.y)) {
                 if (!extendedSprite.skipMouseHandling) {
                     if (
                         extendedSprite.clickHandling &&
@@ -754,7 +744,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                     } else {
                         const identifier = this.getExtendedSpriteIdentifier(extendedSprite);
 
-                        if (checkedSprites.indexOf(identifier) === -1) {
+                        if (!checkedSprites.has(identifier)) {
                             const tag = extendedSprite.tag;
 
                             let mouseData = this._mouseActiveObjects.get(identifier);
@@ -824,7 +814,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                             )
                                 this.bufferMouseEvent(mouseEvent, identifier);
 
-                            checkedSprites.push(identifier);
+                            checkedSprites.add(identifier);
                         }
 
                         didHitSprite = true;
@@ -844,7 +834,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         while (index < keys.length) {
             const key = keys[index];
 
-            if (key && checkedSprites.indexOf(key) >= 0) keys[index] = undefined;
+            if (key && checkedSprites.has(key)) keys[index] = undefined;
 
             index++;
         }
@@ -918,7 +908,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     protected bufferMouseEvent(k: IRoomSpriteMouseEvent, _arg_2: string): void {
         if (!k || !this._eventCache) return;
 
-        this._eventCache.delete(_arg_2);
         this._eventCache.set(_arg_2, k);
     }
 

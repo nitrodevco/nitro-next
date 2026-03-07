@@ -6,17 +6,17 @@ export class TileObjectMap implements ITileObjectMap {
     private _width: number;
     private _height: number;
 
-    constructor(k: number, _arg_2: number) {
+    constructor(width: number, height: number) {
         let index = 0;
 
-        while (index < _arg_2) {
+        while (index < height) {
             this._tileObjectMap.set(index, new Map());
 
             index++;
         }
 
-        this._width = k;
-        this._height = _arg_2;
+        this._width = width;
+        this._height = height;
     }
 
     public clear(): void {

@@ -214,6 +214,10 @@ export class RoomEngine implements IRoomEngine {
         return true;
     }
 
+    public get moveBlocked(): boolean {
+        return false;
+    }
+
     public get isPlayingGame() {
         return this._isPlayingGame;
     }

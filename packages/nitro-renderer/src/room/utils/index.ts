@@ -1,4 +1,5 @@
 export * from './ExtendedSprite';
+export * from './FurnitureStackingHeightMap';
 export * from './ObjectMouseData';
 export * from './RoomCamera';
 export * from './RoomEnterEffect';

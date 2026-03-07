@@ -1,17 +1,25 @@
-import type { IEventDispatcher, IRoom, IRoomEventHandler, IRoomGeometry, IRoomObject } from '@nitrodevco/nitro-api';
+import type {
+    IEventDispatcher,
+    IRoom,
+    IRoomEventHandler,
+    IRoomGeometry,
+    IRoomObject,
+    IVector3D,
+} from '@nitrodevco/nitro-api';
 import {
     MouseEventType,
     NitroLogger,
     RoomObjectCategoryEnum,
     RoomObjectOperationType,
+    RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
-import { RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-shared';
+import { FurnitureDataStore, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-shared';
 
 import { GetRoomEngine } from './GetRoomEngine';
 import { ObjectTileCursorUpdateMessage } from './messages';
-import { RoomEnterEffect } from './utils';
+import { RoomEnterEffect, RoomGeometry } from './utils';
 
 export class RoomEventHandler implements IRoomEventHandler {
     private _eventIds: Map<RoomObjectCategoryEnum, Map<string, number>> = new Map();
@@ -103,6 +111,23 @@ export class RoomEventHandler implements IRoomEventHandler {
 
     private handleRoomObjectMouseClickEvent(event: RoomObjectMouseEvent): void {
         if (!event) return;
+
+        this.clickRoomObject(event);
+
+        let operation = RoomObjectOperationType.OBJECT_UNDEFINED;
+
+        const selectedData = this._room.instance.selectedObject;
+
+        if (selectedData) operation = selectedData.operation;
+
+        let didWalk = false;
+        const didMove = false;
+
+        if (GetRoomEngine().whereYouClickIsWhereYouGo()) {
+            if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) {
+                didWalk = this.handleMoveTargetFurni(event);
+            }
+        }
     }
 
     private handleRoomObjectMouseDoubleClickEvent(event: RoomObjectMouseEvent): void {
@@ -190,50 +215,105 @@ export class RoomEventHandler implements IRoomEventHandler {
             );
         }
 
-        /* const roomObject = this._roomEngine.getRoomObjectCursor(roomId);
+        const cursor = this._room.getRoomObjectCursor();
 
-        if (roomObject && roomObject.visualization) {
-            const _local_4 = event.tileXAsInt;
-            const _local_5 = event.tileYAsInt;
-            const _local_6 = event.tileZAsInt;
-            const _local_7 = this._roomEngine.getRoomInstance(roomId);
+        if (cursor && cursor.visualization) {
+            const tileX = event.tileXAsInt;
+            const tileY = event.tileYAsInt;
+            const tileZ = event.tileZAsInt;
+            const tileObjects = this._room.instance.tileObjectMap;
 
-            if (_local_7) {
-                const _local_8 = this._roomEngine.getRoomTileObjectMap(roomId);
+            const tileObject = tileObjects.getObjectIntTile(tileX, tileY);
+            const heightMap = this._room.instance.furnitureStackingHeightMap;
 
-                if (_local_8) {
-                    const _local_9 = _local_8.getObjectIntTile(_local_4, _local_5);
-                    const _local_10 = this._roomEngine.getFurnitureStackingHeightMap(roomId);
+            if (tileObject && tileObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureIsVariableHeight) > 0) {
+                const tileHeight = heightMap.getTileHeight(tileX, tileY);
+                const wallOffset = this._room.instance.legacyGeometry.getHeight(tileX, tileY);
 
-                    if (_local_10) {
-                        if (
-                            _local_9 &&
-                            _local_9.model &&
-                            _local_9.model.getValue<number>(RoomObjectVariable.FURNITURE_IS_VARIABLE_HEIGHT) > 0
-                        ) {
-                            const _local_11 = _local_10.getTileHeight(_local_4, _local_5);
-                            const _local_12 = this._roomEngine
-                                .getLegacyWallGeometry(roomId)
-                                .getHeight(_local_4, _local_5);
-
-                            return new ObjectTileCursorUpdateMessage(
-                                new Vector3d(_local_4, _local_5, _local_6),
-                                _local_11 - _local_12,
-                                true,
-                                event.eventId,
-                            );
-                        }
-
-                        return new ObjectTileCursorUpdateMessage(
-                            new Vector3d(_local_4, _local_5, _local_6),
-                            0,
-                            true,
-                            event.eventId,
-                        );
-                    }
-                }
+                return new ObjectTileCursorUpdateMessage(
+                    new Vector3d(tileX, tileY, tileZ),
+                    tileHeight - wallOffset,
+                    true,
+                    event.eventId,
+                );
             }
-        } */
+
+            return new ObjectTileCursorUpdateMessage(new Vector3d(tileX, tileY, tileZ), 0, true, event.eventId);
+        }
+
+        return undefined;
+    }
+
+    private clickRoomObject(event: RoomObjectMouseEvent): void {
+        if (!event || event.altKey || event.ctrlKey || event.shiftKey) return;
+
+        const objectId = event.objectId;
+        const objectType = event.objectType;
+        const category = GetRoomEngine().getRoomObjectCategoryForType(objectType);
+
+        if (category === RoomObjectCategoryEnum.Floor) {
+            //GetCommunication().connection.send(new ClickFurniMessageComposer(objectId, category));
+
+            return;
+        }
+
+        if (category === RoomObjectCategoryEnum.Wall) {
+            // This packet only sends a negative number to tell the server that its a wall item
+            //GetCommunication().connection.send(new ClickFurniMessageComposer(-Math.abs(objectId), category));
+
+            return;
+        }
+    }
+
+    private handleMoveTargetFurni(event: RoomObjectMouseEvent): boolean {
+        const roomObject = this._room.getRoomObject(event.objectId, RoomObjectCategoryEnum.Floor);
+        const point = this.getActiveSurfaceLocation(roomObject, event);
+
+        if (point && !GetRoomEngine().moveBlocked) {
+            //GetCommunication().connection.send(new RoomUnitWalkComposer(point.x, point.y));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private getActiveSurfaceLocation(roomObject: IRoomObject, event: RoomObjectMouseEvent): IVector3D | undefined {
+        if (!roomObject || !event) return undefined;
+
+        const furniData = FurnitureDataStore.getState().floorItems?.get(roomObject.type);
+
+        if (!furniData || (!furniData.canStandOn && !furniData.canSitOn && !furniData.canLayOn)) return undefined;
+
+        const location = roomObject.getLocation();
+        const direction = roomObject.getDirection();
+
+        let sizeX = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeX);
+        let sizeY = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeY);
+        const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
+
+        if (direction.x === 90 || direction.x === 270) [sizeX, sizeY] = [sizeY, sizeX];
+
+        if (sizeX < 1) sizeX = 1;
+        if (sizeY < 1) sizeY = 1;
+
+        const scale = this._room.getGeometry()?.scale ?? RoomGeometry.SCALE_ZOOMED_IN;
+        const _local_13 = furniData.canSitOn ? 0.5 : 0;
+        const _local_14 = (scale / 2 + event.spriteOffsetX + event.localX) / (scale / 4);
+        const _local_15 = (event.spriteOffsetY + event.localY + ((sizeZ - _local_13) * scale) / 2) / (scale / 4);
+        const _local_16 = (_local_14 + 2 * _local_15) / 4;
+        const _local_17 = (_local_14 - 2 * _local_15) / 4;
+        const x = Math.floor(location.x + _local_16);
+        const y = Math.floor(location.y - _local_17 + 1);
+
+        let _local_20 = false;
+
+        if (x < location.x || x >= location.x + sizeX) _local_20 = true;
+        else if (y < location.y || y >= location.y + sizeY) _local_20 = true;
+
+        const z = furniData.canSitOn ? sizeZ - 0.5 : sizeZ;
+
+        if (!_local_20) return new Vector3d(x, y, z);
 
         return undefined;
     }

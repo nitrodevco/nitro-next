@@ -1,4 +1,11 @@
-import { GetStage, GetTexturePool, GetTicker, PrepareRenderer } from '@nitrodevco/nitro-renderer';
+import {
+    GetRoomContentLoader,
+    GetStage,
+    GetTexturePool,
+    GetTicker,
+    PrepareRenderer,
+    RoomContentLoader,
+} from '@nitrodevco/nitro-renderer';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
@@ -30,6 +37,14 @@ export const App: FC = () => {
                 });
 
                 await GetRoomEngine().init();
+
+                try {
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER);
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_Wall);
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_PET);
+                } catch (err) {
+                    NitroLogger.error(err);
+                }
 
                 GetTicker().add(ticker => {
                     GetRoomEngine().update(ticker);

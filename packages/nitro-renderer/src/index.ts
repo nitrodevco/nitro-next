@@ -236,6 +236,7 @@ export * from './room/RoomObjectManager';
 export * from './room/RoomObjectVisualizationFactory';
 export * from './room/RoomSpriteCanvas';
 export * from './room/utils/ExtendedSprite';
+export * from './room/utils/FurnitureStackingHeightMap';
 export * from './room/utils/ObjectMouseData';
 export * from './room/utils/RoomCamera';
 export * from './room/utils/RoomEnterEffect';
