@@ -164,7 +164,7 @@ export class RoomEngine implements IRoomEngine {
             objectData.initializeFromRoomObjectModel(roomObject.model);
         }
 
-        roomObject.logic.processUpdateMessage(
+        roomObject.processUpdateMessage(
             new ObjectDataUpdateMessage(parseInt(objectData.getLegacyString()), objectData),
         );
 

@@ -862,7 +862,7 @@ export class RoomEventHandler implements IRoomEventHandler {
         const prevAvatar = this._room.getRoomObject(this._selectedAvatarId, RoomObjectCategoryEnum.Unit);
 
         if (prevAvatar && prevAvatar.logic) {
-            prevAvatar.logic.processUpdateMessage(new ObjectAvatarSelectedMessage(false));
+            prevAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(false));
 
             this._selectedAvatarId = -1;
         }
@@ -872,7 +872,7 @@ export class RoomEventHandler implements IRoomEventHandler {
         const nextAvatar = this._room.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (nextAvatar && nextAvatar.logic) {
-            nextAvatar.logic.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
+            nextAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
 
             this._selectedAvatarId = objectId;
 
@@ -889,11 +889,11 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         if (selectionArrow && selectionArrow.logic) {
             if (_local_6 && !GetRoomEngine().isPlayingGame())
-                selectionArrow.logic.processUpdateMessage(
+                selectionArrow.processUpdateMessage(
                     new ObjectVisibilityUpdateMessage(ObjectVisibilityUpdateMessage.ENABLED),
                 );
             else
-                selectionArrow.logic.processUpdateMessage(
+                selectionArrow.processUpdateMessage(
                     new ObjectVisibilityUpdateMessage(ObjectVisibilityUpdateMessage.DISABLED),
                 );
         }
@@ -916,7 +916,7 @@ export class RoomEventHandler implements IRoomEventHandler {
                         const roomObject = this._room.getRoomObject(objectId, category);
 
                         if (roomObject && roomObject.logic) {
-                            roomObject.logic.processUpdateMessage(new ObjectSelectedMessage(true));
+                            roomObject.processUpdateMessage(new ObjectSelectedMessage(true));
 
                             this._selectedObjectId = objectId;
                             this._selectedObjectCategory = category;
@@ -996,7 +996,7 @@ export class RoomEventHandler implements IRoomEventHandler {
         const object = this._room.getRoomObject(this._selectedObjectId, this._selectedObjectCategory);
 
         if (object && object.logic) {
-            object.logic.processUpdateMessage(new ObjectSelectedMessage(false));
+            object.processUpdateMessage(new ObjectSelectedMessage(false));
 
             this._selectedObjectId = -1;
             this._selectedObjectCategory = RoomObjectCategoryEnum.Minimum;
