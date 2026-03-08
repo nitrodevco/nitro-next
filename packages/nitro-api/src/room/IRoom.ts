@@ -130,4 +130,5 @@ export interface IRoom {
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;
+    setEventHandler(handler: IRoomEventHandler): void;
 }

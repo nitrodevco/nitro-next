@@ -905,6 +905,14 @@ export class Room implements IRoom {
         return this._eventHandler;
     }
 
+    public setEventHandler(handler: IRoomEventHandler): void {
+        this._eventHandler = handler;
+
+        const canvas = this._instance?.canvas;
+
+        if (canvas) canvas.setEventHandler(handler);
+    }
+
     public get areaSelection(): IRoomAreaSelectionManager {
         return this._areaSelection;
     }
