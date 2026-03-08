@@ -30,8 +30,8 @@ export interface IRoomInstance {
     removeUpdateCategory(category: RoomObjectCategoryEnum): void;
     update(time: number, update?: boolean): void;
     hasUninitializedObjects(): boolean;
-    setSelectedObject(data: ISelectedRoomObjectData): void;
-    setPlacedObject(data: ISelectedRoomObjectData): void;
+    setSelectedObject(data: ISelectedRoomObjectData | undefined): void;
+    setPlacedObject(data: ISelectedRoomObjectData | undefined): void;
     setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
     addButtonMouseCursorOwner(key: string): boolean;
     removeButtonMouseCursorOwner(key: string): boolean;
@@ -44,7 +44,7 @@ export interface IRoomInstance {
     roomObjectVariableAccurateZ: string;
     legacyGeometry: ILegacyWallGeometry;
     tileObjectMap: ITileObjectMap;
-    selectedObject: ISelectedRoomObjectData;
-    placedObject: ISelectedRoomObjectData;
+    readonly selectedObject: ISelectedRoomObjectData | undefined;
+    readonly placedObject: ISelectedRoomObjectData | undefined;
     furnitureStackingHeightMap: IFurnitureStackingHeightMap;
 }

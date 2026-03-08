@@ -10,12 +10,12 @@ import { Vector3d } from '@nitrodevco/nitro-api';
 export class SelectedRoomObjectData implements ISelectedRoomObjectData {
     private _id: number;
     private _category: RoomObjectCategoryEnum;
-    private _operation: RoomObjectOperationType;
+    private _operation: RoomObjectOperationType | undefined;
     private _loc: IVector3D = new Vector3d();
     private _dir: IVector3D = new Vector3d();
     private _typeId: number;
     private _instanceData: string;
-    private _stuffData: IObjectData;
+    private _stuffData: IObjectData | undefined;
     private _state: number;
     private _animFrame: number;
     private _posture: string;
@@ -23,29 +23,29 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
     constructor(
         id: number,
         category: RoomObjectCategoryEnum,
-        operation: RoomObjectOperationType,
-        location: IVector3D,
-        direction: IVector3D,
-        typeId: number = 0,
-        instanceData: string,
-        stuffData: IObjectData,
-        state: number = -1,
-        frameNumber: number = -1,
-        posture: string,
+        operation?: RoomObjectOperationType,
+        location?: IVector3D,
+        direction?: IVector3D,
+        typeId?: number,
+        instanceData?: string,
+        stuffData?: IObjectData,
+        state?: number,
+        frameNumber?: number,
+        posture?: string,
     ) {
         this._id = id;
         this._category = category;
-        this._operation = operation;
+        this._operation = operation ?? undefined;
 
-        this._loc.assign(location);
-        this._dir.assign(direction);
+        if (location) this._loc.assign(location);
+        if (direction) this._dir.assign(direction);
 
-        this._typeId = typeId;
-        this._instanceData = instanceData;
-        this._stuffData = stuffData;
-        this._state = state;
-        this._animFrame = frameNumber;
-        this._posture = posture;
+        this._typeId = typeId ?? 0;
+        this._instanceData = instanceData ?? '';
+        this._stuffData = stuffData ?? undefined;
+        this._state = state ?? -1;
+        this._animFrame = frameNumber ?? -1;
+        this._posture = posture ?? '';
     }
 
     public get id(): number {
@@ -56,7 +56,7 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
         return this._category;
     }
 
-    public get operation(): RoomObjectOperationType {
+    public get operation(): RoomObjectOperationType | undefined {
         return this._operation;
     }
 
@@ -76,7 +76,7 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
         return this._instanceData;
     }
 
-    public get stuffData(): IObjectData {
+    public get stuffData(): IObjectData | undefined {
         return this._stuffData;
     }
 

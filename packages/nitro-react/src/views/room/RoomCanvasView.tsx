@@ -95,7 +95,7 @@ export const RoomCanvasView = () => {
                     return;
             }
 
-            room.dispatchMouseEvent(
+            void room.dispatchMouseEvent(
                 x,
                 y,
                 eventType,

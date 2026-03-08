@@ -3,12 +3,12 @@ import type { IVector3D } from '@nitrodevco/nitro-api';
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
-    private _targetLocation: IVector3D;
+    private _targetLocation: IVector3D | undefined;
     private _isSlide: boolean;
 
     constructor(
         location: IVector3D | undefined,
-        targetLocation: IVector3D,
+        targetLocation: IVector3D | undefined,
         direction: IVector3D | undefined,
         isSlide: boolean = false,
     ) {

@@ -6,13 +6,13 @@ export class ObjectAvatarFigureUpdateMessage extends ObjectStateUpdateMessage {
     private _subType: string | undefined;
     private _isRiding: boolean;
 
-    constructor(figure: string, gender: string, subType: string, isRiding: boolean = false) {
+    constructor(figure: string, gender?: string, subType?: string, isRiding?: boolean) {
         super();
 
         this._figure = figure;
         this._gender = gender;
         this._subType = subType;
-        this._isRiding = isRiding;
+        this._isRiding = isRiding ?? false;
     }
 
     public get figure(): string {

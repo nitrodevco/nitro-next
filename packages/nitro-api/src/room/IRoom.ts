@@ -13,6 +13,7 @@ import type {
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
+import type { IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
@@ -26,9 +27,10 @@ export interface IRoom {
         ctrlKey: boolean,
         shiftKey: boolean,
         buttonDown: boolean,
-    ): void;
+    ): Promise<void>;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
+    getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[];
     removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void;
     createRoomObjectAndInitalize(
         objectId: number,
@@ -36,22 +38,33 @@ export interface IRoom {
         category: RoomObjectCategoryEnum,
     ): Promise<IRoomObject | undefined>;
     createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined>;
+    createRoomObjectWall(id: number, type: string): Promise<IRoomObject | undefined>;
+    createRoomObjectUser(id: number, type: string): Promise<IRoomObject | undefined>;
     updateRoomObjectFloor(
         objectId: number,
         location: IVector3D,
         direction: IVector3D,
         state: number,
-        data: IObjectData,
+        data?: IObjectData,
+        extra?: number,
+    ): boolean;
+    updateRoomObjectWall(
+        objectId: number,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        data?: IObjectData,
         extra?: number,
     ): boolean;
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
+    updateRoomObjectMask(objectId: number, add?: boolean): void;
     addFurnitureByTypeId(
         id: number,
         typeId: number,
         location: IVector3D,
         direction: IVector3D,
         state: number,
-        objectData: IObjectData,
+        objectData?: IObjectData,
         extra?: number,
         expires?: number,
         usagePolicy?: number,
@@ -67,7 +80,7 @@ export interface IRoom {
         location: IVector3D,
         direction: IVector3D,
         state: number,
-        objectData: IObjectData,
+        objectData?: IObjectData,
         extra?: number,
         expires?: number,
         usagePolicy?: number,
@@ -78,15 +91,43 @@ export interface IRoom {
         sizeZ?: number,
         typeId?: number,
     ): Promise<boolean>;
+    addFurnitureWallByTypeId(
+        id: number,
+        typeId: number,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        extra?: number,
+        expires?: number,
+        usagePolicy?: number,
+        ownerId?: number,
+        ownerName?: string,
+        synchronized?: boolean,
+        realRoomObject?: boolean,
+        sizeZ?: number,
+    ): Promise<boolean>;
+    addRoomObjectUser(
+        objectId: number,
+        location: IVector3D,
+        direction: IVector3D,
+        headDirection: number,
+        type: number,
+        figure: string,
+    ): Promise<boolean>;
     removeRoomObjectFloor(objectId: number, userId?: number, _arg_4?: boolean): void;
+    removeRoomObjectWall(objectId: number, userId?: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     update(time: number, update?: boolean): void;
+    getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
+    getRoomObjectSelectionArrow(): IRoomObjectController;
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
     readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
+    readonly areaSelection: IRoomAreaSelectionManager;
+    readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;
 }

@@ -27,8 +27,8 @@ export class RoomInstance implements IRoomInstance {
 
     private _legacyGeometry: ILegacyWallGeometry;
     private _tileObjectMap: ITileObjectMap;
-    private _selectedObject: ISelectedRoomObjectData;
-    private _placedObject: ISelectedRoomObjectData;
+    private _selectedObject: ISelectedRoomObjectData | undefined;
+    private _placedObject: ISelectedRoomObjectData | undefined;
     private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
     private _mouseButtonCursorOwners: string[] = [];
     private _roomObjectVariableAccurateZ: string = '';
@@ -189,7 +189,7 @@ export class RoomInstance implements IRoomInstance {
         return false;
     }
 
-    public setSelectedObject(data: ISelectedRoomObjectData): void {
+    public setSelectedObject(data: ISelectedRoomObjectData | undefined): void {
         if (this._selectedObject) {
             this._selectedObject.dispose();
         }
@@ -197,7 +197,7 @@ export class RoomInstance implements IRoomInstance {
         this._selectedObject = data;
     }
 
-    public setPlacedObject(data: ISelectedRoomObjectData): void {
+    public setPlacedObject(data: ISelectedRoomObjectData | undefined): void {
         if (this._placedObject) {
             this._placedObject.dispose();
         }
@@ -284,11 +284,11 @@ export class RoomInstance implements IRoomInstance {
         return this._tileObjectMap;
     }
 
-    public get selectedObject(): ISelectedRoomObjectData {
+    public get selectedObject(): ISelectedRoomObjectData | undefined {
         return this._selectedObject;
     }
 
-    public get placedObject(): ISelectedRoomObjectData {
+    public get placedObject(): ISelectedRoomObjectData | undefined {
         return this._placedObject;
     }
 

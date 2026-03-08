@@ -43,14 +43,15 @@ export class RoomEngine implements IRoomEngine {
     private _imageObjectIdBank = new NumberBank(1000);
 
     private _isPlayingGame: boolean = false;
+    private _moveBlocked: boolean = false;
 
     constructor(roomManager: IRoomManager) {
         this._roomManager = roomManager;
     }
 
     public async init(): Promise<void> {
-        GetRoomObjectLogicFactory().registerEventFunction(event =>
-            this.processRoomObjectEvent(event as RoomObjectEvent),
+        GetRoomObjectLogicFactory().registerEventFunction(
+            event => void this.processRoomObjectEvent(event as RoomObjectEvent),
         );
 
         await GetRoomContentLoader().init();
@@ -203,7 +204,7 @@ export class RoomEngine implements IRoomEngine {
 
         const room = this._rooms.get(roomId);
 
-        room?.eventHandler.handleRoomObjectEvent(event);
+        void room?.eventHandler.handleRoomObjectEvent(event);
     }
 
     private getRoomObjectRoomId(object: IRoomObject): number | undefined {
@@ -214,11 +215,15 @@ export class RoomEngine implements IRoomEngine {
         return true;
     }
 
-    public get moveBlocked(): boolean {
-        return false;
+    public isPlayingGame(): boolean {
+        return this._isPlayingGame;
     }
 
-    public get isPlayingGame() {
-        return this._isPlayingGame;
+    public get moveBlocked(): boolean {
+        return this._moveBlocked;
+    }
+
+    public set moveBlocked(value: boolean) {
+        this._moveBlocked = value;
     }
 }

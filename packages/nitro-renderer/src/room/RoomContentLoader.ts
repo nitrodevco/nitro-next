@@ -120,7 +120,7 @@ export class RoomContentLoader implements IRoomContentLoader {
         return this.removeColorIndex(this._activeObjectTypes.get(typeId) ?? '');
     }
 
-    public getFurnitureWallNameForTypeId(typeId: number, extra: string = ''): string {
+    public getFurnitureWallNameForTypeId(typeId: number, extra?: number): string {
         let type = this._wallItemTypes.get(typeId);
 
         if (type === 'poster' && extra) type = type + extra;

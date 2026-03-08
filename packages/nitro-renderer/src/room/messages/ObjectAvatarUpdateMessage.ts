@@ -9,7 +9,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
 
     constructor(
         location: IVector3D | undefined,
-        targetLocation: IVector3D,
+        targetLocation: IVector3D | undefined,
         direction: IVector3D | undefined,
         headDirection: number,
         canStandUp: boolean,
