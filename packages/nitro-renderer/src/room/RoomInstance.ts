@@ -189,6 +189,14 @@ export class RoomInstance implements IRoomInstance {
         return false;
     }
 
+    public setLegacyGeometry(geometry: ILegacyWallGeometry) {
+        if (this._legacyGeometry) {
+            this._legacyGeometry.dispose();
+        }
+
+        this._legacyGeometry = geometry;
+    }
+
     public setSelectedObject(data: ISelectedRoomObjectData | undefined): void {
         if (this._selectedObject) {
             this._selectedObject.dispose();

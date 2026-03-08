@@ -1,8 +1,13 @@
 import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { FurnitureStackingHeightMap, GetRoomEngine, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
+import {
+    FurnitureStackingHeightMap,
+    GetRoomEngine,
+    LegacyWallGeometry,
+    RoomPlaneParser,
+} from '@nitrodevco/nitro-renderer';
 import { useEffect, useMemo } from 'react';
 
-import { useRoomContext } from './context/room/useRoomContext';
+import { useRoomContext } from './hooks/room/useRoomContext';
 import { RoomCanvasView } from './views/room/RoomCanvasView';
 
 export const RoomView = () => {
@@ -39,17 +44,17 @@ export const RoomView = () => {
             i = 0;
 
             while (i < height) {
-                const subHeightMap: number[] = [];
+                const heights: number[] = [];
 
-                let subIterator = 0;
+                let j = 0;
 
-                while (subIterator < width) {
-                    subHeightMap.push(RoomPlaneParser.TILE_BLOCKED);
+                while (j < width) {
+                    heights.push(RoomPlaneParser.TILE_BLOCKED);
 
-                    subIterator++;
+                    j++;
                 }
 
-                heightMap.push(subHeightMap);
+                heightMap.push(heights);
 
                 i++;
             }
@@ -61,17 +66,17 @@ export const RoomView = () => {
                 const text = model[i];
 
                 if (text.length > 0) {
-                    let subIterator = 0;
+                    let j = 0;
 
-                    while (subIterator < text.length) {
-                        const char = text.charAt(subIterator);
+                    while (j < text.length) {
+                        const char = text.charAt(j);
                         let height = RoomPlaneParser.TILE_BLOCKED;
 
                         if (char !== 'x' && char !== 'X') height = parseInt(char, 36);
 
-                        map[subIterator] = height;
+                        map[j] = height;
 
-                        subIterator++;
+                        j++;
                     }
                 }
 
@@ -135,11 +140,29 @@ export const RoomView = () => {
             planeParser.initializeFromTileData(-1);
             planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + wallHeight);
 
+            const wallGeometry = new LegacyWallGeometry();
+
+            wallGeometry.scale = LegacyWallGeometry.DEFAULT_SCALE;
+            wallGeometry.initialize(width, height, planeParser.floorHeight);
+
+            let wallY = height - 1;
+
+            while (wallY >= 0) {
+                let wallX = width - 1;
+
+                while (wallX >= 0) {
+                    wallGeometry.setHeight(wallX, wallY, planeParser.getTileHeight(wallX, wallY));
+                    wallX--;
+                }
+
+                wallY--;
+            }
+
             const mapData = planeParser.getMapData();
 
             mapData.doors.push({ x: doorX, y: doorY, z: doorZ, dir: doorDir });
 
-            return mapData;
+            return { mapData, wallGeometry };
         };
 
         return parseMapData(
@@ -207,6 +230,7 @@ xxxxxxxxxxxx`,
 
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
+            room.removeRoomObject(3, RoomObjectCategoryEnum.Floor);
         };
     }, [room]);
 
@@ -220,9 +244,13 @@ xxxxxxxxxxxx`,
 
             if (cancelled || !room) return;
 
-            if (mapData) await room.applyRoomMap(mapData);
+            if (mapData.mapData) await room.applyRoomMap(mapData.mapData);
 
-            room.instance.setFurnitureStackingHeightMap(new FurnitureStackingHeightMap(mapData.width, mapData.height));
+            if (mapData.wallGeometry) room.instance.setLegacyGeometry(mapData.wallGeometry);
+
+            room.instance.setFurnitureStackingHeightMap(
+                new FurnitureStackingHeightMap(mapData.mapData.width, mapData.mapData.height),
+            );
 
             setRoom(prev => {
                 if (prev === room) return prev;

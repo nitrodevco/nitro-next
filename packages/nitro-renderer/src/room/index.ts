@@ -231,6 +231,7 @@ export * from './RoomObjectVisualizationFactory';
 export * from './RoomSpriteCanvas';
 export * from './utils/ExtendedSprite';
 export * from './utils/FurnitureStackingHeightMap';
+export * from './utils/LegacyWallGeometry';
 export * from './utils/ObjectMouseData';
 export * from './utils/RoomAreaSelectionManager';
 export * from './utils/RoomCamera';

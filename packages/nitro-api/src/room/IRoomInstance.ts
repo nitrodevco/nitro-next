@@ -30,6 +30,7 @@ export interface IRoomInstance {
     removeUpdateCategory(category: RoomObjectCategoryEnum): void;
     update(time: number, update?: boolean): void;
     hasUninitializedObjects(): boolean;
+    setLegacyGeometry(geometry: ILegacyWallGeometry);
     setSelectedObject(data: ISelectedRoomObjectData | undefined): void;
     setPlacedObject(data: ISelectedRoomObjectData | undefined): void;
     setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;

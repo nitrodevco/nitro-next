@@ -1,17 +1,17 @@
 import type { IVector3D } from '../../utils';
 
 export interface ILegacyWallGeometry {
-    dispose: () => void;
-    readonly disposed: boolean;
-    scale: number;
     initialize(width: number, height: number, floorHeight: number): void;
+    dispose(): void;
     setHeight(x: number, y: number, height: number): boolean;
     getHeight(x: number, y: number): number;
-    getLocation(k: number, _arg_2: number, _arg_3: number, _arg_4: number, _arg_5: string): IVector3D;
-    getLocationOldFormat(k: number, _arg_2: number, _arg_3: string): IVector3D;
-    getOldLocation(k: IVector3D, _arg_2: number): [number, number, number, number, string];
-    getOldLocationString(k: IVector3D, _arg_2: number): string;
-    getDirection(k: string): number;
-    getFloorAltitude(k: number, _arg_2: number): number;
-    isRoomTile(k: number, _arg_2: number): boolean;
+    getLocation(width: number, height: number, localX: number, localY: number, direction: string): IVector3D;
+    getLocationOldFormat(k: number, _arg_2: number, dir: string): IVector3D;
+    getOldLocation(loc: IVector3D, angle: number): [number, number, number, number, string] | undefined;
+    getOldLocationString(loc: IVector3D, angle: number): string;
+    getDirection(dir: string): number;
+    getFloorAltitude(x: number, y: number): number;
+    isRoomTile(x: number, y: number): boolean;
+    readonly disposed: boolean;
+    scale: number;
 }
