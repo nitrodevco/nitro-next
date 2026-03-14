@@ -787,7 +787,7 @@ export class Room implements IRoom {
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Wall);
         this.setMouseDefault(objectId, RoomObjectCategoryEnum.Wall);
 
-        //this.updateRoomObjectMask(roomId, objectId, false);
+        this.updateRoomObjectMask(objectId, false);
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {

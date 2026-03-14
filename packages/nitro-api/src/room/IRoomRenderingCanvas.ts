@@ -9,7 +9,7 @@ export interface IRoomRenderingCanvas {
     dispose(): void;
     initialize(width: number, height: number): void;
     setMask(flag: boolean): void;
-    setScale(scale: number, point?: Point, offsetPoint?: Point, isFlipForced?: boolean): void;
+    setScale(scale: number, point?: Point, offsetPoint?: Point): void;
     render(time: number, update?: boolean): void;
     update(): void;
     setEventHandler(handler: IRoomEventHandler): void;
