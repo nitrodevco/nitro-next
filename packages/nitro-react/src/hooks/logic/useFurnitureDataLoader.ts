@@ -4,7 +4,7 @@ import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
 import { FurnitureData, LocalizationStore } from '@nitrodevco/nitro-shared';
 import { useEffect, useState } from 'react';
 
-import { useConfigurationStore } from '../../stores/useConfigurationStore';
+import { useConfigurationStore } from '#base/stores';
 
 export const useFurnitureDataLoader = () => {
     const [needsUpdate, setNeedsUpdate] = useState(true);

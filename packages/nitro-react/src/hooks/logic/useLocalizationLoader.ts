@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { useLocalizationStore } from '../../stores/useLocalizationStore';
+import { useLocalizationStore } from '#base/stores';
+
 import { useConfigValue } from '../useConfigValue';
 
 export const useLocalizationLoader = () => {

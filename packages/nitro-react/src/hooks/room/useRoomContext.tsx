@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { RoomContext } from '../../context/RoomContext';
+import { RoomContext } from '#base/context';
 
 export const useRoomContext = () => {
     const ctx = useContext(RoomContext);

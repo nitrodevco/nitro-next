@@ -7,6 +7,18 @@
             "vite/client"
         ],
         "paths": {
+            "#base/context": [
+                "./src/context/index.ts"
+            ],
+            "#base/hooks": [
+                "./src/hooks/index.ts"
+            ],
+            "#base/stores": [
+                "./src/stores/index.ts"
+            ],
+            "#base/utils": [
+                "./src/utils/index.ts"
+            ],
             "#base/*": [
                 "./src/*"
             ],

@@ -10,7 +10,7 @@
             "node"
         ],
         "module": "ESNext",
-        "moduleResolution": "Bundler",
+        "moduleResolution": "bundler",
         "strict": false,
         "strictNullChecks": true,
         "skipLibCheck": true,

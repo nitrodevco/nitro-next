@@ -35,13 +35,11 @@ export default defineConfig({
     plugins: [react(), tsconfigPaths(), tailwindcss()],
     resolve: {
         dedupe: ['pixi.js'],
-        alias: {
-            '#base': r('base'),
-            '#themes': r('themes'),
-            '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src'),
-            '@nitrodevco/nitro-renderer': path.resolve(__dirname, '../nitro-renderer/src'),
-            '@nitrodevco/nitro-shared': path.resolve(__dirname, '../nitro-shared/src'),
-        },
+        alias: [{ find: /^#base\/(.*)/, replacement: r('src/$1') },
+        { find: /^#themes\/(.*)/, replacement: r('themes/$1') },
+        { find: '@nitrodevco/nitro-api', replacement: r('../nitro-api/src') },
+        { find: '@nitrodevco/nitro-renderer', replacement: r('../nitro-renderer/src') },
+        { find: '@nitrodevco/nitro-shared', replacement: r('../nitro-shared/src') }],
     },
     server: {
         port: 5173,

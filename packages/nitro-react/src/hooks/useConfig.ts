@@ -1,4 +1,4 @@
-import { useConfigurationStore } from '../stores/useConfigurationStore';
+import { useConfigurationStore } from "#base/stores";
 
 export const useConfig = () => {
     const config = useConfigurationStore(state => state.config);

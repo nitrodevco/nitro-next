@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import { useCommunicationStore } from '../useCommunicationStore';
 
+
 export const useMessageListener = <T>(
     event: IncomingPacketConstructor<T>,
     handler: (data: T) => void,

@@ -12,16 +12,10 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-    "[javascript,javascriptreact]": {
+    "[javascript,javascriptreact,typescript,typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.tabSize": 4,
-        "js/ts.preferences.importModuleSpecifier": "relative",
-        "js/ts.format.enabled": true,
-    },
-    "[typescript,typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.tabSize": 4,
-        "js/ts.preferences.importModuleSpecifier": "relative",
+        "js/ts.preferences.importModuleSpecifier": "shortest",
         "js/ts.format.enabled": true,
     },
     "[json]": {

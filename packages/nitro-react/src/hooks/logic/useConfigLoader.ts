@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useConfigurationStore } from '../../stores/useConfigurationStore';
+import { useConfigurationStore } from '#base/stores';
 
 export const useConfigLoader = () => {
     const configNeedsUpdate = useConfigurationStore(state => state.configNeedsUpdate);

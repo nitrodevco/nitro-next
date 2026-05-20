@@ -7,6 +7,27 @@
         "paths": {
             "#api/*": [
                 "./src/*"
+            ],
+            "#api/asset/*": [
+                "./src/asset/*"
+            ],
+            "#api/avatar/*": [
+                "./src/avatar/*"
+            ],
+            "#api/communication/*": [
+                "./src/communication/*"
+            ],
+            "#api/events/*": [
+                "./src/events/*"
+            ],
+            "#api/room/*": [
+                "./src/room/*"
+            ],
+            "#api/session/*": [
+                "./src/session/*"
+            ],
+            "#api/utils/*": [
+                "./src/utils/*"
             ]
         }
     },

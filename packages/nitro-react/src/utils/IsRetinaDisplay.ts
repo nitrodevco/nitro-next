@@ -1,0 +1,1 @@
+export const IsRetinaDisplay = () => window.matchMedia('(min-resolution: 2dppx)').matches;
