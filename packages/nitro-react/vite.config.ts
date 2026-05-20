@@ -14,7 +14,7 @@ export default defineConfig({
         outDir: 'dist',
         emptyOutDir: true,
         rollupOptions: {
-            external: ['pixi.js', '@nitrodevco/nitro-api', '@nitrodevco/nitro-renderer', '@nitrodevco/nitro-shared'],
+            external: ['pixi.js'],
             output: {
                 manualChunks: id => {
                     if (id.includes('/packages/nitro-api/')) {

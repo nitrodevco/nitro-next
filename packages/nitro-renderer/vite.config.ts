@@ -17,9 +17,19 @@ export default defineConfig({
             fileName: () => 'index.js',
         },
         rollupOptions: {
-            external: ['pixi.js', '@nitrodevco/nitro-api', '@nitrodevco/nitro-shared'],
+            external: ['pixi.js'],
             output: {
-                exports: 'named',
+                manualChunks: id => {
+                    if (id.includes('/packages/nitro-api/')) {
+                        return 'nitro-api';
+                    }
+                    if (id.includes('/packages/nitro-shared/')) {
+                        return 'nitro-shared';
+                    }
+                    if (id.includes('node_modules')) {
+                        return 'vendor';
+                    }
+                },
             },
         },
     },
