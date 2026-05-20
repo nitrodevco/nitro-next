@@ -1,4 +1,5 @@
-import type { IMessageDataWrapper } from '../../../communication';
+import type { IMessageDataWrapper } from '#api/communication';
+
 import type { IRoomObjectModel } from '../IRoomObjectModel';
 import type { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 

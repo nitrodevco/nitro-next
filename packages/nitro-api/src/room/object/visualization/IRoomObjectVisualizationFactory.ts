@@ -1,4 +1,5 @@
-import type { IAssetData } from '../../../asset';
+import type { IAssetData } from '#api/asset';
+
 import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';
 import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
 

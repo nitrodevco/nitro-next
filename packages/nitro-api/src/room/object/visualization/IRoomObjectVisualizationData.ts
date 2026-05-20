@@ -1,4 +1,4 @@
-import type { IAssetData } from '../../../asset';
+import type { IAssetData } from '#api/asset';
 
 export interface IObjectVisualizationData {
     initialize(asset: IAssetData): boolean;

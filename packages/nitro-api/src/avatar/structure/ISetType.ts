@@ -1,4 +1,5 @@
-import type { IAdvancedMap } from '../../utils';
+import type { IAdvancedMap } from '#api/utils';
+
 import type { IFigurePartSet } from './IFigurePartSet';
 
 export interface ISetType {

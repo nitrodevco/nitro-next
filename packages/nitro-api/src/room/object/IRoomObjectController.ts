@@ -1,4 +1,5 @@
-import type { IVector3D } from '../../utils';
+import type { IVector3D } from '#api/utils';
+
 import type { IRoomObject } from './IRoomObject';
 import type { IRoomObjectUpdateMessage } from './IRoomObjectUpdateMessage';
 import type { IRoomObjectEventHandler } from './logic';

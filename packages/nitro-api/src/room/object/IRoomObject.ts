@@ -1,4 +1,5 @@
-import type { IVector3D } from '../../utils';
+import type { IVector3D } from '#api/utils';
+
 import type { IRoomObjectModel } from './IRoomObjectModel';
 import type { IRoomObjectMouseHandler } from './logic';
 import type { IRoomObjectVisualization } from './visualization';

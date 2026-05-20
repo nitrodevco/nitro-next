@@ -1,4 +1,5 @@
-import type { IMessageDataWrapper } from '../../../communication';
+import type { IMessageDataWrapper } from '#api/communication';
+
 import { GetObjectDataForFlags } from './GetObjectDataForFlags';
 
 export const ObjectDataParser = (wrapper: IMessageDataWrapper) => {

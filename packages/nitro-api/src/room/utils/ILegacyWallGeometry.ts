@@ -1,4 +1,4 @@
-import type { IVector3D } from '../../utils';
+import type { IVector3D } from '#api/utils';
 
 export interface ILegacyWallGeometry {
     initialize(width: number, height: number, floorHeight: number): void;

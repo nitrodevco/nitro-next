@@ -1,4 +1,4 @@
-import type { IPetCustomPart } from '../../session';
+import type { IPetCustomPart } from '#api/session';
 
 export interface IPetFigureData {
     readonly typeId: number;
