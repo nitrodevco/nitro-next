@@ -14,6 +14,7 @@
         "@nitrodevco/nitro-shared": "workspace:*",
         "@pixi/gif": "^3.0.1",
         "howler": "^2.2.4",
+        "jszip": "^3.10.1",
         "pako": "^2.1.0",
         "pixi-filters": "^6.1.5",
         "pixi.js": "^8.16.0"

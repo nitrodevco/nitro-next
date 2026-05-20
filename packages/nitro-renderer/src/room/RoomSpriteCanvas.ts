@@ -987,13 +987,13 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             location.x =
                 location.x +
                 this._rotationRodLength *
-                    Math.cos(((direction.x + 180) / 180) * Math.PI) *
-                    Math.cos((direction.y / 180) * Math.PI);
+                Math.cos(((direction.x + 180) / 180) * Math.PI) *
+                Math.cos((direction.y / 180) * Math.PI);
             location.y =
                 location.y +
                 this._rotationRodLength *
-                    Math.sin(((direction.x + 180) / 180) * Math.PI) *
-                    Math.cos((direction.y / 180) * Math.PI);
+                Math.sin(((direction.x + 180) / 180) * Math.PI) *
+                Math.cos((direction.y / 180) * Math.PI);
             location.z = location.z + this._rotationRodLength * Math.sin((direction.y / 180) * Math.PI);
 
             this._geometry.location = location;
@@ -1179,11 +1179,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public get width(): number {
-        return Math.floor(this._width * this._scale);
+        return this._width;
     }
 
     public get height(): number {
-        return Math.floor(this._height * this._scale);
+        return this._height;
     }
 
     public get canvasUpdated(): boolean {

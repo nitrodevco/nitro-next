@@ -1,4 +1,6 @@
-import type { IEventDispatcher, INitroEvent } from '../events';
+
+import type { IEventDispatcher, INitroEvent } from '#api/events';
+
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomSpriteMouseEvent } from './IRoomSpriteMouseEvent';
 import type { IRoomObject, RoomObjectCategoryEnum } from './object';

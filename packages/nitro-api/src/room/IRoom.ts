@@ -1,10 +1,12 @@
-import type { Container, PointData } from 'pixi.js';
+import type { PointData, Rectangle } from 'pixi.js';
 
-import type { IEventDispatcher } from '../events';
+import type { IEventDispatcher } from '#api/events';
+
 import type { IVector3D } from '../utils';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomInstance } from './IRoomInstance';
+import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type {
     IObjectData,
     IRoomMapData,
@@ -17,8 +19,10 @@ import type { IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
-    getRoomDisplay(width: number, height: number, scale: number): Container | undefined;
+    getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
     applyRoomMap(roomMap: IRoomMapData): Promise<void>;
+    getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
+    setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     dispatchMouseEvent(
         x: number,
         y: number,
@@ -130,4 +134,6 @@ export interface IRoom {
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;
+    readonly isCameraFollowDisabled: boolean;
+    readonly useOffsetScrolling: boolean;
 }

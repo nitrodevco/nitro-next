@@ -1,4 +1,6 @@
-import type { RoomObjectSpriteData } from '../../renderer';
+
+import type { RoomObjectSpriteData } from '#api/room';
+
 import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';
 import type { IRoomObjectSprite } from './IRoomObjectSprite';
 

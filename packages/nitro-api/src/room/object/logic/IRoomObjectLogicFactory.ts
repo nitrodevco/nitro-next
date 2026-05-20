@@ -1,4 +1,6 @@
-import type { IEventDispatcher, INitroEvent } from '../../../utils';
+
+import type { IEventDispatcher, INitroEvent } from '#api/events';
+
 import type { IRoomObjectEventHandler } from './IRoomObjectEventHandler';
 
 export interface IRoomObjectLogicFactory {

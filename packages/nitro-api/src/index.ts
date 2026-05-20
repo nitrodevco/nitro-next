@@ -102,8 +102,6 @@ export * from './avatar/structure/ISetType';
 export * from './avatar/structure/IStructureData';
 export * from './communication/enums/ClientDeviceCategoryEnum';
 export * from './communication/enums/ClientPlatformEnum';
-export * from './communication/IBinaryReader';
-export * from './communication/IBinaryWriter';
 export * from './communication/ICodec';
 export * from './communication/IIncomingPacket';
 export * from './communication/IMessageDataWrapper';

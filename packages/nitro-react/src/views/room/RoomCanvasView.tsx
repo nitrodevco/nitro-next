@@ -12,37 +12,45 @@ export const RoomCanvasView = () => {
     useEffect(() => {
         if (!room || !size) return;
 
-        const { width, height, resolution } = size;
+        const width = Math.round(window.innerWidth);
+        const height = Math.round(window.innerHeight);
+        const widthScaled = Math.round(width * window.devicePixelRatio);
+        const heightScaled = Math.round(height * window.devicePixelRatio);
 
-        const canvas = room.getRoomDisplay(width, height, RoomGeometry.SCALE_ZOOMED_IN);
+        const renderer = GetRenderer();
+        const stage = GetStage();
+        const canvas = room.getRoomCanvas(widthScaled, heightScaled, RoomGeometry.SCALE_ZOOMED_IN);
+        const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;
+        const maxX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) ?? 0;
+        const minY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) ?? 0;
+        const maxY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) ?? 0;
+
+        let x = (minX + maxX) / 2;
+        let y = (minY + maxY) / 2;
+
+        const offset = 20;
+
+        x = x + (offset - 1);
+        y = y + (offset - 1);
+
+        const z = Math.sqrt((offset * offset) + (offset * offset)) * Math.tan((30 / 180) * Math.PI);
 
         if (canvas) {
-            const geometry = room.getGeometry();
+            canvas.geometry.location = new Vector3d(x, y, z);
 
-            if (geometry) {
-                const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;
-                const maxX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) ?? 0;
-                const minY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) ?? 0;
-                const maxY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) ?? 0;
-
-                let x = (minX + maxX) / 2;
-                let y = (minY + maxY) / 2;
-
-                const offset = 20;
-
-                x = x + (offset - 1);
-                y = y + (offset - 1);
-
-                const z = Math.sqrt(offset * offset + offset * offset) * Math.tan((30 / 180) * Math.PI);
-
-                geometry.location = new Vector3d(x, y, z);
-            }
-
-            if (!canvas.parent) GetStage().addChild(canvas);
+            if (canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
         }
 
-        GetRenderer().render(GetStage());
-        GetRenderer().resize(width, height, resolution);
+        if (renderer.canvas) {
+            renderer.canvas.style.width = (width).toString() + 'px';
+            renderer.canvas.style.height = (height).toString() + 'px';
+        }
+
+        if (renderer.width !== widthScaled || renderer.height !== heightScaled) {
+            renderer.resize(widthScaled, heightScaled, 1);
+        }
+
+        renderer.render(stage);
     }, [room, size]);
 
     useEffect(() => {
@@ -54,8 +62,8 @@ export const RoomCanvasView = () => {
         let clickCount = 0;
 
         const handler = (event: MouseEvent) => {
-            const x = event.clientX;
-            const y = event.clientY;
+            const x = event.clientX - (event.clientX - Math.round((event.clientX * window.devicePixelRatio)));
+            const y = event.clientY - (event.clientY - Math.round((event.clientY * window.devicePixelRatio)));
 
             let eventType = event.type;
 
@@ -111,12 +119,6 @@ export const RoomCanvasView = () => {
         canvas.onmousedown = handler;
         canvas.onmouseup = handler;
 
-        setSize({
-            width: Math.floor(window.innerWidth),
-            height: Math.floor(window.innerHeight),
-            resolution: window.devicePixelRatio,
-        });
-
         return () => {
             canvas.onclick = null;
             canvas.onmousemove = null;
@@ -125,30 +127,60 @@ export const RoomCanvasView = () => {
         };
     }, [room]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const canvas = GetRenderer().canvas;
 
-        if (canvas) {
-            canvas.classList.add('bg-black');
-
-            elementRef?.current?.appendChild(canvas);
-        }
+        if (canvas) elementRef?.current?.appendChild(canvas);
 
         let resizeTimer: ReturnType<typeof setTimeout>;
 
-        const handleResize = (event: UIEvent) => {
+        const observer = new ResizeObserver(entries => {
+            clearTimeout(resizeTimer);
+
+            for (const entry of entries) {
+                const { width, height } = entry.contentRect;
+
+                if (width <= 0) return;
+
+                resizeTimer = setTimeout(() => {
+                    setSize({
+                        width: Math.floor(width),
+                        height: Math.floor(height),
+                        resolution: Math.round(window.devicePixelRatio),
+                    });
+                }, 5);
+            }
+        });
+
+        if (elementRef?.current) observer.observe();
+
+        return () => {
+            observer.disconnect();
+        }
+    }, []);*/
+
+    useEffect(() => {
+        const canvas = GetRenderer().canvas;
+
+        if (canvas) elementRef?.current?.appendChild(canvas);
+
+        let resizeTimer: ReturnType<typeof setTimeout>;
+
+        const handleResize = (event: UIEvent | undefined) => {
             clearTimeout(resizeTimer);
 
             resizeTimer = setTimeout(() => {
                 setSize({
-                    width: Math.floor(window.innerWidth),
-                    height: Math.floor(window.innerHeight),
-                    resolution: window.devicePixelRatio,
+                    width: Math.round(window.innerWidth),
+                    height: Math.round(window.innerHeight),
+                    resolution: Math.round(window.devicePixelRatio)
                 });
             }, 5);
         };
 
         window.addEventListener('resize', handleResize);
+
+        handleResize(undefined);
 
         return () => {
             clearTimeout(resizeTimer);
@@ -156,5 +188,5 @@ export const RoomCanvasView = () => {
         };
     }, []);
 
-    return <div className="size=full" ref={elementRef}></div>;
+    return <div className="size-full" ref={elementRef}></div>;
 };

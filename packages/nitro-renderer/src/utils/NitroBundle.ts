@@ -1,64 +1,48 @@
-import { BinaryReader } from '@nitrodevco/nitro-shared';
-import { inflate } from 'pako';
+import { NitroLogger } from '@nitrodevco/nitro-api';
+import type JSZip from 'jszip';
 import type { Texture } from 'pixi.js';
 import { Assets } from 'pixi.js';
 
-export class NitroBundle
-{
+export class NitroBundle {
     private static TEXT_DECODER: TextDecoder = new TextDecoder('utf-8');
 
-    private _jsonFile: object | undefined = undefined;
-    private _texture: Texture | undefined = undefined;
+    private _files: { [key: string]: object } = {};
+    private _textures: { [key: string]: Texture } = {};
 
-    public static async from(buffer: ArrayBuffer): Promise<NitroBundle>
-    {
+    public static async fromZip(zip: JSZip): Promise<NitroBundle> {
         const bundle = new NitroBundle();
 
-        await bundle.parse(buffer);
+        for (const file of Object.values(zip.files)) {
+            try {
+                const name = file.name;
+                const ext = name.slice(name.lastIndexOf('.') + 1);
+
+                switch (ext) {
+                    case 'json': {
+                        bundle.files[name] = JSON.parse(NitroBundle.TEXT_DECODER.decode(await file.async('arraybuffer')));
+                        break;
+                    }
+                    case 'png': {
+                        const data = await file.async('base64');
+
+                        bundle.textures[name] = await Assets.load<Texture>(`data:image/png;base64,${data}`);
+                        break;
+                    }
+                }
+            }
+            catch (err) {
+                NitroLogger.error(err);
+            }
+        }
 
         return bundle;
     }
 
-    public async parse(arrayBuffer: ArrayBuffer): Promise<void>
-    {
-        const binaryReader = new BinaryReader(arrayBuffer);
-
-        let fileCount = binaryReader.readShort();
-
-        while(fileCount > 0)
-        {
-            const fileNameLength = binaryReader.readShort();
-            const fileName = binaryReader.readBytes(fileNameLength).toString();
-            const fileLength = binaryReader.readInt();
-            const buffer = binaryReader.readBytes(fileLength);
-            const inflatedBuffer = inflate(buffer.toArrayBuffer());
-
-            if(fileName.endsWith('.json'))
-            {
-                this._jsonFile = JSON.parse(NitroBundle.TEXT_DECODER.decode(inflatedBuffer));
-            }
-            else
-            {
-                const len = inflatedBuffer.byteLength;
-
-                let binary = '';
-
-                for(let i = 0; i < len; i++) (binary += String.fromCharCode(inflatedBuffer[i]));
-
-                this._texture = await Assets.load<Texture>(`data:image/png;base64,${ window.btoa(binary) }`);
-            }
-
-            fileCount--;
-        }
+    public get files(): { [key: string]: object } {
+        return this._files;
     }
 
-    public get jsonFile(): object | undefined
-    {
-        return this._jsonFile;
-    }
-
-    public get texture(): Texture | undefined
-    {
-        return this._texture;
+    public get textures(): { [key: string]: Texture } {
+        return this._textures;
     }
 }

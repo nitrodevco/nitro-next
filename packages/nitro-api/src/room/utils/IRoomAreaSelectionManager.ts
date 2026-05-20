@@ -1,4 +1,5 @@
-import type { INitroEvent } from '../../events';
+import type { INitroEvent } from "#api/events";
+
 
 export interface IRoomAreaSelectionManager {
     startSelecting(): void;

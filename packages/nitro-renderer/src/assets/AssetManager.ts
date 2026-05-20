@@ -1,7 +1,8 @@
-import type { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection } from '@nitrodevco/nitro-api';
+import type { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection, ISpritesheetData } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatedGIF } from '@pixi/gif';
-import type { SpritesheetData, Texture } from 'pixi.js';
+import JSZip from 'jszip';
+import type { Texture } from 'pixi.js';
 import { Assets, Spritesheet } from 'pixi.js';
 
 import { NitroBundle } from '../utils';
@@ -91,27 +92,33 @@ export class AssetManager implements IAssetManager {
         try {
             if (!url || !url.length) return false;
 
-            if (url.endsWith('.nitro') || url.endsWith('.gif')) {
-                const response = await fetch(url);
+            const ext = url.slice(url.lastIndexOf('.') + 1);
+            const response = await fetch(url);
 
-                if (!response || response.status !== 200) return false;
+            if (!response || response.status !== 200) return false;
 
-                const arrayBuffer = await response.arrayBuffer();
+            switch (ext) {
+                case 'nitro': {
+                    const responseData = await response.arrayBuffer();
+                    const zip = await JSZip.loadAsync(responseData);
+                    const bundle = await NitroBundle.fromZip(zip);
 
-                if (url.endsWith('.nitro')) {
-                    const nitroBundle = await NitroBundle.from(arrayBuffer);
-
-                    await this.processAsset(nitroBundle.texture, nitroBundle.jsonFile as IAssetData);
-                } else {
-                    const animatedGif = AnimatedGIF.fromBuffer(arrayBuffer);
+                    await this.processNitroBundle(bundle);
+                    break;
+                }
+                case 'gif': {
+                    const responseData = await response.arrayBuffer();
+                    const animatedGif = AnimatedGIF.fromBuffer(responseData);
                     const texture = animatedGif.texture;
 
                     if (texture) this.setTexture(url, texture);
+                    break;
                 }
-            } else {
-                const texture = await Assets.load<Texture>(url);
+                default: {
+                    const texture = await Assets.load<Texture>(url);
 
-                if (texture) this.setTexture(url, texture);
+                    if (texture) this.setTexture(url, texture);
+                }
             }
 
             return true;
@@ -122,20 +129,49 @@ export class AssetManager implements IAssetManager {
         }
     }
 
-    private async processAsset(texture: Texture | undefined, data: IAssetData | undefined): Promise<void> {
-        if(!data) return;
+    private async processNitroBundle(bundle: NitroBundle): Promise<void> {
+        if (!bundle) return;
 
-        let spritesheet: Spritesheet<SpritesheetData> | undefined = undefined;
+        const keys = Object.keys(bundle.files).filter(x => !x.endsWith('_spritesheet.json'));
 
-        if (texture && data.spritesheet && Object.keys(data.spritesheet).length) {
-            spritesheet = new Spritesheet(texture, data.spritesheet);
+        for (const key of keys) {
+            try {
+                const asset = bundle.files[key] as IAssetData;
 
-            await spritesheet.parse();
+                if (!asset) continue;
 
-            if (spritesheet.textureSource) spritesheet.textureSource.label = data.name ?? null;
+                const name: string | undefined = asset.name ?? key.slice(0, key.lastIndexOf('.'));
+
+                let spritesheetData: ISpritesheetData | undefined = asset.spritesheet;
+                let spritesheet: Spritesheet | undefined = undefined;
+                let texture: Texture | undefined = undefined;
+
+                if (!spritesheetData) spritesheetData = bundle.files[`${name}_spritesheet.json`] as ISpritesheetData;
+
+                if (spritesheetData) {
+                    texture = bundle.textures[spritesheetData.meta.image];
+                } else texture = bundle.textures[`${name}.png`];
+
+                if (texture) {
+                    if (spritesheetData) {
+                        spritesheet = new Spritesheet(texture, spritesheetData);
+
+                        await spritesheet.parse();
+
+                        if (spritesheet.textureSource) spritesheet.textureSource.label = name ?? null;
+                    } else {
+                        this.setTexture(name, texture);
+                    }
+                }
+
+                this.createCollection(asset, spritesheet);
+            }
+            catch (err) {
+                NitroLogger.error(err);
+
+                continue;
+            }
         }
-
-        this.createCollection(data, spritesheet);
     }
 
     public get collections(): Map<string, IGraphicAssetCollection> {

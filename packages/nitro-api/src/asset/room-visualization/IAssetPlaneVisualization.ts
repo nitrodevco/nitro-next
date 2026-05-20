@@ -5,5 +5,5 @@ export interface IAssetPlaneVisualization {
     size?: number;
     horizontalAngle?: number;
     verticalAngle?: number;
-    allLayers?: (IAssetPlaneVisualizationLayer | IAssetPlaneVisualizationAnimatedLayer)[];
+    layers?: (IAssetPlaneVisualizationLayer | IAssetPlaneVisualizationAnimatedLayer)[];
 }

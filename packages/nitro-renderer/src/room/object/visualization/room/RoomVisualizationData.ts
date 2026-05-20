@@ -9,9 +9,7 @@ export class RoomVisualizationData implements IObjectVisualizationData {
     public initialize(asset: IAssetData): boolean {
         if (!asset.roomVisualization) return false;
 
-        const maskData = asset.roomVisualization.maskData;
-
-        if (maskData) this._maskManager.initialize(maskData);
+        if (asset.roomVisualization.maskData) this._maskManager.initialize(asset.roomVisualization.maskData);
 
         return true;
     }
@@ -32,7 +30,7 @@ export class RoomVisualizationData implements IObjectVisualizationData {
         this._initialized = true;
     }
 
-    public clearCache(): void {}
+    public clearCache(): void { }
 
     public get maskManager(): PlaneMaskManager {
         return this._maskManager;

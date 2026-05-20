@@ -340,8 +340,8 @@ export class RoomPlane implements IRoomPlane {
             planeType === RoomPlane.TYPE_FLOOR
                 ? 'floorData'
                 : planeType === RoomPlane.TYPE_WALL
-                  ? 'wallData'
-                  : 'landscapeData';
+                    ? 'wallData'
+                    : 'landscapeData';
 
         const roomCollection = GetAssetManager().getCollection('room');
         const planeVisualizationData = roomCollection?.data?.roomVisualization?.[dataType];
@@ -352,7 +352,7 @@ export class RoomPlane implements IRoomPlane {
                 v => v.size === planeGeometry.scale,
             ) ?? null;
 
-        const planeLayer = planeVisualization?.allLayers?.[0] as IAssetPlaneVisualizationLayer | undefined;
+        const planeLayer = planeVisualization?.layers?.[0] as IAssetPlaneVisualizationLayer | undefined;
         const materialId = planeLayer?.materialId;
         const color = planeLayer?.color ?? 0xffffff;
 

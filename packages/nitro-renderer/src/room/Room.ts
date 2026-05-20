@@ -10,6 +10,7 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomRenderingCanvas,
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import {
@@ -29,8 +30,8 @@ import {
     RoomObjectMouseEvent,
     SessionStore,
 } from '@nitrodevco/nitro-shared';
-import type { Container, PointData } from 'pixi.js';
-import { Point } from 'pixi.js';
+import type { PointData } from 'pixi.js';
+import { Matrix, Point, Rectangle } from 'pixi.js';
 
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
@@ -114,7 +115,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public getRoomDisplay(width: number, height: number, scale: number): Container | undefined {
+    public getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
         if (!this._instance.canvas) {
             this._instance.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
         }
@@ -143,7 +144,7 @@ export class Room implements IRoom {
             if (direction) canvas.geometry.setDisplacement(vector, direction);
         }
 
-        return canvas.master;
+        return canvas;
     }
 
     public async applyRoomMap(roomMap: IRoomMapData): Promise<void> {
@@ -256,6 +257,53 @@ export class Room implements IRoom {
         }
     }
 
+    public getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined {
+        const roomObject = this.getRoomObject(objectId, category);
+        const rectangle = roomObject?.visualization?.getBoundingRectangle();
+
+        if (!roomObject || !rectangle) return undefined;
+
+        const canvas = this._instance.canvas;
+        const screenPoint = canvas?.geometry?.getScreenPoint(roomObject.getLocation());
+
+        if (!canvas || !screenPoint) return undefined;
+
+        screenPoint.x = Math.round(screenPoint.x);
+        screenPoint.y = Math.round(screenPoint.y);
+
+        rectangle.x = (rectangle.x * canvas.scale);
+        rectangle.y = (rectangle.y * canvas.scale);
+        rectangle.width = (rectangle.width * canvas.scale);
+        rectangle.height = (rectangle.height * canvas.scale);
+
+        screenPoint.x = (screenPoint.x * canvas.scale);
+        screenPoint.y = (screenPoint.y * canvas.scale);
+
+        rectangle.x += screenPoint.x;
+        rectangle.y += screenPoint.y;
+
+        rectangle.x += (Math.round(canvas.width / 2) + canvas.screenOffsetX);
+        rectangle.y += (Math.round(canvas.height / 2) + canvas.screenOffsetY);
+
+        return rectangle;
+    }
+
+    public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
+        if (!this._instance.canvas || !point) return false;
+
+        const x = ~~(point.x);
+        const y = ~~(point.y);
+
+        if ((this._instance.canvas.screenOffsetX === x) && (this._instance.canvas.screenOffsetY === y)) return false;
+
+        //EventStore.getState().emit(new RoomDragEvent(roomId, -(this._instance.canvas.screenOffsetX - x), -(this._instance.canvas.screenOffsetY - y)));
+
+        this._instance.canvas.screenOffsetX = x;
+        this._instance.canvas.screenOffsetY = y;
+
+        return true;
+    }
+
     public async dispatchMouseEvent(
         x: number,
         y: number,
@@ -312,6 +360,245 @@ export class Room implements IRoom {
 
         this._canvasMouseX = x;
         this._canvasMouseY = y;
+    }
+
+    private updateRoomCamera(objectLocation: IVector3D, time: number): void {
+        const canvas = this._instance.canvas;
+
+        if (!canvas) return;
+
+        const canvasRectangle = new Rectangle(0, 0, canvas.width, canvas.height);
+
+        let _local_10 = (Math.floor(objectLocation.z) + 1);
+
+        const width = Math.round(canvasRectangle.width);
+        const height = Math.round(canvasRectangle.height);
+        const bounds = this.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
+        const roomCamera = this._camera;
+
+        if (bounds && ((bounds.right < 0) || (bounds.bottom < 0) || (bounds.left >= width) || (bounds.top >= height))) {
+            roomCamera.reset();
+        }
+
+        if ((roomCamera.screenWd !== width) || (roomCamera.screenHt !== height) || (roomCamera.scale !== canvas.geometry.scale) || (roomCamera.geometryUpdateId !== canvas.geometry.updateId) || !Vector3d.isEqual(objectLocation, roomCamera.targetObjectLoc) || roomCamera.isMoving) {
+            roomCamera.targetObjectLoc = objectLocation;
+
+            const _local_15 = new Vector3d();
+
+            _local_15.assign(objectLocation);
+
+            _local_15.x = Math.round(_local_15.x);
+            _local_15.y = Math.round(_local_15.y);
+
+            const _local_16 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMinX) - 0.5);
+            const _local_17 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMinY) - 0.5);
+            const _local_18 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMaxX) + 0.5);
+            const _local_19 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMaxY) + 0.5);
+            const _local_20 = Math.round(((_local_16 + _local_18) / 2));
+            const _local_21 = Math.round(((_local_17 + _local_19) / 2));
+            const _local_22 = 2;
+            let _local_23 = new Point((_local_15.x - _local_20), (_local_15.y - _local_21));
+            const _local_24 = (canvas.geometry.scale / Math.sqrt(2));
+            const _local_25 = (_local_24 / 2);
+            const _local_26 = new Matrix();
+            _local_26.rotate(((-(canvas.geometry.direction.x + 90) / 180) * Math.PI));
+            _local_23 = _local_26.apply(_local_23);
+            _local_23.y = (_local_23.y * (_local_25 / _local_24));
+            const _local_27 = (((canvasRectangle.width / 2) / _local_24) - 1);
+            const _local_28 = (((canvasRectangle.height / 2) / _local_25) - 1);
+
+            let _local_29 = 0;
+            let _local_30 = 0;
+            let _local_31 = 0;
+            let _local_32 = 0;
+            let _local_33 = canvas.geometry.getScreenPoint(new Vector3d(_local_20, _local_21, _local_22));
+
+            if (!_local_33) return;
+
+            _local_33.x = (_local_33.x + Math.round((canvasRectangle.width / 2)));
+            _local_33.y = (_local_33.y + Math.round((canvasRectangle.height / 2)));
+
+            if (bounds) {
+                bounds.x += -(canvas.screenOffsetX);
+                bounds.y += -(canvas.screenOffsetY);
+
+                if (((bounds.width > 1) && (bounds.height > 1))) {
+                    _local_29 = (((bounds.left - _local_33.x) - (canvas.geometry.scale * 0.25)) / _local_24);
+                    _local_31 = (((bounds.right - _local_33.x) + (canvas.geometry.scale * 0.25)) / _local_24);
+                    _local_30 = (((bounds.top - _local_33.y) - (canvas.geometry.scale * 0.5)) / _local_25);
+                    _local_32 = (((bounds.bottom - _local_33.y) + (canvas.geometry.scale * 0.5)) / _local_25);
+                }
+                else {
+                    canvas.geometry.adjustLocation(new Vector3d(-30, -30), 25);
+
+                    return;
+                }
+            }
+            else {
+                canvas.geometry.adjustLocation(new Vector3d(0, 0), 25);
+
+                return;
+            }
+
+            let _local_34 = false;
+            let _local_35 = false;
+            let _local_36 = false;
+            let _local_37 = false;
+            const _local_38 = Math.round(((_local_31 - _local_29) * _local_24));
+
+            if (_local_38 < canvasRectangle.width) {
+                _local_10 = 2;
+                _local_23.x = ((_local_31 + _local_29) / 2);
+                _local_36 = true;
+            }
+            else {
+                if (_local_23.x > (_local_31 - _local_27)) {
+                    _local_23.x = (_local_31 - _local_27);
+                    _local_34 = true;
+                }
+                if (_local_23.x < (_local_29 + _local_27)) {
+                    _local_23.x = (_local_29 + _local_27);
+                    _local_34 = true;
+                }
+            }
+            const _local_39 = Math.round(((_local_32 - _local_30) * _local_25));
+            if (_local_39 < canvasRectangle.height) {
+                _local_10 = 2;
+                _local_23.y = ((_local_32 + _local_30) / 2);
+                _local_37 = true;
+            }
+            else {
+                if (_local_23.y > (_local_32 - _local_28)) {
+                    _local_23.y = (_local_32 - _local_28);
+                    _local_35 = true;
+                }
+                if (_local_23.y < (_local_30 + _local_28)) {
+                    _local_23.y = (_local_30 + _local_28);
+                    _local_35 = true;
+                }
+                if (_local_35) {
+                    _local_23.y = (_local_23.y / (_local_25 / _local_24));
+                }
+            }
+            _local_26.invert();
+            _local_23 = _local_26.apply(_local_23);
+            _local_23.x = (_local_23.x + _local_20);
+            _local_23.y = (_local_23.y + _local_21);
+            let _local_40 = 0.35;
+            let _local_41 = 0.2;
+            let _local_42 = 0.2;
+            const _local_43 = 10;
+            const _local_44 = 10;
+            if ((_local_42 * width) > 100) {
+                _local_42 = (100 / width);
+            }
+            if ((_local_40 * height) > 150) {
+                _local_40 = (150 / height);
+            }
+            if ((_local_41 * height) > 150) {
+                _local_41 = (150 / height);
+            }
+            if ((((roomCamera.limitedLocationX) && (roomCamera.screenWd == width)) && (roomCamera.screenHt == height))) {
+                _local_42 = 0;
+            }
+            if ((((roomCamera.limitedLocationY) && (roomCamera.screenWd == width)) && (roomCamera.screenHt == height))) {
+                _local_40 = 0;
+                _local_41 = 0;
+            }
+
+            canvasRectangle.width = (canvasRectangle.width * (1 - (_local_42 * 2)));
+            canvasRectangle.height = (canvasRectangle.height * (1 - (_local_40 + _local_41)));
+
+            if (canvasRectangle.width < _local_43) {
+                canvasRectangle.width = _local_43;
+            }
+
+            if (canvasRectangle.height < _local_44) {
+                canvasRectangle.height = _local_44;
+            }
+
+            if ((_local_40 + _local_41) > 0) {
+                canvasRectangle.x += (-(canvasRectangle.width) / 2);
+                canvasRectangle.y += (-(canvasRectangle.height) * (_local_41 / (_local_40 + _local_41)));
+            }
+            else {
+                canvasRectangle.x += (-(canvasRectangle.width) / 2);
+                canvasRectangle.y += (-(canvasRectangle.height) / 2);
+            }
+
+            _local_33 = canvas.geometry.getScreenPoint(_local_15);
+
+            if (!_local_33) return;
+
+            if (_local_33) {
+                _local_33.x = (_local_33.x + canvas.screenOffsetX);
+                _local_33.y = (_local_33.y + canvas.screenOffsetY);
+                _local_15.z = _local_10;
+                _local_15.x = (Math.round((_local_23.x * 2)) / 2);
+                _local_15.y = (Math.round((_local_23.y * 2)) / 2);
+                if (!roomCamera.location) {
+                    canvas.geometry.location = _local_15;
+                    if (this.useOffsetScrolling) {
+                        roomCamera.initializeLocation(new Vector3d(0, 0, 0));
+                    }
+                    else {
+                        roomCamera.initializeLocation(_local_15);
+                    }
+                }
+                const _local_45 = canvas.geometry.getScreenPoint(_local_15);
+                const _local_46 = new Vector3d(0, 0, 0);
+                if (_local_45) {
+                    _local_46.x = _local_45.x;
+                    _local_46.y = _local_45.y;
+                }
+                if (((((((((_local_33.x < canvasRectangle.left) || (_local_33.x > canvasRectangle.right)) && (!(roomCamera.centeredLocX))) || (((_local_33.y < canvasRectangle.top) || (_local_33.y > canvasRectangle.bottom)) && (!(roomCamera.centeredLocY)))) || (((_local_36) && (!(roomCamera.centeredLocX))) && (!(roomCamera.screenWd == width)))) || (((_local_37) && (!(roomCamera.centeredLocY))) && (!(roomCamera.screenHt == height)))) || ((!(roomCamera.roomWd == bounds.width)) || (!(roomCamera.roomHt == bounds.height)))) || ((!(roomCamera.screenWd == width)) || (!(roomCamera.screenHt == height))))) {
+                    roomCamera.limitedLocationX = _local_34;
+                    roomCamera.limitedLocationY = _local_35;
+                    if (this.useOffsetScrolling) {
+                        roomCamera.target = _local_46;
+                    }
+                    else {
+                        roomCamera.target = _local_15;
+                    }
+                }
+                else {
+                    if (!_local_34) roomCamera.limitedLocationX = false;
+
+                    if (!_local_35) roomCamera.limitedLocationY = false;
+                }
+            }
+
+            roomCamera.centeredLocX = _local_36;
+            roomCamera.centeredLocY = _local_37;
+            roomCamera.screenWd = width;
+            roomCamera.screenHt = height;
+            roomCamera.scale = canvas.geometry.scale;
+            roomCamera.geometryUpdateId = canvas.geometry.updateId;
+            roomCamera.roomWd = bounds.width;
+            roomCamera.roomHt = bounds.height;
+
+            if (!this.isCameraFollowDisabled) {
+                if (this.useOffsetScrolling) {
+                    roomCamera.update(time, 8);
+                }
+                else {
+                    roomCamera.update(time, 0.5);
+                }
+            }
+
+            if (this.useOffsetScrolling) {
+                this.setRoomInstanceRenderingCanvasOffset(new Point(-(roomCamera.location.x), -(roomCamera.location.y)));
+            }
+            else {
+                canvas.geometry.adjustLocation(roomCamera.location, 25);
+            }
+        }
+        else {
+            roomCamera.limitedLocationX = false;
+            roomCamera.limitedLocationY = false;
+            roomCamera.centeredLocX = false;
+            roomCamera.centeredLocY = false;
+        }
     }
 
     public getGeometry(): IRoomGeometry | undefined {
@@ -817,18 +1104,17 @@ export class Room implements IRoom {
     public update(time: number, update: boolean = false): void {
         this._instance.update(time, update);
 
+        const roomObject = this.getRoomObject(this._camera.targetId, this._camera.targetCategory);
+        const location: IVector3D | undefined = roomObject?.getLocation() ?? undefined;
+
+        if (location && !this._isDragged) this.updateRoomCamera(location, time);
+
         if (this._wasDragged) {
             const canvas = this._instance.canvas;
 
             if (!canvas) return;
 
-            const point = new Point(canvas.screenOffsetX + this._dragX, canvas.screenOffsetY + this._dragY);
-
-            const x = ~~point.x;
-            const y = ~~point.y;
-
-            canvas.screenOffsetX = x;
-            canvas.screenOffsetY = y;
+            this.setRoomInstanceRenderingCanvasOffset(new Point((~~canvas.screenOffsetX + this._dragX), ~~(canvas.screenOffsetY + this._dragY)));
 
             this._dragX = 0;
             this._dragY = 0;
@@ -914,6 +1200,14 @@ export class Room implements IRoom {
     }
 
     public get isDecorating(): boolean {
+        return false;
+    }
+
+    public get isCameraFollowDisabled(): boolean {
+        return false;
+    }
+
+    public get useOffsetScrolling(): boolean {
         return false;
     }
 

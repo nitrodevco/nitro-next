@@ -30,10 +30,11 @@ export const Nitro: FC = () => {
                     width,
                     height,
                     autoDensity: false,
-                    resolution: devicePixelRatio,
+                    resolution: 1,
                     backgroundAlpha: 0,
                     roundPixels: false,
                     preference: 'webgpu',
+                    preserveDrawingBuffer: false,
                 });
 
                 try {

@@ -1,7 +1,5 @@
 export * from './enums/ClientDeviceCategoryEnum';
 export * from './enums/ClientPlatformEnum';
-export * from './IBinaryReader';
-export * from './IBinaryWriter';
 export * from './ICodec';
 export * from './IIncomingPacket';
 export * from './IMessageDataWrapper';

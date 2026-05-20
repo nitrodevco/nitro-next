@@ -1,7 +1,8 @@
 import type { Texture } from 'pixi.js';
 
+import type { IEventDispatcher } from '#api/events';
+
 import type { IGraphicAssetCollection } from '../asset';
-import type { IEventDispatcher } from '../events';
 import type { IFurnitureData } from '../session';
 import type { IPetColorResult } from './IPetColorResult';
 import type { IRoomContentListener } from './IRoomContentListener';

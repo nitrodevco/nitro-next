@@ -1,4 +1,5 @@
-import { IIncomingPacket, IMessageDataWrapper, IUserInfo } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper, IUserInfo } from "@nitrodevco/nitro-api";
+
 
 export type UserObjectMessageType = {
     userInfo: IUserInfo;
@@ -8,7 +9,7 @@ export class UserObjectMessage implements IIncomingPacket<UserObjectMessageType>
     public parse(wrapper: IMessageDataWrapper): UserObjectMessageType {
         const packet: UserObjectMessageType = {
             userInfo: {
-                id: wrapper.readInt(),
+                userId: wrapper.readInt(),
                 name: wrapper.readString(),
                 figure: wrapper.readString(),
                 sex: wrapper.readString(),

@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite --port 3000",
+        "dev": "vite --host --port 3000",
         "build": "vite build",
         "clean": "rimraf dist .vite *.tsbuildinfo"
     },
