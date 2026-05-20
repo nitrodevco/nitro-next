@@ -20,28 +20,5 @@
     "devDependencies": {
         "rimraf": "^6.0.1",
         "typescript": "^5.9.3"
-    },
-    "imports": {
-        "#api/asset/*": [
-            "./src/asset/*"
-        ],
-        "#api/avatar/*": [
-            "./src/avatar/*"
-        ],
-        "#api/communication/*": [
-            "./src/communication/*"
-        ],
-        "#api/events/*": [
-            "./src/events/*"
-        ],
-        "#api/room/*": [
-            "./src/room/*"
-        ],
-        "#api/session/*": [
-            "./src/session/*"
-        ],
-        "#api/utils/*": [
-            "./src/utils/*"
-        ]
     }
 }

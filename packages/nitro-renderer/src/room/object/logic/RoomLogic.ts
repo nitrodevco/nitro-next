@@ -116,23 +116,23 @@ export class RoomLogic extends RoomObjectLogicBase {
 
             switch (message.type) {
                 case ObjectRoomMaskUpdateMessage.ADD_MASK: {
-                    let maskType = RoomPlaneBitmapMaskData.WINDOW;
+                    let maskCategory = RoomPlaneBitmapMaskData.WINDOW;
 
                     if (message.maskCategory === ObjectRoomMaskUpdateMessage.HOLE)
-                        maskType = RoomPlaneBitmapMaskData.HOLE;
+                        maskCategory = RoomPlaneBitmapMaskData.HOLE;
 
-                    this._planeBitmapMaskParser.addMask(
+                    if (message.maskId && message.maskType && message.maskLocation) this._planeBitmapMaskParser.addMask(
                         message.maskId,
                         message.maskType,
                         message.maskLocation,
-                        maskType,
+                        maskCategory,
                     );
 
                     update = true;
                     break;
                 }
                 case ObjectRoomMaskUpdateMessage.REMOVE_MASK:
-                    update = this._planeBitmapMaskParser.removeMask(message.maskId);
+                    if (message.maskId) update = this._planeBitmapMaskParser.removeMask(message.maskId);
                     break;
             }
 

@@ -46,7 +46,7 @@ export class RoomEventHandler implements IRoomEventHandler {
     private _selectedObjectCategory: RoomObjectCategoryEnum = RoomObjectCategoryEnum.Minimum;
     private _objectPlacementSource: string = '';
 
-    constructor(private _room: IRoom) {}
+    constructor(private _room: IRoom) { }
 
     public async handleRoomObjectEvent(event: RoomObjectEvent): Promise<void> {
         if (!event) return;
@@ -73,7 +73,7 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         if (
             category !== RoomObjectCategoryEnum.Room &&
-            (!GetRoomEngine().isPlayingGame || category !== RoomObjectCategoryEnum.Unit)
+            (!this._room.isPlayingGame() || category !== RoomObjectCategoryEnum.Unit)
         )
             category = RoomObjectCategoryEnum.Minimum;
 
@@ -148,6 +148,20 @@ export class RoomEventHandler implements IRoomEventHandler {
         }
 
         const category = GetRoomEngine().getRoomObjectCategoryForType(event.objectType);
+
+        const roomCursor = this._room.getRoomObjectCursor();
+
+        if (roomCursor && roomCursor.logic) {
+            let newEvent: ObjectTileCursorUpdateMessage | undefined = undefined;
+
+            if (event instanceof RoomObjectTileMouseEvent) {
+                newEvent = this.handleMouseOverTile(event);
+            } else if (event.object && event.object.id !== -1) {
+                if (GetRoomEngine().whereYouClickIsWhereYouGo()) newEvent = this.handleMouseOverObject(category, event);
+            }
+
+            if (newEvent) roomCursor.processUpdateMessage(newEvent);
+        }
 
         switch (operation) {
             case RoomObjectOperationType.OBJECT_MOVE:
@@ -257,7 +271,7 @@ export class RoomEventHandler implements IRoomEventHandler {
                             );
                         }
 
-                        if (!GetRoomEngine().isPlayingGame()) {
+                        if (!this._room.isPlayingGame()) {
                             didWalk = true;
                         } else {
                             didMove = true;
@@ -279,7 +293,7 @@ export class RoomEventHandler implements IRoomEventHandler {
                                 this.modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
                             }
 
-                            if (!GetRoomEngine().isPlayingGame()) {
+                            if (this._room.isPlayingGame()) {
                                 didWalk = true;
                             } else {
                                 didMove = true;
@@ -348,8 +362,15 @@ export class RoomEventHandler implements IRoomEventHandler {
         if (roomCursor && roomCursor.logic) {
             let newEvent: ObjectTileCursorUpdateMessage | undefined = undefined;
 
-            if (event instanceof RoomObjectTileMouseEvent) newEvent = this.handleMouseOverTile(event);
-            else if (event.object && event.object.id !== -1) {
+            if (event instanceof RoomObjectTileMouseEvent) {
+                if (event.buttonDown) {
+                    const cursorLocation = roomCursor.getLocation();
+
+                    if (event.tileXAsInt !== cursorLocation.x || event.tileYAsInt !== cursorLocation.y) newEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
+                } else {
+                    newEvent = this.handleMouseOverTile(event);
+                }
+            } else if (event.object && event.object.id !== -1) {
                 if (GetRoomEngine().whereYouClickIsWhereYouGo()) newEvent = this.handleMouseOverObject(category, event);
             } else {
                 newEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
@@ -888,7 +909,7 @@ export class RoomEventHandler implements IRoomEventHandler {
         const selectionArrow = this._room.getRoomObjectSelectionArrow();
 
         if (selectionArrow && selectionArrow.logic) {
-            if (_local_6 && !GetRoomEngine().isPlayingGame())
+            if (_local_6 && !this._room.isPlayingGame())
                 selectionArrow.processUpdateMessage(
                     new ObjectVisibilityUpdateMessage(ObjectVisibilityUpdateMessage.ENABLED),
                 );

@@ -15,7 +15,7 @@ import type {
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
-import type { IRoomAreaSelectionManager } from './utils';
+import type { IRoomAreaSelectionManager, IRoomCamera } from './utils';
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
@@ -126,12 +126,14 @@ export interface IRoom {
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
+    isPlayingGame(): boolean;
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
     readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
     readonly areaSelection: IRoomAreaSelectionManager;
+    readonly camera: IRoomCamera;
     readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;
     readonly isCameraFollowDisabled: boolean;

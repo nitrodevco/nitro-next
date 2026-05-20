@@ -1,5 +1,6 @@
 import {
     GetRoomContentLoader,
+    GetRoomEngine,
     GetStage,
     GetTexturePool,
     GetTicker,
@@ -10,11 +11,10 @@ import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
-import { GetRoomEngine } from '../../nitro-renderer/src/room/GetRoomEngine';
-import { RoomContextProvider } from './context/RoomContextProvider';
-import { useConfigLoader } from './hooks/logic/useConfigLoader';
-import { useFurnitureDataLoader } from './hooks/logic/useFurnitureDataLoader';
+import { RoomContextProvider } from './context';
+import { useConfigLoader, useFurnitureDataLoader } from './hooks';
 import { RoomView } from './RoomView';
+import { GetPixelRatio } from './utils';
 
 export const Nitro: FC = () => {
     const [isReady, setIsReady] = useState(false);
@@ -30,7 +30,7 @@ export const Nitro: FC = () => {
                     width,
                     height,
                     autoDensity: false,
-                    resolution: 1,
+                    resolution: GetPixelRatio(),
                     backgroundAlpha: 0,
                     roundPixels: false,
                     preference: 'webgpu',

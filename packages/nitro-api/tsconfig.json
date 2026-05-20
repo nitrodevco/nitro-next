@@ -5,9 +5,6 @@
         "rootDir": "src",
         "outDir": "dist",
         "paths": {
-            "#api/*": [
-                "./src/*"
-            ],
             "#api/asset/*": [
                 "./src/asset/*"
             ],
@@ -28,7 +25,10 @@
             ],
             "#api/utils/*": [
                 "./src/utils/*"
-            ]
+            ],
+            "#api/*": [
+                "./src/*"
+            ],
         }
     },
     "include": [

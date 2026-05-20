@@ -69,6 +69,7 @@ export * from './object/visualization/ISortableSprite';
 export * from './utils/IFurnitureStackingHeightMap';
 export * from './utils/ILegacyWallGeometry';
 export * from './utils/IRoomAreaSelectionManager';
+export * from './utils/IRoomCamera';
 export * from './utils/ISelectedRoomObjectData';
 export * from './utils/ITileObjectMap';
 export * from './utils/RoomObjectSpriteData';
