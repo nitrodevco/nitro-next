@@ -17,7 +17,6 @@ export default defineConfig({
             fileName: () => 'index.js',
         },
         rollupOptions: {
-            external: ['pixi.js'],
             output: {
                 manualChunks: id => {
                     if (id.includes('/packages/nitro-api/')) {
@@ -26,9 +25,7 @@ export default defineConfig({
                     if (id.includes('/packages/nitro-shared/')) {
                         return 'nitro-shared';
                     }
-                    if (id.includes('node_modules')) {
-                        return 'vendor';
-                    }
+                    if (id.includes('node_modules')) return 'vendor';
                 },
             },
         },

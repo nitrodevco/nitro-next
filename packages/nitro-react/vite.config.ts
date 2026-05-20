@@ -20,8 +20,8 @@ export default defineConfig({
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }
-                    if (id.includes('/packages/nitro-render/')) {
-                        return 'nitro-render';
+                    if (id.includes('/packages/nitro-renderer/')) {
+                        return 'nitro-renderer';
                     }
                     if (id.includes('/packages/nitro-shared/')) {
                         return 'nitro-shared';
