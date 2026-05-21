@@ -15,33 +15,21 @@ export const RoomCanvasView = () => {
 
         const renderer = GetRenderer();
         const stage = GetStage();
-        const pixelRatio = GetPixelRatio();
-        const width = Math.round(window.innerWidth);
-        const height = Math.round(window.innerHeight);
+        const width = Math.round(size.width);
+        const height = Math.round(size.height);
         const canvas = room.getRoomCanvas(width, height, RoomGeometry.SCALE_ZOOMED_IN);
 
+        renderer.canvas.style.width = `${width}px`;
+        renderer.canvas.style.height = `${height}px`;
+
+        if (renderer.resolution !== size.resolution) {
+            room.camera.reset();
+            room.camera.setTarget(new Vector3d(0, 0, 0));
+        }
+
+        if (renderer.width !== width || renderer.height !== height || renderer.resolution !== size.resolution) renderer.resize(width, height, size.resolution);
+
         if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
-
-        if (renderer.canvas) {
-            renderer.canvas.style.width = (width).toString() + 'px';
-            renderer.canvas.style.height = (height).toString() + 'px';
-        }
-
-        if (renderer.width !== width || renderer.height !== height) {
-            if (renderer.resolution !== pixelRatio) {
-                room.camera.reset();
-                room.camera.setTarget(new Vector3d(0, 0, 0));
-            }
-
-            renderer.resize(width, height, pixelRatio);
-        }
-
-        //canvas.setScale(pixelRatio);
-
-        //room.camera.targetId = 1;
-        //room.camera.targetCategory = RoomObjectCategoryEnum.Floor;
-
-        //room.camera.activateFollowing(1000);
 
         renderer.render(stage);
     }, [room, size]);
@@ -56,8 +44,7 @@ export const RoomCanvasView = () => {
         let clickCount = 0;
 
         const mouseHandler = (event: MouseEvent) => {
-            const x = event.clientX - (event.clientX - Math.round((event.clientX)));
-            const y = event.clientY - (event.clientY - Math.round((event.clientY)));
+            event.preventDefault();
 
             let eventType = event.type;
 
@@ -100,8 +87,8 @@ export const RoomCanvasView = () => {
             }
 
             void room.dispatchMouseEvent(
-                x,
-                y,
+                event.clientX,
+                event.clientY,
                 eventType,
                 event.altKey,
                 event.ctrlKey || event.metaKey,
@@ -117,25 +104,22 @@ export const RoomCanvasView = () => {
 
             if (!touch) return;
 
-            const x = touch.clientX - (touch.clientX - Math.round((touch.clientX)));
-            const y = touch.clientY - (touch.clientY - Math.round((touch.clientY)));
-
             switch (event.type) {
                 case 'touchstart':
                     didMouseMove = false;
                     isMouseDown = true;
 
-                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_DOWN, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_DOWN, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
                     break;
                 case 'touchmove':
                     didMouseMove = true;
 
-                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_MOVE, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_MOVE, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
                     break;
                 case 'touchend': {
                     isMouseDown = false;
 
-                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_UP, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_UP, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
 
                     let eventType: string | undefined = undefined;
 
@@ -156,7 +140,7 @@ export const RoomCanvasView = () => {
                         lastClick = 0;
                     }
 
-                    if (eventType) void room.dispatchMouseEvent(x, y, eventType, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    if (eventType) void room.dispatchMouseEvent(touch.clientX, touch.clientY, eventType, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
 
                     break;
                 }
@@ -184,65 +168,36 @@ export const RoomCanvasView = () => {
         };
     }, [room]);
 
-    /*useEffect(() => {
-        const canvas = GetRenderer().canvas;
+    useEffect(() => {
+        const renderer = GetRenderer();
+        const element = elementRef?.current;
 
-        if (canvas) elementRef?.current?.appendChild(canvas);
+        if (!renderer || !element) return;
 
-        let resizeTimer: ReturnType<typeof setTimeout>;
+        if (renderer.canvas) elementRef?.current?.appendChild(renderer.canvas);
 
-        const observer = new ResizeObserver(entries => {
-            clearTimeout(resizeTimer);
+        let timer: ReturnType<typeof setTimeout>;
 
-            for (const entry of entries) {
-                const { width, height } = entry.contentRect;
+        const handleResize = (size: { width: number, height: number, resolution: number }) => {
+            clearTimeout(timer);
 
-                if (width <= 0) return;
+            timer = setTimeout(() => setSize(size), 5);
+        };
 
-                resizeTimer = setTimeout(() => {
-                    setSize({
-                        width: Math.floor(width),
-                        height: Math.floor(height),
-                        resolution: Math.round(GetPixelRatio()),
-                    });
-                }, 5);
-            }
+        const observer = new ResizeObserver(() => {
+            const width = element.clientWidth;
+            const height = element.clientHeight;
+            const resolution = GetPixelRatio();
+
+            handleResize({ width, height, resolution });
         });
 
-        if (elementRef?.current) observer.observe();
+        observer.observe(element);
 
         return () => {
             observer.disconnect();
+            clearTimeout(timer);
         }
-    }, []);*/
-
-    useEffect(() => {
-        const canvas = GetRenderer().canvas;
-
-        if (canvas) elementRef?.current?.appendChild(canvas);
-
-        let resizeTimer: ReturnType<typeof setTimeout>;
-
-        const handleResize = (event: UIEvent | undefined) => {
-            clearTimeout(resizeTimer);
-
-            resizeTimer = setTimeout(() => {
-                setSize({
-                    width: Math.round(window.innerWidth),
-                    height: Math.round(window.innerHeight),
-                    resolution: GetPixelRatio()
-                });
-            }, 5);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        handleResize(undefined);
-
-        return () => {
-            clearTimeout(resizeTimer);
-            window.removeEventListener('resize', handleResize);
-        };
     }, []);
 
     return <div className="size-full" ref={elementRef}></div>;
