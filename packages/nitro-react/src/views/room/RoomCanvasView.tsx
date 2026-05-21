@@ -1,8 +1,9 @@
-import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, RoomGeometry } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRoomContext } from '../../hooks/room/useRoomContext';
+import { useRoomContext } from '#base/hooks';
+import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
     const { room } = useRoomContext();
@@ -12,34 +13,16 @@ export const RoomCanvasView = () => {
     useEffect(() => {
         if (!room || !size) return;
 
-        const width = Math.round(window.innerWidth);
-        const height = Math.round(window.innerHeight);
-        const widthScaled = Math.round(width * window.devicePixelRatio);
-        const heightScaled = Math.round(height * window.devicePixelRatio);
-
         const renderer = GetRenderer();
         const stage = GetStage();
+        const pixelRatio = GetPixelRatio();
+        const width = Math.round(window.innerWidth);
+        const height = Math.round(window.innerHeight);
+        const widthScaled = Math.round(width * pixelRatio);
+        const heightScaled = Math.round(height * pixelRatio);
         const canvas = room.getRoomCanvas(widthScaled, heightScaled, RoomGeometry.SCALE_ZOOMED_IN);
-        const minX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) ?? 0;
-        const maxX = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) ?? 0;
-        const minY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) ?? 0;
-        const maxY = room.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) ?? 0;
 
-        let x = (minX + maxX) / 2;
-        let y = (minY + maxY) / 2;
-
-        const offset = 20;
-
-        x = x + (offset - 1);
-        y = y + (offset - 1);
-
-        const z = Math.sqrt((offset * offset) + (offset * offset)) * Math.tan((30 / 180) * Math.PI);
-
-        if (canvas) {
-            canvas.geometry.location = new Vector3d(x, y, z);
-
-            if (canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
-        }
+        if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
 
         if (renderer.canvas) {
             renderer.canvas.style.width = (width).toString() + 'px';
@@ -50,6 +33,13 @@ export const RoomCanvasView = () => {
             renderer.resize(widthScaled, heightScaled, 1);
         }
 
+        canvas.setScale(pixelRatio);
+
+        //room.camera.targetId = 1;
+        //room.camera.targetCategory = RoomObjectCategoryEnum.Floor;
+
+        //room.camera.activateFollowing(1000);
+
         renderer.render(stage);
     }, [room, size]);
 
@@ -58,12 +48,13 @@ export const RoomCanvasView = () => {
 
         const canvas = GetRenderer().canvas;
         let didMouseMove = false;
+        let isMouseDown = false;
         let lastClick = 0;
         let clickCount = 0;
 
-        const handler = (event: MouseEvent) => {
-            const x = event.clientX - (event.clientX - Math.round((event.clientX * window.devicePixelRatio)));
-            const y = event.clientY - (event.clientY - Math.round((event.clientY * window.devicePixelRatio)));
+        const mouseHandler = (event: MouseEvent) => {
+            const x = event.clientX - (event.clientX - Math.round((event.clientX * GetPixelRatio())));
+            const y = event.clientY - (event.clientY - Math.round((event.clientY * GetPixelRatio())));
 
             let eventType = event.type;
 
@@ -94,8 +85,10 @@ export const RoomCanvasView = () => {
                     break;
                 case MouseEventType.MOUSE_DOWN:
                     didMouseMove = false;
+                    isMouseDown = true;
                     break;
                 case MouseEventType.MOUSE_UP:
+                    isMouseDown = false;
                     break;
                 case MouseEventType.RIGHT_CLICK:
                     break;
@@ -110,20 +103,81 @@ export const RoomCanvasView = () => {
                 event.altKey,
                 event.ctrlKey || event.metaKey,
                 event.shiftKey,
-                false,
+                isMouseDown,
             );
         };
 
-        canvas.onclick = handler;
-        canvas.onmousemove = handler;
-        canvas.onmousedown = handler;
-        canvas.onmouseup = handler;
+        const touchHandler = (event: TouchEvent) => {
+            event.preventDefault();
+
+            const touch = event.changedTouches[0];
+
+            if (!touch) return;
+
+            const x = touch.clientX - (touch.clientX - Math.round((touch.clientX * GetPixelRatio())));
+            const y = touch.clientY - (touch.clientY - Math.round((touch.clientY * GetPixelRatio())));
+
+            switch (event.type) {
+                case 'touchstart':
+                    didMouseMove = false;
+                    isMouseDown = true;
+
+                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_DOWN, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    break;
+                case 'touchmove':
+                    didMouseMove = true;
+
+                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_MOVE, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+                    break;
+                case 'touchend': {
+                    isMouseDown = false;
+
+                    void room.dispatchMouseEvent(x, y, MouseEventType.MOUSE_UP, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+
+                    let eventType: string | undefined = undefined;
+
+                    if (!didMouseMove) {
+                        eventType = MouseEventType.MOUSE_CLICK;
+
+                        if (lastClick) {
+                            clickCount = 1;
+
+                            if (lastClick >= Date.now() - 300) clickCount++;
+                        }
+                    }
+
+                    if (clickCount === 2) {
+                        if (!didMouseMove) eventType = MouseEventType.DOUBLE_CLICK;
+
+                        clickCount = 0;
+                        lastClick = 0;
+                    }
+
+                    if (eventType) void room.dispatchMouseEvent(x, y, eventType, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
+
+                    break;
+                }
+            }
+        };
+
+        canvas.onclick = mouseHandler;
+        canvas.onmousemove = mouseHandler;
+        canvas.onmousedown = mouseHandler;
+        canvas.onmouseup = mouseHandler;
+
+        canvas.ontouchstart = touchHandler;
+        canvas.ontouchmove = touchHandler;
+        canvas.ontouchend = touchHandler;
 
         return () => {
             canvas.onclick = null;
             canvas.onmousemove = null;
             canvas.onmousedown = null;
             canvas.onmouseup = null;
+
+            canvas.ontouchstart = null;
+            canvas.ontouchmove = null;
+            canvas.ontouchend = null;
         };
     }, [room]);
 
@@ -146,7 +200,7 @@ export const RoomCanvasView = () => {
                     setSize({
                         width: Math.floor(width),
                         height: Math.floor(height),
-                        resolution: Math.round(window.devicePixelRatio),
+                        resolution: Math.round(GetPixelRatio()),
                     });
                 }, 5);
             }
@@ -173,7 +227,7 @@ export const RoomCanvasView = () => {
                 setSize({
                     width: Math.round(window.innerWidth),
                     height: Math.round(window.innerHeight),
-                    resolution: Math.round(window.devicePixelRatio)
+                    resolution: Math.round(GetPixelRatio())
                 });
             }, 5);
         };

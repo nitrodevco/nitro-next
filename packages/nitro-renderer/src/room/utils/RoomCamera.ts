@@ -1,7 +1,7 @@
-﻿import type { IVector3D } from '@nitrodevco/nitro-api';
+import type { IRoomCamera, IVector3D } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
-export class RoomCamera {
+export class RoomCamera implements IRoomCamera {
     private static MOVE_SPEED_DENOMINATOR: number = 12;
 
     private _targetId: number = -1;
@@ -10,7 +10,7 @@ export class RoomCamera {
     private _moveDistance: number = 0;
     private _previousMoveSpeed: number = 0;
     private _maintainPreviousMoveSpeed: boolean = false;
-    private _currentLoc: IVector3D = new Vector3d();
+    private _currentLoc: IVector3D | undefined = undefined;
     private _targetObjectLoc: IVector3D = new Vector3d();
     private _limitedLocX: boolean = false;
     private _limitedLocY: boolean = false;
@@ -23,9 +23,9 @@ export class RoomCamera {
     private _roomHt: number = 0;
     private _geometryUpdateId: number = -1;
     private _scaleChanged: boolean = false;
-    private _followDuration: number;
+    private _isMoving: boolean = false;
 
-    public get location(): IVector3D {
+    public get currentLoc(): IVector3D | undefined {
         return this._currentLoc;
     }
 
@@ -106,7 +106,7 @@ export class RoomCamera {
     }
 
     public set scale(k: number) {
-        if (this._scale != k) {
+        if (this._scale !== k) {
             this._scale = k;
             this._scaleChanged = true;
         }
@@ -137,83 +137,71 @@ export class RoomCamera {
     }
 
     public get isMoving(): boolean {
-        if (!(this._targetLoc == null) && !(this._currentLoc == null)) {
-            return true;
-        }
-        return false;
+        return this._isMoving;
     }
 
-    public set target(k: IVector3D) {
-        let _local_2: IVector3D;
-        if (this._targetLoc == null) {
-            this._targetLoc = new Vector3d();
-        }
-        if (!(this._targetLoc.x == k.x) || !(this._targetLoc.y == k.y) || !(this._targetLoc.z == k.z)) {
-            this._targetLoc.assign(k);
-            _local_2 = Vector3d.dif(this._targetLoc, this._currentLoc);
-            this._moveDistance = _local_2.length;
-            this._maintainPreviousMoveSpeed = true;
-        }
+    public setTarget(k: IVector3D): void {
+        this._targetLoc.assign(k);
+        const diff = Vector3d.dif(this._targetLoc, this._currentLoc ?? new Vector3d());
+        this._moveDistance = diff.length;
+        this._maintainPreviousMoveSpeed = true;
+        this._isMoving = true;
     }
-
-    public dispose(): void {}
 
     public initializeLocation(k: IVector3D): void {
-        if (this._currentLoc != null) {
-            return;
-        }
+        if (this._currentLoc) return;
+
         this._currentLoc = new Vector3d();
+
         this._currentLoc.assign(k);
     }
 
     public resetLocation(k: IVector3D): void {
-        if (this._currentLoc == null) {
-            this._currentLoc = new Vector3d();
-        }
+        if (!this._currentLoc) this._currentLoc = new Vector3d();
+
         this._currentLoc.assign(k);
     }
 
-    public update(k: number, _arg_2: number): void {
-        let _local_3: IVector3D;
-        let _local_4: number;
-        let _local_5: number;
-        let _local_6: number;
-        let _local_7: number;
-        if (this._followDuration > 0 && !(this._targetLoc == null) && !(this._currentLoc == null)) {
-            if (this._scaleChanged) {
-                this._scaleChanged = false;
-                this._currentLoc = this._targetLoc;
-                this._targetLoc = new Vector3d();
-                return;
-            }
-            _local_3 = Vector3d.dif(this._targetLoc, this._currentLoc);
-            if (_local_3.length > this._moveDistance) {
-                this._moveDistance = _local_3.length;
-            }
-            if (_local_3.length <= _arg_2) {
-                this._currentLoc = this._targetLoc;
-                this._targetLoc = new Vector3d();
-                this._previousMoveSpeed = 0;
-            } else {
-                _local_4 = Math.sin((Math.PI * _local_3.length) / this._moveDistance);
-                _local_5 = _arg_2 * 0.5;
-                _local_6 = this._moveDistance / RoomCamera.MOVE_SPEED_DENOMINATOR;
-                _local_7 = _local_5 + (_local_6 - _local_5) * _local_4;
-                if (this._maintainPreviousMoveSpeed) {
-                    if (_local_7 < this._previousMoveSpeed) {
-                        _local_7 = this._previousMoveSpeed;
-                        if (_local_7 > _local_3.length) {
-                            _local_7 = _local_3.length;
-                        }
-                    } else {
-                        this._maintainPreviousMoveSpeed = false;
-                    }
+    public update(k: number, threshold: number): void {
+        if (!this._isMoving) return;
+
+        if (this._scaleChanged) {
+            this._scaleChanged = false;
+            this._currentLoc = this._targetLoc;
+            this._targetLoc = new Vector3d();
+            this._isMoving = false;
+            return;
+        }
+
+        if (!this._currentLoc) return;
+
+        const diff = Vector3d.dif(this._targetLoc, this._currentLoc);
+
+        if (diff.length > this._moveDistance) this._moveDistance = diff.length;
+
+        if (diff.length <= threshold) {
+            this._currentLoc = this._targetLoc;
+            this._targetLoc = new Vector3d();
+            this._previousMoveSpeed = 0;
+            this._isMoving = false;
+        } else {
+            const sinFactor = Math.sin((Math.PI * diff.length) / this._moveDistance);
+            const minSpeed = threshold * 0.5;
+            const maxSpeed = this._moveDistance / RoomCamera.MOVE_SPEED_DENOMINATOR;
+            let speed = minSpeed + (maxSpeed - minSpeed) * sinFactor;
+
+            if (this._maintainPreviousMoveSpeed) {
+                if (speed < this._previousMoveSpeed) {
+                    speed = Math.min(this._previousMoveSpeed, diff.length);
+                } else {
+                    this._maintainPreviousMoveSpeed = false;
                 }
-                this._previousMoveSpeed = _local_7;
-                _local_3.divide(_local_3.length);
-                _local_3.multiply(_local_7);
-                this._currentLoc = Vector3d.sum(this._currentLoc, _local_3);
             }
+
+            this._previousMoveSpeed = speed;
+            diff.divide(diff.length);
+            diff.multiply(speed);
+            this._currentLoc = Vector3d.sum(this._currentLoc, diff);
         }
     }
 
@@ -221,7 +209,5 @@ export class RoomCamera {
         this._geometryUpdateId = -1;
     }
 
-    public activateFollowing(k: number): void {
-        this._followDuration = k;
-    }
+    public activateFollowing(_k: number): void {}
 }

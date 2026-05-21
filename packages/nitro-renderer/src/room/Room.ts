@@ -4,6 +4,7 @@ import type {
     IObjectData,
     IRoom,
     IRoomAreaSelectionManager,
+    IRoomCamera,
     IRoomEventHandler,
     IRoomGeometry,
     IRoomInstance,
@@ -73,7 +74,8 @@ export class Room implements IRoom {
     private _floorStack: Map<number, RoomFurnitureData> = new Map();
     private _wallStack: Map<number, RoomFurnitureData> = new Map();
 
-    private _camera: RoomCamera = new RoomCamera();
+    private _camera: IRoomCamera = new RoomCamera();
+    private _cameraInitialized: boolean = false;
     private _canvasMouseX: number = 0;
     private _canvasMouseY: number = 0;
     private _isDragged: boolean = false;
@@ -127,12 +129,12 @@ export class Room implements IRoom {
         canvas.setEventHandler(this._eventHandler);
 
         if (canvas.geometry) {
-            canvas.geometry.z_scale = this._instance.model.getValue(RoomObjectVariableEnum.RoomZScale);
+            canvas.geometry.z_scale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
 
-            const doorX = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorX);
-            const doorY = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorY);
-            const doorZ = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorZ);
-            const doorDirection = this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomDoorDir);
+            const doorX = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorX);
+            const doorY = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorY);
+            const doorZ = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorZ);
+            const doorDirection = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorDir);
             const vector = new Vector3d(doorX, doorY, doorZ);
 
             let direction: IVector3D | undefined = undefined;
@@ -362,243 +364,209 @@ export class Room implements IRoom {
         this._canvasMouseY = y;
     }
 
-    private updateRoomCamera(objectLocation: IVector3D, time: number): void {
+    private updateRoomCamera(time: number): void {
         const canvas = this._instance.canvas;
 
         if (!canvas) return;
 
-        const canvasRectangle = new Rectangle(0, 0, canvas.width, canvas.height);
+        const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
+        const roomBounds = this.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
-        let _local_10 = (Math.floor(objectLocation.z) + 1);
-
-        const width = Math.round(canvasRectangle.width);
-        const height = Math.round(canvasRectangle.height);
-        const bounds = this.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
-        const roomCamera = this._camera;
-
-        if (bounds && ((bounds.right < 0) || (bounds.bottom < 0) || (bounds.left >= width) || (bounds.top >= height))) {
-            roomCamera.reset();
+        if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) {
+            this._camera.reset();
+            this._camera.setTarget(new Vector3d(0, 0, 0));
         }
 
-        if ((roomCamera.screenWd !== width) || (roomCamera.screenHt !== height) || (roomCamera.scale !== canvas.geometry.scale) || (roomCamera.geometryUpdateId !== canvas.geometry.updateId) || !Vector3d.isEqual(objectLocation, roomCamera.targetObjectLoc) || roomCamera.isMoving) {
-            roomCamera.targetObjectLoc = objectLocation;
+        const targetObject = this.getRoomObject(this._camera.targetId, this._camera.targetCategory);
+        const targetLocation = targetObject?.getLocation() ?? new Vector3d();
 
-            const _local_15 = new Vector3d();
+        const needsUpdate =
+            this._camera.screenWd !== viewport.width ||
+            this._camera.screenHt !== viewport.height ||
+            this._camera.scale !== canvas.geometry.scale ||
+            this._camera.geometryUpdateId !== canvas.geometry.updateId ||
+            (targetObject !== undefined && !Vector3d.isEqual(targetLocation, this._camera.targetObjectLoc)) ||
+            this._camera.isMoving;
 
-            _local_15.assign(objectLocation);
+        if (!needsUpdate) {
+            this._camera.limitedLocationX = false;
+            this._camera.limitedLocationY = false;
+            this._camera.centeredLocX = false;
+            this._camera.centeredLocY = false;
 
-            _local_15.x = Math.round(_local_15.x);
-            _local_15.y = Math.round(_local_15.y);
+            return;
+        }
 
-            const _local_16 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMinX) - 0.5);
-            const _local_17 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMinY) - 0.5);
-            const _local_18 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMaxX) + 0.5);
-            const _local_19 = (this._instance.model.getValue<number>(RoomObjectVariableEnum.RoomMaxY) + 0.5);
-            const _local_20 = Math.round(((_local_16 + _local_18) / 2));
-            const _local_21 = Math.round(((_local_17 + _local_19) / 2));
-            const _local_22 = 2;
-            let _local_23 = new Point((_local_15.x - _local_20), (_local_15.y - _local_21));
-            const _local_24 = (canvas.geometry.scale / Math.sqrt(2));
-            const _local_25 = (_local_24 / 2);
-            const _local_26 = new Matrix();
-            _local_26.rotate(((-(canvas.geometry.direction.x + 90) / 180) * Math.PI));
-            _local_23 = _local_26.apply(_local_23);
-            _local_23.y = (_local_23.y * (_local_25 / _local_24));
-            const _local_27 = (((canvasRectangle.width / 2) / _local_24) - 1);
-            const _local_28 = (((canvasRectangle.height / 2) / _local_25) - 1);
+        this._camera.targetObjectLoc = targetLocation;
 
-            let _local_29 = 0;
-            let _local_30 = 0;
-            let _local_31 = 0;
-            let _local_32 = 0;
-            let _local_33 = canvas.geometry.getScreenPoint(new Vector3d(_local_20, _local_21, _local_22));
+        const finalLocation = new Vector3d();
+        let targetZ = Math.floor(targetLocation.z) + 1;
 
-            if (!_local_33) return;
+        finalLocation.assign(targetLocation);
+        finalLocation.x = Math.round(finalLocation.x);
+        finalLocation.y = Math.round(finalLocation.y);
 
-            _local_33.x = (_local_33.x + Math.round((canvasRectangle.width / 2)));
-            _local_33.y = (_local_33.y + Math.round((canvasRectangle.height / 2)));
+        const minX = this.getRoomValue<number>(RoomObjectVariableEnum.RoomMinX) - 0.5;
+        const maxX = this.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxX) + 0.5;
+        const minY = this.getRoomValue<number>(RoomObjectVariableEnum.RoomMinY) - 0.5;
+        const maxY = this.getRoomValue<number>(RoomObjectVariableEnum.RoomMaxY) + 0.5;
 
-            if (bounds) {
-                bounds.x += -(canvas.screenOffsetX);
-                bounds.y += -(canvas.screenOffsetY);
+        const centerX = Math.round((minX + maxX) / 2);
+        const centerY = Math.round((minY + maxY) / 2);
 
-                if (((bounds.width > 1) && (bounds.height > 1))) {
-                    _local_29 = (((bounds.left - _local_33.x) - (canvas.geometry.scale * 0.25)) / _local_24);
-                    _local_31 = (((bounds.right - _local_33.x) + (canvas.geometry.scale * 0.25)) / _local_24);
-                    _local_30 = (((bounds.top - _local_33.y) - (canvas.geometry.scale * 0.5)) / _local_25);
-                    _local_32 = (((bounds.bottom - _local_33.y) + (canvas.geometry.scale * 0.5)) / _local_25);
-                }
-                else {
-                    canvas.geometry.adjustLocation(new Vector3d(-30, -30), 25);
+        let offset = new Point(finalLocation.x - centerX, finalLocation.y - centerY);
 
-                    return;
-                }
+        const scaleX = canvas.geometry.scale / Math.sqrt(2);
+        const scaleY = scaleX / 2;
+        const rotMatrix = new Matrix();
+
+        rotMatrix.rotate((-(canvas.geometry.direction.x + 90) / 180) * Math.PI);
+
+        offset = rotMatrix.apply(offset);
+        offset.y = offset.y * (scaleY / scaleX);
+
+        const halfViewRangeX = viewport.width / 2 / scaleX - 1;
+        const halfViewRangeY = viewport.height / 2 / scaleY - 1;
+        const centerScreen = canvas.geometry.getScreenPoint(new Vector3d(centerX, centerY, 2));
+
+        if (!centerScreen) return;
+
+        centerScreen.x += Math.round(viewport.width / 2);
+        centerScreen.y += Math.round(viewport.height / 2);
+
+        if (!roomBounds) {
+            canvas.geometry.adjustLocation(new Vector3d(0, 0), 25);
+
+            return;
+        }
+
+        roomBounds.x -= canvas.screenOffsetX;
+        roomBounds.y -= canvas.screenOffsetY;
+
+        if (roomBounds.width <= 1 || roomBounds.height <= 1) {
+            canvas.geometry.adjustLocation(new Vector3d(-30, -30), 25);
+
+            return;
+        }
+
+        const boundsMinX = (roomBounds.left - centerScreen.x - canvas.geometry.scale * 0.25) / scaleX;
+        const boundsMaxX = (roomBounds.right - centerScreen.x + canvas.geometry.scale * 0.25) / scaleX;
+        const boundsMinY = (roomBounds.top - centerScreen.y - canvas.geometry.scale * 0.5) / scaleY;
+        const boundsMaxY = (roomBounds.bottom - centerScreen.y + canvas.geometry.scale * 0.5) / scaleY;
+
+        let clampedX = false;
+        let clampedY = false;
+        let fitsHorizontally = false;
+        let fitsVertically = false;
+
+        if (Math.round((boundsMaxX - boundsMinX) * scaleX) < viewport.width) {
+            targetZ = 2;
+            offset.x = (boundsMaxX + boundsMinX) / 2;
+            fitsHorizontally = true;
+        } else {
+            if (offset.x > boundsMaxX - halfViewRangeX) {
+                offset.x = boundsMaxX - halfViewRangeX;
+                clampedX = true;
             }
-            else {
-                canvas.geometry.adjustLocation(new Vector3d(0, 0), 25);
-
-                return;
-            }
-
-            let _local_34 = false;
-            let _local_35 = false;
-            let _local_36 = false;
-            let _local_37 = false;
-            const _local_38 = Math.round(((_local_31 - _local_29) * _local_24));
-
-            if (_local_38 < canvasRectangle.width) {
-                _local_10 = 2;
-                _local_23.x = ((_local_31 + _local_29) / 2);
-                _local_36 = true;
-            }
-            else {
-                if (_local_23.x > (_local_31 - _local_27)) {
-                    _local_23.x = (_local_31 - _local_27);
-                    _local_34 = true;
-                }
-                if (_local_23.x < (_local_29 + _local_27)) {
-                    _local_23.x = (_local_29 + _local_27);
-                    _local_34 = true;
-                }
-            }
-            const _local_39 = Math.round(((_local_32 - _local_30) * _local_25));
-            if (_local_39 < canvasRectangle.height) {
-                _local_10 = 2;
-                _local_23.y = ((_local_32 + _local_30) / 2);
-                _local_37 = true;
-            }
-            else {
-                if (_local_23.y > (_local_32 - _local_28)) {
-                    _local_23.y = (_local_32 - _local_28);
-                    _local_35 = true;
-                }
-                if (_local_23.y < (_local_30 + _local_28)) {
-                    _local_23.y = (_local_30 + _local_28);
-                    _local_35 = true;
-                }
-                if (_local_35) {
-                    _local_23.y = (_local_23.y / (_local_25 / _local_24));
-                }
-            }
-            _local_26.invert();
-            _local_23 = _local_26.apply(_local_23);
-            _local_23.x = (_local_23.x + _local_20);
-            _local_23.y = (_local_23.y + _local_21);
-            let _local_40 = 0.35;
-            let _local_41 = 0.2;
-            let _local_42 = 0.2;
-            const _local_43 = 10;
-            const _local_44 = 10;
-            if ((_local_42 * width) > 100) {
-                _local_42 = (100 / width);
-            }
-            if ((_local_40 * height) > 150) {
-                _local_40 = (150 / height);
-            }
-            if ((_local_41 * height) > 150) {
-                _local_41 = (150 / height);
-            }
-            if ((((roomCamera.limitedLocationX) && (roomCamera.screenWd == width)) && (roomCamera.screenHt == height))) {
-                _local_42 = 0;
-            }
-            if ((((roomCamera.limitedLocationY) && (roomCamera.screenWd == width)) && (roomCamera.screenHt == height))) {
-                _local_40 = 0;
-                _local_41 = 0;
-            }
-
-            canvasRectangle.width = (canvasRectangle.width * (1 - (_local_42 * 2)));
-            canvasRectangle.height = (canvasRectangle.height * (1 - (_local_40 + _local_41)));
-
-            if (canvasRectangle.width < _local_43) {
-                canvasRectangle.width = _local_43;
-            }
-
-            if (canvasRectangle.height < _local_44) {
-                canvasRectangle.height = _local_44;
-            }
-
-            if ((_local_40 + _local_41) > 0) {
-                canvasRectangle.x += (-(canvasRectangle.width) / 2);
-                canvasRectangle.y += (-(canvasRectangle.height) * (_local_41 / (_local_40 + _local_41)));
-            }
-            else {
-                canvasRectangle.x += (-(canvasRectangle.width) / 2);
-                canvasRectangle.y += (-(canvasRectangle.height) / 2);
-            }
-
-            _local_33 = canvas.geometry.getScreenPoint(_local_15);
-
-            if (!_local_33) return;
-
-            if (_local_33) {
-                _local_33.x = (_local_33.x + canvas.screenOffsetX);
-                _local_33.y = (_local_33.y + canvas.screenOffsetY);
-                _local_15.z = _local_10;
-                _local_15.x = (Math.round((_local_23.x * 2)) / 2);
-                _local_15.y = (Math.round((_local_23.y * 2)) / 2);
-                if (!roomCamera.location) {
-                    canvas.geometry.location = _local_15;
-                    if (this.useOffsetScrolling) {
-                        roomCamera.initializeLocation(new Vector3d(0, 0, 0));
-                    }
-                    else {
-                        roomCamera.initializeLocation(_local_15);
-                    }
-                }
-                const _local_45 = canvas.geometry.getScreenPoint(_local_15);
-                const _local_46 = new Vector3d(0, 0, 0);
-                if (_local_45) {
-                    _local_46.x = _local_45.x;
-                    _local_46.y = _local_45.y;
-                }
-                if (((((((((_local_33.x < canvasRectangle.left) || (_local_33.x > canvasRectangle.right)) && (!(roomCamera.centeredLocX))) || (((_local_33.y < canvasRectangle.top) || (_local_33.y > canvasRectangle.bottom)) && (!(roomCamera.centeredLocY)))) || (((_local_36) && (!(roomCamera.centeredLocX))) && (!(roomCamera.screenWd == width)))) || (((_local_37) && (!(roomCamera.centeredLocY))) && (!(roomCamera.screenHt == height)))) || ((!(roomCamera.roomWd == bounds.width)) || (!(roomCamera.roomHt == bounds.height)))) || ((!(roomCamera.screenWd == width)) || (!(roomCamera.screenHt == height))))) {
-                    roomCamera.limitedLocationX = _local_34;
-                    roomCamera.limitedLocationY = _local_35;
-                    if (this.useOffsetScrolling) {
-                        roomCamera.target = _local_46;
-                    }
-                    else {
-                        roomCamera.target = _local_15;
-                    }
-                }
-                else {
-                    if (!_local_34) roomCamera.limitedLocationX = false;
-
-                    if (!_local_35) roomCamera.limitedLocationY = false;
-                }
-            }
-
-            roomCamera.centeredLocX = _local_36;
-            roomCamera.centeredLocY = _local_37;
-            roomCamera.screenWd = width;
-            roomCamera.screenHt = height;
-            roomCamera.scale = canvas.geometry.scale;
-            roomCamera.geometryUpdateId = canvas.geometry.updateId;
-            roomCamera.roomWd = bounds.width;
-            roomCamera.roomHt = bounds.height;
-
-            if (!this.isCameraFollowDisabled) {
-                if (this.useOffsetScrolling) {
-                    roomCamera.update(time, 8);
-                }
-                else {
-                    roomCamera.update(time, 0.5);
-                }
-            }
-
-            if (this.useOffsetScrolling) {
-                this.setRoomInstanceRenderingCanvasOffset(new Point(-(roomCamera.location.x), -(roomCamera.location.y)));
-            }
-            else {
-                canvas.geometry.adjustLocation(roomCamera.location, 25);
+            if (offset.x < boundsMinX + halfViewRangeX) {
+                offset.x = boundsMinX + halfViewRangeX;
+                clampedX = true;
             }
         }
-        else {
-            roomCamera.limitedLocationX = false;
-            roomCamera.limitedLocationY = false;
-            roomCamera.centeredLocX = false;
-            roomCamera.centeredLocY = false;
+
+        if (Math.round((boundsMaxY - boundsMinY) * scaleY) < viewport.height) {
+            targetZ = 2;
+            offset.y = (boundsMaxY + boundsMinY) / 2;
+            fitsVertically = true;
+        } else {
+            if (offset.y > boundsMaxY - halfViewRangeY) {
+                offset.y = boundsMaxY - halfViewRangeY;
+                clampedY = true;
+            }
+
+            if (offset.y < boundsMinY + halfViewRangeY) {
+                offset.y = boundsMinY + halfViewRangeY;
+                clampedY = true;
+            }
+
+            if (clampedY) offset.y = offset.y / (scaleY / scaleX);
         }
+
+        rotMatrix.invert();
+
+        offset = rotMatrix.apply(offset);
+        offset.x += centerX;
+        offset.y += centerY;
+
+        let marginTop = 0.35;
+        let marginBottom = 0.2;
+        let marginX = 0.2;
+
+        if (marginX * viewport.width > 100) marginX = 100 / viewport.width;
+        if (marginTop * viewport.height > 150) marginTop = 150 / viewport.height;
+        if (marginBottom * viewport.height > 150) marginBottom = 150 / viewport.height;
+
+        if (this._camera.limitedLocationX && this._camera.screenWd === viewport.width && this._camera.screenHt === viewport.height) marginX = 0;
+
+        if (this._camera.limitedLocationY && this._camera.screenWd === viewport.width && this._camera.screenHt === viewport.height) {
+            marginTop = 0;
+            marginBottom = 0;
+        }
+
+        viewport.width = Math.max(viewport.width * (1 - marginX * 2), 10);
+        viewport.height = Math.max(viewport.height * (1 - (marginTop + marginBottom)), 10);
+        viewport.x = -viewport.width / 2;
+        viewport.y = (marginTop + marginBottom > 0)
+            ? -(viewport.height * (marginBottom / (marginTop + marginBottom)))
+            : -viewport.height / 2;
+
+        const targetScreen = canvas.geometry.getScreenPoint(finalLocation);
+
+        if (!targetScreen) return;
+
+        targetScreen.x += canvas.screenOffsetX;
+        targetScreen.y += canvas.screenOffsetY;
+
+        finalLocation.z = targetZ;
+        finalLocation.x = Math.round(offset.x * 2) / 2;
+        finalLocation.y = Math.round(offset.y * 2) / 2;
+
+        if (!this._camera.currentLoc) {
+            canvas.geometry.location = finalLocation;
+            this._camera.initializeLocation(new Vector3d(0, 0, 0));
+        }
+
+        const finalScreen = canvas.geometry.getScreenPoint(finalLocation);
+        const currentPosition = new Vector3d(finalScreen?.x ?? 0, finalScreen?.y ?? 0, 0);
+
+        const outOfActiveZoneX = targetObject !== undefined && (targetScreen.x < viewport.left || targetScreen.x > viewport.right) && !this._camera.centeredLocX;
+        const outOfActiveZoneY = targetObject !== undefined && (targetScreen.y < viewport.top || targetScreen.y > viewport.bottom) && !this._camera.centeredLocY;
+        const horizontalFitChanged = fitsHorizontally && !this._camera.centeredLocX && this._camera.screenWd !== viewport.width;
+        const verticalFitChanged = fitsVertically && !this._camera.centeredLocY && this._camera.screenHt !== viewport.height;
+        const roomSizeChanged = this._camera.roomWd !== roomBounds.width || this._camera.roomHt !== roomBounds.height;
+        const activeZoneChanged = this._camera.screenWd !== viewport.width || this._camera.screenHt !== viewport.height;
+
+        if (outOfActiveZoneX || outOfActiveZoneY || horizontalFitChanged || verticalFitChanged || roomSizeChanged || activeZoneChanged) {
+            this._camera.limitedLocationX = clampedX;
+            this._camera.limitedLocationY = clampedY;
+            this._camera.setTarget(currentPosition);
+        } else {
+            if (!clampedX) this._camera.limitedLocationX = false;
+            if (!clampedY) this._camera.limitedLocationY = false;
+        }
+
+        this._camera.centeredLocX = fitsHorizontally;
+        this._camera.centeredLocY = fitsVertically;
+        this._camera.screenWd = viewport.width;
+        this._camera.screenHt = viewport.height;
+        this._camera.scale = canvas.geometry.scale;
+        this._camera.geometryUpdateId = canvas.geometry.updateId;
+        this._camera.roomWd = roomBounds.width;
+        this._camera.roomHt = roomBounds.height;
+
+        if (!this.isCameraFollowDisabled) this._camera.update(time, 8);
+
+        if (this._camera.currentLoc) this.setRoomInstanceRenderingCanvasOffset(new Point(-this._camera.currentLoc.x, -this._camera.currentLoc.y));
     }
 
     public getGeometry(): IRoomGeometry | undefined {
@@ -1104,10 +1072,7 @@ export class Room implements IRoom {
     public update(time: number, update: boolean = false): void {
         this._instance.update(time, update);
 
-        const roomObject = this.getRoomObject(this._camera.targetId, this._camera.targetCategory);
-        const location: IVector3D | undefined = roomObject?.getLocation() ?? undefined;
-
-        if (location && !this._isDragged) this.updateRoomCamera(location, time);
+        if (!this._isDragged) this.updateRoomCamera(time);
 
         if (this._wasDragged) {
             const canvas = this._instance.canvas;
@@ -1152,23 +1117,8 @@ export class Room implements IRoom {
         } */
     }
 
-    private setMouseButton(objectId: number, category: RoomObjectCategoryEnum): void {
-        const sessionControllerLevel = RoomControllerLevelEnum.Guest;
-
-        if (
-            (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
-            sessionControllerLevel >= RoomControllerLevelEnum.Guest
-        ) {
-            this._instance.addButtonMouseCursorOwner(`${category}_${objectId}`);
-
-            this._mouseCursorUpdate = true;
-        }
-    }
-
-    private setMouseDefault(objectId: number, category: RoomObjectCategoryEnum): void {
-        this._instance.removeButtonMouseCursorOwner(`${category}_${objectId}`);
-
-        this._mouseCursorUpdate = true;
+    public isPlayingGame(): boolean {
+        return this.getRoomValue<number>(RoomObjectVariableEnum.IsPlayingGame) > 0;
     }
 
     public get roomId(): number {
@@ -1195,6 +1145,10 @@ export class Room implements IRoom {
         return this._areaSelection;
     }
 
+    public get camera(): IRoomCamera {
+        return this._camera;
+    }
+
     public get isAreaSelectionMode(): boolean {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
     }
@@ -1208,7 +1162,7 @@ export class Room implements IRoom {
     }
 
     public get useOffsetScrolling(): boolean {
-        return false;
+        return true;
     }
 
     private handleRoomDragging(
@@ -1219,7 +1173,7 @@ export class Room implements IRoom {
         ctrlKey: boolean,
         shiftKey: boolean,
     ): boolean {
-        //if (this.isPlayingGame()) return false;
+        if (this.isPlayingGame()) return false;
 
         /* if (this._areaSelectionManager.areaSelectionState === RoomAreaSelectionManager.SELECTING) {
             this._isDragged = false;
@@ -1257,25 +1211,6 @@ export class Room implements IRoom {
                     this._camera.resetLocation(new Vector3d(-canvas.screenOffsetX, -canvas.screenOffsetY));
 
                     if (this._roomDraggingAlwaysCenters) this._camera.reset();
-
-                    /* const instanceData = this.getRoomInstanceData(this._activeRoomId);
-
-                    if (instanceData) {
-                        const camera = instanceData.roomCamera;
-
-                        if (camera) {
-                            if (this.useOffsetScrolling) {
-                                if (!camera.isMoving) {
-                                    camera.centeredLocX = false;
-                                    camera.centeredLocY = false;
-                                }
-
-                                camera.resetLocation(new Vector3d(-canvas.screenOffsetX, -canvas.screenOffsetY));
-                            }
-
-                            if (this._roomDraggingAlwaysCenters) camera.reset();
-                        }
-                    } */
                 }
             }
         } else if (type === MouseEventType.MOUSE_MOVE) {
@@ -1355,5 +1290,24 @@ export class Room implements IRoom {
         }
 
         return new Vector3d(location.x, location.y, z);
+    }
+
+    private setMouseButton(objectId: number, category: RoomObjectCategoryEnum): void {
+        const sessionControllerLevel = RoomControllerLevelEnum.Guest;
+
+        if (
+            (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
+            sessionControllerLevel >= RoomControllerLevelEnum.Guest
+        ) {
+            this._instance.addButtonMouseCursorOwner(`${category}_${objectId}`);
+
+            this._mouseCursorUpdate = true;
+        }
+    }
+
+    private setMouseDefault(objectId: number, category: RoomObjectCategoryEnum): void {
+        this._instance.removeButtonMouseCursorOwner(`${category}_${objectId}`);
+
+        this._mouseCursorUpdate = true;
     }
 }

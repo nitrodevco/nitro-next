@@ -57,7 +57,7 @@ export default [
             '@typescript-eslint/prefer-as-const': 'warn',
             '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
             '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
-            '@typescript-eslint/no-unused-vars': 'warn',
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-empty-object-type': 'warn',
             '@typescript-eslint/no-unsafe-return': 'off',

@@ -1,7 +1,7 @@
 import type { IVector3D } from "#api/utils";
 
 export interface IRoomCamera {
-    readonly location: IVector3D;
+    readonly currentLoc: IVector3D | undefined;
     targetId: number;
     targetCategory: number;
     targetObjectLoc: IVector3D;
