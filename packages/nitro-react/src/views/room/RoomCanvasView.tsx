@@ -1,4 +1,4 @@
-import { MouseEventType } from '@nitrodevco/nitro-api';
+import { MouseEventType, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, RoomGeometry } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
@@ -18,9 +18,7 @@ export const RoomCanvasView = () => {
         const pixelRatio = GetPixelRatio();
         const width = Math.round(window.innerWidth);
         const height = Math.round(window.innerHeight);
-        const widthScaled = Math.round(width * pixelRatio);
-        const heightScaled = Math.round(height * pixelRatio);
-        const canvas = room.getRoomCanvas(widthScaled, heightScaled, RoomGeometry.SCALE_ZOOMED_IN);
+        const canvas = room.getRoomCanvas(width, height, RoomGeometry.SCALE_ZOOMED_IN);
 
         if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
 
@@ -29,11 +27,16 @@ export const RoomCanvasView = () => {
             renderer.canvas.style.height = (height).toString() + 'px';
         }
 
-        if (renderer.width !== widthScaled || renderer.height !== heightScaled) {
-            renderer.resize(widthScaled, heightScaled, 1);
+        if (renderer.width !== width || renderer.height !== height) {
+            if (renderer.resolution !== pixelRatio) {
+                room.camera.reset();
+                room.camera.setTarget(new Vector3d(0, 0, 0));
+            }
+
+            renderer.resize(width, height, pixelRatio);
         }
 
-        canvas.setScale(pixelRatio);
+        //canvas.setScale(pixelRatio);
 
         //room.camera.targetId = 1;
         //room.camera.targetCategory = RoomObjectCategoryEnum.Floor;
@@ -53,8 +56,8 @@ export const RoomCanvasView = () => {
         let clickCount = 0;
 
         const mouseHandler = (event: MouseEvent) => {
-            const x = event.clientX - (event.clientX - Math.round((event.clientX * GetPixelRatio())));
-            const y = event.clientY - (event.clientY - Math.round((event.clientY * GetPixelRatio())));
+            const x = event.clientX - (event.clientX - Math.round((event.clientX)));
+            const y = event.clientY - (event.clientY - Math.round((event.clientY)));
 
             let eventType = event.type;
 
@@ -114,8 +117,8 @@ export const RoomCanvasView = () => {
 
             if (!touch) return;
 
-            const x = touch.clientX - (touch.clientX - Math.round((touch.clientX * GetPixelRatio())));
-            const y = touch.clientY - (touch.clientY - Math.round((touch.clientY * GetPixelRatio())));
+            const x = touch.clientX - (touch.clientX - Math.round((touch.clientX)));
+            const y = touch.clientY - (touch.clientY - Math.round((touch.clientY)));
 
             switch (event.type) {
                 case 'touchstart':
@@ -227,7 +230,7 @@ export const RoomCanvasView = () => {
                 setSize({
                     width: Math.round(window.innerWidth),
                     height: Math.round(window.innerHeight),
-                    resolution: Math.round(GetPixelRatio())
+                    resolution: GetPixelRatio()
                 });
             }, 5);
         };
