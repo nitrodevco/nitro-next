@@ -25,6 +25,7 @@ import {
     RoomEngineObjectEvent,
     RoomEngineObjectPlacedEvent,
     RoomEngineObjectPlacedOnUserEvent,
+    RoomObjectFurnitureActionEvent,
     RoomObjectMouseEvent,
     RoomObjectTileMouseEvent,
     RoomObjectWallMouseEvent,
@@ -58,6 +59,10 @@ export class RoomEventHandler implements IRoomEventHandler {
         }
 
         switch (event.type) {
+            case RoomObjectFurnitureActionEvent.MOUSE_ARROW:
+            case RoomObjectFurnitureActionEvent.MOUSE_BUTTON:
+                this._room.updateMousePointer(event.type, event.objectId, event.objectType);
+                return;
             default:
                 NitroLogger.warn('Unhandled Event', event.constructor.name, 'Object ID', event.object.id);
                 return;
@@ -69,7 +74,7 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         const type = object.type;
 
-        let category = GetRoomEngine().getRoomObjectCategoryForType(type);
+        let category = this._room.getRoomObjectCategoryForType(type);
 
         if (
             category !== RoomObjectCategoryEnum.Room &&
@@ -147,7 +152,7 @@ export class RoomEventHandler implements IRoomEventHandler {
             if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) didWalk = this.handleMoveTargetFurni(event);
         }
 
-        const category = GetRoomEngine().getRoomObjectCategoryForType(event.objectType);
+        const category = this._room.getRoomObjectCategoryForType(event.objectType);
 
         const roomCursor = this._room.getRoomObjectCursor();
 
@@ -355,7 +360,7 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         if (selectedData && selectedData.operation) operation = selectedData.operation;
 
-        const category = GetRoomEngine().getRoomObjectCategoryForType(event.objectType);
+        const category = this._room.getRoomObjectCategoryForType(event.objectType);
 
         const roomCursor = this._room.getRoomObjectCursor();
 
@@ -468,7 +473,7 @@ export class RoomEventHandler implements IRoomEventHandler {
 
         const objectId = event.objectId;
         const objectType = event.objectType;
-        const category = GetRoomEngine().getRoomObjectCategoryForType(objectType);
+        const category = this._room.getRoomObjectCategoryForType(objectType);
 
         if (category === RoomObjectCategoryEnum.Floor) {
             //GetCommunication().connection.send(new ClickFurniMessageComposer(objectId, category));

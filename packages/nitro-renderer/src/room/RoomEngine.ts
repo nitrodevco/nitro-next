@@ -106,7 +106,7 @@ export class RoomEngine implements IRoomEngine {
         const room = await this.getTemporaryRoom();
 
         let objectId = this._imageObjectIdBank.reserveNumber();
-        const objectCategory = this.getRoomObjectCategoryForType(type);
+        const objectCategory = GetRoomContentLoader().getCategoryForType(type);
 
         objectId++;
 
@@ -187,10 +187,6 @@ export class RoomEngine implements IRoomEngine {
         geometry.dispose();
 
         return image;
-    }
-
-    public getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum {
-        return GetRoomContentLoader().getCategoryForType(type);
     }
 
     public getTemporaryRoom(): Promise<IRoom> {

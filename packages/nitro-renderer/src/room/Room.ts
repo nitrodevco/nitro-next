@@ -28,6 +28,7 @@ import {
     EventDispatcher,
     GetConfigValue,
     RoomEngineObjectEvent,
+    RoomObjectFurnitureActionEvent,
     RoomObjectMouseEvent,
     SessionStore,
 } from '@nitrodevco/nitro-shared';
@@ -596,6 +597,10 @@ export class Room implements IRoom {
         return this._instance.getRoomObjectsForCategory(category);
     }
 
+    public getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum {
+        return GetRoomContentLoader().getCategoryForType(type);
+    }
+
     public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
         this._instance.removeRoomObject(objectId, category);
 
@@ -1084,6 +1089,8 @@ export class Room implements IRoom {
             this._dragX = 0;
             this._dragY = 0;
         }
+
+        if (this._mouseCursorUpdate) this.setPointer();
     }
 
     public getRoomObjectRoom(): IRoomObjectController {
@@ -1105,16 +1112,16 @@ export class Room implements IRoom {
     }
 
     public updateMousePointer(type: string, objectId: number, objectType: string): void {
-        /* const category = this.getRoomObjectCategoryForType(objectType);
+        const category = this.getRoomObjectCategoryForType(objectType);
 
         switch (type) {
             case RoomObjectFurnitureActionEvent.MOUSE_BUTTON:
-                this.setMouseButton(category, objectId);
+                this.setMouseButton(objectId, category);
                 return;
             default:
-                this.setMouseDefault(this._activeRoomId, category, objectId);
+                this.setMouseDefault(objectId, category);
                 return;
-        } */
+        }
     }
 
     public isPlayingGame(): boolean {

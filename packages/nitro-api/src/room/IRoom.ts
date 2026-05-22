@@ -34,6 +34,7 @@ export interface IRoom {
     ): Promise<void>;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
+    getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
     getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[];
     removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void;
     createRoomObjectAndInitalize(
@@ -126,6 +127,7 @@ export interface IRoom {
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
+    updateMousePointer(type: string, objectId: number, objectType: string): void;
     isPlayingGame(): boolean;
     readonly roomId: number;
     readonly modelName: string;
