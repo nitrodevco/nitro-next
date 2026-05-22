@@ -75,7 +75,7 @@ export class AssetManager implements IAssetManager {
     }
 
     public async downloadAssets(urls: string[]): Promise<boolean> {
-        if (!urls || !urls.length) return Promise.resolve(true);
+        if (!urls || !urls.length) return true;
 
         try {
             await Promise.all(urls.map(url => this.downloadAsset(url)));
@@ -83,23 +83,24 @@ export class AssetManager implements IAssetManager {
             return true;
         } catch (err) {
             NitroLogger.error(err);
-        }
 
-        return false;
+            return false;
+        }
     }
 
     public async downloadAsset(url: string): Promise<boolean> {
         try {
-            if (!url || !url.length) return false;
+            if (!url || !url.length) throw new Error(`Invalid url: ${url}`);
 
             const ext = url.slice(url.lastIndexOf('.') + 1);
             const response = await fetch(url);
 
-            if (!response || response.status !== 200) return false;
+            if (!response || response.status !== 200) throw new Error(`Invalid response`);
+
+            const responseData = await response.arrayBuffer();
 
             switch (ext) {
                 case 'nitro': {
-                    const responseData = await response.arrayBuffer();
                     const zip = await JSZip.loadAsync(responseData);
                     const bundle = await NitroBundle.fromZip(zip);
 
@@ -107,17 +108,27 @@ export class AssetManager implements IAssetManager {
                     break;
                 }
                 case 'gif': {
-                    const responseData = await response.arrayBuffer();
                     const animatedGif = AnimatedGIF.fromBuffer(responseData);
                     const texture = animatedGif.texture;
 
-                    if (texture) this.setTexture(url, texture);
+                    this.setTexture(url, texture);
+                    break;
+                }
+                case 'png': {
+                    const bytes = new Uint8Array(responseData);
+
+                    let binary = '';
+
+                    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+
+                    const base64 = btoa(binary);
+                    const texture = await Assets.load(`data:image/png;base64,${base64}`);
+
+                    this.setTexture(url, texture);
                     break;
                 }
                 default: {
-                    const texture = await Assets.load<Texture>(url);
-
-                    if (texture) this.setTexture(url, texture);
+                    throw new Error(`Invalid asset extension: ${ext}`);
                 }
             }
 
@@ -127,6 +138,10 @@ export class AssetManager implements IAssetManager {
 
             return false;
         }
+    }
+
+    public get collections(): Map<string, IGraphicAssetCollection> {
+        return this._collections;
     }
 
     private async processNitroBundle(bundle: NitroBundle): Promise<void> {
@@ -172,9 +187,5 @@ export class AssetManager implements IAssetManager {
                 continue;
             }
         }
-    }
-
-    public get collections(): Map<string, IGraphicAssetCollection> {
-        return this._collections;
     }
 }

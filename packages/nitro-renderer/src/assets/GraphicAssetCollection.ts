@@ -82,110 +82,6 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (palettes) this.definePalettes(palettes);
     }
 
-    private defineAssets(assets: { [index: string]: IAsset }): void {
-        if (!assets) return;
-
-        for (const name in assets) {
-            const asset = assets[name];
-
-            if (!asset) continue;
-
-            const x = -(asset.x || 0);
-            const y = -(asset.y || 0);
-            let flipH = false;
-            const flipV = false;
-            const usesPalette = asset.usesPalette || false;
-            let source = asset.source || '';
-
-            if (asset.flipH && source.length) flipH = true;
-
-            // if(asset.flipV && source.length) flipV = true;
-
-            if (!source.length) source = name;
-
-            const texture = this.getLibraryAsset(source);
-
-            if (!texture) continue;
-
-            let didAddAsset = this.createAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
-
-            if (!didAddAsset) {
-                const existingAsset = this.getAsset(name);
-
-                if (existingAsset && existingAsset.name !== existingAsset.source) {
-                    didAddAsset = this.replaceAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
-                }
-            }
-        }
-    }
-
-    private definePalettes(palettes: { [index: string]: IAssetPalette }): void {
-        if (!palettes) return;
-
-        for (const name in palettes) {
-            const palette = palettes[name];
-
-            if (!palette) continue;
-
-            const id = palette.id.toString();
-
-            if (this._palettes.get(id)) continue;
-
-            let colorOne = 0xffffff;
-            let colorTwo = 0xffffff;
-
-            let color = palette.color1;
-
-            if (color && color.length > 0) colorOne = parseInt(color, 16);
-
-            color = palette.color2;
-
-            if (color && color.length > 0) colorTwo = parseInt(color, 16);
-
-            this._palettes.set(id, new GraphicAssetPalette(palette.rgb, colorOne, colorTwo));
-        }
-    }
-
-    private createAsset(
-        name: string,
-        source: string,
-        texture: Texture,
-        flipH: boolean,
-        flipV: boolean,
-        x: number,
-        y: number,
-        usesPalette: boolean,
-    ): boolean {
-        if (this._assets.get(name)) return false;
-
-        const graphicAsset = GraphicAsset.createAsset(name, source, texture, x, y, flipH, flipV, usesPalette);
-
-        this._assets.set(name, graphicAsset);
-
-        return true;
-    }
-
-    private replaceAsset(
-        name: string,
-        source: string,
-        texture: Texture,
-        flipH: boolean,
-        flipV: boolean,
-        x: number,
-        y: number,
-        usesPalette: boolean,
-    ): boolean {
-        const existing = this._assets.get(name);
-
-        if (existing) {
-            this._assets.delete(name);
-
-            existing.recycle();
-        }
-
-        return this.createAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
-    }
-
     public getAsset(name: string): IGraphicAsset | undefined {
         return this._assets.get(name);
     }
@@ -309,6 +205,134 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         return texture;
     }
 
+    public get referenceCount(): number {
+        return this._referenceCount;
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public get data(): IAssetData {
+        return this._data;
+    }
+
+    public get textureSource(): TextureSource | undefined {
+        return this._textureSource;
+    }
+
+    public get textures(): Map<string, Texture> {
+        return this._textures;
+    }
+
+    public get assets(): Map<string, IGraphicAsset> {
+        return this._assets;
+    }
+
+    private defineAssets(assets: { [index: string]: IAsset }): void {
+        if (!assets) return;
+
+        for (const name in assets) {
+            const asset = assets[name];
+
+            if (!asset) continue;
+
+            const x = -(asset.x || 0);
+            const y = -(asset.y || 0);
+            let flipH = false;
+            const flipV = false;
+            const usesPalette = asset.usesPalette || false;
+            let source = asset.source || '';
+
+            if (asset.flipH && source.length) flipH = true;
+
+            // if(asset.flipV && source.length) flipV = true;
+
+            if (!source.length) source = name;
+
+            const texture = this.getLibraryAsset(source);
+
+            if (!texture) continue;
+
+            let didAddAsset = this.createAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
+
+            if (!didAddAsset) {
+                const existingAsset = this.getAsset(name);
+
+                if (existingAsset && existingAsset.name !== existingAsset.source) {
+                    didAddAsset = this.replaceAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
+                }
+            }
+        }
+    }
+
+    private definePalettes(palettes: { [index: string]: IAssetPalette }): void {
+        if (!palettes) return;
+
+        for (const name in palettes) {
+            const palette = palettes[name];
+
+            if (!palette) continue;
+
+            const id = palette.id.toString();
+
+            if (this._palettes.get(id)) continue;
+
+            let colorOne = 0xffffff;
+            let colorTwo = 0xffffff;
+
+            let color = palette.color1;
+
+            if (color && color.length > 0) colorOne = parseInt(color, 16);
+
+            color = palette.color2;
+
+            if (color && color.length > 0) colorTwo = parseInt(color, 16);
+
+            this._palettes.set(id, new GraphicAssetPalette(palette.rgb, colorOne, colorTwo));
+        }
+    }
+
+    private createAsset(
+        name: string,
+        source: string,
+        texture: Texture,
+        flipH: boolean,
+        flipV: boolean,
+        x: number,
+        y: number,
+        usesPalette: boolean,
+    ): boolean {
+        if (this._assets.get(name)) return false;
+
+        const graphicAsset = GraphicAsset.createAsset(name, source, texture, x, y, flipH, flipV, usesPalette);
+
+        this._assets.set(name, graphicAsset);
+
+        return true;
+    }
+
+    private replaceAsset(
+        name: string,
+        source: string,
+        texture: Texture,
+        flipH: boolean,
+        flipV: boolean,
+        x: number,
+        y: number,
+        usesPalette: boolean,
+    ): boolean {
+        const existing = this._assets.get(name);
+
+        if (existing) {
+            this._assets.delete(name);
+
+            existing.recycle();
+        }
+
+        return this.createAsset(name, source, texture, flipH, flipV, x, y, usesPalette);
+    }
+
     private addLibraryAsset(textures: Record<string, Texture> | undefined): void {
         if (!textures) return;
 
@@ -329,29 +353,5 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
                 this._paletteAssetNames = [];
             }
         }
-    }
-
-    public get referenceCount(): number {
-        return this._referenceCount;
-    }
-
-    public get name(): string {
-        return this._name;
-    }
-
-    public get textureSource(): TextureSource | undefined {
-        return this._textureSource;
-    }
-
-    public get data(): IAssetData {
-        return this._data;
-    }
-
-    public get textures(): Map<string, Texture> {
-        return this._textures;
-    }
-
-    public get assets(): Map<string, IGraphicAsset> {
-        return this._assets;
     }
 }

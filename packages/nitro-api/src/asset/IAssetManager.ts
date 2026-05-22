@@ -7,8 +7,8 @@ import type { IGraphicAssetCollection } from './IGraphicAssetCollection';
 export interface IAssetManager {
     getTexture(name: string): Texture | undefined;
     setTexture(name: string, texture: Texture): void;
-    addAssetToCollection(collectionName: string, assetName: string, texture: Texture, override?: boolean): boolean;
     getAsset(name: string): IGraphicAsset | undefined;
+    addAssetToCollection(collectionName: string, assetName: string, texture: Texture, override?: boolean): boolean;
     getCollection(name: string): IGraphicAssetCollection | undefined;
     createCollection(data: IAssetData, spritesheet: Spritesheet): IGraphicAssetCollection | undefined;
     downloadAssets(urls: string[]): Promise<boolean>;

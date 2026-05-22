@@ -25,8 +25,11 @@ export interface IGraphicAssetCollection {
         flipV?: boolean,
     ): boolean;
     disposeAsset(name: string): void;
-    referenceCount: number;
-    name: string;
-    textureSource: TextureSource | undefined;
-    data: IAssetData;
+    getLibraryAsset(name: string): Texture | null;
+    readonly referenceCount: number;
+    readonly name: string;
+    readonly data: IAssetData;
+    readonly textureSource: TextureSource | undefined;
+    readonly textures: Map<string, Texture>;
+    readonly assets: Map<string, IGraphicAsset>;
 }
