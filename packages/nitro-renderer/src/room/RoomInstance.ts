@@ -30,7 +30,6 @@ export class RoomInstance implements IRoomInstance {
     private _selectedObject: ISelectedRoomObjectData | undefined;
     private _placedObject: ISelectedRoomObjectData | undefined;
     private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
-    private _mouseButtonCursorOwners: string[] = [];
     private _roomObjectVariableAccurateZ: string = '';
 
     constructor(id: number) {
@@ -226,34 +225,6 @@ export class RoomInstance implements IRoomInstance {
                 this._furnitureStackingHeightMap.height,
             );
         }
-    }
-
-    public addButtonMouseCursorOwner(key: string): boolean {
-        const i = this._mouseButtonCursorOwners.indexOf(key);
-
-        if (i === -1) {
-            this._mouseButtonCursorOwners.push(key);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public removeButtonMouseCursorOwner(key: string): boolean {
-        const i = this._mouseButtonCursorOwners.indexOf(key);
-
-        if (i > -1) {
-            this._mouseButtonCursorOwners.splice(i, 1);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public hasButtonMouseCursorOwners(): boolean {
-        return this._mouseButtonCursorOwners.length > 0;
     }
 
     public get id(): number {

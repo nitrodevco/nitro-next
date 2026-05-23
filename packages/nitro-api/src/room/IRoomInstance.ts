@@ -34,9 +34,6 @@ export interface IRoomInstance {
     setSelectedObject(data: ISelectedRoomObjectData | undefined): void;
     setPlacedObject(data: ISelectedRoomObjectData | undefined): void;
     setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
-    addButtonMouseCursorOwner(key: string): boolean;
-    removeButtonMouseCursorOwner(key: string): boolean;
-    hasButtonMouseCursorOwners(): boolean;
     readonly id: number;
     readonly canvas: IRoomRenderingCanvas | undefined;
     readonly objects: Map<number, IRoomObject>;

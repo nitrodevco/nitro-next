@@ -1,24 +1,19 @@
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
-import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
-import { useEffect, useRef, useState } from 'react';
+import { RoomEngineObjectEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
+import { useEffect, useRef } from 'react';
 
-import { useRoomCamera, useRoomCanvasMouse, useRoomContext, useRoomEventDispatcher, useRoomEventHandler, useRoomObjectEvent } from '#base/hooks';
+import { useRoomCamera, useRoomCanvasMouse, useRoomContext, useRoomEventDispatcher, useRoomEventHandler } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
     const room = useRoomContext(x => x.room);
     const camera = useRoomContext(x => x.camera);
-    const [size, setSize] = useState<{ width: number; height: number; resolution: number } | undefined>(undefined);
     const elementRef = useRef<HTMLDivElement>(null);
-    const { dragXY, isDragged, wasDragged, hasCursorUpdate, updateMousePointer } = useRoomCanvasMouse();
+    const { dragXY, isDragged, wasDragged, hasCursorUpdate, hasCursorOwners } = useRoomCanvasMouse();
     const { updateRoomCamera } = useRoomCamera();
 
     useRoomEventHandler();
-
-    useRoomObjectEvent<RoomObjectFurnitureActionEvent>([RoomObjectFurnitureActionEvent.MOUSE_ARROW, RoomObjectFurnitureActionEvent.MOUSE_BUTTON], event => {
-        updateMousePointer(event.type, event.objectId, event.objectType);
-    });
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -148,8 +143,6 @@ export const RoomCanvasView = () => {
     });
 
     useEffect(() => {
-        if (!room) return;
-
         const renderer = GetRenderer();
         const stage = GetStage();
         const texturePool = GetTexturePool();
@@ -178,7 +171,7 @@ export const RoomCanvasView = () => {
             if (hasCursorUpdate.current) {
                 hasCursorUpdate.current = false;
 
-                renderer.canvas.style.cursor = room.instance.hasButtonMouseCursorOwners() ? 'pointer' : 'auto';
+                renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
             }
 
             RoomEnterEffect.turnVisualizationOff();
@@ -186,63 +179,51 @@ export const RoomCanvasView = () => {
             renderer.render(stage);
             texturePool.run();
         });
-    }, [room, updateRoomCamera]);
+    }, [room]);
 
     useEffect(() => {
-        if (!room || !size) return;
-
         const renderer = GetRenderer();
         const stage = GetStage();
-        const width = Math.round(size.width);
-        const height = Math.round(size.height);
-        const canvas = room.getRoomCanvas(width, height, RoomGeometry.SCALE_ZOOMED_IN);
 
-        renderer.canvas.style.width = `${width}px`;
-        renderer.canvas.style.height = `${height}px`;
+        if (renderer?.canvas) elementRef?.current?.appendChild(renderer.canvas);
 
-        if (renderer.resolution !== size.resolution) {
-            camera.reset();
-            camera.setTarget(new Vector3d(0, 0, 0));
+        const handleSize = (width: number, height: number, resolution: number) => {
+            const canvas = room.getRoomCanvas(width, height, RoomGeometry.SCALE_ZOOMED_IN);
+
+            renderer.canvas.style.width = `${width}px`;
+            renderer.canvas.style.height = `${height}px`;
+
+            if (renderer.resolution !== resolution) {
+                camera.reset();
+                camera.setTarget(new Vector3d(0, 0, 0));
+            }
+
+            if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) renderer.resize(width, height, resolution);
+
+            if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
+
+            renderer.render(stage);
         }
-
-        if (renderer.width !== width || renderer.height !== height || renderer.resolution !== size.resolution) renderer.resize(width, height, size.resolution);
-
-        if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
-
-        renderer.render(stage);
-    }, [room, size]);
-
-    useEffect(() => {
-        const renderer = GetRenderer();
-        const element = elementRef?.current;
-
-        if (!renderer || !element) return;
-
-        if (renderer.canvas) elementRef?.current?.appendChild(renderer.canvas);
 
         let timer: ReturnType<typeof setTimeout>;
 
-        const handleResize = (size: { width: number, height: number, resolution: number }) => {
-            clearTimeout(timer);
-
-            timer = setTimeout(() => setSize(size), 5);
-        };
-
-        const observer = new ResizeObserver(() => {
-            const width = element.clientWidth;
-            const height = element.clientHeight;
+        const observer = new ResizeObserver(x => {
+            const width = x[0]?.contentRect.width;
+            const height = x[0]?.contentRect.height;
             const resolution = GetPixelRatio();
 
-            handleResize({ width, height, resolution });
+            clearTimeout(timer);
+
+            timer = setTimeout(() => handleSize(width, height, resolution), 5);
         });
 
-        observer.observe(element);
+        if (elementRef.current) observer.observe(elementRef.current);
 
         return () => {
             observer.disconnect();
             clearTimeout(timer);
         }
-    }, []);
+    }, [room]);
 
     return <div className="size-full" ref={elementRef}></div>;
 };

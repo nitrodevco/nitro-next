@@ -1,8 +1,8 @@
+import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { Room } from "@nitrodevco/nitro-renderer";
 import { Matrix, Point, Rectangle } from "pixi.js";
-import { useRoomContext } from "../context"
-import { Room, RoomCamera } from "@nitrodevco/nitro-renderer";
-import { IRoomCamera, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { useRef } from "react";
+import { useRoomContext } from "../context";
 
 export const useRoomCamera = () => {
     const room = useRoomContext(x => x.room);

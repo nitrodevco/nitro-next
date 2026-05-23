@@ -1,9 +1,11 @@
 import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
 
 import { useRoomContext } from "../context";
+import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
+import { useRoomObjectEvent } from "./useRoomObjectEvent";
 
 const DRAG_THRESHOLD: number = 15;
 
@@ -17,22 +19,33 @@ export const useRoomCanvasMouse = () => {
     const isDragged = useRef<boolean>(false);
     const wasDragged = useRef<boolean>(false);
     const hasCursorUpdate = useRef<boolean>(false);
+    const cursorOwners = useRef<string[]>([]);
+
+    const hasCursorOwners = () => cursorOwners.current.length > 0;
 
     const setMouseButton = (objectId: number, category: RoomObjectCategoryEnum) => {
         if (
             (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
             controllerLevel >= RoomControllerLevelEnum.Guest
         ) {
-            room.instance.addButtonMouseCursorOwner(`${category}_${objectId}`);
+            const index = cursorOwners.current.indexOf(`${category}_${objectId}`);
 
-            hasCursorUpdate.current = true;
+            if (index === -1) {
+                cursorOwners.current.push(`${category}_${objectId}`);
+
+                hasCursorUpdate.current = true;
+            }
         }
     }
 
     const setMouseDefault = (objectId: number, category: RoomObjectCategoryEnum) => {
-        room.instance.removeButtonMouseCursorOwner(`${category}_${objectId}`);
+        const index = cursorOwners.current.indexOf(`${category}_${objectId}`);
 
-        hasCursorUpdate.current = true;
+        if (index >= 0) {
+            cursorOwners.current.splice(index, 1);
+
+            hasCursorUpdate.current = true;
+        }
     }
 
     const updateMousePointer = (type: string, objectId: number, objectType: string) => {
@@ -173,6 +186,16 @@ export const useRoomCanvasMouse = () => {
         mouseXY.current = { x, y };
     }
 
+    useRoomEventDispatcher<RoomEngineObjectEvent>(RoomEngineObjectEvent.REMOVED, event => {
+        if (event.category !== RoomObjectCategoryEnum.Floor && event.category !== RoomObjectCategoryEnum.Wall) return;
+
+        setMouseDefault(event.objectId, event.category);
+    });
+
+    useRoomObjectEvent<RoomObjectFurnitureActionEvent>([RoomObjectFurnitureActionEvent.MOUSE_ARROW, RoomObjectFurnitureActionEvent.MOUSE_BUTTON], event => {
+        updateMousePointer(event.type, event.objectId, event.objectType);
+    });
+
     useEffect(() => {
         if (!room) return;
 
@@ -305,7 +328,7 @@ export const useRoomCanvasMouse = () => {
             canvas.ontouchmove = null;
             canvas.ontouchend = null;
         };
-    }, [room, dispatchMouseEvent]);
+    }, [room]);
 
-    return { dragXY, isDragged, wasDragged, hasCursorUpdate, updateMousePointer };
+    return { dragXY, isDragged, wasDragged, hasCursorUpdate, hasCursorOwners, updateMousePointer };
 }

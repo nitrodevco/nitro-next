@@ -46,8 +46,7 @@ import {
 import { RoomLogic } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomObjectLogicFactory } from './RoomObjectLogicFactory';
-import { RoomAreaSelectionManager } from './utils';
-import { type RoomFurnitureData } from './utils';
+import { RoomAreaSelectionManager, type RoomFurnitureData } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -723,7 +722,6 @@ export class Room implements IRoom {
         }
 
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Floor);
-        this.setMouseDefault(objectId, RoomObjectCategoryEnum.Floor);
 
         if (_arg_4)
             this._instance.tileObjectMap?.populate(
@@ -765,7 +763,6 @@ export class Room implements IRoom {
         }
 
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-        this.setMouseDefault(objectId, RoomObjectCategoryEnum.Wall);
 
         this.updateRoomObjectMask(objectId, false);
     }
@@ -888,12 +885,5 @@ export class Room implements IRoom {
         }
 
         return new Vector3d(location.x, location.y, z);
-    }
-
-    private setMouseDefault(objectId: number, category: RoomObjectCategoryEnum): void {
-        this._instance.removeButtonMouseCursorOwner(`${category}_${objectId}`);
-
-        // TODO
-        //this._mouseCursorUpdate = true;
     }
 }
