@@ -15,10 +15,10 @@
         "clean": "rimraf dist *.tsbuildinfo"
     },
     "peerDependencies": {
-        "pixi.js": "^8.16.0"
+        "pixi.js": "^8.18.1"
     },
     "devDependencies": {
-        "rimraf": "^6.0.1",
+        "rimraf": "^6.1.3",
         "typescript": "^5.9.3"
     }
 }

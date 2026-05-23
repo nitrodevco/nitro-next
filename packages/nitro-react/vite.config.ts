@@ -3,7 +3,6 @@ import path from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 const r = (p: string) => path.resolve(__dirname, p);
 
@@ -32,8 +31,9 @@ export default defineConfig({
             },
         },
     },
-    plugins: [react(), tsconfigPaths(), tailwindcss()],
+    plugins: [react(), tailwindcss()],
     resolve: {
+        tsconfigPaths: true,
         dedupe: ['pixi.js'],
         alias: [{ find: /^#base\/(.*)/, replacement: r('src/$1') },
         { find: /^#themes\/(.*)/, replacement: r('themes/$1') },

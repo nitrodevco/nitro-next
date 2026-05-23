@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 const r = (p: string) => path.resolve(__dirname, p);
 
@@ -30,8 +29,9 @@ export default defineConfig({
             },
         },
     },
-    plugins: [tsconfigPaths()],
+    plugins: [],
     resolve: {
+        tsconfigPaths: true,
         dedupe: ['pixi.js'],
         alias: {
             '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src'),

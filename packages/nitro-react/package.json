@@ -11,26 +11,26 @@
         "@nitrodevco/nitro-api": "workspace:*",
         "@nitrodevco/nitro-renderer": "workspace:*",
         "@nitrodevco/nitro-shared": "workspace:*",
-        "@tanstack/react-virtual": "^3.13.18",
-        "dompurify": "^3.3.1",
-        "motion": "12.34.0",
-        "pixi.js": "^8.16.0",
-        "react": "^19.2.4",
-        "react-dom": "^19.2.4",
-        "react-icons": "^5.5.0",
-        "zustand": "^5.0.11"
+        "@tanstack/react-virtual": "^3.13.25",
+        "dompurify": "^3.4.5",
+        "motion": "12.40.0",
+        "pixi.js": "^8.18.1",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+        "react-icons": "^5.6.0",
+        "zustand": "^5.0.13"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.11",
-        "@types/react": "^19.2.14",
+        "@types/react": "^19.2.15",
         "@types/react-dom": "^19.2.3",
-        "@vitejs/plugin-react-swc": "^4.2.3",
-        "autoprefixer": "^10.4.24",
-        "postcss": "^8.5.6",
-        "postcss-url": "^10.1.3",
-        "rimraf": "^6.1.2",
-        "tailwindcss": "^4.1.18",
+        "@vitejs/plugin-react-swc": "^4.3.1",
+        "autoprefixer": "^10.5.0",
+        "postcss": "^8.5.15",
+        "postcss-url": "^10.1.4",
+        "rimraf": "^6.1.3",
+        "tailwindcss": "^4.3.0",
         "typescript": "^5.9.3",
-        "vite": "^7.3.1"
+        "vite": "^8.0.14"
     }
 }

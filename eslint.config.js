@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -25,7 +24,6 @@ export default [
             '**/*.d.ts',
         ],
         plugins: {
-            import: importPlugin,
             'simple-import-sort': simpleImportSort,
             'unused-imports': unusedImports,
         },
