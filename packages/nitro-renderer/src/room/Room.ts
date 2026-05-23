@@ -335,18 +335,8 @@ export class Room implements IRoom {
         ) {
             let eventType: string = '';
 
-            if (type === MouseEventType.MOUSE_CLICK) {
-                this._eventDispatcher.dispatchEvent(
-                    new RoomEngineObjectEvent(
-                        RoomEngineObjectEvent.DESELECTED,
-                        this._roomId,
-                        -1,
-                        RoomObjectCategoryEnum.Minimum,
-                    ),
-                );
-
-                eventType = RoomObjectMouseEvent.CLICK;
-            } else if (type === MouseEventType.MOUSE_MOVE) eventType = RoomObjectMouseEvent.MOUSE_MOVE;
+            if (type === MouseEventType.MOUSE_CLICK) eventType = RoomObjectMouseEvent.CLICK;
+            else if (type === MouseEventType.MOUSE_MOVE) eventType = RoomObjectMouseEvent.MOUSE_MOVE;
             else if (type === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
             else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
 
