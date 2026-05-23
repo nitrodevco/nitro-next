@@ -1,13 +1,13 @@
 
-import type { IEventDispatcher, INitroEvent } from '#api/events';
+import type { IEventDispatcher, IRoomObjectEvent } from '#api/events';
 
-import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomSpriteMouseEvent } from './IRoomSpriteMouseEvent';
-import type { IRoomObject, RoomObjectCategoryEnum } from './object';
+import type { IRoomObject } from './object';
 
 export interface IRoomEventHandler {
-    handleRoomObjectEvent(event: INitroEvent): Promise<void>;
-    handleRoomCanvasMouseEvent(event: IRoomSpriteMouseEvent, object: IRoomObject, geometry: IRoomGeometry): void;
-    setSelectedObject(objectId: number, category: RoomObjectCategoryEnum): void;
+    setRoomObjectEventHandler(handler: ((event: IRoomObjectEvent) => void) | undefined): void;
+    setRoomCanvasMouseHandler(handler: ((event: IRoomSpriteMouseEvent, object: IRoomObject) => void) | undefined): void;
+    handleRoomObjectEvent(event: IRoomObjectEvent): void;
+    handleRoomCanvasMouseEvent(event: IRoomSpriteMouseEvent, object: IRoomObject): void;
     readonly eventDispatcher: IEventDispatcher;
 }

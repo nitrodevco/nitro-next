@@ -922,11 +922,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!roomObject) continue;
 
-            if (this._eventHandler) {
-                this._eventHandler.handleRoomCanvasMouseEvent(event, roomObject, this._geometry);
-            } else {
-                roomObject.mouseHandler?.mouseEvent(event, this._geometry);
-            }
+            this._eventHandler?.handleRoomCanvasMouseEvent(event, roomObject);
         }
 
         if (this._eventCache) this._eventCache.clear();

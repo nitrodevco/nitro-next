@@ -110,6 +110,7 @@ export * from './communication/IOutgoingPacket';
 export * from './communication/OutgoingPacketConstructor';
 export * from './events/IEventDispatcher';
 export * from './events/INitroEvent';
+export * from './events/IRoomObjectEvent';
 export * from './room/enum/AlphaTolerance';
 export * from './room/enum/ContextMenuEnum';
 export * from './room/enum/FriendFurniEngravingWidgetType';

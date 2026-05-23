@@ -209,7 +209,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         super.processUpdateMessage(message);
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry): void {
+    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;
 
         const adUrl = this.getAdClickUrl(this.object.model);

@@ -39,7 +39,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
         }
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry): void {
+    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;
 
         if (event.type === MouseEventType.DOUBLE_CLICK && this._showStateOnceRendered) {

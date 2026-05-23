@@ -3,6 +3,7 @@ import type {
     IRoomEventHandler,
     IRoomGeometry,
     IRoomObjectController,
+    IRoomObjectEvent,
     IRoomObjectEventHandler,
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
@@ -80,12 +81,10 @@ export class RoomObjectLogicBase implements IRoomObjectEventHandler {
         if (disposable) this._events.push(disposable);
     }
 
-    protected handleRoomObjectEvent(event: INitroEvent): void {
+    protected handleRoomObjectEvent(event: IRoomObjectEvent): void {
         if (!event) return;
 
-        this._eventHandler?.eventDispatcher.dispatchEvent(event);
-
-        //void this._eventHandler?.handleRoomObjectEvent(event);
+        void this._eventHandler?.handleRoomObjectEvent(event);
     }
 
     public get object(): IRoomObjectController {

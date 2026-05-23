@@ -78,7 +78,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
         }
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry): void {
+    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;
 
         switch (event.type) {

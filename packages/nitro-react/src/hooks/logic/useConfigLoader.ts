@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
 
 import { useConfigurationStore } from '#base/stores';
 
 export const useConfigLoader = () => {
-    const configNeedsUpdate = useConfigurationStore(state => state.configNeedsUpdate);
-    const setConfig = useConfigurationStore(state => state.setConfig);
+    const [configNeedsUpdate, setConfig] = useConfigurationStore(useShallow(state => [state.configNeedsUpdate, state.setConfig]));
 
     useEffect(() => {
         if (!configNeedsUpdate) return;
@@ -57,7 +57,7 @@ export const useConfigLoader = () => {
                 'elephants',
             ],
         });
-    }, [configNeedsUpdate]);
+    }, [configNeedsUpdate, setConfig]);
 
     return null;
 };

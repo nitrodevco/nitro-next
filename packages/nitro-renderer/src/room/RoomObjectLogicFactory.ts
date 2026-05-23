@@ -1,11 +1,9 @@
 import type {
-    INitroEvent,
     IRoom,
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
 } from '@nitrodevco/nitro-api';
 import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
 
 import type { RoomObjectLogicBase } from './object';
 import {
@@ -78,10 +76,6 @@ import {
 } from './object';
 
 export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
-    private _cachedEvents: Map<string, boolean> = new Map();
-    private _registeredEvents: Map<string, boolean> = new Map();
-    private _functions: ((event: RoomObjectEvent) => void)[] = [];
-
     constructor(private _room: IRoom) { }
 
     public getLogic(type: string): IRoomObjectEventHandler | undefined {
@@ -92,64 +86,12 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
 
             const instance = new logic() as IRoomObjectEventHandler;
 
-            if (!this._cachedEvents.get(type)) {
-                this._cachedEvents.set(type, true);
-
-                const eventTypes = instance.getEventTypes();
-
-                for (const eventType of eventTypes) {
-                    if (!eventType) continue;
-
-                    this.registerEventType(eventType);
-                }
-            }
-
             return instance;
         }
         catch (err) {
             NitroLogger.error(err);
 
             return undefined;
-        }
-    }
-
-    private registerEventType(type: string): void {
-        if (this._registeredEvents.get(type)) return;
-
-        this._registeredEvents.set(type, true);
-
-        for (const func of this._functions) {
-            if (!func) continue;
-
-            this._room.eventDispatcher.addEventListener(type, func);
-        }
-    }
-
-    public registerEventFunction(func: (event: INitroEvent) => void): void {
-        if (!func || this._functions.indexOf(func) >= 0) return;
-
-        this._functions.push(func);
-
-        for (const eventType of this._registeredEvents.keys()) {
-            if (!eventType) continue;
-
-            this._room.eventDispatcher.addEventListener(eventType, func);
-        }
-    }
-
-    public removeEventFunction(func: (event: INitroEvent) => void): void {
-        if (!func) return;
-
-        const index = this._functions.indexOf(func);
-
-        if (index === -1) return;
-
-        this._functions.splice(index, 1);
-
-        for (const event of this._registeredEvents.keys()) {
-            if (!event) continue;
-
-            this._room.eventDispatcher.removeEventListener(event, func);
         }
     }
 

@@ -4,6 +4,7 @@ export * from './logic/useFurnitureDataLoader';
 export * from './logic/useLocalizationLoader';
 export * from './room/useRoomContext';
 export * from './room/useRoomEventDispatcher';
+export * from './room/useRoomEventHandler';
 export * from './room/useRoomObjectEvent';
 export * from './useCommunicationStore';
 export * from './useConfig';

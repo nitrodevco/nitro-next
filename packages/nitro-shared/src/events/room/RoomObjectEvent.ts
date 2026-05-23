@@ -1,8 +1,8 @@
-import type { IRoomObject } from '@nitrodevco/nitro-api';
+import type { IRoomObject, IRoomObjectEvent } from '@nitrodevco/nitro-api';
 
 import { NitroEvent } from '../common';
 
-export class RoomObjectEvent extends NitroEvent {
+export class RoomObjectEvent extends NitroEvent implements IRoomObjectEvent {
     private _object: IRoomObject;
 
     constructor(type: string, object: IRoomObject) {

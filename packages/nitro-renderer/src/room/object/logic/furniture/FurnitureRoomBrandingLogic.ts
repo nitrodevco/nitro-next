@@ -56,7 +56,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         }
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry): void {
+    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (event.type === MouseEventType.MOUSE_MOVE || event.type === MouseEventType.DOUBLE_CLICK) return;
 
         super.mouseEvent(event, geometry);

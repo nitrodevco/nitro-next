@@ -350,7 +350,7 @@ export class Room implements IRoom {
             else if (type === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
             else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
 
-            this._eventDispatcher.dispatchEvent(new RoomObjectMouseEvent(
+            this._eventHandler.handleRoomObjectEvent(new RoomObjectMouseEvent(
                 eventType,
                 this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
                 -1,
@@ -854,7 +854,7 @@ export class Room implements IRoom {
             selectedRoomObjectData.id === id &&
             selectedRoomObjectData.category === RoomObjectCategoryEnum.Floor
         ) {
-            this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Floor);
+            // TODO this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Floor);
         }
 
         if (roomObject?.isReady && synchronized) this._instance.tileObjectMap.addRoomObject(roomObject);
@@ -916,7 +916,7 @@ export class Room implements IRoom {
             Math.abs(selectedRoomObjectData.id) === id &&
             selectedRoomObjectData.category === RoomObjectCategoryEnum.Wall
         ) {
-            this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Wall);
+            // TODO this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Wall);
         }
 
         return true;
