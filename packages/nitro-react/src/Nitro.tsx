@@ -1,17 +1,13 @@
 import {
     GetRoomContentLoader,
     GetRoomEngine,
-    GetStage,
-    GetTexturePool,
-    GetTicker,
     PrepareRenderer,
-    RoomContentLoader,
+    RoomContentLoader
 } from '@nitrodevco/nitro-renderer';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
-import { RoomContextProvider } from './context';
 import { useConfigLoader, useFurnitureDataLoader } from './hooks';
 import { RoomView } from './RoomView';
 import { GetPixelRatio } from './utils';
@@ -46,12 +42,6 @@ export const Nitro: FC = () => {
                     NitroLogger.error(err);
                 }
 
-                GetTicker().add(ticker => {
-                    GetRoomEngine().update(ticker);
-                    renderer.render(GetStage());
-                    GetTexturePool().run();
-                });
-
                 setIsReady(true);
             } catch (err) {
                 NitroLogger.error(err);
@@ -73,11 +63,7 @@ export const Nitro: FC = () => {
                     ></motion.div>
                 )}
             </AnimatePresence>
-            {isReady && (
-                <RoomContextProvider roomId={1}>
-                    <RoomView />
-                </RoomContextProvider>
-            )}
+            {isReady && <RoomView roomId={1} />}
             <div
                 id="draggable-windows-container"
                 className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden"

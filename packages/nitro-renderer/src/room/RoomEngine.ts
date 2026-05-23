@@ -51,23 +51,6 @@ export class RoomEngine implements IRoomEngine {
         await GetRoomContentLoader().init();
     }
 
-    public update(ticker: Ticker): void {
-        const time = ticker.lastTime;
-        const update = false;
-
-        RoomEnterEffect.turnVisualizationOn();
-
-        //this.processPendingFurniture();
-
-        for (const room of this._rooms.values()) room.update(time, update);
-
-        //this.updateRoomCameras(time);
-
-        //if (this._mouseCursorUpdate) this.setPointer();
-
-        RoomEnterEffect.turnVisualizationOff();
-    }
-
     public async createRoom(roomId: number): Promise<IRoom> {
         let room = this._rooms.get(roomId);
 

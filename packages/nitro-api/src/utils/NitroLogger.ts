@@ -2,7 +2,7 @@ export class NitroLogger {
     public static LOG_DEBUG: boolean = false;
     public static LOG_WARN: boolean = false;
     public static LOG_ERROR: boolean = false;
-    public static LOG_EVENTS: boolean = true;
+    public static LOG_EVENTS: boolean = false;
     public static LOG_PACKETS: boolean = false;
 
     public static log(...messages: any[]): void {

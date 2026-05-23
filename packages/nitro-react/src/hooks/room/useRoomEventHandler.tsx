@@ -1,19 +1,17 @@
 
 import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectPlacementSource, RoomObjectType } from '@nitrodevco/nitro-api';
-import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectTileCursorUpdateMessage, ObjectVisibilityUpdateMessage, RoomGeometry, SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
-import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 import { useEffect, useRef } from 'react';
 
 import { useFurnitureDataStore } from '#base/stores';
 
-import { useRoomContext } from './useRoomContext';
-import { useRoomObjectEvent } from './useRoomObjectEvent';
+import { useRoomContext } from '../context';
 
 export const useRoomEventHandler = () => {
-    const { room } = useRoomContext();
+    const room = useRoomContext(x => x.room);
     const floorItems = useFurnitureDataStore(state => state.floorItems);
     const floorItemsRef = useRef(floorItems);
 
@@ -349,17 +347,9 @@ export const useRoomEventHandler = () => {
                     const _y = roomObject.getLocation().y;
 
                     if (roomObject.type === RoomObjectUserType.MONSTER_PLANT) {
-                        /* const roomSession = GetRoomSessionManager().getSession(roomId);
- 
-                        if (roomSession) {
-                            const userData = roomSession.userDataManager.getUserDataByIndex(objectId);
- 
-                            if (userData) {
-                                GetCommunication().connection.send(
+                        NitroLogger.sendPacket(`GetCommunication().connection.send(
                                     new PetMoveComposer(userData.webID, Math.trunc(x), Math.trunc(y), Math.trunc(direction / 45)),
-                                );
-                            }
-                        } */
+                                )`);
                     } else {
                         NitroLogger.sendPacket(
                             `new FurnitureFloorUpdateComposer(objectId, x, y, Math.trunc(direction / 45))`
@@ -438,16 +428,9 @@ export const useRoomEventHandler = () => {
                     const _location = roomObject.getLocation();
                     const _direction = _angle / 45;
                     const _race = parseInt(roomObject.model.getValue<string>(RoomObjectVariableEnum.Race));
-                    /* const roomSession = GetRoomSessionManager().getSession(roomId);
-     
-                    if (roomSession) {
-                        const userData = roomSession.userDataManager.getUserDataByIndex(objectId);
-     
-                        if (userData)
-                            NitroLogger.sendPacket(
-                                `new PetMoveComposer(userData.webID, location.x, location.y, direction`),
-                            );
-                    } */
+
+                    NitroLogger.sendPacket(
+                        `new PetMoveComposer(userData.webID, location.x, location.y, direction`)
                 }
 
                 break;
@@ -725,10 +708,6 @@ export const useRoomEventHandler = () => {
         //this._roomEngine.setObjectMoverIconSpriteVisible(!_local_12);
     };
 
-    useRoomObjectEvent<RoomObjectFurnitureActionEvent>([RoomObjectFurnitureActionEvent.MOUSE_ARROW, RoomObjectFurnitureActionEvent.MOUSE_BUTTON], event => {
-        room?.updateMousePointer(event.type, event.objectId, event.objectType);
-    });
-
     useEffect(() => {
         if (!room) return;
 
@@ -952,7 +931,6 @@ export const useRoomEventHandler = () => {
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [room]);
 
     useEffect(() => {

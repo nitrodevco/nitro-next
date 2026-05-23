@@ -1,3 +1,4 @@
+import type { IRoom } from '@nitrodevco/nitro-api';
 import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
 import {
     FurnitureStackingHeightMap,
@@ -5,13 +6,15 @@ import {
     LegacyWallGeometry,
     RoomPlaneParser,
 } from '@nitrodevco/nitro-renderer';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useRoomContext } from './hooks';
+import { RoomContextProvider } from './hooks/context';
 import { RoomCanvasView } from './views/room/RoomCanvasView';
 
-export const RoomView = () => {
-    const { roomId, room, setRoom } = useRoomContext();
+export const RoomView = ({ roomId }: {
+    roomId: number;
+}) => {
+    const [room, setRoom] = useState<IRoom | undefined>(undefined);
 
     const mapData = useMemo(() => {
         const parseMapData = (
@@ -266,5 +269,9 @@ xxxxxxxxxxxx`,
 
     if (!room) return null;
 
-    return <RoomCanvasView />;
+    return (
+        <RoomContextProvider room={room}>
+            <RoomCanvasView />
+        </RoomContextProvider>
+    );
 };

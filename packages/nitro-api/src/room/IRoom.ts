@@ -24,15 +24,6 @@ export interface IRoom {
     applyRoomMap(roomMap: IRoomMapData): Promise<void>;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
-    dispatchMouseEvent(
-        x: number,
-        y: number,
-        type: string,
-        altKey: boolean,
-        ctrlKey: boolean,
-        shiftKey: boolean,
-        buttonDown: boolean,
-    ): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
     getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
@@ -124,11 +115,9 @@ export interface IRoom {
     removeRoomObjectWall(objectId: number, userId?: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
-    update(time: number, update?: boolean): void;
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
-    updateMousePointer(type: string, objectId: number, objectType: string): void;
     isPlayingGame(): boolean;
     readonly roomId: number;
     readonly modelName: string;
@@ -137,9 +126,7 @@ export interface IRoom {
     readonly eventHandler: IRoomEventHandler;
     readonly logicFactory: IRoomObjectLogicFactory;
     readonly areaSelection: IRoomAreaSelectionManager;
-    readonly camera: IRoomCamera;
     readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;
-    readonly isCameraFollowDisabled: boolean;
     readonly useOffsetScrolling: boolean;
 }

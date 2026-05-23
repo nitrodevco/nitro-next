@@ -1,11 +1,6 @@
-import type { IRoom } from '@nitrodevco/nitro-api';
-import type { Dispatch, SetStateAction } from 'react';
 import { createContext } from 'react';
+import type { StoreApi } from 'zustand';
 
-export interface RoomContextType {
-    roomId: number | undefined;
-    room: IRoom | undefined;
-    setRoom: Dispatch<SetStateAction<IRoom | undefined>>;
-}
+import type { RoomStore } from '#base/stores';
 
-export const RoomContext = createContext<RoomContextType | undefined>(undefined);
+export const RoomContext = createContext<StoreApi<RoomStore> | null>(null);

@@ -1,17 +1,24 @@
-import { MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, RoomGeometry } from '@nitrodevco/nitro-renderer';
-import { RoomEngineObjectEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRoomContext, useRoomEventDispatcher, useRoomEventHandler } from '#base/hooks';
+import { useRoomCamera, useRoomCanvasMouse, useRoomContext, useRoomEventDispatcher, useRoomEventHandler, useRoomObjectEvent } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
-    const { room } = useRoomContext();
+    const room = useRoomContext(x => x.room);
+    const camera = useRoomContext(x => x.camera);
     const [size, setSize] = useState<{ width: number; height: number; resolution: number } | undefined>(undefined);
     const elementRef = useRef<HTMLDivElement>(null);
+    const { dragXY, isDragged, wasDragged, hasCursorUpdate, updateMousePointer } = useRoomCanvasMouse();
+    const { updateRoomCamera } = useRoomCamera();
 
     useRoomEventHandler();
+
+    useRoomObjectEvent<RoomObjectFurnitureActionEvent>([RoomObjectFurnitureActionEvent.MOUSE_ARROW, RoomObjectFurnitureActionEvent.MOUSE_BUTTON], event => {
+        updateMousePointer(event.type, event.objectId, event.objectType);
+    });
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -138,7 +145,48 @@ export const RoomCanvasView = () => {
         }
 
         if (updateEvent) room?.eventDispatcher.dispatchEvent(updateEvent);
-    })
+    });
+
+    useEffect(() => {
+        if (!room) return;
+
+        const renderer = GetRenderer();
+        const stage = GetStage();
+        const texturePool = GetTexturePool();
+
+        GetTicker().add(ticker => {
+            if (!room) return;
+
+            const time = ticker.lastTime;
+            const update = false;
+
+            RoomEnterEffect.turnVisualizationOn();
+
+            room.instance.update(time, update);
+
+            if (!isDragged.current) updateRoomCamera(time);
+
+            if (wasDragged.current) {
+                const offsetX = ~~(room.instance.canvas?.screenOffsetX || 0);
+                const offsetY = ~~(room.instance.canvas?.screenOffsetY || 0);
+
+                room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + dragXY.current.x), y: (offsetY + dragXY.current.y) });
+
+                dragXY.current = { x: 0, y: 0 };
+            }
+
+            if (hasCursorUpdate.current) {
+                hasCursorUpdate.current = false;
+
+                renderer.canvas.style.cursor = room.instance.hasButtonMouseCursorOwners() ? 'pointer' : 'auto';
+            }
+
+            RoomEnterEffect.turnVisualizationOff();
+
+            renderer.render(stage);
+            texturePool.run();
+        });
+    }, [room, updateRoomCamera]);
 
     useEffect(() => {
         if (!room || !size) return;
@@ -153,8 +201,8 @@ export const RoomCanvasView = () => {
         renderer.canvas.style.height = `${height}px`;
 
         if (renderer.resolution !== size.resolution) {
-            room.camera.reset();
-            room.camera.setTarget(new Vector3d(0, 0, 0));
+            camera.reset();
+            camera.setTarget(new Vector3d(0, 0, 0));
         }
 
         if (renderer.width !== width || renderer.height !== height || renderer.resolution !== size.resolution) renderer.resize(width, height, size.resolution);
@@ -163,140 +211,6 @@ export const RoomCanvasView = () => {
 
         renderer.render(stage);
     }, [room, size]);
-
-    useEffect(() => {
-        if (!room) return;
-
-        const canvas = GetRenderer().canvas;
-        let didMouseMove = false;
-        let isMouseDown = false;
-        let lastClick = 0;
-        let clickCount = 0;
-
-        const mouseHandler = (event: MouseEvent) => {
-            event.preventDefault();
-
-            let eventType = event.type;
-
-            if (eventType === MouseEventType.MOUSE_CLICK) {
-                if (lastClick) {
-                    clickCount = 1;
-
-                    if (lastClick >= Date.now() - 300) clickCount++;
-                }
-
-                lastClick = Date.now();
-
-                if (clickCount === 2) {
-                    if (!didMouseMove) eventType = MouseEventType.DOUBLE_CLICK;
-
-                    clickCount = 0;
-                    lastClick = 0;
-                }
-            }
-
-            switch (eventType) {
-                case MouseEventType.MOUSE_CLICK:
-                    break;
-                case MouseEventType.DOUBLE_CLICK:
-                    break;
-                case MouseEventType.MOUSE_MOVE:
-                    didMouseMove = true;
-                    break;
-                case MouseEventType.MOUSE_DOWN:
-                    didMouseMove = false;
-                    isMouseDown = true;
-                    break;
-                case MouseEventType.MOUSE_UP:
-                    isMouseDown = false;
-                    break;
-                case MouseEventType.RIGHT_CLICK:
-                    break;
-                default:
-                    return;
-            }
-
-            void room.dispatchMouseEvent(
-                event.clientX,
-                event.clientY,
-                eventType,
-                event.altKey,
-                event.ctrlKey || event.metaKey,
-                event.shiftKey,
-                isMouseDown,
-            );
-        };
-
-        const touchHandler = (event: TouchEvent) => {
-            event.preventDefault();
-
-            const touch = event.changedTouches[0];
-
-            if (!touch) return;
-
-            switch (event.type) {
-                case 'touchstart':
-                    didMouseMove = false;
-                    isMouseDown = true;
-
-                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_DOWN, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-                    break;
-                case 'touchmove':
-                    didMouseMove = true;
-
-                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_MOVE, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-                    break;
-                case 'touchend': {
-                    isMouseDown = false;
-
-                    void room.dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_UP, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-
-                    let eventType: string | undefined = undefined;
-
-                    if (!didMouseMove) {
-                        eventType = MouseEventType.MOUSE_CLICK;
-
-                        if (lastClick) {
-                            clickCount = 1;
-
-                            if (lastClick >= Date.now() - 300) clickCount++;
-                        }
-                    }
-
-                    if (clickCount === 2) {
-                        if (!didMouseMove) eventType = MouseEventType.DOUBLE_CLICK;
-
-                        clickCount = 0;
-                        lastClick = 0;
-                    }
-
-                    if (eventType) void room.dispatchMouseEvent(touch.clientX, touch.clientY, eventType, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-
-                    break;
-                }
-            }
-        };
-
-        canvas.onclick = mouseHandler;
-        canvas.onmousemove = mouseHandler;
-        canvas.onmousedown = mouseHandler;
-        canvas.onmouseup = mouseHandler;
-
-        canvas.ontouchstart = touchHandler;
-        canvas.ontouchmove = touchHandler;
-        canvas.ontouchend = touchHandler;
-
-        return () => {
-            canvas.onclick = null;
-            canvas.onmousemove = null;
-            canvas.onmousedown = null;
-            canvas.onmouseup = null;
-
-            canvas.ontouchstart = null;
-            canvas.ontouchmove = null;
-            canvas.ontouchend = null;
-        };
-    }, [room]);
 
     useEffect(() => {
         const renderer = GetRenderer();
