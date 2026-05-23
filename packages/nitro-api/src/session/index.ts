@@ -1,5 +1,7 @@
 export * from './enum/FurnitureType';
 export * from './enum/RoomControllerLevelEnum';
+export * from './enum/RoomDoorModeEnum';
+export * from './enum/RoomTradeModeEnum';
 export * from './enum/SecurityLevelEnum';
 export * from './enum/UserTypeEnum';
 export * from './IFurnitureData';

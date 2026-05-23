@@ -1,3 +1,4 @@
+export * from './context/RoomContext';
 export * from './events/useMessageListener';
 export * from './logic/useConfigLoader';
 export * from './logic/useFurnitureDataLoader';
@@ -6,6 +7,8 @@ export * from './room/useRoomContext';
 export * from './room/useRoomEventDispatcher';
 export * from './room/useRoomEventHandler';
 export * from './room/useRoomObjectEvent';
+export * from './room/useRoomSession';
+export * from './room/useRoomUserData';
 export * from './useCommunicationStore';
 export * from './useConfig';
 export * from './useConfigValue';

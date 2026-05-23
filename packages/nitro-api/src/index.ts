@@ -187,6 +187,8 @@ export * from './room/utils/ITileObjectMap';
 export * from './room/utils/RoomObjectSpriteData';
 export * from './session/enum/FurnitureType';
 export * from './session/enum/RoomControllerLevelEnum';
+export * from './session/enum/RoomDoorModeEnum';
+export * from './session/enum/RoomTradeModeEnum';
 export * from './session/enum/SecurityLevelEnum';
 export * from './session/enum/UserTypeEnum';
 export * from './session/IFurnitureData';
