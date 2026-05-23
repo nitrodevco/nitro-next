@@ -3,6 +3,7 @@ import path from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import babel from 'vite-plugin-babel';
 
 const r = (p: string) => path.resolve(__dirname, p);
 
@@ -31,7 +32,13 @@ export default defineConfig({
             },
         },
     },
-    plugins: [react(), tailwindcss()],
+    plugins: [babel({
+        babelConfig: {
+            plugins: ['@babel/plugin-syntax-jsx', ['@babel/plugin-syntax-typescript', { isTSX: true }], 'babel-plugin-react-compiler'],
+        },
+        include: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+    }), react(), tailwindcss()],
     resolve: {
         tsconfigPaths: true,
         dedupe: ['pixi.js'],

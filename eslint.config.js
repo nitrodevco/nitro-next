@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import reactPlugin from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -13,6 +13,7 @@ const TS_PROJECTS = ['./tsconfig.base.json', './packages/*/tsconfig.json'];
 export default [
     js.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
+    prettier,
     {
         ignores: [
             '**/node_modules/**',
@@ -71,18 +72,16 @@ export default [
     {
         files: ['packages/**/src/**/*.{ts,tsx,js,jsx}'],
         plugins: {
-            react: reactPlugin,
             'react-hooks': reactHooks,
+            'react-compiler': reactCompiler,
             'react-refresh': reactRefresh,
         },
         settings: {
             react: { version: 'detect' },
         },
         rules: {
-            ...reactPlugin.configs.recommended.rules,
             ...reactHooks.configs.recommended.rules,
-
-            // Vite React refresh: only export components
+            'react-compiler/react-compiler': 'error',
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/react-in-jsx-scope': 'off',
         },
@@ -98,7 +97,4 @@ export default [
             },
         },
     },
-
-    // 6) Disable formatting conflicts if you use Prettier
-    prettier,
 ];

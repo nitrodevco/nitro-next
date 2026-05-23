@@ -6,9 +6,6 @@
             "DOM",
             "DOM.Iterable"
         ],
-        "types": [
-            "node"
-        ],
         "module": "ESNext",
         "moduleResolution": "bundler",
         "strict": false,

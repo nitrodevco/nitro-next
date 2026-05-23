@@ -4,7 +4,7 @@
         "noEmit": true,
         "jsx": "react-jsx",
         "types": [
-            "vite/client"
+            "node"
         ],
         "paths": {
             "#base/context": [
