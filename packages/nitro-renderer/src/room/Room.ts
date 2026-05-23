@@ -11,6 +11,7 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectLogicFactory,
     IRoomRenderingCanvas,
     IVector3D,
 } from '@nitrodevco/nitro-api';
@@ -37,7 +38,6 @@ import { Matrix, Point, Rectangle } from 'pixi.js';
 
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
-import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
 import {
     ObjectAvatarFigureUpdateMessage,
@@ -50,6 +50,7 @@ import {
 } from './messages';
 import { RoomLogic } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
+import { RoomObjectLogicFactory } from './RoomObjectLogicFactory';
 import { RoomAreaSelectionManager, RoomCamera } from './utils';
 import { type RoomFurnitureData } from './utils';
 
@@ -69,6 +70,7 @@ export class Room implements IRoom {
     private _instance: IRoomInstance;
     private _eventDispatcher: IEventDispatcher;
     private _eventHandler: IRoomEventHandler;
+    private _logicFactory: IRoomObjectLogicFactory;
 
     private _modelName: string;
 
@@ -94,6 +96,7 @@ export class Room implements IRoom {
         this._roomId = roomId;
         this._instance = instance;
         this._eventDispatcher = new EventDispatcher();
+        this._logicFactory = new RoomObjectLogicFactory(this);
         this._eventHandler = new RoomEventHandler(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
     }
@@ -307,7 +310,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public async dispatchMouseEvent(
+    public dispatchMouseEvent(
         x: number,
         y: number,
         type: string,
@@ -315,7 +318,7 @@ export class Room implements IRoom {
         ctrlKey: boolean,
         shiftKey: boolean,
         buttonDown: boolean,
-    ): Promise<void> {
+    ): void {
         /*  const overlay = this.getRenderingCanvasOverlay(canvas);
         const sprite = this.getOverlayIconSprite(overlay, RoomEngine.OBJECT_ICON_SPRITE);
 
@@ -345,20 +348,17 @@ export class Room implements IRoom {
                 eventType = RoomObjectMouseEvent.CLICK;
             } else if (type === MouseEventType.MOUSE_MOVE) eventType = RoomObjectMouseEvent.MOUSE_MOVE;
             else if (type === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
-            else if (type === MouseEventType.MOUSE_DOWN_LONG) eventType = RoomObjectMouseEvent.MOUSE_DOWN_LONG;
             else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
 
-            await this._eventHandler.handleRoomObjectEvent(
-                new RoomObjectMouseEvent(
-                    eventType,
-                    this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
-                    -1,
-                    altKey,
-                    ctrlKey,
-                    shiftKey,
-                    buttonDown,
-                ),
-            );
+            this._eventDispatcher.dispatchEvent(new RoomObjectMouseEvent(
+                eventType,
+                this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
+                -1,
+                altKey,
+                ctrlKey,
+                shiftKey,
+                buttonDown,
+            ));
         }
 
         this._canvasMouseX = x;
@@ -658,7 +658,7 @@ export class Room implements IRoom {
                 if (object) {
                     object.setVisualization(visualization);
 
-                    const logic = GetRoomObjectLogicFactory().getLogic(logicType);
+                    const logic = this._logicFactory.getLogic(logicType);
 
                     if (logic) {
                         logic.eventHandler = this._eventHandler;
@@ -1146,6 +1146,10 @@ export class Room implements IRoom {
 
     public get eventHandler(): IRoomEventHandler {
         return this._eventHandler;
+    }
+
+    public get logicFactory(): IRoomObjectLogicFactory {
+        return this._logicFactory;
     }
 
     public get areaSelection(): IRoomAreaSelectionManager {

@@ -7,7 +7,6 @@ export class RoomObjectMouseEvent extends RoomObjectEvent {
     public static DOUBLE_CLICK: string = 'ROE_MOUSE_DOUBLE_CLICK';
     public static MOUSE_MOVE: string = 'ROE_MOUSE_MOVE';
     public static MOUSE_DOWN: string = 'ROE_MOUSE_DOWN';
-    public static MOUSE_DOWN_LONG: string = 'ROE_MOUSE_DOWN_LONG';
     public static MOUSE_UP: string = 'ROE_MOUSE_UP';
     public static MOUSE_ENTER: string = 'ROE_MOUSE_ENTER';
     public static MOUSE_LEAVE: string = 'ROE_MOUSE_LEAVE';

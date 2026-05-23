@@ -36,7 +36,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectDataUpdateMessage) {
-            message.data.writeRoomObjectModel(this.object.model);
+            message.data?.writeRoomObjectModel(this.object.model);
 
             const stuffData = new MapDataType();
 

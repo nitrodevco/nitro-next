@@ -47,7 +47,11 @@ export class RoomEventHandler implements IRoomEventHandler {
     private _selectedObjectCategory: RoomObjectCategoryEnum = RoomObjectCategoryEnum.Minimum;
     private _objectPlacementSource: string = '';
 
-    constructor(private _room: IRoom) { }
+    constructor(private _room: IRoom) {
+        //this._room.logicFactory.registerEventFunction(
+        //    event => void this.handleRoomObjectEvent(event as RoomObjectEvent),
+        //);
+    }
 
     public async handleRoomObjectEvent(event: RoomObjectEvent): Promise<void> {
         if (!event) return;
@@ -122,9 +126,6 @@ export class RoomEventHandler implements IRoomEventHandler {
             case RoomObjectMouseEvent.MOUSE_DOWN:
                 this.handleRoomObjectMouseDownEvent(event);
                 return;
-            case RoomObjectMouseEvent.MOUSE_DOWN_LONG:
-                this.handleRoomObjectMouseDownLongEvent(event);
-                return;
             case RoomObjectMouseEvent.MOUSE_ENTER:
                 this.handleRoomObjectMouseEnterEvent(event);
                 return;
@@ -148,12 +149,9 @@ export class RoomEventHandler implements IRoomEventHandler {
         let didWalk = false;
         let didMove = false;
 
-        if (GetRoomEngine().whereYouClickIsWhereYouGo()) {
-            if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) didWalk = this.handleMoveTargetFurni(event);
-        }
+        if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) didWalk = this.handleMoveTargetFurni(event);
 
         const category = this._room.getRoomObjectCategoryForType(event.objectType);
-
         const roomCursor = this._room.getRoomObjectCursor();
 
         if (roomCursor && roomCursor.logic) {
@@ -162,7 +160,7 @@ export class RoomEventHandler implements IRoomEventHandler {
             if (event instanceof RoomObjectTileMouseEvent) {
                 newEvent = this.handleMouseOverTile(event);
             } else if (event.object && event.object.id !== -1) {
-                if (GetRoomEngine().whereYouClickIsWhereYouGo()) newEvent = this.handleMouseOverObject(category, event);
+                newEvent = this.handleMouseOverObject(category, event);
             }
 
             if (newEvent) roomCursor.processUpdateMessage(newEvent);
@@ -397,10 +395,6 @@ export class RoomEventHandler implements IRoomEventHandler {
     }
 
     private handleRoomObjectMouseDownEvent(event: RoomObjectMouseEvent): void {
-        if (!event) return;
-    }
-
-    private handleRoomObjectMouseDownLongEvent(event: RoomObjectMouseEvent): void {
         if (!event) return;
     }
 

@@ -15,13 +15,11 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { ImageLike, Ticker } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { NumberBank } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
-import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { ObjectDataUpdateMessage } from './messages';
 import { Room } from './Room';
 import { RoomEnterEffect, RoomGeometry } from './utils';
@@ -50,10 +48,6 @@ export class RoomEngine implements IRoomEngine {
     }
 
     public async init(): Promise<void> {
-        GetRoomObjectLogicFactory().registerEventFunction(
-            event => void this.processRoomObjectEvent(event as RoomObjectEvent),
-        );
-
         await GetRoomContentLoader().init();
     }
 
@@ -191,16 +185,6 @@ export class RoomEngine implements IRoomEngine {
 
     public getTemporaryRoom(): Promise<IRoom> {
         return this.createRoom(RoomEngine.TEMORARY_ROOM_ID);
-    }
-
-    private processRoomObjectEvent(event: RoomObjectEvent): void {
-        const roomId = this.getRoomObjectRoomId(event.object);
-
-        if (roomId === undefined) return;
-
-        const room = this._rooms.get(roomId);
-
-        void room?.eventHandler.handleRoomObjectEvent(event);
     }
 
     private getRoomObjectRoomId(object: IRoomObject): number | undefined {

@@ -12,6 +12,7 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectLogicFactory,
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
@@ -31,7 +32,7 @@ export interface IRoom {
         ctrlKey: boolean,
         shiftKey: boolean,
         buttonDown: boolean,
-    ): Promise<void>;
+    ): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
     getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
@@ -134,6 +135,7 @@ export interface IRoom {
     readonly instance: IRoomInstance;
     readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
+    readonly logicFactory: IRoomObjectLogicFactory;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly camera: IRoomCamera;
     readonly isAreaSelectionMode: boolean;

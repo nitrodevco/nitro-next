@@ -83,7 +83,9 @@ export class RoomObjectLogicBase implements IRoomObjectEventHandler {
     protected handleRoomObjectEvent(event: INitroEvent): void {
         if (!event) return;
 
-        void this._eventHandler?.handleRoomObjectEvent(event);
+        this._eventHandler?.eventDispatcher.dispatchEvent(event);
+
+        //void this._eventHandler?.handleRoomObjectEvent(event);
     }
 
     public get object(): IRoomObjectController {

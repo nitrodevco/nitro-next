@@ -55,7 +55,6 @@ export class FurnitureLogic extends MovingObjectLogic {
             RoomObjectStateChangedEvent.STATE_CHANGE,
             RoomObjectMouseEvent.CLICK,
             RoomObjectMouseEvent.MOUSE_DOWN,
-            RoomObjectMouseEvent.MOUSE_DOWN_LONG,
             RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_SHOW,
             RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_HIDE,
             RoomObjectRoomAdEvent.ROOM_AD_FURNI_DOUBLE_CLICK,
@@ -328,21 +327,6 @@ export class FurnitureLogic extends MovingObjectLogic {
                 this.handleRoomObjectEvent(
                     new RoomObjectMouseEvent(
                         RoomObjectMouseEvent.MOUSE_DOWN,
-                        this.object,
-                        event.eventId,
-                        event.altKey,
-                        event.ctrlKey,
-                        event.shiftKey,
-                        event.buttonDown,
-                    ),
-                );
-
-                return;
-            }
-            case MouseEventType.MOUSE_DOWN_LONG: {
-                this.handleRoomObjectEvent(
-                    new RoomObjectMouseEvent(
-                        RoomObjectMouseEvent.MOUSE_DOWN_LONG,
                         this.object,
                         event.eventId,
                         event.altKey,

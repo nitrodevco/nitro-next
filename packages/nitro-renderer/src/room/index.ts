@@ -1,7 +1,6 @@
 export * from './GetRoomContentLoader';
 export * from './GetRoomEngine';
 export * from './GetRoomManager';
-export * from './GetRoomObjectLogicFactory';
 export * from './GetRoomObjectVisualizationFactory';
 export * from './messages/ObjectAdUpdateMessage';
 export * from './messages/ObjectAvatarCarryObjectUpdateMessage';

@@ -1,12 +1,11 @@
 import type {
-    IEventDispatcher,
     INitroEvent,
+    IRoom,
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
 } from '@nitrodevco/nitro-api';
-import { RoomObjectLogicType } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
 import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
-import { EventDispatcher } from '@nitrodevco/nitro-shared';
 
 import type { RoomObjectLogicBase } from './object';
 import {
@@ -79,31 +78,39 @@ import {
 } from './object';
 
 export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
-    private _events: IEventDispatcher = new EventDispatcher();
     private _cachedEvents: Map<string, boolean> = new Map();
     private _registeredEvents: Map<string, boolean> = new Map();
     private _functions: ((event: RoomObjectEvent) => void)[] = [];
 
+    constructor(private _room: IRoom) { }
+
     public getLogic(type: string): IRoomObjectEventHandler | undefined {
-        const logic = this.getLogicType(type);
+        try {
+            const logic = this.getLogicType(type);
 
-        if (!logic) return undefined;
+            if (!logic) return undefined;
 
-        const instance = new logic() as IRoomObjectEventHandler;
+            const instance = new logic() as IRoomObjectEventHandler;
 
-        if (!this._cachedEvents.get(type)) {
-            this._cachedEvents.set(type, true);
+            if (!this._cachedEvents.get(type)) {
+                this._cachedEvents.set(type, true);
 
-            const eventTypes = instance.getEventTypes();
+                const eventTypes = instance.getEventTypes();
 
-            for (const eventType of eventTypes) {
-                if (!eventType) continue;
+                for (const eventType of eventTypes) {
+                    if (!eventType) continue;
 
-                this.registerEventType(eventType);
+                    this.registerEventType(eventType);
+                }
             }
-        }
 
-        return instance;
+            return instance;
+        }
+        catch (err) {
+            NitroLogger.error(err);
+
+            return undefined;
+        }
     }
 
     private registerEventType(type: string): void {
@@ -114,7 +121,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
         for (const func of this._functions) {
             if (!func) continue;
 
-            this._events.addEventListener(type, func);
+            this._room.eventDispatcher.addEventListener(type, func);
         }
     }
 
@@ -126,7 +133,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
         for (const eventType of this._registeredEvents.keys()) {
             if (!eventType) continue;
 
-            this._events.addEventListener(eventType, func);
+            this._room.eventDispatcher.addEventListener(eventType, func);
         }
     }
 
@@ -142,7 +149,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
         for (const event of this._registeredEvents.keys()) {
             if (!event) continue;
 
-            this._events.removeEventListener(event, func);
+            this._room.eventDispatcher.removeEventListener(event, func);
         }
     }
 
@@ -356,9 +363,5 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
         }
 
         return logic;
-    }
-
-    public get events(): IEventDispatcher {
-        return this._events;
     }
 }

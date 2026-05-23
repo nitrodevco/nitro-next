@@ -7,7 +7,6 @@ export * from './avatar/GetAvatarRenderManager';
 export * from './room/GetRoomContentLoader';
 export * from './room/GetRoomEngine';
 export * from './room/GetRoomManager';
-export * from './room/GetRoomObjectLogicFactory';
 export * from './room/GetRoomObjectVisualizationFactory';
 export * from './room/messages/ObjectAdUpdateMessage';
 export * from './room/messages/ObjectAvatarCarryObjectUpdateMessage';
