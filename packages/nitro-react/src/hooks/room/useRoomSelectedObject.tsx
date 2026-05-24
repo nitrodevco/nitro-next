@@ -40,7 +40,7 @@ export const useRoomSelectedObject = () => {
                     }
                 }
 
-                room.eventHandler.eventDispatcher.dispatchEvent(
+                room.dispatchEvent(
                     new RoomEngineObjectEvent(RoomEngineObjectEvent.SELECTED, room.roomId, objectId, category),
                 );
             }

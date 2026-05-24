@@ -6,12 +6,11 @@ import type {
     IRoomObjectEvent,
     IRoomSpriteMouseEvent,
 } from '@nitrodevco/nitro-api';
-import { EventDispatcher, type RoomObjectEvent, type RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
+import { type RoomObjectEvent, type RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 
 import { RoomEnterEffect } from './utils';
 
 export class RoomEventHandler implements IRoomEventHandler {
-    private _eventDispatcher: IEventDispatcher = new EventDispatcher();
     private _roomObjectEventHandler: ((event: RoomObjectEvent) => void) | undefined = undefined;
     private _roomCanvasMouseHandler: ((event: RoomSpriteMouseEvent, object: IRoomObject) => void) | undefined = undefined;
 
@@ -38,6 +37,6 @@ export class RoomEventHandler implements IRoomEventHandler {
     }
 
     public get eventDispatcher(): IEventDispatcher {
-        return this._eventDispatcher;
+        return this._room.eventDispatcher;
     }
 }

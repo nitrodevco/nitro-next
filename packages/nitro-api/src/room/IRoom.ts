@@ -1,6 +1,7 @@
 import type { PointData, Rectangle } from 'pixi.js';
 
 
+import { IEventDispatcher, INitroEvent } from '../events';
 import type { IVector3D } from '../utils';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
@@ -118,9 +119,11 @@ export interface IRoom {
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
     isPlayingGame(): boolean;
+    dispatchEvent(event: INitroEvent): void;
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
+    readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
     readonly logicFactory: IRoomObjectLogicFactory;
     readonly areaSelection: IRoomAreaSelectionManager;

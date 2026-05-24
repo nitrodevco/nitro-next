@@ -1,19 +1,22 @@
-import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObject, MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
-import { RoomEngineObjectEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
+import { RoomEngineObjectEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
 import { useEffect, useRef } from 'react';
 
-import { useRoomCamera, useRoomCanvasMouse, useRoomContext, useRoomEventDispatcher, useRoomEventHandler } from '#base/hooks';
+import { useRoomCamera, useRoomContext, useRoomCursor, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
     const room = useRoomContext(x => x.room);
     const camera = useRoomContext(x => x.camera);
-    const elementRef = useRef<HTMLDivElement>(null);
-    const { dragXY, isDragged, wasDragged, hasCursorUpdate, hasCursorOwners } = useRoomCanvasMouse();
+    const getMouseEventId = useRoomContext(x => x.getMouseEventId);
+    const setMouseEventId = useRoomContext(x => x.setMouseEventId);
+    const { dragXY, isDragged, wasDragged } = useRoomMouse();
+    const { hasCursorUpdate, hasCursorOwners } = useRoomCursor();
     const { updateRoomCamera } = useRoomCamera();
+    const elementRef = useRef<HTMLDivElement>(null);
 
-    useRoomEventHandler();
+    const { handleRoomObjectMouseEvent } = useRoomEventHandler();
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -31,7 +34,7 @@ export const RoomCanvasView = () => {
 
         switch (event.type) {
             case RoomEngineObjectEvent.SELECTED: {
-                const roomObject = room?.getRoomObject(event.objectId, event.category);
+                const roomObject = room.getRoomObject(event.objectId, event.category);
 
                 if (!roomObject) return;
 
@@ -125,8 +128,64 @@ export const RoomCanvasView = () => {
                 break;
         }
 
-        if (updateEvent) room?.eventHandler.eventDispatcher.dispatchEvent(updateEvent);
+        if (updateEvent) room.dispatchEvent(updateEvent);
     });
+
+    useEffect(() => {
+        if (!room) return;
+
+        const handleRoomObjectEvent = (event: RoomObjectEvent) => {
+
+            if (event instanceof RoomObjectMouseEvent) {
+                handleRoomObjectMouseEvent(event);
+
+                return;
+            }
+
+            switch (event.type) {
+                case RoomObjectFurnitureActionEvent.MOUSE_ARROW:
+                case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
+                    return;
+                }
+            }
+        };
+
+        room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
+
+        return () => room.eventHandler.setRoomObjectEventHandler(undefined);
+    }, [room, handleRoomObjectMouseEvent]);
+
+    useEffect(() => {
+        const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
+            if (!object) return;
+
+            let category = room.getRoomObjectCategoryForType(object.type);
+
+            if (category !== RoomObjectCategoryEnum.Room && (!room.isPlayingGame() || category !== RoomObjectCategoryEnum.Unit))
+                category = RoomObjectCategoryEnum.Minimum;
+
+            const eventId = getMouseEventId(category, event.type);
+
+            if (eventId === event.eventId) {
+                if (
+                    event.type === MouseEventType.MOUSE_CLICK ||
+                    event.type === MouseEventType.DOUBLE_CLICK ||
+                    event.type === MouseEventType.MOUSE_DOWN ||
+                    event.type === MouseEventType.MOUSE_UP ||
+                    event.type === MouseEventType.MOUSE_MOVE
+                )
+                    return;
+            } else if (event.eventId) {
+                setMouseEventId(category, event.type, event.eventId);
+            }
+
+            if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
+        };
+
+        room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
+
+        return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
+    }, [room]);
 
     useEffect(() => {
         const renderer = GetRenderer();

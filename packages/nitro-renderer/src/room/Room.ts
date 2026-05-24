@@ -1,5 +1,7 @@
 import type {
+    IEventDispatcher,
     IGraphicAssetCollection,
+    INitroEvent,
     IObjectData,
     IRoom,
     IRoomAreaSelectionManager,
@@ -24,6 +26,7 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import {
+    EventDispatcher,
     GetConfigValue,
     RoomEngineObjectEvent,
     RoomObjectEvent,
@@ -62,6 +65,7 @@ export class Room implements IRoom {
 
     private _roomId: number;
     private _instance: IRoomInstance;
+    private _eventDispatcher: IEventDispatcher;
     private _eventHandler: IRoomEventHandler;
     private _logicFactory: IRoomObjectLogicFactory;
 
@@ -77,6 +81,7 @@ export class Room implements IRoom {
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
         this._instance = instance;
+        this._eventDispatcher = new EventDispatcher();
         this._eventHandler = new RoomEventHandler(this);
         this._logicFactory = new RoomObjectLogicFactory(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
@@ -325,7 +330,7 @@ export class Room implements IRoom {
     public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
         this._instance.removeRoomObject(objectId, category);
 
-        this._eventHandler.eventDispatcher.dispatchEvent(
+        this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, this._roomId, objectId, category),
         );
     }
@@ -564,7 +569,7 @@ export class Room implements IRoom {
             if (!this.updateRoomObjectFloorHeight(id, sizeZ)) return false;
         }
 
-        this._eventHandler.eventDispatcher.dispatchEvent(
+        this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Floor),
         );
 
@@ -626,7 +631,7 @@ export class Room implements IRoom {
 
         if (!this.updateRoomObjectWall(id, location, direction, state, objectData, extra)) return false;
 
-        this._eventHandler.eventDispatcher.dispatchEvent(
+        this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Wall),
         );
 
@@ -678,7 +683,7 @@ export class Room implements IRoom {
 
         if (figure) roomObject.processUpdateMessage(new ObjectAvatarFigureUpdateMessage(figure));
 
-        this._eventHandler.eventDispatcher.dispatchEvent(
+        this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Unit),
         );
 
@@ -829,6 +834,10 @@ export class Room implements IRoom {
         return this.getRoomValue<number>(RoomObjectVariableEnum.IsPlayingGame) > 0;
     }
 
+    public dispatchEvent(event: INitroEvent): void {
+        this._eventDispatcher.dispatchEvent(event);
+    }
+
     public get roomId(): number {
         return this._roomId;
     }
@@ -839,6 +848,10 @@ export class Room implements IRoom {
 
     public get instance(): IRoomInstance {
         return this._instance;
+    }
+
+    public get eventDispatcher(): IEventDispatcher {
+        return this._eventDispatcher;
     }
 
     public get eventHandler(): IRoomEventHandler {

@@ -1,8 +1,7 @@
 export * from './useRoomCamera';
-export * from './useRoomCanvasMouse';
+export * from './useRoomCursor';
 export * from './useRoomEventDispatcher';
 export * from './useRoomEventHandler';
-export * from './useRoomEventIds';
-export * from './useRoomObjectEvent';
+export * from './useRoomMouse';
 export * from './useRoomSelectedObject';
 
