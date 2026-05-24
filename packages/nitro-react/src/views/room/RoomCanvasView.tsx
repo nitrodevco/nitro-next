@@ -12,7 +12,7 @@ export const RoomCanvasView = () => {
     const getMouseEventId = useRoomContext(x => x.getMouseEventId);
     const setMouseEventId = useRoomContext(x => x.setMouseEventId);
     const { dragXY, isDragged, wasDragged } = useRoomMouse();
-    const { hasCursorUpdate, hasCursorOwners } = useRoomCursor();
+    const { hasCursorUpdate, hasCursorOwners, updateMousePointer } = useRoomCursor();
     const { updateRoomCamera } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
 
@@ -145,6 +145,7 @@ export const RoomCanvasView = () => {
             switch (event.type) {
                 case RoomObjectFurnitureActionEvent.MOUSE_ARROW:
                 case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
+                    updateMousePointer(event.type, event.objectId, event.objectType);
                     return;
                 }
             }
