@@ -1,170 +1,39 @@
 
 import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D } from '@nitrodevco/nitro-api';
 import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRoomEngine, ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectTileCursorUpdateMessage, ObjectVisibilityUpdateMessage, RoomGeometry, SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
+import { GetRoomEngine, ObjectTileCursorUpdateMessage, RoomGeometry, SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import { useFurnitureDataStore } from '#base/stores';
 
 import { useRoomContext } from '../context';
+import { useRoomEventIds } from './useRoomEventIds';
+import { useRoomSelectedObject } from './useRoomSelectedObject';
 
 export const useRoomEventHandler = () => {
     const room = useRoomContext(x => x.room);
-    const floorItems = useFurnitureDataStore(state => state.floorItems);
     const ownUserId = useRoomContext(x => x.ownUserId);
     const controllerLevel = useRoomContext(x => x.controllerLevel);
     const isRoomOwner = useRoomContext(x => x.isRoomOwner);
     const isSpectator = useRoomContext(x => x.isSpectator);
-    const floorItemsRef = useRef(floorItems);
-
-    useEffect(() => { floorItemsRef.current = floorItems; }, [floorItems]);
-
-    const selectedAvatarId = useRef(-1);
-    const selectedObjectId = useRef(-1);
-    const selectedObjectCategory = useRef<RoomObjectCategoryEnum>(RoomObjectCategoryEnum.Minimum);
-    const selectedObject = useRef<ISelectedRoomObjectData | undefined>(undefined);
-    const placedObject = useRef<ISelectedRoomObjectData | undefined>(undefined);
-    const objectPlacementSource = useRef<RoomObjectPlacementSource>(RoomObjectPlacementSource.INVENTORY);
-    const eventIds = useRef(new Map<RoomObjectCategoryEnum, Map<string, number>>());
-
-    const getMouseEventId = (category: RoomObjectCategoryEnum, type: string) =>
-        eventIds.current.get(category)?.get(type);
-
-    const setMouseEventId = (category: RoomObjectCategoryEnum, type: string, eventId: number) => {
-        let map = eventIds.current.get(category);
-
-        if (!map) {
-            map = new Map();
-            eventIds.current.set(category, map);
-        }
-
-        map.set(type, eventId);
-    };
+    const floorItems = useFurnitureDataStore(state => state.floorItems);
+    const { selectedObject, placedObject, objectPlacementSource, selectObject, selectAvatar, deselectObject, resetSelectedObject } = useRoomSelectedObject();
+    const { getMouseEventId, setMouseEventId } = useRoomEventIds();
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
 
     const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest || isFurnitureOwner(room.getRoomObject(objectId, category))); // or isModerator
 
-    const deselectObject = () => {
-        if (selectedObjectId.current === -1) return;
-
-        const roomObject = room?.getRoomObject(selectedObjectId.current, selectedObjectCategory.current);
-
-        if (roomObject?.logic) roomObject.processUpdateMessage(new ObjectSelectedMessage(false));
-
-        selectedObjectId.current = -1;
-        selectedObjectCategory.current = RoomObjectCategoryEnum.Minimum;
-    };
-
-    const selectAvatar = (objectId: number, lookAt: boolean) => {
-        const prevAvatar = room?.getRoomObject(selectedAvatarId.current, RoomObjectCategoryEnum.Unit);
-
-        if (prevAvatar?.logic) {
-            prevAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(false));
-            selectedAvatarId.current = -1;
-        }
-
-        const nextAvatar = room?.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
-
-        if (nextAvatar?.logic) {
-            nextAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
-            selectedAvatarId.current = objectId;
-
-            if (lookAt) {
-                const location = nextAvatar.getLocation();
-                NitroLogger.sendPacket(`new RoomUnitLookComposer(~~(${location.x}), ~~(${location.y}))`);
-            }
-        }
-
-        const selectionArrow = room?.getRoomObjectSelectionArrow();
-
-        if (selectionArrow?.logic) {
-            const visibility = lookAt && !room?.isPlayingGame()
-                ? ObjectVisibilityUpdateMessage.ENABLED
-                : ObjectVisibilityUpdateMessage.DISABLED;
-
-            selectionArrow.processUpdateMessage(new ObjectVisibilityUpdateMessage(visibility));
-        }
-    };
-
-    const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
-        switch (category) {
-            case RoomObjectCategoryEnum.Unit:
-            case RoomObjectCategoryEnum.Floor:
-            case RoomObjectCategoryEnum.Wall: {
-                if (category === RoomObjectCategoryEnum.Unit) {
-                    deselectObject();
-                    selectAvatar(objectId, true);
-                } else {
-                    selectAvatar(0, false);
-
-                    if (objectId !== selectedObjectId.current) {
-                        deselectObject();
-
-                        const roomObject = room?.getRoomObject(objectId, category);
-
-                        if (roomObject?.logic) {
-                            roomObject.processUpdateMessage(new ObjectSelectedMessage(true));
-
-                            selectedObjectId.current = objectId;
-                            selectedObjectCategory.current = category;
-                        }
-                    }
-                }
-
-                room?.eventHandler.eventDispatcher.dispatchEvent(
-                    new RoomEngineObjectEvent(RoomEngineObjectEvent.SELECTED, room.roomId, objectId, category),
-                );
-            }
-        }
-    };
-
     const setFurnitureAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
         object?.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
-    };
-
-    const resetSelectedObject = () => {
-        if (!selectedObject.current) return;
-        //this._roomEngine.removeObjectMoverIconSprite();
-
-        const obj = selectedObject.current;
-
-        if (obj.operation === RoomObjectOperationType.OBJECT_MOVE || obj.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
-            const roomObject = room?.getRoomObject(obj.id, obj.category);
-
-            if (roomObject) {
-                if (obj.operation !== RoomObjectOperationType.OBJECT_MOVE_TO) {
-                    roomObject.setLocation(obj.loc);
-                    roomObject.setDirection(obj.dir);
-                }
-
-                setFurnitureAlphaMultiplier(roomObject, 1);
-            }
-
-            if (obj.category === RoomObjectCategoryEnum.Wall) room?.updateRoomObjectMask(obj.id, true);
-        } else if (obj.operation === RoomObjectOperationType.OBJECT_PLACE) {
-            switch (obj.category) {
-                case RoomObjectCategoryEnum.Floor:
-                    room?.removeRoomObjectFloor(obj.id);
-                    break;
-                case RoomObjectCategoryEnum.Wall:
-                    room?.removeRoomObjectWall(obj.id);
-                    break;
-                case RoomObjectCategoryEnum.Unit:
-                    room?.removeRoomObject(obj.id, RoomObjectCategoryEnum.Unit);
-                    break;
-            }
-        }
-
-        selectedObject.current = undefined;
     };
 
     const getActiveSurfaceLocation = (roomObject: IRoomObject, event: RoomObjectMouseEvent) => {
         if (!roomObject || !event) return undefined;
 
-        const furniData = floorItemsRef.current.get(roomObject.type);
+        const furniData = floorItems.get(roomObject.type);
 
         if (!furniData || (!furniData.canStandOn && !furniData.canSitOn && !furniData.canLayOn)) return undefined;
 
