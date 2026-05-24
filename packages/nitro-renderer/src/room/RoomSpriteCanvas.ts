@@ -7,7 +7,7 @@ import type {
     IRoomObjectSpriteVisualization,
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
-    RoomObjectSpriteData,
+    RoomObjectSpriteData
 } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';

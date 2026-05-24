@@ -14,16 +14,16 @@ export const useRoomEventDispatcher = <T extends NitroEvent>(
         if (!room || !enabled) return;
 
         if (Array.isArray(type)) {
-            type.map(name => room.eventDispatcher.addEventListener(name, handler));
+            type.map(name => room.eventHandler.eventDispatcher.addEventListener(name, handler));
         } else {
-            room.eventDispatcher.addEventListener(type, handler);
+            room.eventHandler.eventDispatcher.addEventListener(type, handler);
         }
 
         return () => {
             if (Array.isArray(type)) {
-                type.map(name => room.eventDispatcher.removeEventListener(name, handler));
+                type.map(name => room.eventHandler.eventDispatcher.removeEventListener(name, handler));
             } else {
-                room.eventDispatcher.removeEventListener(type, handler);
+                room.eventHandler.eventDispatcher.removeEventListener(type, handler);
             }
         };
     }, [room, type, enabled, handler]);

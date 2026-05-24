@@ -1,4 +1,4 @@
-import { RoomControllerLevelEnum, RoomDoorModeEnum, RoomTradeModeEnum } from "@nitrodevco/nitro-api"
+import { RoomControllerLevelEnum, RoomDoorModeEnum, RoomTradeModeEnum } from "@nitrodevco/nitro-api";
 import type { StateCreator } from "zustand";
 
 type State = {
@@ -29,7 +29,7 @@ const initialState: State = {
     controllerLevel: RoomControllerLevelEnum.None,
     ownRoomIndex: -1,
     isGuildRoom: false,
-    isRoomOwner: false,
+    isRoomOwner: true,
     isDecorating: false,
     isSpectator: false
 };

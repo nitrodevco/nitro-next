@@ -251,9 +251,25 @@ xxxxxxxxxxxx`,
 
             if (mapData.wallGeometry) room.instance.setLegacyGeometry(mapData.wallGeometry);
 
-            room.instance.setFurnitureStackingHeightMap(
-                new FurnitureStackingHeightMap(mapData.mapData.width, mapData.mapData.height),
-            );
+            const heightMap = new FurnitureStackingHeightMap(mapData.mapData.width, mapData.mapData.height);
+
+            let y = 0;
+
+            while (y < mapData.mapData.height) {
+                let x = 0;
+
+                while (x < mapData.mapData.width) {
+                    heightMap.setTileHeight(x, y, 0);
+                    heightMap.setStackingBlocked(x, y, false);
+                    heightMap.setIsRoomTile(x, y, true);
+
+                    x++;
+                }
+
+                y++;
+            }
+
+            room.instance.setFurnitureStackingHeightMap(heightMap);
 
             setRoom(prev => {
                 if (prev === room) return prev;

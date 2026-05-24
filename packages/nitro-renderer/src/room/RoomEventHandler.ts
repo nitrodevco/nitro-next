@@ -6,27 +6,16 @@ import type {
     IRoomObjectEvent,
     IRoomSpriteMouseEvent,
 } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
+import { EventDispatcher, type RoomObjectEvent, type RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 
 import { RoomEnterEffect } from './utils';
 
 export class RoomEventHandler implements IRoomEventHandler {
+    private _eventDispatcher: IEventDispatcher = new EventDispatcher();
     private _roomObjectEventHandler: ((event: RoomObjectEvent) => void) | undefined = undefined;
     private _roomCanvasMouseHandler: ((event: RoomSpriteMouseEvent, object: IRoomObject) => void) | undefined = undefined;
 
-    constructor(private _room: IRoom) {
-        //this._room.logicFactory.registerEventFunction(
-        //    event => void this.handleRoomObjectEvent(event as RoomObjectEvent),
-        //);
-    }
-
-    public setRoomObjectEventHandler(handler: ((event: IRoomObjectEvent) => void) | undefined): void {
-        this._roomObjectEventHandler = handler;
-    }
-
-    public setRoomCanvasMouseHandler(handler: ((event: IRoomSpriteMouseEvent, object: IRoomObject) => void) | undefined): void {
-        this._roomCanvasMouseHandler = handler;
-    }
+    constructor(private _room: IRoom) { }
 
     public handleRoomObjectEvent(event: RoomObjectEvent): void {
         if (!event || !this._roomObjectEventHandler) return;
@@ -40,7 +29,15 @@ export class RoomEventHandler implements IRoomEventHandler {
         this._roomCanvasMouseHandler(event, object);
     }
 
+    public setRoomObjectEventHandler(handler: ((event: IRoomObjectEvent) => void) | undefined): void {
+        this._roomObjectEventHandler = handler;
+    }
+
+    public setRoomCanvasMouseHandler(handler: ((event: IRoomSpriteMouseEvent, object: IRoomObject) => void) | undefined): void {
+        this._roomCanvasMouseHandler = handler;
+    }
+
     public get eventDispatcher(): IEventDispatcher {
-        return this._room.eventDispatcher;
+        return this._eventDispatcher;
     }
 }

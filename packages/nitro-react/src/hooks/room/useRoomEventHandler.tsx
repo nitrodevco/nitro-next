@@ -1,6 +1,6 @@
 
 import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D } from '@nitrodevco/nitro-api';
-import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectTileCursorUpdateMessage, ObjectVisibilityUpdateMessage, RoomGeometry, SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
@@ -13,6 +13,10 @@ import { useRoomContext } from '../context';
 export const useRoomEventHandler = () => {
     const room = useRoomContext(x => x.room);
     const floorItems = useFurnitureDataStore(state => state.floorItems);
+    const ownUserId = useRoomContext(x => x.ownUserId);
+    const controllerLevel = useRoomContext(x => x.controllerLevel);
+    const isRoomOwner = useRoomContext(x => x.isRoomOwner);
+    const isSpectator = useRoomContext(x => x.isSpectator);
     const floorItemsRef = useRef(floorItems);
 
     useEffect(() => { floorItemsRef.current = floorItems; }, [floorItems]);
@@ -38,6 +42,10 @@ export const useRoomEventHandler = () => {
 
         map.set(type, eventId);
     };
+
+    const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
+
+    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest || isFurnitureOwner(room.getRoomObject(objectId, category))); // or isModerator
 
     const deselectObject = () => {
         if (selectedObjectId.current === -1) return;
@@ -106,7 +114,7 @@ export const useRoomEventHandler = () => {
                     }
                 }
 
-                room?.eventDispatcher.dispatchEvent(
+                room?.eventHandler.eventDispatcher.dispatchEvent(
                     new RoomEngineObjectEvent(RoomEngineObjectEvent.SELECTED, room.roomId, objectId, category),
                 );
             }
@@ -240,7 +248,7 @@ export const useRoomEventHandler = () => {
 
         resetSelectedObject();
 
-        room?.eventDispatcher.dispatchEvent(
+        room?.eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectPlacedEvent(
                 RoomEngineObjectEvent.PLACED,
                 room.roomId,
@@ -258,7 +266,7 @@ export const useRoomEventHandler = () => {
     };
 
     const placeObjectOnUser = (objectId: number, category: RoomObjectCategoryEnum) => {
-        room?.eventDispatcher.dispatchEvent(
+        room?.eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectPlacedOnUserEvent(
                 RoomEngineObjectEvent.PLACED_ON_USER,
                 room.roomId,
@@ -618,7 +626,6 @@ export const useRoomEventHandler = () => {
 
         if (obj.category === RoomObjectCategoryEnum.Floor || obj.category === RoomObjectCategoryEnum.Unit) {
             if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, obj, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5)))) {
-                handleFurnitureMove(roomObject, obj, obj.loc.x, obj.loc.y);
                 added = false;
             }
         } else if (obj.category === RoomObjectCategoryEnum.Wall) {
@@ -708,223 +715,219 @@ export const useRoomEventHandler = () => {
         //this._roomEngine.setObjectMoverIconSpriteVisible(!_local_12);
     };
 
+    const handleRoomObjectMouseEvent = (event: RoomObjectMouseEvent) => {
+        if (event instanceof RoomObjectTileMouseEvent) room.areaSelection.handleTileMouseEvent(event);
+
+        switch (event.type) {
+            case RoomObjectMouseEvent.CLICK: {
+                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const category = room.getRoomObjectCategoryForType(event.objectType);
+
+                let didWalk = false;
+                let didMove = false;
+
+                if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) didWalk = handleMoveTargetFurni(event);
+
+                if (!event.altKey && !event.ctrlKey && !event.shiftKey) {
+                    if (category === RoomObjectCategoryEnum.Floor) {
+                        NitroLogger.sendPacket(`new ClickFurniMessageComposer(event.objectId, category)`);
+                    } else if (category === RoomObjectCategoryEnum.Wall) {
+                        // This packet only sends a negative number to tell the server that its a wall item
+                        NitroLogger.sendPacket(`new ClickFurniMessageComposer(-Math.abs(event.objectId), category)`);
+                    }
+                }
+
+                const roomCursor = room.getRoomObjectCursor();
+
+                if (roomCursor?.logic) {
+                    let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
+
+                    if (event instanceof RoomObjectTileMouseEvent) {
+                        cursorEvent = handleMouseOverTile(event);
+                    } else if (event.object?.id !== -1) {
+                        cursorEvent = handleMouseOverObject(category, event);
+                    }
+
+                    if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
+                }
+
+                switch (operation) {
+                    case RoomObjectOperationType.OBJECT_MOVE: {
+                        const obj = selectedObject.current;
+
+                        if (category === RoomObjectCategoryEnum.Room) {
+                            if (obj) modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
+                        } else if (category === RoomObjectCategoryEnum.Unit) {
+                            if (obj && event.objectType === RoomObjectUserType.MONSTER_PLANT)
+                                modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
+
+                            if (event.eventId) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
+
+                            placeObjectOnUser(event.objectId, category);
+                        }
+
+                        didMove = true;
+
+                        if (event.objectId !== -1) selectObject(event.objectId, category);
+
+                        break;
+                    }
+                    case RoomObjectOperationType.OBJECT_PLACE:
+                        if (category === RoomObjectCategoryEnum.Room) {
+                            placeObject(event instanceof RoomObjectTileMouseEvent, event instanceof RoomObjectWallMouseEvent);
+                        } else if (category === RoomObjectCategoryEnum.Unit) {
+                            switch (event.objectType) {
+                                case RoomObjectUserType.MONSTER_PLANT:
+                                case RoomObjectUserType.RENTABLE_BOT:
+                                    placeObject(event instanceof RoomObjectTileMouseEvent, event instanceof RoomObjectWallMouseEvent);
+                                    break;
+                                default:
+                                    if (event.eventId) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
+
+                                    placeObjectOnUser(event.objectId, category);
+                                    break;
+                            }
+                        }
+                        break;
+                    case RoomObjectOperationType.OBJECT_UNDEFINED:
+                        if (category === RoomObjectCategoryEnum.Room) {
+                            if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
+                                if (room.isDecorating || isSpectator) return;
+
+                                if (!GetRoomEngine().moveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
+                            }
+                        } else {
+                            if (!room.isAreaSelectionMode || category === RoomObjectCategoryEnum.Unit) {
+                                selectObject(event.objectId, category);
+                            } else {
+                                deselectObject();
+
+                                room.eventHandler.eventDispatcher.dispatchEvent(
+                                    new RoomEngineObjectEvent(RoomEngineObjectEvent.DESELECTED, room.roomId, -1, RoomObjectCategoryEnum.Minimum),
+                                );
+                            }
+
+                            didMove = false;
+
+                            if (category === RoomObjectCategoryEnum.Unit) {
+                                if (event.ctrlKey && !event.altKey && !event.shiftKey && event.objectType === RoomObjectUserType.RENTABLE_BOT) {
+                                    modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP_BOT);
+                                } else if (event.ctrlKey && !event.altKey && !event.shiftKey && event.objectType === RoomObjectUserType.MONSTER_PLANT) {
+                                    modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP_PET);
+                                } else if (!event.ctrlKey && !event.altKey && event.shiftKey && event.objectType === RoomObjectUserType.MONSTER_PLANT) {
+                                    modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE);
+                                }
+
+                                didWalk = !room.isPlayingGame();
+                                didMove = room.isPlayingGame();
+                            } else if (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall) {
+                                if (event.altKey || event.ctrlKey || event.shiftKey) {
+                                    if (!event.ctrlKey && !event.altKey && event.shiftKey && category === RoomObjectCategoryEnum.Floor) {
+                                        if (canManipulateFurniture(event.objectId, category)) modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE);
+                                    } else if (event.ctrlKey && !event.altKey && !event.shiftKey) {
+                                        modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
+                                    }
+
+                                    didWalk = room.isPlayingGame();
+                                    didMove = !room.isPlayingGame();
+                                }
+                            }
+
+                            if (event.eventId) {
+                                if (didWalk) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
+                                if (didMove) setMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK, event.eventId);
+                            }
+                        }
+                        break;
+                }
+
+                if (category === RoomObjectCategoryEnum.Room) {
+                    if (
+                        getMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK) !== event.eventId &&
+                        getMouseEventId(RoomObjectCategoryEnum.Unit, MouseEventType.MOUSE_CLICK) !== event.eventId &&
+                        !didMove
+                    ) {
+                        deselectObject();
+
+                        room.eventHandler.eventDispatcher.dispatchEvent(
+                            new RoomEngineObjectEvent(RoomEngineObjectEvent.DESELECTED, room.roomId, -1, RoomObjectCategoryEnum.Minimum),
+                        );
+
+                        selectAvatar(0, false);
+                    }
+                }
+
+                return;
+            }
+            case RoomObjectMouseEvent.DOUBLE_CLICK:
+                room.eventHandler.eventDispatcher.dispatchEvent(
+                    new RoomEngineObjectEvent(RoomEngineObjectEvent.DOUBLE_CLICK, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
+                );
+                return;
+            case RoomObjectMouseEvent.MOUSE_MOVE: {
+                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const category = room.getRoomObjectCategoryForType(event.objectType);
+                const roomCursor = room.getRoomObjectCursor();
+
+                if (roomCursor?.logic) {
+                    let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
+
+                    if (event instanceof RoomObjectTileMouseEvent) {
+                        cursorEvent = handleMouseOverTile(event);
+                    } else if (event.object?.id !== -1) {
+                        cursorEvent = handleMouseOverObject(category, event);
+                    } else {
+                        cursorEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
+                    }
+
+                    if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
+                }
+
+                if (category === RoomObjectCategoryEnum.Room) {
+                    if (operation === RoomObjectOperationType.OBJECT_MOVE) handleObjectMove(event);
+                    else if (operation === RoomObjectOperationType.OBJECT_PLACE) void handleObjectPlace(event);
+                }
+
+                return;
+            }
+            case RoomObjectMouseEvent.MOUSE_DOWN: {
+                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const category = room.getRoomObjectCategoryForType(event.objectType);
+
+                if (
+                    operation === RoomObjectOperationType.OBJECT_UNDEFINED &&
+                    (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall || event.objectType === RoomObjectUserType.MONSTER_PLANT) &&
+                    ((event.altKey && !event.ctrlKey && !event.shiftKey) || (room.isDecorating && !(event.ctrlKey || event.shiftKey)))
+                ) {
+                    if (canManipulateFurniture(event.objectId, category)) modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_MOVE);
+                }
+
+                return;
+            }
+            case RoomObjectMouseEvent.MOUSE_UP:
+                return;
+            case RoomObjectMouseEvent.MOUSE_ENTER:
+                room.eventHandler.eventDispatcher.dispatchEvent(
+                    new RoomEngineObjectEvent(RoomEngineObjectEvent.MOUSE_ENTER, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
+                );
+                return;
+            case RoomObjectMouseEvent.MOUSE_LEAVE:
+                room.eventHandler.eventDispatcher.dispatchEvent(
+                    new RoomEngineObjectEvent(RoomEngineObjectEvent.MOUSE_LEAVE, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
+                );
+                return;
+        }
+    }
+
     useEffect(() => {
         if (!room) return;
 
         const handleRoomObjectEvent = (event: RoomObjectEvent) => {
-            if (!(event instanceof RoomObjectMouseEvent)) return;
 
-            if (event instanceof RoomObjectTileMouseEvent) room.areaSelection.handleTileMouseEvent(event);
+            if (event instanceof RoomObjectMouseEvent) {
+                handleRoomObjectMouseEvent(event);
 
-            switch (event.type) {
-                case RoomObjectMouseEvent.CLICK: {
-                    const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
-                    const category = room.getRoomObjectCategoryForType(event.objectType);
-
-                    let didWalk = false;
-                    let didMove = false;
-
-                    if (operation === RoomObjectOperationType.OBJECT_UNDEFINED) didWalk = handleMoveTargetFurni(event);
-
-                    if (!event.altKey && !event.ctrlKey && !event.shiftKey) {
-                        if (category === RoomObjectCategoryEnum.Floor) {
-                            NitroLogger.sendPacket(`new ClickFurniMessageComposer(event.objectId, category)`);
-                        } else if (category === RoomObjectCategoryEnum.Wall) {
-                            // This packet only sends a negative number to tell the server that its a wall item
-                            NitroLogger.sendPacket(`new ClickFurniMessageComposer(-Math.abs(event.objectId), category)`);
-                        }
-                    }
-
-                    const roomCursor = room.getRoomObjectCursor();
-
-                    if (roomCursor?.logic) {
-                        let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
-
-                        if (event instanceof RoomObjectTileMouseEvent) {
-                            cursorEvent = handleMouseOverTile(event);
-                        } else if (event.object?.id !== -1) {
-                            cursorEvent = handleMouseOverObject(category, event);
-                        }
-
-                        if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
-                    }
-
-                    switch (operation) {
-                        case RoomObjectOperationType.OBJECT_MOVE: {
-                            const obj = selectedObject.current;
-
-                            if (category === RoomObjectCategoryEnum.Room) {
-                                if (obj) modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
-                            } else if (category === RoomObjectCategoryEnum.Unit) {
-                                if (obj && event.objectType === RoomObjectUserType.MONSTER_PLANT)
-                                    modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
-
-                                if (event.eventId) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
-
-                                placeObjectOnUser(event.objectId, category);
-                            }
-
-                            didMove = true;
-
-                            if (event.objectId !== -1) selectObject(event.objectId, category);
-
-                            break;
-                        }
-                        case RoomObjectOperationType.OBJECT_PLACE:
-                            if (category === RoomObjectCategoryEnum.Room) {
-                                placeObject(event instanceof RoomObjectTileMouseEvent, event instanceof RoomObjectWallMouseEvent);
-                            } else if (category === RoomObjectCategoryEnum.Unit) {
-                                switch (event.objectType) {
-                                    case RoomObjectUserType.MONSTER_PLANT:
-                                    case RoomObjectUserType.RENTABLE_BOT:
-                                        placeObject(event instanceof RoomObjectTileMouseEvent, event instanceof RoomObjectWallMouseEvent);
-                                        break;
-                                    default:
-                                        if (event.eventId) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
-
-                                        placeObjectOnUser(event.objectId, category);
-                                        break;
-                                }
-                            }
-                            break;
-                        case RoomObjectOperationType.OBJECT_UNDEFINED:
-                            if (category === RoomObjectCategoryEnum.Room) {
-                                if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
-                                    if (room.isDecorating) return;
-
-                                    // if is spectator return;
-
-                                    if (!GetRoomEngine().moveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
-                                }
-                            } else {
-                                if (!room.isAreaSelectionMode || category === RoomObjectCategoryEnum.Unit) {
-                                    selectObject(event.objectId, category);
-                                } else {
-                                    deselectObject();
-
-                                    room.eventDispatcher.dispatchEvent(
-                                        new RoomEngineObjectEvent(RoomEngineObjectEvent.DESELECTED, room.roomId, -1, RoomObjectCategoryEnum.Minimum),
-                                    );
-                                }
-
-                                didMove = false;
-
-                                if (category === RoomObjectCategoryEnum.Unit) {
-                                    if (event.ctrlKey && !event.altKey && !event.shiftKey && event.objectType === RoomObjectUserType.RENTABLE_BOT) {
-                                        modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP_BOT);
-                                    } else if (event.ctrlKey && !event.altKey && !event.shiftKey && event.objectType === RoomObjectUserType.MONSTER_PLANT) {
-                                        modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP_PET);
-                                    } else if (!event.ctrlKey && !event.altKey && event.shiftKey && event.objectType === RoomObjectUserType.MONSTER_PLANT) {
-                                        modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE);
-                                    }
-
-                                    didWalk = !room.isPlayingGame();
-                                    didMove = room.isPlayingGame();
-                                } else if (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall) {
-                                    if (event.altKey || event.ctrlKey || event.shiftKey) {
-                                        if (!event.ctrlKey && !event.altKey && event.shiftKey && category === RoomObjectCategoryEnum.Floor) {
-                                            room.eventDispatcher.dispatchEvent(
-                                                new RoomEngineObjectEvent(RoomEngineObjectEvent.REQUEST_ROTATE, room.roomId, event.objectId, category),
-                                            );
-                                        } else if (event.ctrlKey && !event.altKey && !event.shiftKey) {
-                                            modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
-                                        }
-
-                                        didWalk = room.isPlayingGame();
-                                        didMove = !room.isPlayingGame();
-                                    }
-                                }
-
-                                if (event.eventId) {
-                                    if (didWalk) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
-                                    if (didMove) setMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK, event.eventId);
-                                }
-                            }
-                            break;
-                    }
-
-                    if (category === RoomObjectCategoryEnum.Room) {
-                        if (
-                            getMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK) !== event.eventId &&
-                            getMouseEventId(RoomObjectCategoryEnum.Unit, MouseEventType.MOUSE_CLICK) !== event.eventId &&
-                            !didMove
-                        ) {
-                            deselectObject();
-
-                            room.eventDispatcher.dispatchEvent(
-                                new RoomEngineObjectEvent(RoomEngineObjectEvent.DESELECTED, room.roomId, -1, RoomObjectCategoryEnum.Minimum),
-                            );
-
-                            selectAvatar(0, false);
-                        }
-                    }
-
-                    return;
-                }
-                case RoomObjectMouseEvent.DOUBLE_CLICK:
-                    room.eventDispatcher.dispatchEvent(
-                        new RoomEngineObjectEvent(RoomEngineObjectEvent.DOUBLE_CLICK, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
-                    );
-                    return;
-                case RoomObjectMouseEvent.MOUSE_MOVE: {
-                    const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
-                    const category = room.getRoomObjectCategoryForType(event.objectType);
-                    const roomCursor = room.getRoomObjectCursor();
-
-                    if (roomCursor?.logic) {
-                        let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
-
-                        if (event instanceof RoomObjectTileMouseEvent) {
-                            if (event.buttonDown) {
-                                const cursorLocation = roomCursor.getLocation();
-
-                                if (event.tileXAsInt !== cursorLocation.x || event.tileYAsInt !== cursorLocation.y)
-                                    cursorEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
-                            } else {
-                                cursorEvent = handleMouseOverTile(event);
-                            }
-                        } else if (event.object?.id !== -1) {
-                            cursorEvent = handleMouseOverObject(category, event);
-                        } else {
-                            cursorEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
-                        }
-
-                        if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
-                    }
-
-                    if (category === RoomObjectCategoryEnum.Room) {
-                        if (operation === RoomObjectOperationType.OBJECT_MOVE) handleObjectMove(event);
-                        else if (operation === RoomObjectOperationType.OBJECT_PLACE) void handleObjectPlace(event);
-                    }
-
-                    return;
-                }
-                case RoomObjectMouseEvent.MOUSE_DOWN: {
-                    const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
-                    const category = room.getRoomObjectCategoryForType(event.objectType);
-
-                    if (
-                        operation === RoomObjectOperationType.OBJECT_UNDEFINED &&
-                        (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall || event.objectType === RoomObjectUserType.MONSTER_PLANT) &&
-                        ((event.altKey && !event.ctrlKey && !event.shiftKey) || (room.isDecorating && !(event.ctrlKey || event.shiftKey)))
-                    ) {
-                        room.eventDispatcher.dispatchEvent(new RoomEngineObjectEvent(RoomEngineObjectEvent.REQUEST_MOVE, room.roomId, event.objectId, category));
-                    }
-
-                    return;
-                }
-                case RoomObjectMouseEvent.MOUSE_UP:
-                    return;
-                case RoomObjectMouseEvent.MOUSE_ENTER:
-                    room.eventDispatcher.dispatchEvent(
-                        new RoomEngineObjectEvent(RoomEngineObjectEvent.MOUSE_ENTER, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
-                    );
-                    return;
-                case RoomObjectMouseEvent.MOUSE_LEAVE:
-                    room.eventDispatcher.dispatchEvent(
-                        new RoomEngineObjectEvent(RoomEngineObjectEvent.MOUSE_LEAVE, room.roomId, event.objectId, room.getRoomObjectCategoryForType(event.objectType)),
-                    );
-                    return;
+                return;
             }
         };
 

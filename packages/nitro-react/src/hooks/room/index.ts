@@ -3,4 +3,4 @@ export * from './useRoomCanvasMouse';
 export * from './useRoomEventDispatcher';
 export * from './useRoomEventHandler';
 export * from './useRoomObjectEvent';
-export * from './useRoomUserData';
+

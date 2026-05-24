@@ -21,8 +21,6 @@ export const RoomCanvasView = () => {
         RoomEngineObjectEvent.ADDED,
         RoomEngineObjectEvent.REMOVED,
         RoomEngineObjectEvent.PLACED,
-        RoomEngineObjectEvent.REQUEST_MOVE,
-        RoomEngineObjectEvent.REQUEST_ROTATE,
         RoomEngineObjectEvent.MOUSE_ENTER,
         RoomEngineObjectEvent.MOUSE_LEAVE,
         RoomEngineObjectEvent.DOUBLE_CLICK,
@@ -101,18 +99,6 @@ export const RoomCanvasView = () => {
                     );
                 break;
             }
-            case RoomEngineObjectEvent.REQUEST_MOVE:
-                //if (CanManipulateFurniture(roomSession, event.objectId, event.category))
-                //    ProcessRoomObjectOperation(event.objectId, event.category, RoomObjectOperationType.OBJECT_MOVE);
-                break;
-            case RoomEngineObjectEvent.REQUEST_ROTATE:
-                //if (CanManipulateFurniture(roomSession, event.objectId, event.category))
-                //    ProcessRoomObjectOperation(
-                //        event.objectId,
-                //        event.category,
-                //        RoomObjectOperationType.OBJECT_ROTATE_POSITIVE,
-                //    );
-                break;
             case RoomEngineObjectEvent.MOUSE_ENTER:
                 updateEvent = new RoomWidgetUpdateRoomObjectEvent(
                     RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OVER,
@@ -139,7 +125,7 @@ export const RoomCanvasView = () => {
                 break;
         }
 
-        if (updateEvent) room?.eventDispatcher.dispatchEvent(updateEvent);
+        if (updateEvent) room?.eventHandler.eventDispatcher.dispatchEvent(updateEvent);
     });
 
     useEffect(() => {

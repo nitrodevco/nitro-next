@@ -1,5 +1,4 @@
 import type {
-    IEventDispatcher,
     IGraphicAssetCollection,
     IObjectData,
     IRoom,
@@ -10,9 +9,11 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectEvent,
     IRoomObjectLogicFactory,
     IRoomRenderingCanvas,
-    IVector3D,
+    IRoomSpriteMouseEvent,
+    IVector3D
 } from '@nitrodevco/nitro-api';
 import {
     GetObjectDataForFlags,
@@ -23,10 +24,11 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import {
-    EventDispatcher,
     GetConfigValue,
     RoomEngineObjectEvent,
-    SessionStore,
+    RoomObjectEvent,
+    RoomSpriteMouseEvent,
+    SessionStore
 } from '@nitrodevco/nitro-shared';
 import type { PointData } from 'pixi.js';
 import { Rectangle } from 'pixi.js';
@@ -46,7 +48,7 @@ import {
 import { RoomLogic } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomObjectLogicFactory } from './RoomObjectLogicFactory';
-import { RoomAreaSelectionManager, type RoomFurnitureData } from './utils';
+import { RoomAreaSelectionManager, RoomEnterEffect, type RoomFurnitureData } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -60,7 +62,6 @@ export class Room implements IRoom {
 
     private _roomId: number;
     private _instance: IRoomInstance;
-    private _eventDispatcher: IEventDispatcher;
     private _eventHandler: IRoomEventHandler;
     private _logicFactory: IRoomObjectLogicFactory;
 
@@ -70,13 +71,14 @@ export class Room implements IRoom {
     private _wallStack: Map<number, RoomFurnitureData> = new Map();
 
     private _areaSelection: IRoomAreaSelectionManager;
+    private _roomObjectEventHandler: ((event: RoomObjectEvent) => void) | undefined = undefined;
+    private _roomCanvasMouseHandler: ((event: RoomSpriteMouseEvent, object: IRoomObject) => void) | undefined = undefined;
 
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
         this._instance = instance;
-        this._eventDispatcher = new EventDispatcher();
-        this._logicFactory = new RoomObjectLogicFactory(this);
         this._eventHandler = new RoomEventHandler(this);
+        this._logicFactory = new RoomObjectLogicFactory(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
     }
 
@@ -323,7 +325,7 @@ export class Room implements IRoom {
     public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
         this._instance.removeRoomObject(objectId, category);
 
-        this._eventDispatcher.dispatchEvent(
+        this._eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, this._roomId, objectId, category),
         );
     }
@@ -562,7 +564,7 @@ export class Room implements IRoom {
             if (!this.updateRoomObjectFloorHeight(id, sizeZ)) return false;
         }
 
-        this._eventDispatcher.dispatchEvent(
+        this._eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Floor),
         );
 
@@ -624,7 +626,7 @@ export class Room implements IRoom {
 
         if (!this.updateRoomObjectWall(id, location, direction, state, objectData, extra)) return false;
 
-        this._eventDispatcher.dispatchEvent(
+        this._eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Wall),
         );
 
@@ -676,7 +678,7 @@ export class Room implements IRoom {
 
         if (figure) roomObject.processUpdateMessage(new ObjectAvatarFigureUpdateMessage(figure));
 
-        this._eventDispatcher.dispatchEvent(
+        this._eventHandler.eventDispatcher.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Unit),
         );
 
@@ -767,6 +769,26 @@ export class Room implements IRoom {
         this.updateRoomObjectMask(objectId, false);
     }
 
+    public setRoomObjectEventHandler(handler: ((event: IRoomObjectEvent) => void) | undefined): void {
+        this._roomObjectEventHandler = handler;
+    }
+
+    public setRoomCanvasMouseHandler(handler: ((event: IRoomSpriteMouseEvent, object: IRoomObject) => void) | undefined): void {
+        this._roomCanvasMouseHandler = handler;
+    }
+
+    public handleRoomObjectEvent(event: RoomObjectEvent): void {
+        if (!event || !this._roomObjectEventHandler) return;
+
+        this._roomObjectEventHandler(event);
+    }
+
+    public handleRoomCanvasMouseEvent(event: RoomSpriteMouseEvent, object: IRoomObject): void {
+        if (!event || !object || RoomEnterEffect.isRunning() || !this._roomCanvasMouseHandler) return;
+
+        this._roomCanvasMouseHandler(event, object);
+    }
+
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
         const canvas = this._instance?.canvas;
         const roomObject = this.getRoomObject(objectId, category);
@@ -817,10 +839,6 @@ export class Room implements IRoom {
 
     public get instance(): IRoomInstance {
         return this._instance;
-    }
-
-    public get eventDispatcher(): IEventDispatcher {
-        return this._eventDispatcher;
     }
 
     public get eventHandler(): IRoomEventHandler {

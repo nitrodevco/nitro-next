@@ -114,7 +114,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterX, this._centerX);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterY, this._centerY);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterZ, this._centerZ);
-        this.object.model.setValue(RoomObjectVariableEnum.PetAllowedDirections, this._directions);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureAllowedDirections, this._directions);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
     }
 

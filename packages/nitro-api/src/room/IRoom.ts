@@ -1,6 +1,5 @@
 import type { PointData, Rectangle } from 'pixi.js';
 
-import type { IEventDispatcher } from '#api/events';
 
 import type { IVector3D } from '../utils';
 import type { IRoomEventHandler } from './IRoomEventHandler';
@@ -16,7 +15,7 @@ import type {
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
-import type { IRoomAreaSelectionManager, IRoomCamera } from './utils';
+import type { IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     prepareRoom(): Promise<boolean>;
@@ -122,7 +121,6 @@ export interface IRoom {
     readonly roomId: number;
     readonly modelName: string;
     readonly instance: IRoomInstance;
-    readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
     readonly logicFactory: IRoomObjectLogicFactory;
     readonly areaSelection: IRoomAreaSelectionManager;
