@@ -1,15 +1,12 @@
-{
+export default {
     "printWidth": 88,
     "tabWidth": 4,
     "useTabs": false,
-
     "semi": true,
     "singleQuote": true,
     "jsxSingleQuote": false,
-
-    "trailingComma": "es5",
+    "trailingComma": "all",
     "bracketSpacing": true,
-
     "arrowParens": "avoid",
     "endOfLine": "lf"
 }

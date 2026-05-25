@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
-import reactCompiler from 'eslint-plugin-react-compiler';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -8,80 +10,65 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-const TS_PROJECTS = ['./tsconfig.base.json', './packages/*/tsconfig.json'];
-
-export default [
+export default defineConfig([
+    { ignores: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/build/**',
+        '**/.turbo/**',
+        '**/.vite/**',
+        '**/coverage/**',
+        '**/*.d.ts',
+    ]},
     js.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
     prettier,
     {
-        ignores: [
-            '**/node_modules/**',
-            '**/dist/**',
-            '**/build/**',
-            '**/.turbo/**',
-            '**/.vite/**',
-            '**/coverage/**',
-            '**/*.d.ts',
-        ],
         plugins: {
             'simple-import-sort': simpleImportSort,
             'unused-imports': unusedImports,
         },
         languageOptions: {
-            ecmaVersion: 'latest',
-            sourceType: 'module',
             globals: {
-                ...globals.browser,
-                ...globals.node,
+                ...globals.browser
             },
             parserOptions: {
-                // This enables type-aware rules across the monorepo
-                project: TS_PROJECTS,
+                projectService: {
+                    allowDefaultProject: [
+                        '*.config.js',
+                        '*.config.ts',
+                        'packages/*/*.config.js',
+                        'packages/*/*.config.ts',
+                    ],
+                },
                 tsconfigRootDir: import.meta.dirname,
             },
         },
         rules: {
-            indent: ['warn', 4, { SwitchCase: 1 }],
             'no-console': 'off',
             'no-debugger': 'warn',
-            'prefer-const': 'warn',
             'no-else-return': 'warn',
             'no-lonely-if': 'warn',
-            'no-tabs': 'error',
             'simple-import-sort/imports': 'warn',
             'simple-import-sort/exports': 'warn',
             'unused-imports/no-unused-imports': 'warn',
-            '@typescript-eslint/indent': ['warn', 4],
-            '@typescript-eslint/prefer-as-const': 'warn',
             '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
-            '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-empty-object-type': 'warn',
-            '@typescript-eslint/no-unsafe-return': 'off',
-            '@typescript-eslint/no-unsafe-assignment': 'off',
-            '@typescript-eslint/no-unsafe-member-access': 'off',
-            '@typescript-eslint/no-redundant-type-constituents': 'off',
-            '@typescript-eslint/no-unsafe-argument': 'off',
-            '@typescript-eslint/no-unsafe-call': 'off',
         },
     },
 
-    // 4) React-only rules for your React package(s)
+    // React-only rules
     {
         files: ['packages/**/src/**/*.{ts,tsx,js,jsx}'],
         plugins: {
-            'react-hooks': reactHooks,
-            'react-compiler': reactCompiler,
+            ...reactHooks.configs.flat['recommended-latest'].plugins,
             'react-refresh': reactRefresh,
         },
         settings: {
             react: { version: 'detect' },
         },
         rules: {
-            ...reactHooks.configs.recommended.rules,
-            'react-compiler/react-compiler': 'error',
+            ...reactHooks.configs.flat['recommended-latest'].rules,
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/react-in-jsx-scope': 'off',
         },
@@ -97,4 +84,4 @@ export default [
             },
         },
     },
-];
+]);

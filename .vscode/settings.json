@@ -8,28 +8,19 @@
     "editor.insertSpaces": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "always"
     },
     "editor.quickSuggestions": {
         "strings": true
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript,javascriptreact,typescript,typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.tabSize": 4,
         "js/ts.preferences.importModuleSpecifier": "shortest",
-        "js/ts.format.enabled": true,
     },
     "[json]": {
         "editor.tabSize": 4
     },
     "prettier.prettierPath": "./node_modules/prettier/index.cjs",
-    "prettier.configPath": ".prettierrc",
-    "eslint.useFlatConfig": true,
-    "eslint.workingDirectories": [
-        {
-            "mode": "auto"
-        }
-    ],
+    "prettier.configPath": "prettier.config.js",
     "eslint.validate": [
         "javascript",
         "javascriptreact",

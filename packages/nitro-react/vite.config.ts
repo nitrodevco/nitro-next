@@ -1,16 +1,17 @@
-import path from 'node:path';
 
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import babel from 'vite-plugin-babel';
 
-const r = (p: string) => path.resolve(__dirname, p);
+const r = (p: string) => `${import.meta.dirname}/${p}`;
 
 export default defineConfig({
     build: {
-        target: 'es2022',
-        sourcemap: true,
+        target: 'baseline-widely-available',
+        sourcemap: false,
         outDir: 'dist',
         emptyOutDir: true,
         rollupOptions: {
@@ -32,13 +33,15 @@ export default defineConfig({
             },
         },
     },
-    plugins: [babel({
-        babelConfig: {
-            plugins: ['@babel/plugin-syntax-jsx', ['@babel/plugin-syntax-typescript', { isTSX: true }], 'babel-plugin-react-compiler'],
-        },
-        include: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-    }), react(), tailwindcss()],
+    plugins: [
+        react(),
+        babel({
+            presets: [reactCompilerPreset()],
+            include: /\.[jt]sx?$/,
+            exclude: /node_modules/,
+        }),
+        tailwindcss()
+    ],
     resolve: {
         tsconfigPaths: true,
         dedupe: ['pixi.js'],
