@@ -1,6 +1,7 @@
 import { RoomControllerLevelEnum, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { RoomObjectFurnitureActionEvent } from "@nitrodevco/nitro-shared";
 import { useRef } from "react";
+
 import { useRoomContext } from "../context";
 
 export const useRoomCursor = () => {

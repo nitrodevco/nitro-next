@@ -26,7 +26,7 @@ type Actions = {
 const initialState: State = {
     doorMode: RoomDoorModeEnum.Open,
     tradeMode: RoomTradeModeEnum.Disabled,
-    controllerLevel: RoomControllerLevelEnum.None,
+    controllerLevel: RoomControllerLevelEnum.Moderator,
     ownRoomIndex: -1,
     isGuildRoom: false,
     isRoomOwner: true,

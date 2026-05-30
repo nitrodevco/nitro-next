@@ -1,6 +1,9 @@
-import { IRoomObject, MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import type { IRoomObject } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
-import { RoomEngineObjectEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
+import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
+import type { Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
 import { useRoomCamera, useRoomContext, useRoomCursor, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
@@ -14,6 +17,7 @@ export const RoomCanvasView = () => {
     const { dragXY, isDragged, wasDragged } = useRoomMouse();
     const { hasCursorUpdate, hasCursorOwners, updateMousePointer } = useRoomCursor();
     const { updateRoomCamera } = useRoomCamera();
+    const setControllerLevel = useRoomContext(x => x.setControllerLevel);
     const elementRef = useRef<HTMLDivElement>(null);
 
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
@@ -154,7 +158,7 @@ export const RoomCanvasView = () => {
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, handleRoomObjectMouseEvent]);
+    }, [room, handleRoomObjectMouseEvent, updateMousePointer]);
 
     useEffect(() => {
         const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
@@ -186,14 +190,14 @@ export const RoomCanvasView = () => {
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
 
         return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
-    }, [room]);
+    }, [room, getMouseEventId, setMouseEventId]);
 
     useEffect(() => {
         const renderer = GetRenderer();
         const stage = GetStage();
         const texturePool = GetTexturePool();
 
-        GetTicker().add(ticker => {
+        const tick = (ticker: Ticker) => {
             if (!room) return;
 
             const time = ticker.lastTime;
@@ -224,10 +228,18 @@ export const RoomCanvasView = () => {
 
             renderer.render(stage);
             texturePool.run();
-        });
-    }, [room]);
+        }
+
+        GetTicker().add(tick);
+
+        return () => {
+            GetTicker().remove(tick);
+        }
+    }, [room, dragXY, hasCursorUpdate, isDragged, wasDragged, hasCursorOwners, updateRoomCamera]);
 
     useEffect(() => {
+        if (!room) return;
+
         const renderer = GetRenderer();
         const stage = GetStage();
 
@@ -239,7 +251,7 @@ export const RoomCanvasView = () => {
             renderer.canvas.style.width = `${width}px`;
             renderer.canvas.style.height = `${height}px`;
 
-            if (renderer.resolution !== resolution) {
+            if (renderer.resolution !== resolution && camera) {
                 camera.reset();
                 camera.setTarget(new Vector3d(0, 0, 0));
             }
@@ -269,7 +281,7 @@ export const RoomCanvasView = () => {
             observer.disconnect();
             clearTimeout(timer);
         }
-    }, [room]);
+    }, [room, camera]);
 
     return <div className="size-full" ref={elementRef}></div>;
 };

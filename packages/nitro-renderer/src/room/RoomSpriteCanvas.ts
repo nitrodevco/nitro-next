@@ -58,6 +58,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _mouseSpriteWasHit: boolean = false;
     private _mouseActiveObjects: Map<string, ObjectMouseData> = new Map();
     private _eventCache: Map<string, IRoomSpriteMouseEvent> = new Map();
+    private _checkedSprites = new Set<string>();
+    private _mouseOutKeys: string[] = [];
     private _eventId: number = 0;
     private _scale: number = 1;
 
@@ -724,11 +726,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         shiftKey: boolean = false,
         buttonDown: boolean = false,
     ): boolean {
-        const checkedSprites = new Set<string>();
-
         let didHitSprite = false;
         let mouseEvent: IRoomSpriteMouseEvent | undefined = undefined;
         let spriteId = this._activeSpriteCount - 1;
+
+        this._checkedSprites.clear();
 
         while (spriteId >= 0) {
             const extendedSprite = this.getExtendedSprite(spriteId);
@@ -743,7 +745,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                     } else {
                         const identifier = this.getExtendedSpriteIdentifier(extendedSprite);
 
-                        if (!checkedSprites.has(identifier)) {
+                        if (!this._checkedSprites.has(identifier)) {
                             const tag = extendedSprite.tag;
 
                             let mouseData = this._mouseActiveObjects.get(identifier);
@@ -813,7 +815,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                             )
                                 this.bufferMouseEvent(mouseEvent, identifier);
 
-                            checkedSprites.add(identifier);
+                            this._checkedSprites.add(identifier);
                         }
 
                         didHitSprite = true;
@@ -824,47 +826,29 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             spriteId--;
         }
 
-        const keys: (string | undefined)[] = [];
+        this._mouseOutKeys.length = 0;
 
-        for (const key of this._mouseActiveObjects.keys()) keys.push(key);
-
-        let index = 0;
-
-        while (index < keys.length) {
-            const key = keys[index];
-
-            if (key && checkedSprites.has(key)) keys[index] = undefined;
-
-            index++;
+        for (const key of this._mouseActiveObjects.keys()) {
+            if (!this._checkedSprites.has(key)) this._mouseOutKeys.push(key);
         }
 
-        index = 0;
+        for (const key of this._mouseOutKeys) {
+            const existing = this._mouseActiveObjects.get(key);
 
-        while (index < keys.length) {
-            const key = keys[index];
+            if (existing) this._mouseActiveObjects.delete(key);
 
-            if (key) {
-                const existing = this._mouseActiveObjects.get(key);
-
-                if (existing) this._mouseActiveObjects.delete(key);
-
-                const mouseEvent = this.createMouseEvent(
-                    0,
-                    0,
-                    0,
-                    0,
-                    MouseEventType.ROLL_OUT,
-                    existing?.spriteTag ?? '',
-                    altKey,
-                    ctrlKey,
-                    shiftKey,
-                    buttonDown,
-                );
-
-                this.bufferMouseEvent(mouseEvent, key);
-            }
-
-            index++;
+            this.bufferMouseEvent(this.createMouseEvent(
+                0,
+                0,
+                0,
+                0,
+                MouseEventType.ROLL_OUT,
+                existing?.spriteTag ?? '',
+                altKey,
+                ctrlKey,
+                shiftKey,
+                buttonDown,
+            ), key)
         }
 
         this.processMouseEvents();
