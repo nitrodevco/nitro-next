@@ -1,3 +1,5 @@
+import type { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
+
 import type { AnimationFrame, SizeData } from '../data';
 import { AnimationSizeData } from '../data';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
@@ -11,12 +13,12 @@ export class FurnitureAnimatedVisualizationData extends FurnitureVisualizationDa
         return new AnimationSizeData(layerCount, angle);
     }
 
-    protected override processVisualElement(sizeData: SizeData, key: string, data: any): boolean {
+    protected override processVisualElement(sizeData: SizeData, key: string, data: object): boolean {
         if (!sizeData || !key || !data) return false;
 
         switch (key) {
             case 'animations':
-                if (!(sizeData instanceof AnimationSizeData) || !sizeData.defineAnimations(data)) return false;
+                if (!(sizeData instanceof AnimationSizeData) || !sizeData.defineAnimations(data as IAssetVisualAnimation[])) return false;
                 break;
             default:
                 if (!super.processVisualElement(sizeData, key, data)) return false;

@@ -13,7 +13,7 @@ export class SizeData {
 
     private _defaultDirection: DirectionData;
     private _directions: Map<number, DirectionData> = new Map();
-    private _colors: ColorData[] = [];
+    private _colors: Map<number, ColorData> = new Map();
     private _lastDirectionData: DirectionData | undefined = undefined;
     private _lastDirection: number = -1;
 
@@ -29,33 +29,25 @@ export class SizeData {
 
         for (const direction of this._directions.values()) direction?.dispose();
 
-        for (const color of this._colors) color?.dispose();
+        for (const color of this._colors.values()) color?.dispose();
 
         this._defaultDirection = undefined!;
-        this._colors = [];
         this._lastDirectionData = undefined;
         this._lastDirection = -1;
 
         this._directions.clear();
+        this._colors.clear();
     }
 
-    public processLayers(layers: { [index: string]: IAssetVisualizationLayer }): boolean {
-        if (!layers) return false;
-
+    public processLayers(layers: IAssetVisualizationLayer[]): boolean {
         return this.setDirectionLayers(this._defaultDirection, layers);
     }
 
-    public processDirections(directions: { [index: string]: IAssetVisualizationDirection }): boolean {
+    public processDirections(directions: IAssetVisualizationDirection[]): boolean {
         if (!directions) return false;
 
-        for (const key in directions) {
-            const direction = directions[key];
-
-            if (!direction) continue;
-
-            const directionNumber = parseInt(key);
-
-            if (this._directions.get(directionNumber)) return false;
+        for (const direction of directions) {
+            if (this._directions.get(direction.id)) return false;
 
             const directionData = new DirectionData(this._layerCount);
 
@@ -63,7 +55,7 @@ export class SizeData {
 
             if (direction.layers !== undefined) this.setDirectionLayers(directionData, direction.layers);
 
-            this._directions.set(directionNumber, directionData);
+            this._directions.set(direction.id, directionData);
 
             this._lastDirectionData = undefined;
             this._lastDirection = -1;
@@ -72,32 +64,21 @@ export class SizeData {
         return true;
     }
 
-    public processColors(colors: { [index: string]: IAssetColor }): boolean {
+    public processColors(colors: IAssetColor[]): boolean {
         if (!colors) return false;
 
-        for (const key in colors) {
-            const color = colors[key];
-
-            if (!color) continue;
-
-            const colorNumber = parseInt(key);
-
-            if (this._colors[colorNumber]) return false;
+        for (const color of colors) {
+            if (this._colors.get(color.id)) return false;
 
             const colorData = new ColorData(this._layerCount);
 
-            for (const layer in color.layers) {
-                const colorLayer = color.layers[layer];
-
-                if (!colorLayer) continue;
-
-                const layerId = parseInt(layer);
-                const colorId = colorLayer.color;
-
-                if (colorId !== undefined) colorData.setColorLayer(layerId, colorId);
+            if (color.layers) {
+                for (const layer of color.layers) {
+                    if (layer?.color) colorData.setColorLayer(layer.id, layer.color);
+                }
             }
 
-            this._colors[colorNumber] = colorData;
+            this._colors.set(color.id, colorData);
         }
 
         return true;
@@ -105,34 +86,26 @@ export class SizeData {
 
     private setDirectionLayers(
         directionData: DirectionData,
-        layers: { [index: string]: IAssetVisualizationLayer },
+        layers: IAssetVisualizationLayer[],
     ): boolean {
         if (!directionData || !layers) return false;
 
-        for (const key in layers) {
-            const layer = layers[key];
+        for (const layer of layers) {
+            if (layer.id < 0 || layer.id >= this._layerCount) return false;
 
-            if (!layer) continue;
+            if (layer.ink !== undefined) directionData.setLayerBlendMode(layer.id, layer.ink?.toLowerCase() as BLEND_MODES);
 
-            const layerId = parseInt(key);
+            if (layer.tag !== undefined) directionData.setLayerTag(layer.id, layer.tag);
 
-            if (layerId < 0 || layerId >= this._layerCount) return false;
+            if (layer.alpha !== undefined) directionData.setLayerAlpha(layer.id, layer.alpha);
 
-            // TODO: check the .nitro files for inks
-            if (layer.ink !== undefined)
-                directionData.setLayerBlendMode(layerId, layer.ink?.toLowerCase() as BLEND_MODES);
+            if (layer.ignoreMouse !== undefined) directionData.setLayerIgnoreMouse(layer.id, layer.ignoreMouse);
 
-            if (layer.tag !== undefined) directionData.setLayerTag(layerId, layer.tag);
+            if (layer.x !== undefined) directionData.setLayerXOffset(layer.id, layer.x);
 
-            if (layer.alpha !== undefined) directionData.setLayerAlpha(layerId, layer.alpha);
+            if (layer.y !== undefined) directionData.setLayerYOffset(layer.id, layer.y);
 
-            if (layer.ignoreMouse !== undefined) directionData.setLayerIgnoreMouse(layerId, layer.ignoreMouse);
-
-            if (layer.x !== undefined) directionData.setLayerXOffset(layerId, layer.x);
-
-            if (layer.y !== undefined) directionData.setLayerYOffset(layerId, layer.y);
-
-            if (layer.z !== undefined) directionData.setLayerZOffset(layerId, layer.z / -1000);
+            if (layer.z !== undefined) directionData.setLayerZOffset(layer.id, layer.z / -1000);
         }
 
         return true;
@@ -204,7 +177,7 @@ export class SizeData {
     }
 
     public getLayerColor(layerId: number, colorId: number): number {
-        const existing = this._colors[colorId];
+        const existing = this._colors.get(colorId);
 
         if (!existing) return ColorData.DEFAULT_COLOR;
 

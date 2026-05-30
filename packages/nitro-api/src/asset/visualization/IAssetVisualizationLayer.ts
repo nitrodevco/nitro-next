@@ -1,4 +1,5 @@
 export interface IAssetVisualizationLayer {
+    id: number;
     x?: number;
     y?: number;
     z?: number;

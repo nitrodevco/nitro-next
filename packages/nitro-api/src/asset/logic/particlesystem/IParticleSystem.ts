@@ -1,7 +1,7 @@
 import type { IParticleSystemEmitter } from './IParticleSystemEmitter';
 
 export interface IParticleSystem {
-    size: number;
+    size?: number;
     canvasId?: number;
     offsetY?: number;
     blend?: number;

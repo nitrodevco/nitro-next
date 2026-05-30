@@ -2,9 +2,9 @@ import type { IAssetVisualAnimationSequenceFrameOffset } from './IAssetVisualAni
 
 export interface IAssetVisualAnimationSequenceFrame {
     id: number;
-    x: number;
-    y: number;
-    randomX: number;
-    randomY: number;
-    offsets: { [index: string]: IAssetVisualAnimationSequenceFrameOffset };
+    x?: number;
+    y?: number;
+    randomX?: number;
+    randomY?: number;
+    offsets?: IAssetVisualAnimationSequenceFrameOffset[];
 }

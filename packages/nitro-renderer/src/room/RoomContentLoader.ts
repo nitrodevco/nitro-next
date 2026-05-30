@@ -18,22 +18,21 @@ import { GetAssetManager } from '../assets';
 import { PetColorResult } from './PetColorResult';
 
 export class RoomContentLoader implements IRoomContentLoader {
-    public static PLACE_HOLDER: string = 'place_holder';
-    public static PLACE_HOLDER_Wall: string = 'place_holder_wall';
-    public static PLACE_HOLDER_PET: string = 'place_holder_pet';
+    public static ROOM_CONTENT: string = 'HabboRoomContent';
+    public static TILE_CURSOR: string = 'TileCursor';
+    public static SELECTION_ARROW: string = 'SelectionArrow';
+    public static PLACE_HOLDER: string = 'PlaceHolderFurniture';
+    public static PLACE_HOLDER_Wall: string = 'PlaceHolderWallItem';
+    public static PLACE_HOLDER_PET: string = 'PlaceHolderPet';
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
 
-    private static Room: string = 'room';
-    private static TILE_CURSOR: string = 'tile_cursor';
-    private static SELECTION_ARROW: string = 'selection_arrow';
-
     public static MANDATORY_LIBRARIES: string[] = [
-        RoomContentLoader.PLACE_HOLDER,
-        RoomContentLoader.PLACE_HOLDER_Wall,
-        RoomContentLoader.PLACE_HOLDER_PET,
-        RoomContentLoader.Room,
+        RoomContentLoader.ROOM_CONTENT,
         RoomContentLoader.TILE_CURSOR,
         RoomContentLoader.SELECTION_ARROW,
+        RoomContentLoader.PLACE_HOLDER,
+        RoomContentLoader.PLACE_HOLDER_Wall,
+        RoomContentLoader.PLACE_HOLDER_PET
     ];
 
     private _iconListener: IRoomContentListener;
@@ -57,8 +56,10 @@ export class RoomContentLoader implements IRoomContentLoader {
     public async init(): Promise<void> {
         //this.processFurnitureData(FurnitureDataStore.getState().allItems);
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const petTypes = GetConfigValue<string[]>('renderer.petTypes');
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
         if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
         //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
@@ -238,6 +239,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getPetNameForType(type: number): string | undefined {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
         return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
     }
 
@@ -307,28 +309,18 @@ export class RoomContentLoader implements IRoomContentLoader {
         const petIndex = this._pets[type];
         const collection = this.getCollection(type);
 
-        if (petIndex && collection) {
-            const keys = collection.getPaletteNames();
+        if (petIndex && collection && collection.data.palettes) {
             const palettes: Map<number, IPetColorResult> = new Map();
 
-            for (const key of keys) {
-                const palette = collection.getPalette(key);
+            for (const palette of collection.data.palettes) {
+                const paletteData = collection.palettes.get(palette.id);
 
-                if (palette && collection.data.palettes) {
-                    const paletteData = collection.data.palettes[key];
+                if (!paletteData) continue;
 
-                    const primaryColor = palette.primaryColor;
-                    const secondaryColor = palette.secondaryColor;
-                    const breed = paletteData.breed !== undefined ? paletteData.breed : 0;
-                    const tag = paletteData.colorTag !== undefined ? paletteData.colorTag : -1;
-                    const master = paletteData.master !== undefined ? paletteData.master : false;
-                    const layerTags = paletteData.tags !== undefined ? paletteData.tags : [];
-
-                    palettes.set(
-                        parseInt(key),
-                        new PetColorResult(primaryColor, secondaryColor, breed, tag, key, master, layerTags),
-                    );
-                }
+                palettes.set(
+                    palette.id,
+                    new PetColorResult(paletteData.primaryColor, paletteData.secondaryColor, palette.breed ?? 0, palette.colorTag ?? -1, palette.id, palette.master ?? false, palette.tags ?? []),
+                );
             }
 
             this._petColors.set(petIndex, palettes);
@@ -358,8 +350,8 @@ export class RoomContentLoader implements IRoomContentLoader {
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_Wall)];
             case RoomContentLoader.PLACE_HOLDER_PET:
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_PET)];
-            case RoomContentLoader.Room:
-                return [this.getAssetUrlWithGenericBase('room')];
+            case 'room':
+                return [this.getAssetUrlWithGenericBase(RoomContentLoader.ROOM_CONTENT)];
             case RoomContentLoader.TILE_CURSOR:
                 return [this.getAssetUrlWithGenericBase(RoomContentLoader.TILE_CURSOR)];
             case RoomContentLoader.SELECTION_ARROW:
@@ -412,18 +404,22 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         return (GetConfigValue<string>('asset.urls.icons.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
     }
 

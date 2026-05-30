@@ -62,18 +62,12 @@ export class AnimationData {
         if (animation.randomStart) this._randomStart = true;
 
         if (animation.layers) {
-            for (const key in animation.layers) {
-                const layer = animation.layers[key];
-
-                if (!layer) return false;
-
-                const animationId = parseInt(key);
-
+            for (const layer of animation.layers) {
                 const loopCount = layer.loopCount !== undefined ? layer.loopCount : 1;
                 const frameRepeat = layer.frameRepeat !== undefined ? layer.frameRepeat : 1;
                 const isRandom = layer.random !== undefined && layer.random !== 0 ? true : false;
 
-                if (!this.addLayer(animationId, loopCount, frameRepeat, isRandom, layer)) return false;
+                if (!this.addLayer(layer.id, loopCount, frameRepeat, isRandom, layer)) return false;
             }
         }
 
@@ -81,7 +75,7 @@ export class AnimationData {
     }
 
     private addLayer(
-        animationId: number,
+        layerId: number,
         loopCount: number,
         frameRepeat: number,
         isRandom: boolean,
@@ -90,11 +84,7 @@ export class AnimationData {
         const layerData = new AnimationLayerData(loopCount, frameRepeat, isRandom);
 
         if (layer.frameSequences) {
-            for (const key in layer.frameSequences) {
-                const animationSequence = layer.frameSequences[key];
-
-                if (!animationSequence) continue;
-
+            for (const animationSequence of layer.frameSequences) {
                 const loopCount = animationSequence.loopCount ?? 1;
                 const isSequenceRandom =
                     animationSequence.random !== undefined && animationSequence.random !== 0 ? true : false;
@@ -128,7 +118,7 @@ export class AnimationData {
 
         layerData.calculateLength();
 
-        this._layers.set(animationId, layerData);
+        this._layers.set(layerId, layerData);
 
         const frameCount: number = layerData.frameCount;
 
@@ -141,14 +131,10 @@ export class AnimationData {
         let directionalOffset: DirectionalOffsetData | undefined = undefined;
 
         if (frame && frame.offsets) {
-            for (const directionId in frame.offsets) {
-                const offset = frame.offsets[directionId];
-
-                if (!offset) continue;
-
+            for (const offset of frame.offsets) {
                 if (!directionalOffset) directionalOffset = new DirectionalOffsetData();
 
-                directionalOffset.setDirection(offset.direction, offset.x, offset.y);
+                directionalOffset.setDirection(offset.direction, offset.x ?? 0, offset.y ?? 0);
             }
         }
 

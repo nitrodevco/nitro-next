@@ -1,8 +1,8 @@
-import type { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection, ISpritesheetData } from '@nitrodevco/nitro-api';
+import type { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatedGIF } from '@pixi/gif';
 import JSZip from 'jszip';
-import type { Texture } from 'pixi.js';
+import type { SpritesheetData, Texture } from 'pixi.js';
 import { Assets, Spritesheet } from 'pixi.js';
 
 import { NitroBundle } from '../utils';
@@ -122,7 +122,7 @@ export class AssetManager implements IAssetManager {
                     for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
 
                     const base64 = btoa(binary);
-                    const texture = await Assets.load(`data:image/png;base64,${base64}`);
+                    const texture = await Assets.load<Texture>(`data:image/png;base64,${base64}`);
 
                     this.setTexture(url, texture);
                     break;
@@ -147,39 +147,33 @@ export class AssetManager implements IAssetManager {
     private async processNitroBundle(bundle: NitroBundle): Promise<void> {
         if (!bundle) return;
 
-        const keys = Object.keys(bundle.files).filter(x => !x.endsWith('_spritesheet.json'));
+        let assetData: IAssetData = { type: '' };
+        let spritesheet: Spritesheet | undefined = undefined;
 
-        for (const key of keys) {
+        for (const key in bundle.files) {
+            const name = key.substring(0, key.lastIndexOf('.'))
+            const value = bundle.files[key];
+
             try {
-                const asset = bundle.files[key] as IAssetData;
+                if (name.endsWith('_spritesheet')) {
+                    const assetData = value as SpritesheetData;
 
-                if (!asset) continue;
+                    if (!assetData.meta?.image) continue;
 
-                const name: string | undefined = asset.name ?? key.slice(0, key.lastIndexOf('.'));
+                    const texture = bundle.textures[assetData.meta.image];
 
-                let spritesheetData: ISpritesheetData | undefined = asset.spritesheet;
-                let spritesheet: Spritesheet | undefined = undefined;
-                let texture: Texture | undefined = undefined;
-
-                if (!spritesheetData) spritesheetData = bundle.files[`${name}_spritesheet.json`] as ISpritesheetData;
-
-                if (spritesheetData) {
-                    texture = bundle.textures[spritesheetData.meta.image];
-                } else texture = bundle.textures[`${name}.png`];
-
-                if (texture) {
-                    if (spritesheetData) {
-                        spritesheet = new Spritesheet(texture, spritesheetData);
+                    if (texture) {
+                        spritesheet = new Spritesheet(bundle.textures[assetData.meta?.image], assetData);
 
                         await spritesheet.parse();
 
-                        if (spritesheet.textureSource) spritesheet.textureSource.label = name ?? null;
-                    } else {
+                        //if (spritesheet.textureSource) spritesheet.textureSource.label = bundle.name;
+
                         this.setTexture(name, texture);
                     }
+                } else {
+                    assetData = { ...assetData, ...value };
                 }
-
-                this.createCollection(asset, spritesheet);
             }
             catch (err) {
                 NitroLogger.error(err);
@@ -187,5 +181,9 @@ export class AssetManager implements IAssetManager {
                 continue;
             }
         }
+
+        console.log(assetData, spritesheet);
+
+        this.createCollection(assetData, spritesheet);
     }
 }

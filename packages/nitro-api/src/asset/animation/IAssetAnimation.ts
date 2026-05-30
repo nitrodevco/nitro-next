@@ -8,7 +8,7 @@ import type { IAssetAnimationShadow } from './IAssetAnimationShadow';
 import type { IAssetAnimationSprite } from './IAssetAnimationSprite';
 
 export interface IAssetAnimation {
-    name: string;
+    name?: string;
     desc?: string;
     resetOnToggle?: boolean;
     directions?: IAssetAnimationDirection[];

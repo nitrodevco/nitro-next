@@ -1,6 +1,6 @@
 import type { IAssetPlaneMaskVisualization } from './IAssetPlaneMaskVisualization';
 
 export interface IAssetPlaneMask {
-    id: string;
+    id?: string;
     visualizations?: IAssetPlaneMaskVisualization[];
 }

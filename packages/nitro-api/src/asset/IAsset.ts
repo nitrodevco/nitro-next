@@ -1,4 +1,5 @@
 export interface IAsset {
+    name: string;
     source?: string;
     x?: number;
     y?: number;

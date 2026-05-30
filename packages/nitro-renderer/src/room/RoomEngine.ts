@@ -15,14 +15,14 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import type { ImageLike, Ticker } from 'pixi.js';
+import type { ImageLike } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { NumberBank } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { ObjectDataUpdateMessage } from './messages';
 import { Room } from './Room';
-import { RoomEnterEffect, RoomGeometry } from './utils';
+import { RoomGeometry } from './utils';
 
 export class RoomEngine implements IRoomEngine {
     public static ROOM_OBJECT_ID: number = -1;

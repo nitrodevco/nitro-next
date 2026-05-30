@@ -63,7 +63,7 @@ export class PetSizeData extends AnimationSizeData {
         if (index >= 0 && index < this._posturesToAnimations.size) {
             const keys = this._posturesToAnimations.keys();
 
-            for (;;) {
+            for (; ;) {
                 const key = keys.next();
 
                 if (key.done) return undefined;
@@ -81,7 +81,7 @@ export class PetSizeData extends AnimationSizeData {
         if (index >= 0 && index < this._gesturesToAnimations.size) {
             const keys = this._gesturesToAnimations.keys();
 
-            for (;;) {
+            for (; ;) {
                 const key = keys.next();
 
                 if (key.done) return undefined;

@@ -25,7 +25,7 @@ export class PetColorResult implements IPetColorResult {
 
     private _breed: number;
     private _tag: string;
-    private _id: string;
+    private _id: number;
     private _primaryColor: number;
     private _secondaryColor: number;
     private _isMaster: boolean;
@@ -36,7 +36,7 @@ export class PetColorResult implements IPetColorResult {
         secondaryColor: number,
         breed: number,
         tag: number,
-        id: string,
+        id: number,
         isMaster: boolean,
         layerTags: string[],
     ) {
@@ -66,7 +66,7 @@ export class PetColorResult implements IPetColorResult {
         return this._tag;
     }
 
-    public get id(): string {
+    public get id(): number {
         return this._id;
     }
 

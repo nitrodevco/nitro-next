@@ -25,16 +25,18 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
+import type {
+    RoomObjectEvent,
+    RoomSpriteMouseEvent
+} from '@nitrodevco/nitro-shared';
 import {
     EventDispatcher,
     GetConfigValue,
     RoomEngineObjectEvent,
-    RoomObjectEvent,
-    RoomSpriteMouseEvent,
     SessionStore
 } from '@nitrodevco/nitro-shared';
 import type { PointData } from 'pixi.js';
-import { Rectangle } from 'pixi.js';
+import type { Rectangle } from 'pixi.js';
 
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
@@ -361,8 +363,8 @@ export class Room implements IRoom {
             asset = GetRoomContentLoader().getCollection(assetName);
 
             if (asset) {
-                visualizationType = asset.data.visualizationType;
-                logicType = asset.data.logicType;
+                if (asset.data.visualizationType !== undefined) visualizationType = asset.data.visualizationType;
+                if (asset.data.logicType !== undefined) logicType = asset.data.logicType;
             }
         }
 

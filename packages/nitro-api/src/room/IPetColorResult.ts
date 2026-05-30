@@ -3,7 +3,7 @@ export interface IPetColorResult {
     readonly secondaryColor: number;
     readonly breed: number;
     readonly tag: string;
-    readonly id: string;
+    readonly id: number;
     readonly isMaster: boolean;
     readonly layerTags: string[];
 }

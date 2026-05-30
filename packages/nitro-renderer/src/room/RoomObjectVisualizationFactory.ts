@@ -61,7 +61,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
 
         if (!visualization) return undefined;
 
-        return new visualization() as IRoomObjectGraphicVisualization;
+        return new visualization();
     }
 
     public getVisualizationType(type: string): typeof RoomObjectSpriteVisualization | undefined {

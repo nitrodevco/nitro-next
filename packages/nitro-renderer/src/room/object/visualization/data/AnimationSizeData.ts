@@ -29,15 +29,11 @@ export class AnimationSizeData extends SizeData {
         this._animationIds = [];
     }
 
-    public defineAnimations(animations: { [index: string]: IAssetVisualAnimation }): boolean {
+    public defineAnimations(animations: IAssetVisualAnimation[]): boolean {
         if (!animations) return true;
 
-        for (const key in animations) {
-            const animation = animations[key];
-
-            if (!animation) return false;
-
-            let animationId = parseInt(key.split('_')[0]);
+        for (const animation of animations) {
+            let animationId = animation.id;
             let isTransition = false;
 
             const transitionTo = animation.transitionTo;

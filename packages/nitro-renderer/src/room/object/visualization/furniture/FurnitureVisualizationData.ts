@@ -1,4 +1,4 @@
-import type { IAssetData, IAssetVisualizationData, IObjectVisualizationData } from '@nitrodevco/nitro-api';
+import type { IAssetColor, IAssetData, IAssetVisualizationData, IAssetVisualizationDirection, IAssetVisualizationLayer, IObjectVisualizationData } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES } from 'pixi.js';
 
 import { RoomGeometry } from '../../../utils';
@@ -47,7 +47,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
 
         if (!asset) return false;
 
-        this._type = asset.name;
+        this._type = asset.type;
 
         if (!asset.visualizations || !this.defineVisualizations(asset.visualizations)) {
             this.reset();
@@ -88,11 +88,11 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
     protected defineVisualizations(visualizations: IAssetVisualizationData[]): boolean {
         if (!visualizations) return false;
 
-        for (const visualization of Object.values(visualizations)) {
-            const layerCount = visualization.layerCount;
-            const angle = visualization.angle;
+        for (const visualization of visualizations) {
+            const layerCount = visualization.layerCount ?? 0;
+            const angle = visualization.angle ?? 45;
 
-            let size = visualization.size;
+            let size = visualization.size ?? 1;
 
             if (size < 1) size = 1;
 
@@ -103,9 +103,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
             if (!sizeData) return false;
 
             for (const key in visualization) {
-                const data = visualization[key];
-
-                if (!this.processVisualElement(sizeData, key, data)) {
+                if (!this.processVisualElement(sizeData, key, visualization[key] as object)) {
                     sizeData.dispose();
 
                     return false;
@@ -141,18 +139,18 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
         }
     }
 
-    protected processVisualElement(sizeData: SizeData, key: string, data: any): boolean {
+    protected processVisualElement(sizeData: SizeData, key: string, data: object): boolean {
         if (!sizeData || !key || !data) return false;
 
         switch (key) {
             case 'layers':
-                if (!sizeData.processLayers(data)) return false;
+                if (!sizeData.processLayers(data as IAssetVisualizationLayer[])) return false;
                 break;
             case 'directions':
-                if (!sizeData.processDirections(data)) return false;
+                if (!sizeData.processDirections(data as IAssetVisualizationDirection[])) return false;
                 break;
             case 'colors':
-                if (!sizeData.processColors(data)) return false;
+                if (!sizeData.processColors(data as IAssetColor[])) return false;
                 break;
         }
 

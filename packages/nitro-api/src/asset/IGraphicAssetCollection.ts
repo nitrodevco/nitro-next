@@ -10,11 +10,10 @@ export interface IGraphicAssetCollection {
     removeReference(): void;
     define(data: IAssetData): void;
     getAsset(name: string): IGraphicAsset | undefined;
-    getAssetWithPalette(name: string, paletteName: string): IGraphicAsset | undefined;
+    getAssetWithPalette(name: string, paletteId: number): IGraphicAsset | undefined;
     getTexture(name: string): Texture | undefined;
-    getPaletteNames(): string[];
-    getPaletteColors(paletteName: string): number[];
-    getPalette(name: string): IGraphicAssetPalette | undefined;
+    getPaletteColors(paletteId: number): number[];
+    getPalette(paletteId: number): IGraphicAssetPalette | undefined;
     addAsset(
         name: string,
         texture: Texture,
@@ -25,11 +24,12 @@ export interface IGraphicAssetCollection {
         flipV?: boolean,
     ): boolean;
     disposeAsset(name: string): void;
-    getLibraryAsset(name: string): Texture | null;
+    getLibraryAsset(name: string): Texture | undefined;
     readonly referenceCount: number;
     readonly name: string;
     readonly data: IAssetData;
     readonly textureSource: TextureSource | undefined;
     readonly textures: Map<string, Texture>;
     readonly assets: Map<string, IGraphicAsset>;
+    readonly palettes: Map<number, IGraphicAssetPalette>;
 }

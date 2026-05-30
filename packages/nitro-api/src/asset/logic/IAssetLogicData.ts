@@ -9,7 +9,7 @@ export interface IAssetLogicData {
     maskType?: string;
     credits?: string;
     soundSample?: ISoundSample;
-    action?: { link?: string; startState?: number };
+    action?: { link?: string, startState?: number };
     planetSystems?: IAssetLogicPlanetSystem[];
     particleSystems?: IParticleSystem[];
     customVars?: ICustomVars;
