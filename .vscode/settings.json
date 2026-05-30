@@ -21,6 +21,7 @@
     },
     "prettier.prettierPath": "./node_modules/prettier/index.cjs",
     "prettier.configPath": "prettier.config.js",
+    "eslint.workingDirectory": { "mode": "location" },
     "eslint.validate": [
         "javascript",
         "javascriptreact",

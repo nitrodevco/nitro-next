@@ -21,8 +21,6 @@
     },
     "devDependencies": {
         "@babel/core": "^7.29.0",
-        "@babel/plugin-syntax-jsx": "^7.28.6",
-        "@babel/plugin-syntax-typescript": "^7.28.6",
         "@rolldown/plugin-babel": "^0.2.3",
         "@tailwindcss/forms": "^0.5.11",
         "@tailwindcss/vite": "^4.3.0",
@@ -34,10 +32,8 @@
         "eslint-plugin-react-hooks": "^7.1.1",
         "eslint-plugin-react-refresh": "^0.5.2",
         "postcss": "^8.5.15",
-        "postcss-url": "^10.1.4",
         "tailwindcss": "^4.3.0",
         "typescript": "^5.9.3",
-        "vite": "^8.0.14",
-        "vite-plugin-babel": "^1.7.3"
+        "vite": "^8.0.14"
     }
 }

@@ -36,9 +36,7 @@ export default defineConfig({
     plugins: [
         react(),
         babel({
-            presets: [reactCompilerPreset()],
-            include: /\.[jt]sx?$/,
-            exclude: /node_modules/,
+            presets: [reactCompilerPreset()]
         }),
         tailwindcss()
     ],
