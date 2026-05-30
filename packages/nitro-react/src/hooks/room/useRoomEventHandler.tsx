@@ -18,7 +18,12 @@ export const useRoomEventHandler = () => {
     const getMouseEventId = useRoomContext(x => x.getMouseEventId);
     const setMouseEventId = useRoomContext(x => x.setMouseEventId);
     const floorItems = useFurnitureDataStore(state => state.floorItems);
-    const { selectedObject, placedObject, objectPlacementSource, selectObject, selectAvatar, deselectObject, resetSelectedObject } = useRoomSelectedObject();
+    const selectedObject = useRoomContext(x => x.selectedObject);
+    const placedObject = useRoomContext(x => x.placedObject);
+    const objectPlacementSource = useRoomContext(x => x.objectPlacementSource);
+    const setSelectedObject = useRoomContext(x => x.setSelectedObject);
+    const setPlacedObject = useRoomContext(x => x.setPlacedObject);
+    const { selectAvatar, selectObject, deselectObject, resetSelectedObject } = useRoomSelectedObject();
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
 
@@ -64,11 +69,10 @@ export const useRoomEventHandler = () => {
     };
 
     const placeObject = (isTileEvent: boolean, isWallEvent: boolean) => {
-        if (!selectedObject.current) return;
+        if (!selectedObject) return;
 
-        const obj = selectedObject.current;
-        let objectId = obj.id;
-        const category = obj.category;
+        let objectId = selectedObject.id;
+        const category = selectedObject.category;
 
         let x = 0;
         let y = 0;
@@ -96,12 +100,12 @@ export const useRoomEventHandler = () => {
 
             if (objectId < 0 && category === RoomObjectCategoryEnum.Unit) objectId = -objectId;
 
-            if (objectPlacementSource.current !== RoomObjectPlacementSource.CATALOG) {
+            if (objectPlacementSource !== RoomObjectPlacementSource.CATALOG) {
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    if (obj.typeId === RoomObjectType.PET) {
-                        NitroLogger.sendPacket(`new PetPlaceComposer(${obj.id}, Math.trunc(${x}), Math.trunc(${y}))`);
-                    } else if (obj.typeId === RoomObjectType.RENTABLE_BOT) {
-                        NitroLogger.sendPacket(`new BotPlaceComposer(${obj.id}, Math.trunc(${x}), Math.trunc(${y}))`);
+                    if (selectedObject.typeId === RoomObjectType.PET) {
+                        NitroLogger.sendPacket(`new PetPlaceComposer(${selectedObject.id}, Math.trunc(${x}), Math.trunc(${y}))`);
+                    } else if (selectedObject.typeId === RoomObjectType.RENTABLE_BOT) {
+                        NitroLogger.sendPacket(`new BotPlaceComposer(${selectedObject.id}, Math.trunc(${x}), Math.trunc(${y}))`);
                     }
                 } else if (roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureIsStickie) !== undefined) {
                     NitroLogger.sendPacket(`new FurniturePostItPlaceComposer(objectId, wallLocation)`);
@@ -111,7 +115,7 @@ export const useRoomEventHandler = () => {
             }
         }
 
-        placedObject.current = new SelectedRoomObjectData(obj.id, obj.category);
+        setPlacedObject(new SelectedRoomObjectData(selectedObject.id, selectedObject.category));
 
         resetSelectedObject();
 
@@ -124,10 +128,10 @@ export const useRoomEventHandler = () => {
                 wallLocation,
                 x, y, z,
                 direction,
-                roomObject?.id === obj.id,
+                roomObject?.id === selectedObject.id,
                 isTileEvent,
                 isWallEvent,
-                obj.instanceData,
+                selectedObject.instanceData,
             ),
         );
     };
@@ -263,27 +267,21 @@ export const useRoomEventHandler = () => {
                 setFurnitureAlphaMultiplier(roomObject, 0.5);
                 resetSelectedObject();
 
-                selectedObject.current = new SelectedRoomObjectData(
+                setSelectedObject(new SelectedRoomObjectData(
                     roomObject.id, category, operation,
                     roomObject.getLocation(), roomObject.getDirection(),
-                );
+                ));
 
                 //GetRoomEngine().setObjectMoverIconSprite(roomObject.id, category, true);
                 //GetRoomEngine().setObjectMoverIconSpriteVisible(false);
 
                 break;
             case RoomObjectOperationType.OBJECT_MOVE_TO: {
-                const obj = selectedObject.current;
-
-                if (obj) {
-                    selectedObject.current = new SelectedRoomObjectData(
-                        obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO,
-                        obj.loc, obj.dir, obj.typeId, obj.instanceData, obj.stuffData,
-                        obj.state, obj.animFrame, obj.posture,
-                    );
-                }
+                shouldReset = false;
 
                 setFurnitureAlphaMultiplier(roomObject, 1);
+
+                if (category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(objectId, true);
 
                 //GetRoomEngine().removeObjectMoverIconSprite();
 
@@ -307,6 +305,8 @@ export const useRoomEventHandler = () => {
                     NitroLogger.sendPacket(
                         `new PetMoveComposer(userData.webID, location.x, location.y, direction`)
                 }
+
+                setSelectedObject(undefined);
 
                 break;
             }
@@ -482,33 +482,32 @@ export const useRoomEventHandler = () => {
     };
 
     const handleObjectMove = (event: RoomObjectMouseEvent) => {
-        if (!event || !selectedObject.current) return;
+        if (!event || !selectedObject) return;
 
-        const obj = selectedObject.current;
-        const roomObject = room.getRoomObject(obj.id, obj.category);
+        const roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
 
         if (!roomObject) return;
 
         let added = true;
 
-        if (obj.category === RoomObjectCategoryEnum.Floor || obj.category === RoomObjectCategoryEnum.Unit) {
-            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, obj, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5)))) {
+        if (selectedObject.category === RoomObjectCategoryEnum.Floor || selectedObject.category === RoomObjectCategoryEnum.Unit) {
+            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, selectedObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5)))) {
                 added = false;
             }
-        } else if (obj.category === RoomObjectCategoryEnum.Wall) {
+        } else if (selectedObject.category === RoomObjectCategoryEnum.Wall) {
             added = false;
 
             if (event instanceof RoomObjectWallMouseEvent) {
-                if (handleWallItemMove(roomObject, obj, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction))
+                if (handleWallItemMove(roomObject, selectedObject, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction))
                     added = true;
             }
 
             if (!added) {
-                roomObject.setLocation(obj.loc);
-                roomObject.setDirection(obj.dir);
+                roomObject.setLocation(selectedObject.loc);
+                roomObject.setDirection(selectedObject.dir);
             }
 
-            room.updateRoomObjectMask(obj.id, added);
+            room.updateRoomObjectMask(selectedObject.id, added);
         }
 
         setFurnitureAlphaMultiplier(roomObject, added ? 0.5 : 0);
@@ -523,38 +522,37 @@ export const useRoomEventHandler = () => {
     };
 
     const handleObjectPlace = async (event: RoomObjectMouseEvent) => {
-        if (!event || !selectedObject.current) return;
+        if (!event || !selectedObject) return;
 
-        const obj = selectedObject.current;
-        let roomObject = room.getRoomObject(obj.id, obj.category);
+        let roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
 
         if (!roomObject) {
             if (event instanceof RoomObjectTileMouseEvent) {
-                if (obj.category === RoomObjectCategoryEnum.Floor) {
-                    await room.addFurnitureByTypeId(obj.id, obj.typeId, obj.loc, obj.dir, 0, obj.stuffData, parseFloat(obj.instanceData), -1, 0, 0, '', false);
-                } else if (obj.category === RoomObjectCategoryEnum.Unit) {
-                    await room.addRoomObjectUser(obj.id, new Vector3d(), new Vector3d(180), 180, obj.typeId, obj.instanceData);
+                if (selectedObject.category === RoomObjectCategoryEnum.Floor) {
+                    await room.addFurnitureByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.stuffData, parseFloat(selectedObject.instanceData), -1, 0, 0, '', false);
+                } else if (selectedObject.category === RoomObjectCategoryEnum.Unit) {
+                    await room.addRoomObjectUser(selectedObject.id, new Vector3d(), new Vector3d(180), 180, selectedObject.typeId, selectedObject.instanceData);
 
-                    const placed = room.getRoomObject(obj.id, obj.category);
+                    const placed = room.getRoomObject(selectedObject.id, selectedObject.category);
 
-                    if (placed && obj.posture) placed.model.setValue(RoomObjectVariableEnum.FigurePosture, obj.posture);
+                    if (placed && selectedObject.posture) placed.model.setValue(RoomObjectVariableEnum.FigurePosture, selectedObject.posture);
                 }
-            } else if (event instanceof RoomObjectWallMouseEvent && obj.category === RoomObjectCategoryEnum.Wall) {
-                await room.addFurnitureWallByTypeId(obj.id, obj.typeId, obj.loc, obj.dir, 0, parseInt(obj.instanceData), 0);
+            } else if (event instanceof RoomObjectWallMouseEvent && selectedObject.category === RoomObjectCategoryEnum.Wall) {
+                await room.addFurnitureWallByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, parseInt(selectedObject.instanceData), 0);
             }
 
-            roomObject = room.getRoomObject(obj.id, obj.category);
+            roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
 
-            if (roomObject && obj.category === RoomObjectCategoryEnum.Floor) {
+            if (roomObject && selectedObject.category === RoomObjectCategoryEnum.Floor) {
                 const allowedDirections = roomObject.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
 
                 if (allowedDirections?.length) {
                     roomObject.setDirection(new Vector3d(allowedDirections[0]));
 
-                    selectedObject.current = new SelectedRoomObjectData(
-                        obj.id, obj.category, obj.operation, obj.loc, obj.dir,
-                        obj.typeId, obj.instanceData, obj.stuffData, obj.state, obj.animFrame, obj.posture,
-                    );
+                    setSelectedObject(new SelectedRoomObjectData(
+                        selectedObject.id, selectedObject.category, selectedObject.operation, selectedObject.loc, selectedObject.dir,
+                        selectedObject.typeId, selectedObject.instanceData, selectedObject.stuffData, selectedObject.state, selectedObject.animFrame, selectedObject.posture,
+                    ));
                 }
             }
 
@@ -564,19 +562,19 @@ export const useRoomEventHandler = () => {
 
         if (!roomObject) return;
 
-        if (obj.category === RoomObjectCategoryEnum.Floor) {
-            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, obj, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5))))
-                room.removeRoomObjectFloor(obj.id);
-        } else if (obj.category === RoomObjectCategoryEnum.Wall) {
+        if (selectedObject.category === RoomObjectCategoryEnum.Floor) {
+            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, selectedObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5))))
+                room.removeRoomObjectFloor(selectedObject.id);
+        } else if (selectedObject.category === RoomObjectCategoryEnum.Wall) {
             const added = event instanceof RoomObjectWallMouseEvent &&
-                handleWallItemMove(roomObject, obj, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction);
+                handleWallItemMove(roomObject, selectedObject, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction);
 
-            if (!added) room.removeRoomObjectWall(obj.id);
+            if (!added) room.removeRoomObjectWall(selectedObject.id);
 
-            room.updateRoomObjectMask(obj.id, added);
-        } else if (obj.category === RoomObjectCategoryEnum.Unit) {
+            room.updateRoomObjectMask(selectedObject.id, added);
+        } else if (selectedObject.category === RoomObjectCategoryEnum.Unit) {
             if (!(event instanceof RoomObjectTileMouseEvent && handleUserPlace(roomObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5))))
-                room.removeRoomObject(obj.id, RoomObjectCategoryEnum.Unit);
+                room.removeRoomObject(selectedObject.id, RoomObjectCategoryEnum.Unit);
         }
 
         //this._roomEngine.setObjectMoverIconSpriteVisible(!_local_12);
@@ -587,7 +585,7 @@ export const useRoomEventHandler = () => {
 
         switch (event.type) {
             case RoomObjectMouseEvent.CLICK: {
-                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const operation = selectedObject?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
                 const category = room.getRoomObjectCategoryForType(event.objectType);
 
                 let didWalk = false;
@@ -620,13 +618,11 @@ export const useRoomEventHandler = () => {
 
                 switch (operation) {
                     case RoomObjectOperationType.OBJECT_MOVE: {
-                        const obj = selectedObject.current;
-
                         if (category === RoomObjectCategoryEnum.Room) {
-                            if (obj) modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
+                            if (selectedObject) modifyRoomObject(selectedObject.id, selectedObject.category, RoomObjectOperationType.OBJECT_MOVE_TO);
                         } else if (category === RoomObjectCategoryEnum.Unit) {
-                            if (obj && event.objectType === RoomObjectUserType.MONSTER_PLANT)
-                                modifyRoomObject(obj.id, obj.category, RoomObjectOperationType.OBJECT_MOVE_TO);
+                            if (selectedObject && event.objectType === RoomObjectUserType.MONSTER_PLANT)
+                                modifyRoomObject(selectedObject.id, selectedObject.category, RoomObjectOperationType.OBJECT_MOVE_TO);
 
                             if (event.eventId) setMouseEventId(RoomObjectCategoryEnum.Room, MouseEventType.MOUSE_CLICK, event.eventId);
 
@@ -732,7 +728,7 @@ export const useRoomEventHandler = () => {
                 );
                 return;
             case RoomObjectMouseEvent.MOUSE_MOVE: {
-                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const operation = selectedObject?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
                 const category = room.getRoomObjectCategoryForType(event.objectType);
                 const roomCursor = room.getRoomObjectCursor();
 
@@ -758,7 +754,7 @@ export const useRoomEventHandler = () => {
                 return;
             }
             case RoomObjectMouseEvent.MOUSE_DOWN: {
-                const operation = selectedObject.current?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
+                const operation = selectedObject?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
                 const category = room.getRoomObjectCategoryForType(event.objectType);
 
                 if (

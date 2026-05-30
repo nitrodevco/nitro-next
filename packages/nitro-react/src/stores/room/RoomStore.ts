@@ -1,7 +1,9 @@
 import type { IRoom, IRoomCamera, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
+import { RoomCamera } from "@nitrodevco/nitro-renderer";
 import { createStore } from "zustand";
 
-import { RoomCamera } from "@nitrodevco/nitro-renderer";
+import type { RoomSelectedObjectSlice } from "./RoomSelectedObjectSlice";
+import { createRoomSelectedObjectSlice } from "./RoomSelectedObjectSlice";
 import type { RoomSessionSlice } from "./RoomSessionSlice";
 import { createRoomSessionSlice } from "./RoomSessionSlice";
 
@@ -18,7 +20,7 @@ type Actions = {
     setMouseEventId: (category: RoomObjectCategoryEnum, type: string, eventId: number) => void;
 }
 
-export type RoomStore = State & Actions & RoomSessionSlice;
+export type RoomStore = State & Actions & RoomSessionSlice & RoomSelectedObjectSlice;
 
 export const createRoomStore = (room: IRoom) => createStore<RoomStore>()((set, get, store) => ({
     roomId: room.roomId,
@@ -40,4 +42,5 @@ export const createRoomStore = (room: IRoom) => createStore<RoomStore>()((set, g
         map.set(type, eventId);
     },
     ...createRoomSessionSlice(set, get, store),
+    ...createRoomSelectedObjectSlice(set, get, store)
 }));

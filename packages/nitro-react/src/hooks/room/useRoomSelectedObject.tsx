@@ -1,19 +1,20 @@
 
-import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
-import { NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
-import { useRef } from 'react';
+
 import { useRoomContext } from '../context';
 
 export const useRoomSelectedObject = () => {
     const room = useRoomContext(x => x.room);
-    const selectedAvatarId = useRef(-1);
-    const selectedObjectId = useRef(-1);
-    const selectedObjectCategory = useRef<RoomObjectCategoryEnum>(RoomObjectCategoryEnum.Minimum);
-    const selectedObject = useRef<ISelectedRoomObjectData | undefined>(undefined);
-    const placedObject = useRef<ISelectedRoomObjectData | undefined>(undefined);
-    const objectPlacementSource = useRef<RoomObjectPlacementSource>(RoomObjectPlacementSource.INVENTORY);
+    const selectedAvatarId = useRoomContext(x => x.selectedAvatarId);
+    const selectedObjectId = useRoomContext(x => x.selectedObjectId);
+    const selectedObjectCategory = useRoomContext(x => x.selectedObjectCategory);
+    const selectedObject = useRoomContext(x => x.selectedObject);
+    const setSelectedAvatarId = useRoomContext(x => x.setSelectedAvatarId);
+    const setSelectedObjectId = useRoomContext(x => x.setSelectedObjectId);
+    const setSelectedObjectCategory = useRoomContext(x => x.setSelectedObjectCategory);
+    const setSelectedObject = useRoomContext(x => x.setSelectedObject);
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {
@@ -26,7 +27,7 @@ export const useRoomSelectedObject = () => {
                 } else {
                     selectAvatar(0, false);
 
-                    if (objectId !== selectedObjectId.current) {
+                    if (objectId !== selectedObjectId) {
                         deselectObject();
 
                         const roomObject = room.getRoomObject(objectId, category);
@@ -34,8 +35,8 @@ export const useRoomSelectedObject = () => {
                         if (roomObject?.logic) {
                             roomObject.processUpdateMessage(new ObjectSelectedMessage(true));
 
-                            selectedObjectId.current = objectId;
-                            selectedObjectCategory.current = category;
+                            setSelectedObjectId(objectId);
+                            setSelectedObjectCategory(category);
                         }
                     }
                 }
@@ -48,18 +49,18 @@ export const useRoomSelectedObject = () => {
     };
 
     const selectAvatar = (objectId: number, lookAt: boolean) => {
-        const prevAvatar = room.getRoomObject(selectedAvatarId.current, RoomObjectCategoryEnum.Unit);
+        const prevAvatar = room.getRoomObject(selectedAvatarId, RoomObjectCategoryEnum.Unit);
 
         if (prevAvatar?.logic) {
             prevAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(false));
-            selectedAvatarId.current = -1;
+            setSelectedAvatarId(-1);
         }
 
         const nextAvatar = room.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (nextAvatar?.logic) {
             nextAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
-            selectedAvatarId.current = objectId;
+            setSelectedAvatarId(objectId);
 
             if (lookAt) {
                 const location = nextAvatar.getLocation();
@@ -79,51 +80,49 @@ export const useRoomSelectedObject = () => {
     };
 
     const deselectObject = () => {
-        if (selectedObjectId.current === -1) return;
+        if (selectedObjectId === -1) return;
 
-        const roomObject = room.getRoomObject(selectedObjectId.current, selectedObjectCategory.current);
+        const roomObject = room.getRoomObject(selectedObjectId, selectedObjectCategory);
 
         if (roomObject?.logic) roomObject.processUpdateMessage(new ObjectSelectedMessage(false));
 
-        selectedObjectId.current = -1;
-        selectedObjectCategory.current = RoomObjectCategoryEnum.Minimum;
+        setSelectedObjectId(-1);
+        setSelectedObjectCategory(RoomObjectCategoryEnum.Minimum);
     };
 
     const resetSelectedObject = () => {
-        if (!selectedObject.current) return;
+        if (!selectedObject) return;
         //this._roomEngine.removeObjectMoverIconSprite();
 
-        const obj = selectedObject.current;
-
-        if (obj.operation === RoomObjectOperationType.OBJECT_MOVE || obj.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
-            const roomObject = room.getRoomObject(obj.id, obj.category);
+        if (selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE || selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
+            const roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
 
             if (roomObject) {
-                if (obj.operation !== RoomObjectOperationType.OBJECT_MOVE_TO) {
-                    roomObject.setLocation(obj.loc);
-                    roomObject.setDirection(obj.dir);
+                if (selectedObject.operation !== RoomObjectOperationType.OBJECT_MOVE_TO) {
+                    roomObject.setLocation(selectedObject.loc);
+                    roomObject.setDirection(selectedObject.dir);
                 }
 
                 roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
             }
 
-            if (obj.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(obj.id, true);
-        } else if (obj.operation === RoomObjectOperationType.OBJECT_PLACE) {
-            switch (obj.category) {
+            if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.id, true);
+        } else if (selectedObject.operation === RoomObjectOperationType.OBJECT_PLACE) {
+            switch (selectedObject.category) {
                 case RoomObjectCategoryEnum.Floor:
-                    room.removeRoomObjectFloor(obj.id);
+                    room.removeRoomObjectFloor(selectedObject.id);
                     break;
                 case RoomObjectCategoryEnum.Wall:
-                    room.removeRoomObjectWall(obj.id);
+                    room.removeRoomObjectWall(selectedObject.id);
                     break;
                 case RoomObjectCategoryEnum.Unit:
-                    room.removeRoomObject(obj.id, RoomObjectCategoryEnum.Unit);
+                    room.removeRoomObject(selectedObject.id, RoomObjectCategoryEnum.Unit);
                     break;
             }
         }
 
-        selectedObject.current = undefined;
+        setSelectedObject(undefined);
     };
 
-    return { selectedObject, placedObject, objectPlacementSource, selectObject, selectAvatar, deselectObject, resetSelectedObject };
+    return { selectObject, selectAvatar, deselectObject, resetSelectedObject };
 };

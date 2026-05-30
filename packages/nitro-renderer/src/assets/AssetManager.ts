@@ -182,8 +182,6 @@ export class AssetManager implements IAssetManager {
             }
         }
 
-        console.log(assetData, spritesheet);
-
         this.createCollection(assetData, spritesheet);
     }
 }
