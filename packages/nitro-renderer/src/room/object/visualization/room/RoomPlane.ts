@@ -161,137 +161,116 @@ export class RoomPlane implements IRoomPlane {
     public update(geometry: IRoomGeometry, timeSinceStartMs: number, needsUpdate = false): boolean {
         if (!geometry || this._disposed) return false;
 
-        const geometryChanged = this._geometryUpdateId !== geometry.updateId;
-        if (geometryChanged) {
+        if (this._geometryUpdateId !== geometry.updateId) {
             this._geometryUpdateId = geometry.updateId;
             needsUpdate = true;
         }
 
-        const maskChanged = this._maskChanged;
-
-        if (!needsUpdate && !maskChanged) {
+        if (!needsUpdate || !this._canBeVisible) {
             if (!this.visible) return false;
         }
 
-        if (!this._canBeVisible) {
-            if (!this.visible) return false;
-        }
+        if (!needsUpdate) return false;
 
-        let contentChanged = false;
+        if (!this.updateVisibilityAndCorners(geometry)) return false;
 
-        if (needsUpdate) {
-            if (!this.updateVisibilityAndCorners(geometry)) return false;
+        Randomizer.setSeed(this._randomSeed);
 
-            Randomizer.setSeed(this._randomSeed);
+        const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
+        let width = this._leftSide.length * geometry.scale;
+        let height = this._rightSide.length * geometry.scale;
 
-            const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
-            let width = this._leftSide.length * geometry.scale;
-            let height = this._rightSide.length * geometry.scale;
+        const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
 
-            const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
+        switch (this._type) {
+            case RoomPlane.TYPE_FLOOR: {
+                const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height / planeGeometry.scale, 0));
+                const xEnd = planeGeometry.getScreenPoint(new Vector3d(width / planeGeometry.scale, 0, 0));
 
-            switch (this._type) {
-                case RoomPlane.TYPE_FLOOR: {
-                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height / planeGeometry.scale, 0));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(width / planeGeometry.scale, 0, 0));
+                let x = 0;
+                let y = 0;
 
-                    let x = 0;
-                    let y = 0;
+                if (origin && yEnd && xEnd) {
+                    width = Math.round(Math.abs(origin.x - xEnd.x));
+                    height = Math.round(Math.abs(origin.x - yEnd.x));
 
-                    if (origin && yEnd && xEnd) {
-                        width = Math.round(Math.abs(origin.x - xEnd.x));
-                        height = Math.round(Math.abs(origin.x - yEnd.x));
+                    const pixelsPerUnit = Math.abs(
+                        origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
+                    );
 
-                        const pixelsPerUnit = Math.abs(
-                            origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
-                        );
-
-                        x = this._textureOffsetX * pixelsPerUnit;
-                        y = this._textureOffsetY * pixelsPerUnit;
-                    }
-
-                    if (x !== 0 || y !== 0) {
-                        while (x < 0) x += texture.width;
-                        while (y < 0) y += texture.height;
-                    }
-
-                    this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
-                    this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
-                    break;
+                    x = this._textureOffsetX * pixelsPerUnit;
+                    y = this._textureOffsetY * pixelsPerUnit;
                 }
 
-                case RoomPlane.TYPE_WALL: {
-                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const pH = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
-                    const pW = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
-
-                    if (p0 && pH && pW) {
-                        width = Math.round(Math.abs(p0.x - pW.x));
-                        height = Math.round(Math.abs(p0.y - pH.y));
-                    }
-
-                    this._planeOffsetX = this._textureOffsetX * texture.width;
-                    this._planeOffsetY = this._textureOffsetY * texture.height;
-                    break;
+                if (x !== 0 || y !== 0) {
+                    while (x < 0) x += texture.width;
+                    while (y < 0) y += texture.height;
                 }
 
-                case RoomPlane.TYPE_LANDSCAPE: {
-                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
-                    const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
-
-                    if (p0 && pZ && pY) {
-                        width = Math.round(Math.abs(((p0.x - pY.x) * width) / planeGeometry.scale));
-                        height = Math.round(Math.abs(((p0.y - pZ.y) * height) / planeGeometry.scale));
-                    }
-
-                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(p0.x - pY.x));
-                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(p0.y - pZ.y));
-
-                    this._planeOffsetX = renderOffsetX;
-                    this._planeOffsetY = renderOffsetY;
-                    break;
-                }
+                this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
+                this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
+                break;
             }
 
-            if (geometryChanged || !this._planeSprite || this._planeSprite.texture !== texture) {
-                this._planeSprite?.destroy();
-                this._planeSprite = new TilingSprite({
-                    texture,
-                    width,
-                    height,
-                    tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
-                    tint: color,
-                });
-                contentChanged = true;
-            } else {
-                if (this._planeSprite instanceof TilingSprite) {
-                    this._planeSprite.tilePosition.set(this._planeOffsetX, this._planeOffsetY);
+            case RoomPlane.TYPE_WALL: {
+                const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                const pH = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
+                const pW = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
+
+                if (p0 && pH && pW) {
+                    width = Math.round(Math.abs(p0.x - pW.x));
+                    height = Math.round(Math.abs(p0.y - pH.y));
                 }
-                if (this._planeSprite.tint !== color) {
-                    this._planeSprite.tint = color;
-                    contentChanged = true;
+
+                this._planeOffsetX = this._textureOffsetX * texture.width;
+                this._planeOffsetY = this._textureOffsetY * texture.height;
+                break;
+            }
+
+            case RoomPlane.TYPE_LANDSCAPE: {
+                const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
+                const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
+
+                if (p0 && pZ && pY) {
+                    width = Math.round(Math.abs(((p0.x - pY.x) * width) / planeGeometry.scale));
+                    height = Math.round(Math.abs(((p0.y - pZ.y) * height) / planeGeometry.scale));
                 }
+
+                const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(p0.x - pY.x));
+                const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(p0.y - pZ.y));
+
+                this._planeOffsetX = renderOffsetX;
+                this._planeOffsetY = renderOffsetY;
+                break;
             }
         }
+
+        this._planeSprite?.destroy();
+
+        this._planeSprite = new TilingSprite({
+            texture,
+            width,
+            height,
+            tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
+            tint: color,
+        });
 
         if (
             !this._planeTexture ||
             this._planeTexture.width !== this._width ||
             this._planeTexture.height !== this._height
-        ) {
-            this._planeTexture = GetTexturePool().getTexture(this._width, this._height);
-            contentChanged = true;
-        }
+        ) this._planeTexture = GetTexturePool().getTexture(this._width, this._height);
 
         if (this._planeTexture) this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
 
-        if ((contentChanged || maskChanged) && this._planeSprite && this._planeTexture) {
-            const container = new Container();
-            const maskContainer = this.getMergedMasks(geometry);
+        const container = new Container();
 
-            container.addChild(this._planeSprite);
+        container.addChild(this._planeSprite);
+
+        if (this._maskChanged) {
+            const maskContainer = this.getMergedMasks(geometry);
 
             if (maskContainer) {
                 this._planeSprite.setMask({ mask: maskContainer, inverse: true });
@@ -299,14 +278,14 @@ export class RoomPlane implements IRoomPlane {
             } else {
                 this._planeSprite.mask = null;
             }
-
-            GetRenderer().render({
-                target: this._planeTexture,
-                container,
-                transform: this.getMatrixForDimensions(this._planeSprite.width, this._planeSprite.height),
-                clear: true,
-            });
         }
+
+        GetRenderer().render({
+            target: this._planeTexture,
+            container,
+            transform: this.getMatrixForDimensions(this._planeSprite.width, this._planeSprite.height),
+            clear: true,
+        });
 
         return true;
     }
