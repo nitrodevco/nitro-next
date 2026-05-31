@@ -269,15 +269,11 @@ export class RoomPlane implements IRoomPlane {
 
         container.addChild(this._planeSprite);
 
-        if (this._maskChanged) {
-            const maskContainer = this.getMergedMasks(geometry);
+        const maskContainer = this.getMergedMasks(geometry);
 
-            if (maskContainer) {
-                this._planeSprite.setMask({ mask: maskContainer, inverse: true });
-                container.addChild(maskContainer);
-            } else {
-                this._planeSprite.mask = null;
-            }
+        if (maskContainer) {
+            this._planeSprite.setMask({ mask: maskContainer, inverse: true });
+            container.addChild(maskContainer);
         }
 
         GetRenderer().render({
@@ -491,7 +487,7 @@ export class RoomPlane implements IRoomPlane {
         if (
             !this._useMask ||
             (!this._bitmapMasks.length && !this._rectangleMasks.length) ||
-            !this._maskChanged ||
+            //!this._maskChanged ||
             !this._maskManager
         ) return undefined;
 

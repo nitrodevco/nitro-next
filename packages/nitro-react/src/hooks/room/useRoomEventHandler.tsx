@@ -281,8 +281,6 @@ export const useRoomEventHandler = () => {
 
                 setFurnitureAlphaMultiplier(roomObject, 1);
 
-                if (category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(objectId, true);
-
                 //GetRoomEngine().removeObjectMoverIconSprite();
 
                 if (category === RoomObjectCategoryEnum.Floor) {
