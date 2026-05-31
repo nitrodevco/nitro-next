@@ -56,7 +56,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
 
     private _visualizationDatas: Map<string, IObjectVisualizationData> = new Map();
 
-    public getVisualization(type: string): IRoomObjectGraphicVisualization | undefined {
+    public getVisualization(type: string | undefined): IRoomObjectGraphicVisualization | undefined {
         const visualization = this.getVisualizationType(type);
 
         if (!visualization) return undefined;
@@ -64,7 +64,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
         return new visualization();
     }
 
-    public getVisualizationType(type: string): typeof RoomObjectSpriteVisualization | undefined {
+    public getVisualizationType(type: string | undefined): typeof RoomObjectSpriteVisualization | undefined {
         let visualization: typeof RoomObjectSpriteVisualization;
 
         switch (type) {
@@ -185,7 +185,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
 
     public getVisualizationData(
         type: string,
-        visualization: string,
+        visualization: string | undefined,
         asset: IAssetData,
     ): IObjectVisualizationData | undefined {
         let visualizationData = this._visualizationDatas.get(type);

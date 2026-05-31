@@ -35,8 +35,11 @@ export const Nitro: FC = () => {
 
                 try {
                     await GetRoomEngine().init();
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.ROOM_CONTENT);
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.TILE_CURSOR);
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.SELECTION_ARROW);
                     await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_Wall);
+                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_WALL);
                     await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_PET);
                 } catch (err) {
                     NitroLogger.error(err);

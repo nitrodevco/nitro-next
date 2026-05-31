@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { IObjectData } from './IObjectData';
 import { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 import {
@@ -12,9 +13,9 @@ import {
 } from './type';
 
 export const GetObjectDataForFlags = (flags: ObjectDataFlagsEnum) => {
-    let objectData: IObjectData = null!;
+    let objectData: IObjectData | undefined = undefined;
 
-    const baseFlags = (flags & 0xff) as ObjectDataFlagsEnum;
+    const baseFlags = (flags & 0xff);
 
     switch (baseFlags) {
         case ObjectDataFlagsEnum.Crackable:
@@ -44,7 +45,7 @@ export const GetObjectDataForFlags = (flags: ObjectDataFlagsEnum) => {
             break;
     }
 
-    if (!objectData) return null;
+    if (!objectData) return undefined;
 
     objectData.flags = flags & 0xff00;
 

@@ -239,7 +239,7 @@ export class RoomInstance implements IRoomInstance {
         return this._objects;
     }
 
-    public get managers(): Map<number, IRoomObjectManager> {
+    public get managers(): Map<RoomObjectCategoryEnum, IRoomObjectManager> {
         return this._managers;
     }
 

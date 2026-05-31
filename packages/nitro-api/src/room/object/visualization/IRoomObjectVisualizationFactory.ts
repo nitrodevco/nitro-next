@@ -4,6 +4,6 @@ import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisual
 import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
 
 export interface IRoomObjectVisualizationFactory {
-    getVisualization(type: string): IRoomObjectGraphicVisualization | undefined;
-    getVisualizationData(type: string, visualization: string, asset: IAssetData): IObjectVisualizationData | undefined;
+    getVisualization(type: string | undefined): IRoomObjectGraphicVisualization | undefined;
+    getVisualizationData(type: string, visualization: string | undefined, asset: IAssetData): IObjectVisualizationData | undefined;
 }

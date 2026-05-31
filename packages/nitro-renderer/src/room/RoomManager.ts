@@ -1,8 +1,6 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-import { type IRoomInstance, type IRoomManager, type IRoomManagerListener } from '@nitrodevco/nitro-api';
-import { NitroLogger } from '@nitrodevco/nitro-shared';
+import { type IRoomInstance, type IRoomManager } from '@nitrodevco/nitro-api';
 
-import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { RoomInstance } from './RoomInstance';
 
 export class RoomManager implements IRoomManager {
@@ -15,20 +13,7 @@ export class RoomManager implements IRoomManager {
         RoomObjectCategoryEnum.Room,
     ];
 
-    private _listener: IRoomManagerListener;
-
-    private _pendingContentTypes: string[] = [];
-    private _skipContentProcessing: boolean = false;
-
-    public init(listener: IRoomManagerListener): Promise<void> {
-        this._listener = listener;
-
-        return Promise.resolve();
-    }
-
     public update(time: number, update: boolean = false): void {
-        this.processPendingContentTypes(time);
-
         for (const room of this._rooms.values()) room?.update(time, update);
     }
 
@@ -84,34 +69,6 @@ export class RoomManager implements IRoomManager {
         this._updateCategories.splice(index, 1);
 
         for (const room of this._rooms.values()) room?.removeUpdateCategory(category);
-    }
-
-    public processPendingContentTypes(time: number): void {
-        if (this._skipContentProcessing) {
-            this._skipContentProcessing = false;
-
-            return;
-        }
-
-        while (this._pendingContentTypes.length) {
-            const type = this._pendingContentTypes.shift();
-
-            if (type) {
-                const collection = GetRoomContentLoader().getCollection(type);
-
-                if (!collection) {
-                    if (this._listener) this._listener.initalizeTemporaryObjectsByType(type, false);
-
-                    NitroLogger.log('Invalid Collection', type);
-
-                    continue;
-                }
-
-                //this.reinitializeRoomObjectsByType(type);
-
-                if (this._listener) this._listener.initalizeTemporaryObjectsByType(type, true);
-            }
-        }
     }
 
     public get rooms(): Map<number, IRoomInstance> {

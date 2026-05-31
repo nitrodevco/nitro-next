@@ -1,5 +1,4 @@
 import type {
-    IRoom,
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
 } from '@nitrodevco/nitro-api';
@@ -76,9 +75,7 @@ import {
 } from './object';
 
 export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
-    constructor(private _room: IRoom) { }
-
-    public getLogic(type: string): IRoomObjectEventHandler | undefined {
+    public getLogic(type: string | undefined): IRoomObjectEventHandler | undefined {
         try {
             const logic = this.getLogicType(type);
 
@@ -95,7 +92,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
         }
     }
 
-    public getLogicType(type: string): typeof RoomObjectLogicBase | undefined {
+    public getLogicType(type: string | undefined): typeof RoomObjectLogicBase | undefined {
         let logic: typeof RoomObjectLogicBase;
 
         switch (type) {

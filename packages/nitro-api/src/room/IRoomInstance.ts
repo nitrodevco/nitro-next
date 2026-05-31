@@ -37,7 +37,7 @@ export interface IRoomInstance {
     readonly id: number;
     readonly canvas: IRoomRenderingCanvas | undefined;
     readonly objects: Map<number, IRoomObject>;
-    readonly managers: Map<number, IRoomObjectManager>;
+    readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly model: IRoomObjectModel;
     roomObjectVariableAccurateZ: string;
     legacyGeometry: ILegacyWallGeometry;

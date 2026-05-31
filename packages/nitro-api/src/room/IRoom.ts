@@ -11,7 +11,6 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
-    IRoomObjectLogicFactory,
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
@@ -124,7 +123,6 @@ export interface IRoom {
     readonly instance: IRoomInstance;
     readonly eventDispatcher: IEventDispatcher;
     readonly eventHandler: IRoomEventHandler;
-    readonly logicFactory: IRoomObjectLogicFactory;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
     readonly isDecorating: boolean;

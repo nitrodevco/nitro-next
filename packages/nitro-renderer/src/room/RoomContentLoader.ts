@@ -18,22 +18,13 @@ import { GetAssetManager } from '../assets';
 import { PetColorResult } from './PetColorResult';
 
 export class RoomContentLoader implements IRoomContentLoader {
-    public static ROOM_CONTENT: string = 'HabboRoomContent';
-    public static TILE_CURSOR: string = 'TileCursor';
-    public static SELECTION_ARROW: string = 'SelectionArrow';
-    public static PLACE_HOLDER: string = 'PlaceHolderFurniture';
-    public static PLACE_HOLDER_Wall: string = 'PlaceHolderWallItem';
-    public static PLACE_HOLDER_PET: string = 'PlaceHolderPet';
+    public static ROOM_CONTENT: string = 'room';
+    public static TILE_CURSOR: string = 'tile_cursor';
+    public static SELECTION_ARROW: string = 'selection_arrow';
+    public static PLACE_HOLDER: string = 'place_holder';
+    public static PLACE_HOLDER_WALL: string = 'place_holder_wall';
+    public static PLACE_HOLDER_PET: string = 'place_holder_pet';
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
-
-    public static MANDATORY_LIBRARIES: string[] = [
-        RoomContentLoader.ROOM_CONTENT,
-        RoomContentLoader.TILE_CURSOR,
-        RoomContentLoader.SELECTION_ARROW,
-        RoomContentLoader.PLACE_HOLDER,
-        RoomContentLoader.PLACE_HOLDER_Wall,
-        RoomContentLoader.PLACE_HOLDER_PET
-    ];
 
     private _iconListener: IRoomContentListener;
     private _images: Map<string, HTMLImageElement> = new Map();
@@ -203,7 +194,7 @@ export class RoomContentLoader implements IRoomContentLoader {
             case RoomObjectCategoryEnum.Floor:
                 return RoomContentLoader.PLACE_HOLDER;
             case RoomObjectCategoryEnum.Wall:
-                return RoomContentLoader.PLACE_HOLDER_Wall;
+                return RoomContentLoader.PLACE_HOLDER_WALL;
             default:
                 if (this._pets[type] !== undefined) return RoomContentLoader.PLACE_HOLDER_PET;
 
@@ -345,17 +336,17 @@ export class RoomContentLoader implements IRoomContentLoader {
     public getAssetUrls(type: string, param: string = '', icon: boolean = false): string[] {
         switch (type) {
             case RoomContentLoader.PLACE_HOLDER:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER)];
-            case RoomContentLoader.PLACE_HOLDER_Wall:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_Wall)];
+                return [this.getAssetUrlWithGenericBase('PlaceHolderFurniture')];
+            case RoomContentLoader.PLACE_HOLDER_WALL:
+                return [this.getAssetUrlWithGenericBase('PlaceHolderWallItem')];
             case RoomContentLoader.PLACE_HOLDER_PET:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.PLACE_HOLDER_PET)];
-            case 'room':
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.ROOM_CONTENT)];
+                return [this.getAssetUrlWithGenericBase('PlaceHolderPet')];
+            case RoomContentLoader.ROOM_CONTENT:
+                return [this.getAssetUrlWithGenericBase('HabboRoomContent')];
             case RoomContentLoader.TILE_CURSOR:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.TILE_CURSOR)];
+                return [this.getAssetUrlWithGenericBase('TileCursor')];
             case RoomContentLoader.SELECTION_ARROW:
-                return [this.getAssetUrlWithGenericBase(RoomContentLoader.SELECTION_ARROW)];
+                return [this.getAssetUrlWithGenericBase('SelectionArrow')];
             default: {
                 const category = this.getCategoryForType(type);
 

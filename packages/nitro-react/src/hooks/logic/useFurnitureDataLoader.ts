@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { IFurnitureData } from '@nitrodevco/nitro-api';
 import { FurnitureType } from '@nitrodevco/nitro-api';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
@@ -11,6 +14,7 @@ export const useFurnitureDataLoader = () => {
     const [floorItems, setFloorItems] = useState<Map<string, IFurnitureData>>(new Map());
     const [wallItems, setWallItems] = useState<Map<string, IFurnitureData>>(new Map());
     const [allItems, setAllItems] = useState<IFurnitureData[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const furnidataUrl = useConfigurationStore(state => state.config['furnituredata.url']) as string | undefined;
 
     const parseFloorItems = (data: any): IFurnitureData[] => {
@@ -158,13 +162,13 @@ export const useFurnitureDataLoader = () => {
                 setFloorItems(floorMap);
                 setWallItems(wallMap);
                 setAllItems([...floorItems, ...wallItems]);
+                setNeedsUpdate(false);
             } catch (e) {
                 throw new Error(`Failed to load furni data: ${e}`);
             }
         };
 
         void loadAsync(furnidataUrl);
-        setNeedsUpdate(false);
     }, [needsUpdate, furnidataUrl]);
 
     return null;
