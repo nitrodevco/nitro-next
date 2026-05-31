@@ -51,6 +51,9 @@ export class PlaneMaskManager {
 
             if (mask) {
                 const id = mask.id;
+
+                if (!id) continue;
+
                 const existing = this._masks.get(id);
 
                 if (existing) continue;
@@ -69,7 +72,7 @@ export class PlaneMaskManager {
 
                             if (maskVisualization) {
                                 const assetName = this.parseMaskBitmaps(
-                                    visualization.bitmaps,
+                                    visualization.bitmaps ?? [],
                                     maskVisualization,
                                     assets,
                                 );
@@ -101,6 +104,9 @@ export class PlaneMaskManager {
                 if (!bitmap) continue;
 
                 const assetName = bitmap.assetName;
+
+                if (!assetName) continue;
+
                 const asset = assetCollection.getAsset(assetName);
 
                 if (!asset) continue;
@@ -145,7 +151,7 @@ export class PlaneMaskManager {
 
         return {
             texture: texture,
-            position: { x: posX + asset.offsetX, y: posY + asset.offsetY },
+            position: { x: Math.round(posX + asset.offsetX), y: Math.round(posY + asset.offsetY) },
             scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 },
         };
     }

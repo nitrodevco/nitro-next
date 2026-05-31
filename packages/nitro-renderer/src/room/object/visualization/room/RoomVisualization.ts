@@ -397,8 +397,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         _local_14.z !== 0
                             ? RoomVisualization.FLOOR_COLOR
                             : _local_14.x !== 0
-                              ? RoomVisualization.FLOOR_COLOR_RIGHT
-                              : RoomVisualization.FLOOR_COLOR_LEFT;
+                                ? RoomVisualization.FLOOR_COLOR_RIGHT
+                                : RoomVisualization.FLOOR_COLOR_LEFT;
                 } else if (planeType === RoomPlaneData.PLANE_WALL) {
                     plane = new RoomPlane(
                         this.object.getLocation(),
@@ -415,10 +415,10 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         _local_14.x === 0 && _local_14.y === 0
                             ? RoomVisualization.WALL_COLOR_BORDER
                             : _local_14.y > 0
-                              ? RoomVisualization.WALL_COLOR_TOP
-                              : _local_14.y === 0
-                                ? RoomVisualization.WALL_COLOR_SIDE
-                                : RoomVisualization.WALL_COLOR_BOTTOM;
+                                ? RoomVisualization.WALL_COLOR_TOP
+                                : _local_14.y === 0
+                                    ? RoomVisualization.WALL_COLOR_SIDE
+                                    : RoomVisualization.WALL_COLOR_BOTTOM;
                 } else if (planeType === RoomPlaneData.PLANE_LANDSCAPE) {
                     plane = new RoomPlane(
                         this.object.getLocation(),
@@ -439,8 +439,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         _local_14.y > 0
                             ? RoomVisualization.LANDSCAPE_COLOR_TOP
                             : _local_14.y === 0
-                              ? RoomVisualization.LANDSCAPE_COLOR_SIDE
-                              : RoomVisualization.LANDSCAPE_COLOR_BOTTOM;
+                                ? RoomVisualization.LANDSCAPE_COLOR_SIDE
+                                : RoomVisualization.LANDSCAPE_COLOR_BOTTOM;
 
                     landscapeOffsetX = landscapeOffsetX + leftSide.length;
                 }

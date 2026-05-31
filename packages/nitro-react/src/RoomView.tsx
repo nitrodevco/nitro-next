@@ -222,10 +222,16 @@ xxxxxxxxxxxx`,
             new LegacyDataType(),
         );
 
+        room.addFurnitureWallByTypeId(1, 4033, new Vector3d(2, 2), new Vector3d(), 0);
+
+        room.addFurnitureWallByTypeId(2, 4034, new Vector3d(), new Vector3d(), 0);
+
         return () => {
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(3, RoomObjectCategoryEnum.Floor);
+            room.removeRoomObject(1, RoomObjectCategoryEnum.Wall);
+            room.removeRoomObject(2, RoomObjectCategoryEnum.Wall);
         };
     }, [room]);
 

@@ -22,8 +22,8 @@ export class RoomContentLoader implements IRoomContentLoader {
     public static TILE_CURSOR: string = 'tile_cursor';
     public static SELECTION_ARROW: string = 'selection_arrow';
     public static PLACE_HOLDER: string = 'place_holder';
-    public static PLACE_HOLDER_WALL: string = 'place_holder_wall';
-    public static PLACE_HOLDER_PET: string = 'place_holder_pet';
+    public static PLACE_HOLDER_WALL: string = 'wall_place_holder';
+    public static PLACE_HOLDER_PET: string = 'pet_place_holder';
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
 
     private _iconListener: IRoomContentListener;
