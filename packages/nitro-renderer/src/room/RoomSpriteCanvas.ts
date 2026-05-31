@@ -75,6 +75,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
     private _canvasUpdated: boolean = false;
+    private _zDirty: boolean = false;
+    private _frameInterval: number = 0;
+
+    private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
 
     private _objectCache: RoomObjectCache;
 
@@ -95,6 +99,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         );
         //this._animationFPS = GetConfigValue<number>('renderer.animationFps', 24);
         this._animationFPS = 24;
+        this._frameInterval = 60 / this._animationFPS;
         this._objectCache = new RoomObjectCache(this._instance.roomObjectVariableAccurateZ);
 
         this.setupCanvas();
@@ -287,7 +292,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this.doMagic();
 
-        const frame = Math.round(this._totalTimeRunning / (60 / this._animationFPS));
+        const frame = Math.round(this._totalTimeRunning / this._frameInterval);
 
         let updateVisuals = false;
 
@@ -299,6 +304,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         let spriteCount = 0;
 
+        this._zDirty = false;
+
         const objects = this._instance.objects;
 
         if (objects.size) {
@@ -309,9 +316,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             }
         }
 
-        this._sortableSprites.sort((a, b) => b.z - a.z);
+        if (this._zDirty || spriteCount !== this._sortableSprites.length) {
+            this._sortableSprites.sort(RoomSpriteCanvas._zComparator);
+        }
 
-        if (spriteCount < this._sortableSprites.length) this._sortableSprites.splice(spriteCount);
+        if (spriteCount < this._sortableSprites.length) this._sortableSprites.length = spriteCount;
 
         let iterator = 0;
 
@@ -406,8 +415,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         if (x > 0) z = z + x * 1.2e-7;
         else z = z + -x * 1.2e-7;
 
-        x = x + Math.trunc(this._width / 2);
-        y = y + Math.trunc(this._height / 2);
+        x = x + (this._width >> 1);
+        y = y + (this._height >> 1);
+
+        const screenOffsetX = this._screenOffsetX;
+        const screenOffsetY = this._screenOffsetY;
 
         let spriteCount = 0;
 
@@ -419,15 +431,15 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!texture || !baseTexture) continue;
 
-            const spriteX = x + sprite.offsetX + this._screenOffsetX;
-            const spriteY = y + sprite.offsetY + this._screenOffsetY;
+            const spriteX = x + sprite.offsetX + screenOffsetX;
+            const spriteY = y + sprite.offsetY + screenOffsetY;
 
             if (sprite.flipH) {
-                const checkX = x + -(texture.width + -sprite.offsetX) + this._screenOffsetX;
+                const checkX = x + -(texture.width + -sprite.offsetX) + screenOffsetX;
 
                 if (!this.isSpriteVisible(checkX, spriteY, texture.width, texture.height)) continue;
             } else if (sprite.flipV) {
-                const checkY = y + -(texture.height + -sprite.offsetY) + this._screenOffsetY;
+                const checkY = y + -(texture.height + -sprite.offsetY) + screenOffsetY;
 
                 if (!this.isSpriteVisible(spriteX, checkY, texture.width, texture.height)) continue;
             } else if (!this.isSpriteVisible(spriteX, spriteY, texture.width, texture.height)) continue;
@@ -453,9 +465,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                 sortableSprite.sprite.libraryAssetName = 'avatar_' + object.id;
             }
 
-            sortableSprite.x = spriteX - this._screenOffsetX;
-            sortableSprite.y = spriteY - this._screenOffsetY;
-            sortableSprite.z = z + sprite.relativeDepth + 3.7e-11 * count;
+            sortableSprite.x = spriteX - screenOffsetX;
+            sortableSprite.y = spriteY - screenOffsetY;
+
+            const newZ = z + sprite.relativeDepth + 3.7e-11 * count;
+
+            if (!this._zDirty && newZ !== sortableSprite.z) this._zDirty = true;
+
+            sortableSprite.z = newZ;
 
             spriteCount++;
             count++;
