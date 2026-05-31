@@ -6,7 +6,6 @@ export * from './logic/useConfigLoader';
 export * from './logic/useFurnitureDataLoader';
 export * from './logic/useLocalizationLoader';
 export * from './room/useRoomCamera';
-export * from './room/useRoomCursor';
 export * from './room/useRoomEventDispatcher';
 export * from './room/useRoomEventHandler';
 export * from './room/useRoomMouse';
@@ -15,4 +14,3 @@ export * from './useCommunicationStore';
 export * from './useConfig';
 export * from './useConfigValue';
 export * from './useWebsocket';
-

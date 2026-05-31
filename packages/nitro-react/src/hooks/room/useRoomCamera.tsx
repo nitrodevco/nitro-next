@@ -1,13 +1,29 @@
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { Room } from "@nitrodevco/nitro-renderer";
 import { Matrix, Point, Rectangle } from "pixi.js";
-import { useRef } from "react";
+import { useShallow } from "zustand/shallow";
+
 import { useRoomContext } from "../context";
 
 export const useRoomCamera = () => {
     const room = useRoomContext(x => x.room);
-    const camera = useRoomContext(x => x.camera);
-    const isCameraFollowDisabled = useRef<boolean>(false);
+    const [targetId, targetCategory, cameraFollowDisabled, camera, resetCamera, initializeCameraLocation, setCameraTarget, setTargetObjectLocation, setCameraLimitedLocation, setCameraCenteredLocation, setCameraScale, setCameraScreenSize, setCameraRoomSize, setGeometryUpdateId, updateCamera] = useRoomContext(useShallow(x => [
+        x.targetId,
+        x.targetCategory,
+        x.cameraFollowDisabled,
+        x.camera,
+        x.resetCamera,
+        x.initializeCameraLocation,
+        x.setCameraTarget,
+        x.setTargetObjectLocation,
+        x.setCameraLimitedLocation,
+        x.setCameraCenteredLocation,
+        x.setCameraScale,
+        x.setCameraScreenSize,
+        x.setCameraRoomSize,
+        x.setGeometryUpdateId,
+        x.updateCamera
+    ]));
 
     const updateRoomCamera = (time: number) => {
         const canvas = room.instance.canvas;
@@ -17,37 +33,33 @@ export const useRoomCamera = () => {
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
         const roomBounds = room.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
-        if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) {
-            camera.reset();
-            camera.setTarget(new Vector3d(0, 0, 0));
-        }
+        if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) resetCamera();
 
-        const targetObject = room.getRoomObject(camera.targetId, camera.targetCategory);
-        const targetLocation = targetObject?.getLocation() ?? new Vector3d();
+        const targetObject = room.getRoomObject(targetId, targetCategory);
+        const goalLocation = targetObject?.getLocation() ?? new Vector3d();
 
         const needsUpdate =
-            camera.screenWd !== viewport.width ||
-            camera.screenHt !== viewport.height ||
+            camera.screenSize.w !== viewport.width ||
+            camera.screenSize.h !== viewport.height ||
             camera.scale !== canvas.geometry.scale ||
             camera.geometryUpdateId !== canvas.geometry.updateId ||
-            (targetObject !== undefined && !Vector3d.isEqual(targetLocation, camera.targetObjectLoc)) ||
-            camera.isMoving;
+            !Vector3d.isEqual(goalLocation, camera.targetObjectLocation) ||
+            (camera.targetLocation !== undefined && camera.currentLocation !== undefined);
 
         if (!needsUpdate) {
-            camera.limitedLocationX = false;
-            camera.limitedLocationY = false;
-            camera.centeredLocX = false;
-            camera.centeredLocY = false;
+            setCameraLimitedLocation(false, false);
+            setCameraCenteredLocation(false, false);
 
             return;
         }
 
-        camera.targetObjectLoc = targetLocation;
+        setTargetObjectLocation(goalLocation);
+
+        let targetZ = Math.floor(goalLocation.z) + 1;
 
         const finalLocation = new Vector3d();
-        let targetZ = Math.floor(targetLocation.z) + 1;
 
-        finalLocation.assign(targetLocation);
+        finalLocation.assign(goalLocation);
         finalLocation.x = Math.round(finalLocation.x);
         finalLocation.y = Math.round(finalLocation.y);
 
@@ -151,9 +163,9 @@ export const useRoomCamera = () => {
         if (marginTop * viewport.height > 150) marginTop = 150 / viewport.height;
         if (marginBottom * viewport.height > 150) marginBottom = 150 / viewport.height;
 
-        if (camera.limitedLocationX && camera.screenWd === viewport.width && camera.screenHt === viewport.height) marginX = 0;
+        if (camera.limitedLocation.x && camera.screenSize.w === viewport.width && camera.screenSize.h === viewport.height) marginX = 0;
 
-        if (camera.limitedLocationY && camera.screenWd === viewport.width && camera.screenHt === viewport.height) {
+        if (camera.limitedLocation.y && camera.screenSize.w === viewport.width && camera.screenSize.h === viewport.height) {
             marginTop = 0;
             marginBottom = 0;
         }
@@ -176,43 +188,39 @@ export const useRoomCamera = () => {
         finalLocation.x = Math.round(offset.x * 2) / 2;
         finalLocation.y = Math.round(offset.y * 2) / 2;
 
-        if (!camera.currentLoc) {
-            canvas.geometry.location = finalLocation;
-            camera.initializeLocation(new Vector3d(0, 0, 0));
+        if (camera.currentLocation === undefined) {
+            canvas.geometry.setLocation(finalLocation);
+            initializeCameraLocation(new Vector3d(0, 0, 0));
         }
 
         const finalScreen = canvas.geometry.getScreenPoint(finalLocation);
-        const currentPosition = new Vector3d(finalScreen?.x ?? 0, finalScreen?.y ?? 0, 0);
+        const currentPosition = new Vector3d(finalScreen.x, finalScreen.y);
 
-        const outOfActiveZoneX = targetObject !== undefined && (targetScreen.x < viewport.left || targetScreen.x > viewport.right) && !camera.centeredLocX;
-        const outOfActiveZoneY = targetObject !== undefined && (targetScreen.y < viewport.top || targetScreen.y > viewport.bottom) && !camera.centeredLocY;
-        const horizontalFitChanged = fitsHorizontally && !camera.centeredLocX && camera.screenWd !== viewport.width;
-        const verticalFitChanged = fitsVertically && !camera.centeredLocY && camera.screenHt !== viewport.height;
-        const roomSizeChanged = camera.roomWd !== roomBounds.width || camera.roomHt !== roomBounds.height;
-        const activeZoneChanged = camera.screenWd !== viewport.width || camera.screenHt !== viewport.height;
+        const outOfActiveZoneX = targetObject !== undefined && (targetScreen.x < viewport.left || targetScreen.x > viewport.right) && !camera.centeredLocation.x;
+        const outOfActiveZoneY = targetObject !== undefined && (targetScreen.y < viewport.top || targetScreen.y > viewport.bottom) && !camera.centeredLocation.y;
+        const horizontalFitChanged = fitsHorizontally && !camera.centeredLocation.x && camera.screenSize.w !== viewport.width;
+        const verticalFitChanged = fitsVertically && !camera.centeredLocation.y && camera.screenSize.h !== viewport.height;
+        const roomSizeChanged = camera.roomSize.w !== roomBounds.width || camera.roomSize.h !== roomBounds.height;
+        const activeZoneChanged = camera.screenSize.w !== viewport.width || camera.screenSize.h !== viewport.height;
 
-        if (outOfActiveZoneX || outOfActiveZoneY || horizontalFitChanged || verticalFitChanged || roomSizeChanged || activeZoneChanged) {
-            camera.limitedLocationX = clampedX;
-            camera.limitedLocationY = clampedY;
-            camera.setTarget(currentPosition);
+        if (outOfActiveZoneX || outOfActiveZoneY || horizontalFitChanged || verticalFitChanged || roomSizeChanged || activeZoneChanged || camera.geometryUpdateId === -1) {
+            setCameraLimitedLocation(clampedX, clampedY);
+            setCameraTarget(currentPosition);
         } else {
-            if (!clampedX) camera.limitedLocationX = false;
-            if (!clampedY) camera.limitedLocationY = false;
+            if (!clampedX) setCameraLimitedLocation(false, camera.limitedLocation.y);
+            if (!clampedY) setCameraLimitedLocation(camera.limitedLocation.x, false);
         }
 
-        camera.centeredLocX = fitsHorizontally;
-        camera.centeredLocY = fitsVertically;
-        camera.screenWd = viewport.width;
-        camera.screenHt = viewport.height;
-        camera.scale = canvas.geometry.scale;
-        camera.geometryUpdateId = canvas.geometry.updateId;
-        camera.roomWd = roomBounds.width;
-        camera.roomHt = roomBounds.height;
+        setCameraCenteredLocation(fitsHorizontally, fitsVertically);
+        setCameraScreenSize(viewport.width, viewport.height);
+        setCameraScale(canvas.geometry.scale);
+        setGeometryUpdateId(canvas.geometry.updateId);
+        setCameraRoomSize(roomBounds.width, roomBounds.height);
 
-        if (!isCameraFollowDisabled.current) camera.update(time, 8);
+        if (!cameraFollowDisabled) updateCamera(time, 8);
 
-        if (camera.currentLoc) room.setRoomInstanceRenderingCanvasOffset(new Point(-camera.currentLoc.x, -camera.currentLoc.y));
+        room.setRoomInstanceRenderingCanvasOffset(new Point(-(camera.currentLocation?.x ?? 0), -(camera.currentLocation?.y ?? 0)));
     }
 
-    return { updateRoomCamera };
+    return { updateRoomCamera, resetCamera, setCameraTarget };
 }

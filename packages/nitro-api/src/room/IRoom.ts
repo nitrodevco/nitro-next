@@ -1,7 +1,6 @@
 import type { PointData, Rectangle } from 'pixi.js';
 
-
-import { IEventDispatcher, INitroEvent } from '../events';
+import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IVector3D } from '../utils';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';

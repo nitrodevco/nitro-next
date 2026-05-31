@@ -3,7 +3,6 @@ export * from './FurnitureStackingHeightMap';
 export * from './LegacyWallGeometry';
 export * from './ObjectMouseData';
 export * from './RoomAreaSelectionManager';
-export * from './RoomCamera';
 export * from './RoomEnterEffect';
 export * from './RoomFurnitureData';
 export * from './RoomGeometry';

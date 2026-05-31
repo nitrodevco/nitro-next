@@ -976,7 +976,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                 Math.cos((direction.y / 180) * Math.PI);
             location.z = location.z + this._rotationRodLength * Math.sin((direction.y / 180) * Math.PI);
 
-            this._geometry.location = location;
+            this._geometry.setLocation(location);
 
             this._effectLocation = new Vector3d();
             this._effectLocation.assign(location);
@@ -1051,7 +1051,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this._rotation = 0;
 
-        this._geometry.location = this._effectLocation;
+        this._geometry.setLocation(this._effectLocation);
+
         this._geometry.direction = this._effectDirection;
         this._geometry.setDepthVector(new Vector3d(this._effectDirection.x, this._effectDirection.y, 5));
     }
@@ -1069,10 +1070,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         const direction = ((this._geometry.direction.x - 90) / 180) * Math.PI;
 
-        this._geometry.location = Vector3d.sum(
+        this._geometry.setLocation(Vector3d.sum(
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
-        );
+        ));
     }
 
     public moveRight(): void {
@@ -1088,10 +1089,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         const direction = ((this._geometry.direction.x + 90) / 180) * Math.PI;
 
-        this._geometry.location = Vector3d.sum(
+        this._geometry.setLocation(Vector3d.sum(
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
-        );
+        ));
     }
 
     public moveUp(): void {
@@ -1099,10 +1100,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         const direction = (this._geometry.direction.x / 180) * Math.PI;
 
-        this._geometry.location = Vector3d.sum(
+        this._geometry.setLocation(Vector3d.sum(
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
-        );
+        ));
     }
 
     public moveDown(): void {
@@ -1110,10 +1111,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         const direction = ((this._geometry.direction.x + 180) / 180) * Math.PI;
 
-        this._geometry.location = Vector3d.sum(
+        this._geometry.setLocation(Vector3d.sum(
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
-        );
+        ));
     }
 
     public get id(): number {

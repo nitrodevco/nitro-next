@@ -239,7 +239,6 @@ export * from './room/utils/FurnitureStackingHeightMap';
 export * from './room/utils/LegacyWallGeometry';
 export * from './room/utils/ObjectMouseData';
 export * from './room/utils/RoomAreaSelectionManager';
-export * from './room/utils/RoomCamera';
 export * from './room/utils/RoomEnterEffect';
 export * from './room/utils/RoomFurnitureData';
 export * from './room/utils/RoomGeometry';

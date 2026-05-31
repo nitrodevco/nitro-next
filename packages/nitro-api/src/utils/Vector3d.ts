@@ -7,7 +7,7 @@ export class Vector3d implements IVector3D {
         private _x: number = 0,
         private _y: number = 0,
         private _z: number = 0,
-    ) {}
+    ) { }
 
     public static empty(): Vector3d {
         return new Vector3d();
@@ -19,7 +19,7 @@ export class Vector3d implements IVector3D {
         return new Vector3d(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
-    public static dif(vector1: IVector3D, vector2: IVector3D): Vector3d {
+    public static dif(vector1: IVector3D | undefined, vector2: IVector3D | undefined): Vector3d {
         if (!vector1 || !vector2) return Vector3d.empty();
 
         return new Vector3d(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
@@ -71,7 +71,7 @@ export class Vector3d implements IVector3D {
         return Vector3d.dotProduct(vector1, vector2) / totalLength;
     }
 
-    public static isEqual(vector1: IVector3D, vector2: IVector3D): boolean {
+    public static isEqual(vector1: IVector3D | undefined, vector2: IVector3D | undefined): boolean {
         if (!vector1 || !vector2) return false;
 
         if (vector1.x !== vector2.x || vector1.y !== vector2.y || vector1.z !== vector2.z) return false;

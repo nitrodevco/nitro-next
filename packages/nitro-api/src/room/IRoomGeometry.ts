@@ -11,6 +11,7 @@ export interface IRoomGeometry {
     getScreenPosition(_arg_1: IVector3D): IVector3D;
     getScreenPoint(_arg_1: IVector3D): Point;
     getPlanePosition(_arg_1: Point, _arg_2: IVector3D, _arg_3: IVector3D, _arg_4: IVector3D): Point;
+    setLocation(location: IVector3D): void;
     performZoom(): void;
     performZoomOut(): void;
     performZoomIn(): void;

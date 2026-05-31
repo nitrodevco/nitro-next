@@ -5,19 +5,15 @@ import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-sh
 import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
+import { useShallow } from 'zustand/shallow';
 
-import { useRoomCamera, useRoomContext, useRoomCursor, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
+import { useRoomCamera, useRoomContext, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
-    const room = useRoomContext(x => x.room);
-    const camera = useRoomContext(x => x.camera);
-    const getMouseEventId = useRoomContext(x => x.getMouseEventId);
-    const setMouseEventId = useRoomContext(x => x.setMouseEventId);
-    const { dragXY, isDragged, wasDragged } = useRoomMouse();
-    const { hasCursorUpdate, hasCursorOwners, updateMousePointer } = useRoomCursor();
-    const { updateRoomCamera } = useRoomCamera();
-    const setControllerLevel = useRoomContext(x => x.setControllerLevel);
+    const [room, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.getMouseEventId, x.setMouseEventId]));
+    const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
+    const { updateRoomCamera, resetCamera, setCameraTarget } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
 
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
@@ -193,6 +189,8 @@ export const RoomCanvasView = () => {
     }, [room, getMouseEventId, setMouseEventId]);
 
     useEffect(() => {
+        if (!room) return;
+
         const renderer = GetRenderer();
         const stage = GetStage();
         const texturePool = GetTexturePool();
@@ -200,6 +198,7 @@ export const RoomCanvasView = () => {
         const tick = (ticker: Ticker) => {
             if (!room) return;
 
+            const mouseData = mouseDataRef.current;
             const time = ticker.lastTime;
             const update = false;
 
@@ -207,19 +206,19 @@ export const RoomCanvasView = () => {
 
             room.instance.update(time, update);
 
-            if (!isDragged.current) updateRoomCamera(time);
+            if (!mouseData.isDragged) updateRoomCamera(time);
 
-            if (wasDragged.current) {
+            if (mouseData.wasDragged) {
                 const offsetX = ~~(room.instance.canvas?.screenOffsetX || 0);
                 const offsetY = ~~(room.instance.canvas?.screenOffsetY || 0);
 
-                room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + dragXY.current.x), y: (offsetY + dragXY.current.y) });
+                room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 
-                dragXY.current = { x: 0, y: 0 };
+                mouseData.dragXY = { x: 0, y: 0 }
             }
 
-            if (hasCursorUpdate.current) {
-                hasCursorUpdate.current = false;
+            if (mouseData.hasCursorUpdate) {
+                mouseData.hasCursorUpdate = false;
 
                 renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
             }
@@ -235,7 +234,7 @@ export const RoomCanvasView = () => {
         return () => {
             GetTicker().remove(tick);
         }
-    }, [room, dragXY, hasCursorUpdate, isDragged, wasDragged, hasCursorOwners, updateRoomCamera]);
+    }, [room]);
 
     useEffect(() => {
         if (!room) return;
@@ -251,9 +250,9 @@ export const RoomCanvasView = () => {
             renderer.canvas.style.width = `${width}px`;
             renderer.canvas.style.height = `${height}px`;
 
-            if (renderer.resolution !== resolution && camera) {
-                camera.reset();
-                camera.setTarget(new Vector3d(0, 0, 0));
+            if (renderer.resolution !== resolution) {
+                resetCamera();
+                setCameraTarget(new Vector3d(0, 0, 0));
             }
 
             if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) renderer.resize(width, height, resolution);
@@ -281,7 +280,7 @@ export const RoomCanvasView = () => {
             observer.disconnect();
             clearTimeout(timer);
         }
-    }, [room, camera]);
+    }, [room]);
 
     return <div className="size-full" ref={elementRef}></div>;
 };

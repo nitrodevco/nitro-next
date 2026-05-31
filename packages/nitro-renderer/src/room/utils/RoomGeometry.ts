@@ -30,7 +30,8 @@ export class RoomGeometry implements IRoomGeometry {
         this.scale = scale;
 
         this.location.assign(location);
-        this.location = new Vector3d(location.x, location.y, location.z);
+
+        this.setLocation(new Vector3d(location.x, location.y, location.z));
         this.direction = new Vector3d(direction.x, direction.y, direction.z);
 
         this.setDepthVector(depth ?? direction);
@@ -51,7 +52,7 @@ export class RoomGeometry implements IRoomGeometry {
         );
     }
 
-    public dispose(): void {}
+    public dispose(): void { }
 
     public setDisplacement(k: IVector3D, _arg_2: IVector3D): void {
         if (!k || !_arg_2) return;
@@ -120,7 +121,8 @@ export class RoomGeometry implements IRoomGeometry {
         }
         const _local_3: IVector3D = Vector3d.product(this._z, -_arg_2);
         const _local_4: IVector3D = new Vector3d(k.x + _local_3.x, k.y + _local_3.y, k.z + _local_3.z);
-        this.location = _local_4;
+
+        this.setLocation(_local_4);
     }
 
     public getCoordinatePosition(k: IVector3D): IVector3D {
@@ -216,6 +218,24 @@ export class RoomGeometry implements IRoomGeometry {
         const _local_16 = (Vector3d.scalarProjection(_local_14, _arg_4) / _local_12.length) * _arg_4.length;
 
         return new Point(_local_15, _local_16);
+    }
+
+    public setLocation(location: IVector3D): void {
+        if (!location) return;
+
+        if (!this._loc) this._loc = new Vector3d();
+
+        const prevX: number = this._loc.x;
+        const prevY: number = this._loc.y;
+        const prevZ: number = this._loc.z;
+
+        this._loc.assign(location);
+
+        this._loc.x = this._loc.x / this._x_scale;
+        this._loc.y = this._loc.y / this._y_scale;
+        this._loc.z = this._loc.z / this._z_scale;
+
+        if ((this._loc.x !== prevX) || (this._loc.y !== prevY) || (this._loc.z !== prevZ)) this._updateId++;
     }
 
     public performZoom(): void {
