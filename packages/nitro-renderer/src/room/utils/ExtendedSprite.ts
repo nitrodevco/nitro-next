@@ -5,6 +5,8 @@ import { Sprite, Texture } from 'pixi.js';
 import { TextureUtils } from '../../utils';
 
 export class ExtendedSprite extends Sprite {
+    private static readonly _hitMaps = new WeakMap<TextureSource, Uint8Array>();
+
     private _offsetX: number = 0;
     private _offsetY: number = 0;
     private _tag: string = '';
@@ -45,41 +47,54 @@ export class ExtendedSprite extends Sprite {
 
         if (!super.containsPoint({ x, y })) return false;
 
+        if (this.alphaTolerance <= 0) return true;
+
         const texture = this.texture;
-        const textureSource = this.texture.source;
+        const textureSource = texture.source;
 
-        //@ts-expect-error custom point check
-        if ((!textureSource || !textureSource.hitMap) && !ExtendedSprite.generateHitMapForTextureSource(textureSource))
-            return false;
+        if (!textureSource) return false;
 
-        //@ts-expect-error custom hitmap
-        const hitMap = textureSource.hitMap as Uint8Array;
+        let hitMap = ExtendedSprite._hitMaps.get(textureSource);
 
-        if (!hitMap) return false;
+        if (!hitMap) {
+            hitMap = ExtendedSprite.generateHitMapForTextureSource(textureSource);
+            if (!hitMap) return false;
+        }
 
         let dx = x + texture.frame.x;
         let dy = y + texture.frame.y;
 
-        if (this.texture.trim) {
+        if (texture.trim) {
             dx -= texture.trim.x;
             dy -= texture.trim.y;
         }
 
-        dx = Math.round(dx) * textureSource.resolution;
-        dy = Math.round(dy) * textureSource.resolution;
+        dx = (dx * textureSource.resolution + 0.5) | 0;
+        dy = (dy * textureSource.resolution + 0.5) | 0;
 
-        const index = (dx + dy * textureSource.width) * 4;
-
-        return hitMap[index + 3] >= this.alphaTolerance;
+        return hitMap[dx + dy * textureSource.width] >= this.alphaTolerance;
     }
 
-    private static generateHitMapForTextureSource(textureSource: TextureSource): boolean {
-        if (!textureSource) return false;
+    private static generateHitMapForTextureSource(textureSource: TextureSource): Uint8Array | undefined {
+        if (!textureSource) return undefined;
 
-        //@ts-expect-error custom set hitmap
-        textureSource.hitMap = TextureUtils.getPixels(new Texture(textureSource))?.pixels;
+        const tmp = new Texture(textureSource);
+        const result = TextureUtils.getPixels(tmp);
 
-        return true;
+        tmp.destroy();
+
+        if (!result?.pixels) return undefined;
+
+        const rgba = result.pixels;
+        const alpha = new Uint8Array(rgba.length >> 2);
+
+        for (let i = 0; i < alpha.length; i++) {
+            alpha[i] = rgba[(i << 2) + 3];
+        }
+
+        ExtendedSprite._hitMaps.set(textureSource, alpha);
+
+        return alpha;
     }
 
     public get offsetX(): number {

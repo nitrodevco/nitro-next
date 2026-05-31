@@ -1,5 +1,5 @@
 import type { IRoomObject } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
@@ -259,7 +259,11 @@ export const RoomCanvasView = () => {
 
             if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
 
-            renderer.render(stage);
+            try {
+                renderer.render(stage);
+            } catch (err) {
+                NitroLogger.error(err);
+            }
         }
 
         let timer: ReturnType<typeof setTimeout>;
