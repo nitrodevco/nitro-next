@@ -521,7 +521,7 @@ export const useRoomEventHandler = () => {
         return true;
     };
 
-    const handleObjectPlace = async (event: RoomObjectMouseEvent) => {
+    const handleObjectPlace = (event: RoomObjectMouseEvent) => {
         if (!event || !selectedObject) return;
 
         let roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
@@ -529,16 +529,16 @@ export const useRoomEventHandler = () => {
         if (!roomObject) {
             if (event instanceof RoomObjectTileMouseEvent) {
                 if (selectedObject.category === RoomObjectCategoryEnum.Floor) {
-                    await room.addFurnitureByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.stuffData, parseFloat(selectedObject.instanceData), -1, 0, 0, '', false);
+                    room.addFurnitureByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.stuffData, parseFloat(selectedObject.instanceData), -1, 0, 0, '', false);
                 } else if (selectedObject.category === RoomObjectCategoryEnum.Unit) {
-                    await room.addRoomObjectUser(selectedObject.id, new Vector3d(), new Vector3d(180), 180, selectedObject.typeId, selectedObject.instanceData);
+                    room.addRoomObjectUser(selectedObject.id, new Vector3d(), new Vector3d(180), 180, selectedObject.typeId, selectedObject.instanceData);
 
                     const placed = room.getRoomObject(selectedObject.id, selectedObject.category);
 
                     if (placed && selectedObject.posture) placed.model.setValue(RoomObjectVariableEnum.FigurePosture, selectedObject.posture);
                 }
             } else if (event instanceof RoomObjectWallMouseEvent && selectedObject.category === RoomObjectCategoryEnum.Wall) {
-                await room.addFurnitureWallByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, parseInt(selectedObject.instanceData), 0);
+                room.addFurnitureWallByTypeId(selectedObject.id, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, parseInt(selectedObject.instanceData), 0);
             }
 
             roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);

@@ -17,9 +17,9 @@ import type {
 import type { IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
-    prepareRoom(): Promise<boolean>;
+    prepareRoom(): boolean;
     getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
-    applyRoomMap(roomMap: IRoomMapData): Promise<void>;
+    applyRoomMap(roomMap: IRoomMapData): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getGeometry(): IRoomGeometry | undefined;
@@ -31,10 +31,10 @@ export interface IRoom {
         objectId: number,
         type: string,
         category: RoomObjectCategoryEnum,
-    ): Promise<IRoomObject | undefined>;
-    createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined>;
-    createRoomObjectWall(id: number, type: string): Promise<IRoomObject | undefined>;
-    createRoomObjectUser(id: number, type: string): Promise<IRoomObject | undefined>;
+    ): IRoomObject | undefined;
+    createRoomObjectFloor(id: number, type: string): IRoomObject | undefined;
+    createRoomObjectWall(id: number, type: string): IRoomObject | undefined;
+    createRoomObjectUser(id: number, type: string): IRoomObject | undefined;
     updateRoomObjectFloor(
         objectId: number,
         location: IVector3D,
@@ -68,7 +68,7 @@ export interface IRoom {
         synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
-    ): Promise<boolean>;
+    ): boolean;
     addFurnitureFloorByTypeName(
         id: number,
         typeName: string,
@@ -85,7 +85,7 @@ export interface IRoom {
         realRoomObject?: boolean,
         sizeZ?: number,
         typeId?: number,
-    ): Promise<boolean>;
+    ): boolean;
     addFurnitureWallByTypeId(
         id: number,
         typeId: number,
@@ -100,7 +100,7 @@ export interface IRoom {
         synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
-    ): Promise<boolean>;
+    ): boolean;
     addRoomObjectUser(
         objectId: number,
         location: IVector3D,
@@ -108,7 +108,7 @@ export interface IRoom {
         headDirection: number,
         type: number,
         figure: string,
-    ): Promise<boolean>;
+    ): boolean;
     removeRoomObjectFloor(objectId: number, userId?: number, _arg_4?: boolean): void;
     removeRoomObjectWall(objectId: number, userId?: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;

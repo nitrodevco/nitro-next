@@ -51,7 +51,7 @@ export class RoomEngine implements IRoomEngine {
         await GetRoomContentLoader().init();
     }
 
-    public async createRoom(roomId: number): Promise<IRoom> {
+    public createRoom(roomId: number): IRoom {
         let room = this._rooms.get(roomId);
 
         if (room) return room;
@@ -62,7 +62,7 @@ export class RoomEngine implements IRoomEngine {
 
         room = new Room(roomId, instance);
 
-        await room.prepareRoom();
+        room.prepareRoom();
 
         this._rooms.set(roomId, room);
 
@@ -80,14 +80,14 @@ export class RoomEngine implements IRoomEngine {
         frameCount: number = -1,
         posture: string = '',
     ): Promise<ImageLike | undefined> {
-        const room = await this.getTemporaryRoom();
+        const room = this.getTemporaryRoom();
 
         let objectId = this._imageObjectIdBank.reserveNumber();
         const objectCategory = GetRoomContentLoader().getCategoryForType(type);
 
         objectId++;
 
-        const roomObject = (await room.createRoomObjectAndInitalize(
+        const roomObject = (room.createRoomObjectAndInitalize(
             objectId,
             type,
             objectCategory,
@@ -166,7 +166,7 @@ export class RoomEngine implements IRoomEngine {
         return image;
     }
 
-    public getTemporaryRoom(): Promise<IRoom> {
+    public getTemporaryRoom(): IRoom {
         return this.createRoom(RoomEngine.TEMORARY_ROOM_ID);
     }
 

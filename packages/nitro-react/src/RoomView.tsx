@@ -195,42 +195,34 @@ xxxxxxxxxxxx`,
     useEffect(() => {
         if (!room) return;
 
-        let cancelled = false;
+        room.addFurnitureByTypeId(
+            1,
+            26,
+            new Vector3d(5, 7, 0),
+            new Vector3d(90, 0, 0),
+            0,
+            new LegacyDataType(),
+        );
 
-        void (async () => {
-            if (cancelled) return;
+        room.addFurnitureFloorByTypeName(
+            2,
+            'tv_luxus',
+            new Vector3d(6, 4, 0),
+            new Vector3d(90, 0, 0),
+            1,
+            new LegacyDataType(),
+        );
 
-            await room.addFurnitureByTypeId(
-                1,
-                26,
-                new Vector3d(5, 7, 0),
-                new Vector3d(90, 0, 0),
-                0,
-                new LegacyDataType(),
-            );
-
-            await room.addFurnitureFloorByTypeName(
-                2,
-                'tv_luxus',
-                new Vector3d(6, 4, 0),
-                new Vector3d(90, 0, 0),
-                1,
-                new LegacyDataType(),
-            );
-
-            await room.addFurnitureFloorByTypeName(
-                3,
-                'tv_luxus1',
-                new Vector3d(7, 5, 0),
-                new Vector3d(90, 0, 0),
-                1,
-                new LegacyDataType(),
-            );
-        })();
+        room.addFurnitureFloorByTypeName(
+            3,
+            'tv_luxus1',
+            new Vector3d(7, 5, 0),
+            new Vector3d(90, 0, 0),
+            1,
+            new LegacyDataType(),
+        );
 
         return () => {
-            cancelled = true;
-
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(3, RoomObjectCategoryEnum.Floor);
@@ -240,47 +232,40 @@ xxxxxxxxxxxx`,
     useEffect(() => {
         if (!roomId) return;
 
-        let cancelled = false;
+        const room = GetRoomEngine().createRoom(roomId);
 
-        void (async () => {
-            const room = await GetRoomEngine().createRoom(roomId);
+        if (!room) return;
 
-            if (cancelled || !room) return;
+        if (mapData.mapData) room.applyRoomMap(mapData.mapData);
 
-            if (mapData.mapData) await room.applyRoomMap(mapData.mapData);
+        if (mapData.wallGeometry) room.instance.setLegacyGeometry(mapData.wallGeometry);
 
-            if (mapData.wallGeometry) room.instance.setLegacyGeometry(mapData.wallGeometry);
+        const heightMap = new FurnitureStackingHeightMap(mapData.mapData.width, mapData.mapData.height);
 
-            const heightMap = new FurnitureStackingHeightMap(mapData.mapData.width, mapData.mapData.height);
+        let y = 0;
 
-            let y = 0;
+        while (y < mapData.mapData.height) {
+            let x = 0;
 
-            while (y < mapData.mapData.height) {
-                let x = 0;
+            while (x < mapData.mapData.width) {
+                heightMap.setTileHeight(x, y, 0);
+                heightMap.setStackingBlocked(x, y, false);
+                heightMap.setIsRoomTile(x, y, true);
 
-                while (x < mapData.mapData.width) {
-                    heightMap.setTileHeight(x, y, 0);
-                    heightMap.setStackingBlocked(x, y, false);
-                    heightMap.setIsRoomTile(x, y, true);
-
-                    x++;
-                }
-
-                y++;
+                x++;
             }
 
-            room.instance.setFurnitureStackingHeightMap(heightMap);
+            y++;
+        }
 
-            setRoom(prev => {
-                if (prev === room) return prev;
+        room.instance.setFurnitureStackingHeightMap(heightMap);
 
-                return room;
-            });
-        })();
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setRoom(prev => {
+            if (prev === room) return prev;
 
-        return () => {
-            cancelled = true;
-        };
+            return room;
+        });
     }, [roomId, setRoom, mapData]);
 
     if (!room) return null;

@@ -86,22 +86,21 @@ export class Room implements IRoom {
         this._areaSelection = new RoomAreaSelectionManager(this);
     }
 
-    public async prepareRoom(): Promise<boolean> {
+    public prepareRoom(): boolean {
         this._instance.model.setValue(RoomObjectVariableEnum.RoomIsPublic, 0);
         this._instance.model.setValue(RoomObjectVariableEnum.RoomZScale, 1);
 
-        await this.createRoomObjectAndInitalize(
+        this.createRoomObjectAndInitalize(
             Room.CURSOR_OBJECT_ID,
             Room.CURSOR_OBJECT_TYPE,
             RoomObjectCategoryEnum.Cursor,
         );
 
-        if (GetConfigValue('renderer.avatarArrowEnabled', false))
-            await this.createRoomObjectAndInitalize(
-                Room.ARROW_OBJECT_ID,
-                Room.ARROW_OBJECT_TYPE,
-                RoomObjectCategoryEnum.Cursor,
-            );
+        if (GetConfigValue('renderer.avatarArrowEnabled', false)) this.createRoomObjectAndInitalize(
+            Room.ARROW_OBJECT_ID,
+            Room.ARROW_OBJECT_TYPE,
+            RoomObjectCategoryEnum.Cursor,
+        );
 
         return true;
     }
@@ -138,7 +137,7 @@ export class Room implements IRoom {
         return canvas;
     }
 
-    public async applyRoomMap(roomMap: IRoomMapData): Promise<void> {
+    public applyRoomMap(roomMap: IRoomMapData): void {
         if (!roomMap) return;
 
         let roomObject = this._instance.getRoomObject(
@@ -149,7 +148,7 @@ export class Room implements IRoom {
         if (roomObject) this._instance.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
         if (!roomObject)
-            roomObject = (await this.createRoomObjectAndInitalize(
+            roomObject = (this.createRoomObjectAndInitalize(
                 Room.ROOM_OBJECT_ID,
                 Room.ROOM_OBJECT_TYPE,
                 RoomObjectCategoryEnum.Room,
@@ -334,12 +333,11 @@ export class Room implements IRoom {
         );
     }
 
-    // eslint-disable-next-line @typescript-eslint/require-await
-    public async createRoomObjectAndInitalize(
+    public createRoomObjectAndInitalize(
         objectId: number,
         type: string,
         category: RoomObjectCategoryEnum,
-    ): Promise<IRoomObject | undefined> {
+    ): IRoomObject | undefined {
         let assetName = type;
         let asset = GetRoomContentLoader().getCollection(assetName);
         let isLoading = false;
@@ -429,15 +427,15 @@ export class Room implements IRoom {
         //this.addObjectToTileMap(id, object);
     }
 
-    public async createRoomObjectFloor(id: number, type: string): Promise<IRoomObject | undefined> {
+    public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {
         return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
     }
 
-    public async createRoomObjectWall(id: number, type: string): Promise<IRoomObject | undefined> {
+    public createRoomObjectWall(id: number, type: string): IRoomObject | undefined {
         return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall);
     }
 
-    public async createRoomObjectUser(id: number, type: string): Promise<IRoomObject | undefined> {
+    public createRoomObjectUser(id: number, type: string): IRoomObject | undefined {
         return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Unit);
     }
 
@@ -565,7 +563,7 @@ export class Room implements IRoom {
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
     }
 
-    public async addFurnitureByTypeId(
+    public addFurnitureByTypeId(
         id: number,
         typeId: number,
         location: IVector3D,
@@ -580,7 +578,7 @@ export class Room implements IRoom {
         synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
-    ): Promise<boolean> {
+    ): boolean {
         return this.addFurnitureFloorByTypeName(
             id,
             GetRoomContentLoader().getFurnitureFloorNameForTypeId(typeId),
@@ -600,7 +598,7 @@ export class Room implements IRoom {
         );
     }
 
-    public async addFurnitureFloorByTypeName(
+    public addFurnitureFloorByTypeName(
         id: number,
         typeName: string,
         location: IVector3D,
@@ -616,8 +614,8 @@ export class Room implements IRoom {
         realRoomObject: boolean = true,
         sizeZ: number = -1,
         typeId: number = -1,
-    ): Promise<boolean> {
-        const roomObject = await this.createRoomObjectFloor(id, typeName);
+    ): boolean {
+        const roomObject = this.createRoomObjectFloor(id, typeName);
 
         if (roomObject) {
             roomObject.model.setValue(
@@ -659,7 +657,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public async addFurnitureWallByTypeId(
+    public addFurnitureWallByTypeId(
         id: number,
         typeId: number,
         location: IVector3D,
@@ -673,7 +671,7 @@ export class Room implements IRoom {
         synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
-    ): Promise<boolean> {
+    ): boolean {
         const objectData = new LegacyDataType();
 
         objectData.setString((extra ?? 0).toString());
@@ -682,7 +680,7 @@ export class Room implements IRoom {
 
         const type = GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, extra);
 
-        const roomObject = await this.createRoomObjectWall(id, type);
+        const roomObject = this.createRoomObjectWall(id, type);
 
         if (roomObject) {
             roomObject.model.setValue(
@@ -719,14 +717,14 @@ export class Room implements IRoom {
         return true;
     }
 
-    public async addRoomObjectUser(
+    public addRoomObjectUser(
         objectId: number,
         location: IVector3D,
         direction: IVector3D,
         headDirection: number,
         type: number,
         figure: string,
-    ): Promise<boolean> {
+    ): boolean {
         const existing = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (existing) return false;
@@ -735,7 +733,7 @@ export class Room implements IRoom {
 
         if (objectType === RoomObjectUserType.PET) objectType = this.getPetType(figure) ?? '';
 
-        const roomObject = (await this.createRoomObjectUser(objectId, objectType)) as IRoomObjectController;
+        const roomObject = (this.createRoomObjectUser(objectId, objectType)) as IRoomObjectController;
 
         if (!roomObject || !roomObject.logic) return false;
 
