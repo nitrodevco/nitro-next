@@ -222,9 +222,9 @@ xxxxxxxxxxxx`,
             new LegacyDataType(),
         );
 
-        room.addFurnitureWallByTypeId(1, 4033, new Vector3d(2, 2), new Vector3d(), 0);
+        room.addFurnitureWallByTypeId(1, 4033, room.instance.legacyGeometry.getLocation(3, 11, 7, 33, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
 
-        room.addFurnitureWallByTypeId(2, 4034, new Vector3d(), new Vector3d(), 0);
+        room.addFurnitureWallByTypeId(2, 4034, room.instance.legacyGeometry.getLocation(3, 8, 11, 36, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
 
         return () => {
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
