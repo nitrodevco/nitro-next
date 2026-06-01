@@ -292,15 +292,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this.doMagic();
 
-        const frame = Math.round(this._totalTimeRunning / this._frameInterval);
-
-        let updateVisuals = false;
-
-        if (frame !== this._lastFrame) {
-            this._lastFrame = frame;
-
-            updateVisuals = true;
-        }
+        const updateVisuals = true;
 
         let spriteCount = 0;
 
@@ -554,8 +546,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this.updateEnterRoomEffect(extendedSprite, objectSprite);
         }
 
-        extendedSprite.x = Math.round(sprite.x);
-        extendedSprite.y = Math.round(sprite.y);
+        extendedSprite.x = sprite.x;
+        extendedSprite.y = sprite.y;
 
         extendedSprite.offsetX = objectSprite.offsetX;
         extendedSprite.offsetY = objectSprite.offsetY;
