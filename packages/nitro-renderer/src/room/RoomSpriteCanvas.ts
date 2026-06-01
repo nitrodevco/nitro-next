@@ -74,7 +74,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _noSpriteVisibilityChecking: boolean = false;
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
-    private _canvasUpdated: boolean = false;
     private _zDirty: boolean = false;
     private _frameInterval: number = 0;
 
@@ -263,8 +262,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public render(time: number, update: boolean = false): void {
-        this._canvasUpdated = false;
-
         this._totalTimeRunning += GetTicker().deltaTime;
 
         if (this._totalTimeRunning === this._renderTimestamp) return;
@@ -292,20 +289,16 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this.doMagic();
 
-        const updateVisuals = true;
-
         let spriteCount = 0;
 
         this._zDirty = false;
 
         const objects = this._instance.objects;
 
-        if (objects.size) {
-            for (const object of objects.values()) {
-                if (!object) continue;
+        for (const object of objects.values()) {
+            if (!object) continue;
 
-                spriteCount = spriteCount + this.renderObject(object, time, update, updateVisuals, spriteCount);
-            }
+            spriteCount = spriteCount + this.renderObject(object, time, update, spriteCount);
         }
 
         if (this._zDirty || spriteCount !== this._sortableSprites.length) {
@@ -325,8 +318,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         this.cleanSprites(spriteCount);
-
-        if (update || updateVisuals) this._canvasUpdated = true;
 
         this._renderTimestamp = this._totalTimeRunning;
         this._renderedWidth = this._width;
@@ -359,7 +350,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         object: IRoomObject,
         time: number,
         update: boolean,
-        updateVisuals: boolean,
         count: number,
     ): number {
         if (!object) return 0;
@@ -386,13 +376,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             return 0;
         }
 
-        if (updateVisuals)
-            visualization.update(
-                this._geometry,
-                time,
-                !sortableCache.isEmpty || update,
-                this._skipObjectUpdate && this._runningSlow,
-            );
+        visualization.update(
+            this._geometry,
+            time,
+            !sortableCache.isEmpty || update,
+            this._skipObjectUpdate && this._runningSlow,
+        );
 
         if (locationCache.locationChanged) update = true;
 
@@ -471,8 +460,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         sortableCache.setSpriteCount(spriteCount);
-
-        this._canvasUpdated = true;
 
         return spriteCount;
     }
@@ -1174,13 +1161,5 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     public get height(): number {
         return this._height;
-    }
-
-    public get canvasUpdated(): boolean {
-        return this._canvasUpdated;
-    }
-
-    public set canvasUpdated(flag: boolean) {
-        this._canvasUpdated = flag;
     }
 }
