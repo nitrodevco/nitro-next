@@ -19,6 +19,7 @@ node_modules
 /connect.lock
 /coverage
 *.log
+*.tsbuildinfo
 .git
 .DS_Store
 Thumbs.db
