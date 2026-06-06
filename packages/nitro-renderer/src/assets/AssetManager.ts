@@ -45,14 +45,11 @@ export class AssetManager implements IAssetManager {
     public addAssetToCollection(
         collectionName: string,
         assetName: string,
-        texture: Texture,
-        override: boolean = true,
-    ): boolean {
+        texture: Texture
+    ): IGraphicAsset | undefined {
         const collection = this.getCollection(collectionName);
 
-        if (!collection) return false;
-
-        return collection.addAsset(assetName, texture, override, 0, 0, false, false);
+        return collection?.addAsset(assetName, texture, 0, 0, false, false, false, true) ?? undefined;
     }
 
     public getCollection(name: string): IGraphicAssetCollection | undefined {

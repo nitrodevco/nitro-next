@@ -11,6 +11,7 @@ export class FurnitureIsometricBBVisualization extends FurnitureBBVisualization 
     private _needsTransform: boolean = true;
 
     protected generateTransformedImage(texture: Texture, asset: IGraphicAsset): void {
+        const sprite = new Sprite(texture);
         const scale = 1.1;
         const matrix = new Matrix();
         const difference = asset.width / texture.width;
@@ -42,7 +43,6 @@ export class FurnitureIsometricBBVisualization extends FurnitureBBVisualization 
                 matrix.ty = 0;
         }
 
-        const sprite = new Sprite(texture);
         const newTexture = TextureUtils.createAndWriteRenderTexture(
             asset.width + matrix.tx,
             asset.height + matrix.ty,
@@ -50,10 +50,7 @@ export class FurnitureIsometricBBVisualization extends FurnitureBBVisualization 
             matrix,
         );
 
-        this.asset.disposeAsset(`${this._imageUrl}_0`);
-
-        if (newTexture)
-            this.asset.addAsset(`${this._imageUrl}_0`, newTexture, true, sprite.x, sprite.y, asset.flipH, asset.flipV);
+        if (newTexture) this.asset.addAsset(`${this._imageUrl}_0`, newTexture, sprite.x, sprite.y, asset.flipH, asset.flipV, false, true);
 
         this._needsTransform = false;
     }

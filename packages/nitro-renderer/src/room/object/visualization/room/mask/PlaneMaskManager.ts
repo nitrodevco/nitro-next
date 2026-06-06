@@ -5,6 +5,7 @@
     IVector3D,
 } from '@nitrodevco/nitro-api';
 
+import { TextureUtils } from '../../../../../utils';
 import type { MaskEntry } from '../utils/MergeMasks';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
@@ -107,7 +108,15 @@ export class PlaneMaskManager {
 
                 if (!assetName) continue;
 
-                const asset = assetCollection.getAsset(assetName);
+                let asset = assetCollection.getAsset(assetName);
+
+                if (!asset || !asset.texture) continue;
+
+                const texture = TextureUtils.makeWhiteTransparent(asset.texture);
+
+                if (!texture) continue;
+
+                asset = assetCollection.addAsset(asset.name, texture, asset.x, asset.y, asset.flipH, asset.flipV, false, true);
 
                 if (!asset) continue;
 

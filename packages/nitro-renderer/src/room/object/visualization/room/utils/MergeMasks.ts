@@ -1,6 +1,7 @@
 import type { PointData, Texture } from 'pixi.js';
-import { Container } from 'pixi.js';
+import { Container, Graphics } from 'pixi.js';
 import { Sprite } from 'pixi.js';
+
 
 
 export interface MaskEntry {
@@ -17,10 +18,14 @@ export const MergeMasks = (
 ): Container => {
     const container = new Container();
 
+    const base = new Graphics().rect(0, 0, width, height).fill({ color: 0x000000 });
+
+    container.addChild(base);
+
     for (const entry of masks) {
         const sprite = new Sprite(entry.texture);
 
-        //sprite.blendMode = 'erase';
+        sprite.blendMode = 'erase';
 
         if (entry.position) sprite.position.set(entry.position.x, entry.position.y);
 

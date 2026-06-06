@@ -1,5 +1,6 @@
 import type {
     IFurnitureData,
+    IGraphicAsset,
     IGraphicAssetCollection,
     IPetColorResult,
     IRoomContentListener,
@@ -181,10 +182,9 @@ export class RoomContentLoader implements IRoomContentLoader {
     public addAssetToCollection(
         collectionName: string,
         assetName: string,
-        texture: Texture,
-        override: boolean = true,
-    ): boolean {
-        return GetAssetManager().addAssetToCollection(collectionName, assetName, texture, override);
+        texture: Texture
+    ): IGraphicAsset | undefined {
+        return GetAssetManager().addAssetToCollection(collectionName, assetName, texture);
     }
 
     public getPlaceholderName(type: string): string {

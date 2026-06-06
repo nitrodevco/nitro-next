@@ -6,8 +6,8 @@ import type {
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
-import type { Sprite } from 'pixi.js';
-import { TilingSprite } from 'pixi.js';
+import { Sprite } from 'pixi.js';
+import { RenderTexture, TilingSprite } from 'pixi.js';
 import { Container, Matrix, Point, Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';
@@ -94,8 +94,9 @@ export class RoomPlane implements IRoomPlane {
     private _rectangleMasks: RoomPlaneRectangleMask[] = [];
     private _maskChanged = false;
 
-    private _planeSprite?: TilingSprite | Sprite;
+    private _planeSprite?: TilingSprite;
     private _planeTexture?: Texture;
+    private _maskTexture?: Texture | undefined;
 
     private _planeOffsetX = 0;
     private _planeOffsetY = 0;
@@ -153,6 +154,11 @@ export class RoomPlane implements IRoomPlane {
         if (this._planeTexture) {
             GetTexturePool().putTexture(this._planeTexture);
             this._planeTexture = undefined;
+        }
+
+        if (this._maskTexture) {
+            GetTexturePool().putTexture(this._maskTexture);
+            this._maskTexture = undefined;
         }
 
         this._disposed = true;
@@ -247,33 +253,48 @@ export class RoomPlane implements IRoomPlane {
             }
         }
 
-        this._planeSprite?.destroy();
+        if (this._planeSprite) {
+            if (this._planeSprite.texture !== texture) {
+                this._planeSprite.texture = texture;
+            }
 
-        this._planeSprite = new TilingSprite({
-            texture,
-            width,
-            height,
-            tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
-            tint: color,
-        });
+            if (this._planeSprite.width !== width || this._planeSprite.height !== height) {
+                this._planeSprite.width = width;
+                this._planeSprite.height = height;
+            }
 
-        if (
-            !this._planeTexture ||
-            this._planeTexture.width !== this._width ||
-            this._planeTexture.height !== this._height
-        ) this._planeTexture = GetTexturePool().getTexture(this._width, this._height);
+            if (this._planeSprite.tilePosition.x !== this._planeOffsetX || this._planeSprite.tilePosition.y !== this._planeOffsetY) {
+                this._planeSprite.tilePosition = { x: this._planeOffsetX, y: this._planeOffsetY };
+            }
+        } else {
+            this._planeSprite = new TilingSprite({
+                texture,
+                width,
+                height,
+                tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
+                tint: color,
+            });
+        }
+
+        if (!this._planeTexture) this._planeTexture = RenderTexture.create({ width: this._width, height: this._height });
+
+        if (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height) {
+            this._planeTexture.destroy(true);
+
+            this._planeTexture = RenderTexture.create({ width: this._width, height: this._height });
+        }
 
         if (this._planeTexture) this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
 
         const container = new Container();
+        const maskTexture = this.getMergedMasks(geometry);
 
         container.addChild(this._planeSprite);
 
-        const maskContainer = this.getMergedMasks(geometry);
-
-        if (maskContainer) {
-            this._planeSprite.setMask({ mask: maskContainer, inverse: true });
-            container.addChild(maskContainer);
+        if (maskTexture) {
+            const maskSprite = new Sprite(this._maskTexture);
+            this._planeSprite.setMask({ mask: maskSprite, channel: 'alpha' });
+            container.addChild(maskSprite);
         }
 
         GetRenderer().render({
@@ -483,13 +504,13 @@ export class RoomPlane implements IRoomPlane {
         return true;
     }
 
-    private getMergedMasks(geometry: IRoomGeometry): Container | undefined {
+    private getMergedMasks(geometry: IRoomGeometry): Texture | undefined {
         if (
             !this._useMask ||
             (!this._bitmapMasks.length && !this._rectangleMasks.length) ||
-            //!this._maskChanged ||
+            !this._maskChanged ||
             !this._maskManager
-        ) return undefined;
+        ) return this._maskTexture;
 
         this._maskChanged = false;
 
@@ -534,7 +555,22 @@ export class RoomPlane implements IRoomPlane {
             } as unknown as MaskEntry);
         }
 
-        return MergeMasks(masks, width, height);
+        const container = MergeMasks(masks, width, height);
+
+        if (!this._maskTexture) this._maskTexture = RenderTexture.create({ width: container.width, height: container.height });
+
+        if (this._maskTexture.width !== container.width || this._maskTexture.height !== container.height) {
+            this._maskTexture.destroy(true);
+
+            this._maskTexture = RenderTexture.create({ width: container.width, height: container.height });
+        }
+
+        GetRenderer().render({
+            target: this._maskTexture,
+            container
+        });
+
+        return this._maskTexture;
     }
 
     public get canBeVisible(): boolean {

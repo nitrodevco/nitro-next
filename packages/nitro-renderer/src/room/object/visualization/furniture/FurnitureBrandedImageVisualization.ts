@@ -137,7 +137,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
                 break;
         }
 
-        this.asset.addAsset(`${this._imageUrl}_${frame}`, texture, true, x, y, flipH, flipV);
+        this.asset.addAsset(`${this._imageUrl}_${frame}`, texture, x, y, flipH, flipV, false, true);
     }
 
     protected override getSpriteAssetName(scale: number, layerId: number): string {

@@ -1,3 +1,4 @@
+
 import type { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions } from 'pixi.js';
 import { Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
@@ -126,6 +127,37 @@ export class TextureUtils {
         matrix.translate(texture.width, texture.height);
 
         return this.createAndWriteRenderTexture(texture.width, texture.height, new Sprite(texture), matrix);
+    }
+
+    public static makeWhiteTransparent(texture: Texture) {
+        if (!texture) return texture;
+
+        const frame = texture.frame;
+        const canvas = document.createElement('canvas');
+
+        canvas.width = frame.width;
+        canvas.height = frame.height;
+
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) return texture;
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        ctx.drawImage(texture.source.resource, frame.x, frame.y, frame.width, frame.height, 0, 0, frame.width, frame.height);
+
+        const imageData = ctx.getImageData(0, 0, frame.width, frame.height);
+        const data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i], g = data[i + 1], b = data[i + 2];
+            const luminance = (r + g + b) / 3;
+
+            data[i + 3] = 255 - luminance;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+
+        return Texture.from(canvas);
     }
 
     public static getPixels(options: ExtractOptions | Container | Texture) {

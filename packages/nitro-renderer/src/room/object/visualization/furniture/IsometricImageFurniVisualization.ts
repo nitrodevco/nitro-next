@@ -59,8 +59,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
                     const thumbnail = this.generateTransformedThumbnail(texture, asset);
                     const assetName = this.getThumbnailAssetName(scale);
 
-                    this.asset.disposeAsset(assetName);
-                    this.asset.addAsset(assetName, thumbnail, true, asset.offsetX, asset.offsetY, false, false);
+                    this.asset.addAsset(assetName, thumbnail, asset.offsetX, asset.offsetY, false, false, false, true);
                 }
 
                 return;

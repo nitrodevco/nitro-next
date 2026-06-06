@@ -6,6 +6,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import stylistic from "@stylistic/eslint-plugin";
 
 export default [
     { ignores: [
@@ -24,6 +25,7 @@ export default [
         plugins: {
             'simple-import-sort': simpleImportSort,
             'unused-imports': unusedImports,
+            '@stylistic': stylistic
         },
         languageOptions: {
             globals: {
@@ -40,6 +42,7 @@ export default [
             'unused-imports/no-unused-imports': 'warn',
             '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            "@stylistic/function-paren-newline": ["error", "multiline-arguments"]
         }
     }
 ];

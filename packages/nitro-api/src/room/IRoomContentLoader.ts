@@ -2,7 +2,7 @@ import type { Texture } from 'pixi.js';
 
 import type { IEventDispatcher } from '#api/events';
 
-import type { IGraphicAssetCollection } from '../asset';
+import type { IGraphicAsset, IGraphicAssetCollection } from '../asset';
 import type { IFurnitureData } from '../session';
 import type { IPetColorResult } from './IPetColorResult';
 import type { IRoomContentListener } from './IRoomContentListener';
@@ -21,7 +21,7 @@ export interface IRoomContentLoader {
     getFurnitureWallColorIndex(typeId: number): number;
     getImage(name: string): HTMLImageElement;
     getAssetIconUrl(type: string, colorIndex: string): string | undefined;
-    addAssetToCollection(collectionName: string, assetName: string, texture: Texture, override?: boolean): boolean;
+    addAssetToCollection(collectionName: string, assetName: string, texture: Texture): IGraphicAsset | undefined;
     getPetNameForType(type: number): string | undefined;
     downloadImage(id: number, type: string, param: string, events?: IEventDispatcher): boolean;
     getRoomObjectAdUrl(type: string): string;
