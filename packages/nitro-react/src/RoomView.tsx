@@ -222,7 +222,16 @@ xxxxxxxxxxxx`,
             new LegacyDataType(),
         );
 
-        room.addFurnitureWallByTypeId(1, 4033, room.instance.legacyGeometry.getLocation(3, 11, 7, 33, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
+        room.addFurnitureFloorByTypeName(
+            4,
+            'dragonlamp_shinobi',
+            new Vector3d(9, 7, 0),
+            new Vector3d(90, 0, 0),
+            1,
+            new LegacyDataType(),
+        );
+
+        room.addFurnitureWallByTypeId(1, 4032, room.instance.legacyGeometry.getLocation(3, 11, 7, 33, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
 
         room.addFurnitureWallByTypeId(2, 4034, room.instance.legacyGeometry.getLocation(3, 8, 11, 36, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
 
@@ -230,6 +239,7 @@ xxxxxxxxxxxx`,
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(3, RoomObjectCategoryEnum.Floor);
+            room.removeRoomObject(4, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(1, RoomObjectCategoryEnum.Wall);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Wall);
         };

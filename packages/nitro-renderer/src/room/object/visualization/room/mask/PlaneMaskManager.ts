@@ -152,8 +152,7 @@ export class PlaneMaskManager {
         return {
             texture: texture,
             position: { x: posX + asset.offsetX, y: posY + asset.offsetY },
-            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 },
-            whiteIsTransparent: true,
+            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 }
         };
     }
 

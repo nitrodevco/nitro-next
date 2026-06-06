@@ -534,7 +534,7 @@ export class RoomPlane implements IRoomPlane {
             } as unknown as MaskEntry);
         }
 
-        return MergeMasks(masks);
+        return MergeMasks(masks, width, height);
     }
 
     public get canBeVisible(): boolean {
