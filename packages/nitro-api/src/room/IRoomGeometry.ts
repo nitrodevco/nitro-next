@@ -1,6 +1,7 @@
 import type { Point } from 'pixi.js';
 
 import type { IVector3D } from '../utils';
+import type { RoomGeometryScaleType } from './enum';
 
 export interface IRoomGeometry {
     dispose(): void;
@@ -17,7 +18,7 @@ export interface IRoomGeometry {
     performZoomIn(): void;
     isZoomedIn(): boolean;
     readonly updateId: number;
-    scale: number;
+    scale: RoomGeometryScaleType;
     location: IVector3D;
     direction: IVector3D;
     readonly directionAxis: IVector3D;

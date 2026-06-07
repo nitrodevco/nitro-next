@@ -1,5 +1,5 @@
 import type { IRoom } from '@nitrodevco/nitro-api';
-import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { LegacyDataType, RoomGeometryScaleType, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
 import {
     FurnitureStackingHeightMap,
     GetRoomEngine,
@@ -145,7 +145,7 @@ export const RoomView = ({ roomId }: {
 
             const wallGeometry = new LegacyWallGeometry();
 
-            wallGeometry.scale = LegacyWallGeometry.DEFAULT_SCALE;
+            wallGeometry.scale = RoomGeometryScaleType.ZoomedOut;
             wallGeometry.initialize(width, height, planeParser.floorHeight);
 
             let wallY = height - 1;

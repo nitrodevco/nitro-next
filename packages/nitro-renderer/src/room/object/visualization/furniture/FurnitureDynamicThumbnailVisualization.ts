@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { IsometricImageFurniVisualization } from './IsometricImageFurniVisualization';
@@ -11,7 +12,7 @@ export class FurnitureDynamicThumbnailVisualization extends IsometricImageFurniV
         this._hasOutline = true;
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         const thumbnailUrl = this.getThumbnailURL();
 
         if (this._cachedUrl !== thumbnailUrl) {

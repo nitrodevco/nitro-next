@@ -1,7 +1,6 @@
-import type { IAssetColor, IAssetData, IAssetVisualizationData, IAssetVisualizationDirection, IAssetVisualizationLayer, IObjectVisualizationData } from '@nitrodevco/nitro-api';
+import { type IAssetColor, type IAssetData, type IAssetVisualizationData, type IAssetVisualizationDirection, type IAssetVisualizationLayer, type IObjectVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES } from 'pixi.js';
 
-import { RoomGeometry } from '../../../utils';
 import { ColorData, LayerData, SizeData } from '../data';
 
 export class FurnitureVisualizationData implements IObjectVisualizationData {
@@ -38,9 +37,9 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
     private _sizes: number[] = [];
     private _sizeDatas: Map<number, SizeData> = new Map();
     private _lastSize: number = -1;
-    private _lastSizeScale: number = -1;
+    private _lastSizeScale: RoomGeometryScaleType = -1;
     private _lastSizeData: SizeData | undefined = undefined;
-    private _lastSizeDataScale: number = -1;
+    private _lastSizeDataScale: RoomGeometryScaleType = -1;
 
     public initialize(asset: IAssetData): boolean {
         this.reset();
@@ -81,7 +80,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
         this._lastSizeDataScale = -1;
     }
 
-    protected createSizeData(scale: number, layerCount: number, angle: number): SizeData {
+    protected createSizeData(scale: RoomGeometryScaleType, layerCount: number, angle: number): SizeData {
         return new SizeData(layerCount, angle);
     }
 
@@ -125,14 +124,14 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
     private removeInvalidSizes(): void {
         if (!this._sizes || !this._sizes.length) return;
 
-        const zoomedIn = this._sizeDatas.get(RoomGeometry.SCALE_ZOOMED_IN);
-        const zoomedOut = this._sizeDatas.get(RoomGeometry.SCALE_ZOOMED_OUT);
+        const zoomedIn = this._sizeDatas.get(RoomGeometryScaleType.ZoomedIn);
+        const zoomedOut = this._sizeDatas.get(RoomGeometryScaleType.ZoomedOut);
 
         if (zoomedIn && zoomedOut) {
             if (zoomedIn.layerCount !== zoomedOut.layerCount) {
-                this._sizeDatas.delete(RoomGeometry.SCALE_ZOOMED_OUT);
+                this._sizeDatas.delete(RoomGeometryScaleType.ZoomedOut);
 
-                const index = this._sizes.indexOf(RoomGeometry.SCALE_ZOOMED_OUT);
+                const index = this._sizes.indexOf(RoomGeometryScaleType.ZoomedOut);
 
                 if (index >= 0) this._sizes.splice(index, 1);
             }
@@ -157,7 +156,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
         return true;
     }
 
-    public getValidSize(scale: number): number {
+    public getValidSize(scale: RoomGeometryScaleType): number {
         if (scale === this._lastSizeScale) return this._lastSize;
 
         const sizeIndex = this.getSizeIndex(scale);
@@ -193,7 +192,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
         return index;
     }
 
-    protected getSizeData(size: number): SizeData | undefined {
+    protected getSizeData(size: RoomGeometryScaleType): SizeData | undefined {
         if (size === this._lastSizeDataScale) return this._lastSizeData;
 
         const sizeIndex = this.getSizeIndex(size);
@@ -206,43 +205,43 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
         return this._lastSizeData;
     }
 
-    public getLayerCount(scale: number): number {
+    public getLayerCount(scale: RoomGeometryScaleType): number {
         return this.getSizeData(scale)?.layerCount ?? LayerData.DEFAULT_COUNT;
     }
 
-    public getValidDirection(scale: number, direction: number): number {
+    public getValidDirection(scale: RoomGeometryScaleType, direction: number): number {
         return this.getSizeData(scale)?.getValidDirection(direction) ?? LayerData.DEFAULT_DIRECTION;
     }
 
-    public getLayerTag(scale: number, direction: number, layerId: number): string {
+    public getLayerTag(scale: RoomGeometryScaleType, direction: number, layerId: number): string {
         return this.getSizeData(scale)?.getLayerTag(direction, layerId) ?? LayerData.DEFAULT_TAG;
     }
 
-    public getLayerBlendMode(scale: number, direction: number, layerId: number): BLEND_MODES {
+    public getLayerBlendMode(scale: RoomGeometryScaleType, direction: number, layerId: number): BLEND_MODES {
         return this.getSizeData(scale)?.getLayerBlendMode(direction, layerId) ?? LayerData.DEFAULT_BLEND_MODE;
     }
 
-    public getLayerAlpha(scale: number, direction: number, layerId: number): number {
+    public getLayerAlpha(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         return this.getSizeData(scale)?.getLayerAlpha(direction, layerId) ?? LayerData.DEFAULT_ALPHA;
     }
 
-    public getLayerColor(scale: number, layerId: number, colorId: number): number {
+    public getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
         return this.getSizeData(scale)?.getLayerColor(layerId, colorId) ?? ColorData.DEFAULT_COLOR;
     }
 
-    public getLayerIgnoreMouse(scale: number, direction: number, layerId: number): boolean {
+    public getLayerIgnoreMouse(scale: RoomGeometryScaleType, direction: number, layerId: number): boolean {
         return this.getSizeData(scale)?.getLayerIgnoreMouse(direction, layerId) ?? LayerData.DEFAULT_IGNORE_MOUSE;
     }
 
-    public getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    public getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         return this.getSizeData(scale)?.getLayerXOffset(direction, layerId) ?? LayerData.DEFAULT_XOFFSET;
     }
 
-    public getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    public getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         return this.getSizeData(scale)?.getLayerYOffset(direction, layerId) ?? LayerData.DEFAULT_YOFFSET;
     }
 
-    public getLayerZOffset(scale: number, direction: number, layerId: number): number {
+    public getLayerZOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         return this.getSizeData(scale)?.getLayerZOffset(direction, layerId) ?? LayerData.DEFAULT_ZOFFSET;
     }
 

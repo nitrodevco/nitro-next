@@ -1,4 +1,5 @@
 import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AlphaTolerance, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES, Filter } from 'pixi.js';
 import { Texture } from 'pixi.js';
@@ -24,7 +25,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     protected _clickHandling: boolean = false;
 
     protected _cacheDirection: number = -1;
-    protected _cacheScale: number = 0;
+    protected _cacheScale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     protected _cacheSize: number = -1;
 
     protected _layerCount: number = 0;
@@ -88,7 +89,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         this.createSprites(0);
     }
 
-    protected resetLayers(scale: number, direction: number): void {
+    protected resetLayers(scale: RoomGeometryScaleType, direction: number): void {
         if (this._cacheDirection === direction && this._cacheScale === scale) return;
 
         this.resetSpriteData();
@@ -138,7 +139,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         }
     }
 
-    protected updateObject(scale: number, direction: number): boolean {
+    protected updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (
             this.updateObjectCounter === this.object.updateCounter &&
             scale === this._scale &&
@@ -164,7 +165,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return true;
     }
 
-    protected updateModel(scale: number): boolean {
+    protected updateModel(scale: RoomGeometryScaleType): boolean {
         const model = this.object && this.object.model;
 
         if (!model) return false;
@@ -192,7 +193,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return true;
     }
 
-    protected updateSprites(scale: number, update: boolean, animation: number): void {
+    protected updateSprites(scale: RoomGeometryScaleType, update: boolean, animation: number): void {
         if (this._layerCount !== this.totalSprites) this.createSprites(this._layerCount);
 
         if (update) {
@@ -217,7 +218,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         this._alphaChanged = false;
     }
 
-    protected updateSprite(scale: number, layerId: number): void {
+    protected updateSprite(scale: RoomGeometryScaleType, layerId: number): void {
         const assetName = this.getSpriteAssetName(scale, layerId);
         const sprite = this.getSprite(layerId);
 
@@ -275,7 +276,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return asset?.source;
     }
 
-    protected getPostureForAssetFile(scale: number, _arg_2: string): string | undefined {
+    protected getPostureForAssetFile(scale: RoomGeometryScaleType, _arg_2: string): string | undefined {
         return undefined;
     }
 
@@ -294,7 +295,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         sprite.clickHandling = false;
     }
 
-    protected getSpriteAssetName(scale: number, layerId: number): string {
+    protected getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         if (!this._data || layerId >= FurnitureVisualizationData.LAYER_LETTERS.length) return '';
 
         let assetName = this._assetNames[layerId];
@@ -310,7 +311,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return assetName;
     }
 
-    protected cacheSpriteAssetName(scale: number, layerId: number, cache: boolean): string {
+    protected cacheSpriteAssetName(scale: RoomGeometryScaleType, layerId: number, cache: boolean): string {
         const size = cache ? this._cacheSize : this.getValidSize(scale);
         const isntIcon = size !== 1;
 
@@ -336,7 +337,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return assetName;
     }
 
-    protected getLayerTag(scale: number, direction: number, layerId: number): string {
+    protected getLayerTag(scale: RoomGeometryScaleType, direction: number, layerId: number): string {
         const existing = this._spriteTags[layerId];
 
         if (existing !== undefined) return existing;
@@ -350,7 +351,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return tag;
     }
 
-    protected getLayerBlendMode(scale: number, direction: number, layerId: number): BLEND_MODES {
+    protected getLayerBlendMode(scale: RoomGeometryScaleType, direction: number, layerId: number): BLEND_MODES {
         const existing = this._spriteBlendModes[layerId];
 
         if (existing !== undefined) return existing;
@@ -364,7 +365,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return blendMode;
     }
 
-    protected getLayerAlpha(scale: number, direction: number, layerId: number): number {
+    protected getLayerAlpha(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (!this._alphaChanged) {
             const existing = this._spriteAlphas[layerId];
 
@@ -382,7 +383,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return alpha;
     }
 
-    protected getLayerColor(scale: number, layerId: number, colorId: number): number {
+    protected getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
         const existing = this._spriteColors[layerId];
 
         if (existing !== undefined) return existing;
@@ -396,7 +397,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return color;
     }
 
-    protected getLayerIgnoreMouse(scale: number, direction: number, layerId: number): boolean {
+    protected getLayerIgnoreMouse(scale: RoomGeometryScaleType, direction: number, layerId: number): boolean {
         const existing = this._spriteMouseCaptures[layerId];
 
         if (existing !== undefined) return existing;
@@ -410,7 +411,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return ignoreMouse;
     }
 
-    protected getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         const existing = this._spriteXOffsets[layerId];
 
         if (existing !== undefined) return existing;
@@ -424,7 +425,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return xOffset;
     }
 
-    protected getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (layerId === this._shadowLayerIndex) return Math.ceil(this._furnitureLift * (scale / 2));
 
         const existing = this._spriteYOffsets[layerId];
@@ -440,7 +441,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return yOffset;
     }
 
-    protected getLayerZOffset(scale: number, direction: number, layerId: number): number {
+    protected getLayerZOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         const existing = this._spriteZOffsets[layerId];
 
         if (existing !== undefined) return existing;
@@ -454,7 +455,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return zOffset;
     }
 
-    protected getValidSize(scale: number): number {
+    protected getValidSize(scale: RoomGeometryScaleType): number {
         if (!this._data) return scale;
 
         return this._data.getValidSize(scale);
@@ -475,15 +476,15 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return 1;
     }
 
-    protected updateAnimation(scale: number): number {
+    protected updateAnimation(scale: RoomGeometryScaleType): number {
         return 0;
     }
 
-    protected getFrameNumber(scale: number, layerId: number): number {
+    protected getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         return 0;
     }
 
-    protected getPostureForAsset(scale: number, name: string): string | undefined {
+    protected getPostureForAsset(scale: RoomGeometryScaleType, name: string): string | undefined {
         return undefined;
     }
 
@@ -491,7 +492,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         return this.asset?.getAsset(name);
     }
 
-    public getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture {
+    public getTexture(scale: RoomGeometryScaleType, layerId: number, asset: IGraphicAsset): Texture {
         return asset?.texture || Texture.EMPTY;
     }
 

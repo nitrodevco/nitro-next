@@ -3,7 +3,7 @@
 import type { IObjectData, RoomObjectCategoryEnum, RoomObjectOperationType } from '../object';
 
 export interface ISelectedRoomObjectData {
-    id: number;
+    objectId: number;
     category: RoomObjectCategoryEnum;
     operation: RoomObjectOperationType | undefined;
     loc: IVector3D;

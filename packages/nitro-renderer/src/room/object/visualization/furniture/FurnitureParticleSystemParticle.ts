@@ -1,4 +1,4 @@
-﻿import type { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
+﻿import type { IGraphicAsset, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
 export class FurnitureParticleSystemParticle {
@@ -71,7 +71,7 @@ export class FurnitureParticleSystemParticle {
         return undefined;
     }
 
-    protected ignite(): void {}
+    protected ignite(): void { }
 
     public get fade(): boolean {
         return this._fade;
@@ -156,7 +156,7 @@ export class FurnitureParticleSystemParticle {
         return [this._x, this._y, this._z].toString();
     }
 
-    public copy(particle: FurnitureParticleSystemParticle, scale: number): void {
+    public copy(particle: FurnitureParticleSystemParticle, scale: RoomGeometryScaleType): void {
         this._x = particle._x * scale;
         this._y = particle._y * scale;
         this._z = particle._z * scale;

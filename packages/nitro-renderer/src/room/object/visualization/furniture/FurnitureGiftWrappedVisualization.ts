@@ -1,4 +1,4 @@
-import type { IRoomGeometry } from '@nitrodevco/nitro-api';
+import type { IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureVisualization } from './FurnitureVisualization';
@@ -16,22 +16,21 @@ export class FurnitureGiftWrappedVisualization extends FurnitureVisualization {
     private updatePresentWrap(): void {
         if (!this.object) return;
 
-        const extras = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
+        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
 
         const local3 = 1000;
-        const typeIndex = parseInt(extras);
 
-        this._packetType = Math.floor(typeIndex / local3);
-        this._ribbonType = typeIndex % local3;
+        this._packetType = Math.floor(extras / local3);
+        this._ribbonType = extras % local3;
     }
 
-    public override getFrameNumber(scale: number, layerId: number): number {
+    public override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         if (layerId <= 1) return this._packetType;
 
         return this._ribbonType;
     }
 
-    public override getSpriteAssetName(scale: number, layerId: number): string {
+    public override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const size = this.getValidSize(scale);
 
         let assetName = this._type;

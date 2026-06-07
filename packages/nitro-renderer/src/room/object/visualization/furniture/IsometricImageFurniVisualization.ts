@@ -1,4 +1,4 @@
-import type { IGraphicAsset } from '@nitrodevco/nitro-api';
+import type { IGraphicAsset, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Matrix, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
@@ -22,7 +22,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
         this._thumbnailChanged = true;
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         const flag = super.updateModel(scale);
 
         if (!this._thumbnailChanged && this._thumbnailDirection === this.direction) return flag;
@@ -45,7 +45,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
         this._thumbnailDirection = this.direction;
     }
 
-    private addThumbnailAsset(texture: Texture, scale: number): void {
+    private addThumbnailAsset(texture: Texture, scale: RoomGeometryScaleType): void {
         let layerId = 0;
 
         while (layerId < this.totalSprites) {
@@ -128,7 +128,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
         return TextureUtils.generateTexture(sprite);
     }
 
-    protected override getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         if (
             this._thumbnailImageNormal &&
             this.getLayerTag(scale, this.direction, layerId) === IsometricImageFurniVisualization.THUMBNAIL
@@ -138,7 +138,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
         return super.getSpriteAssetName(scale, layerId);
     }
 
-    protected getThumbnailAssetName(scale: number): string {
+    protected getThumbnailAssetName(scale: RoomGeometryScaleType): string {
         this._thumbnailAssetNameNormal = this.getFullThumbnailAssetName(this.object.id, 64);
 
         return this._thumbnailAssetNameNormal;

@@ -13,14 +13,22 @@ import type {
     IRoomObjectEvent,
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
-    IVector3D
+    IVector3D,
+    RoomGeometryScaleType
+} from '@nitrodevco/nitro-api';
+import type {
+    RoomObjectUserType
+} from '@nitrodevco/nitro-api';
+import {
+    RoomObjectUserTypeName
 } from '@nitrodevco/nitro-api';
 import {
     GetObjectDataForFlags,
     LegacyDataType,
     NitroLogger,
+    ObjectDataFlagsEnum,
     RoomObjectCategoryEnum,
-    RoomObjectUserType,
+    RoomObjectUserTypeUtils,
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
@@ -34,11 +42,12 @@ import {
     RoomEngineObjectEvent,
     SessionStore
 } from '@nitrodevco/nitro-shared';
-import type { PointData } from 'pixi.js';
-import type { Rectangle } from 'pixi.js';
+import type { Container, ImageLike, Rectangle } from 'pixi.js';
+import { type PointData, Sprite, Texture } from 'pixi.js';
 
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
+import { GetRoomEngine } from './GetRoomEngine';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
 import {
@@ -52,7 +61,7 @@ import {
 } from './messages';
 import { RoomLogic } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
-import { RoomAreaSelectionManager, RoomEnterEffect, type RoomFurnitureData } from './utils';
+import { RoomAreaSelectionManager, RoomEnterEffect } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -70,9 +79,6 @@ export class Room implements IRoom {
     private _eventHandler: IRoomEventHandler;
 
     private _modelName: string;
-
-    private _floorStack: Map<number, RoomFurnitureData> = new Map();
-    private _wallStack: Map<number, RoomFurnitureData> = new Map();
 
     private _areaSelection: IRoomAreaSelectionManager;
     private _roomObjectEventHandler: ((event: RoomObjectEvent) => void) | undefined = undefined;
@@ -133,6 +139,13 @@ export class Room implements IRoom {
 
             if (direction) canvas.geometry.setDisplacement(vector, direction);
         }
+
+        const overlay = new Sprite(Texture.EMPTY);
+
+        overlay.label = Room.OVERLAY;
+        overlay.interactive = false;
+
+        canvas.master?.addChild(overlay);
 
         return canvas;
     }
@@ -223,7 +236,7 @@ export class Room implements IRoom {
 
         const floorType = '111';
         const wallType = '201';
-        const landscapeType = '1';
+        const landscapeType = '6.12';
 
         if (floorType) {
             roomObject.processUpdateMessage(
@@ -560,6 +573,8 @@ export class Room implements IRoom {
 
         const roomObjectRoom = this.getRoomObjectRoom();
 
+        console.log(new Error().stack);
+
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
     }
 
@@ -642,23 +657,13 @@ export class Room implements IRoom {
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Floor),
         );
 
-        const selectedRoomObjectData = this._instance.placedObject;
-
-        if (
-            selectedRoomObjectData &&
-            selectedRoomObjectData.id === id &&
-            selectedRoomObjectData.category === RoomObjectCategoryEnum.Floor
-        ) {
-            // TODO this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Floor);
-        }
-
         if (roomObject?.isReady && synchronized) this._instance.tileObjectMap.addRoomObject(roomObject);
 
         return true;
     }
 
     public addFurnitureWallByTypeId(
-        id: number,
+        objectId: number,
         typeId: number,
         location: IVector3D,
         direction: IVector3D,
@@ -680,7 +685,7 @@ export class Room implements IRoom {
 
         const type = GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, extra);
 
-        const roomObject = this.createRoomObjectWall(id, type);
+        const roomObject = this.createRoomObjectWall(objectId, type);
 
         if (roomObject) {
             roomObject.model.setValue(
@@ -698,21 +703,11 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, ownerName);
         }
 
-        if (!this.updateRoomObjectWall(id, location, direction, state, objectData, extra)) return false;
+        if (!this.updateRoomObjectWall(objectId, location, direction, state, objectData, extra)) return false;
 
         this.dispatchEvent(
-            new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Wall),
+            new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Wall),
         );
-
-        const selectedRoomObjectData = this._instance.placedObject;
-
-        if (
-            selectedRoomObjectData &&
-            Math.abs(selectedRoomObjectData.id) === id &&
-            selectedRoomObjectData.category === RoomObjectCategoryEnum.Wall
-        ) {
-            // TODO this._eventHandler.setSelectedObject(id, RoomObjectCategoryEnum.Wall);
-        }
 
         return true;
     }
@@ -722,22 +717,22 @@ export class Room implements IRoom {
         location: IVector3D,
         direction: IVector3D,
         headDirection: number,
-        type: number,
+        type: RoomObjectUserType,
         figure: string,
     ): boolean {
         const existing = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (existing) return false;
 
-        let objectType = RoomObjectUserType.getTypeString(type);
+        let objectType = RoomObjectUserTypeUtils.getAvatarTypeName(type);
 
-        if (objectType === RoomObjectUserType.PET) objectType = this.getPetType(figure) ?? '';
+        if (objectType === RoomObjectUserTypeName.Pet) objectType = this.getPetType(figure);
+
+        if (!objectType) return false;
 
         const roomObject = (this.createRoomObjectUser(objectId, objectType)) as IRoomObjectController;
 
-        if (!roomObject || !roomObject.logic) return false;
-
-        //object.model.setValue(RoomObjectVariable.FIGURE_HIGHLIGHT_ENABLE, 1);
+        if (!roomObject) return false;
 
         roomObject.processUpdateMessage(
             new ObjectAvatarUpdateMessage(
@@ -773,7 +768,7 @@ export class Room implements IRoom {
 
                     if (!disabledPickingAnimation) {
                         const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
-                        const extras = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
+                        const extras = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
                         const dataKey = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDataFormat);
                         const objectData = GetObjectDataForFlags(dataKey);
                         /* const icon = this.getFurnitureFloorIcon(typeId, null, extras, objectData).data;
@@ -883,6 +878,70 @@ export class Room implements IRoom {
         return screenPoint;
     }
 
+    public getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined> {
+        let id = -1;
+        let type: string = '';
+        let value: string = '';
+        let data: IObjectData | undefined = undefined;
+        let extras: number | undefined = undefined;
+
+        const roomObject = this.getRoomObject(objectId, category);
+
+        if (roomObject) {
+            id = roomObject.id;
+            type = roomObject.type;
+
+            switch (category) {
+                case RoomObjectCategoryEnum.Floor:
+                case RoomObjectCategoryEnum.Wall: {
+                    value = (roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureColor).toString());
+                    extras = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+
+                    const dataFormat = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
+
+                    if (dataFormat !== ObjectDataFlagsEnum.Legacy) {
+                        data = GetObjectDataForFlags(dataFormat);
+
+                        if (data) data.initializeFromRoomObjectModel(roomObject.model);
+                    }
+
+                    break;
+                }
+                case RoomObjectCategoryEnum.Unit: {
+                    value = roomObject.model.getValue<string>(RoomObjectVariableEnum.Figure);
+                    break;
+                }
+            }
+        }
+
+        return GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, extras, data)
+    }
+
+    public setRoomOverlayIcon(id: number, category: RoomObjectCategoryEnum): void {
+        const roomContentLoader = GetRoomContentLoader();
+        let type: string | undefined = undefined;
+        let colorIndex = 0;
+
+        switch (category) {
+            case RoomObjectCategoryEnum.Floor: {
+                type = roomContentLoader.getFurnitureFloorNameForTypeId(id);
+                colorIndex = roomContentLoader.getFurnitureFloorColorIndex(id);
+                break;
+            }
+            case RoomObjectCategoryEnum.Wall: {
+                type = roomContentLoader.getFurnitureWallNameForTypeId(id);
+                colorIndex = roomContentLoader.getFurnitureWallColorIndex(id);
+                break;
+            }
+            case RoomObjectCategoryEnum.Unit: {
+                type = RoomObjectUserTypeUtils.getAvatarTypeName(id);
+
+
+                break;
+            }
+        }
+    }
+
     public getRoomValue<T>(key: RoomObjectVariableEnum): T {
         return this._instance?.model.getValue(key);
     }
@@ -897,6 +956,29 @@ export class Room implements IRoom {
 
     public getRoomObjectSelectionArrow(): IRoomObjectController {
         return this.getRoomObject(Room.ARROW_OBJECT_ID, RoomObjectCategoryEnum.Cursor);
+    }
+
+    public getRoomOverlay(): Container | undefined {
+        return this._instance.canvas?.master?.getChildByLabel(Room.OVERLAY) ?? undefined;
+    }
+
+    public getRoomOverlayIcon(): Container | undefined {
+        const container = this.getRoomOverlay();
+        const label = Room.OBJECT_ICON_SPRITE;
+
+        if (!container) return undefined;
+
+        let index = container.children.length - 1;
+
+        while (index >= 0) {
+            const child = container.getChildAt(index);
+
+            if (child && child.label === label) return child;
+
+            index--;
+        }
+
+        return undefined;
     }
 
     public isPlayingGame(): boolean {

@@ -1,5 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarAction } from '@nitrodevco/nitro-api';
+import { AvatarAction, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../../assets';
@@ -8,7 +8,7 @@ import type { IAvatarAddition } from './IAvatarAddition';
 
 export class NumberBubbleAddition implements IAvatarAddition {
     private _asset: Texture | undefined = undefined;
-    private _scale: number = 0;
+    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _numberValueFadeDirection: number = 0;
     private _numberValueMoving: boolean = false;
     private _numberValueMoveCounter: number = 0;
@@ -17,27 +17,27 @@ export class NumberBubbleAddition implements IAvatarAddition {
         private _id: number,
         private _number: number,
         private _visualization: AvatarVisualization | undefined,
-    ) {}
+    ) { }
 
     public dispose(): void {
         this._visualization = undefined;
         this._asset = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite || !this._visualization) return;
 
         this._scale = scale;
 
-        let additionScale = 64;
+        let additionScale = RoomGeometryScaleType.ZoomedIn;
         let offsetX = 0;
         let offsetY = 0;
 
         if (this._number > 0) {
-            if (scale < 48) {
+            if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
                 this._asset = GetAssetManager().getTexture('avatar_addition_number_' + this._number + '_small');
 
-                additionScale = 32;
+                additionScale = RoomGeometryScaleType.ZoomedOut;
                 offsetX = -6;
                 offsetY = -52;
             } else {
@@ -86,7 +86,7 @@ export class NumberBubbleAddition implements IAvatarAddition {
             if (this._numberValueMoveCounter < 10) return false;
 
             if (this._numberValueFadeDirection < 0) {
-                if (this._scale < 48) {
+                if (this._scale < RoomGeometryScaleType.AvatarSizeNormal) {
                     sprite.offsetY -= 2;
                 } else {
                     sprite.offsetY -= 4;
@@ -94,7 +94,7 @@ export class NumberBubbleAddition implements IAvatarAddition {
             } else {
                 let count = 4;
 
-                if (this._scale < 48) count = 8;
+                if (this._scale < RoomGeometryScaleType.AvatarSizeNormal) count = 8;
 
                 if (!(this._numberValueMoveCounter % count)) {
                     sprite.offsetY--;

@@ -7,6 +7,7 @@ import type {
     IRoomObjectSpriteVisualization,
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
+    RoomGeometryScaleType,
     RoomObjectSpriteData
 } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/nitro-api';
@@ -88,7 +89,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         private _instance: IRoomInstance,
         width: number,
         height: number,
-        scale: number,
+        scale: RoomGeometryScaleType,
     ) {
         this._geometry = new RoomGeometry(
             scale,

@@ -1,4 +1,5 @@
 import type { IAvatarImage, IAvatarImageListener, IGraphicAsset } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AvatarSetType, type IObjectVisualizationData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -7,7 +8,7 @@ import { FurnitureVisualization } from './FurnitureVisualization';
 export class FurnitureMannequinVisualization extends FurnitureVisualization implements IAvatarImageListener {
     private static AVATAR_IMAGE_SPRITE_TAG: string = 'avatar_image';
 
-    private _mannequinScale: number = -1;
+    private _mannequinScale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _figure: string = '';
     private _gender: string = '';
     private _avatarImage: IAvatarImage | undefined = undefined;
@@ -37,7 +38,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         super.dispose();
     }
 
-    protected override updateObject(scale: number, direction: number): boolean {
+    protected override updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (!super.updateObject(scale, direction)) return false;
 
         if (this._mannequinScale !== scale) {
@@ -49,7 +50,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         return true;
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         let updateModel = super.updateModel(scale);
 
         if (updateModel) {
@@ -87,7 +88,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         this._needsUpdate = true;
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (
             this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
             this._avatarImage
@@ -97,7 +98,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         return super.getLayerXOffset(scale, direction, layerId);
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (
             this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
             this._avatarImage
@@ -107,10 +108,10 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         return super.getLayerYOffset(scale, direction, layerId);
     }
 
-    public override getTexture(scale: number, layerId: number, asset: IGraphicAsset): Texture {
+    public override getTexture(scale: RoomGeometryScaleType, layerId: number, asset: IGraphicAsset): Texture {
         if (
             this.getLayerTag(scale, this.direction, layerId) ===
-                FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
+            FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
             this._avatarImage
         ) {
             this._avatarImage.setDirection(AvatarSetType.FULL, this.direction);

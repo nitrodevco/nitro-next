@@ -1,10 +1,7 @@
-import { type IRoomGeometry, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { type IRoomGeometry, type IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 export class RoomGeometry implements IRoomGeometry {
-    public static SCALE_ZOOMED_IN: number = 64;
-    public static SCALE_ZOOMED_OUT: number = 32;
-
     private _updateId: number = 0;
     private _x: IVector3D = new Vector3d();
     private _y: IVector3D = new Vector3d();
@@ -26,7 +23,7 @@ export class RoomGeometry implements IRoomGeometry {
     private _clipFar: number = 500;
     private _displacements: Map<string, IVector3D> = new Map();
 
-    constructor(scale: number, direction: IVector3D, location: IVector3D, depth: IVector3D | undefined = undefined) {
+    constructor(scale: RoomGeometryScaleType, direction: IVector3D, location: IVector3D, depth: IVector3D | undefined = undefined) {
         this.scale = scale;
 
         this.location.assign(location);
@@ -240,38 +237,39 @@ export class RoomGeometry implements IRoomGeometry {
 
     public performZoom(): void {
         if (this.isZoomedIn()) {
-            this.scale = RoomGeometry.SCALE_ZOOMED_OUT;
+            this.scale = RoomGeometryScaleType.ZoomedOut;
         } else {
-            this.scale = RoomGeometry.SCALE_ZOOMED_IN;
+            this.scale = RoomGeometryScaleType.ZoomedIn;
         }
     }
 
     public performZoomOut(): void {
-        this.scale = RoomGeometry.SCALE_ZOOMED_OUT;
+        this.scale = RoomGeometryScaleType.ZoomedOut;
     }
 
     public performZoomIn(): void {
-        this.scale = RoomGeometry.SCALE_ZOOMED_IN;
+        this.scale = RoomGeometryScaleType.ZoomedIn;
     }
 
     public isZoomedIn(): boolean {
-        return this.scale == RoomGeometry.SCALE_ZOOMED_IN;
+        return this.scale == RoomGeometryScaleType.ZoomedIn;
     }
 
     public get updateId(): number {
         return this._updateId;
     }
 
-    public get scale(): number {
+    public get scale(): RoomGeometryScaleType {
         return this._scale / Math.sqrt(0.5);
     }
 
-    public set scale(scale: number) {
-        if (scale <= 1) {
-            scale = 1;
-        }
+    public set scale(scale: RoomGeometryScaleType) {
+        if (scale <= RoomGeometryScaleType.Icon) scale = RoomGeometryScaleType.Icon;
+
         scale = scale * Math.sqrt(0.5);
-        if (scale != this._scale) {
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+        if (scale !== this._scale) {
             this._scale = scale;
             this._updateId++;
         }

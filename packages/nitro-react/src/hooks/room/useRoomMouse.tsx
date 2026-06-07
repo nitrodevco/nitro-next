@@ -165,15 +165,16 @@ export const useRoomMouse = () => {
         shiftKey: boolean,
         buttonDown: boolean
     ) => {
-        /*  const overlay = this.getRenderingCanvasOverlay(canvas);
-        const sprite = this.getOverlayIconSprite(overlay, RoomEngine.OBJECT_ICON_SPRITE);
-    
+        if (!room) return;
+
+        const sprite = room.getRoomOverlayIcon();
+
         if (sprite) {
             const rectangle = sprite.getLocalBounds();
-    
+
             sprite.x = x - rectangle.width / 2;
             sprite.y = y - rectangle.height / 2;
-        } */
+        }
 
         if (
             !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&

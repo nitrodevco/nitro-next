@@ -1,4 +1,4 @@
-import { AvatarAction, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { AvatarAction, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../../assets';
@@ -16,13 +16,13 @@ export class FloatingIdleZAddition implements IAvatarAddition {
     private _asset: Texture | undefined = undefined;
     private _startTime: number = GetTickerTime();
     private _offsetY: number = 0;
-    private _scale: number = 0;
+    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _state: number = 0;
 
     constructor(
         private _id: number,
         private _visualization: AvatarVisualization | undefined,
-    ) {}
+    ) { }
 
     public dispose(): void {
         this._visualization = undefined;
@@ -41,10 +41,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
         )
             side = 'right';
 
-        return 'avatar_addition_user_idle_' + side + '_' + state + (this._scale < 48 ? '_small' : '');
+        return 'avatar_addition_user_idle_' + side + '_' + state + (this._scale < RoomGeometryScaleType.AvatarSizeNormal ? '_small' : '');
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite || !this._visualization) return;
 
         this._scale = scale;
@@ -52,10 +52,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
             this.getSpriteAssetName(this._state === FloatingIdleZAddition.STATE_FRAME_A ? 1 : 2),
         );
 
-        let additionScale = 64;
+        let additionScale = RoomGeometryScaleType.ZoomedIn;
         let offsetX = 0;
 
-        if (scale < 48) {
+        if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             if (
                 this._visualization.angle === 135 ||
                 this._visualization.angle === 180 ||
@@ -69,7 +69,7 @@ export class FloatingIdleZAddition implements IAvatarAddition {
 
             this._offsetY = -38;
 
-            additionScale = 32;
+            additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             if (
                 this._visualization.angle === 135 ||

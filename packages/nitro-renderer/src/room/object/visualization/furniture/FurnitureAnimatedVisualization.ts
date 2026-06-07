@@ -1,4 +1,5 @@
 import type { IObjectVisualizationData } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
 import { AnimationData, AnimationFrame, AnimationStateData } from '../data';
@@ -12,7 +13,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
     protected _state: number = -1;
     protected _frameIncrease: number = 1;
     private _animationData: AnimationStateData = new AnimationStateData();
-    private _animationScale: number = 0;
+    private _animationScale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _animationChangeTime: number = 0;
     private _animatedLayerCount: number = 0;
     private _directionChanged: boolean = false;
@@ -51,7 +52,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return FurnitureAnimatedVisualization.DEFAULT_ANIMATION_ID;
     }
 
-    protected override updateObject(scale: number, direction: number): boolean {
+    protected override updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (!super.updateObject(scale, direction)) return false;
 
         const state = this.object.getState(0);
@@ -68,7 +69,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return true;
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         if (!super.updateModel(scale)) return false;
 
         if (this.usesAnimationResetting()) {
@@ -193,7 +194,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         this._animationData.setLayerCount(this._animatedLayerCount);
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (!this.data) return 0;
 
         if (scale !== this._animationScale) {
@@ -210,7 +211,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return update;
     }
 
-    protected updateAnimations(scale: number): number {
+    protected updateAnimations(scale: RoomGeometryScaleType): number {
         if (this._animationData.animationOver && !this._directionChanged) return 0;
 
         const update = this.updateFramesForAnimation(this._animationData, scale);
@@ -228,7 +229,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return update;
     }
 
-    protected updateFramesForAnimation(animationData: AnimationStateData, scale: number): number {
+    protected updateFramesForAnimation(animationData: AnimationStateData, scale: RoomGeometryScaleType): number {
         if (animationData.animationOver && !this._directionChanged) return 0;
 
         const animationId = this.getAnimationId(animationData);
@@ -308,11 +309,11 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return update;
     }
 
-    protected override getFrameNumber(scale: number, layerId: number): number {
+    protected override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         return this._animationData.getFrame(layerId)?.id ?? super.getFrameNumber(scale, layerId);
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerXOffset(scale, direction, layerId);
 
         const currentFrame = this._animationData.getFrame(layerId);
@@ -322,7 +323,7 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         return offset;
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerYOffset(scale, direction, layerId);
 
         const currentFrame = this._animationData.getFrame(layerId);

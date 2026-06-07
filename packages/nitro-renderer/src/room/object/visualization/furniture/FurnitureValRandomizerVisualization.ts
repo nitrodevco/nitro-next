@@ -1,3 +1,5 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
 export class FurnitureValRandomizerVisualization extends FurnitureAnimatedVisualization {
@@ -51,7 +53,7 @@ export class FurnitureValRandomizerVisualization extends FurnitureAnimatedVisual
         }
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (this.getLastFramePlayed(11) && this._stateQueue.length > 0)
             super.setAnimation(this._stateQueue.shift() as number);
 

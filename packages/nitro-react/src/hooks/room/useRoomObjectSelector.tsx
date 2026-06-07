@@ -5,12 +5,13 @@ import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
 
 import { useRoomContext } from '../context';
 
-export const useRoomSelectedObject = () => {
+export const useRoomObjectSelector = () => {
     const room = useRoomContext(x => x.room);
     const selectedAvatarId = useRoomContext(x => x.selectedAvatarId);
     const selectedObjectId = useRoomContext(x => x.selectedObjectId);
     const selectedObjectCategory = useRoomContext(x => x.selectedObjectCategory);
     const selectedObject = useRoomContext(x => x.selectedObject);
+    const placedObject = useRoomContext(x => x.placedObject);
     const setSelectedAvatarId = useRoomContext(x => x.setSelectedAvatarId);
     const setSelectedObjectId = useRoomContext(x => x.setSelectedObjectId);
     const setSelectedObjectCategory = useRoomContext(x => x.setSelectedObjectCategory);
@@ -95,7 +96,7 @@ export const useRoomSelectedObject = () => {
         //this._roomEngine.removeObjectMoverIconSprite();
 
         if (selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE || selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
-            const roomObject = room.getRoomObject(selectedObject.id, selectedObject.category);
+            const roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);
 
             if (roomObject) {
                 if (selectedObject.operation !== RoomObjectOperationType.OBJECT_MOVE_TO) {
@@ -106,17 +107,17 @@ export const useRoomSelectedObject = () => {
                 roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
             }
 
-            if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.id, true);
+            if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.objectId, true);
         } else if (selectedObject.operation === RoomObjectOperationType.OBJECT_PLACE) {
             switch (selectedObject.category) {
                 case RoomObjectCategoryEnum.Floor:
-                    room.removeRoomObjectFloor(selectedObject.id);
+                    room.removeRoomObjectFloor(selectedObject.objectId);
                     break;
                 case RoomObjectCategoryEnum.Wall:
-                    room.removeRoomObjectWall(selectedObject.id);
+                    room.removeRoomObjectWall(selectedObject.objectId);
                     break;
                 case RoomObjectCategoryEnum.Unit:
-                    room.removeRoomObject(selectedObject.id, RoomObjectCategoryEnum.Unit);
+                    room.removeRoomObject(selectedObject.objectId, RoomObjectCategoryEnum.Unit);
                     break;
             }
         }
@@ -124,5 +125,5 @@ export const useRoomSelectedObject = () => {
         setSelectedObject(undefined);
     };
 
-    return { selectObject, selectAvatar, deselectObject, resetSelectedObject };
+    return { selectedObject, placedObject, selectObject, selectAvatar, deselectObject, resetSelectedObject };
 };

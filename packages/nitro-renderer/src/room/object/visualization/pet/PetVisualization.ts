@@ -1,4 +1,4 @@
-import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry } from '@nitrodevco/nitro-api';
+import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
@@ -31,7 +31,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
     private _saddleSprites: boolean[] = [];
     private _animationOver: boolean = false;
     private _paletteIndex: number = -1;
-    private _paletteName: string = '';
+    private _paletteName: number = -1;
     private _customLayerIds: number[] = [];
     private _customPartIds: number[] = [];
     private _customPaletteIds: number[] = [];
@@ -128,7 +128,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         }
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         if (this.updateModelCounter === this.object.model.updateCounter) return false;
 
         const posture = this.object.model.getValue<string>(RoomObjectVariableEnum.FigurePosture);
@@ -172,7 +172,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
         if (customPaletteIndex !== this._paletteIndex) {
             this._paletteIndex = customPaletteIndex;
-            this._paletteName = this._paletteIndex.toString();
+            this._paletteName = this._paletteIndex;
         }
 
         this._customLayerIds = customLayerIds ? customLayerIds : [];
@@ -188,7 +188,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         return true;
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         const direction = this.object.getDirection().x;
 
         if (direction !== this._previousAnimationDirection) {
@@ -250,7 +250,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         }
     }
 
-    protected override updateAnimations(scale: number): number {
+    protected override updateAnimations(scale: RoomGeometryScaleType): number {
         if (this._animationOver) return 0;
 
         let animationOver = true;
@@ -287,7 +287,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         return _local_3;
     }
 
-    protected override getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         if (this._headOnly && this.isNonHeadSprite(layerId)) return '';
 
         if (this._isRiding && this._parser3(layerId)) return '';
@@ -323,13 +323,13 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         return '';
     }
 
-    protected override getLayerColor(scale: number, layerId: number, colorId: number): number {
+    protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
         if (layerId < this.totalSprites - PetVisualization.ADDITIONAL_SPRITE_COUNT) return this._color;
 
         return 0xffffff;
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerXOffset(scale, direction, layerId);
         let index = this._animationStates.length - 1;
 
@@ -348,7 +348,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         return offset;
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerYOffset(scale, direction, layerId);
         let index = this._animationStates.length - 1;
 
@@ -367,19 +367,19 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         return offset;
     }
 
-    protected override getLayerZOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerZOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         return (
             this.data?.getLayerZOffset(scale, this.getDirection(scale, layerId), layerId) ?? LayerData.DEFAULT_ZOFFSET
         );
     }
 
-    private getDirection(scale: number, layerId: number): number {
+    private getDirection(scale: RoomGeometryScaleType, layerId: number): number {
         if (!this.isHeadSprite(layerId)) return this._direction;
 
         return this.data.getValidDirection(scale, this._headDirection);
     }
 
-    protected override getFrameNumber(scale: number, layerId: number): number {
+    protected override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         let index = this._animationStates.length - 1;
 
         while (index >= 0) {
@@ -455,7 +455,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         if (layerIndex > -1) {
             partId = this._customPartIds[layerIndex];
             paletteId = this._customPaletteIds[layerIndex];
-            paletteName = paletteId > -1 ? paletteId.toString() : this._paletteName;
+            paletteName = paletteId > -1 ? paletteId : this._paletteName;
         }
 
         if (!isNaN(partId) && partId > -1) name = name + '_' + partId;
@@ -473,7 +473,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
         this._headSprites = [];
     }
 
-    protected override getPostureForAsset(scale: number, name: string): string | undefined {
+    protected override getPostureForAsset(scale: RoomGeometryScaleType, name: string): string | undefined {
         if (!name) return undefined;
 
         const parts = name.split('_');

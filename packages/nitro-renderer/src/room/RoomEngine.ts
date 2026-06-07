@@ -6,12 +6,13 @@ import type {
     IRoomObject,
     IRoomObjectController,
     IVector3D,
+    RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 import {
     GetObjectDataForFlags,
     ObjectDataFlagsEnum,
     RoomObjectCategoryEnum,
-    RoomObjectUserType,
+    RoomObjectUserTypeName,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
@@ -25,14 +26,6 @@ import { Room } from './Room';
 import { RoomGeometry } from './utils';
 
 export class RoomEngine implements IRoomEngine {
-    public static ROOM_OBJECT_ID: number = -1;
-    public static ROOM_OBJECT_TYPE: string = 'room';
-    public static CURSOR_OBJECT_ID: number = -2;
-    public static CURSOR_OBJECT_TYPE: string = 'tile_cursor';
-    public static ARROW_OBJECT_ID: number = -3;
-    public static ARROW_OBJECT_TYPE: string = 'selection_arrow';
-    public static OVERLAY: string = 'overlay';
-    public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
     public static TEMORARY_ROOM_ID: number = -1;
 
     private _roomManager: IRoomManager;
@@ -73,7 +66,7 @@ export class RoomEngine implements IRoomEngine {
         type: string,
         value: string,
         direction: IVector3D,
-        scale: number,
+        scale: RoomGeometryScaleType,
         extras: number = NaN,
         objectData: IObjectData | undefined = undefined,
         state: number = -1,
@@ -107,10 +100,10 @@ export class RoomEngine implements IRoomEngine {
                 break;
             case RoomObjectCategoryEnum.Unit:
                 if (
-                    type === RoomObjectUserType.USER ||
-                    type === RoomObjectUserType.BOT ||
-                    type === RoomObjectUserType.RENTABLE_BOT ||
-                    type === RoomObjectUserType.PET
+                    type === RoomObjectUserTypeName.User ||
+                    type === RoomObjectUserTypeName.Bot ||
+                    type === RoomObjectUserTypeName.RentableBot ||
+                    type === RoomObjectUserTypeName.Pet
                 ) {
                     model.setValue(RoomObjectVariableEnum.Figure, value);
                 } else {

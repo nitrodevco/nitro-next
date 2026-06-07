@@ -5,6 +5,7 @@ import {
     type IAvatarImage,
     type IAvatarImageListener,
     type IObjectVisualizationData,
+    RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 
 import { GetAvatarRenderManager } from '../../../../avatar';
@@ -14,18 +15,18 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
         return true;
     }
 
-    public dispose(): void {}
+    public dispose(): void { }
 
     public createAvatarImage(
         figure: string,
-        size: number,
+        size: RoomGeometryScaleType,
         gender?: string,
         avatarListener?: IAvatarImageListener,
         effectListener?: IAvatarEffectListener,
     ): IAvatarImage {
         let avatarImage: IAvatarImage;
 
-        if (size > 48)
+        if (size > RoomGeometryScaleType.AvatarSizeNormal)
             avatarImage = GetAvatarRenderManager().createAvatarImage(
                 figure,
                 AvatarScaleType.LARGE,

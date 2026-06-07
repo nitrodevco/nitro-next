@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from './enum';
 import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
@@ -10,7 +11,7 @@ import type {
 
 export interface IRoomInstance {
     dispose(): void;
-    createCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
+    createCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas;
     getObjectManager(category: number): IRoomObjectManager | undefined;
     getTotalObjectsForManager(category: RoomObjectCategoryEnum): number;
     getObjectInstanceId(object: IRoomObject): number;

@@ -1,4 +1,5 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
+import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
 import { RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { StateCreator } from "zustand";
 
@@ -14,7 +15,7 @@ type State = {
         centeredLocation: { x: boolean; y: boolean; };
         screenSize: { w: number; h: number; };
         roomSize: { w: number; h: number; };
-        scale: number;
+        scale: RoomGeometryScaleType;
         moveDistance: number;
         previousMoveSpeed: number;
         maintainPreviousMoveSpeed: boolean;
@@ -32,7 +33,7 @@ type Actions = {
     setTargetObjectLocation: (target: IVector3D) => void;
     setCameraLimitedLocation: (x: boolean, y: boolean) => void;
     setCameraCenteredLocation: (x: boolean, y: boolean) => void;
-    setCameraScale: (scale: number) => void;
+    setCameraScale: (scale: RoomGeometryScaleType) => void;
     setCameraScreenSize: (w: number, height: number) => void;
     setCameraRoomSize: (w: number, h: number) => void;
     setGeometryUpdateId: (id: number) => void;
@@ -51,7 +52,7 @@ const initialState: State = {
         centeredLocation: { x: false, y: false },
         screenSize: { w: 0, h: 0 },
         roomSize: { w: 0, h: 0 },
-        scale: 0,
+        scale: RoomGeometryScaleType.ZoomedIn,
         moveDistance: 0,
         previousMoveSpeed: 0,
         maintainPreviousMoveSpeed: false,
@@ -118,7 +119,7 @@ export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCa
         camera.centeredLocation.x = x;
         camera.centeredLocation.y = y;
     },
-    setCameraScale: (scale: number) => {
+    setCameraScale: (scale: RoomGeometryScaleType) => {
         const camera = get().camera;
 
         if (scale === camera.scale) return;

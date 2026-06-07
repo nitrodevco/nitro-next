@@ -1,4 +1,5 @@
 import type { IGraphicAsset, IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -15,7 +16,7 @@ export class FurnitureGuildCustomizedVisualization extends FurnitureAnimatedVisu
     private _badgeAssetNameNormalScale: string = '';
     private _badgeAssetNameSmallScale: string = '';
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         const flag = super.updateModel(scale);
 
         if (this._badgeAssetNameNormalScale === '') {
@@ -40,7 +41,7 @@ export class FurnitureGuildCustomizedVisualization extends FurnitureAnimatedVisu
         return flag;
     }
 
-    protected override getLayerColor(scale: number, layerId: number, colorId: number): number {
+    protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         switch (tag) {
@@ -53,11 +54,11 @@ export class FurnitureGuildCustomizedVisualization extends FurnitureAnimatedVisu
         return super.getLayerColor(scale, layerId, colorId);
     }
 
-    public override getSpriteAssetName(scale: number, layerId: number): string {
+    public override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         if (tag === FurnitureGuildCustomizedVisualization.BADGE) {
-            if (scale === 32) return this._badgeAssetNameSmallScale;
+            if (scale === RoomGeometryScaleType.ZoomedOut) return this._badgeAssetNameSmallScale;
 
             return this._badgeAssetNameNormalScale;
         }

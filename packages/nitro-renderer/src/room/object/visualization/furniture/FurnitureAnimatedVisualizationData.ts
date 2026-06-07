@@ -1,4 +1,4 @@
-import type { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
+import type { IAssetVisualAnimation, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import type { AnimationFrame, SizeData } from '../data';
 import { AnimationSizeData } from '../data';
@@ -9,7 +9,7 @@ export class FurnitureAnimatedVisualizationData extends FurnitureVisualizationDa
         return super.getSizeData(size) as AnimationSizeData | undefined;
     }
 
-    protected override createSizeData(scale: number, layerCount: number, angle: number): AnimationSizeData {
+    protected override createSizeData(scale: RoomGeometryScaleType, layerCount: number, angle: number): AnimationSizeData {
         return new AnimationSizeData(layerCount, angle);
     }
 
@@ -28,28 +28,28 @@ export class FurnitureAnimatedVisualizationData extends FurnitureVisualizationDa
         return true;
     }
 
-    public hasAnimation(scale: number, animationId: number): boolean {
+    public hasAnimation(scale: RoomGeometryScaleType, animationId: number): boolean {
         return this.getSizeData(scale)?.hasAnimation(animationId) ?? false;
     }
 
-    public getAnimationCount(scale: number): number {
+    public getAnimationCount(scale: RoomGeometryScaleType): number {
         return this.getSizeData(scale)?.getAnimationCount() ?? 0;
     }
 
-    public getAnimationId(scale: number, animationId: number): number {
+    public getAnimationId(scale: RoomGeometryScaleType, animationId: number): number {
         return this.getSizeData(scale)?.getAnimationId(animationId) ?? 0;
     }
 
-    public isImmediateChange(scale: number, animationId: number, state: number): boolean {
+    public isImmediateChange(scale: RoomGeometryScaleType, animationId: number, state: number): boolean {
         return this.getSizeData(scale)?.isImmediateChange(animationId, state) ?? false;
     }
 
-    public getStartFrame(scale: number, animationId: number, direction: number): number {
+    public getStartFrame(scale: RoomGeometryScaleType, animationId: number, direction: number): number {
         return this.getSizeData(scale)?.getStartFrame(animationId, direction) ?? 0;
     }
 
     public getFrame(
-        scale: number,
+        scale: RoomGeometryScaleType,
         animationId: number,
         direction: number,
         layerId: number,
@@ -59,7 +59,7 @@ export class FurnitureAnimatedVisualizationData extends FurnitureVisualizationDa
     }
 
     public getFrameFromSequence(
-        scale: number,
+        scale: RoomGeometryScaleType,
         animationId: number,
         direction: number,
         layerId: number,

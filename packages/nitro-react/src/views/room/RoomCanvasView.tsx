@@ -1,6 +1,6 @@
 import type { IRoomObject } from '@nitrodevco/nitro-api';
-import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect, RoomGeometry } from '@nitrodevco/nitro-renderer';
+import { MouseEventType, NitroLogger, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
@@ -245,7 +245,7 @@ export const RoomCanvasView = () => {
         if (renderer?.canvas) elementRef?.current?.appendChild(renderer.canvas);
 
         const handleSize = (width: number, height: number, resolution: number) => {
-            const canvas = room.getRoomCanvas(width, height, RoomGeometry.SCALE_ZOOMED_IN);
+            const canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
 
             renderer.canvas.style.width = `${width}px`;
             renderer.canvas.style.height = `${height}px`;

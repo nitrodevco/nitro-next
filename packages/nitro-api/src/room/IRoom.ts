@@ -1,4 +1,4 @@
-import type { PointData, Rectangle } from 'pixi.js';
+import type { Container, PointData, Rectangle } from 'pixi.js';
 
 import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IVector3D } from '../utils';
@@ -87,7 +87,7 @@ export interface IRoom {
         typeId?: number,
     ): boolean;
     addFurnitureWallByTypeId(
-        id: number,
+        objectId: number,
         typeId: number,
         location: IVector3D,
         direction: IVector3D,
@@ -116,6 +116,8 @@ export interface IRoom {
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
+    getRoomOverlay(): Container | undefined;
+    getRoomOverlayIcon(): Container | undefined;
     isPlayingGame(): boolean;
     dispatchEvent(event: INitroEvent): void;
     readonly roomId: number;

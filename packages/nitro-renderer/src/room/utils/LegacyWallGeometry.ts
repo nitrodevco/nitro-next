@@ -1,26 +1,16 @@
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { type ILegacyWallGeometry, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class LegacyWallGeometry implements ILegacyWallGeometry {
-    public static DEFAULT_SCALE: number = 32;
-
     private static L: string = 'l';
     private static R: string = 'r';
 
-    private _isDisposed: boolean;
-    private _scale: number;
-    private _heightMap: number[][];
-    private _width: number;
-    private _height: number;
-    private _floorHeight: number;
-
-    constructor() {
-        this._isDisposed = false;
-        this._scale = 64;
-        this._heightMap = [];
-        this._width = 0;
-        this._height = 0;
-        this._floorHeight = 0;
-    }
+    private _isDisposed: boolean = false;
+    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedOut;
+    private _heightMap: number[][] = [];
+    private _width: number = 0;
+    private _height: number = 0;
+    private _floorHeight: number = 0;
 
     public initialize(width: number, height: number, floorHeight: number): void {
         if (width <= this._width && height <= this._height) {
@@ -249,13 +239,13 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         return (
             height +
             (Math.trunc(this.getHeight(x - 1, y - 1)) == _local_4 ||
-            Math.trunc(this.getHeight(x, y - 1)) == _local_4 ||
-            Math.trunc(this.getHeight(x + 1, y - 1)) == _local_4 ||
-            Math.trunc(this.getHeight(x - 1, y)) == _local_4 ||
-            Math.trunc(this.getHeight(x + 1, y)) == _local_4 ||
-            Math.trunc(this.getHeight(x - 1, y + 1)) == _local_4 ||
-            Math.trunc(this.getHeight(x, y + 1)) == _local_4 ||
-            Math.trunc(this.getHeight(x + 1, y + 1)) == _local_4
+                Math.trunc(this.getHeight(x, y - 1)) == _local_4 ||
+                Math.trunc(this.getHeight(x + 1, y - 1)) == _local_4 ||
+                Math.trunc(this.getHeight(x - 1, y)) == _local_4 ||
+                Math.trunc(this.getHeight(x + 1, y)) == _local_4 ||
+                Math.trunc(this.getHeight(x - 1, y + 1)) == _local_4 ||
+                Math.trunc(this.getHeight(x, y + 1)) == _local_4 ||
+                Math.trunc(this.getHeight(x + 1, y + 1)) == _local_4
                 ? 0.5
                 : 0)
         );
@@ -269,12 +259,12 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         return this._isDisposed;
     }
 
-    public get scale(): number {
+    public get scale(): RoomGeometryScaleType {
         return this._scale;
     }
 
-    public set scale(k: number) {
-        this._scale = k;
+    public set scale(scale: RoomGeometryScaleType) {
+        this._scale = scale;
     }
 
     private reset(): void {

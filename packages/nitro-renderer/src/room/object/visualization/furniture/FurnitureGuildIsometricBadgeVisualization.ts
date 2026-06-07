@@ -1,4 +1,4 @@
-import type { IGraphicAsset, IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import type { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 import { Matrix, Sprite } from 'pixi.js';
@@ -15,7 +15,7 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
     private _color1: number;
     private _color2: number;
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         const flag = super.updateModel(scale);
 
         if (!this.hasThumbnailImage) {
@@ -108,7 +108,7 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
         return renderTexture; */
     }
 
-    protected override getLayerColor(scale: number, layerId: number, colorId: number): number {
+    protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         switch (tag) {

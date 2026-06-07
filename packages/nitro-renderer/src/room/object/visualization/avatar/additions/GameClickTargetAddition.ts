@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AlphaTolerance, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -12,7 +13,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
 
     private _asset: Texture | undefined = undefined;
 
-    constructor(private _id: number) {}
+    constructor(private _id: number) { }
 
     public dispose(): void {
         if (this._asset) {
@@ -22,7 +23,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
         }
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite) return;
 
         if (!this._asset)

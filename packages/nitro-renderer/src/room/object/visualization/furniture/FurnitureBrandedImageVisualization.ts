@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -29,7 +30,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         }
     }
 
-    protected override updateObject(scale: number, direction: number): boolean {
+    protected override updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (!super.updateObject(scale, direction)) return false;
 
         if (this._imageReady) this.checkAndCreateImageForCurrentState();
@@ -37,7 +38,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         return true;
     }
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         const flag = super.updateModel(scale);
 
         this._offsetX = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetX) || 0;
@@ -140,7 +141,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         this.asset.addAsset(`${this._imageUrl}_${frame}`, texture, x, y, flipH, flipV, false, true);
     }
 
-    protected override getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         if (tag === FurnitureBrandedImageVisualization.BRANDED_IMAGE && this._imageUrl) {

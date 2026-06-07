@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -9,7 +10,7 @@ export class FurnitureVoteMajorityVisualization extends FurnitureAnimatedVisuali
     private static HIDE_RESULTS_STATES: number[] = [-1, 1];
     private static HIDE_RESULTS_VALUE: number = -1;
 
-    protected override getFrameNumber(scale: number, layerId: number): number {
+    protected override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         const result = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteMajorityResult);
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
@@ -25,7 +26,7 @@ export class FurnitureVoteMajorityVisualization extends FurnitureAnimatedVisuali
         }
     }
 
-    protected override getLayerAlpha(scale: number, direction: number, layerId: number): number {
+    protected override getLayerAlpha(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         const result = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteMajorityResult);
 
         if (

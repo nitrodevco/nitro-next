@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from '../furniture';
@@ -11,7 +12,7 @@ export class TileCursorVisualization extends FurnitureAnimatedVisualization {
         this._tileHeight = 0;
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (layerId === 1) {
             this._tileHeight = this.object.model.getValue<number>(RoomObjectVariableEnum.TileCursorHeight);
 

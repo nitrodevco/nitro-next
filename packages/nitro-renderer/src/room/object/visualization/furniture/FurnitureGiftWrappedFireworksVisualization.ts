@@ -1,4 +1,4 @@
-import type { IRoomGeometry } from '@nitrodevco/nitro-api';
+import type { IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureFireworksVisualization } from './FurnitureFireworksVisualization';
@@ -22,11 +22,9 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
         if (!this.object) return;
 
         const local3 = 1000;
-        const extras = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
-
-        const typeIndex = parseInt(extras);
-        const packetType = Math.floor(typeIndex / local3);
-        const ribbonType = typeIndex % local3;
+        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+        const packetType = Math.floor(extras / local3);
+        const ribbonType = extras % local3;
 
         this._packetType =
             packetType > FurnitureGiftWrappedFireworksVisualization.MAX_PACKET_TYPE_VALUE ? 0 : packetType;
@@ -34,7 +32,7 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
             ribbonType > FurnitureGiftWrappedFireworksVisualization.MAX_RIBBON_TYPE_VALUE ? 0 : ribbonType;
     }
 
-    public override getFrameNumber(scale: number, layerId: number): number {
+    public override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         if (this._lastAnimationId === FurnitureGiftWrappedFireworksVisualization.PRESENT_DEFAULT_STATE) {
             if (layerId <= 1) return this._packetType;
 
@@ -44,7 +42,7 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
         return super.getFrameNumber(scale, layerId);
     }
 
-    public override getSpriteAssetName(scale: number, layerId: number): string {
+    public override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const size = this.getValidSize(scale);
 
         let assetName = this._type;

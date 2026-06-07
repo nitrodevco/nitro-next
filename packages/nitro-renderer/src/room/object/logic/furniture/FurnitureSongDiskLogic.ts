@@ -8,12 +8,11 @@ export class FurnitureSongDiskLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (this.isRealRoomObject()) {
-            const extras = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureExtras);
-            const diskId = parseInt(extras);
+            const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
 
             this.object.model.setValue<string>(
                 RoomObjectVariableEnum.InfostandExtraParam,
-                RoomWidgetEnumItemExtradataParameter.SONGDISK + diskId,
+                RoomWidgetEnumItemExtradataParameter.SONGDISK + extras,
             );
         }
     }

@@ -10,7 +10,8 @@ import {
     FurnitureType,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
-    RoomObjectVisualizationType,
+    RoomObjectUserTypeName,
+    RoomObjectUserTypeUtils,
 } from '@nitrodevco/nitro-api';
 import { GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
@@ -215,13 +216,13 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         if (type === 'room') return RoomObjectCategoryEnum.Room;
 
-        if (type === RoomObjectUserType.USER) return RoomObjectCategoryEnum.Unit;
+        if (type === RoomObjectUserTypeName.User) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.PET) return RoomObjectCategoryEnum.Unit;
+        if (type === RoomObjectUserTypeName.Pet) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.BOT) return RoomObjectCategoryEnum.Unit;
+        if (type === RoomObjectUserTypeName.Bot) return RoomObjectCategoryEnum.Unit;
 
-        if (type === RoomObjectUserType.RENTABLE_BOT) return RoomObjectCategoryEnum.Unit;
+        if (type === RoomObjectUserTypeName.RentableBot) return RoomObjectCategoryEnum.Unit;
 
         if (type === RoomContentLoader.TILE_CURSOR || type === RoomContentLoader.SELECTION_ARROW)
             return RoomObjectCategoryEnum.Cursor;
@@ -235,9 +236,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public isLoaderType(type: string): boolean {
-        type = RoomObjectUserType.getRealType(type);
-
-        if (type === RoomObjectVisualizationType.USER) return false;
+        if (RoomObjectUserTypeUtils.getAvatarRealTypeByName(type) === RoomObjectUserType.User) return false;
 
         return true;
     }

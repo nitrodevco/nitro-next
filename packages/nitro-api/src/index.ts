@@ -114,6 +114,7 @@ export * from './events/IRoomObjectEvent';
 export * from './room/enum/AlphaTolerance';
 export * from './room/enum/ContextMenuEnum';
 export * from './room/enum/FriendFurniEngravingWidgetType';
+export * from './room/enum/RoomGeometryScaleType';
 export * from './room/enum/RoomObjectPlacementSource';
 export * from './room/enum/RoomWidgetEnum';
 export * from './room/enum/RoomWidgetEnumItemExtradataParameter';

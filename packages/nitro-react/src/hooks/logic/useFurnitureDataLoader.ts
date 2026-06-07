@@ -17,6 +17,7 @@ export const useFurnitureDataLoader = () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const furnidataUrl = useConfigurationStore(state => state.config['furnituredata.url']) as string | undefined;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parseFloorItems = (data: any): IFurnitureData[] => {
         const floorItems: IFurnitureData[] = [];
 
@@ -84,6 +85,7 @@ export const useFurnitureDataLoader = () => {
         return floorItems;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parseWallItems = (data: any): IFurnitureData[] => {
         const wallItems: IFurnitureData[] = [];
 

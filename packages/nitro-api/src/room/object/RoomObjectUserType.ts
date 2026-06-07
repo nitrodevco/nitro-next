@@ -1,39 +1,59 @@
-export class RoomObjectUserType {
-    public static USER: string = 'user';
-    public static PET: string = 'pet';
-    public static BOT: string = 'bot';
-    public static RENTABLE_BOT: string = 'rentable_bot';
-    public static MONSTER_PLANT: string = 'monsterplant';
-    public static AVATAR_TYPES: { [key: string]: number } = {
-        user: 1,
-        pet: 2,
-        bot: 3,
-        rentable_bot: 4,
-    };
+export enum RoomObjectUserType {
+    User = 1,
+    Pet = 2,
+    Bot = 3,
+    RentableBot = 4,
+}
 
-    public static getTypeNumber(type: string): number {
-        return RoomObjectUserType.AVATAR_TYPES[type];
+export class RoomObjectUserTypeName {
+    public static User: string = 'user';
+    public static Pet: string = 'pet';
+    public static Bot: string = 'bot';
+    public static RentableBot: string = 'rentable_bot';
+    public static MonsterPlant: string = 'monsterplant';
+}
+
+export class RoomObjectUserTypeUtils {
+    private static _avatarTypeToName: Map<RoomObjectUserType, string> = new Map([
+        [RoomObjectUserType.User, RoomObjectUserTypeName.User],
+        [RoomObjectUserType.Pet, RoomObjectUserTypeName.Pet],
+        [RoomObjectUserType.Bot, RoomObjectUserTypeName.Bot],
+        [RoomObjectUserType.RentableBot, RoomObjectUserTypeName.RentableBot],
+    ]);
+    private static _avatarNameToType: Map<string, RoomObjectUserType> = new Map([
+        [RoomObjectUserTypeName.User, RoomObjectUserType.User],
+        [RoomObjectUserTypeName.Pet, RoomObjectUserType.Pet],
+        [RoomObjectUserTypeName.Bot, RoomObjectUserType.Bot],
+        [RoomObjectUserTypeName.RentableBot, RoomObjectUserType.RentableBot],
+    ]);
+
+    public static getAvatarType(type: string): RoomObjectUserType | undefined { //getTypeNumber
+        return this._avatarNameToType.get(type);
     }
 
-    public static getTypeString(type: number): string {
-        for (const key in RoomObjectUserType.AVATAR_TYPES) {
-            if (!key) continue;
-
-            if (RoomObjectUserType.AVATAR_TYPES[key] !== type) continue;
-
-            return key;
-        }
-
-        return '';
+    public static getAvatarTypeName(type: RoomObjectUserType): string | undefined { //getTypeString
+        return this._avatarTypeToName.get(type);
     }
 
-    public static getRealType(type: string): string {
+    public static getAvatarRealType(type: RoomObjectUserType): RoomObjectUserType { //getRealType
         switch (type) {
-            case RoomObjectUserType.BOT:
-            case RoomObjectUserType.RENTABLE_BOT:
-                return RoomObjectUserType.USER;
+            case RoomObjectUserType.Bot:
+            case RoomObjectUserType.RentableBot:
+                return RoomObjectUserType.User;
             default:
                 return type;
+        }
+    }
+
+    public static getAvatarRealTypeByName(type: string): RoomObjectUserType | undefined { //getRealType
+        const avatarType = this.getAvatarType(type);
+
+        switch (avatarType) {
+            case RoomObjectUserType.Bot:
+            case RoomObjectUserType.RentableBot:
+                return RoomObjectUserType.User;
+            default:
+                return avatarType;
         }
     }
 }

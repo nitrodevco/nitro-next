@@ -1,11 +1,12 @@
-import type {
-    IGraphicAssetCollection,
-    IObjectVisualizationData,
-    IRoomGeometry,
-    IRoomObjectController,
-    IRoomObjectSprite,
-    IRoomObjectSpriteVisualization,
-    RoomObjectSpriteData,
+import {
+    type IGraphicAssetCollection,
+    type IObjectVisualizationData,
+    type IRoomGeometry,
+    type IRoomObjectController,
+    type IRoomObjectSprite,
+    type IRoomObjectSpriteVisualization,
+    RoomGeometryScaleType,
+    type RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
 import type { ImageLike } from 'pixi.js';
 import { Container, Point, Rectangle, Sprite } from 'pixi.js';
@@ -21,7 +22,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     private _asset: IGraphicAssetCollection;
     protected _sprites: IRoomObjectSprite[] = [];
 
-    protected _scale: number = -1;
+    protected _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedIn;
 
     private _updateObjectCounter: number = -1;
     private _updateModelCounter: number = -1;
@@ -36,7 +37,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     }
 
     protected reset(): void {
-        this._scale = -1;
+        this._scale = RoomGeometryScaleType.ZoomedIn;
     }
 
     public dispose(): void {

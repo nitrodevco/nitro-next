@@ -1,13 +1,14 @@
 ﻿import type { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
 export class PlaneMask {
-    private _maskVisualizations: Map<number, PlaneMaskVisualization> = new Map();
-    private _sizes: number[] = [];
+    private _maskVisualizations: Map<RoomGeometryScaleType, PlaneMaskVisualization> = new Map();
+    private _sizes: RoomGeometryScaleType[] = [];
     private _assetNames: Map<number, string> = new Map();
     private _lastMaskVisualization: PlaneMaskVisualization | undefined = undefined;
-    private _lastSize: number = -1;
+    private _lastSize: RoomGeometryScaleType = RoomGeometryScaleType.None;
 
     public dispose(): void {
         if (this._maskVisualizations) {
@@ -24,7 +25,7 @@ export class PlaneMask {
         this._sizes = [];
     }
 
-    public createMaskVisualization(size: number): PlaneMaskVisualization | undefined {
+    public createMaskVisualization(size: RoomGeometryScaleType): PlaneMaskVisualization | undefined {
         const existing = this._maskVisualizations.get(size);
 
         if (existing) return undefined;
@@ -39,13 +40,13 @@ export class PlaneMask {
         return visualization;
     }
 
-    private getSizeIndex(k: number): number {
+    private getSizeIndex(size: RoomGeometryScaleType): number {
         let sizeIndex = 0;
         let index = 1;
 
         while (index < this._sizes.length) {
-            if (this._sizes[index] > k) {
-                if (this._sizes[index] - k < k - this._sizes[index - 1]) sizeIndex = index;
+            if (this._sizes[index] > size) {
+                if (this._sizes[index] - size < size - this._sizes[index - 1]) sizeIndex = index;
 
                 break;
             }
@@ -58,10 +59,10 @@ export class PlaneMask {
         return sizeIndex;
     }
 
-    protected getMaskVisualization(k: number): PlaneMaskVisualization | undefined {
-        if (k === this._lastSize) return this._lastMaskVisualization;
+    protected getMaskVisualization(size: RoomGeometryScaleType): PlaneMaskVisualization | undefined {
+        if (size === this._lastSize) return this._lastMaskVisualization;
 
-        const sizeIndex = this.getSizeIndex(k);
+        const sizeIndex = this.getSizeIndex(size);
 
         if (sizeIndex < this._sizes.length) {
             this._lastMaskVisualization = this._maskVisualizations.get(this._sizes[sizeIndex]);
@@ -69,13 +70,13 @@ export class PlaneMask {
             this._lastMaskVisualization = undefined;
         }
 
-        this._lastSize = k;
+        this._lastSize = size;
 
         return this._lastMaskVisualization;
     }
 
-    public getGraphicAsset(k: number, _arg_2: IVector3D): IGraphicAsset | undefined {
-        return this.getMaskVisualization(k)?.getAsset(_arg_2);
+    public getGraphicAsset(size: RoomGeometryScaleType, point: IVector3D): IGraphicAsset | undefined {
+        return this.getMaskVisualization(size)?.getAsset(point);
     }
 
     public getAssetName(k: number): string | undefined {

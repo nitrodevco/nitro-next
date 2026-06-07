@@ -1,4 +1,4 @@
-import type { IGraphicAsset } from '@nitrodevco/nitro-api';
+import type { IGraphicAsset, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 import { Matrix, Sprite } from 'pixi.js';
 
@@ -61,7 +61,7 @@ export class FurnitureIsometricBBVisualization extends FurnitureBBVisualization 
         this._needsTransform = true;
     }
 
-    protected override getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const tag = this.getLayerTag(scale, this._direction, layerId);
 
         if (tag === FurnitureBrandedImageVisualization.BRANDED_IMAGE && this._imageUrl) {

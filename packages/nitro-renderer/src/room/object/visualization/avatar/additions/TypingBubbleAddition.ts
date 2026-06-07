@@ -1,4 +1,4 @@
-import { AvatarAction, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { AvatarAction, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../../assets';
@@ -12,31 +12,31 @@ export class TypingBubbleAddition implements IAvatarAddition {
     constructor(
         private _id: number,
         private _visualization: AvatarVisualization | undefined,
-    ) {}
+    ) { }
 
     public dispose(): void {
         this._visualization = undefined;
         this._asset = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite || !this._visualization) return;
 
         sprite.visible = true;
         sprite.relativeDepth = this._relativeDepth;
         sprite.alpha = 255;
 
-        let additionScale = 64;
+        let additionScale = RoomGeometryScaleType.ZoomedIn;
         let offsetX = 0;
         let offsetY = 0;
 
-        if (scale < 48) {
+        if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_typing_small');
 
             offsetX = 3;
             offsetY = -42;
 
-            additionScale = 32;
+            additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_typing');
 

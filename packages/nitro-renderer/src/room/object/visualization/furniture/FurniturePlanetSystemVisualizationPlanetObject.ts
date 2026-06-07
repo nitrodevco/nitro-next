@@ -1,4 +1,4 @@
-import type { IVector3D } from '@nitrodevco/nitro-api';
+import type { IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
 export class FurniturePlanetSystemVisualizationPlanetObject {
@@ -30,7 +30,7 @@ export class FurniturePlanetSystemVisualizationPlanetObject {
         while (this._children.length > 0) this._children.shift()?.dispose();
     }
 
-    public update(offsets: IVector3D[], rootPosition: IVector3D, scale: number): void {
+    public update(offsets: IVector3D[], rootPosition: IVector3D, scale: RoomGeometryScaleType): void {
         this._position = this._position + this._arcSpeed / FurniturePlanetSystemVisualizationPlanetObject.SYSTEM_TEMPO;
 
         offsets[this._index] = this.getPositionVector(rootPosition, scale);
@@ -38,7 +38,7 @@ export class FurniturePlanetSystemVisualizationPlanetObject {
         for (const child of this._children) child.update(offsets, this._positionVector, scale);
     }
 
-    public getPositionVector(position: IVector3D, scale: number): IVector3D {
+    public getPositionVector(position: IVector3D, scale: RoomGeometryScaleType): IVector3D {
         const cos = this._radius * Math.cos(this._position + this._arcOffset);
         const sine = this._radius * Math.sin(this._position + this._arcOffset);
 

@@ -1,4 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AvatarAction, AvatarGuideStatus } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -14,14 +15,14 @@ export class GuideStatusBubbleAddition implements IAvatarAddition {
         private _id: number,
         private _visualization: AvatarVisualization | undefined,
         private _status: number,
-    ) {}
+    ) { }
 
     public dispose(): void {
         this._visualization = undefined;
         this._asset = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite || !this._visualization) return;
 
         sprite.visible = true;
@@ -38,10 +39,10 @@ export class GuideStatusBubbleAddition implements IAvatarAddition {
                 : 'avatar_addition_user_guide_requester_bubble',
         );
 
-        if (scale < 48) {
+        if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             offsetX = -19;
             offsetY = -80;
-            additionScale = 32;
+            additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             offsetX = -19;
             offsetY = -120;

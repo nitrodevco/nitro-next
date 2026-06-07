@@ -1,3 +1,5 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
 export class FurnitureQueueTileVisualization extends FurnitureAnimatedVisualization {
@@ -20,7 +22,7 @@ export class FurnitureQueueTileVisualization extends FurnitureAnimatedVisualizat
         return super.setAnimation(animationId);
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (this._animationCounter > 0) this._animationCounter--;
 
         if (!this._animationCounter) {

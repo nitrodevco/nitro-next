@@ -1,3 +1,6 @@
+import type {
+    RoomGeometryScaleType
+} from '@nitrodevco/nitro-api';
 import {
     type IAdvancedMap,
     type IGraphicAsset,
@@ -16,7 +19,7 @@ import { FurnitureParticleSystemEmitter } from './FurnitureParticleSystemEmitter
 export class FurnitureParticleSystem {
     private _emitters: IAdvancedMap<number, FurnitureParticleSystemEmitter> = new AdvancedMap();
     private _visualization: FurnitureAnimatedVisualization;
-    private _size: number;
+    private _size: RoomGeometryScaleType;
     private _canvasId: number = -1;
     private _offsetY: number = 0;
     private _currentEmitter: FurnitureParticleSystemEmitter | undefined = undefined;
@@ -103,7 +106,7 @@ export class FurnitureParticleSystem {
         }
     }
 
-    public getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    public getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (this._currentEmitter && this._currentEmitter.roomObjectSpriteId === layerId) {
             return this._currentEmitter.y * this._scaleMultiplier;
         }
@@ -236,6 +239,9 @@ export class FurnitureParticleSystem {
 
         for (const emitter of particleSystem.emitters) {
             const emitterId = emitter.id;
+
+            if (emitterId === undefined) continue;
+
             const emitterName = emitter.name;
             const emitterSpriteId = emitter.spriteId;
             const particleEmitter = new FurnitureParticleSystemEmitter(emitterName, emitterSpriteId);

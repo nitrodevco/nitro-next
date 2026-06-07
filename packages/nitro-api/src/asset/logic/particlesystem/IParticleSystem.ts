@@ -1,7 +1,9 @@
+import type { RoomGeometryScaleType } from '#api/room/enum';
+
 import type { IParticleSystemEmitter } from './IParticleSystemEmitter';
 
 export interface IParticleSystem {
-    size?: number;
+    size: RoomGeometryScaleType;
     canvasId?: number;
     offsetY?: number;
     blend?: number;

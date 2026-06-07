@@ -1,4 +1,5 @@
-﻿import { type IGraphicAsset, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { type IGraphicAsset, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 import type { ParticleSystemParticle } from '../data';
 import { FurnitureParticleSystemParticle } from './FurnitureParticleSystemParticle';
@@ -78,7 +79,7 @@ export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParti
         this.init(0, 0, 0, this._emitterDirection, this._force, this._timeStep, this._fuseTime, true);
     }
 
-    public copyStateFrom(emitter: FurnitureParticleSystemEmitter, scale: number): void {
+    public copyStateFrom(emitter: FurnitureParticleSystemEmitter, scale: RoomGeometryScaleType): void {
         super.copy(emitter, scale);
 
         this._force = emitter._force;
@@ -245,7 +246,7 @@ export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParti
         }
     }
 
-    private satisfyConstraints(): void {}
+    private satisfyConstraints(): void { }
 
     private accumulateForces(): void {
         for (const k of this._particles) {

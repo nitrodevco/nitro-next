@@ -1,3 +1,4 @@
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -21,7 +22,7 @@ export class FurniturePartyBeamerVisualization extends FurnitureAnimatedVisualiz
         this._animOffsetIndex = [];
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (!this._animSpeedIndex) this.initItems(scale);
 
         let sprite = this.getSprite(2);
@@ -35,7 +36,7 @@ export class FurniturePartyBeamerVisualization extends FurnitureAnimatedVisualiz
         return super.updateAnimation(scale);
     }
 
-    private getNewPoint(scale: number, layerId: number): Point {
+    private getNewPoint(scale: RoomGeometryScaleType, layerId: number): Point {
         let diameter = 0;
 
         let animationPhase: number = this._animPhaseIndex[layerId];
@@ -46,7 +47,7 @@ export class FurniturePartyBeamerVisualization extends FurnitureAnimatedVisualiz
 
         let diameterScale = 1;
 
-        if (scale == 32) {
+        if (scale === RoomGeometryScaleType.ZoomedOut) {
             diameter = FurniturePartyBeamerVisualization.AREA_DIAMETER_SMALL;
             diameterScale = 0.5;
         } else {
@@ -86,10 +87,10 @@ export class FurniturePartyBeamerVisualization extends FurnitureAnimatedVisualiz
         return new Point(animationPhase, _local_11);
     }
 
-    private initItems(scale: number): void {
+    private initItems(scale: RoomGeometryScaleType): void {
         let diameter: number;
 
-        if (scale === 32) {
+        if (scale === RoomGeometryScaleType.ZoomedOut) {
             diameter = FurniturePartyBeamerVisualization.AREA_DIAMETER_SMALL;
         } else {
             diameter = FurniturePartyBeamerVisualization.AREA_DIAMETER_LARGE;
@@ -112,13 +113,13 @@ export class FurniturePartyBeamerVisualization extends FurnitureAnimatedVisualiz
         this._animFactorIndex.push(this.getRandomAmplitudeFactor());
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if ((layerId === 2 || layerId === 3) && this._animOffsetIndex.length == 2)
             return this._animOffsetIndex[layerId - 2].x;
         return super.getLayerXOffset(scale, direction, layerId);
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if ((layerId === 2 || layerId === 3) && this._animOffsetIndex.length == 2)
             return this._animOffsetIndex[layerId - 2].y;
 

@@ -1,4 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AvatarAction } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -17,18 +18,18 @@ export class FloatingHeartAddition extends ExpressionAddition {
     private _startTime: number = GetTickerTime();
     private _delta: number = 0;
     private _offsetY: number = 0;
-    private _scale: number = 0;
+    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _state: number = 0;
 
-    public override update(sprite: IRoomObjectSprite, scale: number): void {
+    public override update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite || !this.visualization) return;
 
         this._scale = scale;
 
-        let additionScale = 64;
+        let additionScale = RoomGeometryScaleType.ZoomedIn;
         let offsetX = 0;
 
-        if (scale < 48) {
+        if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_blowkiss_small');
 
             if (this.visualization.angle === 90 || this.visualization.angle === 270) {
@@ -43,7 +44,7 @@ export class FloatingHeartAddition extends ExpressionAddition {
 
             this._offsetY = -38;
 
-            additionScale = 32;
+            additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_blowkiss');
 
@@ -120,7 +121,7 @@ export class FloatingHeartAddition extends ExpressionAddition {
 
             this._delta += 0.05;
 
-            const offset = this._scale < 48 ? -30 : -40;
+            const offset = this._scale < RoomGeometryScaleType.AvatarSizeNormal ? -30 : -40;
 
             sprite.offsetY = this._offsetY + (this._delta < 1 ? alpha : 1) * offset;
             sprite.alpha = (1 - alpha) * 255;

@@ -48,7 +48,7 @@ export class SelectedRoomObjectData implements ISelectedRoomObjectData {
         this._posture = posture ?? '';
     }
 
-    public get id(): number {
+    public get objectId(): number {
         return this._id;
     }
 

@@ -1,20 +1,18 @@
-import type { IAssetVisualizationData } from '@nitrodevco/nitro-api';
+import type { IAssetVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import type { SizeData } from '../data';
-import { AnimationSizeData, PetSizeData } from '../data';
+import type { AnimationSizeData, SizeData } from '../data';
+import { PetSizeData } from '../data';
 import { FurnitureAnimatedVisualizationData } from '../furniture';
 
 export class PetVisualizationData extends FurnitureAnimatedVisualizationData {
     private _isAllowedToTurnHead: boolean = true;
 
-    protected override getSizeData(size: number): PetSizeData | undefined {
+    protected override getSizeData(size: RoomGeometryScaleType): PetSizeData | undefined {
         return super.getSizeData(size) as PetSizeData | undefined;
     }
 
-    protected override createSizeData(scale: number, layerCount: number, angle: number): AnimationSizeData {
-        if (scale > 1) return new PetSizeData(layerCount, angle);
-
-        return new AnimationSizeData(layerCount, angle);
+    protected override createSizeData(scale: RoomGeometryScaleType, layerCount: number, angle: number): AnimationSizeData {
+        return new PetSizeData(layerCount, angle);
     }
 
     protected override defineVisualizations(visualizations: IAssetVisualizationData[]): boolean {
@@ -23,17 +21,21 @@ export class PetVisualizationData extends FurnitureAnimatedVisualizationData {
         return super.defineVisualizations(visualizations);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected override processVisualElement(sizeData: SizeData, key: string, data: any): boolean {
         if (!sizeData || !key || !data) return false;
 
         switch (key) {
             case 'postures':
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 if (!(sizeData instanceof PetSizeData) || !sizeData.processPostures(data)) return false;
                 break;
             case 'gestures':
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 if (!(sizeData instanceof PetSizeData) || !sizeData.processGestures(data)) return false;
                 break;
             default:
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 if (!super.processVisualElement(sizeData, key, data)) return false;
                 break;
         }
@@ -41,35 +43,35 @@ export class PetVisualizationData extends FurnitureAnimatedVisualizationData {
         return true;
     }
 
-    public postureToAnimation(scale: number, posture: string): number {
+    public postureToAnimation(scale: RoomGeometryScaleType, posture: string): number {
         return this.getSizeData(scale)?.getAnimationForPosture(posture) ?? PetSizeData.DEFAULT;
     }
 
-    public getGestureDisabled(scale: number, posture: string): boolean {
+    public getGestureDisabled(scale: RoomGeometryScaleType, posture: string): boolean {
         return this.getSizeData(scale)?.getGestureDisabled(posture) ?? false;
     }
 
-    public gestureToAnimation(scale: number, gesture: string): number {
+    public gestureToAnimation(scale: RoomGeometryScaleType, gesture: string): number {
         return this.getSizeData(scale)?.getAnimationForGesture(gesture) ?? PetSizeData.DEFAULT;
     }
 
-    public animationToPosture(scale: number, index: number, useDefault: boolean): string | undefined {
+    public animationToPosture(scale: RoomGeometryScaleType, index: number, useDefault: boolean): string | undefined {
         return this.getSizeData(scale)?.getPostureForAnimation(index, useDefault) ?? undefined;
     }
 
-    public animationToGesture(scale: number, index: number): string | undefined {
+    public animationToGesture(scale: RoomGeometryScaleType, index: number): string | undefined {
         return this.getSizeData(scale)?.getGestureForAnimation(index) ?? undefined;
     }
 
-    public getGestureForAnimationId(scale: number, id: number): string | undefined {
+    public getGestureForAnimationId(scale: RoomGeometryScaleType, id: number): string | undefined {
         return this.getSizeData(scale)?.getGestureForAnimationId(id) ?? undefined;
     }
 
-    public totalPostures(scale: number): number {
+    public totalPostures(scale: RoomGeometryScaleType): number {
         return this.getSizeData(scale)?.totalPostures ?? 0;
     }
 
-    public totalGestures(scale: number): number {
+    public totalGestures(scale: RoomGeometryScaleType): number {
         return this.getSizeData(scale)?.totalGestures ?? 0;
     }
 

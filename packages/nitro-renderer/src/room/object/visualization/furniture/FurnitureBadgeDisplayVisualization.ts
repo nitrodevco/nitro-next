@@ -1,3 +1,4 @@
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -10,7 +11,7 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
     private _badgeAssetNameSmallScale: string = '';
     private _badgeVisibleInState: number = -1;
 
-    protected override updateModel(scale: number): boolean {
+    protected override updateModel(scale: RoomGeometryScaleType): boolean {
         let updateModel = super.updateModel(scale);
 
         const badgeStatus = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBadgeImageStatus);
@@ -38,7 +39,7 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         return updateModel;
     }
 
-    protected override getSpriteAssetName(scale: number, layerId: number): string {
+    protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
         if (
@@ -47,22 +48,22 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         )
             return super.getSpriteAssetName(scale, layerId);
 
-        if (scale === 32) return this._badgeAssetNameSmallScale;
+        if (scale === RoomGeometryScaleType.ZoomedOut) return this._badgeAssetNameSmallScale;
 
         return this._badgeAssetNameNormalScale;
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerXOffset(scale, direction, layerId);
 
         if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE) {
             const asset = this.getAsset(
-                scale === 32 ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
+                scale === RoomGeometryScaleType.ZoomedOut ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
                 layerId,
             );
 
             if (asset) {
-                if (scale === 64) offset += (40 - asset.width) / 2;
+                if (scale === RoomGeometryScaleType.ZoomedIn) offset += (40 - asset.width) / 2;
                 else offset += (20 - asset.width) / 2;
             }
         }
@@ -70,17 +71,17 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         return offset;
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         let offset = super.getLayerYOffset(scale, direction, layerId);
 
         if (this.getLayerTag(scale, direction, layerId) === FurnitureBadgeDisplayVisualization.BADGE) {
             const asset = this.getAsset(
-                scale === 32 ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
+                scale === RoomGeometryScaleType.ZoomedOut ? this._badgeAssetNameSmallScale : this._badgeAssetNameNormalScale,
                 layerId,
             );
 
             if (asset) {
-                if (scale === 64) offset += (40 - asset.height) / 2;
+                if (scale === RoomGeometryScaleType.ZoomedIn) offset += (40 - asset.height) / 2;
                 else offset += (20 - asset.height) / 2;
             }
         }

@@ -1,4 +1,4 @@
-import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import type { IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import type { AvatarVisualization } from '../AvatarVisualization';
 import type { IExpressionAddition } from './IExpressionAddition';
@@ -8,13 +8,13 @@ export class ExpressionAddition implements IExpressionAddition {
         private _id: number,
         private _type: number,
         private _visualization: AvatarVisualization | undefined,
-    ) {}
+    ) { }
 
     public dispose(): void {
         this._visualization = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: number): void {
+    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         return;
     }
 

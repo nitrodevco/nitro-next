@@ -1,4 +1,5 @@
 import type { IRoomObject, IRoomObjectModel } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import {
     AlphaTolerance,
     AvatarAction,
@@ -33,8 +34,7 @@ import { AvatarVisualizationData } from './AvatarVisualizationData';
 
 export class AvatarVisualization
     extends RoomObjectSpriteVisualization
-    implements IAvatarImageListener, IAvatarEffectListener
-{
+    implements IAvatarImageListener, IAvatarEffectListener {
     private static AVATAR: string = 'avatar';
     private static FLOATING_IDLE_Z_ID: number = 1;
     private static TYPING_BUBBLE_ID: number = 2;
@@ -302,6 +302,7 @@ export class AvatarVisualization
                             offsetY += layerData.dy;
                         }
 
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
                         if (scale < 48) {
                             offsetX /= 2;
                             offsetY /= 2;
@@ -336,6 +337,7 @@ export class AvatarVisualization
                             dd += layerData.dd;
                         }
 
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
                         if (scale < 48) {
                             offsetX /= 2;
                             offsetY /= 2;
@@ -380,7 +382,7 @@ export class AvatarVisualization
         }
     }
 
-    private createAvatarImage(scale: number, effectId: number): IAvatarImage | undefined {
+    private createAvatarImage(scale: RoomGeometryScaleType, effectId: number): IAvatarImage | undefined {
         let cachedImage: IAvatarImage | undefined = undefined;
         let imageName = 'avatarImage' + scale.toString();
 
@@ -470,7 +472,7 @@ export class AvatarVisualization
         return update;
     }
 
-    protected updateModel(model: IRoomObjectModel, scale: number): boolean {
+    protected updateModel(model: IRoomObjectModel, scale: RoomGeometryScaleType): boolean {
         if (!model) return false;
 
         if (this.updateModelCounter === model.updateCounter) return false;
@@ -763,8 +765,8 @@ export class AvatarVisualization
         this._needsUpdate = true;
     }
 
-    private updateScale(scale: number): void {
-        if (scale < 48) this._blink = false;
+    private updateScale(scale: RoomGeometryScaleType): void {
+        if (scale < RoomGeometryScaleType.AvatarSizeNormal) this._blink = false;
 
         if (this._posture === 'sit' || this._posture === 'lay') {
             this._postureOffset = scale / 2;
@@ -902,7 +904,7 @@ export class AvatarVisualization
         addition.dispose();
     }
 
-    private updateShadow(scale: number): void {
+    private updateShadow(scale: RoomGeometryScaleType): void {
         this._shadow = undefined;
 
         const sprite = this.getSprite(AvatarVisualization.SHADOW_LAYER_ID);
@@ -921,6 +923,7 @@ export class AvatarVisualization
                 let offsetX = 0;
                 let offsetY = 0;
 
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
                 if (scale < 48) {
                     sprite.libraryAssetName = 'sh_std_sd_1_0_0';
 

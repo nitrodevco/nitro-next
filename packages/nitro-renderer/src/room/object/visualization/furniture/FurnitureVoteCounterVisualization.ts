@@ -1,3 +1,4 @@
+import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -8,13 +9,13 @@ export class FurnitureVoteCounterVisualization extends FurnitureAnimatedVisualiz
     private static HUNDREDS_SPRITE: string = 'hundreds_sprite';
     private static HIDE_COUNTER_SCORE: number = -1;
 
-    protected override updateObject(scale: number, direction: number): boolean {
+    protected override updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         super.updateObject(scale, direction);
 
         return true;
     }
 
-    protected override getFrameNumber(scale: number, layerId: number): number {
+    protected override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
         const result = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteCounterCount);
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
@@ -30,7 +31,7 @@ export class FurnitureVoteCounterVisualization extends FurnitureAnimatedVisualiz
         }
     }
 
-    protected override getLayerAlpha(scale: number, direction: number, layerId: number): number {
+    protected override getLayerAlpha(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         const result = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteCounterCount);
 
         if (result === FurnitureVoteCounterVisualization.HIDE_COUNTER_SCORE) {

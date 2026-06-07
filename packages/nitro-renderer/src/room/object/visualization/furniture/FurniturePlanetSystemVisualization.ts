@@ -1,4 +1,4 @@
-import type { IAssetLogicPlanetSystem, IVector3D } from '@nitrodevco/nitro-api';
+import type { IAssetLogicPlanetSystem, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
@@ -21,7 +21,7 @@ export class FurniturePlanetSystemVisualization extends FurnitureAnimatedVisuali
         super.dispose(); // TODO maybe not?
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (!this._planetIndex && this.spriteCount > 0 && !this.processPlanets()) return 0;
 
         if (this._planetIndex) {
@@ -33,19 +33,19 @@ export class FurniturePlanetSystemVisualization extends FurnitureAnimatedVisuali
         return 0;
     }
 
-    protected override getLayerXOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (this._offsetArray[layerId]) return this._offsetArray[layerId].x;
 
         return super.getLayerXOffset(scale, direction, layerId);
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (this._offsetArray[layerId]) return this._offsetArray[layerId].y;
 
         return super.getLayerYOffset(scale, direction, layerId);
     }
 
-    protected override getLayerZOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerZOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (this._offsetArray[layerId]) return this._offsetArray[layerId].z;
 
         return super.getLayerZOffset(scale, direction, layerId);
@@ -62,17 +62,19 @@ export class FurniturePlanetSystemVisualization extends FurnitureAnimatedVisuali
         this._planetNameIndex = [];
 
         for (const planet of planetSystems) {
+            if (planet.id === undefined) continue;
+
             const sprite = this.getSprite(planet.id);
 
             if (sprite) {
                 this.addPlanet(
-                    planet.name,
+                    planet.name ?? '',
                     planet.id,
-                    planet.parent,
-                    planet.radius || 0,
-                    planet.arcSpeed || 0,
-                    planet.arcOffset || 0,
-                    planet.height || 0,
+                    planet.parent ?? '',
+                    planet.radius ?? 0,
+                    planet.arcSpeed ?? 0,
+                    planet.arcOffset ?? 0,
+                    planet.height ?? 0,
                 );
             }
         }

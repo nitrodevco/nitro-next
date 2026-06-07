@@ -9,7 +9,7 @@ export * from './room/useRoomCamera';
 export * from './room/useRoomEventDispatcher';
 export * from './room/useRoomEventHandler';
 export * from './room/useRoomMouse';
-export * from './room/useRoomSelectedObject';
+export * from './room/useRoomObjectSelector';
 export * from './useCommunicationStore';
 export * from './useConfig';
 export * from './useConfigValue';

@@ -1,4 +1,4 @@
-import type { IAdvancedMap, IParticleSystem } from '@nitrodevco/nitro-api';
+import type { IAdvancedMap, IParticleSystem, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-shared';
 
@@ -21,7 +21,7 @@ export class FurnitureFireworksVisualization extends FurnitureAnimatedVisualizat
         }
     }
 
-    protected override updateObject(scale: number, direction: number): boolean {
+    protected override updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (!super.updateObject(scale, direction)) return false;
 
         if (!this._particleSystems) this.readDefinition();
@@ -45,13 +45,13 @@ export class FurnitureFireworksVisualization extends FurnitureAnimatedVisualizat
         return true;
     }
 
-    protected override updateSprites(scale: number, update: boolean, animation: number): void {
+    protected override updateSprites(scale: RoomGeometryScaleType, update: boolean, animation: number): void {
         super.updateSprites(scale, update, animation);
 
         if (this._currentParticleSystem) this._currentParticleSystem.updateSprites();
     }
 
-    protected override updateAnimation(scale: number): number {
+    protected override updateAnimation(scale: RoomGeometryScaleType): number {
         if (this._currentParticleSystem) this._currentParticleSystem.updateAnimation();
 
         return super.updateAnimation(scale);
@@ -63,7 +63,7 @@ export class FurnitureFireworksVisualization extends FurnitureAnimatedVisualizat
         super.setAnimation(id);
     }
 
-    protected override getLayerYOffset(scale: number, direction: number, layerId: number): number {
+    protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (this._currentParticleSystem && this._currentParticleSystem.controlsSprite(layerId)) {
             return this._currentParticleSystem.getLayerYOffset(scale, direction, layerId);
         }
