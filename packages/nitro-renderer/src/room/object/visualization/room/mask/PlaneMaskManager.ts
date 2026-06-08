@@ -3,6 +3,7 @@
     IAssetPlaneTextureBitmap,
     IGraphicAssetCollection,
     IVector3D,
+    RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 
 import { TextureUtils } from '../../../../../utils';
@@ -141,7 +142,7 @@ export class PlaneMaskManager {
 
     public getMaskEntry(
         type: string,
-        scale: number,
+        scale: RoomGeometryScaleType,
         normal: IVector3D,
         posX: number,
         posY: number,

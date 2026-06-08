@@ -504,8 +504,6 @@ export const useRoomEventHandler = () => {
                 roomObject.setDirection(selectedObject.dir);
             }
 
-            console.log(selectedObject.objectId, added);
-
             room.updateRoomObjectMask(selectedObject.objectId, added);
         }
 

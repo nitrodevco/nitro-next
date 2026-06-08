@@ -236,7 +236,7 @@ export class Room implements IRoom {
 
         const floorType = '111';
         const wallType = '201';
-        const landscapeType = '6.12';
+        const landscapeType = 'default';
 
         if (floorType) {
             roomObject.processUpdateMessage(
@@ -554,7 +554,7 @@ export class Room implements IRoom {
         let maskUpdate: ObjectRoomMaskUpdateMessage | undefined = undefined;
 
         if (roomObject && roomObject.model) {
-            if (roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureUsesPlaneMask) > 0) {
+            if (roomObject.model.getValue<boolean>(RoomObjectVariableEnum.FurnitureUsesPlaneMask)) {
                 const maskType = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurniturePlaneMaskType);
                 const location = roomObject.getLocation();
 
@@ -572,8 +572,6 @@ export class Room implements IRoom {
         }
 
         const roomObjectRoom = this.getRoomObjectRoom();
-
-        console.log(new Error().stack);
 
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
     }

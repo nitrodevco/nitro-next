@@ -132,15 +132,14 @@ export class RoomLogic extends RoomObjectLogicBase {
                     break;
                 }
                 case ObjectRoomMaskUpdateMessage.REMOVE_MASK:
-                    if (message.maskId) update = this._planeBitmapMaskParser.removeMask(message.maskId);
+                    update = this._planeBitmapMaskParser.removeMask(message.maskId);
                     break;
             }
 
-            if (update)
-                this.object.model.setValue(
-                    RoomObjectVariableEnum.RoomPlaneMaskXml,
-                    this._planeBitmapMaskParser.getXML(),
-                );
+            if (update) this.object.model.setValue(
+                RoomObjectVariableEnum.RoomPlaneMaskData,
+                this._planeBitmapMaskParser.getMaskData(),
+            );
 
             return;
         }

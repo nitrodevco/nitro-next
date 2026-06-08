@@ -9,6 +9,7 @@ import type {
     IRoomRenderingCanvas,
     ISelectedRoomObjectData,
     ITileObjectMap,
+    RoomGeometryScaleType,
     RoomObjectCategoryEnum,
 } from '@nitrodevco/nitro-api';
 
@@ -48,7 +49,7 @@ export class RoomInstance implements IRoomInstance {
         this._model.dispose();
     }
 
-    public createCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
+    public createCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas {
         if (this._canvas) {
             this._canvas.initialize(width, height);
 

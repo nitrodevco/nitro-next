@@ -4,7 +4,7 @@ import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomMaskUpdateMessage extends RoomObjectUpdateMessage {
     public static ADD_MASK: string = 'RORMUM_ADD_MASK';
-    public static REMOVE_MASK: string = 'RORMUM_ADD_MASK';
+    public static REMOVE_MASK: string = 'RORMUM_REMOVE_MASK';
     public static DOOR: string = 'door';
     public static WINDOW: string = 'window';
     public static HOLE: string = 'hole';

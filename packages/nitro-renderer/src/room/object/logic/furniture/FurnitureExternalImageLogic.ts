@@ -16,7 +16,7 @@ export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
         if (asset.logic && asset.logic.maskType && asset.logic.maskType !== '' && asset.logic.maskType.length > 0)
             maskType = asset.logic.maskType;
 
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, 0);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, false);
         this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);
     }
 

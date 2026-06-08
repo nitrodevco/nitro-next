@@ -6,10 +6,6 @@ import { RoomPlaneBitmapMaskData } from './RoomPlaneBitmapMaskData';
 export class RoomPlaneBitmapMaskParser {
     private _masks: Map<string, RoomPlaneBitmapMaskData> = new Map();
 
-    public get maskCount(): number {
-        return this._masks.size;
-    }
-
     public dispose(): void {
         if (this._masks) {
             this.reset();
@@ -18,10 +14,20 @@ export class RoomPlaneBitmapMaskParser {
         }
     }
 
+    public reset(): void {
+        for (const mask of this._masks.values()) {
+            if (!mask) continue;
+
+            mask.dispose();
+        }
+
+        this._masks.clear();
+    }
+
     public initialize(data: RoomMapMaskData): boolean {
         if (!data) return false;
 
-        this._masks.clear();
+        this.reset();
 
         if (data.masks.length) {
             for (const mask of data.masks) {
@@ -38,16 +44,6 @@ export class RoomPlaneBitmapMaskParser {
         return true;
     }
 
-    public reset(): void {
-        for (const mask of this._masks.values()) {
-            if (!mask) continue;
-
-            mask.dispose();
-        }
-
-        this._masks.clear();
-    }
-
     public addMask(key: string, type: string, loc: IVector3D, category: string): void {
         const mask = new RoomPlaneBitmapMaskData(type, loc, category);
 
@@ -55,7 +51,9 @@ export class RoomPlaneBitmapMaskParser {
         this._masks.set(key, mask);
     }
 
-    public removeMask(key: string): boolean {
+    public removeMask(key: string | undefined): boolean {
+        if (!key) return false;
+
         const existing = this._masks.get(key);
 
         if (existing) {
@@ -69,7 +67,7 @@ export class RoomPlaneBitmapMaskParser {
         return false;
     }
 
-    public getXML(): RoomMapMaskData {
+    public getMaskData(): RoomMapMaskData {
         const data = new RoomMapMaskData();
 
         for (const [key, mask] of this._masks.entries()) {
@@ -108,5 +106,9 @@ export class RoomPlaneBitmapMaskParser {
 
     public get masks() {
         return this._masks;
+    }
+
+    public get maskCount(): number {
+        return this._masks.size;
     }
 }

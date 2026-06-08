@@ -11,7 +11,7 @@ import { RenderTexture, TilingSprite } from 'pixi.js';
 import { Container, Matrix, Point, Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';
-import { GetRenderer, GetTexturePool } from '../../../../utils';
+import { GetRenderer } from '../../../../utils';
 import { RoomGeometry } from '../../../utils';
 import type { PlaneMaskManager } from './mask';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
@@ -95,8 +95,8 @@ export class RoomPlane implements IRoomPlane {
     private _maskChanged = false;
 
     private _planeSprite?: TilingSprite;
-    private _planeTexture?: Texture;
-    private _maskTexture?: Texture | undefined;
+    private _planeTexture?: RenderTexture;
+    private _maskTexture?: RenderTexture | undefined;
 
     private _planeOffsetX = 0;
     private _planeOffsetY = 0;
@@ -152,162 +152,154 @@ export class RoomPlane implements IRoomPlane {
         this._planeSprite = undefined;
 
         if (this._planeTexture) {
-            GetTexturePool().putTexture(this._planeTexture);
+            this._planeTexture.destroy(true);
             this._planeTexture = undefined;
         }
 
         if (this._maskTexture) {
-            GetTexturePool().putTexture(this._maskTexture);
+            this._maskTexture.destroy(true);
             this._maskTexture = undefined;
         }
 
         this._disposed = true;
     }
 
-    public update(geometry: IRoomGeometry, timeSinceStartMs: number, needsUpdate = false): boolean {
+    public update(geometry: IRoomGeometry, timeSinceStartMs: number): boolean {
         if (!geometry || this._disposed) return false;
 
-        if (this._geometryUpdateId !== geometry.updateId) {
-            this._geometryUpdateId = geometry.updateId;
-            needsUpdate = true;
-        }
+        let geometryChanged = false;
 
-        if (!needsUpdate || !this._canBeVisible) {
+        if (this._geometryUpdateId !== geometry.updateId) geometryChanged = true;
+
+        if (!geometryChanged || !this._canBeVisible) {
             if (!this.visible) return false;
         }
 
-        if (!needsUpdate) return false;
+        if (geometryChanged) {
+            const result = this.updateVisibilityAndCorners(geometry);
 
-        if (!this.updateVisibilityAndCorners(geometry)) return false;
+            if (result === false) return false;
 
-        Randomizer.setSeed(this._randomSeed);
-
-        const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
-        let width = this._leftSide.length * geometry.scale;
-        let height = this._rightSide.length * geometry.scale;
-
-        const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
-
-        switch (this._type) {
-            case RoomPlane.TYPE_FLOOR: {
-                const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height / planeGeometry.scale, 0));
-                const xEnd = planeGeometry.getScreenPoint(new Vector3d(width / planeGeometry.scale, 0, 0));
-
-                let x = 0;
-                let y = 0;
-
-                if (origin && yEnd && xEnd) {
-                    width = Math.round(Math.abs(origin.x - xEnd.x));
-                    height = Math.round(Math.abs(origin.x - yEnd.x));
-
-                    const pixelsPerUnit = Math.abs(
-                        origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
-                    );
-
-                    x = this._textureOffsetX * pixelsPerUnit;
-                    y = this._textureOffsetY * pixelsPerUnit;
-                }
-
-                if (x !== 0 || y !== 0) {
-                    while (x < 0) x += texture.width;
-                    while (y < 0) y += texture.height;
-                }
-
-                this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
-                this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
-                break;
-            }
-
-            case RoomPlane.TYPE_WALL: {
-                const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                const pH = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
-                const pW = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
-
-                if (p0 && pH && pW) {
-                    width = Math.round(Math.abs(p0.x - pW.x));
-                    height = Math.round(Math.abs(p0.y - pH.y));
-                }
-
-                this._planeOffsetX = this._textureOffsetX * texture.width;
-                this._planeOffsetY = this._textureOffsetY * texture.height;
-                break;
-            }
-
-            case RoomPlane.TYPE_LANDSCAPE: {
-                const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
-                const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
-
-                if (p0 && pZ && pY) {
-                    width = Math.round(Math.abs(((p0.x - pY.x) * width) / planeGeometry.scale));
-                    height = Math.round(Math.abs(((p0.y - pZ.y) * height) / planeGeometry.scale));
-                }
-
-                const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(p0.x - pY.x));
-                const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(p0.y - pZ.y));
-
-                this._planeOffsetX = renderOffsetX;
-                this._planeOffsetY = renderOffsetY;
-                break;
-            }
+            if (result === true) return true;
         }
 
-        if (this._planeSprite) {
-            if (this._planeSprite.texture !== texture) {
-                this._planeSprite.texture = texture;
+        if (geometryChanged || (this._canBeVisible && this._maskChanged)) {
+            const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
+
+            let width = this._leftSide.length * geometry.scale;
+            let height = this._rightSide.length * geometry.scale;
+
+            const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
+
+            switch (this._type) {
+                case RoomPlane.TYPE_FLOOR: {
+                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height / planeGeometry.scale, 0));
+                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(width / planeGeometry.scale, 0, 0));
+
+                    let x = 0;
+                    let y = 0;
+
+                    if (origin && yEnd && xEnd) {
+                        width = Math.round(Math.abs(origin.x - xEnd.x));
+                        height = Math.round(Math.abs(origin.x - yEnd.x));
+
+                        const pixelsPerUnit = Math.abs(
+                            origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
+                        );
+
+                        x = this._textureOffsetX * pixelsPerUnit;
+                        y = this._textureOffsetY * pixelsPerUnit;
+                    }
+
+                    if (x !== 0 || y !== 0) {
+                        while (x < 0) x += texture.width;
+                        while (y < 0) y += texture.height;
+                    }
+
+                    this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
+                    this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
+                    break;
+                }
+
+                case RoomPlane.TYPE_WALL: {
+                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                    const pH = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
+                    const pW = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
+
+                    if (p0 && pH && pW) {
+                        width = Math.round(Math.abs(p0.x - pW.x));
+                        height = Math.round(Math.abs(p0.y - pH.y));
+                    }
+
+                    this._planeOffsetX = this._textureOffsetX * texture.width;
+                    this._planeOffsetY = this._textureOffsetY * texture.height;
+                    break;
+                }
+
+                case RoomPlane.TYPE_LANDSCAPE: {
+                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                    const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
+                    const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
+
+                    if (p0 && pZ && pY) {
+                        width = Math.round(Math.abs(((p0.x - pY.x) * width) / planeGeometry.scale));
+                        height = Math.round(Math.abs(((p0.y - pZ.y) * height) / planeGeometry.scale));
+                    }
+
+                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(p0.x - pY.x));
+                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(p0.y - pZ.y));
+
+                    this._planeOffsetX = renderOffsetX;
+                    this._planeOffsetY = renderOffsetY;
+                    break;
+                }
             }
 
-            if (this._planeSprite.width !== width || this._planeSprite.height !== height) {
-                this._planeSprite.width = width;
-                this._planeSprite.height = height;
-            }
+            Randomizer.setSeed(this._randomSeed);
 
-            if (this._planeSprite.tilePosition.x !== this._planeOffsetX || this._planeSprite.tilePosition.y !== this._planeOffsetY) {
-                this._planeSprite.tilePosition = { x: this._planeOffsetX, y: this._planeOffsetY };
-            }
-        } else {
+            if (this._planeSprite) this._planeSprite.destroy();
+
             this._planeSprite = new TilingSprite({
                 texture,
                 width,
                 height,
                 tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
-                tint: color,
+                tint: color
             });
+
+            if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) this._planeTexture.resize(this._width, this._height);
+
+            if (!this._planeTexture) this._planeTexture = RenderTexture.create({ width: this._width, height: this._height, dynamic: true });
+
+            this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
+
+            const container = new Container();
+            const maskTexture = this.getMergedMasks(geometry);
+
+            container.addChild(this._planeSprite);
+
+            if (maskTexture) {
+                const maskSprite = new Sprite(this._maskTexture);
+
+                this._planeSprite.setMask({ mask: maskSprite, channel: 'alpha' });
+                container.addChild(maskSprite);
+            }
+
+            GetRenderer().render({
+                target: this._planeTexture,
+                container,
+                transform: this.getMatrixForDimensions(this._planeSprite.width, this._planeSprite.height),
+                clear: true,
+            });
+
+            return true;
         }
 
-        if (!this._planeTexture) this._planeTexture = RenderTexture.create({ width: this._width, height: this._height });
-
-        if (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height) {
-            this._planeTexture.destroy(true);
-
-            this._planeTexture = RenderTexture.create({ width: this._width, height: this._height });
-        }
-
-        if (this._planeTexture) this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
-
-        const container = new Container();
-        const maskTexture = this.getMergedMasks(geometry);
-
-        container.addChild(this._planeSprite);
-
-        if (maskTexture) {
-            const maskSprite = new Sprite(this._maskTexture);
-            this._planeSprite.setMask({ mask: maskSprite, channel: 'alpha' });
-            container.addChild(maskSprite);
-        }
-
-        GetRenderer().render({
-            target: this._planeTexture,
-            container,
-            transform: this.getMatrixForDimensions(this._planeSprite.width, this._planeSprite.height),
-            clear: true,
-        });
-
-        return true;
+        return false;
     }
 
-    private updateVisibilityAndCorners(geometry: IRoomGeometry): boolean {
+    private updateVisibilityAndCorners(geometry: IRoomGeometry): boolean | undefined {
         let cosAngle = Vector3d.cosAngle(geometry.directionAxis, this.normal);
 
         if (cosAngle > -0.001) {
@@ -346,8 +338,9 @@ export class RoomPlane implements IRoomPlane {
 
         this._relativeDepth = relativeDepth;
         this._isVisible = true;
+        this._geometryUpdateId = geometry.updateId;
 
-        return true;
+        return undefined;
     }
 
     private getTextureAndColorForPlane(planeId: string, planeType: number, planeGeometry: IRoomGeometry) {
@@ -505,12 +498,16 @@ export class RoomPlane implements IRoomPlane {
     }
 
     private getMergedMasks(geometry: IRoomGeometry): Texture | undefined {
-        if (
-            !this._useMask ||
-            (!this._bitmapMasks.length && !this._rectangleMasks.length) ||
-            !this._maskChanged ||
-            !this._maskManager
-        ) return this._maskTexture;
+        if (!this._useMask || (!this._bitmapMasks.length && !this._rectangleMasks.length)) {
+            if (this._maskTexture) {
+                this._maskTexture.destroy(true);
+                this._maskTexture = undefined;
+            }
+
+            this._maskChanged = false;
+        }
+
+        if (!this._maskChanged || !this._maskManager) return this._maskTexture;
 
         this._maskChanged = false;
 
@@ -555,19 +552,18 @@ export class RoomPlane implements IRoomPlane {
             } as unknown as MaskEntry);
         }
 
+        if (!masks.length) return undefined;
+
         const container = MergeMasks(masks, width, height);
 
-        if (!this._maskTexture) this._maskTexture = RenderTexture.create({ width: container.width, height: container.height });
+        if (this._maskTexture && (this._maskTexture.width !== width || this._maskTexture.height !== height)) this._maskTexture.resize(width, height);
 
-        if (this._maskTexture.width !== container.width || this._maskTexture.height !== container.height) {
-            this._maskTexture.destroy(true);
-
-            this._maskTexture = RenderTexture.create({ width: container.width, height: container.height });
-        }
+        if (!this._maskTexture) this._maskTexture = RenderTexture.create({ width, height, dynamic: true });
 
         GetRenderer().render({
             target: this._maskTexture,
-            container
+            container,
+            clear: true
         });
 
         return this._maskTexture;

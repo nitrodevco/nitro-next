@@ -122,7 +122,7 @@ export enum RoomObjectVariableEnum {
     PetAllowedDirections = 'pet_allowed_directions',
     Race = 'race',
     RoomMapData = 'room_map_data',
-    RoomPlaneMaskXml = 'room_plane_mask_xml',
+    RoomPlaneMaskData = 'room_plane_mask_data',
     RoomFloorType = 'room_floor_type',
     RoomWallType = 'room_wall_type',
     RoomLandscapeType = 'room_landscape_type',

@@ -4,7 +4,10 @@ import type {
     IRoomGeometry,
     IRoomObjectModel,
     IRoomObjectSprite,
-    IRoomPlane,
+    IRoomPlane
+} from '@nitrodevco/nitro-api';
+import {
+    RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 import { AlphaTolerance, RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { ToInt32 } from '@nitrodevco/nitro-shared';
@@ -14,7 +17,6 @@ import { Rectangle, Texture } from 'pixi.js';
 import type { RoomMapData } from '../../RoomMapData';
 import type { RoomMapMaskData } from '../../RoomMapMaskData';
 import { RoomPlaneBitmapMaskData } from '../../RoomPlaneBitmapMaskData';
-import { RoomPlaneBitmapMaskParser } from '../../RoomPlaneBitmapMaskParser';
 import { RoomPlaneData } from '../../RoomPlaneData';
 import { RoomPlaneParser } from '../../RoomPlaneParser';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
@@ -37,7 +39,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected _data: RoomVisualizationData | undefined = undefined;
 
     private _roomPlaneParser: RoomPlaneParser = new RoomPlaneParser();
-    private _roomPlaneBitmapMaskParser: RoomPlaneBitmapMaskParser = new RoomPlaneBitmapMaskParser();
     private _geometryUpdateId: number = -1;
     private _boundingRectangle: Rectangle | undefined = undefined;
     private _directionX: number = 0;
@@ -49,7 +50,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     private _planes: RoomPlane[] = [];
     private _visiblePlanes: RoomPlane[] = [];
     private _visiblePlaneSpriteNumbers: number[] = [];
-    private _roomScale: number = 0;
+    private _roomScale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _colorBackgroundOnly: boolean = true;
     private _color: number = 0xffffff;
     private _redColor: number = 0xffffff;
@@ -107,12 +108,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
             this._roomPlaneParser = undefined!;
         }
 
-        if (this._roomPlaneBitmapMaskParser) {
-            this._roomPlaneBitmapMaskParser.dispose();
-
-            this._roomPlaneBitmapMaskParser = undefined!;
-        }
-
         if (this._data) {
             this._data.clearCache();
 
@@ -128,7 +123,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         this._landscapeType = undefined;
         this._maskData = undefined;
         this._geometryUpdateId = -1;
-        this._roomScale = 0;
+        this._roomScale = RoomGeometryScaleType.None;
     }
 
     public override update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
@@ -145,11 +140,11 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
 
         this.initializeRoomPlanes();
 
-        if (this.updateMasks(objectModel)) needsUpdate = true;
+        if (this.updateMasksAndColors(objectModel)) needsUpdate = true;
 
         if (this.updatePlaneTexturesAndVisibilities(objectModel)) needsUpdate = true;
 
-        if (this.updatePlanes(geometry, geometryUpdate, time, needsUpdate)) needsUpdate = true;
+        if (this.updatePlanes(geometry, geometryUpdate, time)) needsUpdate = true;
 
         if (needsUpdate) {
             let index = 0;
@@ -185,27 +180,27 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         this.updateModelCounter = objectModel.updateCounter;
     }
 
-    private updateGeometry(k: IRoomGeometry): boolean {
-        if (!k) return false;
+    private updateGeometry(geometry: IRoomGeometry): boolean {
+        if (!geometry) return false;
 
-        if (this._geometryUpdateId === k.updateId) return false;
+        if (this._geometryUpdateId === geometry.updateId) return false;
 
-        this._geometryUpdateId = k.updateId;
+        this._geometryUpdateId = geometry.updateId;
         this._boundingRectangle = undefined;
 
-        const direction = k.direction;
+        const direction = geometry.direction;
 
         if (
             direction &&
             (direction.x !== this._directionX ||
                 direction.y !== this._directionY ||
                 direction.z !== this._directionZ ||
-                k.scale !== this._roomScale)
+                geometry.scale !== this._roomScale)
         ) {
             this._directionX = direction.x;
             this._directionY = direction.y;
             this._directionZ = direction.z;
-            this._roomScale = k.scale;
+            this._roomScale = geometry.scale;
 
             return true;
         }
@@ -271,12 +266,12 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         return result;
     }
 
-    private updateMasks(model: IRoomObjectModel): boolean {
+    private updateMasksAndColors(model: IRoomObjectModel): boolean {
         if (this.updateModelCounter === model.updateCounter) return false;
 
         let didUpdate = false;
 
-        const planeMask = model.getValue<RoomMapMaskData>(RoomObjectVariableEnum.RoomPlaneMaskXml);
+        const planeMask = model.getValue<RoomMapMaskData>(RoomObjectVariableEnum.RoomPlaneMaskData);
 
         if (planeMask !== this._maskData) {
             this.updatePlaneMasks(planeMask);
@@ -675,8 +670,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected updatePlanes(
         geometry: IRoomGeometry,
         geometryUpdate: boolean,
-        timeSinceStartMs: number,
-        needsUpdate: boolean = false,
+        timeSinceStartMs: number
     ): boolean {
         this._assetUpdateCounter++;
 
@@ -708,7 +702,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                 if (plane) {
                     sprite.id = plane.uniqueId;
 
-                    if (plane.update(geometry, timeSinceStartMs, needsUpdate)) {
+                    if (plane.update(geometry, timeSinceStartMs)) {
                         if (plane.visible) {
                             depth = plane.relativeDepth + this.floorRelativeDepth + id / 1000;
 
@@ -756,8 +750,6 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected updatePlaneMasks(maskData: RoomMapMaskData): void {
         if (!maskData) return;
 
-        this._roomPlaneBitmapMaskParser.initialize(maskData);
-
         const _local_4: number[] = [];
         const _local_5: number[] = [];
 
@@ -776,47 +768,47 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
             index++;
         }
 
-        for (const mask of this._roomPlaneBitmapMaskParser.masks.values()) {
-            const maskType = this._roomPlaneBitmapMaskParser.getMaskType(mask);
-            const maskLocation = this._roomPlaneBitmapMaskParser.getMaskLocation(mask);
-            const maskCategory = this._roomPlaneBitmapMaskParser.getMaskCategory(mask);
+        for (const mask of maskData.masks) {
+            const maskType = mask.type;
+            const maskLocation = mask.locations[0] ?? undefined;
+            const maskCategory = mask.category;
 
-            if (maskLocation) {
-                let i = 0;
+            if (!maskLocation) continue;
 
-                while (i < this._planes.length) {
-                    const plane = this._planes[i];
+            let i = 0;
 
-                    if (plane.type === RoomPlane.TYPE_WALL || plane.type === RoomPlane.TYPE_LANDSCAPE) {
-                        if (plane && plane.location && plane.normal) {
-                            const _local_14 = Vector3d.dif(maskLocation, plane.location);
-                            const _local_15 = Math.abs(Vector3d.scalarProjection(_local_14, plane.normal));
+            while (i < this._planes.length) {
+                const plane = this._planes[i];
 
-                            if (_local_15 < 0.01) {
-                                if (plane.leftSide && plane.rightSide) {
-                                    const leftSideLoc = Vector3d.scalarProjection(_local_14, plane.leftSide);
-                                    const rightSideLoc = Vector3d.scalarProjection(_local_14, plane.rightSide);
+                if (plane.type === RoomPlane.TYPE_WALL || plane.type === RoomPlane.TYPE_LANDSCAPE) {
+                    if (plane && plane.location && plane.normal) {
+                        const _local_14 = Vector3d.dif(maskLocation, plane.location);
+                        const _local_15 = Math.abs(Vector3d.scalarProjection(_local_14, plane.normal));
 
-                                    if (
-                                        plane.type === RoomPlane.TYPE_WALL ||
-                                        (plane.type === RoomPlane.TYPE_LANDSCAPE &&
-                                            maskCategory === RoomPlaneBitmapMaskData.HOLE)
-                                    ) {
-                                        plane.addBitmapMask(maskType, leftSideLoc, rightSideLoc);
-                                    } else if (plane.type === RoomPlane.TYPE_LANDSCAPE) {
-                                        if (!plane.canBeVisible) _local_6 = true;
+                        if (_local_15 < 0.01) {
+                            if (plane.leftSide && plane.rightSide) {
+                                const leftSideLoc = Vector3d.scalarProjection(_local_14, plane.leftSide);
+                                const rightSideLoc = Vector3d.scalarProjection(_local_14, plane.rightSide);
 
-                                        plane.canBeVisible = true;
+                                if (
+                                    plane.type === RoomPlane.TYPE_WALL ||
+                                    (plane.type === RoomPlane.TYPE_LANDSCAPE &&
+                                        maskCategory === RoomPlaneBitmapMaskData.HOLE)
+                                ) {
+                                    plane.addBitmapMask(maskType, leftSideLoc, rightSideLoc);
+                                } else if (plane.type === RoomPlane.TYPE_LANDSCAPE) {
+                                    if (!plane.canBeVisible) _local_6 = true;
 
-                                        _local_5.push(i);
-                                    }
+                                    plane.canBeVisible = true;
+
+                                    _local_5.push(i);
                                 }
                             }
                         }
                     }
-
-                    i++;
                 }
+
+                i++;
             }
         }
 
