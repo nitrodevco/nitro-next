@@ -22,7 +22,8 @@ export const useRoomEventHandler = () => {
     const objectPlacementSource = useRoomContext(x => x.objectPlacementSource);
     const setSelectedObject = useRoomContext(x => x.setSelectedObject);
     const setPlacedObject = useRoomContext(x => x.setPlacedObject);
-    const { selectedObject, placedObject, selectAvatar, selectObject, deselectObject, resetSelectedObject } = useRoomObjectSelector();
+    const selectedObject = useRoomContext(x => x.selectedObject);
+    const { placedObject, selectAvatar, selectObject, deselectObject, resetSelectedObject } = useRoomObjectSelector();
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
 
@@ -264,7 +265,6 @@ export const useRoomEventHandler = () => {
             case RoomObjectOperationType.OBJECT_MOVE:
                 shouldReset = false;
                 setFurnitureAlphaMultiplier(roomObject, 0.5);
-                resetSelectedObject();
 
                 setSelectedObject(new SelectedRoomObjectData(
                     roomObject.id, category, operation,
@@ -276,7 +276,12 @@ export const useRoomEventHandler = () => {
 
                 break;
             case RoomObjectOperationType.OBJECT_MOVE_TO: {
-                shouldReset = false;
+                if (selectedObject) {
+                    setSelectedObject(new SelectedRoomObjectData(
+                        selectedObject.objectId, selectedObject.category, RoomObjectOperationType.OBJECT_MOVE_TO,
+                        roomObject.getLocation(), roomObject.getDirection(),
+                    ));
+                }
 
                 setFurnitureAlphaMultiplier(roomObject, 1);
 
@@ -302,8 +307,6 @@ export const useRoomEventHandler = () => {
                     NitroLogger.sendPacket(
                         `new PetMoveComposer(userData.webID, location.x, location.y, direction`)
                 }
-
-                setSelectedObject(undefined);
 
                 break;
             }

@@ -10,8 +10,8 @@ export const useRoomObjectSelector = () => {
     const selectedAvatarId = useRoomContext(x => x.selectedAvatarId);
     const selectedObjectId = useRoomContext(x => x.selectedObjectId);
     const selectedObjectCategory = useRoomContext(x => x.selectedObjectCategory);
-    const selectedObject = useRoomContext(x => x.selectedObject);
     const placedObject = useRoomContext(x => x.placedObject);
+    const getSelectedObject = useRoomContext(x => x.getSelectedObject);
     const setSelectedAvatarId = useRoomContext(x => x.setSelectedAvatarId);
     const setSelectedObjectId = useRoomContext(x => x.setSelectedObjectId);
     const setSelectedObjectCategory = useRoomContext(x => x.setSelectedObjectCategory);
@@ -92,6 +92,8 @@ export const useRoomObjectSelector = () => {
     };
 
     const resetSelectedObject = () => {
+        const selectedObject = getSelectedObject();
+
         if (!selectedObject) return;
         //this._roomEngine.removeObjectMoverIconSprite();
 
@@ -125,5 +127,5 @@ export const useRoomObjectSelector = () => {
         setSelectedObject(undefined);
     };
 
-    return { selectedObject, placedObject, selectObject, selectAvatar, deselectObject, resetSelectedObject };
+    return { placedObject, selectObject, selectAvatar, deselectObject, resetSelectedObject };
 };
