@@ -2,7 +2,7 @@ import { FurnitureType, type IFurnitureData } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
 type State = {
-    localization: Map<string, string>;
+    localization: Record<string, string>;
     badgePointLimits: Map<string, number>;
     needsUpdate: boolean;
 };
@@ -13,44 +13,13 @@ type Actions = {
 };
 
 const initialState: State = {
-    localization: new Map(),
+    localization: {},
     badgePointLimits: new Map(),
     needsUpdate: true,
 };
 
 export const LocalizationStore = createStore<State & Actions>((set, get) => ({
     ...initialState,
-    loadAsync: async (...urls: string[]) => {
-        if (!urls || !urls.length) return;
-
-        const locals = new Map<string, string>();
-
-        try {
-            for (const url of urls) {
-                if (!url || !url.length) continue;
-
-                const response = await fetch(url);
-
-                if (response.status !== 200) throw new Error('Invalid localization url');
-
-                const data = (await response.json()) as { [index: string]: any };
-
-                for (const key in data) locals.set(key, data[key]);
-            }
-
-            if (locals.size === 0) return;
-
-            set(state => {
-                const newLocals = new Map(state.localization);
-
-                for (const [key, value] of locals) newLocals.set(key, value);
-
-                return { localization: newLocals };
-            });
-        } catch (e) {
-            throw new Error(`Failed to load localization: ${e}`);
-        }
-    },
     setLocalization: (localizations: Record<string, string>) =>
         set(state => {
             return {
@@ -79,9 +48,9 @@ export const LocalizationStore = createStore<State & Actions>((set, get) => ({
         if (locals.size === 0) return;
 
         set(state => {
-            const newLocals = new Map(state.localization);
+            const newLocals = { ...state.localization };
 
-            for (const [key, value] of locals) newLocals.set(key, value);
+            for (const [key, value] of locals) newLocals[key] = value;
 
             return { localization: newLocals };
         });

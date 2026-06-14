@@ -8,21 +8,21 @@ import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
-import { useConfigLoader, useFurnitureDataLoader } from './hooks';
+import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from './hooks';
 import { RoomView } from './RoomView';
 import { GetPixelRatio } from './utils';
 
 export const Nitro: FC = () => {
-    const [isReady, setIsReady] = useState(false);
+    const [isEngineReady, setIsEngineReady] = useState(false);
 
     useConfigLoader();
-    //useLocalizationLoader();
-    useFurnitureDataLoader();
+    const { isLocalizationReady } = useLocalizationLoader();
+    const { isFurnitureDataReady } = useFurnitureDataLoader();
 
     useEffect(() => {
         const setup = async (width: number, height: number) => {
             try {
-                const renderer = await PrepareRenderer({
+                await PrepareRenderer({
                     width,
                     height,
                     autoDensity: false,
@@ -41,11 +41,11 @@ export const Nitro: FC = () => {
                     await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER);
                     await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_WALL);
                     await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_PET);
+
+                    setIsEngineReady(true);
                 } catch (err) {
                     NitroLogger.error(err);
                 }
-
-                setIsReady(true);
             } catch (err) {
                 NitroLogger.error(err);
             }
@@ -53,6 +53,8 @@ export const Nitro: FC = () => {
 
         void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
     }, []);
+
+    const isReady = isEngineReady && isLocalizationReady() && isFurnitureDataReady();
 
     return (
         <>

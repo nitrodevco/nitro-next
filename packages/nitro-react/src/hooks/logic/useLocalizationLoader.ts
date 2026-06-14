@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
+import { NitroLogger } from '@nitrodevco/nitro-api';
+import { useEffect, useState } from 'react';
 
-import { useLocalizationStore } from '#base/stores';
-
-import { useConfigValue } from '../useConfigValue';
+import { useConfigurationStore, useLocalizationStore } from '#base/stores';
 
 export const useLocalizationLoader = () => {
-    const setLocalization = useLocalizationStore(state => state.setLocalization);
+    const [needsUpdate, setNeedsUpdate] = useState<boolean>(true);
+    const setLocalization = useLocalizationStore(x => x.setLocalization);
     //const setBadgePointLimits = useLocalizationStore(state => state.setBadgePointLimits);
-    const needsUpdate = useLocalizationStore(state => state.needsUpdate);
-    const localizationUrl = useConfigValue<string | string[]>('gamedata.urls.externalTexts');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const localizationUrl = useConfigurationStore(state => state.config['gamedata.urls.externalTexts']) as string | undefined;
+
+    const isLocalizationReady = () => !needsUpdate;
 
     const processJson = (data: Record<string, string>) => {
         const resolveReferences = (data: Record<string, string>) => {
@@ -25,8 +27,8 @@ export const useLocalizationLoader = () => {
 
                 if (typeof resolvedConfig[key] === 'string')
                     resolvedConfig[key] = resolvedConfig[key].replace(/\$\{([^}]+)\}/g, (_, refKey) =>
-                        getValue(refKey),
-                    );
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                        getValue(refKey),);
             }
 
             return resolvedConfig;
@@ -48,7 +50,7 @@ export const useLocalizationLoader = () => {
     }); */
 
     useEffect(() => {
-        if (!needsUpdate) return;
+        if (!needsUpdate || !localizationUrl || !localizationUrl.length) return;
 
         const urls: string[] = [];
 
@@ -61,22 +63,27 @@ export const useLocalizationLoader = () => {
         }
 
         const load = async (urls: string[]) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let data: Record<string, any> = {};
 
             for (const url of urls) {
                 try {
                     const response = await fetch(url);
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const responseData = (await response.json()) as Record<string, any>;
 
                     data = { ...data, ...responseData };
                 } catch (err) {
-                    console.error(`Trouble loading the localization using: ${url}`, err.message);
+                    NitroLogger.error(err);
                 }
             }
 
             setLocalization(processJson({ ...data }));
+            setNeedsUpdate(false);
         };
 
         void load(urls);
     }, [needsUpdate, localizationUrl]);
+
+    return { isLocalizationReady };
 };

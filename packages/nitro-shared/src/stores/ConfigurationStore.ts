@@ -1,28 +1,24 @@
 import { createStore } from 'zustand';
 
 type State = {
-    config: {};
-    configNeedsUpdate: boolean;
+    config: object;
 };
 
 type Actions = {
-    setConfig: (config: {}) => void;
+    setConfig: (config: object) => void;
     setConfigValue: <T = unknown>(key: string, value: T) => void;
-    setConfigNeedsUpdate: (configNeedsUpdate: boolean) => void;
 };
 
 const initialState: State = {
-    config: {},
-    configNeedsUpdate: true,
+    config: {}
 };
 
 export const ConfigurationStore = createStore<State & Actions>(set => ({
     ...initialState,
 
-    setConfig: (config: {}) => set({ config, configNeedsUpdate: false }),
+    setConfig: (config: object) => set({ config }),
     setConfigValue: <T = unknown>(key: string, value: T) =>
         set(state => {
             return { config: { ...state.config, [key]: value } };
         }),
-    setConfigNeedsUpdate: (configNeedsUpdate: boolean) => set({ configNeedsUpdate }),
 }));

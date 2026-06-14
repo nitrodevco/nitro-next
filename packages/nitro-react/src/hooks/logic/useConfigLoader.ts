@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
-import { useShallow } from 'zustand/shallow';
 
 import { useConfigurationStore } from '#base/stores';
 
 export const useConfigLoader = () => {
-    const [configNeedsUpdate, setConfig] = useConfigurationStore(useShallow(state => [state.configNeedsUpdate, state.setConfig]));
+    const setConfig = useConfigurationStore(x => x.setConfig);
 
     useEffect(() => {
-        if (!configNeedsUpdate) return;
-
         setConfig({
+            'gamedata.urls.externalTexts': 'https://assets.nitrodev.co/gamedata/ExternalTexts.json',
             'furnituredata.url': 'https://assets.nitrodev.co/gamedata/FurnitureData.json',
             'asset.urls.generic': 'https://assets.nitrodev.co/bundled/generic/%libname%.nitro',
             'asset.urls.furni': 'https://assets.nitrodev.co/bundled/furniture/%libname%.nitro',
@@ -57,7 +55,5 @@ export const useConfigLoader = () => {
                 'elephants',
             ],
         });
-    }, [configNeedsUpdate, setConfig]);
-
-    return null;
+    }, []);
 };

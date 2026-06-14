@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { IFurnitureData } from '@nitrodevco/nitro-api';
-import { FurnitureType } from '@nitrodevco/nitro-api';
+import { FurnitureType, NitroLogger } from '@nitrodevco/nitro-api';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
-import { FurnitureData, LocalizationStore } from '@nitrodevco/nitro-shared';
+import { FurnitureData } from '@nitrodevco/nitro-shared';
 import { useEffect, useState } from 'react';
 
-import { useConfigurationStore } from '#base/stores';
+import { useConfigurationStore, useLocalizationStore } from '#base/stores';
 
 export const useFurnitureDataLoader = () => {
     const [needsUpdate, setNeedsUpdate] = useState(true);
@@ -16,6 +16,11 @@ export const useFurnitureDataLoader = () => {
     const [allItems, setAllItems] = useState<IFurnitureData[]>([]);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const furnidataUrl = useConfigurationStore(state => state.config['furnituredata.url']) as string | undefined;
+    const setLocalizationForFurniture = useLocalizationStore(x => x.setLocalizationForFurniture);
+
+    const isFurnitureDataReady = () => {
+        return !needsUpdate;
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parseFloorItems = (data: any): IFurnitureData[] => {
@@ -135,7 +140,7 @@ export const useFurnitureDataLoader = () => {
     useEffect(() => {
         if (!allItems || !allItems.length) return;
 
-        LocalizationStore.getState().setLocalizationForFurniture(allItems);
+        setLocalizationForFurniture(allItems);
         GetRoomContentLoader().processFurnitureData(allItems);
     }, [allItems]);
 
@@ -166,12 +171,12 @@ export const useFurnitureDataLoader = () => {
                 setAllItems([...floorItems, ...wallItems]);
                 setNeedsUpdate(false);
             } catch (e) {
-                throw new Error(`Failed to load furni data: ${e}`);
+                NitroLogger.error(e);
             }
         };
 
         void loadAsync(furnidataUrl);
     }, [needsUpdate, furnidataUrl]);
 
-    return null;
+    return { isFurnitureDataReady };
 };
