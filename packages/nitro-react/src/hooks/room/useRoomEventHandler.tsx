@@ -4,6 +4,9 @@ import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 import { useShallow } from 'zustand/shallow';
 
+import { useRoomSessionSelector } from '#base/selectors';
+import { useRoomSelectedObjectSelector } from '#base/selectors/room';
+
 import { useRoomContext } from '../context';
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -14,7 +17,9 @@ import { useRoomObjectPlace } from './useRoomObjectPlace';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 
 export const useRoomEventHandler = () => {
-    const [room, isSpectator, isDecorating, isPlayingGame, getMouseEventId, setMouseEventId, selectedObject] = useRoomContext(useShallow(x => [x.room, x.isSpectator, x.isDecorating, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId, x.selectedObject]));
+    const [room, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.getMouseEventId, x.setMouseEventId]));
+    const { isSpectator, isDecorating, isPlayingGame } = useRoomSessionSelector();
+    const { selectedObject } = useRoomSelectedObjectSelector();
     const { placedObject, selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();

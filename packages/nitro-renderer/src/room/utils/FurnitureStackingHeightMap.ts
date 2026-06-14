@@ -54,59 +54,56 @@ export class FurnitureStackingHeightMap implements IFurnitureStackingHeightMap {
     }
 
     public validateLocation(
-        k: number,
-        _arg_2: number,
-        _arg_3: number,
-        _arg_4: number,
-        _arg_5: number,
-        _arg_6: number,
-        _arg_7: number,
-        _arg_8: number,
-        _arg_9: boolean,
-        _arg_10: number = -1,
+        x: number,
+        y: number,
+        sizeX: number,
+        sizeY: number,
+        prevX: number,
+        prevY: number,
+        prevSizeX: number,
+        prevSizeY: number,
+        alwaysStackable: boolean,
+        height: number = -1,
     ): boolean {
-        let _local_12 = 0;
-        let _local_13 = 0;
+        if (!this.validPosition(x, y) || !this.validPosition(x + sizeX - 1, y + sizeY - 1)) return false;
 
-        if (!this.validPosition(k, _arg_2) || !this.validPosition(k + _arg_3 - 1, _arg_2 + _arg_4 - 1)) return false;
+        if (prevX < 0 || prevX >= this._width) prevX = 0;
 
-        if (_arg_5 < 0 || _arg_5 >= this._width) _arg_5 = 0;
+        if (prevY < 0 || prevY >= this._height) prevY = 0;
 
-        if (_arg_6 < 0 || _arg_6 >= this._height) _arg_6 = 0;
+        prevSizeX = Math.min(prevSizeX, this._width - prevX);
+        prevSizeY = Math.min(prevSizeY, this._height - prevY);
 
-        _arg_7 = Math.min(_arg_7, this._width - _arg_5);
-        _arg_8 = Math.min(_arg_8, this._height - _arg_6);
+        if (height === -1) height = this.getTileHeight(x, y);
 
-        if (_arg_10 === -1) _arg_10 = this.getTileHeight(k, _arg_2);
+        let tileY = y;
 
-        let _local_11 = _arg_2;
+        while (tileY < y + sizeY) {
+            let tileX = x;
 
-        while (_local_11 < _arg_2 + _arg_4) {
-            _local_12 = k;
-
-            while (_local_12 < k + _arg_3) {
+            while (tileX < x + sizeX) {
                 if (
-                    _local_12 < _arg_5 ||
-                    _local_12 >= _arg_5 + _arg_7 ||
-                    _local_11 < _arg_6 ||
-                    _local_11 >= _arg_6 + _arg_8
+                    tileX < prevX ||
+                    tileX >= prevX + prevSizeX ||
+                    tileY < prevY ||
+                    tileY >= prevY + prevSizeY
                 ) {
-                    _local_13 = _local_11 * this._width + _local_12;
+                    const tileIndex = tileY * this._width + tileX;
 
-                    if (_arg_9) {
-                        if (!this._isRoomTile[_local_13]) return false;
+                    if (alwaysStackable) {
+                        if (!this._isRoomTile[tileIndex]) return false;
                     } else if (
-                        this._isNotStackable[_local_13] ||
-                        !this._isRoomTile[_local_13] ||
-                        Math.abs(this._heights[_local_13] - _arg_10) > 0.01
+                        this._isNotStackable[tileIndex] ||
+                        !this._isRoomTile[tileIndex] ||
+                        Math.abs(this._heights[tileIndex] - height) > 0.01
                     )
                         return false;
                 }
 
-                _local_12++;
+                tileX++;
             }
 
-            _local_11++;
+            tileY++;
         }
 
         return true;
