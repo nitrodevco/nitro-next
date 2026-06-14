@@ -195,7 +195,7 @@ xxxxxxxxxxxx`,
     useEffect(() => {
         if (!room) return;
 
-        room.addFurnitureByTypeId(
+        room.addFurnitureFloorByTypeId(
             1,
             26,
             new Vector3d(5, 7, 0),

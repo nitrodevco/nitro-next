@@ -10,9 +10,7 @@ import type {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
-    IRoomObjectEvent,
     IRoomRenderingCanvas,
-    IRoomSpriteMouseEvent,
     IVector3D,
     RoomGeometryScaleType
 } from '@nitrodevco/nitro-api';
@@ -61,7 +59,7 @@ import {
 } from './messages';
 import { RoomLogic } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
-import { RoomAreaSelectionManager, RoomEnterEffect } from './utils';
+import { RoomAreaSelectionManager } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -440,18 +438,6 @@ export class Room implements IRoom {
         //this.addObjectToTileMap(id, object);
     }
 
-    public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
-    }
-
-    public createRoomObjectWall(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall);
-    }
-
-    public createRoomObjectUser(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Unit);
-    }
-
     public reinitializeRoomObjectsByType(type: string): void {
         if (!type) return;
 
@@ -497,6 +483,18 @@ export class Room implements IRoom {
                 manager.removeObject(object.id);
             }
         }
+    }
+
+    public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {
+        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
+    }
+
+    public createRoomObjectWall(id: number, type: string): IRoomObject | undefined {
+        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall);
+    }
+
+    public createRoomObjectUser(id: number, type: string): IRoomObject | undefined {
+        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Unit);
     }
 
     public updateRoomObjectFloor(
@@ -576,8 +574,8 @@ export class Room implements IRoom {
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
     }
 
-    public addFurnitureByTypeId(
-        id: number,
+    public addFurnitureFloorByTypeId(
+        objectId: number,
         typeId: number,
         location: IVector3D,
         direction: IVector3D,
@@ -593,7 +591,7 @@ export class Room implements IRoom {
         sizeZ: number = -1,
     ): boolean {
         return this.addFurnitureFloorByTypeName(
-            id,
+            objectId,
             GetRoomContentLoader().getFurnitureFloorNameForTypeId(typeId),
             location,
             direction,
@@ -612,7 +610,7 @@ export class Room implements IRoom {
     }
 
     public addFurnitureFloorByTypeName(
-        id: number,
+        objectId: number,
         typeName: string,
         location: IVector3D,
         direction: IVector3D,
@@ -628,7 +626,7 @@ export class Room implements IRoom {
         sizeZ: number = -1,
         typeId: number = -1,
     ): boolean {
-        const roomObject = this.createRoomObjectFloor(id, typeName);
+        const roomObject = this.createRoomObjectFloor(objectId, typeName);
 
         if (roomObject) {
             roomObject.model.setValue(
@@ -645,14 +643,14 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, ownerName);
         }
 
-        if (!this.updateRoomObjectFloor(id, location, direction, state, objectData, extra)) return false;
+        if (!this.updateRoomObjectFloor(objectId, location, direction, state, objectData, extra)) return false;
 
         if (sizeZ >= 0) {
-            if (!this.updateRoomObjectFloorHeight(id, sizeZ)) return false;
+            if (!this.updateRoomObjectFloorHeight(objectId, sizeZ)) return false;
         }
 
         this.dispatchEvent(
-            new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, id, RoomObjectCategoryEnum.Floor),
+            new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Floor),
         );
 
         if (roomObject?.isReady && synchronized) this._instance.tileObjectMap.addRoomObject(roomObject);
@@ -675,15 +673,47 @@ export class Room implements IRoom {
         realRoomObject: boolean = true,
         sizeZ: number = -1,
     ): boolean {
+        return this.addFurnitureWallByTypeName(
+            objectId,
+            GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, extra),
+            location,
+            direction,
+            state,
+            extra,
+            expires,
+            usagePolicy,
+            ownerId,
+            ownerName,
+            synchronized,
+            realRoomObject,
+            sizeZ,
+            typeId
+        );
+    }
+
+    public addFurnitureWallByTypeName(
+        objectId: number,
+        typeName: string,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        extra?: number,
+        expires: number = -1,
+        usagePolicy: number = 0,
+        ownerId: number = 0,
+        ownerName: string = '',
+        synchronized: boolean = true,
+        realRoomObject: boolean = true,
+        sizeZ: number = -1,
+        typeId: number = -1
+    ): boolean {
         const objectData = new LegacyDataType();
 
         objectData.setString((extra ?? 0).toString());
 
         if (objectData) extra = parseInt(objectData.getLegacyString());
 
-        const type = GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, extra);
-
-        const roomObject = this.createRoomObjectWall(objectId, type);
+        const roomObject = this.createRoomObjectWall(objectId, typeName);
 
         if (roomObject) {
             roomObject.model.setValue(
@@ -836,26 +866,6 @@ export class Room implements IRoom {
         this.updateRoomObjectMask(objectId, false);
     }
 
-    public setRoomObjectEventHandler(handler: ((event: IRoomObjectEvent) => void) | undefined): void {
-        this._roomObjectEventHandler = handler;
-    }
-
-    public setRoomCanvasMouseHandler(handler: ((event: IRoomSpriteMouseEvent, object: IRoomObject) => void) | undefined): void {
-        this._roomCanvasMouseHandler = handler;
-    }
-
-    public handleRoomObjectEvent(event: RoomObjectEvent): void {
-        if (!event || !this._roomObjectEventHandler) return;
-
-        this._roomObjectEventHandler(event);
-    }
-
-    public handleRoomCanvasMouseEvent(event: RoomSpriteMouseEvent, object: IRoomObject): void {
-        if (!event || !object || RoomEnterEffect.isRunning() || !this._roomCanvasMouseHandler) return;
-
-        this._roomCanvasMouseHandler(event, object);
-    }
-
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
         const canvas = this._instance?.canvas;
         const roomObject = this.getRoomObject(objectId, category);
@@ -915,7 +925,7 @@ export class Room implements IRoom {
         return GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, extras, data)
     }
 
-    public setRoomOverlayIcon(id: number, category: RoomObjectCategoryEnum): void {
+    public setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum): void {
         const roomContentLoader = GetRoomContentLoader();
         let type: string | undefined = undefined;
         let colorIndex = 0;
@@ -940,6 +950,14 @@ export class Room implements IRoom {
         }
     }
 
+    public removeRoomOverlayIconSprite(): void {
+        const sprite = this.getRoomOverlayIconSprite();
+
+        if (!sprite) return;
+
+        sprite.parent?.removeChild(sprite);
+    }
+
     public getRoomValue<T>(key: RoomObjectVariableEnum): T {
         return this._instance?.model.getValue(key);
     }
@@ -960,23 +978,8 @@ export class Room implements IRoom {
         return this._instance.canvas?.master?.getChildByLabel(Room.OVERLAY) ?? undefined;
     }
 
-    public getRoomOverlayIcon(): Container | undefined {
-        const container = this.getRoomOverlay();
-        const label = Room.OBJECT_ICON_SPRITE;
-
-        if (!container) return undefined;
-
-        let index = container.children.length - 1;
-
-        while (index >= 0) {
-            const child = container.getChildAt(index);
-
-            if (child && child.label === label) return child;
-
-            index--;
-        }
-
-        return undefined;
+    public getRoomOverlayIconSprite(): Container | undefined {
+        return this.getRoomOverlay()?.getChildByLabel(Room.OBJECT_ICON_SPRITE) ?? undefined;
     }
 
     public dispatchEvent(event: INitroEvent): void {

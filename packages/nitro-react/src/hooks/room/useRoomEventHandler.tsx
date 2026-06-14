@@ -520,7 +520,7 @@ export const useRoomEventHandler = () => {
         if (!roomObject) {
             if (event instanceof RoomObjectTileMouseEvent) {
                 if (selectedObject.category === RoomObjectCategoryEnum.Floor) {
-                    room.addFurnitureByTypeId(selectedObject.objectId, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.stuffData, parseFloat(selectedObject.instanceData), -1, 0, 0, '', false);
+                    room.addFurnitureFloorByTypeId(selectedObject.objectId, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.stuffData, parseFloat(selectedObject.instanceData), -1, 0, 0, '', false);
                 } else if (selectedObject.category === RoomObjectCategoryEnum.Unit) {
                     room.addRoomObjectUser(selectedObject.objectId, new Vector3d(), new Vector3d(180), 180, selectedObject.typeId, selectedObject.instanceData);
 

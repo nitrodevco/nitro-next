@@ -1,7 +1,8 @@
-import type { Container, PointData, Rectangle } from 'pixi.js';
+import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 
 import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IVector3D } from '../utils';
+import type { RoomGeometryScaleType } from './enum';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomInstance } from './IRoomInstance';
@@ -24,14 +25,16 @@ export interface IRoom {
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
-    getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
     getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[];
+    getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
     removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void;
     createRoomObjectAndInitalize(
         objectId: number,
         type: string,
         category: RoomObjectCategoryEnum,
     ): IRoomObject | undefined;
+    objectInitialized(objectId: number, category: RoomObjectCategoryEnum): void;
+    reinitializeRoomObjectsByType(type: string): void;
     createRoomObjectFloor(id: number, type: string): IRoomObject | undefined;
     createRoomObjectWall(id: number, type: string): IRoomObject | undefined;
     createRoomObjectUser(id: number, type: string): IRoomObject | undefined;
@@ -53,8 +56,8 @@ export interface IRoom {
     ): boolean;
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
     updateRoomObjectMask(objectId: number, add?: boolean): void;
-    addFurnitureByTypeId(
-        id: number,
+    addFurnitureFloorByTypeId(
+        objectId: number,
         typeId: number,
         location: IVector3D,
         direction: IVector3D,
@@ -101,6 +104,22 @@ export interface IRoom {
         realRoomObject?: boolean,
         sizeZ?: number,
     ): boolean;
+    addFurnitureWallByTypeName(
+        objectId: number,
+        typeName: string,
+        location: IVector3D,
+        direction: IVector3D,
+        state: number,
+        extra?: number,
+        expires?: number,
+        usagePolicy?: number,
+        ownerId?: number,
+        ownerName?: string,
+        synchronized?: boolean,
+        realRoomObject?: boolean,
+        sizeZ?: number,
+        typeId?: number
+    ): boolean;
     addRoomObjectUser(
         objectId: number,
         location: IVector3D,
@@ -112,12 +131,15 @@ export interface IRoom {
     removeRoomObjectFloor(objectId: number, userId?: number, _arg_4?: boolean): void;
     removeRoomObjectWall(objectId: number, userId?: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
+    getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;
+    setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum): void;
+    removeRoomOverlayIconSprite(): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
     getRoomObjectSelectionArrow(): IRoomObjectController;
     getRoomOverlay(): Container | undefined;
-    getRoomOverlayIcon(): Container | undefined;
+    getRoomOverlayIconSprite(): Container | undefined;
     dispatchEvent(event: INitroEvent): void;
     readonly roomId: number;
     readonly modelName: string;

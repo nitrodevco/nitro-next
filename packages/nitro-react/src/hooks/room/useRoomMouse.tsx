@@ -169,7 +169,7 @@ export const useRoomMouse = () => {
     ) => {
         if (!room) return;
 
-        const sprite = room.getRoomOverlayIcon();
+        const sprite = room.getRoomOverlayIconSprite();
 
         if (sprite) {
             const rectangle = sprite.getLocalBounds();
