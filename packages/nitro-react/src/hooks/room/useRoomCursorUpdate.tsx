@@ -33,7 +33,7 @@ export const useRoomCursorUpdate = () => {
         );
     };
 
-    const updateCursorForEvent = (event: RoomObjectMouseEvent) => {
+    const updateCursorForEvent = (event: RoomObjectMouseEvent, clear: boolean = false) => {
         const category = room.getRoomObjectCategoryForType(event.objectType);
         const roomCursor = room.getRoomObjectCursor();
 
@@ -45,7 +45,7 @@ export const useRoomCursorUpdate = () => {
             cursorEvent = handleMouseOverTile(event);
         } else if (event.object?.id !== -1) {
             cursorEvent = handleMouseOverObject(category, event);
-        }
+        } else if (clear) cursorEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
 
         if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
     };

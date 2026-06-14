@@ -161,7 +161,7 @@ export const useRoomEventHandler = () => {
                 const operation = selectedObject?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
                 const category = room.getRoomObjectCategoryForType(event.objectType);
 
-                updateCursorForEvent(event);
+                updateCursorForEvent(event, true);
 
                 if (category === RoomObjectCategoryEnum.Room) {
                     if (operation === RoomObjectOperationType.OBJECT_MOVE) handleObjectMove(event, selectedObject);
