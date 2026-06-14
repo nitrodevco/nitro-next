@@ -1,7 +1,9 @@
 import type { NitroEvent } from '@nitrodevco/nitro-shared';
 import { useEffect } from 'react';
 
-import { useRoomContext } from '../context';
+import { useRoomContext } from '#base/context';
+
+
 
 export const useRoomEventDispatcher = <T extends NitroEvent>(
     type: string | string[],

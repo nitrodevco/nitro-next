@@ -5,9 +5,9 @@ import { RoomDraggedEvent } from "@nitrodevco/nitro-shared";
 import { Matrix, Point, Rectangle } from "pixi.js";
 import { useRef } from "react";
 
-import { useRoomCameraSelector } from "#base/selectors/room";
+import { useRoomContext } from "#base/context";
+import { useRoomCameraSelector } from "#base/selectors";
 
-import { useRoomContext } from "../context";
 import { useConfigValue } from "../useConfigValue";
 import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
 

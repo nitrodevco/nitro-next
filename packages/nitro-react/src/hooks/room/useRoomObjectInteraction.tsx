@@ -2,7 +2,8 @@ import { NitroLogger, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomContext } from "../context";
+import { useRoomContext } from "#base/context";
+
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectInteraction = () => {

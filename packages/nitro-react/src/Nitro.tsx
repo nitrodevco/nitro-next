@@ -8,9 +8,10 @@ import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
-import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from './hooks';
+import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from '#base/hooks';
+import { GetPixelRatio } from '#base/utils';
+
 import { RoomView } from './RoomView';
-import { GetPixelRatio } from './utils';
 import { LoadingScreenView } from './views/LoadingScreenView';
 
 export const Nitro: FC = () => {

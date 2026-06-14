@@ -2,9 +2,8 @@ import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVect
 import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
+import { useRoomContext } from '#base/context';
 import { useFurnitureDataStore } from "#base/stores";
-
-import { useRoomContext } from "../context"
 
 export const useRoomObjectValidation = () => {
     const room = useRoomContext(x => x.room);
@@ -144,9 +143,16 @@ export const useRoomObjectValidation = () => {
         const alwaysStackable = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlwaysStackable) === 1;
 
         return room.instance.furnitureStackingHeightMap.validateLocation(
-            location.x, location.y, sizeX, sizeY,
-            location.x, location.y, prevSizeX, prevSizeY,
-            alwaysStackable, location.z,
+            location.x,
+            location.y,
+            sizeX,
+            sizeY,
+            location.x,
+            location.y,
+            prevSizeX,
+            prevSizeY,
+            alwaysStackable,
+            location.z,
         );
     };
 

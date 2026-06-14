@@ -5,9 +5,9 @@ import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
 import { useShallow } from "zustand/shallow";
 
+import { useRoomContext } from "#base/context";
 import { useRoomSelectedObjectSelector } from "#base/selectors";
 
-import { useRoomContext } from "../context"
 import { useRoomObjectMove } from "./useRoomObjectMove";
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
@@ -77,7 +77,9 @@ export const useRoomObjectPlace = () => {
                 objectId,
                 category,
                 wallLocation,
-                x, y, z,
+                x,
+                y,
+                z,
                 direction,
                 roomObject?.id === selectedObject.objectId,
                 isTileEvent,
@@ -137,8 +139,17 @@ export const useRoomObjectPlace = () => {
                     roomObject.setDirection(new Vector3d(allowedDirections[0]));
 
                     setSelectedObject(new SelectedRoomObjectData(
-                        selectedObject.objectId, selectedObject.category, selectedObject.operation, selectedObject.loc, selectedObject.dir,
-                        selectedObject.typeId, selectedObject.instanceData, selectedObject.stuffData, selectedObject.state, selectedObject.animFrame, selectedObject.posture,
+                        selectedObject.objectId,
+                        selectedObject.category,
+                        selectedObject.operation,
+                        selectedObject.loc,
+                        selectedObject.dir,
+                        selectedObject.typeId,
+                        selectedObject.instanceData,
+                        selectedObject.stuffData,
+                        selectedObject.state,
+                        selectedObject.animFrame,
+                        selectedObject.posture,
                     ));
                 }
             }

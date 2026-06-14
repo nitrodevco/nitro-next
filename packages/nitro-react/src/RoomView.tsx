@@ -8,7 +8,8 @@ import {
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useMemo, useState } from 'react';
 
-import { RoomContextProvider } from './hooks/context';
+import { RoomContextProvider } from '#base/context';
+
 import { RoomCanvasView } from './views/room/RoomCanvasView';
 
 export const RoomView = ({ roomId }: {

@@ -4,10 +4,9 @@ import { NitroLogger, RoomControllerLevelEnum, RoomObjectOperationType, RoomObje
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import { useShallow } from "zustand/shallow";
 
-import { useRoomSessionSelector } from "#base/selectors";
-import { useRoomSelectedObjectSelector } from "#base/selectors/room";
+import { useRoomContext } from "#base/context";
+import { useRoomSelectedObjectSelector, useRoomSessionSelector } from "#base/selectors";
 
-import { useRoomContext } from "../context";
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
@@ -81,8 +80,11 @@ export const useRoomObjectModify = () => {
                 setFurnitureAlphaMultiplier(roomObject, 0.5);
 
                 setSelectedObject(new SelectedRoomObjectData(
-                    roomObject.id, category, operation,
-                    roomObject.getLocation(), roomObject.getDirection(),
+                    roomObject.id,
+                    category,
+                    operation,
+                    roomObject.getLocation(),
+                    roomObject.getDirection(),
                 ));
 
                 void (async () => {
@@ -95,8 +97,11 @@ export const useRoomObjectModify = () => {
             case RoomObjectOperationType.OBJECT_MOVE_TO: {
                 if (selectedObject) {
                     setSelectedObject(new SelectedRoomObjectData(
-                        selectedObject.objectId, selectedObject.category, RoomObjectOperationType.OBJECT_MOVE_TO,
-                        roomObject.getLocation(), roomObject.getDirection(),
+                        selectedObject.objectId,
+                        selectedObject.category,
+                        RoomObjectOperationType.OBJECT_MOVE_TO,
+                        roomObject.getLocation(),
+                        roomObject.getDirection(),
                     ));
                 }
 
@@ -122,7 +127,8 @@ export const useRoomObjectModify = () => {
                     const _race = parseInt(roomObject.model.getValue<string>(RoomObjectVariableEnum.Race));
 
                     NitroLogger.sendPacket(
-                        `new PetMoveComposer(userData.webID, location.x, location.y, direction`)
+                        `new PetMoveComposer(userData.webID, location.x, location.y, direction`
+                    )
                 }
 
                 break;

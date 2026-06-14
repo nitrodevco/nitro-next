@@ -1,6 +1,3 @@
-export * from './context/RoomContext';
-export * from './context/RoomContextProvider';
-export * from './context/useRoomContext';
 export * from './events/useMessageListener';
 export * from './logic/useConfigLoader';
 export * from './logic/useFurnitureDataLoader';

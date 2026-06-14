@@ -4,10 +4,9 @@ import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 import { useShallow } from 'zustand/shallow';
 
-import { useRoomSessionSelector } from '#base/selectors';
-import { useRoomSelectedObjectSelector } from '#base/selectors/room';
+import { useRoomContext } from '#base/context';
+import { useRoomSelectedObjectSelector, useRoomSessionSelector } from '#base/selectors';
 
-import { useRoomContext } from '../context';
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 import { useRoomObjectInteraction } from './useRoomObjectInteraction';

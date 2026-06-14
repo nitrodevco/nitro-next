@@ -13,6 +13,9 @@
             "#base/hooks": [
                 "./src/hooks/index.ts"
             ],
+            "#base/selectors": [
+                "./src/selectors/index.ts"
+            ],
             "#base/stores": [
                 "./src/stores/index.ts"
             ],

@@ -3,7 +3,8 @@ import { ObjectTileCursorUpdateMessage } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomObjectTileMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomContext } from "../context"
+import { useRoomContext } from "#base/context";
+
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomCursorUpdate = () => {
@@ -13,7 +14,9 @@ export const useRoomCursorUpdate = () => {
     const handleMouseOverTile = (event: RoomObjectTileMouseEvent) =>
         new ObjectTileCursorUpdateMessage(
             new Vector3d(event.tileXAsInt, event.tileYAsInt, event.tileZAsInt),
-            0, true, event.eventId,
+            0,
+            true,
+            event.eventId,
         );
 
     const handleMouseOverObject = (category: RoomObjectCategoryEnum, event: RoomObjectMouseEvent) => {
@@ -29,7 +32,9 @@ export const useRoomCursorUpdate = () => {
 
         return new ObjectTileCursorUpdateMessage(
             new Vector3d(location.x, location.y, roomObject.getLocation().z),
-            location.z, true, event.eventId,
+            location.z,
+            true,
+            event.eventId,
         );
     };
 

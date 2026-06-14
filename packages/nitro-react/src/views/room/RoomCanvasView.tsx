@@ -7,7 +7,8 @@ import type { Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/shallow';
 
-import { useRoomCamera, useRoomContext, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
+import { useRoomContext } from '#base/context';
+import { useRoomCamera, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {

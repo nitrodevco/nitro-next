@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "../../hooks/context/useRoomContext";
+import { useRoomContext } from '#base/context';
 
 export const useRoomCameraSelector = () => useRoomContext(useShallow(x => ({
     targetId: x.targetId,
