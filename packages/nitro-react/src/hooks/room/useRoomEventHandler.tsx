@@ -1,63 +1,26 @@
 
-import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRoomEngine, ObjectTileCursorUpdateMessage } from '@nitrodevco/nitro-renderer';
+import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
+import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '../context';
+import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
+import { useRoomObjectInteraction } from './useRoomObjectInteraction';
 import { useRoomObjectModify } from './useRoomObjectModify';
 import { useRoomObjectMove } from './useRoomObjectMove';
 import { useRoomObjectPlace } from './useRoomObjectPlace';
 import { useRoomObjectSelector } from './useRoomObjectSelector';
-import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomEventHandler = () => {
     const [room, isSpectator, isDecorating, isPlayingGame, getMouseEventId, setMouseEventId, selectedObject] = useRoomContext(useShallow(x => [x.room, x.isSpectator, x.isDecorating, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId, x.selectedObject]));
     const { placedObject, selectAvatar, selectObject, deselectObject } = useRoomObjectSelector();
-    const { getActiveSurfaceLocation } = useRoomObjectValidation();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();
     const { placeObject, placeObjectOnUser, handleObjectPlace } = useRoomObjectPlace();
-
-    const handleMoveTargetFurni = (event: RoomObjectMouseEvent) => {
-        const roomObject = room.getRoomObject(event.objectId, RoomObjectCategoryEnum.Floor);
-
-        if (!roomObject) return false;
-
-        const point = getActiveSurfaceLocation(roomObject, event);
-
-        if (point && !GetRoomEngine().moveBlocked) {
-            NitroLogger.sendPacket(`new RoomUnitWalkComposer(point.x, point.y)`);
-
-            return true;
-        }
-
-        return false;
-    };
-
-    const handleMouseOverTile = (event: RoomObjectTileMouseEvent) =>
-        new ObjectTileCursorUpdateMessage(
-            new Vector3d(event.tileXAsInt, event.tileYAsInt, event.tileZAsInt),
-            0, true, event.eventId,
-        );
-
-    const handleMouseOverObject = (category: RoomObjectCategoryEnum, event: RoomObjectMouseEvent) => {
-        if (category !== RoomObjectCategoryEnum.Floor) return undefined;
-
-        const roomObject = room.getRoomObject(event.objectId, RoomObjectCategoryEnum.Floor);
-
-        if (!roomObject) return undefined;
-
-        const location = getActiveSurfaceLocation(roomObject, event);
-
-        if (!location || !room.instance.furnitureStackingHeightMap) return undefined;
-
-        return new ObjectTileCursorUpdateMessage(
-            new Vector3d(location.x, location.y, roomObject.getLocation().z),
-            location.z, true, event.eventId,
-        );
-    };
+    const { updateCursorForEvent } = useRoomCursorUpdate();
+    const { handleMoveTargetFurni } = useRoomObjectInteraction();
 
     const handleRoomObjectMouseEvent = (event: RoomObjectMouseEvent) => {
         if (event instanceof RoomObjectTileMouseEvent) room.areaSelection.handleTileMouseEvent(event);
@@ -81,19 +44,7 @@ export const useRoomEventHandler = () => {
                     }
                 }
 
-                const roomCursor = room.getRoomObjectCursor();
-
-                if (roomCursor?.logic) {
-                    let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
-
-                    if (event instanceof RoomObjectTileMouseEvent) {
-                        cursorEvent = handleMouseOverTile(event);
-                    } else if (event.object?.id !== -1) {
-                        cursorEvent = handleMouseOverObject(category, event);
-                    }
-
-                    if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
-                }
+                updateCursorForEvent(event);
 
                 switch (operation) {
                     case RoomObjectOperationType.OBJECT_MOVE: {
@@ -209,25 +160,12 @@ export const useRoomEventHandler = () => {
             case RoomObjectMouseEvent.MOUSE_MOVE: {
                 const operation = selectedObject?.operation ?? RoomObjectOperationType.OBJECT_UNDEFINED;
                 const category = room.getRoomObjectCategoryForType(event.objectType);
-                const roomCursor = room.getRoomObjectCursor();
 
-                if (roomCursor?.logic) {
-                    let cursorEvent: ObjectTileCursorUpdateMessage | undefined;
-
-                    if (event instanceof RoomObjectTileMouseEvent) {
-                        cursorEvent = handleMouseOverTile(event);
-                    } else if (event.object?.id !== -1) {
-                        cursorEvent = handleMouseOverObject(category, event);
-                    } else {
-                        cursorEvent = new ObjectTileCursorUpdateMessage(undefined, 0, false, event.eventId);
-                    }
-
-                    if (cursorEvent) roomCursor.processUpdateMessage(cursorEvent);
-                }
+                updateCursorForEvent(event);
 
                 if (category === RoomObjectCategoryEnum.Room) {
                     if (operation === RoomObjectOperationType.OBJECT_MOVE) handleObjectMove(event, selectedObject);
-                    else if (operation === RoomObjectOperationType.OBJECT_PLACE) void handleObjectPlace(event);
+                    else if (operation === RoomObjectOperationType.OBJECT_PLACE) handleObjectPlace(event);
                 }
 
                 return;
