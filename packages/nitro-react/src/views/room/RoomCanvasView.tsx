@@ -1,6 +1,6 @@
 import type { IRoomObject } from '@nitrodevco/nitro-api';
-import { MouseEventType, NitroLogger, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, GetTexturePool, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
+import { MouseEventType, NitroLogger, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { GetRenderer, GetStage, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
@@ -13,7 +13,7 @@ import { GetPixelRatio } from '#base/utils';
 export const RoomCanvasView = () => {
     const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
     const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
-    const { updateRoomCamera, resetCamera, setCameraTarget } = useRoomCamera();
+    const { updateRoomCamera } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
 
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
@@ -193,7 +193,6 @@ export const RoomCanvasView = () => {
 
         const renderer = GetRenderer();
         const stage = GetStage();
-        const texturePool = GetTexturePool();
 
         const tick = (ticker: Ticker) => {
             if (!room) return;
@@ -226,7 +225,6 @@ export const RoomCanvasView = () => {
             RoomEnterEffect.turnVisualizationOff();
 
             renderer.render(stage);
-            texturePool.run();
         }
 
         GetTicker().add(tick);
@@ -250,12 +248,11 @@ export const RoomCanvasView = () => {
             renderer.canvas.style.width = `${width}px`;
             renderer.canvas.style.height = `${height}px`;
 
-            if (renderer.resolution !== resolution) {
-                resetCamera();
-                setCameraTarget(new Vector3d(0, 0, 0));
-            }
+            if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) {
+                renderer.resize(width, height, resolution);
 
-            if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) renderer.resize(width, height, resolution);
+                canvas.geometry.increaseUpdateId();
+            }
 
             if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
 

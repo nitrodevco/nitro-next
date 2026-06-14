@@ -5,12 +5,12 @@ import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "../context";
-import { useRoomObjectSelector } from "./useRoomObjectSelector";
+import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectModify = () => {
     const [room, ownUserId, controllerLevel, isRoomOwner, selectedObject, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.ownUserId, x.controllerLevel, x.isRoomOwner, x.selectedObject, x.setSelectedObject]));
-    const { resetSelectedObject } = useRoomObjectSelector();
+    const { resetSelectedObject } = useRoomObjectSelect();
     const { setFurnitureAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
@@ -80,8 +80,11 @@ export const useRoomObjectModify = () => {
                     roomObject.getLocation(), roomObject.getDirection(),
                 ));
 
-                //GetRoomEngine().setObjectMoverIconSprite(roomObject.id, category, true);
-                //GetRoomEngine().setObjectMoverIconSpriteVisible(false);
+                void (async () => {
+                    await room.setRoomOverlayIconSprite(roomObject.id, category, true);
+
+                    room.setRoomOverlayIconSpriteVisibility(false);
+                })();
 
                 break;
             case RoomObjectOperationType.OBJECT_MOVE_TO: {
@@ -94,7 +97,7 @@ export const useRoomObjectModify = () => {
 
                 setFurnitureAlphaMultiplier(roomObject, 1);
 
-                //GetRoomEngine().removeObjectMoverIconSprite();
+                room.removeRoomOverlayIconSprite();
 
                 if (category === RoomObjectCategoryEnum.Floor) {
                     const _angle = roomObject.getDirection().x % 360;

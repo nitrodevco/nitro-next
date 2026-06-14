@@ -16,7 +16,7 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import type { ImageLike } from 'pixi.js';
+import { type ImageLike } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { NumberBank } from '../utils';

@@ -3,6 +3,7 @@ export * from './events/EventDispatcher';
 export * from './events/room/RoomBackgroundColorEvent';
 export * from './events/room/RoomContentLoadedEvent';
 export * from './events/room/RoomDragEvent';
+export * from './events/room/RoomDraggedEvent';
 export * from './events/room/RoomEngineAreaHideStateEvent';
 export * from './events/room/RoomEngineDimmerStateEvent';
 export * from './events/room/RoomEngineEvent';

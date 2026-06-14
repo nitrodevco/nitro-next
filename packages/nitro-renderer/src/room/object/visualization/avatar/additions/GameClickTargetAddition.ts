@@ -1,8 +1,7 @@
 import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AlphaTolerance, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { RenderTexture } from 'pixi.js';
 
-import { GetTexturePool } from '../../../../../utils';
 import type { IAvatarAddition } from './IAvatarAddition';
 
 export class GameClickTargetAddition implements IAvatarAddition {
@@ -11,13 +10,13 @@ export class GameClickTargetAddition implements IAvatarAddition {
     private static OFFSET_X: number = -23;
     private static OFFSET_Y: number = -48;
 
-    private _asset: Texture | undefined = undefined;
+    private _asset: RenderTexture | undefined = undefined;
 
     constructor(private _id: number) { }
 
     public dispose(): void {
         if (this._asset) {
-            GetTexturePool().putTexture(this._asset);
+            this._asset.destroy(true);
 
             this._asset = undefined;
         }
@@ -26,8 +25,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
     public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
         if (!sprite) return;
 
-        if (!this._asset)
-            this._asset = GetTexturePool().getTexture(GameClickTargetAddition.WIDTH, GameClickTargetAddition.HEIGHT);
+        if (!this._asset) this._asset = RenderTexture.create({ width: GameClickTargetAddition.WIDTH, height: GameClickTargetAddition.HEIGHT });
 
         if (this._asset) {
             sprite.visible = true;

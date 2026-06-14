@@ -17,6 +17,7 @@ export interface IRoomGeometry {
     performZoomOut(): void;
     performZoomIn(): void;
     isZoomedIn(): boolean;
+    increaseUpdateId(): void;
     readonly updateId: number;
     scale: RoomGeometryScaleType;
     location: IVector3D;

@@ -1,59 +1,142 @@
-import { RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IVector3D } from "@nitrodevco/nitro-api";
+import { RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { Room } from "@nitrodevco/nitro-renderer";
+import { RoomDraggedEvent } from "@nitrodevco/nitro-shared";
 import { Matrix, Point, Rectangle } from "pixi.js";
-import { useShallow } from "zustand/shallow";
+import { useRef } from "react";
+
+import { useRoomCameraSelector } from "#base/selectors/room";
 
 import { useRoomContext } from "../context";
+import { useConfigValue } from "../useConfigValue";
+import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
 
 export const useRoomCamera = () => {
-    const [room, targetId, targetCategory, cameraFollowDisabled, camera, resetCamera, initializeCameraLocation, setCameraTarget, setTargetObjectLocation, setCameraLimitedLocation, setCameraCenteredLocation, setCameraScale, setCameraScreenSize, setCameraRoomSize, setGeometryUpdateId, updateCamera] = useRoomContext(useShallow(x => [
-        x.room,
-        x.targetId,
-        x.targetCategory,
-        x.cameraFollowDisabled,
-        x.camera,
-        x.resetCamera,
-        x.initializeCameraLocation,
-        x.setCameraTarget,
-        x.setTargetObjectLocation,
-        x.setCameraLimitedLocation,
-        x.setCameraCenteredLocation,
-        x.setCameraScale,
-        x.setCameraScreenSize,
-        x.setCameraRoomSize,
-        x.setGeometryUpdateId,
-        x.updateCamera
-    ]));
+    const room = useRoomContext(x => x.room);
+    const { targetId, targetCategory, cameraFollowDisabled, followDuration } = useRoomCameraSelector();
+    const moveSpeedDenominator = useConfigValue<number>('camera.move.speed', 12);
+    const cameraDataRef = useRef<{
+        currentLocation: IVector3D | undefined;
+        targetLocation: IVector3D | undefined;
+        targetObjectLocation: IVector3D | undefined;
+        limitedLocation: { x: boolean; y: boolean; };
+        centeredLocation: { x: boolean; y: boolean; };
+        screenSize: { w: number; h: number; };
+        roomSize: { w: number; h: number; };
+        scale: RoomGeometryScaleType;
+        moveDistance: number;
+        previousMoveSpeed: number;
+        maintainPreviousMoveSpeed: boolean;
+        geometryUpdateId: number;
+        scaleChanged: boolean;
+    }>({
+        currentLocation: undefined,
+        targetLocation: undefined,
+        targetObjectLocation: new Vector3d(),
+        limitedLocation: { x: false, y: false },
+        centeredLocation: { x: false, y: false },
+        screenSize: { w: 0, h: 0 },
+        roomSize: { w: 0, h: 0 },
+        scale: RoomGeometryScaleType.ZoomedIn,
+        moveDistance: 0,
+        previousMoveSpeed: 0,
+        maintainPreviousMoveSpeed: false,
+        geometryUpdateId: -1,
+        scaleChanged: false
+    });
+
+    const setCameraTarget = (target: IVector3D) => {
+        const cameraData = cameraDataRef.current;
+
+        if (!cameraData.targetLocation) cameraData.targetLocation = new Vector3d();
+
+        if (cameraData.targetLocation.x === target.x && cameraData.targetLocation.y === target.y && cameraData.targetLocation.z === target.z) return;
+
+        cameraData.targetLocation.assign(target);
+
+        const diff = Vector3d.dif(cameraData.targetLocation, cameraData.currentLocation);
+
+        cameraData.moveDistance = diff.length;
+        cameraData.maintainPreviousMoveSpeed = true;
+    }
+
+    const adjustCamera = (time: number, threshold: number) => {
+        const cameraData = cameraDataRef.current;
+
+        if (followDuration <= 0 || !cameraData.targetLocation || !cameraData.currentLocation) return;
+
+        if (cameraData.scaleChanged) {
+            cameraData.scaleChanged = false;
+            cameraData.currentLocation = Vector3d.from(cameraData.targetLocation);
+            cameraData.targetLocation = undefined;
+
+            return;
+        }
+
+        const diff = Vector3d.dif(cameraData.targetLocation, cameraData.currentLocation);
+
+        if (diff.length > cameraData.moveDistance) cameraData.moveDistance = diff.length;
+
+        if (diff.length <= threshold) {
+            cameraData.currentLocation = Vector3d.from(cameraData.targetLocation);
+            cameraData.targetLocation = undefined;
+            cameraData.previousMoveSpeed = 0;
+
+            return;
+        }
+
+        const sinFactor = Math.sin((Math.PI * diff.length) / cameraData.moveDistance);
+        const minSpeed = threshold * 0.5;
+        const maxSpeed = cameraData.moveDistance / moveSpeedDenominator!;
+
+        let speed = minSpeed + (maxSpeed - minSpeed) * sinFactor;
+
+        if (cameraData.maintainPreviousMoveSpeed) {
+            if (speed < cameraData.previousMoveSpeed) {
+                speed = Math.min(cameraData.previousMoveSpeed, diff.length);
+            } else {
+                cameraData.maintainPreviousMoveSpeed = false;
+            }
+        }
+
+        cameraData.previousMoveSpeed = speed;
+
+        diff.divide(diff.length);
+        diff.multiply(speed);
+
+        cameraData.currentLocation = Vector3d.sum(cameraData.currentLocation, diff);
+    }
 
     const updateRoomCamera = (time: number) => {
         const canvas = room.instance.canvas;
 
         if (!canvas) return;
 
+        const cameraData = cameraDataRef.current;
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
         const roomBounds = room.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
-        if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) resetCamera();
+        if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) cameraData.geometryUpdateId = -1;
 
         const targetObject = room.getRoomObject(targetId, targetCategory);
         const goalLocation = targetObject?.getLocation() ?? new Vector3d();
 
         const needsUpdate =
-            camera.screenSize.w !== viewport.width ||
-            camera.screenSize.h !== viewport.height ||
-            camera.scale !== canvas.geometry.scale ||
-            camera.geometryUpdateId !== canvas.geometry.updateId ||
-            !Vector3d.isEqual(goalLocation, camera.targetObjectLocation) ||
-            (camera.targetLocation !== undefined && camera.currentLocation !== undefined);
+            cameraData.screenSize.w !== viewport.width ||
+            cameraData.screenSize.h !== viewport.height ||
+            cameraData.scale !== canvas.geometry.scale ||
+            cameraData.geometryUpdateId !== canvas.geometry.updateId ||
+            !Vector3d.isEqual(goalLocation, cameraData.targetObjectLocation) ||
+            (cameraData.targetLocation !== undefined && cameraData.currentLocation !== undefined);
 
         if (!needsUpdate) {
-            setCameraLimitedLocation(false, false);
-            setCameraCenteredLocation(false, false);
+            cameraData.limitedLocation = { x: false, y: false };
+            cameraData.centeredLocation = { x: false, y: false };
 
             return;
         }
 
-        setTargetObjectLocation(goalLocation);
+        cameraData.targetObjectLocation = goalLocation;
 
         let targetZ = Math.floor(goalLocation.z) + 1;
 
@@ -163,9 +246,9 @@ export const useRoomCamera = () => {
         if (marginTop * viewport.height > 150) marginTop = 150 / viewport.height;
         if (marginBottom * viewport.height > 150) marginBottom = 150 / viewport.height;
 
-        if (camera.limitedLocation.x && camera.screenSize.w === viewport.width && camera.screenSize.h === viewport.height) marginX = 0;
+        if (cameraData.limitedLocation.x && cameraData.screenSize.w === viewport.width && cameraData.screenSize.h === viewport.height) marginX = 0;
 
-        if (camera.limitedLocation.y && camera.screenSize.w === viewport.width && camera.screenSize.h === viewport.height) {
+        if (cameraData.limitedLocation.y && cameraData.screenSize.w === viewport.width && cameraData.screenSize.h === viewport.height) {
             marginTop = 0;
             marginBottom = 0;
         }
@@ -188,39 +271,52 @@ export const useRoomCamera = () => {
         finalLocation.x = Math.round(offset.x * 2) / 2;
         finalLocation.y = Math.round(offset.y * 2) / 2;
 
-        if (camera.currentLocation === undefined) {
+        if (cameraData.currentLocation === undefined) {
             canvas.geometry.setLocation(finalLocation);
-            initializeCameraLocation(new Vector3d(0, 0, 0));
+            cameraData.currentLocation = new Vector3d(0, 0, 0);
         }
 
         const finalScreen = canvas.geometry.getScreenPoint(finalLocation);
         const currentPosition = new Vector3d(finalScreen.x, finalScreen.y);
 
-        const outOfActiveZoneX = targetObject !== undefined && (targetScreen.x < viewport.left || targetScreen.x > viewport.right) && !camera.centeredLocation.x;
-        const outOfActiveZoneY = targetObject !== undefined && (targetScreen.y < viewport.top || targetScreen.y > viewport.bottom) && !camera.centeredLocation.y;
-        const horizontalFitChanged = fitsHorizontally && !camera.centeredLocation.x && camera.screenSize.w !== viewport.width;
-        const verticalFitChanged = fitsVertically && !camera.centeredLocation.y && camera.screenSize.h !== viewport.height;
-        const roomSizeChanged = camera.roomSize.w !== roomBounds.width || camera.roomSize.h !== roomBounds.height;
-        const activeZoneChanged = camera.screenSize.w !== viewport.width || camera.screenSize.h !== viewport.height;
+        const outOfActiveZoneX = targetObject !== undefined && (targetScreen.x < viewport.left || targetScreen.x > viewport.right) && !cameraData.centeredLocation.x;
+        const outOfActiveZoneY = targetObject !== undefined && (targetScreen.y < viewport.top || targetScreen.y > viewport.bottom) && !cameraData.centeredLocation.y;
+        const horizontalFitChanged = fitsHorizontally && !cameraData.centeredLocation.x && cameraData.screenSize.w !== viewport.width;
+        const verticalFitChanged = fitsVertically && !cameraData.centeredLocation.y && cameraData.screenSize.h !== viewport.height;
+        const roomSizeChanged = cameraData.roomSize.w !== roomBounds.width || cameraData.roomSize.h !== roomBounds.height;
+        const activeZoneChanged = cameraData.screenSize.w !== viewport.width || cameraData.screenSize.h !== viewport.height;
 
-        if (outOfActiveZoneX || outOfActiveZoneY || horizontalFitChanged || verticalFitChanged || roomSizeChanged || activeZoneChanged || camera.geometryUpdateId === -1) {
-            setCameraLimitedLocation(clampedX, clampedY);
+        if (outOfActiveZoneX || outOfActiveZoneY || horizontalFitChanged || verticalFitChanged || roomSizeChanged || activeZoneChanged || cameraData.geometryUpdateId === -1) {
+            cameraData.limitedLocation = { x: clampedX, y: clampedY };
+
             setCameraTarget(currentPosition);
         } else {
-            if (!clampedX) setCameraLimitedLocation(false, camera.limitedLocation.y);
-            if (!clampedY) setCameraLimitedLocation(camera.limitedLocation.x, false);
+            if (!clampedX) cameraData.limitedLocation = { x: false, y: cameraData.limitedLocation.y };
+            if (!clampedY) cameraData.limitedLocation = { x: cameraData.limitedLocation.x, y: false };
         }
 
-        setCameraCenteredLocation(fitsHorizontally, fitsVertically);
-        setCameraScreenSize(viewport.width, viewport.height);
-        setCameraScale(canvas.geometry.scale);
-        setGeometryUpdateId(canvas.geometry.updateId);
-        setCameraRoomSize(roomBounds.width, roomBounds.height);
+        cameraData.centeredLocation = { x: fitsHorizontally, y: fitsVertically };
+        cameraData.screenSize = { w: canvas.width, h: canvas.height };
+        cameraData.roomSize = { w: roomBounds.width, h: roomBounds.height };
+        cameraData.geometryUpdateId = canvas.geometry.updateId;
 
-        if (!cameraFollowDisabled) updateCamera(time, 8);
+        if (cameraData.scale !== canvas.geometry.scale) {
+            cameraData.scaleChanged = true;
+            cameraData.scale = canvas.geometry.scale;
+        }
 
-        room.setRoomInstanceRenderingCanvasOffset(new Point(-(camera.currentLocation?.x ?? 0), -(camera.currentLocation?.y ?? 0)));
+        if (!cameraFollowDisabled) adjustCamera(time, 8);
+
+        room.setRoomInstanceRenderingCanvasOffset(new Point(-(cameraData.currentLocation?.x ?? 0), -(cameraData.currentLocation?.y ?? 0)));
     }
 
-    return { updateRoomCamera, resetCamera, setCameraTarget };
+    useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, event => {
+        const cameraData = cameraDataRef.current;
+
+        if (cameraData.currentLocation === undefined || cameraData.targetLocation === undefined) cameraData.centeredLocation = { x: false, y: false };
+
+        cameraData.currentLocation = new Vector3d(event.offsetX, event.offsetY);
+    });
+
+    return { updateRoomCamera };
 }

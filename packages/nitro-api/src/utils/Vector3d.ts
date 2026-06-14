@@ -9,6 +9,14 @@ export class Vector3d implements IVector3D {
         private _z: number = 0,
     ) { }
 
+    public static from(vector: IVector3D): IVector3D {
+        const v = new Vector3d();
+
+        if (vector) v.assign(vector);
+
+        return v;
+    }
+
     public static empty(): Vector3d {
         return new Vector3d();
     }

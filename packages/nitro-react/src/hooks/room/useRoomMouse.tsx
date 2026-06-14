@@ -1,23 +1,17 @@
-import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { RoomDragEvent, RoomDraggedEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
-import { useShallow } from "zustand/shallow";
+
+import { useRoomSessionSelector } from "#base/selectors/room";
 
 import { useRoomContext } from "../context";
 
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
-    const [room, controllerLevel, camera, isDecorating, isPlayingGame, resetCameraLocation, setCameraCenteredLocation] = useRoomContext(useShallow(x => [
-        x.room,
-        x.controllerLevel,
-        x.camera,
-        x.isDecorating,
-        x.isPlayingGame,
-        x.resetCameraLocation,
-        x.setCameraCenteredLocation
-    ]));
+    const room = useRoomContext(x => x.room);
+    const { controllerLevel, isDecorating, isPlayingGame } = useRoomSessionSelector();
     const mouseDataRef = useRef<{
         mouseXY: { x: number, y: number },
         dragStartXY: { x: number, y: number },
@@ -114,11 +108,7 @@ export const useRoomMouse = () => {
             if (mouseData.isDragged) {
                 mouseData.isDragged = false;
 
-                if (mouseData.wasDragged) {
-                    if ((camera.targetLocation === undefined) || (camera.currentLocation === undefined)) setCameraCenteredLocation(false, false);
-
-                    resetCameraLocation(new Vector3d(-canvas.screenOffsetX, -canvas.screenOffsetY));
-                }
+                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(room.roomId, -canvas.screenOffsetX, -canvas.screenOffsetY));
             }
         } else if (type === MouseEventType.MOUSE_MOVE) {
             if (mouseData.isDragged) {
@@ -143,6 +133,8 @@ export const useRoomMouse = () => {
                     mouseData.dragXY.x += offsetX;
                     mouseData.dragXY.y += offsetY;
                     mouseData.wasDragged = true;
+
+                    room.dispatchEvent(new RoomDragEvent(room.roomId, -(canvas.screenOffsetX - offsetX), -(canvas.screenOffsetY - offsetY)));
                 }
             }
         } else if (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK) {

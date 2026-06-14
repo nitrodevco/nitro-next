@@ -1,13 +1,13 @@
-import { RoomEngineEvent } from './RoomEngineEvent';
+import { RoomEngineEvent } from "./RoomEngineEvent";
 
-export class RoomDragEvent extends RoomEngineEvent {
-    public static ROOM_DRAG: string = 'RDE_ROOM_DRAG';
+export class RoomDraggedEvent extends RoomEngineEvent {
+    public static ROOM_DRAGGED: string = 'RDE_ROOM_DRAGGED';
 
     private _offsetX: number;
     private _offsetY: number;
 
     constructor(roomId: number, offsetX: number, offsetY: number) {
-        super(RoomDragEvent.ROOM_DRAG, roomId);
+        super(RoomDraggedEvent.ROOM_DRAGGED, roomId);
 
         this._offsetX = offsetX;
         this._offsetY = offsetY;

@@ -7,13 +7,13 @@ import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "../context"
 import { useRoomObjectMove } from "./useRoomObjectMove";
-import { useRoomObjectSelector } from "./useRoomObjectSelector";
+import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectPlace = () => {
     const [room, objectPlacementSource, setPlacedObject, selectedObject, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.objectPlacementSource, x.setPlacedObject, x.selectedObject, x.setSelectedObject]));
     const { setFurnitureAlphaMultiplier } = useRoomObjectValidation();
-    const { resetSelectedObject } = useRoomObjectSelector();
+    const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
 
     const placeObject = (isTileEvent: boolean, isWallEvent: boolean) => {
@@ -141,27 +141,36 @@ export const useRoomObjectPlace = () => {
             }
 
             if (roomObject) setFurnitureAlphaMultiplier(roomObject, 0.5);
-            //this._roomEngine.setObjectMoverIconSpriteVisible(true)
+
+            room.setRoomOverlayIconSpriteVisibility(true);
         }
 
         if (!roomObject) return;
 
+        let added = true;
+
         if (selectedObject.category === RoomObjectCategoryEnum.Floor) {
-            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, selectedObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5))))
+            if (!(event instanceof RoomObjectTileMouseEvent && handleFurnitureMove(roomObject, selectedObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5)))) {
                 room.removeRoomObjectFloor(selectedObject.objectId);
+
+                added = false;
+            }
         } else if (selectedObject.category === RoomObjectCategoryEnum.Wall) {
-            const added = event instanceof RoomObjectWallMouseEvent &&
+            added = event instanceof RoomObjectWallMouseEvent &&
                 handleWallItemMove(roomObject, selectedObject, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction);
 
             if (!added) room.removeRoomObjectWall(selectedObject.objectId);
 
             room.updateRoomObjectMask(selectedObject.objectId, added);
         } else if (selectedObject.category === RoomObjectCategoryEnum.Unit) {
-            if (!(event instanceof RoomObjectTileMouseEvent && handleUserPlace(roomObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5))))
+            if (!(event instanceof RoomObjectTileMouseEvent && handleUserPlace(roomObject, Math.trunc(event.tileX + 0.5), Math.trunc(event.tileY + 0.5)))) {
                 room.removeRoomObject(selectedObject.objectId, RoomObjectCategoryEnum.Unit);
+
+                added = false;
+            }
         }
 
-        //this._roomEngine.setObjectMoverIconSpriteVisible(!_local_12);
+        room.setRoomOverlayIconSpriteVisibility(!added);
     };
 
     return { placeObject, placeObjectOnUser, handleUserPlace, handleObjectPlace };

@@ -4,10 +4,13 @@ import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpd
 import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
 import { useShallow } from 'zustand/shallow';
 
+import { useRoomSelectedObjectSelector } from '#base/selectors/room';
+
 import { useRoomContext } from '../context';
 
-export const useRoomObjectSelector = () => {
-    const [room, isPlayingGame, selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.selectedAvatarId, x.selectedObjectId, x.selectedObjectCategory, x.placedObject, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
+export const useRoomObjectSelect = () => {
+    const [room, isPlayingGame, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
+    const { selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject } = useRoomSelectedObjectSelector();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {
@@ -87,7 +90,8 @@ export const useRoomObjectSelector = () => {
         const selectedObject = getSelectedObject();
 
         if (!selectedObject) return;
-        //this._roomEngine.removeObjectMoverIconSprite();
+
+        room.removeRoomOverlayIconSprite();
 
         if (selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE || selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
             const roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);

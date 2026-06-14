@@ -2,6 +2,7 @@ import type {
     IEventDispatcher,
     INitroEvent,
     IObjectData,
+    IPetCustomPart,
     IRoom,
     IRoomAreaSelectionManager,
     IRoomEventHandler,
@@ -11,11 +12,10 @@ import type {
     IRoomObject,
     IRoomObjectController,
     IRoomRenderingCanvas,
-    IVector3D,
-    RoomGeometryScaleType
+    IVector3D, RoomObjectUserType
 } from '@nitrodevco/nitro-api';
-import type {
-    RoomObjectUserType
+import {
+    RoomGeometryScaleType
 } from '@nitrodevco/nitro-api';
 import {
     RoomObjectUserTypeName
@@ -30,19 +30,17 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import type {
-    RoomObjectEvent,
-    RoomSpriteMouseEvent
-} from '@nitrodevco/nitro-shared';
 import {
     EventDispatcher,
     GetConfigValue,
     RoomEngineObjectEvent,
     SessionStore
 } from '@nitrodevco/nitro-shared';
-import type { Container, ImageLike, Rectangle } from 'pixi.js';
-import { type PointData, Sprite, Texture } from 'pixi.js';
+import type { ImageLike, Rectangle } from 'pixi.js';
+import { Container, Texture } from 'pixi.js';
+import { type PointData, Sprite } from 'pixi.js';
 
+import { PetFigureData } from '../session';
 import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
@@ -69,7 +67,7 @@ export class Room implements IRoom {
     public static ARROW_OBJECT_ID: number = -3;
     public static ARROW_OBJECT_TYPE: string = 'selection_arrow';
     public static OVERLAY: string = 'overlay';
-    public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
+    public static OVERLAY_ICON_SPRITE: string = 'overlay_icon_sprite';
 
     private _roomId: number;
     private _instance: IRoomInstance;
@@ -79,8 +77,6 @@ export class Room implements IRoom {
     private _modelName: string;
 
     private _areaSelection: IRoomAreaSelectionManager;
-    private _roomObjectEventHandler: ((event: RoomObjectEvent) => void) | undefined = undefined;
-    private _roomCanvasMouseHandler: ((event: RoomSpriteMouseEvent, object: IRoomObject) => void) | undefined = undefined;
 
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
@@ -138,7 +134,7 @@ export class Room implements IRoom {
             if (direction) canvas.geometry.setDisplacement(vector, direction);
         }
 
-        const overlay = new Sprite(Texture.EMPTY);
+        const overlay = new Container();
 
         overlay.label = Room.OVERLAY;
         overlay.interactive = false;
@@ -886,7 +882,7 @@ export class Room implements IRoom {
         return screenPoint;
     }
 
-    public getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined> {
+    public async getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined> {
         let id = -1;
         let type: string = '';
         let value: string = '';
@@ -922,32 +918,74 @@ export class Room implements IRoom {
             }
         }
 
-        return GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, extras, data)
+        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, extras, data);
     }
 
-    public setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum): void {
+    public async getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly: boolean = false, customParts: IPetCustomPart[] = [], posture: string | undefined = undefined): Promise<ImageLike | undefined> {
+        const type = GetRoomContentLoader().getPetNameForType(typeId);
+
+        if (!type) return undefined;
+
+        let value = `${typeId} ${paletteId} ${color.toString(16)}`;
+
+        if (headOnly) value = `${value} head`;
+
+        if (customParts) {
+            value = `${value} ${customParts.length}`;
+
+            for (const part of customParts) value = `${value} ${part.layerId} ${part.partId} ${part.paletteId}`;
+        }
+
+        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, 0, undefined, 0, 0, posture);
+    }
+
+    public async setRoomOverlayIconSprite(objectId: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra: string = '', posture: string = ''): Promise<void> {
         const roomContentLoader = GetRoomContentLoader();
         let type: string | undefined = undefined;
         let colorIndex = 0;
 
-        switch (category) {
-            case RoomObjectCategoryEnum.Floor: {
-                type = roomContentLoader.getFurnitureFloorNameForTypeId(id);
-                colorIndex = roomContentLoader.getFurnitureFloorColorIndex(id);
-                break;
-            }
-            case RoomObjectCategoryEnum.Wall: {
-                type = roomContentLoader.getFurnitureWallNameForTypeId(id);
-                colorIndex = roomContentLoader.getFurnitureWallColorIndex(id);
-                break;
-            }
-            case RoomObjectCategoryEnum.Unit: {
-                type = RoomObjectUserTypeUtils.getAvatarTypeName(id);
+        let image: ImageLike | undefined = undefined;
 
+        if (realRoomObject) {
+            image = await this.getRoomObjectImage(objectId, category, new Vector3d(), RoomGeometryScaleType.Icon);
+        } else {
+            if (category === RoomObjectCategoryEnum.Floor) {
+                type = roomContentLoader.getFurnitureFloorNameForTypeId(objectId);
+                colorIndex = roomContentLoader.getFurnitureFloorColorIndex(objectId);
+            } else if (category === RoomObjectCategoryEnum.Wall) {
+                type = roomContentLoader.getFurnitureWallNameForTypeId(objectId);
+                colorIndex = roomContentLoader.getFurnitureWallColorIndex(objectId);
+            }
 
-                break;
+            if (category === RoomObjectCategoryEnum.Unit) {
+                type = RoomObjectUserTypeUtils.getAvatarTypeName(objectId);
+
+                if (type === RoomObjectUserTypeName.Pet) {
+                    type = this.getPetType(extra);
+
+                    const petFigureData = new PetFigureData(extra);
+
+                    image = await this.getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, true, petFigureData.customParts, posture);
+                } else {
+                    image = await GetRoomEngine().getGenericRoomObjectImage(type!, extra, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, 0, undefined, 0, 0, posture);
+                }
+            } else {
+                image = await GetRoomEngine().getGenericRoomObjectImage(type!, colorIndex.toString(), new Vector3d(), RoomGeometryScaleType.Icon, 0, undefined, 0, 0, posture);
             }
         }
+
+        if (!image) return;
+
+        this.removeRoomOverlayIconSprite();
+        this.addRoomOverlayIconSprite(image, Room.OVERLAY_ICON_SPRITE);
+    }
+
+    public setRoomOverlayIconSpriteVisibility(flag: boolean): void {
+        const sprite = this.getRoomOverlayIconSprite();
+
+        if (!sprite) return;
+
+        sprite.visible = flag;
     }
 
     public removeRoomOverlayIconSprite(): void {
@@ -979,7 +1017,7 @@ export class Room implements IRoom {
     }
 
     public getRoomOverlayIconSprite(): Container | undefined {
-        return this.getRoomOverlay()?.getChildByLabel(Room.OBJECT_ICON_SPRITE) ?? undefined;
+        return this.getRoomOverlay()?.getChildByLabel(Room.OVERLAY_ICON_SPRITE) ?? undefined;
     }
 
     public dispatchEvent(event: INitroEvent): void {
@@ -1052,5 +1090,21 @@ export class Room implements IRoom {
         }
 
         return new Vector3d(location.x, location.y, z);
+    }
+
+    private addRoomOverlayIconSprite(image: ImageLike | undefined, label: string): void {
+        if (!image) return;
+
+        let sprite = this.getRoomOverlayIconSprite();
+
+        if (sprite) return;
+
+        sprite = new Sprite(Texture.from(image));
+
+        sprite.label = label;
+
+        sprite.scale.set(1);
+
+        this.getRoomOverlay()?.addChild(sprite);
     }
 }

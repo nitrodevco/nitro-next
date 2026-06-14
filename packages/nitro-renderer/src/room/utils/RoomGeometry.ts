@@ -255,6 +255,10 @@ export class RoomGeometry implements IRoomGeometry {
         return this.scale == RoomGeometryScaleType.ZoomedIn;
     }
 
+    public increaseUpdateId(): void {
+        this._updateId++;
+    }
+
     public get updateId(): number {
         return this._updateId;
     }

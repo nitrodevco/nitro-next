@@ -97,7 +97,15 @@ export const useRoomObjectMove = () => {
             room.updateRoomObjectMask(selectedObject.objectId, added);
         }
 
-        setFurnitureAlphaMultiplier(roomObject, added ? 0.5 : 0);
+        if (added) {
+            setFurnitureAlphaMultiplier(roomObject, 0.5);
+
+            room.setRoomOverlayIconSpriteVisibility(false);
+        } else {
+            setFurnitureAlphaMultiplier(roomObject, 0);
+
+            room.setRoomOverlayIconSpriteVisibility(true);
+        }
     };
 
     return { handleFurnitureMove, handleWallItemMove, handleObjectMove };

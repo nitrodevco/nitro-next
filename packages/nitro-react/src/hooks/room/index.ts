@@ -7,5 +7,5 @@ export * from './useRoomObjectInteraction';
 export * from './useRoomObjectModify';
 export * from './useRoomObjectMove';
 export * from './useRoomObjectPlace';
-export * from './useRoomObjectSelector';
+export * from './useRoomObjectSelect';
 export * from './useRoomObjectValidation';

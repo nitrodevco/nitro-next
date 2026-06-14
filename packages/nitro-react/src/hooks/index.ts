@@ -14,7 +14,7 @@ export * from './room/useRoomObjectInteraction';
 export * from './room/useRoomObjectModify';
 export * from './room/useRoomObjectMove';
 export * from './room/useRoomObjectPlace';
-export * from './room/useRoomObjectSelector';
+export * from './room/useRoomObjectSelect';
 export * from './room/useRoomObjectValidation';
 export * from './useCommunicationStore';
 export * from './useConfig';

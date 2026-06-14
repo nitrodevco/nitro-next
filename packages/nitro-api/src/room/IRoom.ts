@@ -1,6 +1,7 @@
 import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 
 import type { IEventDispatcher, INitroEvent } from '../events';
+import type { IPetCustomPart } from '../session';
 import type { IVector3D } from '../utils';
 import type { RoomGeometryScaleType } from './enum';
 import type { IRoomEventHandler } from './IRoomEventHandler';
@@ -132,7 +133,9 @@ export interface IRoom {
     removeRoomObjectWall(objectId: number, userId?: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;
-    setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum): void;
+    getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly?: boolean, customParts?: IPetCustomPart[], posture?: string): Promise<ImageLike | undefined>;
+    setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra?: string, posture?: string): Promise<void>;
+    setRoomOverlayIconSpriteVisibility(flag: boolean): void
     removeRoomOverlayIconSprite(): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     getRoomObjectRoom(): IRoomObjectController;

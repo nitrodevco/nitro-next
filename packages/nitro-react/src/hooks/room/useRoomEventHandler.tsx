@@ -11,11 +11,11 @@ import { useRoomObjectInteraction } from './useRoomObjectInteraction';
 import { useRoomObjectModify } from './useRoomObjectModify';
 import { useRoomObjectMove } from './useRoomObjectMove';
 import { useRoomObjectPlace } from './useRoomObjectPlace';
-import { useRoomObjectSelector } from './useRoomObjectSelector';
+import { useRoomObjectSelect } from './useRoomObjectSelect';
 
 export const useRoomEventHandler = () => {
     const [room, isSpectator, isDecorating, isPlayingGame, getMouseEventId, setMouseEventId, selectedObject] = useRoomContext(useShallow(x => [x.room, x.isSpectator, x.isDecorating, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId, x.selectedObject]));
-    const { placedObject, selectAvatar, selectObject, deselectObject } = useRoomObjectSelector();
+    const { placedObject, selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();
     const { placeObject, placeObjectOnUser, handleObjectPlace } = useRoomObjectPlace();
