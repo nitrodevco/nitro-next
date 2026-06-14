@@ -11,7 +11,7 @@ import { useRoomCamera, useRoomContext, useRoomEventDispatcher, useRoomEventHand
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
-    const [room, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.getMouseEventId, x.setMouseEventId]));
+    const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
     const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
     const { updateRoomCamera, resetCamera, setCameraTarget } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
@@ -162,7 +162,7 @@ export const RoomCanvasView = () => {
 
             let category = room.getRoomObjectCategoryForType(object.type);
 
-            if (category !== RoomObjectCategoryEnum.Room && (!room.isPlayingGame() || category !== RoomObjectCategoryEnum.Unit))
+            if (category !== RoomObjectCategoryEnum.Room && (!isPlayingGame || category !== RoomObjectCategoryEnum.Unit))
                 category = RoomObjectCategoryEnum.Minimum;
 
             const eventId = getMouseEventId(category, event.type);

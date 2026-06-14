@@ -9,10 +9,12 @@ import { useRoomContext } from "../context";
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
-    const [room, controllerLevel, camera, resetCameraLocation, setCameraCenteredLocation] = useRoomContext(useShallow(x => [
+    const [room, controllerLevel, camera, isDecorating, isPlayingGame, resetCameraLocation, setCameraCenteredLocation] = useRoomContext(useShallow(x => [
         x.room,
         x.controllerLevel,
         x.camera,
+        x.isDecorating,
+        x.isPlayingGame,
         x.resetCameraLocation,
         x.setCameraCenteredLocation
     ]));
@@ -84,7 +86,7 @@ export const useRoomMouse = () => {
         ctrlKey: boolean,
         shiftKey: boolean
     ) => {
-        if (room.isPlayingGame()) return false;
+        if (isPlayingGame) return false;
 
         const mouseData = mouseDataRef.current;
 
@@ -103,7 +105,7 @@ export const useRoomMouse = () => {
         let offsetY = y - mouseData.mouseXY.y;
 
         if (type === MouseEventType.MOUSE_DOWN) {
-            if (!altKey && !ctrlKey && !shiftKey && !room.isDecorating) {
+            if (!altKey && !ctrlKey && !shiftKey && !isDecorating) {
                 mouseData.isDragged = true;
                 mouseData.wasDragged = false;
                 mouseData.dragStartXY = { ...mouseData.mouseXY };

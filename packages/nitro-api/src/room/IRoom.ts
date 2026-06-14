@@ -118,7 +118,6 @@ export interface IRoom {
     getRoomObjectSelectionArrow(): IRoomObjectController;
     getRoomOverlay(): Container | undefined;
     getRoomOverlayIcon(): Container | undefined;
-    isPlayingGame(): boolean;
     dispatchEvent(event: INitroEvent): void;
     readonly roomId: number;
     readonly modelName: string;
@@ -127,6 +126,4 @@ export interface IRoom {
     readonly eventHandler: IRoomEventHandler;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
-    readonly isDecorating: boolean;
-    readonly useOffsetScrolling: boolean;
 }

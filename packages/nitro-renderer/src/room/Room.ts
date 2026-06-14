@@ -979,10 +979,6 @@ export class Room implements IRoom {
         return undefined;
     }
 
-    public isPlayingGame(): boolean {
-        return this.getRoomValue<number>(RoomObjectVariableEnum.IsPlayingGame) > 0;
-    }
-
     public dispatchEvent(event: INitroEvent): void {
         this._eventDispatcher.dispatchEvent(event);
     }
@@ -1013,14 +1009,6 @@ export class Room implements IRoom {
 
     public get isAreaSelectionMode(): boolean {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
-    }
-
-    public get isDecorating(): boolean {
-        return false;
-    }
-
-    public get useOffsetScrolling(): boolean {
-        return true;
     }
 
     private getPetTypeId(figure: string): number {

@@ -10,6 +10,7 @@ type State = {
     isRoomOwner: boolean;
     isDecorating: boolean;
     isSpectator: boolean;
+    isPlayingGame: boolean;
 }
 
 type Actions = {
@@ -21,6 +22,7 @@ type Actions = {
     setIsRoomOwner: (flag: boolean) => void;
     setIsDecorating: (flag: boolean) => void;
     setIsSpectator: (flag: boolean) => void;
+    setIsPlayingGame: (flag: boolean) => void;
 };
 
 const initialState: State = {
@@ -31,7 +33,8 @@ const initialState: State = {
     isGuildRoom: false,
     isRoomOwner: true,
     isDecorating: false,
-    isSpectator: false
+    isSpectator: false,
+    isPlayingGame: false
 };
 
 export type RoomSessionSlice = State & Actions;
@@ -92,6 +95,13 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
             return {
                 ...state,
                 isSpectator: flag
+            }
+        }),
+    setIsPlayingGame: (flag: boolean) =>
+        set(state => {
+            return {
+                ...state,
+                isPlayingGame: flag
             }
         }),
 });

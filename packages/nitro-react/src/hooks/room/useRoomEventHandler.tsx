@@ -12,7 +12,7 @@ import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 import { useRoomObjectSelector } from './useRoomObjectSelector';
 
 export const useRoomEventHandler = () => {
-    const [room, ownUserId, controllerLevel, isRoomOwner, isSpectator, getMouseEventId, setMouseEventId, objectPlacementSource, setSelectedObject, setPlacedObject, selectedObject] = useRoomContext(useShallow(x => [x.room, x.ownUserId, x.controllerLevel, x.isRoomOwner, x.isSpectator, x.getMouseEventId, x.setMouseEventId, x.objectPlacementSource, x.setSelectedObject, x.setPlacedObject, x.selectedObject]));
+    const [room, ownUserId, controllerLevel, isRoomOwner, isSpectator, isDecorating, isPlayingGame, getMouseEventId, setMouseEventId, objectPlacementSource, setSelectedObject, setPlacedObject, selectedObject] = useRoomContext(useShallow(x => [x.room, x.ownUserId, x.controllerLevel, x.isRoomOwner, x.isSpectator, x.isDecorating, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId, x.objectPlacementSource, x.setSelectedObject, x.setPlacedObject, x.selectedObject]));
     const floorItems = useFurnitureDataStore(state => state.floorItems);
     const { placedObject, selectAvatar, selectObject, deselectObject, resetSelectedObject } = useRoomObjectSelector();
 
@@ -646,7 +646,7 @@ export const useRoomEventHandler = () => {
                     case RoomObjectOperationType.OBJECT_UNDEFINED:
                         if (category === RoomObjectCategoryEnum.Room) {
                             if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
-                                if (room.isDecorating || isSpectator) return;
+                                if (isDecorating || isSpectator) return;
 
                                 if (!GetRoomEngine().moveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
                             }
@@ -672,8 +672,8 @@ export const useRoomEventHandler = () => {
                                     modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE);
                                 }
 
-                                didWalk = !room.isPlayingGame();
-                                didMove = room.isPlayingGame();
+                                didWalk = !isPlayingGame;
+                                didMove = isPlayingGame;
                             } else if (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall) {
                                 if (event.altKey || event.ctrlKey || event.shiftKey) {
                                     if (!event.ctrlKey && !event.altKey && event.shiftKey && category === RoomObjectCategoryEnum.Floor) {
@@ -682,8 +682,8 @@ export const useRoomEventHandler = () => {
                                         modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
                                     }
 
-                                    didWalk = room.isPlayingGame();
-                                    didMove = !room.isPlayingGame();
+                                    didWalk = isPlayingGame;
+                                    didMove = isPlayingGame;
                                 }
                             }
 
@@ -751,7 +751,7 @@ export const useRoomEventHandler = () => {
                 if (
                     operation === RoomObjectOperationType.OBJECT_UNDEFINED &&
                     (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall || event.objectType === RoomObjectUserTypeName.MonsterPlant) &&
-                    ((event.altKey && !event.ctrlKey && !event.shiftKey) || (room.isDecorating && !(event.ctrlKey || event.shiftKey)))
+                    ((event.altKey && !event.ctrlKey && !event.shiftKey) || (isDecorating && !(event.ctrlKey || event.shiftKey)))
                 ) {
                     if (canManipulateFurniture(event.objectId, category)) modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_MOVE);
                 }

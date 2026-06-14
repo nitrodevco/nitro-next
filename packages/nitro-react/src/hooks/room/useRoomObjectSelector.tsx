@@ -7,7 +7,7 @@ import { useShallow } from 'zustand/shallow';
 import { useRoomContext } from '../context';
 
 export const useRoomObjectSelector = () => {
-    const [room, selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.selectedAvatarId, x.selectedObjectId, x.selectedObjectCategory, x.placedObject, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
+    const [room, isPlayingGame, selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.selectedAvatarId, x.selectedObjectId, x.selectedObjectCategory, x.placedObject, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {
@@ -64,7 +64,7 @@ export const useRoomObjectSelector = () => {
         const selectionArrow = room.getRoomObjectSelectionArrow();
 
         if (selectionArrow?.logic) {
-            const visibility = lookAt && !room.isPlayingGame()
+            const visibility = lookAt && !isPlayingGame
                 ? ObjectVisibilityUpdateMessage.ENABLED
                 : ObjectVisibilityUpdateMessage.DISABLED;
 
