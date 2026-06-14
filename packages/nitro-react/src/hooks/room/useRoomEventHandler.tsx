@@ -3,6 +3,7 @@ import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVect
 import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, ObjectTileCursorUpdateMessage, SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { useShallow } from 'zustand/shallow';
 
 import { useFurnitureDataStore } from '#base/stores';
 
@@ -11,18 +12,8 @@ import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 import { useRoomObjectSelector } from './useRoomObjectSelector';
 
 export const useRoomEventHandler = () => {
-    const room = useRoomContext(x => x.room);
-    const ownUserId = useRoomContext(x => x.ownUserId);
-    const controllerLevel = useRoomContext(x => x.controllerLevel);
-    const isRoomOwner = useRoomContext(x => x.isRoomOwner);
-    const isSpectator = useRoomContext(x => x.isSpectator);
-    const getMouseEventId = useRoomContext(x => x.getMouseEventId);
-    const setMouseEventId = useRoomContext(x => x.setMouseEventId);
+    const [room, ownUserId, controllerLevel, isRoomOwner, isSpectator, getMouseEventId, setMouseEventId, objectPlacementSource, setSelectedObject, setPlacedObject, selectedObject] = useRoomContext(useShallow(x => [x.room, x.ownUserId, x.controllerLevel, x.isRoomOwner, x.isSpectator, x.getMouseEventId, x.setMouseEventId, x.objectPlacementSource, x.setSelectedObject, x.setPlacedObject, x.selectedObject]));
     const floorItems = useFurnitureDataStore(state => state.floorItems);
-    const objectPlacementSource = useRoomContext(x => x.objectPlacementSource);
-    const setSelectedObject = useRoomContext(x => x.setSelectedObject);
-    const setPlacedObject = useRoomContext(x => x.setPlacedObject);
-    const selectedObject = useRoomContext(x => x.selectedObject);
     const { placedObject, selectAvatar, selectObject, deselectObject, resetSelectedObject } = useRoomObjectSelector();
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);

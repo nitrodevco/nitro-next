@@ -2,20 +2,12 @@
 import { NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
+import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '../context';
 
 export const useRoomObjectSelector = () => {
-    const room = useRoomContext(x => x.room);
-    const selectedAvatarId = useRoomContext(x => x.selectedAvatarId);
-    const selectedObjectId = useRoomContext(x => x.selectedObjectId);
-    const selectedObjectCategory = useRoomContext(x => x.selectedObjectCategory);
-    const placedObject = useRoomContext(x => x.placedObject);
-    const getSelectedObject = useRoomContext(x => x.getSelectedObject);
-    const setSelectedAvatarId = useRoomContext(x => x.setSelectedAvatarId);
-    const setSelectedObjectId = useRoomContext(x => x.setSelectedObjectId);
-    const setSelectedObjectCategory = useRoomContext(x => x.setSelectedObjectCategory);
-    const setSelectedObject = useRoomContext(x => x.setSelectedObject);
+    const [room, selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.selectedAvatarId, x.selectedObjectId, x.selectedObjectCategory, x.placedObject, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {

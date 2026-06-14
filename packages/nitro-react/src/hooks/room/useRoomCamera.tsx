@@ -6,8 +6,8 @@ import { useShallow } from "zustand/shallow";
 import { useRoomContext } from "../context";
 
 export const useRoomCamera = () => {
-    const room = useRoomContext(x => x.room);
-    const [targetId, targetCategory, cameraFollowDisabled, camera, resetCamera, initializeCameraLocation, setCameraTarget, setTargetObjectLocation, setCameraLimitedLocation, setCameraCenteredLocation, setCameraScale, setCameraScreenSize, setCameraRoomSize, setGeometryUpdateId, updateCamera] = useRoomContext(useShallow(x => [
+    const [room, targetId, targetCategory, cameraFollowDisabled, camera, resetCamera, initializeCameraLocation, setCameraTarget, setTargetObjectLocation, setCameraLimitedLocation, setCameraCenteredLocation, setCameraScale, setCameraScreenSize, setCameraRoomSize, setGeometryUpdateId, updateCamera] = useRoomContext(useShallow(x => [
+        x.room,
         x.targetId,
         x.targetCategory,
         x.cameraFollowDisabled,
