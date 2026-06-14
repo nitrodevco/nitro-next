@@ -41,67 +41,13 @@ export type RoomSessionSlice = State & Actions;
 
 export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], RoomSessionSlice> = (set, get, store) => ({
     ...initialState,
-    setDoorMode: (mode: RoomDoorModeEnum) =>
-        set(state => {
-            return {
-                ...state,
-                doorMode: mode
-            }
-        }),
-    setTradeMode: (mode: RoomTradeModeEnum) =>
-        set(state => {
-            return {
-                ...state,
-                tradeMode: mode
-            }
-        }),
-    setControllerLevel: (level: RoomControllerLevelEnum) =>
-        set(state => {
-            return {
-                ...state,
-                controllerLevel: level
-            }
-        }),
-    setOwnRoomIndex: (index: number) =>
-        set(state => {
-            return {
-                ...state,
-                ownRoomIndex: index
-            }
-        }),
-    setIsGuildRoom: (flag: boolean) =>
-        set(state => {
-            return {
-                ...state,
-                isGuildRoom: flag
-            }
-        }),
-    setIsRoomOwner: (flag: boolean) =>
-        set(state => {
-            return {
-                ...state,
-                isRoomOwner: flag
-            }
-        }),
-    setIsDecorating: (flag: boolean) =>
-        set(state => {
-            return {
-                ...state,
-                isDecorating: flag
-            }
-        }),
-    setIsSpectator: (flag: boolean) =>
-        set(state => {
-            return {
-                ...state,
-                isSpectator: flag
-            }
-        }),
-    setIsPlayingGame: (flag: boolean) =>
-        set(state => {
-            return {
-                ...state,
-                isPlayingGame: flag
-            }
-        }),
+    setDoorMode: (mode: RoomDoorModeEnum) => set({ doorMode: mode }),
+    setTradeMode: (mode: RoomTradeModeEnum) => set({ tradeMode: mode }),
+    setControllerLevel: (level: RoomControllerLevelEnum) => set({ controllerLevel: level }),
+    setOwnRoomIndex: (index: number) => set({ ownRoomIndex: index }),
+    setIsGuildRoom: (flag: boolean) => set({ isGuildRoom: flag }),
+    setIsRoomOwner: (flag: boolean) => set({ isRoomOwner: flag }),
+    setIsDecorating: (flag: boolean) => set({ isDecorating: flag }),
+    setIsSpectator: (flag: boolean) => set({ isSpectator: flag }),
+    setIsPlayingGame: (flag: boolean) => set({ isPlayingGame: flag }),
 });

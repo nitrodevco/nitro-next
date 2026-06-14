@@ -34,21 +34,9 @@ export type RoomSelectedObjectSlice = State & Actions;
 export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set, get, store) => ({
     ...initialState,
     getSelectedObject: () => get().selectedObject,
-    setSelectedAvatarId: (id: number) => set(state => { return { ...state, selectedAvatarId: id } }),
-    setSelectedObjectId: (id: number) => set(state => { return { ...state, selectedObjectId: id } }),
-    setSelectedObjectCategory: (id: number) => set(state => { return { ...state, selectedObjectCategory: id } }),
-    setSelectedObject: (data: ISelectedRoomObjectData | undefined) =>
-        set(state => {
-            return {
-                ...state,
-                selectedObject: data
-            }
-        }),
-    setPlacedObject: (data: ISelectedRoomObjectData | undefined) =>
-        set(state => {
-            return {
-                ...state,
-                placedObject: data
-            }
-        }),
+    setSelectedAvatarId: (id: number) => set({ selectedAvatarId: id }),
+    setSelectedObjectId: (id: number) => set({ selectedObjectId: id }),
+    setSelectedObjectCategory: (id: number) => set({ selectedObjectCategory: id }),
+    setSelectedObject: (data: ISelectedRoomObjectData | undefined) => set({ selectedObject: data }),
+    setPlacedObject: (data: ISelectedRoomObjectData | undefined) => set({ placedObject: data }),
 });
