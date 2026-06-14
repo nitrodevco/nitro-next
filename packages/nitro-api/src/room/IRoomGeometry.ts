@@ -5,13 +5,13 @@ import type { RoomGeometryScaleType } from './enum';
 
 export interface IRoomGeometry {
     dispose(): void;
-    setDisplacement(_arg_1: IVector3D, _arg_2: IVector3D): void;
-    setDepthVector(k: IVector3D): void;
-    adjustLocation(_arg_1: IVector3D, _arg_2: number): void;
-    getCoordinatePosition(_arg_1: IVector3D): IVector3D;
-    getScreenPosition(_arg_1: IVector3D): IVector3D;
-    getScreenPoint(_arg_1: IVector3D): Point;
-    getPlanePosition(_arg_1: Point, _arg_2: IVector3D, _arg_3: IVector3D, _arg_4: IVector3D): Point;
+    setDisplacement(location: IVector3D, displacement: IVector3D): void;
+    setDepthVector(rotation: IVector3D): void;
+    adjustLocation(location: IVector3D, distance: number): void;
+    getCoordinatePosition(worldPos: IVector3D): IVector3D;
+    getScreenPosition(worldPos: IVector3D): IVector3D;
+    getScreenPoint(location: IVector3D): Point;
+    getPlanePosition(screenPoint: Point, planeOrigin: IVector3D, planeAxis1: IVector3D, planeAxis2: IVector3D): Point;
     setLocation(location: IVector3D): void;
     performZoom(): void;
     performZoomOut(): void;
@@ -23,7 +23,7 @@ export interface IRoomGeometry {
     location: IVector3D;
     direction: IVector3D;
     readonly directionAxis: IVector3D;
-    x_scale: number;
-    y_scale: number;
-    z_scale: number;
+    xScale: number;
+    yScale: number;
+    zScale: number;
 }

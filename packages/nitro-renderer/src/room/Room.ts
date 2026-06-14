@@ -117,7 +117,7 @@ export class Room implements IRoom {
         canvas.setEventHandler(this._eventHandler);
 
         if (canvas.geometry) {
-            canvas.geometry.z_scale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
+            canvas.geometry.zScale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
 
             const doorX = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorX);
             const doorY = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorY);
@@ -1099,7 +1099,9 @@ export class Room implements IRoom {
 
         if (sprite) return;
 
-        sprite = new Sprite(Texture.from(image));
+        const texture = Texture.from(image);
+
+        sprite = new Sprite(texture);
 
         sprite.label = label;
 

@@ -11,12 +11,12 @@ export class RoomGeometry implements IRoomGeometry {
     private _direction: IVector3D = new Vector3d();
     private _depth: IVector3D = new Vector3d();
     private _scale: number = 1;
-    private _x_scale: number = 1;
-    private _y_scale: number = 1;
-    private _z_scale: number = 1;
-    private _x_scale_internal: number = 1;
-    private _y_scale_internal: number = 1;
-    private _z_scale_internal: number = Math.sqrt(1 / 2) / Math.sqrt(3 / 4);
+    private _xScale: number = 1;
+    private _yScale: number = 1;
+    private _zScale: number = 1;
+    private _xScaleInternal: number = 1;
+    private _yScaleInternal: number = 1;
+    private _zScaleInternal: number = Math.sqrt(1 / 2) / Math.sqrt(3 / 4);
     private _loc: IVector3D;
     private _dir: IVector3D;
     private _clipNear: number = -500;
@@ -35,142 +35,142 @@ export class RoomGeometry implements IRoomGeometry {
     }
 
     public static getIntersectionVector(
-        k: IVector3D,
-        _arg_2: IVector3D,
-        _arg_3: IVector3D,
-        _arg_4: IVector3D,
+        rayOrigin: IVector3D,
+        rayDirection: IVector3D,
+        planePoint: IVector3D,
+        planeNormal: IVector3D,
     ): IVector3D {
         return Vector3d.sum(
-            k,
+            rayOrigin,
             Vector3d.product(
-                _arg_2,
-                -Vector3d.dotProduct(_arg_4, Vector3d.dif(k, _arg_3)) / Vector3d.dotProduct(_arg_2, _arg_4),
+                rayDirection,
+                -Vector3d.dotProduct(planeNormal, Vector3d.dif(rayOrigin, planePoint)) / Vector3d.dotProduct(rayDirection, planeNormal),
             ),
         );
     }
 
     public dispose(): void { }
 
-    public setDisplacement(k: IVector3D, _arg_2: IVector3D): void {
-        if (!k || !_arg_2) return;
+    public setDisplacement(location: IVector3D, displacement: IVector3D): void {
+        if (!location || !displacement) return;
 
-        const key = Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z));
+        const key = Math.trunc(Math.round(location.x)) + '_' + Math.trunc(Math.round(location.y)) + '_' + Math.trunc(Math.round(location.z));
 
         this._displacements.delete(key);
 
-        const point = new Vector3d();
-        point.assign(_arg_2);
-
-        this._displacements.set(key, point);
+        this._displacements.set(key, Vector3d.from(displacement));
         this._updateId++;
     }
 
-    public setDepthVector(k: IVector3D): void {
-        let _local_18: number;
-        let _local_19: number;
-        let _local_20: IVector3D;
-        let _local_21: IVector3D;
-        let _local_22: IVector3D;
-        const _local_2: IVector3D = new Vector3d(0, 1, 0);
-        const _local_3: IVector3D = new Vector3d(0, 0, 1);
-        const _local_4: IVector3D = new Vector3d(1, 0, 0);
-        const _local_5: number = (k.x / 180) * Math.PI;
-        const _local_6: number = (k.y / 180) * Math.PI;
-        const _local_7: number = (k.z / 180) * Math.PI;
-        const _local_8: number = Math.cos(_local_5);
-        const _local_9: number = Math.sin(_local_5);
-        const _local_10: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_2, _local_8),
-            Vector3d.product(_local_4, -_local_9),
+    public setDepthVector(rotation: IVector3D): void {
+        const upAxis = new Vector3d(0, 1, 0);
+        const zAxis = new Vector3d(0, 0, 1);
+        const xAxis = new Vector3d(1, 0, 0);
+
+        const rotXRad = (rotation.x / 180) * Math.PI;
+        const rotYRad = (rotation.y / 180) * Math.PI;
+        const rotZRad = (rotation.z / 180) * Math.PI;
+
+        const cosX = Math.cos(rotXRad);
+        const sinX = Math.sin(rotXRad);
+
+        const rotatedYAfterX = Vector3d.sum(
+            Vector3d.product(upAxis, cosX),
+            Vector3d.product(xAxis, -sinX),
         );
-        const _local_11: IVector3D = new Vector3d(_local_3.x, _local_3.y, _local_3.z);
-        const _local_12: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_2, _local_9),
-            Vector3d.product(_local_4, _local_8),
+        const rotatedZAfterX = new Vector3d(zAxis.x, zAxis.y, zAxis.z);
+        const rotatedXAfterX = Vector3d.sum(
+            Vector3d.product(upAxis, sinX),
+            Vector3d.product(xAxis, cosX),
         );
-        const _local_13: number = Math.cos(_local_6);
-        const _local_14: number = Math.sin(_local_6);
-        const _local_15: IVector3D = new Vector3d(_local_10.x, _local_10.y, _local_10.z);
-        const _local_16: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_11, _local_13),
-            Vector3d.product(_local_12, _local_14),
+
+        const cosY: number = Math.cos(rotYRad);
+        const sinY: number = Math.sin(rotYRad);
+
+        const rotatedXAfterY = new Vector3d(rotatedYAfterX.x, rotatedYAfterX.y, rotatedYAfterX.z);
+        const rotatedYAfterY = Vector3d.sum(
+            Vector3d.product(rotatedZAfterX, cosY),
+            Vector3d.product(rotatedXAfterX, sinY),
         );
-        const _local_17: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_11, -_local_14),
-            Vector3d.product(_local_12, _local_13),
+        const rotatedZAfterY = Vector3d.sum(
+            Vector3d.product(rotatedZAfterX, -sinY),
+            Vector3d.product(rotatedXAfterX, cosY),
         );
-        if (_local_7 != 0) {
-            _local_18 = Math.cos(_local_7);
-            _local_19 = Math.sin(_local_7);
-            _local_20 = Vector3d.sum(Vector3d.product(_local_15, _local_18), Vector3d.product(_local_16, _local_19));
-            _local_21 = Vector3d.sum(Vector3d.product(_local_15, -_local_19), Vector3d.product(_local_16, _local_18));
-            _local_22 = new Vector3d(_local_17.x, _local_17.y, _local_17.z);
-            this._depth.assign(_local_22);
+
+        if (rotZRad !== 0) {
+            const cosZ = Math.cos(rotZRad);
+            const sinZ = Math.sin(rotZRad);
+
+            const _finalX = Vector3d.sum(Vector3d.product(rotatedXAfterY, cosZ), Vector3d.product(rotatedYAfterY, sinZ));
+            const _finalY = Vector3d.sum(Vector3d.product(rotatedXAfterY, -sinZ), Vector3d.product(rotatedYAfterY, cosZ));
+            const finalZ = new Vector3d(rotatedZAfterY.x, rotatedZAfterY.y, rotatedZAfterY.z);
+
+            this._depth.assign(finalZ);
         } else {
-            this._depth.assign(_local_17);
+            this._depth.assign(rotatedZAfterY);
         }
+
         this._updateId++;
     }
 
-    public adjustLocation(k: IVector3D, _arg_2: number): void {
-        if (k == null || this._z == null) {
-            return;
-        }
-        const _local_3: IVector3D = Vector3d.product(this._z, -_arg_2);
-        const _local_4: IVector3D = new Vector3d(k.x + _local_3.x, k.y + _local_3.y, k.z + _local_3.z);
+    public adjustLocation(location: IVector3D, distance: number): void {
+        if (!location || !this._z) return;
 
-        this.setLocation(_local_4);
+        const zOffset = Vector3d.product(this._z, -distance);
+        const adjustedLocation = new Vector3d(location.x + zOffset.x, location.y + zOffset.y, location.z + zOffset.z);
+
+        this.setLocation(adjustedLocation);
     }
 
-    public getCoordinatePosition(k: IVector3D): IVector3D {
-        let _local_2 = -1;
-        let _local_3 = -1;
-        let _local_4 = -1;
+    public getCoordinatePosition(worldPos: IVector3D): IVector3D {
+        let x = -1;
+        let y = -1;
+        let z = -1;
 
-        if (k) {
-            _local_2 = Vector3d.scalarProjection(k, this._x);
-            _local_3 = Vector3d.scalarProjection(k, this._y);
-            _local_4 = Vector3d.scalarProjection(k, this._z);
+        if (worldPos) {
+            x = Vector3d.scalarProjection(worldPos, this._x);
+            y = Vector3d.scalarProjection(worldPos, this._y);
+            z = Vector3d.scalarProjection(worldPos, this._z);
         }
 
-        return new Vector3d(_local_2, _local_3, _local_4);
+        return new Vector3d(x, y, z);
     }
 
-    public getScreenPosition(k: IVector3D): IVector3D {
-        if (!k) k = new Vector3d();
+    public getScreenPosition(worldPos: IVector3D): IVector3D {
+        if (!worldPos) worldPos = new Vector3d();
 
-        let _local_2: IVector3D = Vector3d.dif(k, this._loc);
+        let relativePos: IVector3D = Vector3d.dif(worldPos, this._loc);
 
-        _local_2.x = _local_2.x * this._x_scale;
-        _local_2.y = _local_2.y * this._y_scale;
-        _local_2.z = _local_2.z * this._z_scale;
+        relativePos.x = relativePos.x * this._xScale;
+        relativePos.y = relativePos.y * this._yScale;
+        relativePos.z = relativePos.z * this._zScale;
 
-        let _local_3: number = Vector3d.scalarProjection(_local_2, this._depth);
+        let depthDist: number = Vector3d.scalarProjection(relativePos, this._depth);
 
-        if (_local_3 < this._clipNear || _local_3 > this._clipFar) return new Vector3d();
+        if (depthDist < this._clipNear || depthDist > this._clipFar) return new Vector3d();
 
-        let _local_4: number = Vector3d.scalarProjection(_local_2, this._x);
-        let _local_5: number = -Vector3d.scalarProjection(_local_2, this._y);
+        let screenX: number = Vector3d.scalarProjection(relativePos, this._x);
+        let screenY: number = -Vector3d.scalarProjection(relativePos, this._y);
 
-        _local_4 = _local_4 * this._scale;
-        _local_5 = _local_5 * this._scale;
+        screenX = screenX * this._scale;
+        screenY = screenY * this._scale;
 
-        const displacement = this.getDisplacenent(k);
+        const displacement = this.getDisplacenent(worldPos);
 
         if (displacement) {
-            _local_2 = Vector3d.dif(k, this._loc);
-            _local_2.add(displacement);
-            _local_2.x = _local_2.x * this._x_scale;
-            _local_2.y = _local_2.y * this._y_scale;
-            _local_2.z = _local_2.z * this._z_scale;
-            _local_3 = Vector3d.scalarProjection(_local_2, this._depth);
+            relativePos = Vector3d.dif(worldPos, this._loc);
+            relativePos.add(displacement);
+            relativePos.x = relativePos.x * this._xScale;
+            relativePos.y = relativePos.y * this._yScale;
+            relativePos.z = relativePos.z * this._zScale;
+            depthDist = Vector3d.scalarProjection(relativePos, this._depth);
         }
 
-        _local_2.x = _local_4;
-        _local_2.y = _local_5;
-        _local_2.z = _local_3;
+        relativePos.x = screenX;
+        relativePos.y = screenY;
+        relativePos.z = depthDist;
 
-        return _local_2;
+        return relativePos;
     }
 
     public getScreenPoint(location: IVector3D): Point {
@@ -179,42 +179,47 @@ export class RoomGeometry implements IRoomGeometry {
         return new Point(pos.x, pos.y);
     }
 
-    public getPlanePosition(k: Point, _arg_2: IVector3D, _arg_3: IVector3D, _arg_4: IVector3D): Point {
-        const _local_5: number = k.x / this._scale;
-        const _local_6: number = -k.y / this._scale;
-        const _local_7: IVector3D = Vector3d.product(this._x, _local_5);
-        _local_7.add(Vector3d.product(this._y, _local_6));
-        const _local_8: IVector3D = new Vector3d(
-            this._loc.x * this._x_scale,
-            this._loc.y * this._y_scale,
-            this._loc.z * this._z_scale,
-        );
-        _local_8.add(_local_7);
-        const _local_9: IVector3D = this._z;
-        const _local_10: IVector3D = new Vector3d(
-            _arg_2.x * this._x_scale,
-            _arg_2.y * this._y_scale,
-            _arg_2.z * this._z_scale,
-        );
-        const _local_11: IVector3D = new Vector3d(
-            _arg_3.x * this._x_scale,
-            _arg_3.y * this._y_scale,
-            _arg_3.z * this._z_scale,
-        );
-        const _local_12: IVector3D = new Vector3d(
-            _arg_4.x * this._x_scale,
-            _arg_4.y * this._y_scale,
-            _arg_4.z * this._z_scale,
-        );
-        const _local_13: IVector3D = Vector3d.crossProduct(_local_11, _local_12);
-        const _local_14: IVector3D = new Vector3d();
-        _local_14.assign(RoomGeometry.getIntersectionVector(_local_8, _local_9, _local_10, _local_13));
+    public getPlanePosition(screenPoint: Point, planeOrigin: IVector3D, planeAxis1: IVector3D, planeAxis2: IVector3D): Point {
+        const screenX = screenPoint.x / this._scale;
+        const screenY = -screenPoint.y / this._scale;
 
-        _local_14.subtract(_local_10);
-        const _local_15 = (Vector3d.scalarProjection(_local_14, _arg_3) / _local_11.length) * _arg_3.length;
-        const _local_16 = (Vector3d.scalarProjection(_local_14, _arg_4) / _local_12.length) * _arg_4.length;
+        const xComponent = Vector3d.product(this._x, screenX);
+        xComponent.add(Vector3d.product(this._y, screenY));
 
-        return new Point(_local_15, _local_16);
+        const cameraPos = new Vector3d(
+            this._loc.x * this._xScale,
+            this._loc.y * this._yScale,
+            this._loc.z * this._zScale,
+        );
+        cameraPos.add(xComponent);
+
+        const rayDirection = this._z;
+
+        const planeOriginScaled = new Vector3d(
+            planeOrigin.x * this._xScale,
+            planeOrigin.y * this._yScale,
+            planeOrigin.z * this._zScale,
+        );
+        const planeAxis1Scaled = new Vector3d(
+            planeAxis1.x * this._xScale,
+            planeAxis1.y * this._yScale,
+            planeAxis1.z * this._zScale,
+        );
+        const planeAxis2Scaled = new Vector3d(
+            planeAxis2.x * this._xScale,
+            planeAxis2.y * this._yScale,
+            planeAxis2.z * this._zScale,
+        );
+
+        const planeNormal = Vector3d.crossProduct(planeAxis1Scaled, planeAxis2Scaled);
+        const intersectionPoint = Vector3d.from(RoomGeometry.getIntersectionVector(cameraPos, rayDirection, planeOriginScaled, planeNormal));
+
+        intersectionPoint.subtract(planeOriginScaled);
+
+        const axis1Distance = (Vector3d.scalarProjection(intersectionPoint, planeAxis1) / planeAxis1Scaled.length) * planeAxis1.length;
+        const axis2Distance = (Vector3d.scalarProjection(intersectionPoint, planeAxis2) / planeAxis2Scaled.length) * planeAxis2.length;
+
+        return new Point(axis1Distance, axis2Distance);
     }
 
     public setLocation(location: IVector3D): void {
@@ -228,9 +233,9 @@ export class RoomGeometry implements IRoomGeometry {
 
         this._loc.assign(location);
 
-        this._loc.x = this._loc.x / this._x_scale;
-        this._loc.y = this._loc.y / this._y_scale;
-        this._loc.z = this._loc.z / this._z_scale;
+        this._loc.x = this._loc.x / this._xScale;
+        this._loc.y = this._loc.y / this._yScale;
+        this._loc.z = this._loc.z / this._zScale;
 
         if ((this._loc.x !== prevX) || (this._loc.y !== prevY) || (this._loc.z !== prevZ)) this._updateId++;
     }
@@ -281,29 +286,28 @@ export class RoomGeometry implements IRoomGeometry {
 
     public get location(): IVector3D {
         this._location.assign(this._loc);
-        this._location.x = this._location.x * this._x_scale;
-        this._location.y = this._location.y * this._y_scale;
-        this._location.z = this._location.z * this._z_scale;
+        this._location.x = this._location.x * this._xScale;
+        this._location.y = this._location.y * this._yScale;
+        this._location.z = this._location.z * this._zScale;
         return this._location;
     }
 
     public set location(location: IVector3D) {
-        if (location == null) {
-            return;
-        }
-        if (this._loc == null) {
-            this._loc = new Vector3d();
-        }
-        const _local_2: number = this._loc.x;
-        const _local_3: number = this._loc.y;
-        const _local_4: number = this._loc.z;
+        if (!location) return;
+
+        if (!this._loc) this._loc = new Vector3d();
+
+        const prevX: number = this._loc.x;
+        const prevY: number = this._loc.y;
+        const prevZ: number = this._loc.z;
+
         this._loc.assign(location);
-        this._loc.x = this._loc.x / this._x_scale;
-        this._loc.y = this._loc.y / this._y_scale;
-        this._loc.z = this._loc.z / this._z_scale;
-        if (!(this._loc.x == _local_2) || !(this._loc.y == _local_3) || !(this._loc.z == _local_4)) {
-            this._updateId++;
-        }
+
+        this._loc.x = this._loc.x / this._xScale;
+        this._loc.y = this._loc.y / this._yScale;
+        this._loc.z = this._loc.z / this._zScale;
+
+        if (this._loc.x !== prevX || this._loc.y !== prevY || this._loc.z !== prevZ) this._updateId++;
     }
 
     public get direction(): IVector3D {
@@ -322,58 +326,64 @@ export class RoomGeometry implements IRoomGeometry {
         this._dir.assign(direction);
         this._direction.assign(direction);
 
-        if (this._dir.x !== prevX || this._dir.y !== prevY || this._dir.z !== prevZ) {
-            this._updateId++;
-        }
+        if (this._dir.x !== prevX || this._dir.y !== prevY || this._dir.z !== prevZ) this._updateId++;
 
-        const _local_5: IVector3D = new Vector3d(0, 1, 0);
-        const _local_6: IVector3D = new Vector3d(0, 0, 1);
-        const _local_7: IVector3D = new Vector3d(1, 0, 0);
-        const _local_8: number = (direction.x / 180) * Math.PI;
-        const _local_9: number = (direction.y / 180) * Math.PI;
-        const _local_10: number = (direction.z / 180) * Math.PI;
-        const _local_11: number = Math.cos(_local_8);
-        const _local_12: number = Math.sin(_local_8);
-        const _local_13: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_5, _local_11),
-            Vector3d.product(_local_7, -_local_12),
+        const upAxis = new Vector3d(0, 1, 0);
+        const zAxis = new Vector3d(0, 0, 1);
+        const xAxis = new Vector3d(1, 0, 0);
+
+        const rotXRad = (direction.x / 180) * Math.PI;
+        const rotYRad = (direction.y / 180) * Math.PI;
+        const rotZRad = (direction.z / 180) * Math.PI;
+
+        const cosX = Math.cos(rotXRad);
+        const sinX = Math.sin(rotXRad);
+
+        const rotatedYAfterX = Vector3d.sum(
+            Vector3d.product(upAxis, cosX),
+            Vector3d.product(xAxis, -sinX),
         );
-        const _local_14: IVector3D = new Vector3d(_local_6.x, _local_6.y, _local_6.z);
-        const _local_15: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_5, _local_12),
-            Vector3d.product(_local_7, _local_11),
+        const rotatedZAfterX = new Vector3d(zAxis.x, zAxis.y, zAxis.z);
+        const rotatedXAfterX = Vector3d.sum(
+            Vector3d.product(upAxis, sinX),
+            Vector3d.product(xAxis, cosX),
         );
-        const _local_16: number = Math.cos(_local_9);
-        const _local_17: number = Math.sin(_local_9);
-        const _local_18: IVector3D = new Vector3d(_local_13.x, _local_13.y, _local_13.z);
-        const _local_19: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_14, _local_16),
-            Vector3d.product(_local_15, _local_17),
+
+        const cosY = Math.cos(rotYRad);
+        const sinY = Math.sin(rotYRad);
+
+        const rotatedXAfterY = new Vector3d(rotatedYAfterX.x, rotatedYAfterX.y, rotatedYAfterX.z);
+        const rotatedYAfterY = Vector3d.sum(
+            Vector3d.product(rotatedZAfterX, cosY),
+            Vector3d.product(rotatedXAfterX, sinY),
         );
-        const _local_20: IVector3D = Vector3d.sum(
-            Vector3d.product(_local_14, -_local_17),
-            Vector3d.product(_local_15, _local_16),
+        const rotatedZAfterY = Vector3d.sum(
+            Vector3d.product(rotatedZAfterX, -sinY),
+            Vector3d.product(rotatedXAfterX, cosY),
         );
-        if (_local_10 != 0) {
-            const _local_21 = Math.cos(_local_10);
-            const _local_22 = Math.sin(_local_10);
-            const _local_23 = Vector3d.sum(
-                Vector3d.product(_local_18, _local_21),
-                Vector3d.product(_local_19, _local_22),
+
+        if (rotZRad !== 0) {
+            const cosZ = Math.cos(rotZRad);
+            const sinZ = Math.sin(rotZRad);
+
+            const finalX = Vector3d.sum(
+                Vector3d.product(rotatedXAfterY, cosZ),
+                Vector3d.product(rotatedYAfterY, sinZ),
             );
-            const _local_24 = Vector3d.sum(
-                Vector3d.product(_local_18, -_local_22),
-                Vector3d.product(_local_19, _local_21),
+            const finalY = Vector3d.sum(
+                Vector3d.product(rotatedXAfterY, -sinZ),
+                Vector3d.product(rotatedYAfterY, cosZ),
             );
-            const _local_25 = new Vector3d(_local_20.x, _local_20.y, _local_20.z);
-            this._x.assign(_local_23);
-            this._y.assign(_local_24);
-            this._z.assign(_local_25);
+            const finalZ = new Vector3d(rotatedZAfterY.x, rotatedZAfterY.y, rotatedZAfterY.z);
+
+            this._x.assign(finalX);
+            this._y.assign(finalY);
+            this._z.assign(finalZ);
             this._directionAxis.assign(this._z);
         } else {
-            this._x.assign(_local_18);
-            this._y.assign(_local_19);
-            this._z.assign(_local_20);
+            this._x.assign(rotatedXAfterY);
+            this._y.assign(rotatedYAfterY);
+            this._z.assign(rotatedZAfterY);
             this._directionAxis.assign(this._z);
         }
     }
@@ -382,35 +392,35 @@ export class RoomGeometry implements IRoomGeometry {
         return this._directionAxis;
     }
 
-    public get x_scale(): number {
-        return this._x_scale;
+    public get xScale(): number {
+        return this._xScale;
     }
 
-    public set x_scale(value: number) {
-        if (this._x_scale != value * this._x_scale_internal) {
-            this._x_scale = value * this._x_scale_internal;
+    public set xScale(value: number) {
+        if (this._xScale != value * this._xScaleInternal) {
+            this._xScale = value * this._xScaleInternal;
             this._updateId++;
         }
     }
 
-    public get y_scale(): number {
-        return this._y_scale;
+    public get yScale(): number {
+        return this._yScale;
     }
 
-    public set y_scale(value: number) {
-        if (this._y_scale != value * this._y_scale_internal) {
-            this._y_scale = value * this._y_scale_internal;
+    public set yScale(value: number) {
+        if (this._yScale != value * this._yScaleInternal) {
+            this._yScale = value * this._yScaleInternal;
             this._updateId++;
         }
     }
 
-    public get z_scale(): number {
-        return this._z_scale;
+    public get zScale(): number {
+        return this._zScale;
     }
 
-    public set z_scale(value: number) {
-        if (this._z_scale != value * this._z_scale_internal) {
-            this._z_scale = value * this._z_scale_internal;
+    public set zScale(value: number) {
+        if (this._zScale != value * this._zScaleInternal) {
+            this._zScale = value * this._zScaleInternal;
             this._updateId++;
         }
     }
