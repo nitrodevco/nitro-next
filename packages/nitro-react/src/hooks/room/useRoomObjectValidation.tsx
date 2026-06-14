@@ -1,5 +1,5 @@
-import type { IRoomObject, ISelectedRoomObjectData, IVector3D } from "@nitrodevco/nitro-api";
-import { RoomGeometryScaleType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D } from "@nitrodevco/nitro-api";
+import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
 import { useFurnitureDataStore } from "#base/stores";
@@ -9,6 +9,10 @@ import { useRoomContext } from "../context"
 export const useRoomObjectValidation = () => {
     const room = useRoomContext(x => x.room);
     const floorItems = useFurnitureDataStore(x => x.floorItems);
+
+    const setFurnitureAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
+        object?.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
+    };
 
     const getActiveSurfaceLocation = (roomObject: IRoomObject, event: RoomObjectMouseEvent) => {
         if (!roomObject || !event) return undefined;
@@ -146,5 +150,30 @@ export const useRoomObjectValidation = () => {
         );
     };
 
-    return { getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation };
+    const getValidRoomObjectDirection = (roomObject: IRoomObjectController, forward: boolean) => {
+        if (!roomObject?.model) return 0;
+
+        const allowedDirections: number[] = roomObject.type === RoomObjectUserTypeName.MonsterPlant
+            ? roomObject.model.getValue<number[]>(RoomObjectVariableEnum.PetAllowedDirections)
+            : roomObject.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
+
+        const direction = roomObject.getDirection().x;
+
+        if (!allowedDirections?.length) return direction;
+
+        let dirIndex = allowedDirections.indexOf(direction);
+
+        if (dirIndex < 0) {
+            const insertAt = allowedDirections.findIndex(d => direction <= d);
+            dirIndex = insertAt < 0 ? 0 : insertAt;
+        }
+
+        dirIndex = forward
+            ? (dirIndex + 1) % allowedDirections.length
+            : (dirIndex - 1 + allowedDirections.length) % allowedDirections.length;
+
+        return allowedDirections[dirIndex];
+    };
+
+    return { setFurnitureAlphaMultiplier, getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation, getValidRoomObjectDirection };
 }

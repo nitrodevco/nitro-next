@@ -2,4 +2,8 @@ export * from './useRoomCamera';
 export * from './useRoomEventDispatcher';
 export * from './useRoomEventHandler';
 export * from './useRoomMouse';
+export * from './useRoomObjectModify';
+export * from './useRoomObjectMove';
+export * from './useRoomObjectPlace';
 export * from './useRoomObjectSelector';
+export * from './useRoomObjectValidation';
