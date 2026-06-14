@@ -11,6 +11,7 @@ import { type FC, useEffect, useState } from 'react';
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from './hooks';
 import { RoomView } from './RoomView';
 import { GetPixelRatio } from './utils';
+import { LoadingScreenView } from './views/LoadingScreenView';
 
 export const Nitro: FC = () => {
     const [isEngineReady, setIsEngineReady] = useState(false);
@@ -65,7 +66,9 @@ export const Nitro: FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                    ></motion.div>
+                    >
+                        <LoadingScreenView />
+                    </motion.div>
                 )}
             </AnimatePresence>
             {isReady && <RoomView roomId={1} />}

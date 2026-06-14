@@ -1,0 +1,90 @@
+@layer utilities {
+    @keyframes spin-slow {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes pulse-dot {
+        0%,
+        100% {
+            opacity: 0.4;
+            r: 3;
+        }
+        50% {
+            opacity: 1;
+            r: 4.5;
+        }
+    }
+
+    @keyframes bounce-up {
+        0%,
+        100% {
+            opacity: 0.4;
+            transform: translateY(0);
+        }
+        50% {
+            opacity: 1;
+            transform: translateY(-8px);
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-spin-slow {
+        animation: spin-slow 2.5s linear infinite;
+    }
+
+    .animate-pulse-dot {
+        animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    .animate-bounce-up-1 {
+        animation: bounce-up 1.4s ease-in-out infinite;
+    }
+
+    .animate-bounce-up-2 {
+        animation: bounce-up 1.4s ease-in-out infinite 0.2s;
+    }
+
+    .animate-bounce-up-3 {
+        animation: bounce-up 1.4s ease-in-out infinite 0.4s;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.6s ease-out;
+    }
+
+    .animate-slide-up-1 {
+        animation: slide-up 0.8s ease-out 0.2s both;
+    }
+
+    .animate-slide-up-2 {
+        animation: slide-up 0.8s ease-out 0.35s both;
+    }
+
+    .animate-slide-up-3 {
+        animation: slide-up 0.8s ease-out 0.4s both;
+    }
+}
