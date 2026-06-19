@@ -284,7 +284,7 @@ export class RoomPlane implements IRoomPlane {
             if (maskTexture) {
                 const maskSprite = new Sprite(this._maskTexture);
 
-                maskSprite.blendMode = 'erase';
+                this._planeSprite.setMask({ mask: maskSprite, channel: 'alpha', inverse: true });
 
                 container.addChild(maskSprite);
             }
