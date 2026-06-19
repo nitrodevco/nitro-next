@@ -1,3 +1,4 @@
+export * from './useRoom';
 export * from './useRoomCamera';
 export * from './useRoomCursorUpdate';
 export * from './useRoomEventDispatcher';

@@ -3,13 +3,14 @@ import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-r
 import { RoomDragEvent, RoomDraggedEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
 
-import { useRoomContext } from "#base/context";
 import { useRoomSessionSelector } from "#base/selectors";
+
+import { useRoom } from "./useRoom";
 
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
-    const room = useRoomContext(x => x.room);
+    const room = useRoom();
     const { controllerLevel, isDecorating, isPlayingGame } = useRoomSessionSelector();
     const mouseDataRef = useRef<{
         mouseXY: { x: number, y: number },

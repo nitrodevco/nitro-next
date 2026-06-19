@@ -1,3 +1,3 @@
-export interface IOutgoingPacket<T = unknown> {
-    compose(): any[];
+export interface IOutgoingPacket<T extends object> {
+    compose(): (number | string)[];
 }

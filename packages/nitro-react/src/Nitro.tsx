@@ -11,7 +11,9 @@ import { type FC, useEffect, useState } from 'react';
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
+import { useWebSocketContext } from './context';
 import { RoomView } from './RoomView';
+import { useConfigurationStore } from './stores';
 import { LoadingScreenView } from './views/LoadingScreenView';
 
 export const Nitro: FC = () => {
@@ -20,6 +22,16 @@ export const Nitro: FC = () => {
     useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
+    const { isConnectionReady, connect } = useWebSocketContext();
+    const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
+
+    useEffect(() => {
+        if (!socketUrl || !socketUrl.length) return;
+
+        console.log('connecting', socketUrl);
+
+        connect(socketUrl);
+    }, [socketUrl]);
 
     useEffect(() => {
         const setup = async (width: number, height: number) => {

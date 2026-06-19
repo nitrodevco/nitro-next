@@ -14,6 +14,7 @@ export const useConfigLoader = () => {
             'asset.urls.icons.furni': 'https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png',
             'asset.urls.pet': 'https://assets.nitrodev.co/bundled/pet/%libname%.nitro',
             'fps.limit': 60,
+            'socket.url': 'ws://127.0.0.1:30001',
             'renderer.petTypes': [
                 'dog',
                 'cat',

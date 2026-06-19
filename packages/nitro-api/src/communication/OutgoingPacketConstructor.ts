@@ -1,3 +1,5 @@
 import type { IOutgoingPacket } from './IOutgoingPacket';
 
-export type OutgoingPacketConstructor<T = any> = new (params: T) => IOutgoingPacket<T>;
+export type OutgoingPacketConstructor<T extends object> = new (
+    params: T
+) => IOutgoingPacket<T>;

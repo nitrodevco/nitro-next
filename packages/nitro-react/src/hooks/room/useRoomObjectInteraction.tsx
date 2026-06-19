@@ -2,12 +2,11 @@ import { NitroLogger, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomContext } from "#base/context";
-
+import { useRoom } from "./useRoom";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectInteraction = () => {
-    const room = useRoomContext(x => x.room);
+    const room = useRoom();
     const { getActiveSurfaceLocation } = useRoomObjectValidation();
 
     const handleMoveTargetFurni = (event: RoomObjectMouseEvent) => {

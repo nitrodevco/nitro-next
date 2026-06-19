@@ -3,12 +3,11 @@ import { RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomContext } from "#base/context";
-
+import { useRoom } from "./useRoom";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectMove = () => {
-    const room = useRoomContext(x => x.room);
+    const room = useRoom();
     const { setFurnitureAlphaMultiplier, validateFurnitureLocation, validateWallItemLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 
     const handleFurnitureMove = (

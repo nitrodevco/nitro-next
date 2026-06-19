@@ -3,12 +3,11 @@ import { ObjectTileCursorUpdateMessage } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomObjectTileMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomContext } from "#base/context";
-
+import { useRoom } from "./useRoom";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomCursorUpdate = () => {
-    const room = useRoomContext(x => x.room);
+    const room = useRoom();
     const { getActiveSurfaceLocation } = useRoomObjectValidation();
 
     const handleMouseOverTile = (event: RoomObjectTileMouseEvent) =>

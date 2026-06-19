@@ -1,16 +1,14 @@
 import type { NitroEvent } from '@nitrodevco/nitro-shared';
 import { useEffect } from 'react';
 
-import { useRoomContext } from '#base/context';
-
-
+import { useRoom } from './useRoom';
 
 export const useRoomEventDispatcher = <T extends NitroEvent>(
     type: string | string[],
     handler: (event: T) => void,
     enabled: boolean = true,
 ) => {
-    const room = useRoomContext(x => x.room);
+    const room = useRoom();
 
     useEffect(() => {
         if (!room || !enabled) return;

@@ -1,7 +1,17 @@
-import { useConfig } from './useConfig';
+import { useConfigurationStore } from '#base/stores';
 
-export const useConfigValue = <T>(key: string, defaultValue: T | undefined = undefined) => {
-    const config = useConfig();
+export const useConfigValue = <T = unknown>(
+    key: string,
+    defaultValue: T | undefined = undefined
+): T | undefined => useConfigurationStore(
+    (state) => {
+        const keys = key.split('.');
+        let current: unknown = state.config;
 
-    return config(key, defaultValue);
-};
+        for (const k of keys) {
+            current = (current as Record<string, unknown>)?.[k];
+        }
+
+        return (current as T) ?? defaultValue;
+    }
+);

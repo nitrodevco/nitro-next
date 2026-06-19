@@ -555,7 +555,6 @@ export * from './packets/incoming/Vault/CreditVaultStatusMessage';
 export * from './packets/incoming/Vault/IncomeRewardClaimResponseMessage';
 export * from './packets/incoming/Vault/IncomeRewardStatusMessage';
 export * from './packets/IncomingHeader';
-export * from './stores/CommunicationStore';
 export * from './stores/ConfigurationStore';
 export * from './stores/FurnitureData';
 export * from './stores/FurnitureDataStore';
