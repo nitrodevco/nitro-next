@@ -1,14 +1,15 @@
 import type {
     IAssetPlaneVisualizationLayer,
     IAssetRoomVisualizationData,
+    IMaskEntry,
     IRoomGeometry,
     IRoomPlane,
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
-import { Sprite } from 'pixi.js';
+import { Container, Sprite } from 'pixi.js';
 import { RenderTexture, TilingSprite } from 'pixi.js';
-import { Container, Matrix, Point, Texture } from 'pixi.js';
+import { Matrix, Point, Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';
 import { GetRenderer } from '../../../../utils';
@@ -17,8 +18,6 @@ import type { PlaneMaskManager } from './mask';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
 import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';
 import { Randomizer } from './utils';
-import type { MaskEntry } from './utils/MergeMasks';
-import { MergeMasks } from './utils/MergeMasks';
 
 type PlaneDataType = keyof IAssetRoomVisualizationData;
 
@@ -186,8 +185,8 @@ export class RoomPlane implements IRoomPlane {
         if (geometryChanged || (this._canBeVisible && this._maskChanged)) {
             const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
 
-            let width = this._leftSide.length * geometry.scale;
-            let height = this._rightSide.length * geometry.scale;
+            let width = Math.max(1, Math.floor(this._leftSide.length) * geometry.scale);
+            let height = Math.max(1, Math.floor(this._rightSide.length) * geometry.scale);
 
             const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
 
@@ -223,13 +222,13 @@ export class RoomPlane implements IRoomPlane {
                 }
 
                 case RoomPlane.TYPE_WALL: {
-                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const pH = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
-                    const pW = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
+                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
+                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
 
-                    if (p0 && pH && pW) {
-                        width = Math.round(Math.abs(p0.x - pW.x));
-                        height = Math.round(Math.abs(p0.y - pH.y));
+                    if (origin && yEnd && xEnd) {
+                        width = Math.round(Math.abs(origin.x - xEnd.x));
+                        height = Math.round(Math.abs(origin.y - yEnd.y));
                     }
 
                     this._planeOffsetX = this._textureOffsetX * texture.width;
@@ -238,17 +237,17 @@ export class RoomPlane implements IRoomPlane {
                 }
 
                 case RoomPlane.TYPE_LANDSCAPE: {
-                    const p0 = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
                     const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
                     const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
 
-                    if (p0 && pZ && pY) {
-                        width = Math.round(Math.abs(((p0.x - pY.x) * width) / planeGeometry.scale));
-                        height = Math.round(Math.abs(((p0.y - pZ.y) * height) / planeGeometry.scale));
+                    if (origin && pZ && pY) {
+                        width = Math.round(Math.abs(((origin.x - pY.x) * width) / planeGeometry.scale));
+                        height = Math.round(Math.abs(((origin.y - pZ.y) * height) / planeGeometry.scale));
                     }
 
-                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(p0.x - pY.x));
-                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(p0.y - pZ.y));
+                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - pY.x));
+                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - pZ.y));
 
                     this._planeOffsetX = renderOffsetX;
                     this._planeOffsetY = renderOffsetY;
@@ -275,21 +274,22 @@ export class RoomPlane implements IRoomPlane {
             this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
 
             const container = new Container();
-            const maskTexture = this.getMergedMasks(geometry);
+            const maskTexture = this.getMergedMasks(geometry, width, height);
 
             container.addChild(this._planeSprite);
 
             if (maskTexture) {
                 const maskSprite = new Sprite(this._maskTexture);
 
-                this._planeSprite.setMask({ mask: maskSprite, channel: 'alpha' });
+                maskSprite.blendMode = 'erase';
+
                 container.addChild(maskSprite);
             }
 
             GetRenderer().render({
                 target: this._planeTexture,
                 container,
-                transform: this.getMatrixForDimensions(this._planeSprite.width, this._planeSprite.height),
+                transform: this.getMatrixForDimensions(width, height),
                 clear: true,
             });
 
@@ -497,7 +497,7 @@ export class RoomPlane implements IRoomPlane {
         return true;
     }
 
-    private getMergedMasks(geometry: IRoomGeometry): Texture | undefined {
+    private getMergedMasks(geometry: IRoomGeometry, width: number, height: number): Texture | undefined {
         if (!this._useMask || (!this._bitmapMasks.length && !this._rectangleMasks.length)) {
             if (this._maskTexture) {
                 this._maskTexture.destroy(true);
@@ -511,13 +511,10 @@ export class RoomPlane implements IRoomPlane {
 
         this._maskChanged = false;
 
-        const width = this._planeSprite?.width ?? 0;
-        const height = this._planeSprite?.height ?? 0;
-
         if (width <= 0 || height <= 0) return undefined;
 
         const normal = geometry.getCoordinatePosition(this._normal);
-        const masks: MaskEntry[] = [];
+        const masks: IMaskEntry[] = [];
 
         for (const mask of this._bitmapMasks) {
             if (!mask) continue;
@@ -526,8 +523,8 @@ export class RoomPlane implements IRoomPlane {
                 mask.type,
                 geometry.scale,
                 normal,
-                width - (width * mask.leftSideLoc) / this._leftSide.length,
-                height - (height * mask.rightSideLoc) / this._rightSide.length,
+                width - ((width * mask.leftSideLoc) / this._leftSide.length),
+                height - ((height * mask.rightSideLoc) / this._rightSide.length),
             );
 
             if (entry) masks.push(entry);
@@ -543,22 +540,33 @@ export class RoomPlane implements IRoomPlane {
             const ht = (height * mask.rightSideLength) / this._rightSide.length;
 
             masks.push({
-                type: 'rect',
                 texture: Texture.WHITE,
-                x: Math.trunc(posX - wd),
-                y: Math.trunc(posY - ht),
-                width: Math.trunc(wd),
-                height: Math.trunc(ht),
-            } as unknown as MaskEntry);
+                position: { x: Math.trunc(posX - wd), y: Math.trunc(posY - ht) },
+                size: { width: Math.trunc(wd), height: Math.trunc(ht) }
+            });
         }
 
         if (!masks.length) return undefined;
 
-        const container = MergeMasks(masks, width, height);
-
         if (this._maskTexture && (this._maskTexture.width !== width || this._maskTexture.height !== height)) this._maskTexture.resize(width, height);
 
         if (!this._maskTexture) this._maskTexture = RenderTexture.create({ width, height, dynamic: true });
+
+        const container = new Container();
+
+        for (const entry of masks) {
+            const sprite = new Sprite(entry.texture);
+
+            if (entry.position !== undefined) sprite.position.set(entry.position.x, entry.position.y);
+
+            if (entry.size !== undefined) sprite.setSize(entry.size.width, entry.size.height);
+
+            if (entry.scale !== undefined) sprite.scale.set(entry.scale.x, entry.scale.y);
+
+            if (entry.rotation !== undefined) sprite.rotation = entry.rotation;
+
+            container.addChild(sprite);
+        }
 
         GetRenderer().render({
             target: this._maskTexture,

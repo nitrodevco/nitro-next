@@ -32,6 +32,7 @@ export * from './RoomObjectType';
 export * from './RoomObjectUserType';
 export * from './RoomObjectVariableEnum';
 export * from './RoomObjectVisualizationType';
+export * from './visualization/IMaskEntry';
 export * from './visualization/IPlaneDrawingData';
 export * from './visualization/IPlaneVisualization';
 export * from './visualization/IRoomObjectGraphicVisualization';

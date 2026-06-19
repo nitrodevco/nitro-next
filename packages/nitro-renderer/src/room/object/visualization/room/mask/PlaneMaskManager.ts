@@ -2,12 +2,12 @@
     IAssetPlaneMaskData,
     IAssetPlaneTextureBitmap,
     IGraphicAssetCollection,
+    IMaskEntry,
     IVector3D,
     RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 
 import { TextureUtils } from '../../../../../utils';
-import type { MaskEntry } from '../utils/MergeMasks';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
@@ -146,7 +146,7 @@ export class PlaneMaskManager {
         normal: IVector3D,
         posX: number,
         posY: number,
-    ): MaskEntry | undefined {
+    ): IMaskEntry | undefined {
         const mask = this._masks.get(type);
 
         if (!mask) return undefined;
@@ -161,9 +161,9 @@ export class PlaneMaskManager {
 
         return {
             texture: texture,
-            position: { x: posX + asset.offsetX, y: posY + asset.offsetY },
+            position: { x: Math.trunc(posX) + asset.offsetX, y: Math.trunc(posY) + asset.offsetY },
             scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 }
-        };
+        }
     }
 
     public getMask(k: string): PlaneMask | undefined {

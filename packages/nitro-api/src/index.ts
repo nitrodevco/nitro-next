@@ -169,6 +169,7 @@ export * from './room/object/RoomObjectType';
 export * from './room/object/RoomObjectUserType';
 export * from './room/object/RoomObjectVariableEnum';
 export * from './room/object/RoomObjectVisualizationType';
+export * from './room/object/visualization/IMaskEntry';
 export * from './room/object/visualization/IPlaneDrawingData';
 export * from './room/object/visualization/IPlaneVisualization';
 export * from './room/object/visualization/IRoomObjectGraphicVisualization';

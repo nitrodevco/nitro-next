@@ -166,7 +166,6 @@ export * from './visualization/room/RoomPlaneRectangleMask';
 export * from './visualization/room/RoomVisualization';
 export * from './visualization/room/RoomVisualizationData';
 export * from './visualization/room/TileCursorVisualization';
-export * from './visualization/room/utils/MergeMasks';
 export * from './visualization/room/utils/PlaneBitmapData';
 export * from './visualization/room/utils/Randomizer';
 export * from './visualization/RoomObjectSprite';

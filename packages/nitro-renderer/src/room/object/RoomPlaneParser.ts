@@ -1,4 +1,5 @@
 ﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import type { PointData } from 'pixi.js';
 import { Point } from 'pixi.js';
 
 import { RoomFloorHole } from './RoomFloorHole';
@@ -501,11 +502,12 @@ export class RoomPlaneParser {
 
     private generateWallData(k: Point, _arg_2: boolean): RoomWallData | undefined {
         const wallData: RoomWallData = new RoomWallData();
-        const funcs: ((k: Point, _arg_2: boolean) => Point | undefined)[] = [
-            this.extractTopWall.bind(this),
-            this.extractRightWall.bind(this),
-            this.extractBottomWall.bind(this),
-            this.extractLeftWall.bind(this),
+
+        const funcs = [
+            (point: PointData, flag: boolean) => this.extractTopWall(point, flag),
+            (point: PointData, flag: boolean) => this.extractRightWall(point, flag),
+            (point: PointData, flag: boolean) => this.extractBottomWall(point, flag),
+            (point: PointData, flag: boolean) => this.extractLeftWall(point, flag),
         ];
 
         let _local_5 = 0;
@@ -864,7 +866,7 @@ export class RoomPlaneParser {
         return true;
     }
 
-    private extractTopWall(k: Point, _arg_2: boolean): Point | undefined {
+    private extractTopWall(k: PointData, _arg_2: boolean): Point | undefined {
         if (k) {
             let width = 1;
 
@@ -881,7 +883,7 @@ export class RoomPlaneParser {
         return undefined;
     }
 
-    private extractRightWall(k: Point, _arg_2: boolean): Point | undefined {
+    private extractRightWall(k: PointData, _arg_2: boolean): Point | undefined {
         if (k) {
             let width = 1;
 
@@ -898,7 +900,7 @@ export class RoomPlaneParser {
         return undefined;
     }
 
-    private extractBottomWall(k: Point, _arg_2: boolean): Point | undefined {
+    private extractBottomWall(k: PointData, _arg_2: boolean): Point | undefined {
         if (k) {
             let width = 1;
 
@@ -915,7 +917,7 @@ export class RoomPlaneParser {
         return undefined;
     }
 
-    private extractLeftWall(k: Point, _arg_2: boolean): Point | undefined {
+    private extractLeftWall(k: PointData, _arg_2: boolean): Point | undefined {
         if (k) {
             let width = 1;
 
@@ -1279,10 +1281,7 @@ export class RoomPlaneParser {
     }
 
     public get floorHeight(): number {
-        if (this._fixedWallHeight != -1) {
-            return this._fixedWallHeight;
-        }
-        return this._floorHeight;
+        return this._fixedWallHeight !== -1 ? this._fixedWallHeight : this._floorHeight;
     }
 
     public get tileMapWidth(): number {

@@ -213,7 +213,6 @@ export * from './object/visualization/room/RoomPlaneRectangleMask';
 export * from './object/visualization/room/RoomVisualization';
 export * from './object/visualization/room/RoomVisualizationData';
 export * from './object/visualization/room/TileCursorVisualization';
-export * from './object/visualization/room/utils/MergeMasks';
 export * from './object/visualization/room/utils/PlaneBitmapData';
 export * from './object/visualization/room/utils/Randomizer';
 export * from './object/visualization/RoomObjectSprite';

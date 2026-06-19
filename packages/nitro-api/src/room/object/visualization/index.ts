@@ -1,3 +1,4 @@
+export * from './IMaskEntry';
 export * from './IPlaneDrawingData';
 export * from './IPlaneVisualization';
 export * from './IRoomObjectGraphicVisualization';

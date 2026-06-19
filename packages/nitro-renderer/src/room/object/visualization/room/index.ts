@@ -9,6 +9,5 @@ export * from './RoomPlaneRectangleMask';
 export * from './RoomVisualization';
 export * from './RoomVisualizationData';
 export * from './TileCursorVisualization';
-export * from './utils/MergeMasks';
 export * from './utils/PlaneBitmapData';
 export * from './utils/Randomizer';

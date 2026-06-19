@@ -81,7 +81,6 @@ export * from './room/RoomPlaneRectangleMask';
 export * from './room/RoomVisualization';
 export * from './room/RoomVisualizationData';
 export * from './room/TileCursorVisualization';
-export * from './room/utils/MergeMasks';
 export * from './room/utils/PlaneBitmapData';
 export * from './room/utils/Randomizer';
 export * from './RoomObjectSprite';
