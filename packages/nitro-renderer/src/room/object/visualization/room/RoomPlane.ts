@@ -248,6 +248,8 @@ export class RoomPlane implements IRoomPlane {
 
                     const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - xEnd.x));
                     const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - yEnd.y));
+                    const renderMaxX = Math.trunc(this._textureMaxX * Math.abs((origin.x - xEnd.x)));
+                    const renderMaxY = Math.trunc(this._textureMaxY * Math.abs((origin.y - yEnd.y)));
 
                     this._planeOffsetX = renderOffsetX;
                     this._planeOffsetY = renderOffsetY;

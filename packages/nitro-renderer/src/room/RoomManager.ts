@@ -13,10 +13,6 @@ export class RoomManager implements IRoomManager {
         RoomObjectCategoryEnum.Room,
     ];
 
-    public update(time: number, update: boolean = false): void {
-        for (const room of this._rooms.values()) room?.update(time, update);
-    }
-
     public getRoomInstance(roomId: number): IRoomInstance | undefined {
         return this._rooms.get(roomId);
     }

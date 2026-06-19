@@ -141,8 +141,8 @@ export const RoomView = ({ roomId }: {
             }
 
             planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ);
-            planeParser.initializeFromTileData(-1);
-            planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + wallHeight);
+            planeParser.initializeFromTileData(wallHeight);
+            planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + planeParser.wallHeight);
 
             const wallGeometry = new LegacyWallGeometry();
 
@@ -186,7 +186,7 @@ xxxx00000000
 xxxx00000000
 xxxxxxxxxxxx
 xxxxxxxxxxxx`,
-            1,
+            0,
             3,
             5,
             2,
@@ -236,6 +236,8 @@ xxxxxxxxxxxx`,
 
         room.addFurnitureWallByTypeId(2, 4034, room.instance.legacyGeometry.getLocation(3, 8, 11, 36, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
 
+        //room.addFurnitureWallByTypeName(3, "window_grunge", room.instance.legacyGeometry.getLocation(3, 5, 11, 36, 'l'), new Vector3d(room.instance.legacyGeometry.getDirection('l')), 0);
+
         return () => {
             room.removeRoomObject(1, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Floor);
@@ -243,6 +245,7 @@ xxxxxxxxxxxx`,
             room.removeRoomObject(4, RoomObjectCategoryEnum.Floor);
             room.removeRoomObject(1, RoomObjectCategoryEnum.Wall);
             room.removeRoomObject(2, RoomObjectCategoryEnum.Wall);
+            room.removeRoomObject(3, RoomObjectCategoryEnum.Wall);
         };
     }, [room]);
 

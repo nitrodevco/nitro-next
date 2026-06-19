@@ -9,14 +9,13 @@ import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '#base/context';
 import { useRoomCamera, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
+import { useConfigurationStore } from '#base/stores';
 import { GetPixelRatio } from '#base/utils';
-
-let lastFrameTime = 0;
-const TARGET_FPS = 60;
-const FRAME_TIME = 1000 / TARGET_FPS;
 
 export const RoomCanvasView = () => {
     const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit']) ?? 60;
     const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
     const { updateRoomCamera } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
@@ -208,11 +207,7 @@ export const RoomCanvasView = () => {
 
             RoomEnterEffect.turnVisualizationOn();
 
-            if (time - lastFrameTime >= FRAME_TIME) {
-                room.instance.update(time, update);
-
-                lastFrameTime = time;
-            }
+            room.instance.update(time, update);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 
@@ -233,16 +228,17 @@ export const RoomCanvasView = () => {
 
             RoomEnterEffect.turnVisualizationOff();
 
-            if (room.instance?.canvas?.isDirty()) {
-                renderer.render(stage);
-                room.instance.canvas.markClean();
-            }
+            renderer.render(stage);
         }
 
-        GetTicker().add(tick);
+        const ticker = GetTicker();
+
+        ticker.maxFPS = maxFPS;
+
+        ticker.add(tick);
 
         return () => {
-            GetTicker().remove(tick);
+            ticker.remove(tick);
         }
     }, [room]);
 

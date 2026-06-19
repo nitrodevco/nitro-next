@@ -293,8 +293,6 @@ export class Room implements IRoom {
 
         if ((this._instance.canvas.screenOffsetX === x) && (this._instance.canvas.screenOffsetY === y)) return false;
 
-        //EventStore.getState().emit(new RoomDragEvent(roomId, -(this._instance.canvas.screenOffsetX - x), -(this._instance.canvas.screenOffsetY - y)));
-
         this._instance.canvas.screenOffsetX = x;
         this._instance.canvas.screenOffsetY = y;
 

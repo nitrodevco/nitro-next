@@ -13,6 +13,7 @@ export const useConfigLoader = () => {
             'asset.urls.furni': 'https://assets.nitrodev.co/bundled/furniture/%libname%.nitro',
             'asset.urls.icons.furni': 'https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png',
             'asset.urls.pet': 'https://assets.nitrodev.co/bundled/pet/%libname%.nitro',
+            'fps.limit': 60,
             'renderer.petTypes': [
                 'dog',
                 'cat',
