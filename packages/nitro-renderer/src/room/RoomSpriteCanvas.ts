@@ -76,6 +76,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
     private _zDirty: boolean = false;
+    private _isDirty: boolean = false;
     private _frameInterval: number = 0;
 
     private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
@@ -260,23 +261,29 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this.screenOffsetX = offsetPoint.x - local.x * this._scale;
         this.screenOffsetY = offsetPoint.y - local.y * this._scale;
+
+        this._isDirty = true;
     }
 
     public render(time: number, update: boolean = false): void {
         this._totalTimeRunning += GetTicker().deltaTime;
 
-        if (this._totalTimeRunning === this._renderTimestamp) return;
-
         if (time === -1) time = this._renderTimestamp + 1;
 
         if (!this._instance || !this._geometry) return;
 
-        if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) update = true;
+        if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) {
+            update = true;
+
+            this._isDirty = true;
+        }
 
         if (this._display) {
             if (this._display.x !== this._screenOffsetX || this._display.y !== this._screenOffsetY) {
                 this._display.x = Math.floor(this._screenOffsetX);
                 this._display.y = Math.floor(this._screenOffsetY);
+
+                this._isDirty = true;
 
                 update = true;
             }
@@ -284,11 +291,13 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             if (this._display.scale.x !== this._scale) {
                 this._display.scale.set(this._scale);
 
+                this._isDirty = true;
+
                 update = true;
             }
         }
 
-        this.doMagic();
+        //this.doMagic();
 
         let spriteCount = 0;
 
@@ -304,6 +313,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (this._zDirty || spriteCount !== this._sortableSprites.length) {
             this._sortableSprites.sort(RoomSpriteCanvas._zComparator);
+            this._isDirty = true;
         }
 
         if (spriteCount < this._sortableSprites.length) this._sortableSprites.length = spriteCount;
@@ -384,11 +394,16 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._skipObjectUpdate && this._runningSlow,
         );
 
-        if (locationCache.locationChanged) update = true;
+        if (locationCache.locationChanged) {
+            update = true;
+            this._isDirty = true;
+        }
 
         if (!sortableCache.needsUpdate(visualization.instanceId, visualization.updateSpriteCounter) && !update) {
             return sortableCache.spriteCount;
         }
+
+        this._isDirty = true;
 
         let x = vector.x;
         let y = vector.y;
@@ -532,6 +547,15 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             } else if (extendedSprite.scale.y !== 1) extendedSprite.scale.y = 1;
 
             this.updateEnterRoomEffect(extendedSprite, objectSprite);
+
+            this._isDirty = true;
+        }
+
+        const posChanged = extendedSprite.x !== sprite.x || extendedSprite.y !== sprite.y;
+        const offsetChanged = extendedSprite.offsetX !== objectSprite.offsetX || extendedSprite.offsetY !== objectSprite.offsetY;
+
+        if (posChanged || offsetChanged) {
+            this._isDirty = true;
         }
 
         extendedSprite.x = sprite.x;
@@ -1112,6 +1136,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
         ));
+    }
+
+    public isDirty(): boolean {
+        return this._isDirty;
+    }
+
+    public markClean(): void {
+        this._isDirty = false;
     }
 
     public get id(): number {

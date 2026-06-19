@@ -11,6 +11,10 @@ import { useRoomContext } from '#base/context';
 import { useRoomCamera, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
 import { GetPixelRatio } from '#base/utils';
 
+let lastFrameTime = 0;
+const TARGET_FPS = 60;
+const FRAME_TIME = 1000 / TARGET_FPS;
+
 export const RoomCanvasView = () => {
     const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
     const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
@@ -204,7 +208,11 @@ export const RoomCanvasView = () => {
 
             RoomEnterEffect.turnVisualizationOn();
 
-            room.instance.update(time, update);
+            if (time - lastFrameTime >= FRAME_TIME) {
+                room.instance.update(time, update);
+
+                lastFrameTime = time;
+            }
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 
@@ -225,7 +233,10 @@ export const RoomCanvasView = () => {
 
             RoomEnterEffect.turnVisualizationOff();
 
-            renderer.render(stage);
+            if (room.instance?.canvas?.isDirty()) {
+                renderer.render(stage);
+                room.instance.canvas.markClean();
+            }
         }
 
         GetTicker().add(tick);

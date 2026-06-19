@@ -29,6 +29,8 @@ export const useRoomCamera = () => {
         maintainPreviousMoveSpeed: boolean;
         geometryUpdateId: number;
         scaleChanged: boolean;
+        lastOffsetX: number;
+        lastOffsetY: number;
     }>({
         currentLocation: undefined,
         targetLocation: undefined,
@@ -42,7 +44,9 @@ export const useRoomCamera = () => {
         previousMoveSpeed: 0,
         maintainPreviousMoveSpeed: false,
         geometryUpdateId: -1,
-        scaleChanged: false
+        scaleChanged: false,
+        lastOffsetX: 0,
+        lastOffsetY: 0
     });
 
     const setCameraTarget = (target: IVector3D) => {
@@ -307,7 +311,15 @@ export const useRoomCamera = () => {
 
         if (!cameraFollowDisabled) adjustCamera(time, 8);
 
-        room.setRoomInstanceRenderingCanvasOffset(new Point(-(cameraData.currentLocation?.x ?? 0), -(cameraData.currentLocation?.y ?? 0)));
+        const offsetX = -(cameraData.currentLocation?.x ?? 0);
+        const offsetY = -(cameraData.currentLocation?.y ?? 0);
+
+        if (cameraData.lastOffsetX !== offsetX || cameraData.lastOffsetY !== offsetY) {
+            cameraData.lastOffsetX = offsetX;
+            cameraData.lastOffsetY = offsetY;
+
+            room.setRoomInstanceRenderingCanvasOffset(new Point(offsetX, offsetY));
+        }
     }
 
     useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, event => {
