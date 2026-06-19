@@ -163,7 +163,7 @@ export class RoomPlane implements IRoomPlane {
         this._disposed = true;
     }
 
-    public update(geometry: IRoomGeometry, timeSinceStartMs: number): boolean {
+    public update(geometry: IRoomGeometry, _timeSinceStartMs: number): boolean {
         if (!geometry || this._disposed) return false;
 
         let geometryChanged = false;
@@ -185,16 +185,16 @@ export class RoomPlane implements IRoomPlane {
         if (geometryChanged || (this._canBeVisible && this._maskChanged)) {
             const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
 
-            let width = Math.max(1, Math.floor(this._leftSide.length) * geometry.scale);
-            let height = Math.max(1, Math.floor(this._rightSide.length) * geometry.scale);
+            let width = Math.floor(this._leftSide.length);
+            let height = Math.floor(this._rightSide.length);
 
             const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
 
             switch (this._type) {
                 case RoomPlane.TYPE_FLOOR: {
                     const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height / planeGeometry.scale, 0));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(width / planeGeometry.scale, 0, 0));
+                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height, 0));
+                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(width, 0, 0));
 
                     let x = 0;
                     let y = 0;
@@ -223,8 +223,8 @@ export class RoomPlane implements IRoomPlane {
 
                 case RoomPlane.TYPE_WALL: {
                     const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, height / planeGeometry.scale));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, width / planeGeometry.scale, 0));
+                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, height));
+                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, width, 0));
 
                     if (origin && yEnd && xEnd) {
                         width = Math.round(Math.abs(origin.x - xEnd.x));
@@ -238,22 +238,25 @@ export class RoomPlane implements IRoomPlane {
 
                 case RoomPlane.TYPE_LANDSCAPE: {
                     const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const pZ = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
-                    const pY = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
+                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
+                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
 
-                    if (origin && pZ && pY) {
-                        width = Math.round(Math.abs(((origin.x - pY.x) * width) / planeGeometry.scale));
-                        height = Math.round(Math.abs(((origin.y - pZ.y) * height) / planeGeometry.scale));
+                    if (origin && yEnd && xEnd) {
+                        width = Math.round(Math.abs(((origin.x - xEnd.x) * width)));
+                        height = Math.round(Math.abs(((origin.y - yEnd.y) * height)));
                     }
 
-                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - pY.x));
-                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - pZ.y));
+                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - xEnd.x));
+                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - yEnd.y));
 
                     this._planeOffsetX = renderOffsetX;
                     this._planeOffsetY = renderOffsetY;
                     break;
                 }
             }
+
+            if (width < 1) width = 1;
+            if (height < 1) height = 1;
 
             Randomizer.setSeed(this._randomSeed);
 

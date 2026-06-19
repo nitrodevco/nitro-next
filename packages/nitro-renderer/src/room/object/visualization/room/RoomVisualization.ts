@@ -126,7 +126,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         this._roomScale = RoomGeometryScaleType.None;
     }
 
-    public override update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
+    public override update(geometry: IRoomGeometry, time: number, _update: boolean, _skipUpdate: boolean): void {
         if (!this.object || !geometry) return;
 
         const geometryUpdate = this.updateGeometry(geometry);
