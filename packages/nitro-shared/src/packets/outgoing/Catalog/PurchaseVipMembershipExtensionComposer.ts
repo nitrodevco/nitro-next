@@ -1,0 +1,17 @@
+import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+
+export type PurchaseVipMembershipExtensionComposerType = {
+  offerId: number;
+};
+
+export class PurchaseVipMembershipExtensionComposer implements IOutgoingPacket<PurchaseVipMembershipExtensionComposerType>
+{
+  public constructor(private params: PurchaseVipMembershipExtensionComposerType) { }
+
+  public compose(): any[]
+  {
+    return [
+      this.params.offerId,
+    ];
+  }
+}
