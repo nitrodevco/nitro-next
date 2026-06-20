@@ -56,9 +56,15 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                 }));
             };
 
-            ws.current.onerror = event => { };
+            ws.current.onerror = event => {
+                NitroLogger.error('WebSocket error:', event);
+            };
 
-            ws.current.onclose = event => { };
+            ws.current.onclose = event => {
+                NitroLogger.warn('WebSocket closed:', event.code, event.reason);
+                setIsAuthenticated(false);
+                setIsReady(false);
+            };
 
             ws.current.onmessage = (event: MessageEvent<ArrayBuffer>) => {
                 const array = new Uint8Array(wsBuffer.current.byteLength + event.data.byteLength);

@@ -6,28 +6,23 @@ import { Byte } from './Byte';
 import { EvaWireDataWrapper } from './EvaWireDataWrapper';
 import { Short } from './Short';
 
-export class EvaWireFormat implements ICodec
-{
-    public encode(header: number, messages: any[]): IBinaryWriter
-    {
+export class EvaWireFormat implements ICodec {
+    public encode(header: number, messages: any[]): IBinaryWriter {
         const writer = new BinaryWriter();
 
         writer.writeShort(header);
 
-        for (const value of messages)
-        {
+        for (const value of messages) {
             let type: string = typeof value;
 
-            if (type === 'object')
-            {
+            if (type === 'object') {
                 if (value === null) type = 'null';
                 else if (value instanceof Byte) type = 'byte';
                 else if (value instanceof Short) type = 'short';
                 else if (value instanceof ArrayBuffer) type = 'arraybuffer';
             }
 
-            switch (type)
-            {
+            switch (type) {
                 case 'undefined':
                 case 'null':
                     writer.writeShort(0);
@@ -46,8 +41,7 @@ export class EvaWireFormat implements ICodec
                     break;
                 case 'string':
                     if (!value) writer.writeShort(0);
-                    else
-                    {
+                    else {
                         writer.writeString(value, true);
                     }
                     break;
@@ -62,27 +56,21 @@ export class EvaWireFormat implements ICodec
         return new BinaryWriter().writeInt(buffer.byteLength).writeBytes(buffer);
     }
 
-    public decode(buffer: ArrayBuffer): IMessageDataWrapper[]
-    {
+    public decode(buffer: ArrayBuffer): IMessageDataWrapper[] {
         const wrappers: IMessageDataWrapper[] = [];
 
-        if(buffer && buffer.byteLength)
-        {
-            while (buffer.byteLength)
-            {
-                if (buffer.byteLength < 4) break;
+        if (!buffer || !buffer.byteLength) return wrappers;
 
-                const container = new BinaryReader(buffer);
-                const length = container.readInt();
+        const reader = new BinaryReader(buffer);
 
-                if (length > (buffer.byteLength - 4)) break;
+        while (reader.remaining() >= 4) {
+            const length = reader.readInt();
 
-                const extracted = container.readBytes(length);
+            if (length > reader.remaining()) break;
 
-                wrappers.push(new EvaWireDataWrapper(extracted.readShort(), extracted));
+            const extracted = reader.readBytes(length);
 
-                buffer = buffer.slice(length + 4);
-            }
+            wrappers.push(new EvaWireDataWrapper(extracted.readShort(), extracted));
         }
 
         return wrappers;
