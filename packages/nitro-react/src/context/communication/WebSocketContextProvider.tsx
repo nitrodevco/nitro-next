@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { ICodec, IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-api';
-import { EvaWireFormat } from '@nitrodevco/nitro-shared';
+import { GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { AuthenticationOKMessage, ClientHelloComposer, EvaWireFormat, GetIncomingPackets, GetOutgoingPackets, SSOTicketComposer } from '@nitrodevco/nitro-shared';
 import type { ReactNode } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useCommunicationIncoming, useCommunicationOutgoing } from '#base/hooks/communication';
+import { useConfigurationStore } from '#base/stores';
 
 import { WebSocketContext } from './WebSocketContext';
 
@@ -13,35 +15,56 @@ type ProviderProps = {
     children: ReactNode;
 }
 
-const pendingClientMessages: IOutgoingPacket<any>[] = [];
-const pendingServerMessages: IMessageDataWrapper[] = [];
-
 export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isConnectionReady, setIsConnectionReady] = useState<boolean>(false);
-    const { incomingByHeader, incomingCtors, incomingHeaderByCtor } = useCommunicationIncoming();
-    const { outgoingHeaderByComposerName } = useCommunicationOutgoing();
+    const { incomingByHeader, incomingCtors, incomingHeaderByCtor, registerManyIncoming } = useCommunicationIncoming();
+    const { outgoingHeaderByComposerName, registerManyOutgoing } = useCommunicationOutgoing();
+    const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
+    const production = useConfigurationStore(x => x.config['production.version'] as string) ?? undefined;
     const ws = useRef<WebSocket | undefined>(undefined);
     const wsBuffer = useRef<ArrayBuffer>(new ArrayBuffer(0));
     const wsCodec = useRef<ICodec>(new EvaWireFormat());
     const listeners = useRef<Map<IncomingPacketConstructor<object>, Array<(data: object) => void>>>(new Map());
+    const pendingClientMessages = useRef<IOutgoingPacket<object>[]>([]);
+    const pendingServerMessages = useRef<IMessageDataWrapper[]>([]);
 
-    const connect = (url: string) => {
+    const connect = () => {
         try {
+            if (!socketUrl || !socketUrl.length) return;
+
             ws.current?.close();
 
-            const connection = new WebSocket(url);
+            ws.current = new WebSocket(socketUrl);
 
-            connection.binaryType = 'arraybuffer';
+            ws.current.binaryType = 'arraybuffer';
 
-            connection.onopen = event => { };
-            connection.onerror = event => { };
-            connection.onclose = event => { };
-            connection.onmessage = (event: MessageEvent<ArrayBuffer>) => {
+            ws.current.onopen = event => {
+                send(new ClientHelloComposer({
+                    production: production,
+                    platform: 'WEB',
+                    clientPlatform: 0,
+                    deviceCategory: 0
+                }));
+
+                const params = new URLSearchParams(window.location.search);
+                const sso = params.get('sso');
+
+                if (sso && sso.length) send(new SSOTicketComposer({
+                    ssoTicket: sso,
+                    elapsedMilliseconds: GetTickerTime()
+                }));
+            };
+
+            ws.current.onerror = event => { };
+
+            ws.current.onclose = event => { };
+
+            ws.current.onmessage = (event: MessageEvent<ArrayBuffer>) => {
                 const array = new Uint8Array(wsBuffer.current.byteLength + event.data.byteLength);
 
                 array.set(new Uint8Array(wsBuffer.current), 0);
-                array.set(new Uint8Array(event.data), event.data.byteLength);
+                array.set(new Uint8Array(event.data), wsBuffer.current.byteLength);
 
                 wsBuffer.current = array.buffer;
 
@@ -58,6 +81,22 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
             const wrappers = wsCodec.current.decode(buffer);
 
+            if (isAuthenticated && !isConnectionReady) {
+                pendingServerMessages.current.push(...wrappers);
+
+                return;
+            }
+
+            processWrappers(...wrappers);
+        } catch (err) {
+            NitroLogger.error(err);
+        }
+    }
+
+    const processWrappers = (...wrappers: IMessageDataWrapper[]) => {
+        try {
+            if (!wrappers || !wrappers.length) return;
+
             for (const wrapper of wrappers) {
                 try {
                     const ctor = incomingByHeader.current.get(wrapper.header);
@@ -67,7 +106,6 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                     const handlers = listeners.current.get(ctor);
 
                     if (!handlers?.length) continue;
-
 
                     const parsed = new ctor().parse(wrapper);
 
@@ -84,11 +122,13 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const send = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
         if (!packets?.length) return;
 
-        if (!ws.current || !isAuthenticated || !isConnectionReady || ws.current.readyState !== WebSocket.OPEN) {
-            pendingClientMessages.push(...packets);
+        if (isAuthenticated && !isConnectionReady) {
+            pendingClientMessages.current.push(...packets);
 
             return;
         }
+
+        if (!ws.current || ws.current.readyState !== WebSocket.OPEN) return;
 
         for (const outgoing of packets) {
             try {
@@ -144,8 +184,31 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         };
     };
 
+    const setReady = () => {
+        if (isConnectionReady) return;
+
+        setIsConnectionReady(true);
+
+        processWrappers(...pendingServerMessages.current.slice());
+        send(...pendingClientMessages.current.slice());
+
+        pendingServerMessages.current = [];
+        pendingClientMessages.current = [];
+    }
+
+    useEffect(() => {
+        return subscribe(AuthenticationOKMessage, data => {
+            setIsAuthenticated(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        registerManyIncoming(GetIncomingPackets());
+        registerManyOutgoing(GetOutgoingPackets());
+    }, []);
+
     return (
-        <WebSocketContext.Provider value={{ isAuthenticated, isConnectionReady: isConnectionReady, connect, send, subscribe }}>
+        <WebSocketContext.Provider value={{ isAuthenticated, isConnectionReady, connect, send, subscribe, setReady }}>
             {children}
         </WebSocketContext.Provider>
     );

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useWebSocketContext } from '#base/context';
 
-export const useCommunicationSubscription = <T extends object,>(event: IncomingPacketConstructor<T>, handler: (data: T) => void, enabled: boolean = true) => {
+export const useMessageListener = <T extends object,>(event: IncomingPacketConstructor<T>, handler: (data: T) => void, enabled: boolean = true) => {
     const { subscribe } = useWebSocketContext();
 
     useEffect(() => {

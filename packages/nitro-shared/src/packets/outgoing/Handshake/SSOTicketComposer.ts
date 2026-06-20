@@ -1,7 +1,7 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type SSOTicketComposerType = {
-    sSO: string;
+    ssoTicket: string;
     elapsedMilliseconds: number;
 };
 
@@ -10,7 +10,7 @@ export class SSOTicketComposer implements IOutgoingPacket<SSOTicketComposerType>
 
     public compose(): (number | string)[] {
         return [
-            this.params.sSO,
+            this.params.ssoTicket,
             this.params.elapsedMilliseconds,
         ];
     }

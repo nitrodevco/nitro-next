@@ -7,6 +7,7 @@ export const useConfigLoader = () => {
 
     useEffect(() => {
         setConfig({
+            'production.version': 'WIN63-202601121721-391685409',
             'gamedata.urls.externalTexts': 'https://assets.nitrodev.co/gamedata/ExternalTexts.json',
             'furnituredata.url': 'https://assets.nitrodev.co/gamedata/FurnitureData.json',
             'asset.urls.generic': 'https://assets.nitrodev.co/bundled/generic/%libname%.nitro',
@@ -14,7 +15,7 @@ export const useConfigLoader = () => {
             'asset.urls.icons.furni': 'https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png',
             'asset.urls.pet': 'https://assets.nitrodev.co/bundled/pet/%libname%.nitro',
             'fps.limit': 60,
-            'socket.url': 'ws://127.0.0.1:30001',
+            'socket.url': 'ws://localhost:9001',
             'renderer.petTypes': [
                 'dog',
                 'cat',
