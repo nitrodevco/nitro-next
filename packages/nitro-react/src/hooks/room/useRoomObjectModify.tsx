@@ -5,15 +5,19 @@ import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "#base/context";
-import { useRoomSelectedObjectSelector, useRoomSessionSelector } from "#base/selectors";
+import { useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelector } from "#base/selectors";
 
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectModify = () => {
-    const [room, ownUserId, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.ownUserId, x.setSelectedObject]));
-    const { controllerLevel, isRoomOwner } = useRoomSessionSelector();
-    const { selectedObject } = useRoomSelectedObjectSelector();
+    const room = useRoomSelector();
+    const [ownUserId, setSelectedObject] = useRoomContext(useShallow(x => [x.ownUserId, x.setSelectedObject]));
+
+    const { controllerLevel, isRoomOwner } = useRoomPermissionsSelector();
+    const selectedObject = useRoomSelectedObject();
+
+
     const { resetSelectedObject } = useRoomObjectSelect();
     const { setFurnitureAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 

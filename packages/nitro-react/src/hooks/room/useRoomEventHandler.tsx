@@ -5,7 +5,7 @@ import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, 
 import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '#base/context';
-import { useRoomSelectedObjectSelector, useRoomSessionSelector } from '#base/selectors';
+import { useRoomInteractionSelector, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector } from '#base/selectors';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -16,10 +16,16 @@ import { useRoomObjectPlace } from './useRoomObjectPlace';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 
 export const useRoomEventHandler = () => {
-    const [room, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.getMouseEventId, x.setMouseEventId]));
-    const { isSpectator, isDecorating, isPlayingGame } = useRoomSessionSelector();
-    const { selectedObject } = useRoomSelectedObjectSelector();
-    const { placedObject, selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
+    const room = useRoomSelector();
+
+    const [getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.getMouseEventId, x.setMouseEventId]));
+
+
+    const { isSpectator, isDecorating, isPlayingGame } = useRoomInteractionSelector();
+    const selectedObject = useRoomSelectedObject();
+    const placedObject = useRoomPlacedObject();
+
+    const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();
     const { placeObject, placeObjectOnUser, handleObjectPlace } = useRoomObjectPlace();

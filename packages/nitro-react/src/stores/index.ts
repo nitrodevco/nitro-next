@@ -2,6 +2,8 @@ export * from './room/RoomCameraSlice';
 export * from './room/RoomSelectedObjectSlice';
 export * from './room/RoomSessionSlice';
 export * from './room/RoomStore';
+export * from './room/selectors/RoomSelectedObjectSelectors';
+export * from './room/selectors/RoomSessionSelectors';
 export * from './useConfigurationStore';
 export * from './useFurnitureDataStore';
 export * from './useLocalizationStore';

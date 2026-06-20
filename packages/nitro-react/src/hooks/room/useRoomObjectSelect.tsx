@@ -5,11 +5,14 @@ import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
 import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '#base/context';
-import { useRoomSelectedObjectSelector } from '#base/selectors';
+import { useRoomIsPlayingGame, useRoomSelectedObjectDetails, useRoomSelector } from '#base/selectors';
 
 export const useRoomObjectSelect = () => {
-    const [room, isPlayingGame, getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
-    const { selectedAvatarId, selectedObjectId, selectedObjectCategory, placedObject } = useRoomSelectedObjectSelector();
+    const room = useRoomSelector();
+    const isPlayingGame = useRoomIsPlayingGame();
+    const { selectedAvatarId, selectedObjectId, selectedObjectCategory } = useRoomSelectedObjectDetails();
+
+    const [getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {
@@ -122,5 +125,5 @@ export const useRoomObjectSelect = () => {
         setSelectedObject(undefined);
     };
 
-    return { placedObject, selectObject, selectAvatar, deselectObject, resetSelectedObject };
+    return { selectObject, selectAvatar, deselectObject, resetSelectedObject };
 };

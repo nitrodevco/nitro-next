@@ -5,14 +5,13 @@ import { RoomDraggedEvent } from "@nitrodevco/nitro-shared";
 import { Matrix, Point, Rectangle } from "pixi.js";
 import { useRef } from "react";
 
-import { useRoomCameraSelector } from "#base/selectors";
+import { useRoomCameraSelector, useRoomSelector } from "#base/selectors";
 
 import { useConfigValue } from "../useConfigValue";
-import { useRoom } from "./useRoom";
 import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
 
 export const useRoomCamera = () => {
-    const room = useRoom();
+    const room = useRoomSelector();
     const { targetId, targetCategory, cameraFollowDisabled, followDuration } = useRoomCameraSelector();
     const moveSpeedDenominator = useConfigValue<number>('camera.move.speed', 12);
     const cameraDataRef = useRef<{

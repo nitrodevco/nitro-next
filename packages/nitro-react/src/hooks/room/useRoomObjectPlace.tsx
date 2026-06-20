@@ -6,15 +6,21 @@ import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPla
 import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "#base/context";
-import { useRoomSelectedObjectSelector } from "#base/selectors";
+import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelector } from "#base/selectors";
 
 import { useRoomObjectMove } from "./useRoomObjectMove";
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectPlace = () => {
-    const [room, setPlacedObject, setSelectedObject] = useRoomContext(useShallow(x => [x.room, x.setPlacedObject, x.setSelectedObject]));
-    const { selectedObject, objectPlacementSource } = useRoomSelectedObjectSelector();
+    const room = useRoomSelector();
+    const selectedObject = useRoomSelectedObject();
+    const objectPlacementSource = useRoomObjectPlacementSource();
+
+
+    const [setPlacedObject, setSelectedObject] = useRoomContext(useShallow(x => [x.setPlacedObject, x.setSelectedObject]));
+
+
     const { setFurnitureAlphaMultiplier } = useRoomObjectValidation();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
