@@ -5,3 +5,4 @@ export * from './room/RoomStore';
 export * from './useConfigurationStore';
 export * from './useFurnitureDataStore';
 export * from './useLocalizationStore';
+export * from './useSessionStore';

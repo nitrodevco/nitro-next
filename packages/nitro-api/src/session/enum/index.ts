@@ -1,3 +1,4 @@
+export * from './ChangeUserNameResultMessageCode';
 export * from './FurnitureType';
 export * from './RoomControllerLevelEnum';
 export * from './RoomDoorModeEnum';

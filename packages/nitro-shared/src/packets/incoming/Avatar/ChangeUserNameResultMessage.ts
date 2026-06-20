@@ -1,7 +1,7 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { ChangeUserNameResultMessageCode, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ChangeUserNameResultMessageType = {
-    resultCode: number;
+    resultCode: ChangeUserNameResultMessageCode;
     name: string;
     nameSuggestions: string[];
 };
