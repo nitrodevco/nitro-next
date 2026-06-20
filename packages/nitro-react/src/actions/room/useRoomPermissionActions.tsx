@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "#base/context";
-import { extractPermissionActions } from "#base/stores";
+import { extractRoomPermissionActions } from "#base/stores";
 
-export const useRoomPermissionActions = () => useRoomContext(useShallow(extractPermissionActions));
+export const useRoomPermissionActions = () => useRoomContext(useShallow(extractRoomPermissionActions));

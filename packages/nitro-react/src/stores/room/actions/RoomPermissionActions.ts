@@ -5,7 +5,7 @@ export type RoomPermissionActions = {
     setIsRoomOwner: RoomStore['setIsRoomOwner'];
 }
 
-export const extractPermissionActions = (store: RoomStore) => ({
+export const extractRoomPermissionActions = (store: RoomStore) => ({
     setControllerLevel: store.setControllerLevel,
     setIsRoomOwner: store.setIsRoomOwner
 });

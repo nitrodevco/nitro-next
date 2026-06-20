@@ -1,11 +1,10 @@
 import { GetGuestRoomResultMessage } from "@nitrodevco/nitro-shared";
-import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "#base/context";
+import { useRoomSettingActions } from "#base/actions";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomDataHandler = () => {
-    const [setTradeMode, setIsGuildRoom, setDoorMode, setAllowPets] = useRoomContext(useShallow(x => [x.setTradeMode, x.setIsGuildRoom, x.setDoorMode, x.setAllowPets]));
+    const { setTradeMode, setIsGuildRoom, setDoorMode, setAllowPets } = useRoomSettingActions();
 
     useMessageListener(GetGuestRoomResultMessage, data => {
         if (data.roomForward) return;

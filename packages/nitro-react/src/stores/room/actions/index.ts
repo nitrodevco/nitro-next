@@ -1,1 +1,2 @@
-export * from './RoomSessionActions';
+export * from './RoomPermissionActions';
+export * from './RoomSettingActions';
