@@ -8,8 +8,13 @@ type State = {
     followDuration: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Actions = {
+    setTargetId: (id: number) => void;
+    setTargetCategory: (category: RoomObjectCategoryEnum) => void;
+    setTarget: (id: number, category: RoomObjectCategoryEnum) => void;
+    setCameraFollowDisabled: (disabled: boolean) => void;
+    setFollowDuration: (duration: number) => void;
+    disableFollowTemporarily: (duration: number) => void;
 };
 
 const initialState: State = {
@@ -21,6 +26,15 @@ const initialState: State = {
 
 export type RoomCameraSlice = State & Actions;
 
-export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCameraSlice> = (set, get, store) => ({
-    ...initialState
+export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCameraSlice> = (set) => ({
+    ...initialState,
+    setTargetId: (id: number) => set({ targetId: id }),
+    setTargetCategory: (category: RoomObjectCategoryEnum) => set({ targetCategory: category }),
+    setTarget: (id: number, category: RoomObjectCategoryEnum) => set({ targetId: id, targetCategory: category }),
+    setCameraFollowDisabled: (disabled: boolean) => set({ cameraFollowDisabled: disabled }),
+    setFollowDuration: (duration: number) => set({ followDuration: duration }),
+    disableFollowTemporarily: (duration: number) => {
+        set({ cameraFollowDisabled: true, followDuration: duration });
+        setTimeout(() => set({ cameraFollowDisabled: false }), duration);
+    }
 });

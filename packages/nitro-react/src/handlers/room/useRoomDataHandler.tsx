@@ -5,17 +5,17 @@ import { useRoomContext } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomDataHandler = () => {
-    const [setTradeMode, setIsGuildRoom, setDoorMode, setAllowPets] = useRoomContext(useShallow(x => [x.setTradeMode, x.setIsGuildRoom, x.setDoorMode, x.setAllowPets]));
+    const { setRoomSettings, setIsGuildRoom } = useRoomContext(useShallow(x => ({
+        setRoomSettings: x.setRoomSettings,
+        setIsGuildRoom: x.setIsGuildRoom,
+    })));
 
     useMessageListener(GetGuestRoomResultMessage, data => {
         if (data.roomForward) return;
 
         const roomInfo = data.roomInfo;
 
-        setTradeMode(roomInfo.tradeType);
+        setRoomSettings(roomInfo.doorMode, roomInfo.tradeType, roomInfo.allowPets);
         setIsGuildRoom(roomInfo.groupId !== 0);
-        setDoorMode(roomInfo.doorMode);
-        setAllowPets(roomInfo.allowPets);
-        // moderation settings
     });
 }

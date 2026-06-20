@@ -18,6 +18,8 @@ type State = {
 type Actions = {
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => number | undefined;
     setMouseEventId: (category: RoomObjectCategoryEnum, type: string, eventId: number) => void;
+    setOwnUserId: (userId: number) => void;
+    resetRoomState: () => void;
 }
 
 export type RoomStore = State & Actions & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice;
@@ -39,6 +41,36 @@ export const createRoomStore = (room: IRoom) => createStore<RoomStore>()((set, g
         }
 
         map.set(type, eventId);
+    },
+    setOwnUserId: (userId: number) => set({ ownUserId: userId }),
+    resetRoomState: () => {
+        set(state => {
+            const newState = { ...state };
+            newState.eventIds.clear();
+            return {
+                ...newState,
+                doorMode: 0,
+                tradeMode: 0,
+                controllerLevel: 1,
+                ownRoomIndex: -1,
+                allowPets: false,
+                isGuildRoom: false,
+                isRoomOwner: true,
+                isDecorating: false,
+                isSpectator: false,
+                isPlayingGame: false,
+                targetId: -1,
+                targetCategory: 0,
+                cameraFollowDisabled: false,
+                followDuration: 1000,
+                selectedAvatarId: -1,
+                selectedObjectId: -1,
+                selectedObjectCategory: 0,
+                selectedObject: undefined,
+                placedObject: undefined,
+                objectPlacementSource: 1,
+            };
+        });
     },
     ...createRoomSessionSlice(set, get, store),
     ...createRoomCameraSlice(set, get, store),

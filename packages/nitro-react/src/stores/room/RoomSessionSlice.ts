@@ -25,6 +25,8 @@ type Actions = {
     setIsDecorating: (flag: boolean) => void;
     setIsSpectator: (flag: boolean) => void;
     setIsPlayingGame: (flag: boolean) => void;
+    setPermissions: (controllerLevel: RoomControllerLevelEnum, isRoomOwner: boolean) => void;
+    setRoomSettings: (doorMode: RoomDoorModeEnum, tradeMode: RoomTradeModeEnum, allowPets: boolean) => void;
 };
 
 const initialState: State = {
@@ -42,7 +44,7 @@ const initialState: State = {
 
 export type RoomSessionSlice = State & Actions;
 
-export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], RoomSessionSlice> = (set, get, store) => ({
+export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], RoomSessionSlice> = (set) => ({
     ...initialState,
     setDoorMode: (mode: RoomDoorModeEnum) => set({ doorMode: mode }),
     setTradeMode: (mode: RoomTradeModeEnum) => set({ tradeMode: mode }),
@@ -54,4 +56,6 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
     setIsDecorating: (flag: boolean) => set({ isDecorating: flag }),
     setIsSpectator: (flag: boolean) => set({ isSpectator: flag }),
     setIsPlayingGame: (flag: boolean) => set({ isPlayingGame: flag }),
+    setPermissions: (controllerLevel: RoomControllerLevelEnum, isRoomOwner: boolean) => set({ controllerLevel, isRoomOwner }),
+    setRoomSettings: (doorMode: RoomDoorModeEnum, tradeMode: RoomTradeModeEnum, allowPets: boolean) => set({ doorMode, tradeMode, allowPets }),
 });

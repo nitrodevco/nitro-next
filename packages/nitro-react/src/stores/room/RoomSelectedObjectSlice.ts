@@ -12,12 +12,12 @@ type State = {
 }
 
 type Actions = {
-    getSelectedObject: () => ISelectedRoomObjectData | undefined;
     setSelectedAvatarId: (id: number) => void;
     setSelectedObjectId: (id: number) => void;
-    setSelectedObjectCategory: (id: number) => void;
+    setSelectedObjectCategory: (category: RoomObjectCategoryEnum) => void;
     setSelectedObject: (data: ISelectedRoomObjectData | undefined) => void;
     setPlacedObject: (data: ISelectedRoomObjectData | undefined) => void;
+    setObjectPlacementSource: (source: RoomObjectPlacementSource) => void;
 };
 
 const initialState: State = {
@@ -31,12 +31,12 @@ const initialState: State = {
 
 export type RoomSelectedObjectSlice = State & Actions;
 
-export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set, get, store) => ({
+export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set) => ({
     ...initialState,
-    getSelectedObject: () => get().selectedObject,
     setSelectedAvatarId: (id: number) => set({ selectedAvatarId: id }),
     setSelectedObjectId: (id: number) => set({ selectedObjectId: id }),
-    setSelectedObjectCategory: (id: number) => set({ selectedObjectCategory: id }),
+    setSelectedObjectCategory: (category: RoomObjectCategoryEnum) => set({ selectedObjectCategory: category }),
     setSelectedObject: (data: ISelectedRoomObjectData | undefined) => set({ selectedObject: data }),
     setPlacedObject: (data: ISelectedRoomObjectData | undefined) => set({ placedObject: data }),
+    setObjectPlacementSource: (source: RoomObjectPlacementSource) => set({ objectPlacementSource: source }),
 });

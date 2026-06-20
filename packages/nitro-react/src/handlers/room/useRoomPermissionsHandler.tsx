@@ -6,7 +6,10 @@ import { useRoomContext } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomPermissionsHandler = () => {
-    const [setControllerLevel, setIsRoomOwner] = useRoomContext(useShallow(x => [x.setControllerLevel, x.setIsRoomOwner]));
+    const { setPermissions, setControllerLevel } = useRoomContext(useShallow(x => ({
+        setPermissions: x.setPermissions,
+        setControllerLevel: x.setControllerLevel,
+    })));
 
     useMessageListener(YouAreControllerMessage, data => {
         setControllerLevel(data.controllerLevel);
@@ -17,6 +20,6 @@ export const useRoomPermissionsHandler = () => {
     });
 
     useMessageListener(YouAreOwnerMessage, data => {
-        setIsRoomOwner(true);
+        setPermissions(RoomControllerLevelEnum.Owner, true);
     });
 }

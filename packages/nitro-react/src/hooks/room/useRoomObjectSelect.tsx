@@ -31,7 +31,7 @@ export const useRoomObjectSelect = () => {
                             roomObject.processUpdateMessage(new ObjectSelectedMessage(true));
 
                             setSelectedObjectId(objectId);
-                            setSelectedObjectCategory(category);
+                            setSelectedObjectCategory(category as RoomObjectCategoryEnum);
                         }
                     }
                 }
