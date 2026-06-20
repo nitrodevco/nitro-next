@@ -12,8 +12,7 @@ import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from '
 import { GetPixelRatio } from '#base/utils';
 
 import { useWebSocketContext } from './context';
-import { RoomView } from './RoomView';
-import { useConfigurationStore } from './stores';
+import { MainView } from './MainView';
 import { LoadingScreenView } from './views/LoadingScreenView';
 
 export const Nitro: FC = () => {
@@ -22,16 +21,13 @@ export const Nitro: FC = () => {
     useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
-    const { isConnectionReady, connect } = useWebSocketContext();
-    const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
+    const { isAuthenticated, connect } = useWebSocketContext();
 
     useEffect(() => {
-        if (!socketUrl || !socketUrl.length) return;
+        if (!isEngineReady) return;
 
-        console.log('connecting', socketUrl);
-
-        connect(socketUrl);
-    }, [socketUrl]);
+        connect();
+    }, [isEngineReady]);
 
     useEffect(() => {
         const setup = async (width: number, height: number) => {
@@ -68,7 +64,7 @@ export const Nitro: FC = () => {
         void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
     }, []);
 
-    const isReady = isEngineReady && isLocalizationReady() && isFurnitureDataReady();
+    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady();
 
     return (
         <>
@@ -84,7 +80,7 @@ export const Nitro: FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {isReady && <RoomView roomId={1} />}
+            {isReady && <MainView />}
             <div
                 id="draggable-windows-container"
                 className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden"

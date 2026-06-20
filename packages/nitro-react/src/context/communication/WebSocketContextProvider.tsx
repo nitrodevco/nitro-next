@@ -17,7 +17,7 @@ type ProviderProps = {
 
 export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [isConnectionReady, setIsConnectionReady] = useState<boolean>(false);
+    const [isReady, setIsReady] = useState<boolean>(false);
     const { incomingByHeader, incomingCtors, incomingHeaderByCtor, registerManyIncoming } = useCommunicationIncoming();
     const { outgoingHeaderByComposerName, registerManyOutgoing } = useCommunicationOutgoing();
     const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
@@ -81,7 +81,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
             const wrappers = wsCodec.current.decode(buffer);
 
-            if (isAuthenticated && !isConnectionReady) {
+            if (isAuthenticated && !isReady) {
                 pendingServerMessages.current.push(...wrappers);
 
                 return;
@@ -122,11 +122,17 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const send = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
         if (!packets?.length) return;
 
-        if (isAuthenticated && !isConnectionReady) {
+        if (isAuthenticated && !isReady) {
             pendingClientMessages.current.push(...packets);
 
             return;
         }
+
+        sendRaw(...packets);
+    }
+
+    const sendRaw = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
+        if (!packets?.length) return;
 
         if (!ws.current || ws.current.readyState !== WebSocket.OPEN) return;
 
@@ -185,30 +191,35 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     };
 
     const setReady = () => {
-        if (isConnectionReady) return;
+        if (isReady) return;
 
-        setIsConnectionReady(true);
-
-        processWrappers(...pendingServerMessages.current.slice());
-        send(...pendingClientMessages.current.slice());
+        const pendingClient = pendingClientMessages.current;
+        const pendingServer = pendingServerMessages.current;
 
         pendingServerMessages.current = [];
         pendingClientMessages.current = [];
-    }
 
-    useEffect(() => {
-        return subscribe(AuthenticationOKMessage, data => {
-            setIsAuthenticated(true);
-        });
-    }, []);
+        setIsReady(true);
+
+        processWrappers(...pendingServer);
+        sendRaw(...pendingClient);
+    }
 
     useEffect(() => {
         registerManyIncoming(GetIncomingPackets());
         registerManyOutgoing(GetOutgoingPackets());
     }, []);
 
+    useEffect(() => {
+        if (isAuthenticated) return;
+
+        return subscribe(AuthenticationOKMessage, data => {
+            setIsAuthenticated(true);
+        });
+    }, []);
+
     return (
-        <WebSocketContext.Provider value={{ isAuthenticated, isConnectionReady, connect, send, subscribe, setReady }}>
+        <WebSocketContext.Provider value={{ isAuthenticated, connect, send, subscribe, setReady }}>
             {children}
         </WebSocketContext.Provider>
     );
