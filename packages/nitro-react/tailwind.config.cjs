@@ -1,6 +1,30 @@
-const colors = {};
+const colors = {
+    // Theme system colors - can be overridden via CSS variables
+    windowBg: 'var(--color-windowBg, #e8e8e8)',
+    windowBorder: 'var(--color-windowBorder, #999999)',
+    windowHeader: 'var(--color-windowHeader, #6ba3d0)',
+    primary: 'var(--color-primary, #ffd700)',
+    primaryForeground: 'var(--color-primaryForeground, #1a1a1a)',
+    secondary: 'var(--color-secondary, #4a4a4a)',
+    secondaryForeground: 'var(--color-secondaryForeground, #ffffff)',
+    accent: 'var(--color-accent, #ff6b6b)',
+    accentForeground: 'var(--color-accentForeground, #ffffff)',
+    buttonPrimary: 'var(--color-buttonPrimary, #ffec8e)',
+    buttonPrimaryHover: 'var(--color-buttonPrimaryHover, #ffe082)',
+    buttonPrimaryActive: 'var(--color-buttonPrimaryActive, #fdd835)',
+    buttonSecondary: 'var(--color-buttonSecondary, #d4d4d4)',
+    buttonSecondaryHover: 'var(--color-buttonSecondaryHover, #cacaca)',
+    buttonSecondaryActive: 'var(--color-buttonSecondaryActive, #b0b0b0)',
+    destructive: 'var(--color-destructive, #ff6b6b)',
+    destructiveForeground: 'var(--color-destructiveForeground, #ffffff)',
+};
 
-const boxShadow = {};
+const boxShadow = {
+    window: 'var(--shadow-window, 0 8px 16px rgba(0, 0, 0, 0.25))',
+    sm: 'var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.1))',
+    md: 'var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.15))',
+    lg: 'var(--shadow-lg, 0 10px 15px rgba(0, 0, 0, 0.2))',
+};
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

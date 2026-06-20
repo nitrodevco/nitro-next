@@ -14,6 +14,7 @@ import { GetPixelRatio } from '#base/utils';
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/LoadingScreenView';
+import { ThemeProvider } from './theme';
 
 export const Nitro: FC = () => {
     const [isEngineReady, setIsEngineReady] = useState(false);
@@ -67,7 +68,7 @@ export const Nitro: FC = () => {
     const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady();
 
     return (
-        <>
+        <ThemeProvider>
             <AnimatePresence>
                 {!isReady && (
                     <motion.div
@@ -85,6 +86,6 @@ export const Nitro: FC = () => {
                 id="draggable-windows-container"
                 className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden"
             />
-        </>
+        </ThemeProvider>
     );
 };
