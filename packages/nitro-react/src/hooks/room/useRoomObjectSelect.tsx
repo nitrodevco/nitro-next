@@ -1,18 +1,16 @@
 
+import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
 import { NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
-import { useShallow } from 'zustand/shallow';
 
-import { useRoomContext } from '#base/context';
-import { useRoomIsPlayingGame, useRoomSelectedObjectDetails, useRoomSelector } from '#base/selectors';
+import { useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomSelectedObjectDetails, useRoomSelector } from '#base/context';
 
 export const useRoomObjectSelect = () => {
     const room = useRoomSelector();
     const isPlayingGame = useRoomIsPlayingGame();
     const { selectedAvatarId, selectedObjectId, selectedObjectCategory } = useRoomSelectedObjectDetails();
-
-    const [getSelectedObject, setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject] = useRoomContext(useShallow(x => [x.getSelectedObject, x.setSelectedAvatarId, x.setSelectedObjectId, x.setSelectedObjectCategory, x.setSelectedObject]));
+    const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         switch (category) {
@@ -88,9 +86,7 @@ export const useRoomObjectSelect = () => {
         setSelectedObjectCategory(RoomObjectCategoryEnum.Minimum);
     };
 
-    const resetSelectedObject = () => {
-        const selectedObject = getSelectedObject();
-
+    const resetSelectedObject = (selectedObject: ISelectedRoomObjectData | undefined) => {
         if (!selectedObject) return;
 
         room.removeRoomOverlayIconSprite();

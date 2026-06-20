@@ -4,4 +4,4 @@ export * from './room/useRoomHandlers';
 export * from './room/useRoomPermissionsHandler';
 export * from './room/useRoomPetPackageHandler';
 export * from './room/useRoomPollHandler';
-export * from './useSessionHandler';
+export * from './user/useUserInfoHandler';

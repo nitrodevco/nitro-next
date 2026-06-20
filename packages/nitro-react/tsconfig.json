@@ -10,11 +10,11 @@
             "#base/context": [
                 "./src/context/index.ts"
             ],
+            "#base/handlers": [
+                "./src/handlers/index.ts"
+            ],
             "#base/hooks": [
                 "./src/hooks/index.ts"
-            ],
-            "#base/selectors": [
-                "./src/selectors/index.ts"
             ],
             "#base/stores": [
                 "./src/stores/index.ts"

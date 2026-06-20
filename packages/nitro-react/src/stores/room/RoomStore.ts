@@ -16,6 +16,7 @@ type State = {
 }
 
 type Actions = {
+    setOwnUserId: (ownUserId: number) => void;
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => number | undefined;
     setMouseEventId: (category: RoomObjectCategoryEnum, type: string, eventId: number) => void;
 }
@@ -27,6 +28,7 @@ export const createRoomStore = (room: IRoom) => createStore<RoomStore>()((set, g
     room: room,
     ownUserId: -1,
     eventIds: new Map(),
+    setOwnUserId: (ownUserId: number) => set({ ownUserId }),
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => {
         return get().eventIds.get(category)?.get(type);
     },

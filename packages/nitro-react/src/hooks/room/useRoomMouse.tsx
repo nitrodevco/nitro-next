@@ -3,7 +3,7 @@ import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-r
 import { RoomDragEvent, RoomDraggedEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
 
-import { useRoomInteractionSelector, useRoomPermissionsSelector, useRoomSelector } from "#base/selectors";
+import { useRoomInteractionSelector, useRoomPermissionsSelector, useRoomSelector } from "#base/context";
 
 const DRAG_THRESHOLD: number = 15;
 

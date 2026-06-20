@@ -3,10 +3,8 @@ import { NitroLogger, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObj
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
-import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "#base/context";
-import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelector } from "#base/selectors";
+import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector } from "#base/context";
 
 import { useRoomObjectMove } from "./useRoomObjectMove";
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
@@ -16,11 +14,7 @@ export const useRoomObjectPlace = () => {
     const room = useRoomSelector();
     const selectedObject = useRoomSelectedObject();
     const objectPlacementSource = useRoomObjectPlacementSource();
-
-
-    const [setPlacedObject, setSelectedObject] = useRoomContext(useShallow(x => [x.setPlacedObject, x.setSelectedObject]));
-
-
+    const { setSelectedObject, setPlacedObject } = useRoomSelectedObjectActions();
     const { setFurnitureAlphaMultiplier } = useRoomObjectValidation();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
@@ -74,7 +68,7 @@ export const useRoomObjectPlace = () => {
 
         setPlacedObject(new SelectedRoomObjectData(selectedObject.objectId, selectedObject.category));
 
-        resetSelectedObject();
+        resetSelectedObject(selectedObject);
 
         room.dispatchEvent(
             new RoomEngineObjectPlacedEvent(

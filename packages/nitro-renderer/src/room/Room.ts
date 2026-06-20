@@ -33,8 +33,7 @@ import {
 import {
     EventDispatcher,
     GetConfigValue,
-    RoomEngineObjectEvent,
-    SessionStore
+    RoomEngineObjectEvent
 } from '@nitrodevco/nitro-shared';
 import type { ImageLike, Rectangle } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
@@ -776,8 +775,8 @@ export class Room implements IRoom {
         return true;
     }
 
-    public removeRoomObjectFloor(objectId: number, userId: number = -1, _arg_4: boolean = false): void {
-        if (SessionStore.getState().userId === userId && !FurniId.isBuilderClubId(objectId)) {
+    public removeRoomObjectFloor(objectId: number, isOwner: boolean = false, _arg_4: boolean = false): void {
+        if (isOwner && !FurniId.isBuilderClubId(objectId)) {
             const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
 
             if (roomObject) {
@@ -822,8 +821,8 @@ export class Room implements IRoom {
             );
     }
 
-    public removeRoomObjectWall(objectId: number, userId: number = -1): void {
-        if (SessionStore.getState().userId === userId && !FurniId.isBuilderClubId(objectId)) {
+    public removeRoomObjectWall(objectId: number, isOwner: boolean = false): void {
+        if (isOwner && !FurniId.isBuilderClubId(objectId)) {
             const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
             if (

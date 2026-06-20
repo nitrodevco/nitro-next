@@ -1,13 +1,12 @@
 import { ChangeUserNameResultMessageCode } from "@nitrodevco/nitro-api";
 import { ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-shared";
-import { useShallow } from "zustand/shallow";
 
-import { useSessionStore } from "#base/stores";
+import { useOwnUserId, useUserInfoActions } from "#base/context";
+import { useMessageListener } from "#base/hooks";
 
-import { useMessageListener } from "../hooks/events";
-
-export const useSessionHandler = () => {
-    const [userId, setUserInfo, setName, setFigure, setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setEmailVerified] = useSessionStore(useShallow(x => [x.userId, x.setUserInfo, x.setName, x.setFigure, x.setRights, x.setNoobnessLevel, x.increasePetRespects, x.decreasePetRespects, x.setEmailVerified]));
+export const useUserInfoHandler = () => {
+    const userId = useOwnUserId();
+    const { setUserInfo, setName, setFigure, setEmailVerified, setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects } = useUserInfoActions();
 
     useMessageListener(FigureUpdateEventMessage, data => {
         setFigure(data.figure, data.gender);

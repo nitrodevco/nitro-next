@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useWebSocketContext } from "./context";
-import { useSessionHandler } from "./handlers";
+import { useUserInfoHandler } from "./handlers";
 import { HotelView } from "./views/hotel-view/HotelView";
 import { RoomView } from "./views/room/RoomView";
 
@@ -13,7 +13,7 @@ export const MainView = () => {
     const [landingViewVisible, setLandingViewVisible] = useState(true);
     const { setReady, send } = useWebSocketContext();
 
-    useSessionHandler();
+    useUserInfoHandler();
 
     useEffect(() => {
         if (!isReady) return;

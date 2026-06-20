@@ -1,7 +1,7 @@
 import { RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
 import { YouAreControllerMessage, YouAreNotControllerMessage, YouAreOwnerMessage } from "@nitrodevco/nitro-shared";
 
-import { useRoomPermissionActions } from "#base/actions";
+import { useRoomPermissionActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomPermissionsHandler = () => {

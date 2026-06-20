@@ -2,22 +2,18 @@ import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { NitroLogger, RoomControllerLevelEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
-import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "#base/context";
-import { useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelector } from "#base/selectors";
+import { useOwnUserId, useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector } from "#base/context";
 
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
 export const useRoomObjectModify = () => {
     const room = useRoomSelector();
-    const [ownUserId, setSelectedObject] = useRoomContext(useShallow(x => [x.ownUserId, x.setSelectedObject]));
-
-    const { controllerLevel, isRoomOwner } = useRoomPermissionsSelector();
+    const ownUserId = useOwnUserId();
     const selectedObject = useRoomSelectedObject();
-
-
+    const { controllerLevel, isRoomOwner } = useRoomPermissionsSelector();
+    const { setSelectedObject } = useRoomSelectedObjectActions();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { setFurnitureAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 
@@ -31,6 +27,8 @@ export const useRoomObjectModify = () => {
         if (!roomObject) return false;
 
         let shouldReset = true;
+
+        let selectedObjectData = selectedObject;
 
         switch (operation) {
             case RoomObjectOperationType.OBJECT_ROTATE_POSITIVE:
@@ -83,6 +81,14 @@ export const useRoomObjectModify = () => {
                 shouldReset = false;
                 setFurnitureAlphaMultiplier(roomObject, 0.5);
 
+                selectedObjectData = new SelectedRoomObjectData(
+                    roomObject.id,
+                    category,
+                    operation,
+                    roomObject.getLocation(),
+                    roomObject.getDirection(),
+                );
+
                 setSelectedObject(new SelectedRoomObjectData(
                     roomObject.id,
                     category,
@@ -99,15 +105,13 @@ export const useRoomObjectModify = () => {
 
                 break;
             case RoomObjectOperationType.OBJECT_MOVE_TO: {
-                if (selectedObject) {
-                    setSelectedObject(new SelectedRoomObjectData(
-                        selectedObject.objectId,
-                        selectedObject.category,
-                        RoomObjectOperationType.OBJECT_MOVE_TO,
-                        roomObject.getLocation(),
-                        roomObject.getDirection(),
-                    ));
-                }
+                if (selectedObject) selectedObjectData = new SelectedRoomObjectData(
+                    selectedObject.objectId,
+                    selectedObject.category,
+                    RoomObjectOperationType.OBJECT_MOVE_TO,
+                    roomObject.getLocation(),
+                    roomObject.getDirection(),
+                );
 
                 setFurnitureAlphaMultiplier(roomObject, 1);
 
@@ -139,7 +143,9 @@ export const useRoomObjectModify = () => {
             }
         }
 
-        if (shouldReset) resetSelectedObject();
+        if (selectedObjectData !== selectedObject) setSelectedObject(selectedObjectData)
+
+        if (shouldReset) resetSelectedObject(selectedObjectData);
 
         return true;
     };

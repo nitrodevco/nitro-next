@@ -3,7 +3,7 @@ import { RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector } from "#base/selectors";
+import { useRoomSelector } from "#base/context";
 
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 

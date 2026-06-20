@@ -3,7 +3,7 @@ import { ObjectTileCursorUpdateMessage } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { RoomObjectTileMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector } from "#base/selectors";
+import { useRoomSelector } from "#base/context";
 
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 

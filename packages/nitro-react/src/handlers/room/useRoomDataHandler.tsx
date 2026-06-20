@@ -1,6 +1,6 @@
 import { GetGuestRoomResultMessage } from "@nitrodevco/nitro-shared";
 
-import { useRoomSettingActions } from "#base/actions";
+import { useRoomSettingActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomDataHandler = () => {

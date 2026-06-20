@@ -1,7 +1,7 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper, NoobnessLevelEnum } from '@nitrodevco/nitro-api';
 
 export type NoobnessLevelMessageType = {
-    noobnessLevel: number;
+    noobnessLevel: NoobnessLevelEnum;
 };
 
 export class NoobnessLevelMessage implements IIncomingPacket<NoobnessLevelMessageType> {

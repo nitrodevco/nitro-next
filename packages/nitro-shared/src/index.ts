@@ -1058,8 +1058,6 @@ export * from './stores/ConfigurationStore';
 export * from './stores/FurnitureData';
 export * from './stores/FurnitureDataStore';
 export * from './stores/LocalizationStore';
-export * from './stores/SessionStore';
-export * from './stores/UserInfoSlice';
 export * from './utils/AdvancedMap';
 export * from './utils/ArrayBufferToBase64';
 export * from './utils/BinaryReader';

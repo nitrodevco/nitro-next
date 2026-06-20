@@ -2,7 +2,7 @@ import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVect
 import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector } from "#base/selectors";
+import { useRoomSelector } from "#base/context";
 import { useFurnitureDataStore } from "#base/stores";
 
 export const useRoomObjectValidation = () => {

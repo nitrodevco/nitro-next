@@ -1,5 +1,6 @@
 export * from './enum/ChangeUserNameResultMessageCode';
 export * from './enum/FurnitureType';
+export * from './enum/NoobnessLevelEnum';
 export * from './enum/RoomControllerLevelEnum';
 export * from './enum/RoomDoorModeEnum';
 export * from './enum/RoomTradeModeEnum';

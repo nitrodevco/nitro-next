@@ -1,4 +1,7 @@
+export * from './actions/RoomActions';
+export * from './actions/RoomMouseEventActions';
 export * from './actions/RoomPermissionActions';
+export * from './actions/RoomSelectedObjectActions';
 export * from './actions/RoomSettingActions';
 export * from './RoomCameraSlice';
 export * from './RoomSelectedObjectSlice';
