@@ -1,3 +1,4 @@
+export * from './room/actions/RoomSessionActions';
 export * from './room/RoomCameraSlice';
 export * from './room/RoomSelectedObjectSlice';
 export * from './room/RoomSessionSlice';

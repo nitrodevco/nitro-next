@@ -1,12 +1,11 @@
 import { RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
 import { YouAreControllerMessage, YouAreNotControllerMessage, YouAreOwnerMessage } from "@nitrodevco/nitro-shared";
-import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "#base/context";
+import { useRoomPermissionActions } from "#base/actions";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomPermissionsHandler = () => {
-    const [setControllerLevel, setIsRoomOwner] = useRoomContext(useShallow(x => [x.setControllerLevel, x.setIsRoomOwner]));
+    const { setControllerLevel, setIsRoomOwner } = useRoomPermissionActions();
 
     useMessageListener(YouAreControllerMessage, data => {
         setControllerLevel(data.controllerLevel);
