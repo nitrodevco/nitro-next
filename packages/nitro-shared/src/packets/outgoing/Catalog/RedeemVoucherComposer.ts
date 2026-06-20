@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type RedeemVoucherComposerType = {
-  code: string;
+    code: string;
 };
 
-export class RedeemVoucherComposer implements IOutgoingPacket<RedeemVoucherComposerType>
-{
-  public constructor(private params: RedeemVoucherComposerType) { }
+export class RedeemVoucherComposer implements IOutgoingPacket<RedeemVoucherComposerType> {
+    public constructor(private params: RedeemVoucherComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.code,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.code,
+        ];
+    }
 }

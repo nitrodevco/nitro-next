@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ForwardToARandomPromotedRoomComposerType = {
-  category: string;
+    category: string;
 };
 
-export class ForwardToARandomPromotedRoomComposer implements IOutgoingPacket<ForwardToARandomPromotedRoomComposerType>
-{
-  public constructor(private params: ForwardToARandomPromotedRoomComposerType) { }
+export class ForwardToARandomPromotedRoomComposer implements IOutgoingPacket<ForwardToARandomPromotedRoomComposerType> {
+    public constructor(private params: ForwardToARandomPromotedRoomComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.category,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.category,
+        ];
+    }
 }

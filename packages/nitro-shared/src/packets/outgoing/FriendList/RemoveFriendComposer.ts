@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type RemoveFriendComposerType = {
-  friendIds: number[];
+    friendIds: number[];
 };
 
-export class RemoveFriendComposer implements IOutgoingPacket<RemoveFriendComposerType>
-{
-  public constructor(private params: RemoveFriendComposerType) { }
+export class RemoveFriendComposer implements IOutgoingPacket<RemoveFriendComposerType> {
+    public constructor(private params: RemoveFriendComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.friendIds,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.friendIds,
+        ];
+    }
 }

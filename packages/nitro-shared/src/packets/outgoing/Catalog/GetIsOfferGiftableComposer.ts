@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetIsOfferGiftableComposerType = {
-  offerId: number;
+    offerId: number;
 };
 
-export class GetIsOfferGiftableComposer implements IOutgoingPacket<GetIsOfferGiftableComposerType>
-{
-  public constructor(private params: GetIsOfferGiftableComposerType) { }
+export class GetIsOfferGiftableComposer implements IOutgoingPacket<GetIsOfferGiftableComposerType> {
+    public constructor(private params: GetIsOfferGiftableComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.offerId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.offerId,
+        ];
+    }
 }

@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ApplySnapshotComposerType = {
-  id: number;
+    id: number;
 };
 
-export class ApplySnapshotComposer implements IOutgoingPacket<ApplySnapshotComposerType>
-{
-  public constructor(private params: ApplySnapshotComposerType) { }
+export class ApplySnapshotComposer implements IOutgoingPacket<ApplySnapshotComposerType> {
+    public constructor(private params: ApplySnapshotComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.id,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.id,
+        ];
+    }
 }

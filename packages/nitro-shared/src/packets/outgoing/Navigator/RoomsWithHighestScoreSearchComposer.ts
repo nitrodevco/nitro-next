@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type RoomsWithHighestScoreSearchComposerType = {
-  adIndex: number;
+    adIndex: number;
 };
 
-export class RoomsWithHighestScoreSearchComposer implements IOutgoingPacket<RoomsWithHighestScoreSearchComposerType>
-{
-  public constructor(private params: RoomsWithHighestScoreSearchComposerType) { }
+export class RoomsWithHighestScoreSearchComposer implements IOutgoingPacket<RoomsWithHighestScoreSearchComposerType> {
+    public constructor(private params: RoomsWithHighestScoreSearchComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.adIndex,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.adIndex,
+        ];
+    }
 }

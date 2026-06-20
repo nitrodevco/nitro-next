@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetFlatControllersComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class GetFlatControllersComposer implements IOutgoingPacket<GetFlatControllersComposerType>
-{
-  public constructor(private params: GetFlatControllersComposerType) { }
+export class GetFlatControllersComposer implements IOutgoingPacket<GetFlatControllersComposerType> {
+    public constructor(private params: GetFlatControllersComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

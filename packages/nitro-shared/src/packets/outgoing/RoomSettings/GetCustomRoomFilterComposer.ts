@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetCustomRoomFilterComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class GetCustomRoomFilterComposer implements IOutgoingPacket<GetCustomRoomFilterComposerType>
-{
-  public constructor(private params: GetCustomRoomFilterComposerType) { }
+export class GetCustomRoomFilterComposer implements IOutgoingPacket<GetCustomRoomFilterComposerType> {
+    public constructor(private params: GetCustomRoomFilterComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

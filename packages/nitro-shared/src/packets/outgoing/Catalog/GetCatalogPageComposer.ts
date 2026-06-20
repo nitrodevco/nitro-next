@@ -1,21 +1,19 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetCatalogPageComposerType = {
-  pageId: number;
-  offerId: number;
-  catalogType: CatalogType;
+    pageId: number;
+    offerId: number;
+    catalogType: CatalogType;
 };
 
-export class GetCatalogPageComposer implements IOutgoingPacket<GetCatalogPageComposerType>
-{
-  public constructor(private params: GetCatalogPageComposerType) { }
+export class GetCatalogPageComposer implements IOutgoingPacket<GetCatalogPageComposerType> {
+    public constructor(private params: GetCatalogPageComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.pageId,
-      this.params.offerId,
-      this.params.catalogType,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.pageId,
+            this.params.offerId,
+            this.params.catalogType,
+        ];
+    }
 }

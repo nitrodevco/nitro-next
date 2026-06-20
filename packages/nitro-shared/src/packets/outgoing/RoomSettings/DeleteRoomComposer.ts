@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type DeleteRoomComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class DeleteRoomComposer implements IOutgoingPacket<DeleteRoomComposerType>
-{
-  public constructor(private params: DeleteRoomComposerType) { }
+export class DeleteRoomComposer implements IOutgoingPacket<DeleteRoomComposerType> {
+    public constructor(private params: DeleteRoomComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

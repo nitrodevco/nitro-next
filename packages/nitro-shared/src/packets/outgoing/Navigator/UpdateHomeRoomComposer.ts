@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type UpdateHomeRoomComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class UpdateHomeRoomComposer implements IOutgoingPacket<UpdateHomeRoomComposerType>
-{
-  public constructor(private params: UpdateHomeRoomComposerType) { }
+export class UpdateHomeRoomComposer implements IOutgoingPacket<UpdateHomeRoomComposerType> {
+    public constructor(private params: UpdateHomeRoomComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

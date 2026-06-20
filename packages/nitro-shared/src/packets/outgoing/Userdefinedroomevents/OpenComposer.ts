@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type OpenComposerType = {
-  id: number;
+    id: number;
 };
 
-export class OpenComposer implements IOutgoingPacket<OpenComposerType>
-{
-  public constructor(private params: OpenComposerType) { }
+export class OpenComposer implements IOutgoingPacket<OpenComposerType> {
+    public constructor(private params: OpenComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.id,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.id,
+        ];
+    }
 }

@@ -1,19 +1,17 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type MoveAvatarComposerType = {
-  targetX: number;
-  targetY: number;
+    targetX: number;
+    targetY: number;
 };
 
-export class MoveAvatarComposer implements IOutgoingPacket<MoveAvatarComposerType>
-{
-  public constructor(private params: MoveAvatarComposerType) { }
+export class MoveAvatarComposer implements IOutgoingPacket<MoveAvatarComposerType> {
+    public constructor(private params: MoveAvatarComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.targetX,
-      this.params.targetY,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.targetX,
+            this.params.targetY,
+        ];
+    }
 }

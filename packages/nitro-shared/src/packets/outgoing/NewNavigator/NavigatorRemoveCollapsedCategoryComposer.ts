@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type NavigatorRemoveCollapsedCategoryComposerType = {
-  categoryName: string;
+    categoryName: string;
 };
 
-export class NavigatorRemoveCollapsedCategoryComposer implements IOutgoingPacket<NavigatorRemoveCollapsedCategoryComposerType>
-{
-  public constructor(private params: NavigatorRemoveCollapsedCategoryComposerType) { }
+export class NavigatorRemoveCollapsedCategoryComposer implements IOutgoingPacket<NavigatorRemoveCollapsedCategoryComposerType> {
+    public constructor(private params: NavigatorRemoveCollapsedCategoryComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.categoryName,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.categoryName,
+        ];
+    }
 }

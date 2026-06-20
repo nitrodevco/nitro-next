@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type LagWarningReportComposerType = {
-  warningCount: number;
+    warningCount: number;
 };
 
-export class LagWarningReportComposer implements IOutgoingPacket<LagWarningReportComposerType>
-{
-  public constructor(private params: LagWarningReportComposerType) { }
+export class LagWarningReportComposer implements IOutgoingPacket<LagWarningReportComposerType> {
+    public constructor(private params: LagWarningReportComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.warningCount,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.warningCount,
+        ];
+    }
 }

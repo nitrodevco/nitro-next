@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type AcceptFriendComposerType = {
-  friends: number[];
+    friends: number[];
 };
 
-export class AcceptFriendComposer implements IOutgoingPacket<AcceptFriendComposerType>
-{
-  public constructor(private params: AcceptFriendComposerType) { }
+export class AcceptFriendComposer implements IOutgoingPacket<AcceptFriendComposerType> {
+    public constructor(private params: AcceptFriendComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.friends,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.friends,
+        ];
+    }
 }

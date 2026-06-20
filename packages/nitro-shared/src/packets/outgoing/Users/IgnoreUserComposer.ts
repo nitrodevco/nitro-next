@@ -5,9 +5,9 @@ export type IgnoreUserComposerType = {
 };
 
 export class IgnoreUserComposer implements IOutgoingPacket<IgnoreUserComposerType> {
-    public constructor(private params: IgnoreUserComposerType) {}
+    public constructor(private params: IgnoreUserComposerType) { }
 
-    public compose(): any[] {
+    public compose(): (number | string)[] {
         return [this.params.userId];
     }
 }

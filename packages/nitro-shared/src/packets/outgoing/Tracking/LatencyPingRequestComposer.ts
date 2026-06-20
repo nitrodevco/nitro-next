@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type LatencyPingRequestComposerType = {
-  requestId: number;
+    requestId: number;
 };
 
-export class LatencyPingRequestComposer implements IOutgoingPacket<LatencyPingRequestComposerType>
-{
-  public constructor(private params: LatencyPingRequestComposerType) { }
+export class LatencyPingRequestComposer implements IOutgoingPacket<LatencyPingRequestComposerType> {
+    public constructor(private params: LatencyPingRequestComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.requestId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.requestId,
+        ];
+    }
 }

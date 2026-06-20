@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type PurchaseBasicMembershipExtensionComposerType = {
-  offerId: number;
+    offerId: number;
 };
 
-export class PurchaseBasicMembershipExtensionComposer implements IOutgoingPacket<PurchaseBasicMembershipExtensionComposerType>
-{
-  public constructor(private params: PurchaseBasicMembershipExtensionComposerType) { }
+export class PurchaseBasicMembershipExtensionComposer implements IOutgoingPacket<PurchaseBasicMembershipExtensionComposerType> {
+    public constructor(private params: PurchaseBasicMembershipExtensionComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.offerId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.offerId,
+        ];
+    }
 }

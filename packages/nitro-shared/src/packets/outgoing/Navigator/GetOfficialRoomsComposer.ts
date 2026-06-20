@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetOfficialRoomsComposerType = {
-  adIndex: number;
+    adIndex: number;
 };
 
-export class GetOfficialRoomsComposer implements IOutgoingPacket<GetOfficialRoomsComposerType>
-{
-  public constructor(private params: GetOfficialRoomsComposerType) { }
+export class GetOfficialRoomsComposer implements IOutgoingPacket<GetOfficialRoomsComposerType> {
+    public constructor(private params: GetOfficialRoomsComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.adIndex,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.adIndex,
+        ];
+    }
 }

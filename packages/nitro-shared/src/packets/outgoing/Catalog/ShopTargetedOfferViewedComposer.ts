@@ -1,19 +1,17 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ShopTargetedOfferViewedComposerType = {
-  targetedOfferId: number;
-  trackingState: number;
+    targetedOfferId: number;
+    trackingState: number;
 };
 
-export class ShopTargetedOfferViewedComposer implements IOutgoingPacket<ShopTargetedOfferViewedComposerType>
-{
-  public constructor(private params: ShopTargetedOfferViewedComposerType) { }
+export class ShopTargetedOfferViewedComposer implements IOutgoingPacket<ShopTargetedOfferViewedComposerType> {
+    public constructor(private params: ShopTargetedOfferViewedComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.targetedOfferId,
-      this.params.trackingState,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.targetedOfferId,
+            this.params.trackingState,
+        ];
+    }
 }

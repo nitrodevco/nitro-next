@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GuildBaseSearchComposerType = {
-  unknown: number;
+    unknown: number;
 };
 
-export class GuildBaseSearchComposer implements IOutgoingPacket<GuildBaseSearchComposerType>
-{
-  public constructor(private params: GuildBaseSearchComposerType) { }
+export class GuildBaseSearchComposer implements IOutgoingPacket<GuildBaseSearchComposerType> {
+    public constructor(private params: GuildBaseSearchComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.unknown,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.unknown,
+        ];
+    }
 }

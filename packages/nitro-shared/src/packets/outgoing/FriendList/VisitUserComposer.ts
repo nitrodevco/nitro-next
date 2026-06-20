@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type VisitUserComposerType = {
-  playerName: string;
+    playerName: string;
 };
 
-export class VisitUserComposer implements IOutgoingPacket<VisitUserComposerType>
-{
-  public constructor(private params: VisitUserComposerType) { }
+export class VisitUserComposer implements IOutgoingPacket<VisitUserComposerType> {
+    public constructor(private params: VisitUserComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.playerName,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.playerName,
+        ];
+    }
 }

@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetBannedUsersFromRoomComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class GetBannedUsersFromRoomComposer implements IOutgoingPacket<GetBannedUsersFromRoomComposerType>
-{
-  public constructor(private params: GetBannedUsersFromRoomComposerType) { }
+export class GetBannedUsersFromRoomComposer implements IOutgoingPacket<GetBannedUsersFromRoomComposerType> {
+    public constructor(private params: GetBannedUsersFromRoomComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

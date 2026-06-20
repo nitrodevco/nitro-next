@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type AddFavouriteRoomComposerType = {
-  roomId: RoomId;
+    roomId: RoomId;
 };
 
-export class AddFavouriteRoomComposer implements IOutgoingPacket<AddFavouriteRoomComposerType>
-{
-  public constructor(private params: AddFavouriteRoomComposerType) { }
+export class AddFavouriteRoomComposer implements IOutgoingPacket<AddFavouriteRoomComposerType> {
+    public constructor(private params: AddFavouriteRoomComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.roomId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.roomId,
+        ];
+    }
 }

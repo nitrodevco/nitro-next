@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type PlaceObjectComposerType = {
-  data: string;
+    data: string;
 };
 
-export class PlaceObjectComposer implements IOutgoingPacket<PlaceObjectComposerType>
-{
-  public constructor(private params: PlaceObjectComposerType) { }
+export class PlaceObjectComposer implements IOutgoingPacket<PlaceObjectComposerType> {
+    public constructor(private params: PlaceObjectComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.data,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.data,
+        ];
+    }
 }

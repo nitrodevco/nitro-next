@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetSellablePetPalettesComposerType = {
-  localizationId: number;
+    localizationId: number;
 };
 
-export class GetSellablePetPalettesComposer implements IOutgoingPacket<GetSellablePetPalettesComposerType>
-{
-  public constructor(private params: GetSellablePetPalettesComposerType) { }
+export class GetSellablePetPalettesComposer implements IOutgoingPacket<GetSellablePetPalettesComposerType> {
+    public constructor(private params: GetSellablePetPalettesComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.localizationId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.localizationId,
+        ];
+    }
 }

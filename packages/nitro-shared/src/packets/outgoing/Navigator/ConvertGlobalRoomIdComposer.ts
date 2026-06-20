@@ -1,17 +1,15 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ConvertGlobalRoomIdComposerType = {
-  flatId: string;
+    flatId: string;
 };
 
-export class ConvertGlobalRoomIdComposer implements IOutgoingPacket<ConvertGlobalRoomIdComposerType>
-{
-  public constructor(private params: ConvertGlobalRoomIdComposerType) { }
+export class ConvertGlobalRoomIdComposer implements IOutgoingPacket<ConvertGlobalRoomIdComposerType> {
+    public constructor(private params: ConvertGlobalRoomIdComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.flatId,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.flatId,
+        ];
+    }
 }

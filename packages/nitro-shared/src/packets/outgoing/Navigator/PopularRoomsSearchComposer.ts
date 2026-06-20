@@ -1,19 +1,17 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type PopularRoomsSearchComposerType = {
-  query: string;
-  adIndex: number;
+    query: string;
+    adIndex: number;
 };
 
-export class PopularRoomsSearchComposer implements IOutgoingPacket<PopularRoomsSearchComposerType>
-{
-  public constructor(private params: PopularRoomsSearchComposerType) { }
+export class PopularRoomsSearchComposer implements IOutgoingPacket<PopularRoomsSearchComposerType> {
+    public constructor(private params: PopularRoomsSearchComposerType) { }
 
-  public compose(): any[]
-  {
-    return [
-      this.params.query,
-      this.params.adIndex,
-    ];
-  }
+    public compose(): (number | string)[] {
+        return [
+            this.params.query,
+            this.params.adIndex,
+        ];
+    }
 }
