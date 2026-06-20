@@ -10,3 +10,4 @@ export * from './useRoomObjectMove';
 export * from './useRoomObjectPlace';
 export * from './useRoomObjectSelect';
 export * from './useRoomObjectValidation';
+export * from './useRoomStoreActions';

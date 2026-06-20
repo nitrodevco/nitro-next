@@ -3,6 +3,7 @@ export * from './room/RoomSelectedObjectSlice';
 export * from './room/RoomSessionSlice';
 export * from './room/RoomStore';
 export * from './room/createRoomSelectors';
+export * from './room/selectorComposites';
 export * from './useConfigurationStore';
 export * from './useFurnitureDataStore';
 export * from './useLocalizationStore';
