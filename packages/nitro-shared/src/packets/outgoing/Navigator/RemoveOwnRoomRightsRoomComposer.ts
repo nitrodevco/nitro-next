@@ -1,7 +1,7 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type RemoveOwnRoomRightsRoomComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class RemoveOwnRoomRightsRoomComposer implements IOutgoingPacket<RemoveOwnRoomRightsRoomComposerType> {

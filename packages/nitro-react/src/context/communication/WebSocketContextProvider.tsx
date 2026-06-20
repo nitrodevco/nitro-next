@@ -1,8 +1,8 @@
 
-import type { ICodec, IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
+import type { IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetTickerTime } from '@nitrodevco/nitro-renderer';
-import { AuthenticationOKMessage, ClientHelloComposer, EvaWireFormat, GetIncomingPackets, GetOutgoingPackets, SSOTicketComposer } from '@nitrodevco/nitro-shared';
+import { AuthenticationOKMessage, BinaryReader, BinaryWriter, Byte, ClientHelloComposer, EvaWireDataWrapper, GetIncomingPackets, GetOutgoingPackets, Short, SSOTicketComposer } from '@nitrodevco/nitro-shared';
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -24,7 +24,6 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const production = useConfigurationStore(x => x.config['production.version'] as string) ?? undefined;
     const ws = useRef<WebSocket | undefined>(undefined);
     const wsBuffer = useRef<ArrayBuffer>(new ArrayBuffer(0));
-    const wsCodec = useRef<ICodec>(new EvaWireFormat());
     const listeners = useRef<Map<IncomingPacketConstructor<object>, Array<(data: object) => void>>>(new Map());
     const pendingClientMessages = useRef<IOutgoingPacket<object>[]>([]);
     const pendingServerMessages = useRef<IMessageDataWrapper[]>([]);
@@ -74,18 +73,18 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
                 wsBuffer.current = array.buffer;
 
-                processBuffer(wsBuffer.current);
+                processBuffer();
             }
         } catch (err) {
             NitroLogger.error(err);
         }
     }
 
-    const processBuffer = (buffer: ArrayBuffer) => {
+    const processBuffer = () => {
         try {
-            if (buffer.byteLength === 0) return;
+            if (wsBuffer.current.byteLength === 0) return;
 
-            const wrappers = wsCodec.current.decode(buffer);
+            const wrappers = decodeWrappers();
 
             if (isAuthenticated && !isReady) {
                 pendingServerMessages.current.push(...wrappers);
@@ -97,6 +96,79 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         } catch (err) {
             NitroLogger.error(err);
         }
+    }
+
+    const encode = (header: number, messages: (number | string | Byte | Short | ArrayBuffer)[]) => {
+        const writer = new BinaryWriter();
+
+        writer.writeShort(header);
+
+        for (const value of messages) {
+            let type: string = typeof value;
+
+            if (type === 'object') {
+                if (value === null) type = 'null';
+                else if (value instanceof Byte) type = 'byte';
+                else if (value instanceof Short) type = 'short';
+                else if (value instanceof ArrayBuffer) type = 'arraybuffer';
+            }
+
+            switch (type) {
+                case 'undefined':
+                case 'null':
+                    writer.writeShort(0);
+                    break;
+                case 'byte':
+                    writer.writeByte((value as Byte).value);
+                    break;
+                case 'short':
+                    writer.writeShort((value as Short).value);
+                    break;
+                case 'number':
+                    writer.writeInt(value as number);
+                    break;
+                case 'boolean':
+                    writer.writeByte(value ? 1 : 0);
+                    break;
+                case 'string':
+                    if (!value) writer.writeShort(0);
+                    else {
+                        writer.writeString(value as string, true);
+                    }
+                    break;
+                case 'arraybuffer':
+                    writer.writeBytes(value as ArrayBuffer);
+                    break;
+            }
+        }
+
+        const buffer = writer.getBuffer();
+
+        return new BinaryWriter().writeInt(buffer.byteLength).writeBytes(buffer);
+    }
+
+    const decodeWrappers = () => {
+        const wrappers: IMessageDataWrapper[] = [];
+
+        if (!wsBuffer.current || !wsBuffer.current.byteLength) return wrappers;
+
+        const reader = new BinaryReader(wsBuffer.current);
+
+        while (wsBuffer.current.byteLength) {
+            if (wsBuffer.current.byteLength < 4) break;
+
+            const length = reader.readInt();
+
+            if (length > (wsBuffer.current.byteLength - 4)) break;
+
+            const extracted = reader.readBytes(length);
+
+            wrappers.push(new EvaWireDataWrapper(extracted.readShort(), extracted));
+
+            wsBuffer.current = wsBuffer.current.slice(length + 4);
+        }
+
+        return wrappers;
     }
 
     const processWrappers = (...wrappers: IMessageDataWrapper[]) => {
@@ -154,7 +226,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                 }
 
                 const message = outgoing.compose();
-                const encoded = wsCodec.current.encode(header, message);
+                const encoded = encode(header, message);
 
                 if (!encoded) continue;
 

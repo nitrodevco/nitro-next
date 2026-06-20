@@ -8,19 +8,22 @@ import { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/shallow';
 
 import { useRoomContext } from '#base/context';
+import { useRoomHandlers } from '#base/handlers';
 import { useRoomCamera, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
 import { useConfigurationStore } from '#base/stores';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvasView = () => {
     const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit']) ?? 60;
+
+    const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit'] as number) ?? 60;
     const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
     const { updateRoomCamera } = useRoomCamera();
     const elementRef = useRef<HTMLDivElement>(null);
 
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
+
+    useRoomHandlers();
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,

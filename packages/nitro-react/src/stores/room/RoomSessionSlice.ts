@@ -6,6 +6,7 @@ type State = {
     tradeMode: RoomTradeModeEnum;
     controllerLevel: RoomControllerLevelEnum;
     ownRoomIndex: number;
+    allowPets: boolean;
     isGuildRoom: boolean;
     isRoomOwner: boolean;
     isDecorating: boolean;
@@ -18,6 +19,7 @@ type Actions = {
     setTradeMode: (mode: RoomTradeModeEnum) => void;
     setControllerLevel: (level: RoomControllerLevelEnum) => void;
     setOwnRoomIndex: (index: number) => void;
+    setAllowPets: (flag: boolean) => void;
     setIsGuildRoom: (flag: boolean) => void;
     setIsRoomOwner: (flag: boolean) => void;
     setIsDecorating: (flag: boolean) => void;
@@ -28,6 +30,7 @@ type Actions = {
 const initialState: State = {
     doorMode: RoomDoorModeEnum.Open,
     tradeMode: RoomTradeModeEnum.Disabled,
+    allowPets: false,
     controllerLevel: RoomControllerLevelEnum.Moderator,
     ownRoomIndex: -1,
     isGuildRoom: false,
@@ -45,6 +48,7 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
     setTradeMode: (mode: RoomTradeModeEnum) => set({ tradeMode: mode }),
     setControllerLevel: (level: RoomControllerLevelEnum) => set({ controllerLevel: level }),
     setOwnRoomIndex: (index: number) => set({ ownRoomIndex: index }),
+    setAllowPets: (flag: boolean) => set({ allowPets: flag }),
     setIsGuildRoom: (flag: boolean) => set({ isGuildRoom: flag }),
     setIsRoomOwner: (flag: boolean) => set({ isRoomOwner: flag }),
     setIsDecorating: (flag: boolean) => set({ isDecorating: flag }),

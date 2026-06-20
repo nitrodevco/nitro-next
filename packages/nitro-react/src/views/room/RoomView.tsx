@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { RoomContextProvider } from '#base/context';
 
-import { RoomCanvasView } from './views/room/RoomCanvasView';
+import { RoomCanvasView } from './RoomCanvasView';
 
 export const RoomView = ({ roomId }: {
     roomId: number;

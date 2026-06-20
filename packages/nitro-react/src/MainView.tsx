@@ -1,11 +1,11 @@
-import { InfoRetrieveComposer } from "@nitrodevco/nitro-shared";
+import { InfoRetrieveComposer, OpenFlatConnectionComposer } from "@nitrodevco/nitro-shared";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useWebSocketContext } from "./context";
 import { useSessionHandler } from "./handlers";
-import { RoomView } from "./RoomView";
 import { HotelView } from "./views/hotel-view/HotelView";
+import { RoomView } from "./views/room/RoomView";
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
@@ -17,8 +17,17 @@ export const MainView = () => {
 
     useEffect(() => {
         if (!isReady) return;
+    }, [isReady]);
+
+    useEffect(() => {
+        if (!isReady) return;
 
         send(new InfoRetrieveComposer({}));
+        send(new OpenFlatConnectionComposer({
+            roomId,
+            password: '',
+            unknown1: -1
+        }));
     }, [isReady]);
 
     useEffect(() => {
