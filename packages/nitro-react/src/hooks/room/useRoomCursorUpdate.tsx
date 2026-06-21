@@ -20,7 +20,7 @@ export const useRoomCursorUpdate = () => {
         );
 
     const handleMouseOverObject = (category: RoomObjectCategoryEnum, event: RoomObjectMouseEvent) => {
-        if (category !== RoomObjectCategoryEnum.Floor) return undefined;
+        if (!room || category !== RoomObjectCategoryEnum.Floor) return undefined;
 
         const roomObject = room.getRoomObject(event.objectId, RoomObjectCategoryEnum.Floor);
 
@@ -28,7 +28,7 @@ export const useRoomCursorUpdate = () => {
 
         const location = getActiveSurfaceLocation(roomObject, event);
 
-        if (!location || !room.instance.furnitureStackingHeightMap) return undefined;
+        if (!location) return undefined;
 
         return new ObjectTileCursorUpdateMessage(
             new Vector3d(location.x, location.y, roomObject.getLocation().z),
@@ -39,6 +39,8 @@ export const useRoomCursorUpdate = () => {
     };
 
     const updateCursorForEvent = (event: RoomObjectMouseEvent, clear: boolean = false) => {
+        if (!room) return;
+
         const category = room.getRoomObjectCategoryForType(event.objectType);
         const roomCursor = room.getRoomObjectCursor();
 

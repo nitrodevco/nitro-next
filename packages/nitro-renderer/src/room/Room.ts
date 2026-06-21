@@ -646,8 +646,6 @@ export class Room implements IRoom {
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Floor),
         );
 
-        if (roomObject?.isReady && synchronized) this._instance.tileObjectMap.addRoomObject(roomObject);
-
         return true;
     }
 
@@ -775,7 +773,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public removeRoomObjectFloor(objectId: number, isOwner: boolean = false, _arg_4: boolean = false): void {
+    public removeRoomObjectFloor(objectId: number, isOwner: boolean = false): void {
         if (isOwner && !FurniId.isBuilderClubId(objectId)) {
             const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
 
@@ -814,11 +812,6 @@ export class Room implements IRoom {
         }
 
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Floor);
-
-        if (_arg_4)
-            this._instance.tileObjectMap?.populate(
-                this._instance.getRoomObjectsForCategory(RoomObjectCategoryEnum.Floor),
-            );
     }
 
     public removeRoomObjectWall(objectId: number, isOwner: boolean = false): void {
@@ -1079,7 +1072,8 @@ export class Room implements IRoom {
         if (!location) return undefined;
 
         let z = location.z;
-        const tileHeight = this._instance.furnitureStackingHeightMap.getTileHeight(location.x, location.y);
+        const tileHeight = 0;
+        // TODO FIX const tileHeight = this._instance.furnitureStackingHeightMap.getTileHeight(location.x, location.y);
         const wallHeight = this._instance.legacyGeometry.getHeight(location.x, location.y);
 
         if (Math.abs(z - tileHeight) < 0.1 && Math.abs(tileHeight - wallHeight) < 0.1) {

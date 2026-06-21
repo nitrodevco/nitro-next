@@ -1,14 +1,15 @@
 import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
-import { FurnitureStackingHeightMap, LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
+import { LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
 import type { HeightMapMessageType } from "@nitrodevco/nitro-shared";
 import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage } from "@nitrodevco/nitro-shared";
 import { useState } from "react";
 
-import { useRoomSelector } from "#base/context";
+import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomMappingHandler = () => {
     const room = useRoomSelector();
+    const { setHeightMap, setHeightMapUpdates } = useRoomStackingHeightMapActions();
     const [entryTile, setEntryTile] = useState<{ x: number, y: number, dir: number } | undefined>(undefined);
 
     const decodeTileHeight = (height: number) => ((height < 0) ? -1 : ((height & 16383) / 0x0100));
@@ -197,7 +198,9 @@ export const useRoomMappingHandler = () => {
 
         const width = data.width;
         const height = data.height;
-        const heightMap = new FurnitureStackingHeightMap(width, height);
+        const heights: number[] = [];
+        const stackingBlocked: boolean[] = [];
+        const validTiles: boolean[] = [];
 
         let y = 0;
 
@@ -205,9 +208,11 @@ export const useRoomMappingHandler = () => {
             let x = 0;
 
             while (x < width) {
-                heightMap.setTileHeight(x, y, getTileHeight(data, x, y));
-                heightMap.setStackingBlocked(x, y, getStackingBlocked(data, x, y));
-                heightMap.setIsRoomTile(x, y, isRoomTile(data, x, y));
+                const key = y * width + x;
+
+                heights[key] = getTileHeight(data, x, y);
+                stackingBlocked[key] = getStackingBlocked(data, x, y);
+                validTiles[key] = isRoomTile(data, x, y);
 
                 x++;
             }
@@ -215,18 +220,22 @@ export const useRoomMappingHandler = () => {
             y++;
         }
 
-        room.instance.setFurnitureStackingHeightMap(heightMap);
+        setHeightMap(width, height, heights, stackingBlocked, validTiles);
     });
 
     useMessageListener(HeightMapUpdateMessage, data => {
         if (!room || !data.heightUpdates.length) return;
 
-        const heightMap = room.instance.furnitureStackingHeightMap;
+        const updates: { x: number, y: number, height: number, stackingBlocked: boolean, validTile: boolean }[] = [];
 
-        for (const update of data.heightUpdates) {
-            heightMap.setTileHeight(update.x, update.y, decodeTileHeight(update.height));
-            heightMap.setStackingBlocked(update.x, update.y, decodeIsStackingBlocked(update.height));
-            heightMap.setIsRoomTile(update.x, update.y, decodeIsRoomTile(update.height));
-        }
+        for (const update of data.heightUpdates) updates.push({
+            x: update.x,
+            y: update.y,
+            height: decodeTileHeight(update.height),
+            stackingBlocked: decodeIsStackingBlocked(update.height),
+            validTile: decodeIsRoomTile(update.height)
+        });
+
+        setHeightMapUpdates(updates);
     });
 }

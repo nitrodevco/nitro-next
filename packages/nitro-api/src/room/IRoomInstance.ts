@@ -3,10 +3,7 @@ import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
 import type {
-    IFurnitureStackingHeightMap,
     ILegacyWallGeometry,
-    ISelectedRoomObjectData,
-    ITileObjectMap,
 } from './utils';
 
 export interface IRoomInstance {
@@ -32,9 +29,6 @@ export interface IRoomInstance {
     update(time: number, update?: boolean): void;
     hasUninitializedObjects(): boolean;
     setLegacyGeometry(geometry: ILegacyWallGeometry);
-    setSelectedObject(data: ISelectedRoomObjectData | undefined): void;
-    setPlacedObject(data: ISelectedRoomObjectData | undefined): void;
-    setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void;
     readonly id: number;
     readonly canvas: IRoomRenderingCanvas | undefined;
     readonly objects: Map<number, IRoomObject>;
@@ -42,8 +36,4 @@ export interface IRoomInstance {
     readonly model: IRoomObjectModel;
     roomObjectVariableAccurateZ: string;
     legacyGeometry: ILegacyWallGeometry;
-    tileObjectMap: ITileObjectMap;
-    readonly selectedObject: ISelectedRoomObjectData | undefined;
-    readonly placedObject: ISelectedRoomObjectData | undefined;
-    furnitureStackingHeightMap: IFurnitureStackingHeightMap;
 }

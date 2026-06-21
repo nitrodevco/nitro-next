@@ -2,19 +2,20 @@ import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVect
 import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector } from "#base/context";
+import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
 import { useFurnitureDataStore } from "#base/stores";
 
 export const useRoomObjectValidation = () => {
     const room = useRoomSelector();
     const floorItems = useFurnitureDataStore(x => x.floorItems);
+    const { getTileHeight, validateLocation } = useRoomStackingHeightMapActions();
 
     const setFurnitureAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
         object?.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
     };
 
     const getActiveSurfaceLocation = (roomObject: IRoomObject, event: RoomObjectMouseEvent) => {
-        if (!roomObject || !event) return undefined;
+        if (!room || !roomObject || !event) return undefined;
 
         const furniData = floorItems.get(roomObject.type);
 
@@ -74,10 +75,10 @@ export const useRoomObjectValidation = () => {
 
         const stackable = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlwaysStackable) === 1;
 
-        if (!room.instance.furnitureStackingHeightMap.validateLocation(loc.x, loc.y, sizeX, sizeY, prevLoc.x, prevLoc.y, prevSizeX, prevSizeY, stackable))
+        if (!validateLocation(loc.x, loc.y, sizeX, sizeY, prevLoc.x, prevLoc.y, prevSizeX, prevSizeY, stackable))
             return undefined;
 
-        return new Vector3d(loc.x, loc.y, room.instance.furnitureStackingHeightMap.getTileHeight(loc.x, loc.y));
+        return new Vector3d(loc.x, loc.y, getTileHeight(loc.x, loc.y));
     };
 
     const validateWallItemLocation = (
@@ -142,7 +143,7 @@ export const useRoomObjectValidation = () => {
 
         const alwaysStackable = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlwaysStackable) === 1;
 
-        return room.instance.furnitureStackingHeightMap.validateLocation(
+        return validateLocation(
             location.x,
             location.y,
             sizeX,

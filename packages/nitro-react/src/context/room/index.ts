@@ -3,6 +3,7 @@ export * from './actions/useRoomMouseActions';
 export * from './actions/useRoomPermissionActions';
 export * from './actions/useRoomSelectedObjectActions';
 export * from './actions/useRoomSettingActions';
+export * from './actions/useRoomStackingHeightMapActions';
 export * from './RoomContext';
 export * from './RoomContextProvider';
 export * from './selectors/selection/useRoomObjectPlacementSource';

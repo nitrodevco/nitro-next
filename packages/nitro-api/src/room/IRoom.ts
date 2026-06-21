@@ -129,7 +129,7 @@ export interface IRoom {
         type: number,
         figure: string,
     ): boolean;
-    removeRoomObjectFloor(objectId: number, isOwner?: boolean, _arg_4?: boolean): void;
+    removeRoomObjectFloor(objectId: number, isOwner?: boolean): void;
     removeRoomObjectWall(objectId: number, isOwner?: boolean): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;

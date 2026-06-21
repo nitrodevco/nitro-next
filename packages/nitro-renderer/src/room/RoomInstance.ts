@@ -1,5 +1,4 @@
 import type {
-    IFurnitureStackingHeightMap,
     ILegacyWallGeometry,
     IRoomInstance,
     IRoomObject,
@@ -7,8 +6,6 @@ import type {
     IRoomObjectManager,
     IRoomObjectModel,
     IRoomRenderingCanvas,
-    ISelectedRoomObjectData,
-    ITileObjectMap,
     RoomGeometryScaleType,
     RoomObjectCategoryEnum,
 } from '@nitrodevco/nitro-api';
@@ -16,7 +13,6 @@ import type {
 import { RoomObjectModel } from './object';
 import { RoomObjectManager } from './RoomObjectManager';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';
-import { TileObjectMap } from './utils';
 
 export class RoomInstance implements IRoomInstance {
     private _id: number;
@@ -27,10 +23,6 @@ export class RoomInstance implements IRoomInstance {
     private _model: IRoomObjectModel = new RoomObjectModel();
 
     private _legacyGeometry: ILegacyWallGeometry;
-    private _tileObjectMap: ITileObjectMap;
-    private _selectedObject: ISelectedRoomObjectData | undefined;
-    private _placedObject: ISelectedRoomObjectData | undefined;
-    private _furnitureStackingHeightMap: IFurnitureStackingHeightMap;
     private _roomObjectVariableAccurateZ: string = '';
 
     constructor(id: number) {
@@ -197,37 +189,6 @@ export class RoomInstance implements IRoomInstance {
         this._legacyGeometry = geometry;
     }
 
-    public setSelectedObject(data: ISelectedRoomObjectData | undefined): void {
-        if (this._selectedObject) {
-            this._selectedObject.dispose();
-        }
-
-        this._selectedObject = data;
-    }
-
-    public setPlacedObject(data: ISelectedRoomObjectData | undefined): void {
-        if (this._placedObject) {
-            this._placedObject.dispose();
-        }
-
-        this._placedObject = data;
-    }
-
-    public setFurnitureStackingHeightMap(heightMap: IFurnitureStackingHeightMap): void {
-        if (this._furnitureStackingHeightMap) this._furnitureStackingHeightMap.dispose();
-
-        this._furnitureStackingHeightMap = heightMap;
-
-        if (this._tileObjectMap) this._tileObjectMap.dispose();
-
-        if (this._furnitureStackingHeightMap) {
-            this._tileObjectMap = new TileObjectMap(
-                this._furnitureStackingHeightMap.width,
-                this._furnitureStackingHeightMap.height,
-            );
-        }
-    }
-
     public get id(): number {
         return this._id;
     }
@@ -258,21 +219,5 @@ export class RoomInstance implements IRoomInstance {
 
     public get legacyGeometry(): ILegacyWallGeometry {
         return this._legacyGeometry;
-    }
-
-    public get tileObjectMap(): ITileObjectMap {
-        return this._tileObjectMap;
-    }
-
-    public get selectedObject(): ISelectedRoomObjectData | undefined {
-        return this._selectedObject;
-    }
-
-    public get placedObject(): ISelectedRoomObjectData | undefined {
-        return this._placedObject;
-    }
-
-    public get furnitureStackingHeightMap(): IFurnitureStackingHeightMap {
-        return this._furnitureStackingHeightMap;
     }
 }
