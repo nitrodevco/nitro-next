@@ -7,5 +7,5 @@ export type RoomActions = {
 
 export const extractRoomActions = (store: RoomStore) => ({
     setRoom: store.setRoom,
-    setOwnUserId: store.setOwnUserId,
+    setOwnUserId: store.setOwnUserId
 });

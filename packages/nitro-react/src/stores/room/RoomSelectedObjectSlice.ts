@@ -21,7 +21,7 @@ type Actions = {
     setObjectPlacementSource: (source: RoomObjectPlacementSource) => void;
 };
 
-const initialState: State = {
+export const RoomSelectedObjectSliceInitialState: State = {
     selectedAvatarId: -1,
     selectedObjectId: -1,
     selectedObjectCategory: RoomObjectCategoryEnum.Minimum,
@@ -33,7 +33,7 @@ const initialState: State = {
 export type RoomSelectedObjectSlice = State & Actions;
 
 export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set, get, store) => ({
-    ...initialState,
+    ...RoomSelectedObjectSliceInitialState,
     getSelectedObject: () => get().selectedObject,
     setSelectedAvatarId: (id: number) => set({ selectedAvatarId: id }),
     setSelectedObjectId: (id: number) => set({ selectedObjectId: id }),

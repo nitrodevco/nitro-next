@@ -17,7 +17,7 @@ type Actions = {
     disableFollowTemporarily: (duration: number) => void;
 };
 
-const initialState: State = {
+export const RoomCameraSliceInitialState: State = {
     targetId: -1,
     targetCategory: RoomObjectCategoryEnum.Minimum,
     cameraFollowDisabled: false,
@@ -27,7 +27,7 @@ const initialState: State = {
 export type RoomCameraSlice = State & Actions;
 
 export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCameraSlice> = (set, get, store) => ({
-    ...initialState,
+    ...RoomCameraSliceInitialState,
     setTargetId: (id: number) => set({ targetId: id }),
     setTargetCategory: (category: RoomObjectCategoryEnum) => set({ targetCategory: category }),
     setTarget: (id: number, category: RoomObjectCategoryEnum) => set({ targetId: id, targetCategory: category }),

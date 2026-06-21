@@ -2,7 +2,7 @@ import { InfoRetrieveComposer } from "@nitrodevco/nitro-shared";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { RoomContainer } from "./components";
+import { RoomWrapper } from "./components";
 import { useWebSocketContext } from "./context";
 import { useNavigatorHandler, useUserInfoHandler } from "./handlers";
 import { HotelView } from "./views/hotel-view/HotelView";
@@ -46,7 +46,7 @@ export const MainView = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {isReady && <RoomContainer />}
+            {isReady && <RoomWrapper />}
         </>
     );
 }

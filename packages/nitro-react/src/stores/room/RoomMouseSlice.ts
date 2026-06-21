@@ -16,7 +16,7 @@ type Actions = {
     hasCursorOwners: () => boolean;
 };
 
-const initialState: State = {
+export const RoomMouseSliceInitialState: State = {
     eventIds: new Map(),
     cursorOwners: [],
     hasCursorUpdate: false
@@ -25,7 +25,7 @@ const initialState: State = {
 export type RoomMouseSlice = State & Actions;
 
 export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMouseSlice> = (set, get, store) => ({
-    ...initialState,
+    ...RoomMouseSliceInitialState,
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => {
         return get().eventIds.get(category)?.get(type);
     },
