@@ -1,39 +1,35 @@
-import { InfoRetrieveComposer, OpenFlatConnectionComposer } from "@nitrodevco/nitro-shared";
+import { InfoRetrieveComposer } from "@nitrodevco/nitro-shared";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
+import { RoomContainer } from "./components";
 import { useWebSocketContext } from "./context";
-import { useUserInfoHandler } from "./handlers";
+import { useNavigatorHandler, useUserInfoHandler } from "./handlers";
 import { HotelView } from "./views/hotel-view/HotelView";
-import { RoomView } from "./views/room/RoomView";
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
-    const [roomId, setRoomId] = useState(1);
     const [landingViewVisible, setLandingViewVisible] = useState(true);
     const { setReady, send } = useWebSocketContext();
 
     useUserInfoHandler();
-
-    useEffect(() => {
-        if (!isReady) return;
-    }, [isReady]);
+    useNavigatorHandler();
 
     useEffect(() => {
         if (!isReady) return;
 
         send(new InfoRetrieveComposer({}));
-        send(new OpenFlatConnectionComposer({
-            roomId,
-            password: '',
-            unknown1: -1
-        }));
+    }, [isReady]);
+
+    useEffect(() => {
+        if (!isReady) return;
+
+        setReady();
     }, [isReady]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsReady(true);
-        setReady();
     }, []);
 
     return (
@@ -50,7 +46,7 @@ export const MainView = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {roomId > 0 && <RoomView roomId={roomId} />}
+            {isReady && <RoomContainer />}
         </>
     );
 }

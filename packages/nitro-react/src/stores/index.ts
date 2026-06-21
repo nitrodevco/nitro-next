@@ -1,5 +1,5 @@
 export * from './room/actions/RoomActions';
-export * from './room/actions/RoomMouseEventActions';
+export * from './room/actions/RoomMouseActions';
 export * from './room/actions/RoomPermissionActions';
 export * from './room/actions/RoomSelectedObjectActions';
 export * from './room/actions/RoomSettingActions';

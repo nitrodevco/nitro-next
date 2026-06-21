@@ -1,5 +1,3 @@
-import { useShallow } from "zustand/shallow";
+import { useRoomContext } from "../useRoomContext";
 
-import { useRoomContext } from "#base/context";
-
-export const useRoomSelector = () => useRoomContext(useShallow(x => x.room));
+export const useRoomSelector = () => useRoomContext(x => x.room);

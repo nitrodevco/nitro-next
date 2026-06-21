@@ -1,18 +1,28 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HeightMapUpdateMessageType = {
-  // no fields
-
+    heightUpdates: { x: number, y: number, height: number }[];
 };
 
-export class HeightMapUpdateMessage implements IIncomingPacket<HeightMapUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): HeightMapUpdateMessageType
-  {
+export class HeightMapUpdateMessage implements IIncomingPacket<HeightMapUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): HeightMapUpdateMessageType {
 
-    const packet: HeightMapUpdateMessageType = {
-    };
+        const packet: HeightMapUpdateMessageType = {
+            heightUpdates: []
+        };
 
-    return packet;
-  }
+        let count = wrapper.readByte();
+
+        while (count > 0) {
+            const x = wrapper.readByte();
+            const y = wrapper.readByte();
+            const height = wrapper.readShort();
+
+            packet.heightUpdates.push({ x, y, height });
+
+            count--;
+        }
+
+        return packet;
+    }
 }

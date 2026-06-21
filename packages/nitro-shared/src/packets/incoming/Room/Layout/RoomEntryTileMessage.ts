@@ -1,24 +1,20 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(Rotation: Rotation): Unknown type 'Rotation'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RoomEntryTileMessageType = {
-  x: number;
-  y: number;
-  rotation: any;
+    x: number;
+    y: number;
+    rotation: number;
 };
 
-export class RoomEntryTileMessage implements IIncomingPacket<RoomEntryTileMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): RoomEntryTileMessageType
-  {
+export class RoomEntryTileMessage implements IIncomingPacket<RoomEntryTileMessageType> {
+    public parse(wrapper: IMessageDataWrapper): RoomEntryTileMessageType {
 
-    const packet: RoomEntryTileMessageType = {
-      x: wrapper.readInt(),
-      y: wrapper.readInt(),
-      rotation: undefined as any, // Unknown type 'Rotation'. Add override mapping.
-    };
+        const packet: RoomEntryTileMessageType = {
+            x: wrapper.readInt(),
+            y: wrapper.readInt(),
+            rotation: wrapper.readInt()
+        }
 
-    return packet;
-  }
+        return packet;
+    }
 }

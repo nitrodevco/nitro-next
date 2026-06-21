@@ -3,7 +3,7 @@ import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperatio
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 
-import { useRoomInteractionSelector, useRoomMouseEventActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector } from '#base/context';
+import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector } from '#base/context';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -18,7 +18,7 @@ export const useRoomEventHandler = () => {
     const selectedObject = useRoomSelectedObject();
     const placedObject = useRoomPlacedObject();
     const { isSpectator, isDecorating, isPlayingGame } = useRoomInteractionSelector();
-    const { getMouseEventId, setMouseEventId } = useRoomMouseEventActions();
+    const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
     const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();

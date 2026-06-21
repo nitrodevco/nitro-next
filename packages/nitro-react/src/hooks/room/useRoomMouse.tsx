@@ -1,75 +1,28 @@
-import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
+import { MouseEventType, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { RoomDragEvent, RoomDraggedEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { RoomDragEvent, RoomDraggedEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
 
-import { useRoomInteractionSelector, useRoomPermissionsSelector, useRoomSelector } from "#base/context";
+import { useRoomInteractionSelector, useRoomSelector } from "#base/context";
 
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
     const room = useRoomSelector();
     const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
-    const { controllerLevel } = useRoomPermissionsSelector();
     const mouseDataRef = useRef<{
         mouseXY: { x: number, y: number },
         dragStartXY: { x: number, y: number },
         dragXY: { x: number, y: number },
         isDragged: boolean,
-        wasDragged: boolean,
-        hasCursorUpdate: boolean,
-        cursorOwners: Set<string>
+        wasDragged: boolean
     }>({
         mouseXY: { x: 0, y: 0 },
         dragStartXY: { x: 0, y: 0 },
         dragXY: { x: 0, y: 0 },
         isDragged: false,
-        wasDragged: false,
-        hasCursorUpdate: false,
-        cursorOwners: new Set<string>()
+        wasDragged: false
     });
-
-    const hasCursorOwners = () => mouseDataRef.current.cursorOwners.size > 0;
-
-    const setMouseButton = (objectId: number, category: RoomObjectCategoryEnum) => {
-        if (
-            (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
-            controllerLevel >= RoomControllerLevelEnum.Guest
-        ) {
-            const cursorOwners = mouseDataRef.current.cursorOwners;
-            const key = `${category}_${objectId}`;
-
-            if (!cursorOwners.has(key)) {
-                cursorOwners.add(key);
-
-                mouseDataRef.current.hasCursorUpdate = true;
-            }
-        }
-    }
-
-    const setMouseDefault = (objectId: number, category: RoomObjectCategoryEnum) => {
-        const cursorOwners = mouseDataRef.current.cursorOwners;
-        const key = `${category}_${objectId}`;
-
-        if (cursorOwners.has(key)) {
-            cursorOwners.delete(key);
-
-            mouseDataRef.current.hasCursorUpdate = true;
-        }
-    }
-
-    const updateMousePointer = (type: string, objectId: number, objectType: string) => {
-        const category = room.getRoomObjectCategoryForType(objectType);
-
-        switch (type) {
-            case RoomObjectFurnitureActionEvent.MOUSE_BUTTON:
-                setMouseButton(objectId, category);
-                return;
-            default:
-                setMouseDefault(objectId, category);
-                return;
-        }
-    }
 
     const handleRoomDragging = (
         x: number,
@@ -328,5 +281,5 @@ export const useRoomMouse = () => {
         };
     }, [room]);
 
-    return { mouseDataRef, hasCursorOwners, setMouseButton, setMouseDefault, updateMousePointer };
+    return { mouseDataRef };
 }

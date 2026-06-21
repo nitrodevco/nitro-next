@@ -1,29 +1,18 @@
-import type { IRoomObject } from '@nitrodevco/nitro-api';
-import { MouseEventType, NitroLogger, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
-import type { RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
-import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-shared';
-import type { Ticker } from 'pixi.js';
-import { useEffect, useRef } from 'react';
-import { useShallow } from 'zustand/shallow';
+import type { IRoomObject } from "@nitrodevco/nitro-api";
+import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
+import type { RoomObjectEvent, RoomSpriteMouseEvent } from "@nitrodevco/nitro-shared";
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
+import { useEffect } from "react";
 
-import { useRoomContext } from '#base/context';
-import { useRoomHandlers } from '#base/handlers';
-import { useRoomCamera, useRoomEventDispatcher, useRoomEventHandler, useRoomMouse } from '#base/hooks';
-import { useConfigurationStore } from '#base/stores';
-import { GetPixelRatio } from '#base/utils';
+import { useRoomControllerLevel, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
+import { useRoomEventDispatcher, useRoomEventHandler } from "#base/hooks";
 
-export const RoomCanvasView = () => {
-    const [room, isPlayingGame, getMouseEventId, setMouseEventId] = useRoomContext(useShallow(x => [x.room, x.isPlayingGame, x.getMouseEventId, x.setMouseEventId]));
-
-    const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit'] as number) ?? 60;
-    const { mouseDataRef, hasCursorOwners, updateMousePointer } = useRoomMouse();
-    const { updateRoomCamera } = useRoomCamera();
-    const elementRef = useRef<HTMLDivElement>(null);
-
+export const RoomEventHandler = () => {
+    const room = useRoomSelector();
+    const controllerLevel = useRoomControllerLevel();
+    const isPlayingGame = useRoomIsPlayingGame();
+    const { getMouseEventId, setMouseEventId, addCursorOwner, removeCursorOwner } = useRoomMouseActions();
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
-
-    useRoomHandlers();
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -35,6 +24,7 @@ export const RoomCanvasView = () => {
         RoomEngineObjectEvent.MOUSE_LEAVE,
         RoomEngineObjectEvent.DOUBLE_CLICK,
     ], event => {
+        if (!room) return;
         //if (RoomId.isRoomPreviewerId(event.roomId)) return;
 
         let updateEvent: RoomWidgetUpdateRoomObjectEvent | undefined = undefined;
@@ -142,7 +132,6 @@ export const RoomCanvasView = () => {
         if (!room) return;
 
         const handleRoomObjectEvent = (event: RoomObjectEvent) => {
-
             if (event instanceof RoomObjectMouseEvent) {
                 handleRoomObjectMouseEvent(event);
 
@@ -150,20 +139,22 @@ export const RoomCanvasView = () => {
             }
 
             switch (event.type) {
-                case RoomObjectFurnitureActionEvent.MOUSE_ARROW:
+                case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
+                    removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
+                    return;
+                }
                 case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
-                    updateMousePointer(event.type, event.objectId, event.objectType);
+                    const category = room.getRoomObjectCategoryForType(event.objectType);
+
+                    if (
+                        (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
+                        controllerLevel >= RoomControllerLevelEnum.Guest
+                    ) addCursorOwner(event.objectId, category);
                     return;
                 }
             }
         };
 
-        room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
-
-        return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, handleRoomObjectMouseEvent, updateMousePointer]);
-
-    useEffect(() => {
         const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
             if (!object) return;
 
@@ -190,109 +181,14 @@ export const RoomCanvasView = () => {
             if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
         };
 
+        room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
 
-        return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
-    }, [room, getMouseEventId, setMouseEventId]);
-
-    useEffect(() => {
-        if (!room) return;
-
-        const renderer = GetRenderer();
-        const stage = GetStage();
-
-        const tick = (ticker: Ticker) => {
-            if (!room) return;
-
-            const mouseData = mouseDataRef.current;
-            const time = ticker.lastTime;
-            const update = false;
-
-            RoomEnterEffect.turnVisualizationOn();
-
-            room.instance.update(time, update);
-
-            if (!mouseData.isDragged) updateRoomCamera(time);
-
-            if (mouseData.wasDragged) {
-                const offsetX = ~~(room.instance.canvas?.screenOffsetX || 0);
-                const offsetY = ~~(room.instance.canvas?.screenOffsetY || 0);
-
-                room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
-
-                mouseData.dragXY = { x: 0, y: 0 }
-            }
-
-            if (mouseData.hasCursorUpdate) {
-                mouseData.hasCursorUpdate = false;
-
-                renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
-            }
-
-            RoomEnterEffect.turnVisualizationOff();
-
-            renderer.render(stage);
-        }
-
-        const ticker = GetTicker();
-
-        ticker.maxFPS = maxFPS;
-
-        ticker.add(tick);
-
         return () => {
-            ticker.remove(tick);
+            room.eventHandler.setRoomObjectEventHandler(undefined);
+            room.eventHandler.setRoomCanvasMouseHandler(undefined);
         }
     }, [room]);
 
-    useEffect(() => {
-        if (!room) return;
-
-        const renderer = GetRenderer();
-        const stage = GetStage();
-
-        if (renderer?.canvas) elementRef?.current?.appendChild(renderer.canvas);
-
-        const handleSize = (width: number, height: number, resolution: number) => {
-            const canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
-
-            renderer.canvas.style.width = `${width}px`;
-            renderer.canvas.style.height = `${height}px`;
-
-            if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) {
-                renderer.resize(width, height, resolution);
-
-                canvas.geometry.increaseUpdateId();
-            }
-
-            if (canvas && canvas.master && !canvas?.master?.parent) stage?.addChild(canvas.master);
-
-            try {
-                renderer.render(stage);
-            } catch (err) {
-                NitroLogger.error(err);
-            }
-        }
-
-        let timer: ReturnType<typeof setTimeout>;
-
-        const observer = new ResizeObserver(x => {
-            const width = x[0]?.contentRect.width;
-            const height = x[0]?.contentRect.height;
-            const resolution = GetPixelRatio();
-
-            clearTimeout(timer);
-
-            timer = setTimeout(() => handleSize(width, height, resolution), 5);
-        });
-
-        if (elementRef.current) observer.observe(elementRef.current);
-
-        return () => {
-            observer.disconnect();
-            clearTimeout(timer);
-        }
-    }, [room]);
-
-    return <div className="size-full" ref={elementRef}></div>;
-};
+    return null;
+}

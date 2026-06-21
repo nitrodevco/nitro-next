@@ -1,5 +1,5 @@
 export * from './actions/useRoomActions';
-export * from './actions/useRoomMouseEventActions';
+export * from './actions/useRoomMouseActions';
 export * from './actions/useRoomPermissionActions';
 export * from './actions/useRoomSelectedObjectActions';
 export * from './actions/useRoomSettingActions';
@@ -9,6 +9,7 @@ export * from './selectors/selection/useRoomObjectPlacementSource';
 export * from './selectors/selection/useRoomPlacedObject';
 export * from './selectors/selection/useRoomSelectedObject';
 export * from './selectors/selection/useRoomSelectedObjectDetails';
+export * from './selectors/session/useRoomControllerLevel';
 export * from './selectors/session/useRoomInteractionSelector';
 export * from './selectors/session/useRoomIsPlayingGame';
 export * from './selectors/session/useRoomPermissionsSelector';

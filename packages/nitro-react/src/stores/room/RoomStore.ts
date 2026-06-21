@@ -1,47 +1,33 @@
-import type { IRoom, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
+import type { IRoom } from "@nitrodevco/nitro-api";
 import { createStore } from "zustand";
 
 import type { RoomCameraSlice } from "./RoomCameraSlice";
 import { createRoomCameraSlice } from "./RoomCameraSlice";
+import type { RoomMouseSlice } from "./RoomMouseSlice";
+import { createRoomMouseSlice } from "./RoomMouseSlice";
 import type { RoomSelectedObjectSlice } from "./RoomSelectedObjectSlice";
 import { createRoomSelectedObjectSlice } from "./RoomSelectedObjectSlice";
 import type { RoomSessionSlice } from "./RoomSessionSlice";
 import { createRoomSessionSlice } from "./RoomSessionSlice";
 
 type State = {
-    roomId: number;
-    room: IRoom;
+    room: IRoom | undefined;
     ownUserId: number;
-    eventIds: Map<RoomObjectCategoryEnum, Map<string, number>>;
 }
 
 type Actions = {
+    setRoom: (room: IRoom) => void;
     setOwnUserId: (ownUserId: number) => void;
-    getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => number | undefined;
-    setMouseEventId: (category: RoomObjectCategoryEnum, type: string, eventId: number) => void;
 }
 
-export type RoomStore = State & Actions & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice;
+export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice;
 
-export const createRoomStore = (room: IRoom) => createStore<RoomStore>()((set, get, store) => ({
-    roomId: room.roomId,
-    room: room,
+export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
+    room: undefined,
     ownUserId: -1,
-    eventIds: new Map(),
+    setRoom: (room: IRoom | undefined) => set({ room }),
     setOwnUserId: (ownUserId: number) => set({ ownUserId }),
-    getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => {
-        return get().eventIds.get(category)?.get(type);
-    },
-    setMouseEventId: (category: RoomObjectCategoryEnum, type: string, eventId: number) => {
-        let map = get().eventIds.get(category);
-
-        if (!map) {
-            map = new Map();
-            get().eventIds.set(category, map);
-        }
-
-        map.set(type, eventId);
-    },
+    ...createRoomMouseSlice(set, get, store),
     ...createRoomSessionSlice(set, get, store),
     ...createRoomCameraSlice(set, get, store),
     ...createRoomSelectedObjectSlice(set, get, store)

@@ -2,6 +2,7 @@ export * from './selection/useRoomObjectPlacementSource';
 export * from './selection/useRoomPlacedObject';
 export * from './selection/useRoomSelectedObject';
 export * from './selection/useRoomSelectedObjectDetails';
+export * from './session/useRoomControllerLevel';
 export * from './session/useRoomInteractionSelector';
 export * from './session/useRoomIsPlayingGame';
 export * from './session/useRoomPermissionsSelector';

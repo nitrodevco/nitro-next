@@ -7,6 +7,9 @@
             "node"
         ],
         "paths": {
+            "#base/components": [
+                "./src/components/index.ts"
+            ],
             "#base/context": [
                 "./src/context/index.ts"
             ],
