@@ -1,5 +1,4 @@
 import type {
-    ILegacyWallGeometry,
     IRoomInstance,
     IRoomObject,
     IRoomObjectController,
@@ -22,7 +21,6 @@ export class RoomInstance implements IRoomInstance {
     private _updateCategories: RoomObjectCategoryEnum[] = [];
     private _model: IRoomObjectModel = new RoomObjectModel();
 
-    private _legacyGeometry: ILegacyWallGeometry;
     private _roomObjectVariableAccurateZ: string = '';
 
     constructor(id: number) {
