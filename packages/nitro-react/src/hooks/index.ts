@@ -17,3 +17,4 @@ export * from './room/useRoomObjectPlace';
 export * from './room/useRoomObjectSelect';
 export * from './room/useRoomObjectValidation';
 export * from './useConfigValue';
+export * from './useForm';

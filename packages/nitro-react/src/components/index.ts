@@ -6,3 +6,7 @@ export { Panel } from './ui/Panel';
 
 // Window Components
 export { DraggableWindow } from './windows/DraggableWindow';
+
+// Common/Integration Components
+export { Form, FormField, FormError, FormActions } from './common/Form';
+export { UserForm } from './common/UserForm';
