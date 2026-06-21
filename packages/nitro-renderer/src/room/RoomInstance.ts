@@ -181,14 +181,6 @@ export class RoomInstance implements IRoomInstance {
         return false;
     }
 
-    public setLegacyGeometry(geometry: ILegacyWallGeometry) {
-        if (this._legacyGeometry) {
-            this._legacyGeometry.dispose();
-        }
-
-        this._legacyGeometry = geometry;
-    }
-
     public get id(): number {
         return this._id;
     }
@@ -215,9 +207,5 @@ export class RoomInstance implements IRoomInstance {
 
     public set roomObjectVariableAccurateZ(z: string) {
         this._roomObjectVariableAccurateZ = z;
-    }
-
-    public get legacyGeometry(): ILegacyWallGeometry {
-        return this._legacyGeometry;
     }
 }

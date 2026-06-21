@@ -16,7 +16,7 @@ import type {
     RoomObjectCategoryEnum,
     RoomObjectVariableEnum,
 } from './object';
-import type { IRoomAreaSelectionManager } from './utils';
+import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     prepareRoom(): boolean;
@@ -137,6 +137,7 @@ export interface IRoom {
     setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra?: string, posture?: string): Promise<void>;
     setRoomOverlayIconSpriteVisibility(flag: boolean): void
     removeRoomOverlayIconSprite(): void;
+    setLegacyGeometry(geometry: ILegacyWallGeometry): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     getRoomObjectRoom(): IRoomObjectController;
     getRoomObjectCursor(): IRoomObjectController;
@@ -151,4 +152,5 @@ export interface IRoom {
     readonly eventHandler: IRoomEventHandler;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
+    readonly legacyGeometry: ILegacyWallGeometry;
 }

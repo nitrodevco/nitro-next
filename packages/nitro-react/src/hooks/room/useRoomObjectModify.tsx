@@ -19,9 +19,11 @@ export const useRoomObjectModify = () => {
 
     const isFurnitureOwner = (object: IRoomObject) => ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId);
 
-    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest || isFurnitureOwner(room.getRoomObject(objectId, category))); // or isModerator
+    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest || isFurnitureOwner(room.getRoomObject(objectId, category)))); // or isModerator
 
     const modifyRoomObject = (objectId: number, category: RoomObjectCategoryEnum, operation: RoomObjectOperationType) => {
+        if (!room) return false;
+
         const roomObject = room.getRoomObject(objectId, category);
 
         if (!roomObject) return false;
@@ -125,7 +127,7 @@ export const useRoomObjectModify = () => {
                     NitroLogger.sendPacket(`new FurnitureFloorUpdateComposer(objectId, location.x, location.y, direction`);
                 } else if (category === RoomObjectCategoryEnum.Wall) {
                     const _angle = roomObject.getDirection().x % 360;
-                    const _location = room.instance.legacyGeometry.getOldLocationString(roomObject.getLocation(), _angle);
+                    const _location = room.legacyGeometry.getOldLocationString(roomObject.getLocation(), _angle);
 
                     NitroLogger.sendPacket(`new FurnitureWallUpdateComposer(objectId, location)`);
                 } else if (category === RoomObjectCategoryEnum.Unit) {

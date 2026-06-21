@@ -2,9 +2,6 @@ import type { RoomGeometryScaleType } from './enum';
 import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type { IRoomObject, IRoomObjectModel, RoomObjectCategoryEnum } from './object';
-import type {
-    ILegacyWallGeometry,
-} from './utils';
 
 export interface IRoomInstance {
     dispose(): void;
@@ -28,12 +25,10 @@ export interface IRoomInstance {
     removeUpdateCategory(category: RoomObjectCategoryEnum): void;
     update(time: number, update?: boolean): void;
     hasUninitializedObjects(): boolean;
-    setLegacyGeometry(geometry: ILegacyWallGeometry);
     readonly id: number;
     readonly canvas: IRoomRenderingCanvas | undefined;
     readonly objects: Map<number, IRoomObject>;
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly model: IRoomObjectModel;
     roomObjectVariableAccurateZ: string;
-    legacyGeometry: ILegacyWallGeometry;
 }

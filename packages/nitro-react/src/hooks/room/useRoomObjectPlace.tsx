@@ -20,7 +20,7 @@ export const useRoomObjectPlace = () => {
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
 
     const placeObject = (isTileEvent: boolean, isWallEvent: boolean) => {
-        if (!selectedObject) return;
+        if (!room || !selectedObject) return;
 
         let objectId = selectedObject.objectId;
         const category = selectedObject.category;
@@ -42,7 +42,7 @@ export const useRoomObjectPlace = () => {
             z = location.z;
 
             if (category === RoomObjectCategoryEnum.Wall) {
-                const wallGeometry = room.instance.legacyGeometry;
+                const wallGeometry = room.legacyGeometry;
 
                 if (wallGeometry) wallLocation = wallGeometry.getOldLocationString(location, direction);
             }
@@ -90,7 +90,7 @@ export const useRoomObjectPlace = () => {
     };
 
     const placeObjectOnUser = (objectId: number, category: RoomObjectCategoryEnum) => {
-        room.dispatchEvent(
+        room?.dispatchEvent(
             new RoomEngineObjectPlacedOnUserEvent(
                 RoomEngineObjectEvent.PLACED_ON_USER,
                 room.roomId,
@@ -103,15 +103,15 @@ export const useRoomObjectPlace = () => {
     };
 
     const handleUserPlace = (roomObject: IRoomObjectController, x: number, y: number) => {
-        if (!room.instance.legacyGeometry.isRoomTile(x, y)) return false;
+        if (!room || !room.legacyGeometry.isRoomTile(x, y)) return false;
 
-        roomObject.setLocation(new Vector3d(x, y, room.instance.legacyGeometry.getHeight(x, y)));
+        roomObject.setLocation(new Vector3d(x, y, room.legacyGeometry.getHeight(x, y)));
 
         return true;
     };
 
     const handleObjectPlace = (event: RoomObjectMouseEvent) => {
-        if (!event || !selectedObject) return;
+        if (!room || !event || !selectedObject) return;
 
         let roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);
 

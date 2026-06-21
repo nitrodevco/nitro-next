@@ -1,5 +1,6 @@
 import type {
     IEventDispatcher,
+    ILegacyWallGeometry,
     INitroEvent,
     IObjectData,
     IPetCustomPart,
@@ -76,6 +77,7 @@ export class Room implements IRoom {
     private _modelName: string;
 
     private _areaSelection: IRoomAreaSelectionManager;
+    private _legacyGeometry: ILegacyWallGeometry;
 
     constructor(roomId: number, instance: IRoomInstance) {
         this._roomId = roomId;
@@ -986,6 +988,14 @@ export class Room implements IRoom {
         sprite.parent?.removeChild(sprite);
     }
 
+    public setLegacyGeometry(geometry: ILegacyWallGeometry) {
+        if (this._legacyGeometry) {
+            this._legacyGeometry.dispose();
+        }
+
+        this._legacyGeometry = geometry;
+    }
+
     public getRoomValue<T>(key: RoomObjectVariableEnum): T {
         return this._instance?.model.getValue(key);
     }
@@ -1042,6 +1052,10 @@ export class Room implements IRoom {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
     }
 
+    public get legacyGeometry(): ILegacyWallGeometry {
+        return this._legacyGeometry;
+    }
+
     private getPetTypeId(figure: string): number {
         let type = -1;
 
@@ -1074,10 +1088,10 @@ export class Room implements IRoom {
         let z = location.z;
         const tileHeight = 0;
         // TODO FIX const tileHeight = this._instance.furnitureStackingHeightMap.getTileHeight(location.x, location.y);
-        const wallHeight = this._instance.legacyGeometry.getHeight(location.x, location.y);
+        const wallHeight = this._legacyGeometry.getHeight(location.x, location.y);
 
         if (Math.abs(z - tileHeight) < 0.1 && Math.abs(tileHeight - wallHeight) < 0.1) {
-            z = this._instance.legacyGeometry.getFloorAltitude(location.x, location.y);
+            z = this._legacyGeometry.getFloorAltitude(location.x, location.y);
         }
 
         return new Vector3d(location.x, location.y, z);

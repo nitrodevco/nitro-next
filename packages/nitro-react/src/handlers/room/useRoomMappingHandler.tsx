@@ -190,7 +190,7 @@ export const useRoomMappingHandler = () => {
         const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
 
         room.applyRoomMap(mapData);
-        room.instance.setLegacyGeometry(wallGeometry);
+        room.setLegacyGeometry(wallGeometry);
     });
 
     useMessageListener(HeightMapMessage, data => {
