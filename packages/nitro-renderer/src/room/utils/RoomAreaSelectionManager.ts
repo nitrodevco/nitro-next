@@ -4,7 +4,6 @@ import type { RoomObjectTileMouseEvent } from '@nitrodevco/nitro-shared';
 import { RoomObjectMouseEvent } from '@nitrodevco/nitro-shared';
 import { ColorMatrixFilter } from 'pixi.js';
 
-import { GetRoomEngine } from '../GetRoomEngine';
 import type { RoomVisualization } from '../object';
 import type { FurnitureVisualization } from '../object';
 
@@ -71,7 +70,8 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.AWAITING_MOUSE_DOWN;
 
-        GetRoomEngine().moveBlocked = true;
+        // TODO
+        // set isMoveBlocked = true;
     }
 
     public finishSelecting(): boolean {
@@ -79,7 +79,8 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.NOT_SELECTING_AREA;
 
-        GetRoomEngine().moveBlocked = false;
+        // TODO
+        // set isMoveBlocked = false;
 
         if (this._callback)
             this._callback(this._highlightRootX, this._highlightRootY, this._highlightWidth, this._highlightHeight);
@@ -170,7 +171,8 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.NOT_SELECTING_AREA;
 
-        GetRoomEngine().moveBlocked = false;
+        // TODO
+        // set isMoveBlocked = false;
 
         if (this._callback) this._callback(0, 0, 0, 0);
     }

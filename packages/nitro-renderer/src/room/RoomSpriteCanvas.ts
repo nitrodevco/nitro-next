@@ -1,7 +1,7 @@
 import type {
+    IRoom,
     IRoomEventHandler,
     IRoomGeometry,
-    IRoomInstance,
     IRoomObject,
     IRoomObjectSprite,
     IRoomObjectSpriteVisualization,
@@ -28,6 +28,7 @@ import {
 } from './utils';
 
 export class RoomSpriteCanvas implements IRoomRenderingCanvas {
+    private _room: IRoom;
     private _geometry: IRoomGeometry;
     private _renderTimestamp: number = 0;
 
@@ -81,19 +82,19 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _eventHandler: IRoomEventHandler | undefined = undefined;
 
     constructor(
-        private _id: number,
-        private _instance: IRoomInstance,
+        room: IRoom,
         width: number,
         height: number,
         scale: RoomGeometryScaleType,
     ) {
+        this._room = room;
         this._geometry = new RoomGeometry(
             scale,
             new Vector3d(-135, 30, 0),
             new Vector3d(11, 11, 5),
             new Vector3d(-135, 0.5, 0),
         );
-        this._objectCache = new RoomObjectCache(this._instance.roomObjectVariableAccurateZ);
+        this._objectCache = new RoomObjectCache();
 
         this.setupCanvas();
         this.initialize(width, height);
@@ -256,7 +257,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public render(time: number, update: boolean = false): void {
-        if (!this._instance || !this._geometry) return;
+        if (!this._geometry) return;
 
         if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) update = true;
 
@@ -274,7 +275,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this._zDirty = false;
 
-        const objects = this._instance.objects;
+        const objects = this._room.objects;
 
         for (const object of objects.values()) {
             if (!object) continue;
@@ -883,14 +884,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     protected processMouseEvents(): void {
-        if (!this._instance || !this._eventCache) return;
+        if (!this._eventCache) return;
 
         for (const [key, event] of this._eventCache.entries()) {
             if (!this._eventCache) return;
 
             if (!event) continue;
 
-            const roomObject = this._instance.getRoomObjectByInstanceId(parseInt(key));
+            const roomObject = this._room.getRoomObjectByInstanceId(parseInt(key));
 
             if (!roomObject) continue;
 
@@ -1103,10 +1104,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._geometry.location,
             new Vector3d(Math.cos(direction) * Math.sqrt(2), Math.sin(direction) * Math.sqrt(2)),
         ));
-    }
-
-    public get id(): number {
-        return this._id;
     }
 
     public get geometry(): IRoomGeometry {

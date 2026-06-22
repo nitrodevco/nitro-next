@@ -31,13 +31,13 @@ export const RoomCanvas = () => {
 
             RoomEnterEffect.turnVisualizationOn();
 
-            room.instance.update(time, update);
+            room.update(time, update);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 
             if (mouseData.wasDragged) {
-                const offsetX = ~~(room.instance.canvas?.screenOffsetX || 0);
-                const offsetY = ~~(room.instance.canvas?.screenOffsetY || 0);
+                const offsetX = ~~(room.canvas?.screenOffsetX || 0);
+                const offsetY = ~~(room.canvas?.screenOffsetY || 0);
 
                 room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 

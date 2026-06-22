@@ -1,6 +1,5 @@
 
 import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
-import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 
 import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector } from '#base/context';
@@ -17,7 +16,7 @@ export const useRoomEventHandler = () => {
     const room = useRoomSelector();
     const selectedObject = useRoomSelectedObject();
     const placedObject = useRoomPlacedObject();
-    const { isSpectator, isDecorating, isPlayingGame } = useRoomInteractionSelector();
+    const { isSpectator, isDecorating, isPlayingGame, isMoveBlocked } = useRoomInteractionSelector();
     const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
     const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
@@ -27,6 +26,8 @@ export const useRoomEventHandler = () => {
     const { handleMoveTargetFurni } = useRoomObjectInteraction();
 
     const handleRoomObjectMouseEvent = (event: RoomObjectMouseEvent) => {
+        if (!room) return;
+
         if (event instanceof RoomObjectTileMouseEvent) room.areaSelection.handleTileMouseEvent(event);
 
         switch (event.type) {
@@ -91,7 +92,7 @@ export const useRoomEventHandler = () => {
                             if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
                                 if (isDecorating || isSpectator) return;
 
-                                if (!GetRoomEngine().moveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
+                                if (!isMoveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
                             }
                         } else {
                             if (!room.isAreaSelectionMode || category === RoomObjectCategoryEnum.Unit) {

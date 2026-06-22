@@ -2,8 +2,6 @@ import type {
     IObjectData,
     IRoom,
     IRoomEngine,
-    IRoomManager,
-    IRoomObject,
     IRoomObjectController,
     IVector3D,
     RoomGeometryScaleType,
@@ -28,17 +26,8 @@ import { RoomGeometry } from './utils';
 export class RoomEngine implements IRoomEngine {
     public static TEMORARY_ROOM_ID: number = -1;
 
-    private _roomManager: IRoomManager;
-
     private _rooms: Map<number, IRoom> = new Map();
     private _imageObjectIdBank = new NumberBank(1000);
-
-    private _isPlayingGame: boolean = false;
-    private _moveBlocked: boolean = false;
-
-    constructor(roomManager: IRoomManager) {
-        this._roomManager = roomManager;
-    }
 
     public async init(): Promise<void> {
         await GetRoomContentLoader().init();
@@ -49,11 +38,7 @@ export class RoomEngine implements IRoomEngine {
 
         if (room) return room;
 
-        const instance = this._roomManager.createRoomInstance(roomId);
-
-        if (!instance) throw new Error('invalid_instance');
-
-        room = new Room(roomId, instance);
+        room = new Room(roomId);
 
         room.prepareRoom();
 
@@ -161,21 +146,5 @@ export class RoomEngine implements IRoomEngine {
 
     public getTemporaryRoom(): IRoom {
         return this.createRoom(RoomEngine.TEMORARY_ROOM_ID);
-    }
-
-    private getRoomObjectRoomId(object: IRoomObject): number | undefined {
-        return object.model.getValue<number>(RoomObjectVariableEnum.ObjectRoomId) ?? undefined;
-    }
-
-    public whereYouClickIsWhereYouGo(): boolean {
-        return true;
-    }
-
-    public get moveBlocked(): boolean {
-        return this._moveBlocked;
-    }
-
-    public set moveBlocked(value: boolean) {
-        this._moveBlocked = value;
     }
 }

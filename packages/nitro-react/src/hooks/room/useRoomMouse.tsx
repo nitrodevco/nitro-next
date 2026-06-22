@@ -1,3 +1,4 @@
+import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { MouseEventType, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
 import { RoomDragEvent, RoomDraggedEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
@@ -32,7 +33,7 @@ export const useRoomMouse = () => {
         ctrlKey: boolean,
         shiftKey: boolean
     ) => {
-        if (isPlayingGame) return false;
+        if (!room || !room.canvas || isPlayingGame) return false;
 
         const mouseData = mouseDataRef.current;
 
@@ -42,10 +43,6 @@ export const useRoomMouse = () => {
 
             return false;
         }
-
-        const canvas = room.instance?.canvas;
-
-        if (!canvas) return false;
 
         let offsetX = x - mouseData.mouseXY.x;
         let offsetY = y - mouseData.mouseXY.y;
@@ -60,7 +57,7 @@ export const useRoomMouse = () => {
             if (mouseData.isDragged) {
                 mouseData.isDragged = false;
 
-                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(room.roomId, -canvas.screenOffsetX, -canvas.screenOffsetY));
+                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(room.roomId, -room.canvas.screenOffsetX, -room.canvas.screenOffsetY));
             }
         } else if (type === MouseEventType.MOUSE_MOVE) {
             if (mouseData.isDragged) {
@@ -86,7 +83,7 @@ export const useRoomMouse = () => {
                     mouseData.dragXY.y += offsetY;
                     mouseData.wasDragged = true;
 
-                    room.dispatchEvent(new RoomDragEvent(room.roomId, -(canvas.screenOffsetX - offsetX), -(canvas.screenOffsetY - offsetY)));
+                    room.dispatchEvent(new RoomDragEvent(room.roomId, -(room.canvas.screenOffsetX - offsetX), -(room.canvas.screenOffsetY - offsetY)));
                 }
             }
         } else if (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK) {
@@ -124,7 +121,7 @@ export const useRoomMouse = () => {
 
         if (
             !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
-            !room.instance.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+            !room.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
         ) {
             let eventType: string = '';
 
@@ -135,7 +132,7 @@ export const useRoomMouse = () => {
 
             room.eventHandler.handleRoomObjectEvent(new RoomObjectMouseEvent(
                 eventType,
-                room.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room),
+                room.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room) as IRoomObject,
                 -1,
                 altKey,
                 ctrlKey,

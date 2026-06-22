@@ -1,19 +1,12 @@
-﻿import type { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomObjectLocationCacheItem {
-    private _roomObjectVariableAccurateZ: string;
-
     private _location: Vector3d = new Vector3d();
     private _screenLocation: Vector3d = new Vector3d();
     private _locationChanged: boolean = false;
 
     private _geometryUpdateId: number = -1;
     private _objectUpdateId: number = -1;
-
-    constructor(accurateZ: string) {
-        this._roomObjectVariableAccurateZ = accurateZ || '';
-    }
 
     public dispose(): void {
         this._screenLocation = undefined!;
@@ -51,21 +44,19 @@ export class RoomObjectLocationCacheItem {
 
             const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);
 
-                if (rounded.x !== location.x || rounded.y !== location.y) {
-                    const roundedScreen = geometry.getScreenPosition(rounded);
+            if ((rounded.x !== location.x) || (rounded.y !== location.y)) {
+                const roundedScreen = geometry.getScreenPosition(rounded);
 
-                    this._screenLocation.assign(screenLocation);
+                this._screenLocation.assign(screenLocation);
 
-                    if (roundedScreen) this._screenLocation.z = roundedScreen.z;
-                } else {
-                    this._screenLocation.assign(screenLocation);
-                }
-            } else {
+                if (roundedScreen) this._screenLocation.z = roundedScreen.z;
+            }
+            else {
                 this._screenLocation.assign(screenLocation);
             }
 
-            this._screenLocation.x = Math.round(this._screenLocation.x);
-            this._screenLocation.y = Math.round(this._screenLocation.y);
+            this._screenLocation.x = Math.round(screenLocation.x);
+            this._screenLocation.y = Math.round(screenLocation.y);
         }
 
         return this._screenLocation;

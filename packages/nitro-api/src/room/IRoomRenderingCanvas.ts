@@ -32,7 +32,6 @@ export interface IRoomRenderingCanvas {
     moveUp(): void;
     moveDown(): void;
     removeFromCache(identifier: number): void;
-    id: number;
     geometry: IRoomGeometry;
     master: Container | undefined;
     display: Container | undefined;

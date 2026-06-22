@@ -20,6 +20,8 @@ export const selectIsSpectator = (state: RoomStore) => state.isSpectator;
 
 export const selectIsPlayingGame = (state: RoomStore) => state.isPlayingGame;
 
+export const selectIsMoveBlocked = (state: RoomStore) => state.isMoveBlocked;
+
 export const selectRoomPermissions = (state: RoomStore) => ({
     controllerLevel: state.controllerLevel,
     isRoomOwner: state.isRoomOwner
@@ -35,5 +37,6 @@ export const selectRoomSettings = (state: RoomStore) => ({
 export const selectRoomInteractionState = (state: RoomStore) => ({
     isPlayingGame: state.isPlayingGame,
     isSpectator: state.isSpectator,
-    isDecorating: state.isDecorating
+    isDecorating: state.isDecorating,
+    isMoveBlocked: state.isMoveBlocked
 });

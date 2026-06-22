@@ -6,7 +6,7 @@ import type { IVector3D } from '../utils';
 import type { RoomGeometryScaleType } from './enum';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
-import type { IRoomInstance } from './IRoomInstance';
+import type { IRoomObjectManager } from './IRoomObjectManager';
 import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
 import type {
     IObjectData,
@@ -19,15 +19,24 @@ import type {
 import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
+    dispose(): void;
     prepareRoom(): boolean;
     getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
     applyRoomMap(roomMap: IRoomMapData): void;
+    update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getGeometry(): IRoomGeometry | undefined;
-    getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController;
+    getRoomObjectManager(category: number): IRoomObjectManager | undefined;
+    getTotalObjectsForManager(category: RoomObjectCategoryEnum): number;
+    getObjectInstanceId(object: IRoomObject): number;
+    getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController | undefined;
+    getRoomObjectByIndex(index: number, category: RoomObjectCategoryEnum): IRoomObject | undefined;
+    getRoomObjectByInstanceId(instanceId: number): IRoomObject | undefined;
     getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[];
     getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum;
+    hasUninitializedRoomObjects(): boolean;
+    removeAllRoomObjectManagers(): void;
     removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void;
     createRoomObjectAndInitalize(
         objectId: number,
@@ -139,18 +148,21 @@ export interface IRoom {
     removeRoomOverlayIconSprite(): void;
     setLegacyGeometry(geometry: ILegacyWallGeometry): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
-    getRoomObjectRoom(): IRoomObjectController;
-    getRoomObjectCursor(): IRoomObjectController;
-    getRoomObjectSelectionArrow(): IRoomObjectController;
+    setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void;
+    getRoomObjectRoom(): IRoomObjectController | undefined;
+    getRoomObjectCursor(): IRoomObjectController | undefined;
+    getRoomObjectSelectionArrow(): IRoomObjectController | undefined;
     getRoomOverlay(): Container | undefined;
     getRoomOverlayIconSprite(): Container | undefined;
     dispatchEvent(event: INitroEvent): void;
+    readonly disposed: boolean;
     readonly roomId: number;
-    readonly modelName: string;
-    readonly instance: IRoomInstance;
     readonly eventDispatcher: IEventDispatcher;
+    readonly canvas: IRoomRenderingCanvas | undefined;
     readonly eventHandler: IRoomEventHandler;
+    readonly objects: Map<number, IRoomObject>;
+    readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
-    readonly legacyGeometry: ILegacyWallGeometry;
+    readonly legacyGeometry: ILegacyWallGeometry | undefined;
 }

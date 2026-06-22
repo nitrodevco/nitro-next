@@ -8,10 +8,11 @@ import type {
     IRoomAreaSelectionManager,
     IRoomEventHandler,
     IRoomGeometry,
-    IRoomInstance,
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectManager,
+    IRoomObjectModel,
     IRoomRenderingCanvas,
     IVector3D, RoomObjectUserType
 } from '@nitrodevco/nitro-api';
@@ -42,10 +43,9 @@ import { type PointData, Sprite } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { FurniId, GetTickerTime } from '../utils';
+import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
-import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
-import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
 import {
     ObjectAvatarFigureUpdateMessage,
     ObjectAvatarUpdateMessage,
@@ -55,8 +55,9 @@ import {
     ObjectRoomUpdateMessage,
     RoomObjectUpdateMessage,
 } from './messages';
-import { RoomLogic } from './object';
+import { RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
+import { RoomSpriteCanvas } from './RoomSpriteCanvas';
 import { RoomAreaSelectionManager } from './utils';
 
 export class Room implements IRoom {
@@ -70,26 +71,49 @@ export class Room implements IRoom {
     public static OVERLAY_ICON_SPRITE: string = 'overlay_icon_sprite';
 
     private _roomId: number;
-    private _instance: IRoomInstance;
+    private _disposed: boolean = false;
     private _eventDispatcher: IEventDispatcher;
     private _eventHandler: IRoomEventHandler;
-
-    private _modelName: string;
-
+    private _model: IRoomObjectModel = new RoomObjectModel();
+    private _objects: Map<number, IRoomObject> = new Map();
+    private _objectManagers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
+    private _updateCategories: RoomObjectCategoryEnum[] = [
+        RoomObjectCategoryEnum.Floor,
+        RoomObjectCategoryEnum.Wall,
+        RoomObjectCategoryEnum.Unit,
+        RoomObjectCategoryEnum.Cursor,
+        RoomObjectCategoryEnum.Room,
+    ];
+    private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
+    private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
-    private _legacyGeometry: ILegacyWallGeometry;
 
-    constructor(roomId: number, instance: IRoomInstance) {
+    constructor(roomId: number) {
         this._roomId = roomId;
-        this._instance = instance;
         this._eventDispatcher = new EventDispatcher();
         this._eventHandler = new RoomEventHandler(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
     }
 
+    public dispose(): void {
+        this.removeAllRoomObjectManagers();
+
+        if (this._canvas) {
+            this._canvas.dispose();
+
+            this._canvas = undefined;
+        }
+
+        this._model.dispose();
+
+        // dispatch room disposed event
+
+        this._disposed = true;
+    }
+
     public prepareRoom(): boolean {
-        this._instance.model.setValue(RoomObjectVariableEnum.RoomIsPublic, 0);
-        this._instance.model.setValue(RoomObjectVariableEnum.RoomZScale, 1);
+        this.setRoomValue(RoomObjectVariableEnum.RoomIsPublic, 0);
+        this.setRoomValue(RoomObjectVariableEnum.RoomZScale, 1);
 
         this.createRoomObjectAndInitalize(
             Room.CURSOR_OBJECT_ID,
@@ -107,18 +131,18 @@ export class Room implements IRoom {
     }
 
     public getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
-        if (!this._instance.canvas) {
-            this._instance.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
+        if (this._canvas) {
+            this._canvas.initialize(width, height);
+
+            if (this._canvas.geometry) this._canvas.geometry.scale = scale;
+        } else {
+            this._canvas = new RoomSpriteCanvas(this, width, height, scale);
         }
 
-        this._instance.roomObjectVariableAccurateZ = RoomObjectVariableEnum.ObjectAccurateZValue;
+        this._canvas.setEventHandler(this._eventHandler);
 
-        const canvas = this._instance.createCanvas(width, height, scale);
-
-        canvas.setEventHandler(this._eventHandler);
-
-        if (canvas.geometry) {
-            canvas.geometry.zScale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
+        if (this._canvas.geometry) {
+            this._canvas.geometry.zScale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
 
             const doorX = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorX);
             const doorY = this.getRoomValue<number>(RoomObjectVariableEnum.RoomDoorY);
@@ -132,35 +156,33 @@ export class Room implements IRoom {
 
             if (doorDirection === 180) direction = new Vector3d(0, -2000, 0);
 
-            if (direction) canvas.geometry.setDisplacement(vector, direction);
+            if (direction) this._canvas.geometry.setDisplacement(vector, direction);
         }
 
-        const overlay = new Container();
+        let overlay = this.getRoomOverlay();
 
-        overlay.label = Room.OVERLAY;
-        overlay.interactive = false;
+        if (!overlay) {
+            overlay = new Container();
 
-        canvas.master?.addChild(overlay);
+            overlay.label = Room.OVERLAY;
+            overlay.interactive = false;
 
-        return canvas;
+            this._canvas.master?.addChild(overlay);
+        }
+
+        return this._canvas;
     }
 
     public applyRoomMap(roomMap: IRoomMapData): void {
         if (!roomMap) return;
 
-        let roomObject = this._instance.getRoomObject(
+        this.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
+
+        const roomObject = (this.createRoomObjectAndInitalize(
             Room.ROOM_OBJECT_ID,
+            Room.ROOM_OBJECT_TYPE,
             RoomObjectCategoryEnum.Room,
-        ) as IRoomObjectController;
-
-        if (roomObject) this._instance.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
-
-        if (!roomObject)
-            roomObject = (this.createRoomObjectAndInitalize(
-                Room.ROOM_OBJECT_ID,
-                Room.ROOM_OBJECT_TYPE,
-                RoomObjectCategoryEnum.Room,
-            )) as IRoomObjectController;
+        )) as IRoomObjectController;
 
         if (!roomObject || !(roomObject.logic instanceof RoomLogic)) return;
 
@@ -172,10 +194,10 @@ export class Room implements IRoom {
             const minY = roomMap.dimensions.minY;
             const maxY = roomMap.dimensions.maxY;
 
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomMinX, minX);
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomMaxX, maxX);
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomMinY, minY);
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomMaxY, maxY);
+            this.setRoomValue(RoomObjectVariableEnum.RoomMinX, minX);
+            this.setRoomValue(RoomObjectVariableEnum.RoomMaxX, maxX);
+            this.setRoomValue(RoomObjectVariableEnum.RoomMinY, minY);
+            this.setRoomValue(RoomObjectVariableEnum.RoomMaxY, maxY);
 
             const seed = Math.trunc(minX * 423 + maxX * 671 + minY * 913 + maxY * 7509);
 
@@ -211,17 +233,17 @@ export class Room implements IRoom {
 
                     if (doorDir === 90 || doorDir === 180) {
                         if (doorDir === 90) {
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorX, doorX - 0.5);
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorY, doorY);
+                            this.setRoomValue(RoomObjectVariableEnum.RoomDoorX, doorX - 0.5);
+                            this.setRoomValue(RoomObjectVariableEnum.RoomDoorY, doorY);
                         }
 
                         if (doorDir === 180) {
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorX, doorX);
-                            this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorY, doorY - 0.5);
+                            this.setRoomValue(RoomObjectVariableEnum.RoomDoorX, doorX);
+                            this.setRoomValue(RoomObjectVariableEnum.RoomDoorY, doorY - 0.5);
                         }
 
-                        this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorZ, doorZ);
-                        this._instance.model.setValue(RoomObjectVariableEnum.RoomDoorDir, doorDir);
+                        this.setRoomValue(RoomObjectVariableEnum.RoomDoorZ, doorZ);
+                        this.setRoomValue(RoomObjectVariableEnum.RoomDoorDir, doorDir);
                     }
                 }
 
@@ -237,22 +259,37 @@ export class Room implements IRoom {
             roomObject.processUpdateMessage(
                 new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType),
             );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomFloorType, floorType);
+            this.setRoomValue(RoomObjectVariableEnum.RoomFloorType, floorType);
         }
 
         if (wallType) {
             roomObject.processUpdateMessage(
                 new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType),
             );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomWallType, wallType);
+            this.setRoomValue(RoomObjectVariableEnum.RoomWallType, wallType);
         }
 
         if (landscapeType) {
             roomObject.processUpdateMessage(
                 new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType),
             );
-            this._instance.model.setValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
+            this.setRoomValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
         }
+    }
+
+    public update(time: number, update: boolean = false): void {
+        if (this._disposed) return;
+
+        for (const category of this._updateCategories) {
+            const objects = this.getRoomObjectManager(category)?.objects;
+
+            if (!objects || !objects.length) continue;
+
+            for (const object of objects.getValues()) object?.logic?.update(time);
+        }
+
+        this._canvas?.render(time, update);
+        this._canvas?.update();
     }
 
     public getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined {
@@ -261,7 +298,7 @@ export class Room implements IRoom {
 
         if (!roomObject || !rectangle) return undefined;
 
-        const canvas = this._instance.canvas;
+        const canvas = this._canvas;
         const screenPoint = canvas?.geometry?.getScreenPoint(roomObject.getLocation());
 
         if (!canvas || !screenPoint) return undefined;
@@ -287,52 +324,111 @@ export class Room implements IRoom {
     }
 
     public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
-        if (!this._instance.canvas || !point) return false;
+        if (!this._canvas || !point) return false;
 
         const x = ~~(point.x);
         const y = ~~(point.y);
 
-        if ((this._instance.canvas.screenOffsetX === x) && (this._instance.canvas.screenOffsetY === y)) return false;
+        if ((this._canvas.screenOffsetX === x) && (this._canvas.screenOffsetY === y)) return false;
 
-        this._instance.canvas.screenOffsetX = x;
-        this._instance.canvas.screenOffsetY = y;
+        this._canvas.screenOffsetX = x;
+        this._canvas.screenOffsetY = y;
 
         return true;
     }
 
     public getGeometry(): IRoomGeometry | undefined {
-        return this._instance?.canvas?.geometry;
+        return this._canvas?.geometry;
     }
 
-    public getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController {
-        const roomObject = this._instance.getRoomObject(objectId, category) as IRoomObjectController;
+    public getRoomObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager {
+        let manager = this._objectManagers.get(category);
 
-        if (!roomObject) {
-            switch (category) {
-                case RoomObjectCategoryEnum.Floor: {
-                    //this.addObjectFurnitureFromData(this.getRoomIdFromString(roomId), objectId, null);
-                    break;
-                }
-                case RoomObjectCategoryEnum.Wall: {
-                    //this.addObjectWallItemFromData(this.getRoomIdFromString(roomId), objectId, null);
-                    break;
-                }
-            }
+        if (!manager) {
+            manager = new RoomObjectManager();
+
+            this._objectManagers.set(category, manager);
         }
 
-        return roomObject;
+        return manager;
+    }
+
+    public getTotalObjectsForManager(category: RoomObjectCategoryEnum): number {
+        return this.getRoomObjectManager(category).totalObjects;
+    }
+
+    public getObjectInstanceId(object: IRoomObject): number {
+        return object?.instanceId ?? -1;
+    }
+
+    public getRoomObject(objectId: number, category: RoomObjectCategoryEnum): IRoomObjectController | undefined {
+        return this.getRoomObjectManager(category).getObject(objectId);
+    }
+
+    public getRoomObjectByIndex(index: number, category: RoomObjectCategoryEnum): IRoomObjectController | undefined {
+        return this.getRoomObjectManager(category)?.getObjectByIndex(index);
+    }
+
+    public getRoomObjectByInstanceId(instanceId: number): IRoomObject | undefined {
+        return this._objects.get(instanceId);
     }
 
     public getRoomObjectsForCategory(category: RoomObjectCategoryEnum): IRoomObject[] {
-        return this._instance.getRoomObjectsForCategory(category);
+        return this.getRoomObjectManager(category).objects.getValues() ?? [];
     }
 
     public getRoomObjectCategoryForType(type: string): RoomObjectCategoryEnum {
         return GetRoomContentLoader().getCategoryForType(type);
     }
 
+    public hasUninitializedRoomObjects(): boolean {
+        for (const manager of this._objectManagers.values()) {
+            if (!manager) continue;
+
+            for (const object of manager.objects.getValues()) {
+                if (!object) continue;
+
+                if (!object.isReady) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public removeAllRoomObjectManagers(): void {
+        for (const manager of this._objectManagers.values()) {
+            if (!manager) continue;
+
+            for (const object of manager.objects.getValues()) {
+                if (!object) continue;
+
+                object.tearDown();
+
+                this._objects.delete(object.instanceId);
+                this._canvas?.removeFromCache(object.instanceId);
+            }
+
+            manager.dispose();
+        }
+
+        this._objectManagers.clear();
+    }
+
     public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
-        this._instance.removeRoomObject(objectId, category);
+        const manager = this.getRoomObjectManager(category);
+
+        if (!manager) return;
+
+        const object = manager.getObject(objectId);
+
+        if (!object) return;
+
+        object.tearDown();
+
+        this._objects.delete(object.instanceId);
+        this._canvas?.removeFromCache(object.instanceId);
+
+        manager.removeObject(objectId);
 
         this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.REMOVED, this._roomId, objectId, category),
@@ -380,9 +476,11 @@ export class Room implements IRoom {
 
             if (!visualizationData || !visualization.initialize(visualizationData)) return undefined;
 
-            const object = this._instance.createRoomObject(objectId, 1, type, category) as IRoomObjectController;
+            const object = this.getRoomObjectManager(category).createObject(objectId, 1, type);
 
             if (object) {
+                this._objects.set(this.getObjectInstanceId(object), object);
+
                 object.setVisualization(visualization);
 
                 const logic = GetRoomObjectLogicFactory().getLogic(asset.data.logicType);
@@ -446,7 +544,7 @@ export class Room implements IRoom {
             asset.data
         );
 
-        for (const [category, manager] of this._instance.managers.entries()) {
+        for (const [category, manager] of this._objectManagers.entries()) {
             for (const object of manager.objects.getValues()) {
                 if (!object || object.type !== type) continue;
 
@@ -855,18 +953,17 @@ export class Room implements IRoom {
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
-        const canvas = this._instance?.canvas;
         const roomObject = this.getRoomObject(objectId, category);
 
-        if (!canvas || !roomObject) return undefined;
+        if (!this._canvas || !roomObject) return undefined;
 
-        const screenPoint = canvas.geometry.getScreenPoint(roomObject.getLocation());
+        const screenPoint = this._canvas.geometry.getScreenPoint(roomObject.getLocation());
 
-        screenPoint.x = screenPoint.x * canvas.scale;
-        screenPoint.y = screenPoint.y * canvas.scale;
+        screenPoint.x = screenPoint.x * this._canvas.scale;
+        screenPoint.y = screenPoint.y * this._canvas.scale;
 
-        screenPoint.x += canvas.width / 2 + canvas.screenOffsetX;
-        screenPoint.y += canvas.height / 2 + canvas.screenOffsetY;
+        screenPoint.x += this._canvas.width / 2 + this._canvas.screenOffsetX;
+        screenPoint.y += this._canvas.height / 2 + this._canvas.screenOffsetY;
 
         screenPoint.x = Math.round(screenPoint.x);
         screenPoint.y = Math.round(screenPoint.y);
@@ -997,23 +1094,27 @@ export class Room implements IRoom {
     }
 
     public getRoomValue<T>(key: RoomObjectVariableEnum): T {
-        return this._instance?.model.getValue(key);
+        return this._model.getValue(key);
     }
 
-    public getRoomObjectRoom(): IRoomObjectController {
+    public setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void {
+        this._model.setValue(key, value);
+    }
+
+    public getRoomObjectRoom(): IRoomObjectController | undefined {
         return this.getRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
     }
 
-    public getRoomObjectCursor(): IRoomObjectController {
+    public getRoomObjectCursor(): IRoomObjectController | undefined {
         return this.getRoomObject(Room.CURSOR_OBJECT_ID, RoomObjectCategoryEnum.Cursor);
     }
 
-    public getRoomObjectSelectionArrow(): IRoomObjectController {
+    public getRoomObjectSelectionArrow(): IRoomObjectController | undefined {
         return this.getRoomObject(Room.ARROW_OBJECT_ID, RoomObjectCategoryEnum.Cursor);
     }
 
     public getRoomOverlay(): Container | undefined {
-        return this._instance.canvas?.master?.getChildByLabel(Room.OVERLAY) ?? undefined;
+        return this._canvas?.master?.getChildByLabel(Room.OVERLAY) ?? undefined;
     }
 
     public getRoomOverlayIconSprite(): Container | undefined {
@@ -1024,16 +1125,12 @@ export class Room implements IRoom {
         this._eventDispatcher.dispatchEvent(event);
     }
 
+    public get disposed(): boolean {
+        return this._disposed;
+    }
+
     public get roomId(): number {
         return this._roomId;
-    }
-
-    public get modelName(): string {
-        return this._modelName;
-    }
-
-    public get instance(): IRoomInstance {
-        return this._instance;
     }
 
     public get eventDispatcher(): IEventDispatcher {
@@ -1044,6 +1141,18 @@ export class Room implements IRoom {
         return this._eventHandler;
     }
 
+    public get objects(): Map<number, IRoomObject> {
+        return this._objects;
+    }
+
+    public get managers(): Map<RoomObjectCategoryEnum, IRoomObjectManager> {
+        return this._objectManagers;
+    }
+
+    public get canvas(): IRoomRenderingCanvas | undefined {
+        return this._canvas;
+    }
+
     public get areaSelection(): IRoomAreaSelectionManager {
         return this._areaSelection;
     }
@@ -1052,7 +1161,7 @@ export class Room implements IRoom {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
     }
 
-    public get legacyGeometry(): ILegacyWallGeometry {
+    public get legacyGeometry(): ILegacyWallGeometry | undefined {
         return this._legacyGeometry;
     }
 
@@ -1083,7 +1192,7 @@ export class Room implements IRoom {
     }
 
     private fixedUserLocation(location: IVector3D): IVector3D | undefined {
-        if (!location) return undefined;
+        if (!this._legacyGeometry || !location) return undefined;
 
         let z = location.z;
         const tileHeight = 0;

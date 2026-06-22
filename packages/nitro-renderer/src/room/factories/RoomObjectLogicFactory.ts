@@ -4,7 +4,7 @@ import type {
 } from '@nitrodevco/nitro-api';
 import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectLogicBase } from './object';
+import type { RoomObjectLogicBase } from '../object';
 import {
     AvatarLogic,
     FurnitureAchievementResolutionLogic,
@@ -72,7 +72,7 @@ import {
     RoomLogic,
     SelectionArrowLogic,
     TileCursorLogic,
-} from './object';
+} from '../object';
 
 export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
     public getLogic(type: string | undefined): IRoomObjectEventHandler | undefined {

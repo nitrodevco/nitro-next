@@ -12,11 +12,6 @@ export class RoomObjectCache {
     private static MAX_SIZE_FOR_AVG_COLOR: number = 200;
 
     private _data: Map<number, RoomObjectCacheItem> = new Map();
-    private _roomObjectVariableAccurateZ: string;
-
-    constructor(accurateZ: string) {
-        this._roomObjectVariableAccurateZ = accurateZ;
-    }
 
     public dispose(): void {
         if (this._data) {
@@ -36,7 +31,7 @@ export class RoomObjectCache {
         let existing = this._data.get(key);
 
         if (!existing) {
-            existing = new RoomObjectCacheItem(this._roomObjectVariableAccurateZ);
+            existing = new RoomObjectCacheItem();
 
             this._data.set(key, existing);
         }

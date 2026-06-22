@@ -111,7 +111,7 @@ export const useRoomCamera = () => {
     }
 
     const updateRoomCamera = (time: number) => {
-        const canvas = room.instance.canvas;
+        const canvas = room?.canvas;
 
         if (!canvas) return;
 

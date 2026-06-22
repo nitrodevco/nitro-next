@@ -6,7 +6,7 @@ import type {
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectSpriteVisualization } from './object';
+import type { RoomObjectSpriteVisualization } from '../object';
 import {
     AvatarVisualization,
     AvatarVisualizationData,
@@ -49,7 +49,7 @@ import {
     RoomVisualization,
     RoomVisualizationData,
     TileCursorVisualization,
-} from './object';
+} from '../object';
 
 export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory {
     private static CACHING_ENABLED: boolean = true;

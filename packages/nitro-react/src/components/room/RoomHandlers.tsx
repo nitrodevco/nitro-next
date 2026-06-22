@@ -1,3 +1,4 @@
+import { NitroLogger } from "@nitrodevco/nitro-api";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import { OpenConnectionMessage, RoomReadyMessage } from "@nitrodevco/nitro-shared";
 
@@ -9,7 +10,12 @@ export const RoomHandlers = () => {
     const { setRoom } = useRoomActions();
 
     useMessageListener(OpenConnectionMessage, data => {
-        setRoom(GetRoomEngine().createRoom(data.roomId));
+        try {
+            const room = GetRoomEngine().createRoom(data.roomId);
+            setRoom(room);
+        } catch (err) {
+            NitroLogger.error(err);
+        }
     });
 
     useMessageListener(RoomReadyMessage, data => {

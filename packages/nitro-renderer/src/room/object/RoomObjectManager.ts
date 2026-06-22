@@ -1,7 +1,7 @@
 import type { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-shared';
 
-import { RoomObject } from './object';
+import { RoomObject } from './RoomObject';
 
 export class RoomObjectManager implements IRoomObjectManager {
     private _objects: IAdvancedMap<number, IRoomObjectController> = new AdvancedMap();

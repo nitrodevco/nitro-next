@@ -4,6 +4,7 @@ export * from './selection/useRoomSelectedObject';
 export * from './selection/useRoomSelectedObjectDetails';
 export * from './session/useRoomControllerLevel';
 export * from './session/useRoomInteractionSelector';
+export * from './session/useRoomIsMoveBlocked';
 export * from './session/useRoomIsPlayingGame';
 export * from './session/useRoomPermissionsSelector';
 export * from './useRoomCameraSelector';

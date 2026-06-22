@@ -12,6 +12,7 @@ type State = {
     isDecorating: boolean;
     isSpectator: boolean;
     isPlayingGame: boolean;
+    isMoveBlocked: boolean;
 }
 
 type Actions = {
@@ -37,7 +38,8 @@ export const RoomSessionSliceInitialState: State = {
     isRoomOwner: true,
     isDecorating: false,
     isSpectator: false,
-    isPlayingGame: false
+    isPlayingGame: false,
+    isMoveBlocked: false
 };
 
 export type RoomSessionSlice = State & Actions;

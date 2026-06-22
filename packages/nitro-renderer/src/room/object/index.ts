@@ -76,6 +76,7 @@ export * from './RoomFloorHole';
 export * from './RoomMapData';
 export * from './RoomMapMaskData';
 export * from './RoomObject';
+export * from './RoomObjectManager';
 export * from './RoomObjectModel';
 export * from './RoomPlaneBitmapMaskData';
 export * from './RoomPlaneBitmapMaskParser';

@@ -15,6 +15,7 @@ export * from './room/selectors/selection/useRoomSelectedObject';
 export * from './room/selectors/selection/useRoomSelectedObjectDetails';
 export * from './room/selectors/session/useRoomControllerLevel';
 export * from './room/selectors/session/useRoomInteractionSelector';
+export * from './room/selectors/session/useRoomIsMoveBlocked';
 export * from './room/selectors/session/useRoomIsPlayingGame';
 export * from './room/selectors/session/useRoomPermissionsSelector';
 export * from './room/selectors/useRoomCameraSelector';
