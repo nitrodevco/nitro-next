@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+import type { IMessageDataWrapper } from '#api/communication/IMessageDataWrapper';
+
 import type { IObjectData } from './IObjectData';
 import { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 import {
@@ -13,7 +15,7 @@ import {
 } from './type';
 
 export const GetObjectDataForFlags = (flags: ObjectDataFlagsEnum) => {
-    let objectData: IObjectData | undefined = undefined;
+    let objectData: IObjectData;
 
     const baseFlags = (flags & 0xff);
 
@@ -45,9 +47,15 @@ export const GetObjectDataForFlags = (flags: ObjectDataFlagsEnum) => {
             break;
     }
 
-    if (!objectData) return undefined;
-
     objectData.flags = flags & 0xff00;
 
     return objectData;
 };
+
+export const GetObjectDataFromWrapper = (wrapper: IMessageDataWrapper) => {
+    const data = GetObjectDataForFlags(wrapper.readInt());
+
+    data.parseWrapper(wrapper);
+
+    return data;
+}

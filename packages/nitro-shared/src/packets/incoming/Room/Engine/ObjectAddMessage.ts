@@ -1,20 +1,20 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(FloorItem: RoomFloorItemSnapshot): Unknown type 'RoomFloorItemSnapshot'. Add override mapping.
+import { FloorItemParser } from './Data/FloorItemParser';
+import type { IRoomFloorItem } from './Data/IRoomFloorItem';
 
 export type ObjectAddMessageType = {
-  floorItem: any;
+    floorItem: IRoomFloorItem;
 };
 
-export class ObjectAddMessage implements IIncomingPacket<ObjectAddMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectAddMessageType
-  {
+export class ObjectAddMessage implements IIncomingPacket<ObjectAddMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectAddMessageType {
+        const packet: ObjectAddMessageType = {
+            floorItem: FloorItemParser(wrapper)
+        };
 
-    const packet: ObjectAddMessageType = {
-      floorItem: undefined as any, // Unknown type 'RoomFloorItemSnapshot'. Add override mapping.
-    };
+        packet.floorItem.ownerName = wrapper.readString();
 
-    return packet;
-  }
+        return packet;
+    }
 }

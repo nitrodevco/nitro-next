@@ -1,26 +1,21 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(ObjectId: RoomObjectId): Unknown type 'RoomObjectId'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ObjectRemoveMessageType = {
-  objectId: any;
-  isExpired: boolean;
-  pickerId: number;
-  delay: number;
+    objectId: number;
+    isExpired: boolean;
+    pickerId: number;
+    delay: number;
 };
 
-export class ObjectRemoveMessage implements IIncomingPacket<ObjectRemoveMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectRemoveMessageType
-  {
+export class ObjectRemoveMessage implements IIncomingPacket<ObjectRemoveMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectRemoveMessageType {
+        const packet: ObjectRemoveMessageType = {
+            objectId: parseInt(wrapper.readString()),
+            isExpired: wrapper.readBoolean(),
+            pickerId: wrapper.readInt(),
+            delay: wrapper.readInt(),
+        };
 
-    const packet: ObjectRemoveMessageType = {
-      objectId: undefined as any, // Unknown type 'RoomObjectId'. Add override mapping.
-      isExpired: wrapper.readBoolean(),
-      pickerId: wrapper.readInt(),
-      delay: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -4,6 +4,7 @@ import { OpenConnectionMessage, RoomReadyMessage } from "@nitrodevco/nitro-share
 
 import { useRoomActions } from "#base/context";
 import { useRoomChatHandler, useRoomDataHandler, useRoomMappingHandler, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler } from "#base/handlers";
+import { useRoomFurnitureHandler } from "#base/handlers/room";
 import { useMessageListener } from "#base/hooks";
 
 export const RoomHandlers = () => {
@@ -23,6 +24,7 @@ export const RoomHandlers = () => {
 
     useRoomChatHandler();
     useRoomDataHandler();
+    useRoomFurnitureHandler();
     useRoomMappingHandler();
     useRoomPermissionsHandler();
     useRoomPetPackageHandler();

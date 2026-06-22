@@ -1,22 +1,19 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(ObjectIdsToRemove: ImmutableArray<long>): Unknown type 'ImmutableArray<long>'. Add override mapping.
+import { NumbersParser } from './Data/NumbersParser';
 
 export type ObjectRemoveMultipleMessageType = {
-  objectIdsToRemove: any;
-  pickerId: number;
+    objectIds: number[];
+    pickerId: number;
 };
 
-export class ObjectRemoveMultipleMessage implements IIncomingPacket<ObjectRemoveMultipleMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectRemoveMultipleMessageType
-  {
+export class ObjectRemoveMultipleMessage implements IIncomingPacket<ObjectRemoveMultipleMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectRemoveMultipleMessageType {
+        const packet: ObjectRemoveMultipleMessageType = {
+            objectIds: NumbersParser(wrapper),
+            pickerId: wrapper.readInt(),
+        };
 
-    const packet: ObjectRemoveMultipleMessageType = {
-      objectIdsToRemove: undefined as any, // Unknown type 'ImmutableArray<long>'. Add override mapping.
-      pickerId: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

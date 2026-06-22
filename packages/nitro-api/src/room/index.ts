@@ -1,6 +1,7 @@
 export * from './enum/AlphaTolerance';
 export * from './enum/ContextMenuEnum';
 export * from './enum/FriendFurniEngravingWidgetType';
+export * from './enum/FurnitureUsagePolicyEnum';
 export * from './enum/RoomControllerLevelEnum';
 export * from './enum/RoomGeometryScaleType';
 export * from './enum/RoomObjectPlacementSource';

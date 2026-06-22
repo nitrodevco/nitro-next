@@ -592,8 +592,8 @@ export class Room implements IRoom {
 
     public updateRoomObjectFloor(
         objectId: number,
-        location: IVector3D,
-        direction: IVector3D,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
         state: number,
         data?: IObjectData,
         extra?: number,
@@ -610,8 +610,8 @@ export class Room implements IRoom {
 
     public updateRoomObjectWall(
         objectId: number,
-        location: IVector3D,
-        direction: IVector3D,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
         state: number,
         data?: IObjectData,
         extra?: number,

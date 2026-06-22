@@ -6,7 +6,6 @@ export type HeightMapUpdateMessageType = {
 
 export class HeightMapUpdateMessage implements IIncomingPacket<HeightMapUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): HeightMapUpdateMessageType {
-
         const packet: HeightMapUpdateMessageType = {
             heightUpdates: []
         };

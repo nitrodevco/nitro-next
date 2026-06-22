@@ -1,0 +1,91 @@
+import { Vector3d } from "@nitrodevco/nitro-api";
+import { ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage } from "@nitrodevco/nitro-shared";
+
+import { useRoomSelector } from "#base/context";
+import { useMessageListener } from "#base/hooks";
+
+export const useRoomFurnitureHandler = () => {
+    const room = useRoomSelector();
+
+    useMessageListener(ObjectAddMessage, data => {
+        if (!room) return;
+
+        const item = data.floorItem;
+        const location = new Vector3d(item.x, item.y, item.z);
+        const direction = new Vector3d(item.rotation);
+
+        if (item.spriteName) {
+            room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+        } else {
+            room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+        }
+    });
+
+    useMessageListener(ObjectDataUpdateMessage, data => {
+        if (!room) return;
+
+        room.updateRoomObjectFloor(data.objectId, undefined, undefined, data.stuffData.state, data.stuffData);
+    });
+
+    useMessageListener(ObjectRemoveMessage, data => {
+        if (!room) return;
+
+        const isOwner = false;
+
+        if (data.delay > 0) {
+            setTimeout(() => {
+                if (!room) return;
+
+                room.removeRoomObjectFloor(data.objectId, isOwner);
+            }, data.delay);
+        } else {
+            room.removeRoomObjectFloor(data.objectId, isOwner);
+        }
+    });
+
+    useMessageListener(ObjectRemoveMultipleMessage, data => {
+        if (!room) return;
+
+        for (const objectId of data.objectIds) {
+            const isOwner = false;
+
+            room.removeRoomObjectFloor(objectId, isOwner);
+        }
+    });
+
+    useMessageListener(ObjectsDataUpdateMessage, data => {
+        if (!room) return;
+
+        for (const stuffData of data.stuffDatas) {
+            room.updateRoomObjectFloor(stuffData.objectId, undefined, undefined, stuffData.stuffData.state, stuffData.stuffData);
+        }
+    });
+
+    useMessageListener(ObjectsMessage, data => {
+        if (!room) return;
+
+        for (const item of data.floorItems) {
+            const location = new Vector3d(item.x, item.y, item.z);
+            const direction = new Vector3d(item.rotation);
+
+            if (item.spriteName) {
+                room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+            } else {
+                room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+            }
+        }
+    });
+
+    useMessageListener(ObjectUpdateMessage, data => {
+        if (!room) return;
+
+        const item = data.floorItem;
+
+        const location = new Vector3d(item.x, item.y, item.z);
+        const direction = new Vector3d(item.rotation);
+
+        room.updateRoomObjectFloor(item.objectId, location, direction, item.stuffData.state, item.stuffData, item.extra);
+        room.updateRoomObjectFloorHeight(item.objectId, item.stackHeight);
+        // TODO update expiration
+    });
+}

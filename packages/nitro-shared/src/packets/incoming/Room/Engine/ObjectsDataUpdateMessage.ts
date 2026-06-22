@@ -1,20 +1,23 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(StuffDatas: ImmutableDictionary<long, StuffDataSnapshot>): Unknown type 'ImmutableDictionary<long, StuffDataSnapshot>'. Add override mapping.
+import { GetObjectDataFromWrapper, type IIncomingPacket, type IMessageDataWrapper, type IObjectData } from '@nitrodevco/nitro-api';
 
 export type ObjectsDataUpdateMessageType = {
-  stuffDatas: any;
+    stuffDatas: { objectId: number, stuffData: IObjectData }[];
 };
 
-export class ObjectsDataUpdateMessage implements IIncomingPacket<ObjectsDataUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectsDataUpdateMessageType
-  {
+export class ObjectsDataUpdateMessage implements IIncomingPacket<ObjectsDataUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectsDataUpdateMessageType {
+        const packet: ObjectsDataUpdateMessageType = {
+            stuffDatas: []
+        };
 
-    const packet: ObjectsDataUpdateMessageType = {
-      stuffDatas: undefined as any, // Unknown type 'ImmutableDictionary<long, StuffDataSnapshot>'. Add override mapping.
-    };
+        let count = wrapper.readInt();
 
-    return packet;
-  }
+        while (count > 0) {
+            packet.stuffDatas.push({ objectId: wrapper.readInt(), stuffData: GetObjectDataFromWrapper(wrapper) });
+
+            count--;
+        }
+
+        return packet;
+    }
 }

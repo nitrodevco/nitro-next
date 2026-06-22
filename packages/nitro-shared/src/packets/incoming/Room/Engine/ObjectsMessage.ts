@@ -1,23 +1,33 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(OwnerNames: ImmutableDictionary<PlayerId, string>): Unknown type 'ImmutableDictionary<PlayerId, string>'. Add override mapping.
-// TODO(FloorItems: ImmutableArray<RoomFloorItemSnapshot>): Unknown type 'ImmutableArray<RoomFloorItemSnapshot>'. Add override mapping.
+import { FloorItemParser } from './Data/FloorItemParser';
+import { FurnitureOwnersParser } from './Data/FurnitureOwnersParser';
+import type { IRoomFloorItem } from './Data/IRoomFloorItem';
 
 export type ObjectsMessageType = {
-  ownerNames: any;
-  floorItems: any;
+    owners: Map<number, string>;
+    floorItems: IRoomFloorItem[];
 };
 
-export class ObjectsMessage implements IIncomingPacket<ObjectsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectsMessageType
-  {
+export class ObjectsMessage implements IIncomingPacket<ObjectsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectsMessageType {
+        const packet: ObjectsMessageType = {
+            owners: FurnitureOwnersParser(wrapper),
+            floorItems: []
+        };
 
-    const packet: ObjectsMessageType = {
-      ownerNames: undefined as any, // Unknown type 'ImmutableDictionary<PlayerId, string>'. Add override mapping.
-      floorItems: undefined as any, // Unknown type 'ImmutableArray<RoomFloorItemSnapshot>'. Add override mapping.
-    };
+        let count = wrapper.readInt();
 
-    return packet;
-  }
+        while (count > 0) {
+            const floorItem = FloorItemParser(wrapper);
+
+            floorItem.ownerName = packet.owners.get(floorItem.ownerId) ?? '';
+
+            packet.floorItems.push(floorItem);
+
+            count--;
+        }
+
+        return packet;
+    }
 }

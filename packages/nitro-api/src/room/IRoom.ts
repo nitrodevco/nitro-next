@@ -50,16 +50,16 @@ export interface IRoom {
     createRoomObjectUser(id: number, type: string): IRoomObject | undefined;
     updateRoomObjectFloor(
         objectId: number,
-        location: IVector3D,
-        direction: IVector3D,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
         state: number,
         data?: IObjectData,
         extra?: number,
     ): boolean;
     updateRoomObjectWall(
         objectId: number,
-        location: IVector3D,
-        direction: IVector3D,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
         state: number,
         data?: IObjectData,
         extra?: number,

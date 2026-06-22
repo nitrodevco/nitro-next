@@ -9,7 +9,6 @@ export type HeightMapMessageType = {
 
 export class HeightMapMessage implements IIncomingPacket<HeightMapMessageType> {
     public parse(wrapper: IMessageDataWrapper): HeightMapMessageType {
-
         const packet: HeightMapMessageType = {
             width: wrapper.readInt(),
             size: wrapper.readInt(),
