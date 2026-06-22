@@ -11,8 +11,7 @@ export const RoomHandlers = () => {
 
     useMessageListener(OpenConnectionMessage, data => {
         try {
-            const room = GetRoomEngine().createRoom(data.roomId);
-            setRoom(room);
+            setRoom(GetRoomEngine().createRoom(data.roomId));
         } catch (err) {
             NitroLogger.error(err);
         }

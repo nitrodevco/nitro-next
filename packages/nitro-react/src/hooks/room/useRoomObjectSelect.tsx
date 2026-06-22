@@ -13,6 +13,8 @@ export const useRoomObjectSelect = () => {
     const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
+        if (!room) return;
+
         switch (category) {
             case RoomObjectCategoryEnum.Unit:
             case RoomObjectCategoryEnum.Floor:
@@ -45,6 +47,8 @@ export const useRoomObjectSelect = () => {
     };
 
     const selectAvatar = (objectId: number, lookAt: boolean) => {
+        if (!room) return;
+
         const prevAvatar = room.getRoomObject(selectedAvatarId, RoomObjectCategoryEnum.Unit);
 
         if (prevAvatar?.logic) {
@@ -76,7 +80,7 @@ export const useRoomObjectSelect = () => {
     };
 
     const deselectObject = () => {
-        if (selectedObjectId === -1) return;
+        if (!room || selectedObjectId === -1) return;
 
         const roomObject = room.getRoomObject(selectedObjectId, selectedObjectCategory);
 
@@ -87,7 +91,7 @@ export const useRoomObjectSelect = () => {
     };
 
     const resetSelectedObject = (selectedObject: ISelectedRoomObjectData | undefined) => {
-        if (!selectedObject) return;
+        if (!room || !selectedObject) return;
 
         room.removeRoomOverlayIconSprite();
 

@@ -1,10 +1,10 @@
-import type { IUserInfo, NoobnessLevelEnum, SecurityLevelEnum } from '@nitrodevco/nitro-api';
+import type { ClubLevelEnum, IUserInfo, NoobnessLevelEnum, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
 type State = {
     tags: string[];
-    clubLevel: number;
-    securityLevel: number;
+    clubLevel: ClubLevelEnum;
+    securityLevel: SecurityLevelEnum;
     isAmbassador: boolean;
     noobnessLevel: number;
     isEmailVerified: boolean;
@@ -22,7 +22,7 @@ type Actions = {
     setAccountSafetyLocked: (accountSafetyLocked: boolean) => void;
     setEmailVerified: (directMail: boolean) => void;
     setTags: (tags: string[]) => void;
-    setRights: (clubLevel: number, securityLevel: SecurityLevelEnum, isAmbassador: boolean) => void;
+    setRights: (clubLevel: ClubLevelEnum, securityLevel: SecurityLevelEnum, isAmbassador: boolean) => void;
     setNoobnessLevel: (noobnessLevel: NoobnessLevelEnum) => void;
     increasePetRespects: () => void;
     decreasePetRespects: () => void;
@@ -75,7 +75,7 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
         }),
     setFigure: (figure: string, sex: string) => set({ figure, sex }),
     setAccountSafetyLocked: (accountSafetyLocked: boolean) => set({ accountSafetyLocked }),
-    setRights: (clubLevel: number, securityLevel: SecurityLevelEnum, isAmbassador: boolean) =>
+    setRights: (clubLevel: ClubLevelEnum, securityLevel: SecurityLevelEnum, isAmbassador: boolean) =>
         set({ clubLevel, securityLevel, isAmbassador }),
     setNoobnessLevel: (noobnessLevel: NoobnessLevelEnum) => set({ noobnessLevel }),
     increasePetRespects: () => set(state => ({ petRespectLeft: state.petRespectLeft + 1 })),

@@ -4,11 +4,12 @@ import type { RoomObjectEvent, RoomSpriteMouseEvent } from "@nitrodevco/nitro-sh
 import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
 import { useEffect } from "react";
 
-import { useRoomControllerLevel, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
+import { useIsModerator, useRoomControllerLevel, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
 import { useRoomEventDispatcher, useRoomEventHandler } from "#base/hooks";
 
 export const RoomEventHandler = () => {
     const room = useRoomSelector();
+    const isModerator = useIsModerator();
     const controllerLevel = useRoomControllerLevel();
     const isPlayingGame = useRoomIsPlayingGame();
     const { getMouseEventId, setMouseEventId, addCursorOwner, removeCursorOwner } = useRoomMouseActions();
@@ -37,7 +38,7 @@ export const RoomEventHandler = () => {
 
                 const disabled = (roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSelectionDisabled) === 1);
 
-                if (!disabled) { // || isModerator
+                if (!disabled || isModerator) {
                     updateEvent = new RoomWidgetUpdateRoomObjectEvent(
                         RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED,
                         event.objectId,

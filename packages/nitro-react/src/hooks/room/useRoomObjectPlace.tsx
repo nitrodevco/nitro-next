@@ -103,7 +103,7 @@ export const useRoomObjectPlace = () => {
     };
 
     const handleUserPlace = (roomObject: IRoomObjectController, x: number, y: number) => {
-        if (!room || !room.legacyGeometry.isRoomTile(x, y)) return false;
+        if (!room || !room.legacyGeometry?.isRoomTile(x, y)) return false;
 
         roomObject.setLocation(new Vector3d(x, y, room.legacyGeometry.getHeight(x, y)));
 

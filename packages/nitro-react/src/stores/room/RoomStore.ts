@@ -27,14 +27,22 @@ export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & Ro
 export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
     room: undefined,
     ownUserId: -1,
-    setRoom: (room: IRoom | undefined) => set(x => x.room ? {
-        ...RoomMouseSliceInitialState,
-        ...RoomSessionSliceInitialState,
-        ...RoomCameraSliceInitialState,
-        ...RoomSelectedObjectSliceInitialState,
-        ...RoomStackingHeightMapSliceInitialState,
-        room
-    } : { room }),
+    setRoom: (room: IRoom | undefined) => set(x => {
+        if (x.room) {
+            x.room.dispose();
+
+            return {
+                ...RoomMouseSliceInitialState,
+                ...RoomSessionSliceInitialState,
+                ...RoomCameraSliceInitialState,
+                ...RoomSelectedObjectSliceInitialState,
+                ...RoomStackingHeightMapSliceInitialState,
+                room
+            };
+        }
+
+        return { room };
+    }),
     setOwnUserId: (ownUserId: number) => set({ ownUserId }),
     ...createRoomMouseSlice(set, get, store),
     ...createRoomSessionSlice(set, get, store),

@@ -70,7 +70,7 @@ export const useRoomObjectMove = () => {
     };
 
     const handleObjectMove = (event: RoomObjectMouseEvent, selectedObject: ISelectedRoomObjectData | undefined) => {
-        if (!event || !selectedObject) return;
+        if (!room || !event || !selectedObject) return;
 
         const roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);
 

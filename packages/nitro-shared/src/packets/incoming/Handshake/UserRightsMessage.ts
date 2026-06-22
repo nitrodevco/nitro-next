@@ -1,8 +1,8 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { ClubLevelEnum, IIncomingPacket, IMessageDataWrapper, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 
 export type UserRightsMessageType = {
-    clubLevel: number;
-    securityLevel: number;
+    clubLevel: ClubLevelEnum;
+    securityLevel: SecurityLevelEnum;
     isAmbassador: boolean;
 };
 
