@@ -49,12 +49,7 @@ export class RoomObjectLocationCacheItem {
 
             if (!screenLocation) return undefined;
 
-            const accurateZ = object.model.getValue<number>(
-                this._roomObjectVariableAccurateZ as RoomObjectVariableEnum,
-            );
-
-            if (isNaN(accurateZ) || accurateZ === 0) {
-                const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);
+            const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);
 
                 if (rounded.x !== location.x || rounded.y !== location.y) {
                     const roundedScreen = geometry.getScreenPosition(rounded);
