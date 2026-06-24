@@ -45,6 +45,7 @@ const config = [
             react: { version: 'detect' },
         },
         rules: {
+            "indent": ["error", 4],
             'no-console': 'off',
             'no-debugger': 'warn',
             'no-else-return': 'warn',
@@ -55,6 +56,7 @@ const config = [
             '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
             "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
+            "@stylistic/array-bracket-spacing": ["always"],
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/react-in-jsx-scope': 'off',
         },

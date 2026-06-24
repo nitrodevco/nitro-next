@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host --port 3000",
-        "build": "vite build"
+        "build": "vite build",
+        "eslint": "eslint"
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",
