@@ -2,9 +2,9 @@ import type { IRoomObjectController } from "@nitrodevco/nitro-api";
 import { NitroLogger, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
-import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
+import { PlaceObjectComposer, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector } from "#base/context";
+import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from "#base/context";
 
 import { useRoomObjectMove } from "./useRoomObjectMove";
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
@@ -18,6 +18,7 @@ export const useRoomObjectPlace = () => {
     const { setFurnitureAlphaMultiplier } = useRoomObjectValidation();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
+    const { send } = useWebSocketContext();
 
     const placeObject = (isTileEvent: boolean, isWallEvent: boolean) => {
         if (!room || !selectedObject) return;
@@ -61,7 +62,9 @@ export const useRoomObjectPlace = () => {
                 } else if (roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureIsStickie) !== undefined) {
                     NitroLogger.sendPacket(`new FurniturePostItPlaceComposer(objectId, wallLocation)`);
                 } else {
-                    NitroLogger.sendPacket(`new FurniturePlaceComposer(objectId, category, wallLocation, Math.trunc(x), Math.trunc(y), direction)`);
+                    send(new PlaceObjectComposer({
+                        itemId: objectId, category, wallLocation, x: Math.trunc(x), y: Math.trunc(y), rotation: direction
+                    }));
                 }
             }
         }

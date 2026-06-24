@@ -1,18 +1,16 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FavoriteMembershipUpdateMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class FavoriteMembershipUpdateMessage implements IIncomingPacket<FavoriteMembershipUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FavoriteMembershipUpdateMessageType
-  {
+export class FavoriteMembershipUpdateMessage implements IIncomingPacket<FavoriteMembershipUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FavoriteMembershipUpdateMessageType {
 
-    const packet: FavoriteMembershipUpdateMessageType = {
-    };
+        const packet: FavoriteMembershipUpdateMessageType = {
+        };
 
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -1,20 +1,22 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(ObjectStates: ImmutableDictionary<long, string>): Unknown type 'ImmutableDictionary<long, string>'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ItemsStateUpdateMessageType = {
-  objectStates: any;
+    objectStates: { objectId: number, state: string }[];
 };
 
-export class ItemsStateUpdateMessage implements IIncomingPacket<ItemsStateUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ItemsStateUpdateMessageType
-  {
+export class ItemsStateUpdateMessage implements IIncomingPacket<ItemsStateUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ItemsStateUpdateMessageType {
+        const packet: ItemsStateUpdateMessageType = {
+            objectStates: []
+        };
 
-    const packet: ItemsStateUpdateMessageType = {
-      objectStates: undefined as any, // Unknown type 'ImmutableDictionary<long, string>'. Add override mapping.
-    };
+        let count = wrapper.readInt();
 
-    return packet;
-  }
+        while (count > 0) {
+            packet.objectStates.push({ objectId: wrapper.readInt(), state: wrapper.readString() });
+            count--;
+        }
+
+        return packet;
+    }
 }

@@ -1,22 +1,17 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(ObjectId: RoomObjectId): Unknown type 'RoomObjectId'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ItemRemoveMessageType = {
-  objectId: any;
-  pickerId: number;
+    objectId: number;
+    pickerId: number;
 };
 
-export class ItemRemoveMessage implements IIncomingPacket<ItemRemoveMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ItemRemoveMessageType
-  {
+export class ItemRemoveMessage implements IIncomingPacket<ItemRemoveMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ItemRemoveMessageType {
+        const packet: ItemRemoveMessageType = {
+            objectId: parseInt(wrapper.readString()),
+            pickerId: wrapper.readInt(),
+        };
 
-    const packet: ItemRemoveMessageType = {
-      objectId: undefined as any, // Unknown type 'RoomObjectId'. Add override mapping.
-      pickerId: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

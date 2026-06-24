@@ -1,7 +1,7 @@
 import { NitroLogger, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { MoveAvatarComposer, type RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
-import { useRoomIsMoveBlocked, useRoomSelector } from "#base/context";
+import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from "#base/context";
 
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
 
@@ -9,6 +9,7 @@ export const useRoomObjectInteraction = () => {
     const room = useRoomSelector();
     const isMoveBlocked = useRoomIsMoveBlocked();
     const { getActiveSurfaceLocation } = useRoomObjectValidation();
+    const { send } = useWebSocketContext();
 
     const handleMoveTargetFurni = (event: RoomObjectMouseEvent) => {
         if (!room) return false;
@@ -20,7 +21,7 @@ export const useRoomObjectInteraction = () => {
         const point = getActiveSurfaceLocation(roomObject, event);
 
         if (point && !isMoveBlocked) {
-            NitroLogger.sendPacket(`new RoomUnitWalkComposer(point.x, point.y)`);
+            send(new MoveAvatarComposer({ targetX: point.x, targetY: point.y }));
 
             return true;
         }

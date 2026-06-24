@@ -1,20 +1,18 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(WallItem: RoomWallItemSnapshot): Unknown type 'RoomWallItemSnapshot'. Add override mapping.
+import type { IRoomWallItem } from './Data/IRoomWallItem';
+import { WallItemParser } from './Data/WallItemParser';
 
 export type ItemUpdateMessageType = {
-  wallItem: any;
+    wallItem: IRoomWallItem;
 };
 
-export class ItemUpdateMessage implements IIncomingPacket<ItemUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ItemUpdateMessageType
-  {
+export class ItemUpdateMessage implements IIncomingPacket<ItemUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ItemUpdateMessageType {
+        const packet: ItemUpdateMessageType = {
+            wallItem: WallItemParser(wrapper)
+        };
 
-    const packet: ItemUpdateMessageType = {
-      wallItem: undefined as any, // Unknown type 'RoomWallItemSnapshot'. Add override mapping.
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

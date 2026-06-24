@@ -19,11 +19,11 @@ export class ObjectsMessage implements IIncomingPacket<ObjectsMessageType> {
         let count = wrapper.readInt();
 
         while (count > 0) {
-            const floorItem = FloorItemParser(wrapper);
+            const item = FloorItemParser(wrapper);
 
-            floorItem.ownerName = packet.owners.get(floorItem.ownerId) ?? '';
+            item.ownerName = packet.owners.get(item.ownerId) ?? '';
 
-            packet.floorItems.push(floorItem);
+            packet.floorItems.push(item);
 
             count--;
         }

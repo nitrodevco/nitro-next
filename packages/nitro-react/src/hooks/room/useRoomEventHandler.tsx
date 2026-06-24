@@ -1,8 +1,8 @@
 
 import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
-import { RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { ClickFurniComposer, MoveAvatarComposer, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 
-import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector } from '#base/context';
+import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector, useWebSocketContext } from '#base/context';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -24,6 +24,7 @@ export const useRoomEventHandler = () => {
     const { placeObject, placeObjectOnUser, handleObjectPlace } = useRoomObjectPlace();
     const { updateCursorForEvent } = useRoomCursorUpdate();
     const { handleMoveTargetFurni } = useRoomObjectInteraction();
+    const { send } = useWebSocketContext();
 
     const handleRoomObjectMouseEvent = (event: RoomObjectMouseEvent) => {
         if (!room) return;
@@ -42,10 +43,9 @@ export const useRoomEventHandler = () => {
 
                 if (!event.altKey && !event.ctrlKey && !event.shiftKey) {
                     if (category === RoomObjectCategoryEnum.Floor) {
-                        NitroLogger.sendPacket(`new ClickFurniMessageComposer(event.objectId, category)`);
+                        send(new ClickFurniComposer({ objectId: event.objectId, param: 0 }));
                     } else if (category === RoomObjectCategoryEnum.Wall) {
-                        // This packet only sends a negative number to tell the server that its a wall item
-                        NitroLogger.sendPacket(`new ClickFurniMessageComposer(-Math.abs(event.objectId), category)`);
+                        send(new ClickFurniComposer({ objectId: -Math.abs(event.objectId), param: 0 }));
                     }
                 }
 
@@ -92,7 +92,7 @@ export const useRoomEventHandler = () => {
                             if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
                                 if (isDecorating || isSpectator) return;
 
-                                if (!isMoveBlocked) NitroLogger.sendPacket(`new RoomUnitWalkComposer(x, y)`);
+                                if (!isMoveBlocked) send(new MoveAvatarComposer({ targetX: event.tileXAsInt, targetY: event.tileYAsInt }));
                             }
                         } else {
                             if (!room.isAreaSelectionMode || category === RoomObjectCategoryEnum.Unit) {

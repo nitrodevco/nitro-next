@@ -1,22 +1,17 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(ObjectId: RoomObjectId): Unknown type 'RoomObjectId'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ItemDataUpdateMessageType = {
-  objectId: any;
-  state: string;
+    objectId: number;
+    state: string;
 };
 
-export class ItemDataUpdateMessage implements IIncomingPacket<ItemDataUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ItemDataUpdateMessageType
-  {
+export class ItemDataUpdateMessage implements IIncomingPacket<ItemDataUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ItemDataUpdateMessageType {
+        const packet: ItemDataUpdateMessageType = {
+            objectId: parseInt(wrapper.readString()),
+            state: wrapper.readString(),
+        };
 
-    const packet: ItemDataUpdateMessageType = {
-      objectId: undefined as any, // Unknown type 'RoomObjectId'. Add override mapping.
-      state: wrapper.readString(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

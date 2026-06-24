@@ -1,18 +1,16 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type BuildersClubPlacementWarningMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class BuildersClubPlacementWarningMessage implements IIncomingPacket<BuildersClubPlacementWarningMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): BuildersClubPlacementWarningMessageType
-  {
+export class BuildersClubPlacementWarningMessage implements IIncomingPacket<BuildersClubPlacementWarningMessageType> {
+    public parse(wrapper: IMessageDataWrapper): BuildersClubPlacementWarningMessageType {
 
-    const packet: BuildersClubPlacementWarningMessageType = {
-    };
+        const packet: BuildersClubPlacementWarningMessageType = {
+        };
 
-    return packet;
-  }
+        return packet;
+    }
 }

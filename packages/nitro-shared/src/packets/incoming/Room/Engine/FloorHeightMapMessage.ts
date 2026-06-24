@@ -1,12 +1,13 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(AreaHideData: List<AreaHideDataSnapshot>): List<T> requires custom read loop (length + items).
+import { AreaHideParser } from './Data/AreaHideParser';
+import type { IAreaHide } from './Data/IAreaHide';
 
 export type FloorHeightMapMessageType = {
     scaleType: boolean;
     fixedWallsHeight: number;
     modelData: string;
-    areaHideData: any[];
+    areaHideData: IAreaHide[];
 };
 
 export class FloorHeightMapMessage implements IIncomingPacket<FloorHeightMapMessageType> {
@@ -16,10 +17,8 @@ export class FloorHeightMapMessage implements IIncomingPacket<FloorHeightMapMess
             scaleType: wrapper.readBoolean(),
             fixedWallsHeight: wrapper.readInt(),
             modelData: wrapper.readString(),
-            areaHideData: [],
+            areaHideData: AreaHideParser(wrapper),
         };
-
-        const count = wrapper.readInt();
 
         return packet;
     }

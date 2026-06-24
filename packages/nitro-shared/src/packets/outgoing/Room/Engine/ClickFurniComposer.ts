@@ -1,4 +1,4 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ClickFurniComposerType = {
     objectId: number;
