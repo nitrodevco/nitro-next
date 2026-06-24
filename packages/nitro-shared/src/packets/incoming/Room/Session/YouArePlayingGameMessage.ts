@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type YouArePlayingGameMessageType = {
-  isPlaying: boolean;
+    isPlaying: boolean;
 };
 
-export class YouArePlayingGameMessage implements IIncomingPacket<YouArePlayingGameMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): YouArePlayingGameMessageType
-  {
+export class YouArePlayingGameMessage implements IIncomingPacket<YouArePlayingGameMessageType> {
+    public parse(wrapper: IMessageDataWrapper): YouArePlayingGameMessageType {
+        const packet: YouArePlayingGameMessageType = {
+            isPlaying: wrapper.readBoolean(),
+        };
 
-    const packet: YouArePlayingGameMessageType = {
-      isPlaying: wrapper.readBoolean(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

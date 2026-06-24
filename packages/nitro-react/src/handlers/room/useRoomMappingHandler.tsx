@@ -1,7 +1,7 @@
 import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
 import { LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
 import type { HeightMapMessageType } from "@nitrodevco/nitro-shared";
-import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage } from "@nitrodevco/nitro-shared";
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage } from "@nitrodevco/nitro-shared";
 import { useRef } from "react";
 
 import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
@@ -244,5 +244,14 @@ export const useRoomMappingHandler = () => {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         room.updateRoomPlaneType((data.key === "floor") ? data.value : undefined, (data.key === "wallpaper") ? data.value : undefined, (data.key === "landscape") ? data.value : undefined);
+    });
+
+    useMessageListener(RoomVisualizationSettingsMessage, data => {
+        if (!room) return;
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        room.updateRoomPlaneVisibilities(!data.wallsHidden);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        room.updateRoomPlaneThickness(data.wallThickness, data.floorThickness);
     });
 }

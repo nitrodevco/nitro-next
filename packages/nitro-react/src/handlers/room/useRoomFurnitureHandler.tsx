@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Vector3d } from "@nitrodevco/nitro-api";
-import { ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage } from "@nitrodevco/nitro-shared";
+import { LegacyDataType, Vector3d } from "@nitrodevco/nitro-api";
+import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, YouAreNotSpectatorMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector } from "#base/context";
+import { useRoomSelector, useRoomSessionActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 import type { IRoomFloorItem } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomFloorItem";
@@ -13,6 +13,7 @@ import type { IRoomWallItem } from "../../../../nitro-shared/src/packets/incomin
 
 export const useRoomFurnitureHandler = () => {
     const room = useRoomSelector();
+    const { setIsPlayingGame, setIsSpectator } = useRoomSessionActions();
 
     const addRoomObjectFloor = (item: IRoomFloorItem) => {
         if (!room) return;
@@ -148,5 +149,31 @@ export const useRoomFurnitureHandler = () => {
 
         room.updateRoomObjectWall(item.objectId, location, direction, item.state, item.data);
         // expiration
+    });
+
+    useMessageListener(DiceValueMessage, data => {
+        if (!room) return;
+
+        room.updateRoomObjectFloor(data.furniId, undefined, undefined, data.value, new LegacyDataType());
+    });
+
+    useMessageListener(OneWayDoorStatusMessage, data => {
+        if (!room) return;
+
+        room.updateRoomObjectFloor(data.furniId, undefined, undefined, data.status, new LegacyDataType());
+    });
+
+    useMessageListener(YouArePlayingGameMessage, data => {
+        if (!room) return;
+
+        setIsPlayingGame(data.isPlaying);
+    });
+
+    useMessageListener(YouAreNotSpectatorMessage, data => {
+        if (!room) return;
+
+        if (data.roomId !== room.roomId) return;
+
+        setIsSpectator(false);
     });
 }

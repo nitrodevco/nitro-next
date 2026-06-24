@@ -5,5 +5,6 @@ export * from './FurnitureUsagePolicyEnum';
 export * from './RoomControllerLevelEnum';
 export * from './RoomGeometryScaleType';
 export * from './RoomObjectPlacementSource';
+export * from './RoomThicknessType';
 export * from './RoomWidgetEnum';
 export * from './RoomWidgetEnumItemExtradataParameter';

@@ -2,6 +2,7 @@ export * from './actions/RoomActions';
 export * from './actions/RoomMouseActions';
 export * from './actions/RoomPermissionActions';
 export * from './actions/RoomSelectedObjectActions';
+export * from './actions/RoomSessionActions';
 export * from './actions/RoomSettingActions';
 export * from './actions/RoomStackingHeightMapActions';
 export * from './RoomCameraSlice';

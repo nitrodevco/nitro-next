@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {
     IObjectVisualizationData,
     IPlaneVisualization,
@@ -5,6 +7,9 @@ import type {
     IRoomObjectModel,
     IRoomObjectSprite,
     IRoomPlane
+} from '@nitrodevco/nitro-api';
+import {
+    RoomThicknessType
 } from '@nitrodevco/nitro-api';
 import {
     RoomGeometryScaleType,
@@ -44,8 +49,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     private _directionX: number = 0;
     private _directionY: number = 0;
     private _directionZ: number = 0;
-    private _floorThickness: number = 1;
-    private _wallThickness: number = 1;
+    private _floorThickness: RoomThicknessType = RoomThicknessType.Normal;
+    private _wallThickness: RoomThicknessType = RoomThicknessType.Normal;
     private _holeUpdateTime: number = NaN;
     private _planes: RoomPlane[] = [];
     private _visiblePlanes: RoomPlane[] = [];
@@ -214,11 +219,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         const floorThickness = k.getValue<number>(RoomObjectVariableEnum.RoomFloorThickness);
         const wallThickness = k.getValue<number>(RoomObjectVariableEnum.RoomWallThickness);
 
-        if (
-            !isNaN(floorThickness) &&
-            !isNaN(wallThickness) &&
-            (floorThickness !== this._floorThickness || wallThickness !== this._wallThickness)
-        ) {
+        if ((floorThickness !== this._floorThickness || wallThickness !== this._wallThickness)) {
             this._floorThickness = floorThickness;
             this._wallThickness = wallThickness;
 
@@ -326,8 +327,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected initializeRoomPlanes(): void {
         if (!this.object || this._isPlaneSet) return;
 
-        if (!isNaN(this._floorThickness)) this._roomPlaneParser.floorThicknessMultiplier = this._floorThickness;
-        if (!isNaN(this._wallThickness)) this._roomPlaneParser.wallThicknessMultiplier = this._wallThickness;
+        this._roomPlaneParser.floorThicknessMultiplier = this._floorThickness;
+        this._roomPlaneParser.wallThicknessMultiplier = this._wallThickness;
 
         this._roomPlaneParser.clearHighlightArea();
 

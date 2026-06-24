@@ -3,7 +3,7 @@ import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IPetCustomPart } from '../session';
 import type { IVector3D } from '../utils';
-import type { FurnitureUsagePolicyEnum, RoomGeometryScaleType } from './enum';
+import type { FurnitureUsagePolicyEnum, RoomGeometryScaleType, RoomThicknessType } from './enum';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomObjectManager } from './IRoomObjectManager';
@@ -73,8 +73,10 @@ export interface IRoom {
         data: string
     ): boolean;
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
-    updateRoomObjectMask(objectId: number, add?: boolean): void;
-    updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): void;
+    updateRoomObjectMask(objectId: number, add?: boolean): boolean;
+    updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean;
+    updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible?: boolean): boolean;
+    updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     addFurnitureFloorByTypeId(
         objectId: number,
         typeId: number,

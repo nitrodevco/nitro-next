@@ -5,6 +5,7 @@ export * from './room/actions/useRoomActions';
 export * from './room/actions/useRoomMouseActions';
 export * from './room/actions/useRoomPermissionActions';
 export * from './room/actions/useRoomSelectedObjectActions';
+export * from './room/actions/useRoomSessionActions';
 export * from './room/actions/useRoomSettingActions';
 export * from './room/actions/useRoomStackingHeightMapActions';
 export * from './room/RoomContext';

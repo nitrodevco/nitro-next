@@ -14,7 +14,8 @@ import type {
     IRoomObjectManager,
     IRoomObjectModel,
     IRoomRenderingCanvas,
-    IVector3D, RoomObjectUserType
+    IVector3D, RoomObjectUserType,
+    RoomThicknessType
 } from '@nitrodevco/nitro-api';
 import {
     RoomGeometryScaleType
@@ -53,6 +54,8 @@ import {
     ObjectHeightUpdateMessage,
     ObjectItemDataUpdateMessage,
     ObjectRoomMaskUpdateMessage,
+    ObjectRoomPlanePropertyUpdateMessage,
+    ObjectRoomPlaneVisibilityUpdateMessage,
     ObjectRoomUpdateMessage,
     RoomObjectUpdateMessage,
 } from './messages';
@@ -671,7 +674,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public updateRoomObjectMask(objectId: number, add: boolean = true): void {
+    public updateRoomObjectMask(objectId: number, add: boolean = true): boolean {
         const maskName = RoomObjectCategoryEnum.Wall + '_' + objectId;
         const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -698,18 +701,44 @@ export class Room implements IRoom {
         const roomObjectRoom = this.getRoomObjectRoom();
 
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
+
+        return true;
     }
 
-    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined) {
+    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean {
         const room = this.getRoomObjectRoom();
 
-        if (!room) return;
+        if (!room) return false;
 
         if (floorType && floorType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType));
 
         if (wallType && wallType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType));
 
         if (landscapeType && landscapeType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType));
+
+        return true;
+    }
+
+    public updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible: boolean = true): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.WALL_VISIBILITY, wallVisible));
+        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.FLOOR_VISIBILITY, floorVisible));
+
+        return true;
+    }
+
+    public updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS, wallThickness as number));
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS, floorThickness as number));
+
+        return true;
     }
 
     public addFurnitureFloorByTypeId(
