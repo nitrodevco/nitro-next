@@ -1,6 +1,5 @@
 import type { Container, Point, Texture } from 'pixi.js';
 
-import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { ISortableSprite } from './object';
 import type { RoomObjectSpriteData } from './utils';
@@ -12,7 +11,6 @@ export interface IRoomRenderingCanvas {
     setScale(scale: number, point?: Point, offsetPoint?: Point): void;
     render(time: number, update?: boolean): void;
     update(): void;
-    setEventHandler(handler: IRoomEventHandler): void;
     skipSpriteVisibilityChecking(): void;
     resumeSpriteVisibilityChecking(): void;
     getPlaneSortableSprites(): ISortableSprite[];

@@ -139,8 +139,6 @@ export class Room implements IRoom {
             this._canvas = new RoomSpriteCanvas(this, width, height, scale);
         }
 
-        this._canvas.setEventHandler(this._eventHandler);
-
         if (this._canvas.geometry) {
             this._canvas.geometry.zScale = this.getRoomValue(RoomObjectVariableEnum.RoomZScale);
 
@@ -679,7 +677,6 @@ export class Room implements IRoom {
         usagePolicy: number = 0,
         ownerId: number = 0,
         ownerName: string = '',
-        synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
     ): boolean {
@@ -695,7 +692,6 @@ export class Room implements IRoom {
             usagePolicy,
             ownerId,
             ownerName,
-            synchronized,
             realRoomObject,
             sizeZ,
             typeId,
@@ -714,7 +710,6 @@ export class Room implements IRoom {
         usagePolicy: number = 0,
         ownerId: number = 0,
         ownerName: string = '',
-        synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
         typeId: number = -1,
@@ -760,7 +755,6 @@ export class Room implements IRoom {
         usagePolicy: number = 0,
         ownerId: number = 0,
         ownerName: string = '',
-        synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
     ): boolean {
@@ -775,7 +769,6 @@ export class Room implements IRoom {
             usagePolicy,
             ownerId,
             ownerName,
-            synchronized,
             realRoomObject,
             sizeZ,
             typeId
@@ -793,7 +786,6 @@ export class Room implements IRoom {
         usagePolicy: number = 0,
         ownerId: number = 0,
         ownerName: string = '',
-        synchronized: boolean = true,
         realRoomObject: boolean = true,
         sizeZ: number = -1,
         typeId: number = -1

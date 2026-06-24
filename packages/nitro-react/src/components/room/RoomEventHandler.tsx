@@ -38,14 +38,12 @@ export const RoomEventHandler = () => {
 
                 const disabled = (roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSelectionDisabled) === 1);
 
-                if (!disabled || isModerator) {
-                    updateEvent = new RoomWidgetUpdateRoomObjectEvent(
-                        RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED,
-                        event.objectId,
-                        event.category,
-                        event.roomId,
-                    );
-                }
+                if (!disabled || isModerator) updateEvent = new RoomWidgetUpdateRoomObjectEvent(
+                    RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED,
+                    event.objectId,
+                    event.category,
+                    event.roomId,
+                );
                 break;
             }
             case RoomEngineObjectEvent.DESELECTED:
@@ -69,13 +67,12 @@ export const RoomEventHandler = () => {
                         break;
                 }
 
-                if (addedEventType)
-                    updateEvent = new RoomWidgetUpdateRoomObjectEvent(
-                        addedEventType,
-                        event.objectId,
-                        event.category,
-                        event.roomId,
-                    );
+                if (addedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(
+                    addedEventType,
+                    event.objectId,
+                    event.category,
+                    event.roomId,
+                );
                 break;
             }
             case RoomEngineObjectEvent.REMOVED: {
@@ -91,13 +88,12 @@ export const RoomEventHandler = () => {
                         break;
                 }
 
-                if (removedEventType)
-                    updateEvent = new RoomWidgetUpdateRoomObjectEvent(
-                        removedEventType,
-                        event.objectId,
-                        event.category,
-                        event.roomId,
-                    );
+                if (removedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(
+                    removedEventType,
+                    event.objectId,
+                    event.category,
+                    event.roomId,
+                );
                 break;
             }
             case RoomEngineObjectEvent.MOUSE_ENTER:
@@ -156,13 +152,20 @@ export const RoomEventHandler = () => {
             }
         };
 
+        room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
+
+        return () => room.eventHandler.setRoomObjectEventHandler(undefined);
+    }, [room, controllerLevel, handleRoomObjectMouseEvent, removeCursorOwner, addCursorOwner]);
+
+    useEffect(() => {
+        if (!room) return;
+
         const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
             if (!object) return;
 
             let category = room.getRoomObjectCategoryForType(object.type);
 
-            if (category !== RoomObjectCategoryEnum.Room && (!isPlayingGame || category !== RoomObjectCategoryEnum.Unit))
-                category = RoomObjectCategoryEnum.Minimum;
+            if (category !== RoomObjectCategoryEnum.Room && (!isPlayingGame || category !== RoomObjectCategoryEnum.Unit)) category = RoomObjectCategoryEnum.Minimum;
 
             const eventId = getMouseEventId(category, event.type);
 
@@ -180,16 +183,12 @@ export const RoomEventHandler = () => {
             }
 
             if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
-        };
+        }
 
-        room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
 
-        return () => {
-            room.eventHandler.setRoomObjectEventHandler(undefined);
-            room.eventHandler.setRoomCanvasMouseHandler(undefined);
-        }
-    }, [room]);
+        return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
+    }, [room, isPlayingGame, getMouseEventId, setMouseEventId]);
 
     return null;
 }

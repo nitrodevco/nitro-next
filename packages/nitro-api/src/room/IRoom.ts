@@ -78,12 +78,11 @@ export interface IRoom {
         usagePolicy?: number,
         ownerId?: number,
         ownerName?: string,
-        synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
     ): boolean;
     addFurnitureFloorByTypeName(
-        id: number,
+        objectId: number,
         typeName: string,
         location: IVector3D,
         direction: IVector3D,
@@ -94,7 +93,6 @@ export interface IRoom {
         usagePolicy?: number,
         ownerId?: number,
         ownerName?: string,
-        synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
         typeId?: number,
@@ -110,7 +108,6 @@ export interface IRoom {
         usagePolicy?: number,
         ownerId?: number,
         ownerName?: string,
-        synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
     ): boolean;
@@ -125,7 +122,6 @@ export interface IRoom {
         usagePolicy?: number,
         ownerId?: number,
         ownerName?: string,
-        synchronized?: boolean,
         realRoomObject?: boolean,
         sizeZ?: number,
         typeId?: number

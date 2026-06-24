@@ -1,6 +1,5 @@
 import type {
     IRoom,
-    IRoomEventHandler,
     IRoomGeometry,
     IRoomObject,
     IRoomObjectSprite,
@@ -78,8 +77,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
 
     private _objectCache: RoomObjectCache;
-
-    private _eventHandler: IRoomEventHandler | undefined = undefined;
 
     constructor(
         room: IRoom,
@@ -160,8 +157,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         if (this._eventCache) this._eventCache.clear();
-
-        this._eventHandler = undefined;
     }
 
     public initialize(width: number, height: number): void {
@@ -642,17 +637,9 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public update(): void {
-        if (!this._mouseCheckCount) {
-            //this.checkMouseHits(this._mouseLocation.x, this._mouseLocation.y, MouseEventType.MOUSE_MOVE);
-        }
-
         this._mouseCheckCount = 0;
 
         this._eventId++;
-    }
-
-    public setEventHandler(handler: IRoomEventHandler): void {
-        this._eventHandler = handler;
     }
 
     private getCacheItem(id: number): RoomObjectCacheItem {
@@ -895,7 +882,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!roomObject) continue;
 
-            this._eventHandler?.handleRoomCanvasMouseEvent(event, roomObject);
+            this._room.eventHandler?.handleRoomCanvasMouseEvent(event, roomObject);
         }
 
         if (this._eventCache) this._eventCache.clear();

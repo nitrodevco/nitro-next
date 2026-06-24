@@ -92,14 +92,6 @@ export const useRoomObjectModify = () => {
                     roomObject.getDirection(),
                 );
 
-                setSelectedObject(new SelectedRoomObjectData(
-                    roomObject.id,
-                    category,
-                    operation,
-                    roomObject.getLocation(),
-                    roomObject.getDirection(),
-                ));
-
                 void (async () => {
                     await room.setRoomOverlayIconSprite(roomObject.id, category, true);
 
@@ -146,7 +138,7 @@ export const useRoomObjectModify = () => {
             }
         }
 
-        if (selectedObjectData !== selectedObject) setSelectedObject(selectedObjectData)
+        if (selectedObjectData !== selectedObject) setSelectedObject(selectedObjectData);
 
         if (shouldReset) resetSelectedObject(selectedObjectData);
 

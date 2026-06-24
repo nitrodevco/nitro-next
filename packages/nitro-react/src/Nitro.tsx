@@ -27,7 +27,7 @@ export const Nitro: FC = () => {
         if (!isEngineReady) return;
 
         connect();
-    }, [isEngineReady]);
+    }, [isEngineReady, connect]);
 
     useEffect(() => {
         const setup = async (width: number, height: number) => {

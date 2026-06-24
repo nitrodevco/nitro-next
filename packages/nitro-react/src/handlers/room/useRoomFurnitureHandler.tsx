@@ -15,9 +15,9 @@ export const useRoomFurnitureHandler = () => {
         const direction = new Vector3d(item.rotation);
 
         if (item.spriteName) {
-            room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+            room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, item.stackHeight);
         } else {
-            room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+            room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, item.stackHeight);
         }
     });
 
@@ -69,9 +69,9 @@ export const useRoomFurnitureHandler = () => {
             const direction = new Vector3d(item.rotation);
 
             if (item.spriteName) {
-                room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+                room.addFurnitureFloorByTypeName(item.objectId, item.spriteName, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, item.stackHeight);
             } else {
-                room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, true, item.stackHeight);
+                room.addFurnitureFloorByTypeId(item.objectId, item.spriteId, location, direction, item.stuffData.state, item.stuffData, item.extra, item.expires, item.usagePolicy, item.ownerId, item.ownerName, true, item.stackHeight);
             }
         }
     });

@@ -30,15 +30,13 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
     const connect = () => {
         try {
-            if (!socketUrl || !socketUrl.length) return;
-
-            ws.current?.close();
+            if (!socketUrl || !socketUrl.length || ws.current) return;
 
             ws.current = new WebSocket(socketUrl);
 
             ws.current.binaryType = 'arraybuffer';
 
-            ws.current.onopen = event => {
+            ws.current.onopen = (event: Event) => {
                 send(new ClientHelloComposer({
                     production: production,
                     platform: 'WEB',
@@ -55,11 +53,11 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                 }));
             };
 
-            ws.current.onerror = event => {
+            ws.current.onerror = (event: Event) => {
                 NitroLogger.error('WebSocket error:', event);
             };
 
-            ws.current.onclose = event => {
+            ws.current.onclose = (event: CloseEvent) => {
                 NitroLogger.warn('WebSocket closed:', event.code, event.reason);
                 setIsAuthenticated(false);
                 setIsReady(false);
@@ -74,7 +72,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                 wsBuffer.current = array.buffer;
 
                 processBuffer();
-            }
+            };
         } catch (err) {
             NitroLogger.error(err);
         }
@@ -294,7 +292,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         return subscribe(AuthenticationOKMessage, data => {
             setIsAuthenticated(true);
         });
-    }, []);
+    }, [isAuthenticated, subscribe]);
 
     return (
         <WebSocketContext.Provider value={{ isAuthenticated, connect, send, subscribe, setReady }}>

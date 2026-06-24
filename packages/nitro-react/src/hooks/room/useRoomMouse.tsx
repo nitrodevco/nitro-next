@@ -276,7 +276,7 @@ export const useRoomMouse = () => {
             canvas.ontouchmove = null;
             canvas.ontouchend = null;
         };
-    }, [room]);
+    }, [room, dispatchMouseEvent]);
 
     return { mouseDataRef };
 }

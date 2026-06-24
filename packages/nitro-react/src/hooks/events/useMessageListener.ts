@@ -10,5 +10,5 @@ export const useMessageListener = <T extends object,>(event: IncomingPacketConst
         if (!enabled) return;
 
         return subscribe(event, handler);
-    }, [event, handler, enabled]);
+    }, [event, enabled, subscribe, handler]);
 }
