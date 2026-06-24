@@ -35,7 +35,7 @@ export const RoomSessionSliceInitialState: State = {
     controllerLevel: RoomControllerLevelEnum.Moderator,
     ownRoomIndex: -1,
     isGuildRoom: false,
-    isRoomOwner: true,
+    isRoomOwner: false,
     isDecorating: false,
     isSpectator: false,
     isPlayingGame: false,
