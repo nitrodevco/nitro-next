@@ -3,6 +3,7 @@
 import { defineConfig } from 'eslint/config';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import reactCompiler from 'eslint-plugin-react-compiler';
 
 import base from '../../eslint.base.config.js';
 
@@ -22,10 +23,11 @@ export default defineConfig([
     reactHooks.configs.flat['recommended-latest'],
     {
         plugins: {
+            'react-compiler': reactCompiler,
             'react-refresh': reactRefresh,
         },
         rules: {
-            "react-hooks/exhaustive-deps": "off",
+            'react-compiler/react-compiler': 'error',
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/react-in-jsx-scope': 'off',
         },
