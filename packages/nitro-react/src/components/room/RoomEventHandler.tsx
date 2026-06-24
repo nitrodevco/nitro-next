@@ -164,7 +164,7 @@ export const RoomEventHandler = () => {
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, controllerLevel, handleRoomObjectMouseEvent, removeCursorOwner, addCursorOwner]);
+    }, [room, controllerLevel, handleRoomObjectMouseEvent, changeItemState, removeCursorOwner, addCursorOwner]);
 
     useEffect(() => {
         if (!room) return;

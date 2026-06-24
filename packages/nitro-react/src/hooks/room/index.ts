@@ -1,6 +1,5 @@
 export * from './useRoomCamera';
 export * from './useRoomCursorUpdate';
-export * from './useRoomDirectory';
 export * from './useRoomEventDispatcher';
 export * from './useRoomEventHandler';
 export * from './useRoomMouse';

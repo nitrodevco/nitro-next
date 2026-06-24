@@ -96,7 +96,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         }
     }
 
-    const encode = (header: number, messages: (number | string | Byte | Short | ArrayBuffer)[]) => {
+    const encode = (header: number, messages: (number | string | boolean | Byte | Short | ArrayBuffer)[]) => {
         const writer = new BinaryWriter();
 
         writer.writeShort(header);

@@ -1,5 +1,5 @@
-import { FurnitureUsagePolicyEnum, NitroLogger, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
-import { MoveAvatarComposer, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer, type RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
+import { MoveAvatarComposer, type RoomObjectMouseEvent, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from "@nitrodevco/nitro-shared";
 
 import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from "#base/context";
 
@@ -38,9 +38,11 @@ export const useRoomObjectInteraction = () => {
             case RoomObjectCategoryEnum.Floor: {
                 if (!random) send(new UseFurnitureComposer({ objectId, param }));
                 else send(new SetRandomStateComposer({ objectId, param }));
+                break;
             }
             case RoomObjectCategoryEnum.Wall: {
                 send(new UseWallItemComposer({ objectId, param }));
+                break;
             }
         }
 

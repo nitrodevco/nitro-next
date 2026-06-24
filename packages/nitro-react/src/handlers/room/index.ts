@@ -1,5 +1,6 @@
 export * from './useRoomChatHandler';
 export * from './useRoomDataHandler';
+export * from './useRoomDirectoryHandler';
 export * from './useRoomFurnitureHandler';
 export * from './useRoomMappingHandler';
 export * from './useRoomPermissionsHandler';
