@@ -1,9 +1,7 @@
-const colors = {};
-
-const boxShadow = {};
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+    content: ['./index.html', './src/**/*.{html,js,jsx,ts,tsx}', './themes/**/*.{html,js,jsx,ts,tsx}'],
+    darkMode: 'class',
     theme: {
         extend: {
             fontSize: {
@@ -18,8 +16,6 @@ module.exports = {
             fontFamily: {
                 sans: ['Ubuntu'],
             },
-            colors: colors,
-            boxShadow,
             backgroundImage: {
                 'button-gradient-gray': 'linear-gradient(to bottom, #e2e2e2 50%, #c8c8c8 50%)',
                 'button-gradient-yellow': 'linear-gradient(to bottom, #fff176 50%, #fbc02d 50%)',
@@ -89,7 +85,6 @@ module.exports = {
         'justify-end',
         'items-end',
     ],
-    darkMode: 'class',
     variants: {
         extend: {
             divideColor: ['group-hover'],
@@ -99,5 +94,4 @@ module.exports = {
     plugins: {
         '@tailwindcss/forms': {},
     },
-    content: ['./index.html', './src/**/*.{html,js,jsx,ts,tsx}', './themes/**/*.{html,js,jsx,ts,tsx}'],
 };

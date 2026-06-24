@@ -1,9 +1,5 @@
-
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import babel from '@rolldown/plugin-babel';
-import tailwindcss from '@tailwindcss/vite';
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 const r = (p: string) => `${import.meta.dirname}/${p}`;
@@ -36,9 +32,8 @@ export default defineConfig({
     plugins: [
         react(),
         babel({
-            presets: [reactCompilerPreset()]
+            plugins: ['babel-plugin-react-compiler'],
         }),
-        tailwindcss()
     ],
     resolve: {
         tsconfigPaths: true,

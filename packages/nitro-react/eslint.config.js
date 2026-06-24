@@ -1,35 +1,64 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { defineConfig } from 'eslint/config';
+import js from '@eslint/js';
+import stylistic from "@stylistic/eslint-plugin";
+import prettier from 'eslint-config-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import reactCompiler from 'eslint-plugin-react-compiler';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-import base from '../../eslint.base.config.js';
-
-export default defineConfig([
-    ...base,
+/** @type {import('eslint').Linter.Config[]} */
+const config = [
+    { 
+        ignores: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/build/**',
+            '**/.turbo/**',
+            '**/.vite/**',
+            '**/coverage/**',
+            '**/*.d.ts',
+        ]
+    },
+    js.configs.recommended,
+    ...tseslint.configs.recommendedTypeChecked,
+    prettier,
+    reactHooks.configs.flat['recommended-latest'],
     {
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+            'unused-imports': unusedImports,
+            '@stylistic': stylistic,
+            'react-refresh': reactRefresh,
+        },
         languageOptions: {
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname,
             },
+            globals: {
+                ...globals.browser,
+            },
         },
         settings: {
             react: { version: 'detect' },
         },
-    },
-    reactHooks.configs.flat['recommended-latest'],
-    {
-        plugins: {
-            'react-compiler': reactCompiler,
-            'react-refresh': reactRefresh,
-        },
         rules: {
-            'react-compiler/react-compiler': 'error',
+            'no-console': 'off',
+            'no-debugger': 'warn',
+            'no-else-return': 'warn',
+            'no-lonely-if': 'warn',
+            'simple-import-sort/imports': 'warn',
+            'simple-import-sort/exports': 'warn',
+            'unused-imports/no-unused-imports': 'warn',
+            '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/react-in-jsx-scope': 'off',
         },
     }
-]);
+];
+
+export default config;

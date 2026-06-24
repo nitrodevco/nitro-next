@@ -1,25 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import js from '@eslint/js';
+import stylistic from "@stylistic/eslint-plugin";
 import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import stylistic from "@stylistic/eslint-plugin";
 
-export default [
-    { ignores: [
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/build/**',
-        '**/.turbo/**',
-        '**/.vite/**',
-        '**/coverage/**',
-        '**/*.d.ts',
-    ]},
+/** @type {import('eslint').Linter.Config[]} */
+const config = [
+    { 
+        ignores: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/build/**',
+            '**/.turbo/**',
+            '**/.vite/**',
+            '**/coverage/**',
+            '**/*.d.ts',
+        ]
+    },
     js.configs.recommended,
-    tseslint.configs.recommendedTypeChecked,
+    ...tseslint.configs.recommendedTypeChecked,
     prettier,
     {
         plugins: {
@@ -28,9 +29,13 @@ export default [
             '@stylistic': stylistic
         },
         languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
             globals: {
-                ...globals.browser
-            }
+                ...globals.browser,
+            },
         },
         rules: {
             'no-console': 'off',
@@ -42,7 +47,9 @@ export default [
             'unused-imports/no-unused-imports': 'warn',
             '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-            "@stylistic/function-paren-newline": ["error", "multiline-arguments"]
-        }
+            "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
+        },
     }
 ];
+
+export default config;

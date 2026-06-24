@@ -46,7 +46,11 @@
     ],
     "include": [
         "src/**/*",
-        "themes/**/*"
+        "themes/**/*",
+        "vite.config.ts",
+        "postcss.config.js",
+        "tailwind.config.js",
+        "eslint.config.js"
     ],
     "exclude": [
         "dist",
