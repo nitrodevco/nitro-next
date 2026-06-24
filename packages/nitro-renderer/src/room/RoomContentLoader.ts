@@ -49,10 +49,10 @@ export class RoomContentLoader implements IRoomContentLoader {
     public async init(): Promise<void> {
         //this.processFurnitureData(FurnitureDataStore.getState().allItems);
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const petTypes = GetConfigValue<string[]>('renderer.petTypes');
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+        const petTypes = GetConfigValue<string[]>('renderer.petTypes', []);
+
+
         if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
         //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
@@ -231,8 +231,8 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getPetNameForType(type: number): string | undefined {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-        return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
+
+        return GetConfigValue<string[]>('renderer.petTypes', [])?.[type] ?? undefined;
     }
 
     public isLoaderType(type: string): boolean {
@@ -394,23 +394,19 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
+        return GetConfigValue<string>('asset.urls.generic', '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
+        return GetConfigValue<string>('asset.urls.furni', '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        return (GetConfigValue<string>('asset.urls.icons.furni') ?? '').replace(/%libname%/gi, assetName);
+        return GetConfigValue<string>('asset.urls.icons.furni', '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
+        return GetConfigValue<string>('asset.urls.pet', '').replace(/%libname%/gi, assetName);
     }
 
     public setIconListener(listener: IRoomContentListener): void {

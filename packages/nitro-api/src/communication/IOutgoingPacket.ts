@@ -1,3 +1,3 @@
 export interface IOutgoingPacket<T extends object> {
-    compose(): (number | string)[];
+    compose(): (number | string | boolean)[];
 }
