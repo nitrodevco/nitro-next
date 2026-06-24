@@ -51,6 +51,7 @@ import {
     ObjectAvatarUpdateMessage,
     ObjectDataUpdateMessage,
     ObjectHeightUpdateMessage,
+    ObjectItemDataUpdateMessage,
     ObjectRoomMaskUpdateMessage,
     ObjectRoomUpdateMessage,
     RoomObjectUpdateMessage,
@@ -611,17 +612,51 @@ export class Room implements IRoom {
         location: IVector3D | undefined,
         direction: IVector3D | undefined,
         state: number,
-        data?: IObjectData,
-        extra?: number,
+        data: string
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
         if (!object || !object.logic) return false;
 
+        const stuffData = new LegacyDataType();
+
+        stuffData.setString(data);
+
         object.processUpdateMessage(new RoomObjectUpdateMessage(location, direction));
-        object.processUpdateMessage(new ObjectDataUpdateMessage(state, data, extra));
+        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
 
         this.updateRoomObjectMask(objectId);
+
+        return true;
+    }
+
+    public updateRoomObjectWallState(
+        objectId: number,
+        state: number,
+        data: string
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        const stuffData = new LegacyDataType();
+
+        stuffData.setString(data);
+
+        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
+
+        return true;
+    }
+
+    public updateRoomObjectWallItemData(
+        objectId: number,
+        data: string
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        object.processUpdateMessage(new ObjectItemDataUpdateMessage(data));
 
         return true;
     }
@@ -663,6 +698,18 @@ export class Room implements IRoom {
         const roomObjectRoom = this.getRoomObjectRoom();
 
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
+    }
+
+    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined) {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return;
+
+        if (floorType && floorType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType));
+
+        if (wallType && wallType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType));
+
+        if (landscapeType && landscapeType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType));
     }
 
     public addFurnitureFloorByTypeId(
@@ -750,52 +797,18 @@ export class Room implements IRoom {
         location: IVector3D,
         direction: IVector3D,
         state: number,
-        extra?: number,
+        data: string,
         expires: number = -1,
         usagePolicy: number = 0,
         ownerId: number = 0,
         ownerName: string = '',
         realRoomObject: boolean = true,
-        sizeZ: number = -1,
     ): boolean {
-        return this.addFurnitureWallByTypeName(
-            objectId,
-            GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, extra),
-            location,
-            direction,
-            state,
-            extra,
-            expires,
-            usagePolicy,
-            ownerId,
-            ownerName,
-            realRoomObject,
-            sizeZ,
-            typeId
-        );
-    }
+        const stuffData = new LegacyDataType();
 
-    public addFurnitureWallByTypeName(
-        objectId: number,
-        typeName: string,
-        location: IVector3D,
-        direction: IVector3D,
-        state: number,
-        extra?: number,
-        expires: number = -1,
-        usagePolicy: number = 0,
-        ownerId: number = 0,
-        ownerName: string = '',
-        realRoomObject: boolean = true,
-        sizeZ: number = -1,
-        typeId: number = -1
-    ): boolean {
-        const objectData = new LegacyDataType();
+        stuffData.setString(data);
 
-        objectData.setString((extra ?? 0).toString());
-
-        if (objectData) extra = parseInt(objectData.getLegacyString());
-
+        const typeName = GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, stuffData.getLegacyString());
         const roomObject = this.createRoomObjectWall(objectId, typeName);
 
         if (roomObject) {
@@ -806,7 +819,6 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureTypeId, typeId);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, '');
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, realRoomObject ? 1 : 0);
-            roomObject.model.setValue(RoomObjectVariableEnum.ObjectAccurateZValue, 1);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
             roomObject.model.setValue(RoomObjectVariableEnum.FigureExperienceTimestamp, GetTickerTime());
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, usagePolicy);
@@ -814,7 +826,7 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, ownerName);
         }
 
-        if (!this.updateRoomObjectWall(objectId, location, direction, state, objectData, extra)) return false;
+        if (!this.updateRoomObjectWall(objectId, location, direction, state, stuffData.getLegacyString())) return false;
 
         this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Wall),

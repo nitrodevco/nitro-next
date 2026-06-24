@@ -1,10 +1,10 @@
 export interface IUserInfo {
-    userId: number | undefined;
-    name: string | undefined;
-    figure: string | undefined;
-    sex: string | undefined;
-    customData: string | undefined;
-    realName: string | undefined;
+    userId: number;
+    name: string;
+    figure: string;
+    sex: string;
+    customData: string;
+    realName: string;
     directMail: boolean;
     respectTotal: number;
     respectLeft: number;

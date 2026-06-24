@@ -1,19 +1,25 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ItemsStateUpdateMessageType = {
-    objectStates: { objectId: number, state: string }[];
+    updates: { objectId: number, data: string, state: number }[];
 };
 
 export class ItemsStateUpdateMessage implements IIncomingPacket<ItemsStateUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemsStateUpdateMessageType {
         const packet: ItemsStateUpdateMessageType = {
-            objectStates: []
+            updates: []
         };
 
         let count = wrapper.readInt();
 
         while (count > 0) {
-            packet.objectStates.push({ objectId: wrapper.readInt(), state: wrapper.readString() });
+            const update = { objectId: wrapper.readInt(), data: wrapper.readString(), state: 0 };
+            const state = parseFloat(update.data);
+
+            if (!isNaN(state)) update.state = state;
+
+            packet.updates.push(update);
+
             count--;
         }
 

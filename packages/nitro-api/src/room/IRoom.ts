@@ -3,7 +3,7 @@ import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IPetCustomPart } from '../session';
 import type { IVector3D } from '../utils';
-import type { RoomGeometryScaleType } from './enum';
+import type { FurnitureUsagePolicyEnum, RoomGeometryScaleType } from './enum';
 import type { IRoomEventHandler } from './IRoomEventHandler';
 import type { IRoomGeometry } from './IRoomGeometry';
 import type { IRoomObjectManager } from './IRoomObjectManager';
@@ -61,11 +61,20 @@ export interface IRoom {
         location: IVector3D | undefined,
         direction: IVector3D | undefined,
         state: number,
-        data?: IObjectData,
-        extra?: number,
+        data: string
+    ): boolean
+    updateRoomObjectWallState(
+        objectId: number,
+        state: number,
+        data: string
+    ): boolean;
+    updateRoomObjectWallItemData(
+        objectId: number,
+        data: string
     ): boolean;
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
     updateRoomObjectMask(objectId: number, add?: boolean): void;
+    updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): void;
     addFurnitureFloorByTypeId(
         objectId: number,
         typeId: number,
@@ -75,7 +84,7 @@ export interface IRoom {
         objectData?: IObjectData,
         extra?: number,
         expires?: number,
-        usagePolicy?: number,
+        usagePolicy?: FurnitureUsagePolicyEnum,
         ownerId?: number,
         ownerName?: string,
         realRoomObject?: boolean,
@@ -90,7 +99,7 @@ export interface IRoom {
         objectData?: IObjectData,
         extra?: number,
         expires?: number,
-        usagePolicy?: number,
+        usagePolicy?: FurnitureUsagePolicyEnum,
         ownerId?: number,
         ownerName?: string,
         realRoomObject?: boolean,
@@ -103,28 +112,12 @@ export interface IRoom {
         location: IVector3D,
         direction: IVector3D,
         state: number,
-        extra?: number,
+        data: string,
         expires?: number,
         usagePolicy?: number,
         ownerId?: number,
         ownerName?: string,
         realRoomObject?: boolean,
-        sizeZ?: number,
-    ): boolean;
-    addFurnitureWallByTypeName(
-        objectId: number,
-        typeName: string,
-        location: IVector3D,
-        direction: IVector3D,
-        state: number,
-        extra?: number,
-        expires?: number,
-        usagePolicy?: number,
-        ownerId?: number,
-        ownerName?: string,
-        realRoomObject?: boolean,
-        sizeZ?: number,
-        typeId?: number
     ): boolean;
     addRoomObjectUser(
         objectId: number,

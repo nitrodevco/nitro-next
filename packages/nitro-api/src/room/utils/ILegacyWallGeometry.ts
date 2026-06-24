@@ -6,6 +6,7 @@ export interface ILegacyWallGeometry {
     setHeight(x: number, y: number, height: number): boolean;
     getHeight(x: number, y: number): number;
     getLocation(width: number, height: number, localX: number, localY: number, direction: string): IVector3D;
+    getLocationFromString(loc: string): { width: number, height: number, localX: number, localY: number, direction: string };
     getLocationOldFormat(k: number, _arg_2: number, dir: string): IVector3D;
     getOldLocation(loc: IVector3D, angle: number): [number, number, number, number, string] | undefined;
     getOldLocationString(loc: IVector3D, angle: number): string;

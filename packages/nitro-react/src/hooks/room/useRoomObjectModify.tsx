@@ -2,12 +2,12 @@ import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 import { NitroLogger, RoomControllerLevelEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
+import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from "@nitrodevco/nitro-shared";
 
 import { useIsModerator, useOwnUserId, useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from "#base/context";
 
 import { useRoomObjectSelect } from "./useRoomObjectSelect";
 import { useRoomObjectValidation } from "./useRoomObjectValidation";
-import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from "@nitrodevco/nitro-shared";
 
 export const useRoomObjectModify = () => {
     const room = useRoomSelector();
@@ -62,22 +62,22 @@ export const useRoomObjectModify = () => {
                 break;
             case RoomObjectOperationType.OBJECT_PICKUP_PET: {
                 /* const session = GetRoomSessionManager().getSession(roomId);
-     
-                if (session) {
-                    const userData = session.userDataManager.getUserDataByIndex(objectId);
-     
-                    session.pickupPet(userData.webID);
-                } */
+         
+                    if (session) {
+                        const userData = session.userDataManager.getUserDataByIndex(objectId);
+         
+                        session.pickupPet(userData.webID);
+                    } */
                 break;
             }
             case RoomObjectOperationType.OBJECT_PICKUP_BOT: {
                 /* const session = GetRoomSessionManager().getSession(roomId);
-     
-                if (session) {
-                    const userData = session.userDataManager.getUserDataByIndex(objectId);
-     
-                    session.pickupBot(userData.webID);
-                } */
+         
+                    if (session) {
+                        const userData = session.userDataManager.getUserDataByIndex(objectId);
+         
+                        session.pickupBot(userData.webID);
+                    } */
                 break;
             }
             case RoomObjectOperationType.OBJECT_MOVE:

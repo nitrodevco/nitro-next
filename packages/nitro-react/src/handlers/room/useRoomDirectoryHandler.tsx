@@ -1,11 +1,15 @@
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
-import { NitroLogger, OpenConnectionMessage, RoomReadyMessage } from "@nitrodevco/nitro-shared";
+import { NitroLogger, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-shared";
 
 import { useRoomActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomDirectoryHandler = () => {
-    const { setRoom } = useRoomActions();
+    const { setRoom, setOwnUserId } = useRoomActions();
+
+    useMessageListener(UserObjectMessage, data => {
+        setOwnUserId(data.userInfo.userId);
+    });
 
     useMessageListener(OpenConnectionMessage, data => {
         try {

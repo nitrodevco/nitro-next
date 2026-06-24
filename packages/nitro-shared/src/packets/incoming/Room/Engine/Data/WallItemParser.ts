@@ -7,12 +7,17 @@ export const WallItemParser = (wrapper: IMessageDataWrapper): IRoomWallItem => {
         objectId: parseInt(wrapper.readString()),
         spriteId: wrapper.readInt(),
         wallPosition: wrapper.readString(),
-        state: wrapper.readString(),
+        data: wrapper.readString(),
+        state: 0,
         expires: wrapper.readInt(),
         usagePolicy: wrapper.readInt(),
         ownerId: wrapper.readInt(),
         ownerName: ''
     };
+
+    const state = parseFloat(item.data);
+
+    if (!isNaN(state)) item.state = state;
 
     return item;
 }

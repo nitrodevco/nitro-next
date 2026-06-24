@@ -1,8 +1,8 @@
 import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
 import { LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
 import type { HeightMapMessageType } from "@nitrodevco/nitro-shared";
-import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage } from "@nitrodevco/nitro-shared";
-import { useState } from "react";
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage } from "@nitrodevco/nitro-shared";
+import { useRef } from "react";
 
 import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
@@ -10,7 +10,7 @@ import { useMessageListener } from "#base/hooks";
 export const useRoomMappingHandler = () => {
     const room = useRoomSelector();
     const { setHeightMap, setHeightMapUpdates } = useRoomStackingHeightMapActions();
-    const [entryTile, setEntryTile] = useState<{ x: number, y: number, dir: number } | undefined>(undefined);
+    const entryTile = useRef<{ x: number, y: number, dir: number } | undefined>(undefined);
 
     const decodeTileHeight = (height: number) => ((height < 0) ? -1 : ((height & 16383) / 0x0100));
     const decodeIsStackingBlocked = (height: number) => !!(height & 0x4000);
@@ -114,7 +114,7 @@ export const useRoomMappingHandler = () => {
                 if (
                     ((y > 0 && y < height - 1) || (x > 0 && x < width - 1)) &&
                     !(tileHeight === RoomPlaneParser.TILE_BLOCKED) &&
-                    (!entryTile || (x === entryTile.x && y === entryTile.y))
+                    (!entryTile.current || (x === entryTile.current.x && y === entryTile.current.y))
                 ) {
                     if (
                         (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
@@ -153,7 +153,7 @@ export const useRoomMappingHandler = () => {
 
         const wallGeometry = new LegacyWallGeometry();
 
-        wallGeometry.scale = RoomGeometryScaleType.ZoomedOut;
+        wallGeometry.scale = RoomGeometryScaleType.ZoomedIn;
         wallGeometry.initialize(width, height, planeParser.floorHeight);
 
         let wallY = height - 1;
@@ -177,11 +177,11 @@ export const useRoomMappingHandler = () => {
     };
 
     useMessageListener(RoomEntryTileMessage, data => {
-        setEntryTile({
+        entryTile.current = {
             x: data.x,
             y: data.y,
             dir: data.rotation
-        });
+        };
     });
 
     useMessageListener(FloorHeightMapMessage, data => {
@@ -237,5 +237,12 @@ export const useRoomMappingHandler = () => {
         });
 
         setHeightMapUpdates(updates);
+    });
+
+    useMessageListener(RoomPropertyMessage, data => {
+        if (!room) return;
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        room.updateRoomPlaneType((data.key === "floor") ? data.value : undefined, (data.key === "wallpaper") ? data.value : undefined, (data.key === "landscape") ? data.value : undefined);
     });
 }

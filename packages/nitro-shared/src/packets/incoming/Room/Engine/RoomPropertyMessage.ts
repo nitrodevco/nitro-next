@@ -1,18 +1,17 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RoomPropertyMessageType = {
-  // no fields
-
+    key: string;
+    value: string;
 };
 
-export class RoomPropertyMessage implements IIncomingPacket<RoomPropertyMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): RoomPropertyMessageType
-  {
+export class RoomPropertyMessage implements IIncomingPacket<RoomPropertyMessageType> {
+    public parse(wrapper: IMessageDataWrapper): RoomPropertyMessageType {
+        const packet: RoomPropertyMessageType = {
+            key: wrapper.readString(),
+            value: wrapper.readString()
+        };
 
-    const packet: RoomPropertyMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

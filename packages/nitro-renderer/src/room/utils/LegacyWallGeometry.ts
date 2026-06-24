@@ -1,3 +1,5 @@
+
+
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { type ILegacyWallGeometry, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
@@ -6,7 +8,7 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
     private static R: string = 'r';
 
     private _isDisposed: boolean = false;
-    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedOut;
+    private _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedIn;
     private _heightMap: number[][] = [];
     private _width: number = 0;
     private _height: number = 0;
@@ -130,6 +132,45 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         }
         const _local_11: IVector3D = new Vector3d(_local_8, _local_9, _local_10);
         return _local_11;
+    }
+
+    public getLocationFromString(loc: string): { width: number, height: number, localX: number, localY: number, direction: string } {
+        let width = 0;
+        let height = 0;
+        let localX = 0;
+        let localY = 0;
+        let direction = '';
+
+        if (loc.indexOf(':') === 0) {
+            let parts = loc.split(' ');
+
+            if (parts.length >= 3) {
+                let widthHeight = parts[0];
+                let leftRight = parts[1];
+
+                direction = parts[2];
+
+                if ((widthHeight.length > 3) && (leftRight.length > 2)) {
+                    widthHeight = widthHeight.substr(3);
+                    leftRight = leftRight.substr(2);
+                    parts = widthHeight.split(',');
+
+                    if (parts.length >= 2) {
+                        width = parseInt(parts[0]);
+                        height = parseInt(parts[1]);
+
+                        parts = leftRight.split(',');
+
+                        if (parts.length >= 2) {
+                            localX = parseInt(parts[0]);
+                            localY = parseInt(parts[1]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return { width, height, localX, localY, direction };
     }
 
     public getLocationOldFormat(k: number, _arg_2: number, dir: string): IVector3D {

@@ -29,12 +29,12 @@ type Actions = {
 };
 
 const initialState: State = {
-    userId: undefined,
-    name: undefined,
-    figure: undefined,
-    sex: undefined,
-    customData: undefined,
-    realName: undefined,
+    userId: -1,
+    name: '',
+    figure: '',
+    sex: '',
+    customData: '',
+    realName: '',
     directMail: false,
     respectTotal: 0,
     respectLeft: 0,
@@ -60,23 +60,11 @@ export type UserStore = State & Actions;
 
 export const createUserStore = () => createStore<UserStore>()((set, get, store) => ({
     ...initialState,
-    setUserInfo: (userInfo: IUserInfo) =>
-        set(state => {
-            return {
-                ...userInfo,
-            };
-        }),
-    setName: (name: string, nameChangeAllowed: boolean) =>
-        set(state => {
-            return {
-                name,
-                nameChangeAllowed,
-            };
-        }),
+    setUserInfo: (userInfo: IUserInfo) => set({ ...userInfo }),
+    setName: (name: string, nameChangeAllowed: boolean) => set({ name, nameChangeAllowed }),
     setFigure: (figure: string, sex: string) => set({ figure, sex }),
     setAccountSafetyLocked: (accountSafetyLocked: boolean) => set({ accountSafetyLocked }),
-    setRights: (clubLevel: ClubLevelEnum, securityLevel: SecurityLevelEnum, isAmbassador: boolean) =>
-        set({ clubLevel, securityLevel, isAmbassador }),
+    setRights: (clubLevel: ClubLevelEnum, securityLevel: SecurityLevelEnum, isAmbassador: boolean) => set({ clubLevel, securityLevel, isAmbassador }),
     setNoobnessLevel: (noobnessLevel: NoobnessLevelEnum) => set({ noobnessLevel }),
     increasePetRespects: () => set(state => ({ petRespectLeft: state.petRespectLeft + 1 })),
     decreasePetRespects: () => set(state => ({ petRespectLeft: state.petRespectLeft - 1 })),
