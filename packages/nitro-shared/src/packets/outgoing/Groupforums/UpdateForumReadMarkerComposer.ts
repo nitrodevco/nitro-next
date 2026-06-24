@@ -5,7 +5,7 @@ export type UpdateForumReadMarkerComposerType = object;
 export class UpdateForumReadMarkerComposer implements IOutgoingPacket<UpdateForumReadMarkerComposerType> {
     public constructor(private params: UpdateForumReadMarkerComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

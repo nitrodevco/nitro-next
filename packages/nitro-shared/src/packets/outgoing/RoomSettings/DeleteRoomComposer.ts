@@ -7,7 +7,7 @@ export type DeleteRoomComposerType = {
 export class DeleteRoomComposer implements IOutgoingPacket<DeleteRoomComposerType> {
     public constructor(private params: DeleteRoomComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
         ];

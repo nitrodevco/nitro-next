@@ -9,7 +9,7 @@ export type OpenFlatConnectionComposerType = {
 export class OpenFlatConnectionComposer implements IOutgoingPacket<OpenFlatConnectionComposerType> {
     public constructor(private params: OpenFlatConnectionComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.password,

@@ -7,7 +7,7 @@ export type GetFlatControllersComposerType = {
 export class GetFlatControllersComposer implements IOutgoingPacket<GetFlatControllersComposerType> {
     public constructor(private params: GetFlatControllersComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
         ];

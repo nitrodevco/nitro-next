@@ -5,7 +5,7 @@ export type RequestABadgeComposerType = object;
 export class RequestABadgeComposer implements IOutgoingPacket<RequestABadgeComposerType> {
     public constructor(private params: RequestABadgeComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

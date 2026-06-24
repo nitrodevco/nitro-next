@@ -5,7 +5,7 @@ export type GetSeasonalQuestsOnlyComposerType = object;
 export class GetSeasonalQuestsOnlyComposer implements IOutgoingPacket<GetSeasonalQuestsOnlyComposerType> {
     public constructor(private params: GetSeasonalQuestsOnlyComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

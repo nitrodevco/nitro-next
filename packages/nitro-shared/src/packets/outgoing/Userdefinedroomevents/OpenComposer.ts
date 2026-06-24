@@ -7,7 +7,7 @@ export type OpenComposerType = {
 export class OpenComposer implements IOutgoingPacket<OpenComposerType> {
     public constructor(private params: OpenComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.id,
         ];

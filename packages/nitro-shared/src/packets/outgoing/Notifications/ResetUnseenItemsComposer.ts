@@ -5,7 +5,7 @@ export type ResetUnseenItemsComposerType = object;
 export class ResetUnseenItemsComposer implements IOutgoingPacket<ResetUnseenItemsComposerType> {
     public constructor(private params: ResetUnseenItemsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

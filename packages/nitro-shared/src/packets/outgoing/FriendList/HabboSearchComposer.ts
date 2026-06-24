@@ -7,7 +7,7 @@ export type HabboSearchComposerType = {
 export class HabboSearchComposer implements IOutgoingPacket<HabboSearchComposerType> {
     public constructor(private params: HabboSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.searchQuery,
         ];

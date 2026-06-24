@@ -8,7 +8,7 @@ export type UseWallItemComposerType = {
 export class UseWallItemComposer implements IOutgoingPacket<UseWallItemComposerType> {
     public constructor(private params: UseWallItemComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.objectId,
             this.params.param,

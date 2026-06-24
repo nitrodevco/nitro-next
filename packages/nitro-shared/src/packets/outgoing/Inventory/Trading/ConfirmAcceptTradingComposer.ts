@@ -5,7 +5,7 @@ export type ConfirmAcceptTradingComposerType = object;
 export class ConfirmAcceptTradingComposer implements IOutgoingPacket<ConfirmAcceptTradingComposerType> {
     public constructor(private params: ConfirmAcceptTradingComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

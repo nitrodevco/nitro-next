@@ -5,7 +5,7 @@ export type WithdrawCreditVaultComposerType = object;
 export class WithdrawCreditVaultComposer implements IOutgoingPacket<WithdrawCreditVaultComposerType> {
     public constructor(private params: WithdrawCreditVaultComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

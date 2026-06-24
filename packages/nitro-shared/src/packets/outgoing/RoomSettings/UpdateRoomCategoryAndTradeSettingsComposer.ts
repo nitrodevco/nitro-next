@@ -9,7 +9,7 @@ export type UpdateRoomCategoryAndTradeSettingsComposerType = {
 export class UpdateRoomCategoryAndTradeSettingsComposer implements IOutgoingPacket<UpdateRoomCategoryAndTradeSettingsComposerType> {
     public constructor(private params: UpdateRoomCategoryAndTradeSettingsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.categoryId,

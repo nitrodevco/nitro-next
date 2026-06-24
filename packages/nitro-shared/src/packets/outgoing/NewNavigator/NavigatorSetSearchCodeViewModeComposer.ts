@@ -8,7 +8,7 @@ export type NavigatorSetSearchCodeViewModeComposerType = {
 export class NavigatorSetSearchCodeViewModeComposer implements IOutgoingPacket<NavigatorSetSearchCodeViewModeComposerType> {
     public constructor(private params: NavigatorSetSearchCodeViewModeComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.categoryName,
             this.params.viewMode,

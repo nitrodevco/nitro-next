@@ -5,7 +5,7 @@ export type GetGuideReportingStatusComposerType = object;
 export class GetGuideReportingStatusComposer implements IOutgoingPacket<GetGuideReportingStatusComposerType> {
     public constructor(private params: GetGuideReportingStatusComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

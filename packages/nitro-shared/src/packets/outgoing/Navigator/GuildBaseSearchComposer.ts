@@ -7,7 +7,7 @@ export type GuildBaseSearchComposerType = {
 export class GuildBaseSearchComposer implements IOutgoingPacket<GuildBaseSearchComposerType> {
     public constructor(private params: GuildBaseSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.unknown,
         ];

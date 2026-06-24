@@ -5,7 +5,7 @@ export type PeerUsersClassificationComposerType = object;
 export class PeerUsersClassificationComposer implements IOutgoingPacket<PeerUsersClassificationComposerType> {
     public constructor(private params: PeerUsersClassificationComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

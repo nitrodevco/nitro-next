@@ -5,7 +5,7 @@ export type AmbassadorAlertComposerType = object;
 export class AmbassadorAlertComposer implements IOutgoingPacket<AmbassadorAlertComposerType> {
     public constructor(private params: AmbassadorAlertComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

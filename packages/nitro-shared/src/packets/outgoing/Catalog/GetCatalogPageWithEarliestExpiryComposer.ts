@@ -5,7 +5,7 @@ export type GetCatalogPageWithEarliestExpiryComposerType = object;
 export class GetCatalogPageWithEarliestExpiryComposer implements IOutgoingPacket<GetCatalogPageWithEarliestExpiryComposerType> {
     public constructor(private params: GetCatalogPageWithEarliestExpiryComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

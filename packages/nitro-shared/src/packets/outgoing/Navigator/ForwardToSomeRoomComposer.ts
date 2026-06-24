@@ -7,7 +7,7 @@ export type ForwardToSomeRoomComposerType = {
 export class ForwardToSomeRoomComposer implements IOutgoingPacket<ForwardToSomeRoomComposerType> {
     public constructor(private params: ForwardToSomeRoomComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.forwardData,
         ];

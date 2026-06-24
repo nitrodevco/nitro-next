@@ -8,7 +8,7 @@ export type ChargeFireworkComposerType = {
 export class ChargeFireworkComposer implements IOutgoingPacket<ChargeFireworkComposerType> {
     public constructor(private params: ChargeFireworkComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.spriteId,
             this.params.type,

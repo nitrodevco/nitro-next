@@ -7,7 +7,7 @@ export type GetNextTargetedOfferComposerType = {
 export class GetNextTargetedOfferComposer implements IOutgoingPacket<GetNextTargetedOfferComposerType> {
     public constructor(private params: GetNextTargetedOfferComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.offerId,
         ];

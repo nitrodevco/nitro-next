@@ -8,7 +8,7 @@ export type MoveAvatarComposerType = {
 export class MoveAvatarComposer implements IOutgoingPacket<MoveAvatarComposerType> {
     public constructor(private params: MoveAvatarComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.targetX,
             this.params.targetY,

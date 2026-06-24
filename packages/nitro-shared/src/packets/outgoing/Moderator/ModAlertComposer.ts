@@ -5,7 +5,7 @@ export type ModAlertComposerType = object;
 export class ModAlertComposer implements IOutgoingPacket<ModAlertComposerType> {
     public constructor(private params: ModAlertComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -7,7 +7,7 @@ export type PurchaseBasicMembershipExtensionComposerType = {
 export class PurchaseBasicMembershipExtensionComposer implements IOutgoingPacket<PurchaseBasicMembershipExtensionComposerType> {
     public constructor(private params: PurchaseBasicMembershipExtensionComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.offerId,
         ];

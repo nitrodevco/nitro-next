@@ -5,7 +5,7 @@ export type CraftSecretComposerType = object;
 export class CraftSecretComposer implements IOutgoingPacket<CraftSecretComposerType> {
     public constructor(private params: CraftSecretComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

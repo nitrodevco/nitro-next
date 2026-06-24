@@ -10,7 +10,7 @@ export type ClientHelloComposerType = {
 export class ClientHelloComposer implements IOutgoingPacket<ClientHelloComposerType> {
     public constructor(private params: ClientHelloComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.production,
             this.params.platform,

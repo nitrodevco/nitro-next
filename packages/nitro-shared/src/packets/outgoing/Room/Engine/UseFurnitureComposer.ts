@@ -8,7 +8,7 @@ export type UseFurnitureComposerType = {
 export class UseFurnitureComposer implements IOutgoingPacket<UseFurnitureComposerType> {
     public constructor(private params: UseFurnitureComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.objectId,
             this.params.param,

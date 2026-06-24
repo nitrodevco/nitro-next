@@ -5,7 +5,7 @@ export type GetSoundSettingsComposerType = object;
 export class GetSoundSettingsComposer implements IOutgoingPacket<GetSoundSettingsComposerType> {
     public constructor(private params: GetSoundSettingsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -5,7 +5,7 @@ export type RemoveItemComposerType = object;
 export class RemoveItemComposer implements IOutgoingPacket<RemoveItemComposerType> {
     public constructor(private params: RemoveItemComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

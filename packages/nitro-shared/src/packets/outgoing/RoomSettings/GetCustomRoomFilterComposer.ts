@@ -7,7 +7,7 @@ export type GetCustomRoomFilterComposerType = {
 export class GetCustomRoomFilterComposer implements IOutgoingPacket<GetCustomRoomFilterComposerType> {
     public constructor(private params: GetCustomRoomFilterComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
         ];

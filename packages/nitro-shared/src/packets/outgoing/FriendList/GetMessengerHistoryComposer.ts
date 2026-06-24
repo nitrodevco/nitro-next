@@ -8,7 +8,7 @@ export type GetMessengerHistoryComposerType = {
 export class GetMessengerHistoryComposer implements IOutgoingPacket<GetMessengerHistoryComposerType> {
     public constructor(private params: GetMessengerHistoryComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.chatId,
             this.params.message,

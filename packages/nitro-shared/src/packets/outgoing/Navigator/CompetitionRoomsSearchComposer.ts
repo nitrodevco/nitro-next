@@ -8,7 +8,7 @@ export type CompetitionRoomsSearchComposerType = {
 export class CompetitionRoomsSearchComposer implements IOutgoingPacket<CompetitionRoomsSearchComposerType> {
     public constructor(private params: CompetitionRoomsSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.goalId,
             this.params.pageIndex,

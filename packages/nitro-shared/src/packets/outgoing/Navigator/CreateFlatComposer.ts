@@ -12,7 +12,7 @@ export type CreateFlatComposerType = {
 export class CreateFlatComposer implements IOutgoingPacket<CreateFlatComposerType> {
     public constructor(private params: CreateFlatComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.flatName,
             this.params.flatDescription,

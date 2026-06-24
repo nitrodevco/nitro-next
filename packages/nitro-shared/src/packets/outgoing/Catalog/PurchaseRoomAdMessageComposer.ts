@@ -13,7 +13,7 @@ export type PurchaseRoomAdMessageComposerType = {
 export class PurchaseRoomAdMessageComposer implements IOutgoingPacket<PurchaseRoomAdMessageComposerType> {
     public constructor(private params: PurchaseRoomAdMessageComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerId,

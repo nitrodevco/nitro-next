@@ -5,7 +5,7 @@ export type WiredGetErrorLogsComposerType = object;
 export class WiredGetErrorLogsComposer implements IOutgoingPacket<WiredGetErrorLogsComposerType> {
     public constructor(private params: WiredGetErrorLogsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

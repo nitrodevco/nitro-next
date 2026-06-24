@@ -5,7 +5,7 @@ export type GetUserFlatCatsComposerType = object;
 export class GetUserFlatCatsComposer implements IOutgoingPacket<GetUserFlatCatsComposerType> {
     public constructor(private params: GetUserFlatCatsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

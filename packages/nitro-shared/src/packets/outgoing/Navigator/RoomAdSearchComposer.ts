@@ -8,7 +8,7 @@ export type RoomAdSearchComposerType = {
 export class RoomAdSearchComposer implements IOutgoingPacket<RoomAdSearchComposerType> {
     public constructor(private params: RoomAdSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.adIndex,
             this.params.tabId,

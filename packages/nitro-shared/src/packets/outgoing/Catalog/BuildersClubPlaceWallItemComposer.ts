@@ -10,7 +10,7 @@ export type BuildersClubPlaceWallItemComposerType = {
 export class BuildersClubPlaceWallItemComposer implements IOutgoingPacket<BuildersClubPlaceWallItemComposerType> {
     public constructor(private params: BuildersClubPlaceWallItemComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerId,

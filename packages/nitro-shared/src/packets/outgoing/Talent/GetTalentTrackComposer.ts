@@ -5,7 +5,7 @@ export type GetTalentTrackComposerType = object;
 export class GetTalentTrackComposer implements IOutgoingPacket<GetTalentTrackComposerType> {
     public constructor(private params: GetTalentTrackComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

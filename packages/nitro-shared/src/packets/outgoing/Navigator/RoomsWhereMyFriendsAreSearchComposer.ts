@@ -5,7 +5,7 @@ export type RoomsWhereMyFriendsAreSearchComposerType = object;
 export class RoomsWhereMyFriendsAreSearchComposer implements IOutgoingPacket<RoomsWhereMyFriendsAreSearchComposerType> {
     public constructor(private params: RoomsWhereMyFriendsAreSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

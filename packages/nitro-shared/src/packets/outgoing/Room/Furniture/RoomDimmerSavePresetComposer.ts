@@ -5,7 +5,7 @@ export type RoomDimmerSavePresetComposerType = object;
 export class RoomDimmerSavePresetComposer implements IOutgoingPacket<RoomDimmerSavePresetComposerType> {
     public constructor(private params: RoomDimmerSavePresetComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

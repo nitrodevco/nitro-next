@@ -5,7 +5,7 @@ export type RequestCameraConfigurationComposerType = object;
 export class RequestCameraConfigurationComposer implements IOutgoingPacket<RequestCameraConfigurationComposerType> {
     public constructor(private params: RequestCameraConfigurationComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

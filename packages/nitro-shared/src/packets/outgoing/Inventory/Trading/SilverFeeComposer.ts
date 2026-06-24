@@ -5,7 +5,7 @@ export type SilverFeeComposerType = object;
 export class SilverFeeComposer implements IOutgoingPacket<SilverFeeComposerType> {
     public constructor(private params: SilverFeeComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

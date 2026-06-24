@@ -5,7 +5,7 @@ export type WhisperComposerType = object;
 export class WhisperComposer implements IOutgoingPacket<WhisperComposerType> {
     public constructor(private params: WhisperComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -9,7 +9,7 @@ export type EditEventComposerType = {
 export class EditEventComposer implements IOutgoingPacket<EditEventComposerType> {
     public constructor(private params: EditEventComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.id,
             this.params.name,

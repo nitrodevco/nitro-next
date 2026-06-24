@@ -5,7 +5,7 @@ export type UpdateGuildSettingsComposerType = object;
 export class UpdateGuildSettingsComposer implements IOutgoingPacket<UpdateGuildSettingsComposerType> {
     public constructor(private params: UpdateGuildSettingsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

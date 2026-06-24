@@ -7,7 +7,7 @@ export type ApplySnapshotComposerType = {
 export class ApplySnapshotComposer implements IOutgoingPacket<ApplySnapshotComposerType> {
     public constructor(private params: ApplySnapshotComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.id,
         ];

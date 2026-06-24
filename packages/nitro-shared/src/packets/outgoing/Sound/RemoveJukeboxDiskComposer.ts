@@ -5,7 +5,7 @@ export type RemoveJukeboxDiskComposerType = object;
 export class RemoveJukeboxDiskComposer implements IOutgoingPacket<RemoveJukeboxDiskComposerType> {
     public constructor(private params: RemoveJukeboxDiskComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

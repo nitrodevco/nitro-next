@@ -7,7 +7,7 @@ export type GetOfficialRoomsComposerType = {
 export class GetOfficialRoomsComposer implements IOutgoingPacket<GetOfficialRoomsComposerType> {
     public constructor(private params: GetOfficialRoomsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.adIndex,
         ];

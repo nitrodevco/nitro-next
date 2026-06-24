@@ -7,7 +7,7 @@ export type GetCfhStatusComposerType = {
 export class GetCfhStatusComposer implements IOutgoingPacket<GetCfhStatusComposerType> {
     public constructor(private params: GetCfhStatusComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.flag,
         ];

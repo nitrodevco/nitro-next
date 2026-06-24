@@ -15,7 +15,7 @@ export type PurchaseFromCatalogAsGiftComposerType = {
 export class PurchaseFromCatalogAsGiftComposer implements IOutgoingPacket<PurchaseFromCatalogAsGiftComposerType> {
     public constructor(private params: PurchaseFromCatalogAsGiftComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerCode,

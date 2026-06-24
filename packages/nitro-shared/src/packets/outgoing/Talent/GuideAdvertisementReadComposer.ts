@@ -5,7 +5,7 @@ export type GuideAdvertisementReadComposerType = object;
 export class GuideAdvertisementReadComposer implements IOutgoingPacket<GuideAdvertisementReadComposerType> {
     public constructor(private params: GuideAdvertisementReadComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

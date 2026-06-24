@@ -7,7 +7,7 @@ export type GetIsOfferGiftableComposerType = {
 export class GetIsOfferGiftableComposer implements IOutgoingPacket<GetIsOfferGiftableComposerType> {
     public constructor(private params: GetIsOfferGiftableComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.offerId,
         ];

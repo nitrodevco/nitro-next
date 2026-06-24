@@ -12,7 +12,7 @@ export type BuildersClubPlaceRoomItemComposerType = {
 export class BuildersClubPlaceRoomItemComposer implements IOutgoingPacket<BuildersClubPlaceRoomItemComposerType> {
     public constructor(private params: BuildersClubPlaceRoomItemComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerId,

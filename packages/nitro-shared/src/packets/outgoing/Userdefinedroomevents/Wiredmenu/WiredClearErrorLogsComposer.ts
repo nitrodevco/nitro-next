@@ -5,7 +5,7 @@ export type WiredClearErrorLogsComposerType = object;
 export class WiredClearErrorLogsComposer implements IOutgoingPacket<WiredClearErrorLogsComposerType> {
     public constructor(private params: WiredClearErrorLogsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

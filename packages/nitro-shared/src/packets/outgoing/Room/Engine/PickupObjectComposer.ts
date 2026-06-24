@@ -1,4 +1,4 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type PickupObjectComposerType = {
     categoryId: number;
@@ -9,7 +9,7 @@ export type PickupObjectComposerType = {
 export class PickupObjectComposer implements IOutgoingPacket<PickupObjectComposerType> {
     public constructor(private params: PickupObjectComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.categoryId,
             this.params.objectId,

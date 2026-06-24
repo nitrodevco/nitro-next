@@ -7,7 +7,7 @@ export type GetProductOfferComposerType = {
 export class GetProductOfferComposer implements IOutgoingPacket<GetProductOfferComposerType> {
     public constructor(private params: GetProductOfferComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.offerId,
         ];

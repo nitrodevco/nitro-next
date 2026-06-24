@@ -5,7 +5,7 @@ export type GetMarketplaceOwnOffersComposerType = object;
 export class GetMarketplaceOwnOffersComposer implements IOutgoingPacket<GetMarketplaceOwnOffersComposerType> {
     public constructor(private params: GetMarketplaceOwnOffersComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

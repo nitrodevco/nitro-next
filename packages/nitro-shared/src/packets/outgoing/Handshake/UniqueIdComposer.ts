@@ -9,7 +9,7 @@ export type UniqueIdComposerType = {
 export class UniqueIdComposer implements IOutgoingPacket<UniqueIdComposerType> {
     public constructor(private params: UniqueIdComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.machineID,
             this.params.fingerprint,

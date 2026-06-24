@@ -5,7 +5,7 @@ export type SaveWardrobeOutfitComposerType = object;
 export class SaveWardrobeOutfitComposer implements IOutgoingPacket<SaveWardrobeOutfitComposerType> {
     public constructor(private params: SaveWardrobeOutfitComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

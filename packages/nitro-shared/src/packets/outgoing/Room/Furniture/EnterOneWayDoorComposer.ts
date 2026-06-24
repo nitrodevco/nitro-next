@@ -5,7 +5,7 @@ export type EnterOneWayDoorComposerType = object;
 export class EnterOneWayDoorComposer implements IOutgoingPacket<EnterOneWayDoorComposerType> {
     public constructor(private params: EnterOneWayDoorComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

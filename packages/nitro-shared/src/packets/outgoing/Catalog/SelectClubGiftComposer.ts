@@ -7,7 +7,7 @@ export type SelectClubGiftComposerType = {
 export class SelectClubGiftComposer implements IOutgoingPacket<SelectClubGiftComposerType> {
     public constructor(private params: SelectClubGiftComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.productCode,
         ];

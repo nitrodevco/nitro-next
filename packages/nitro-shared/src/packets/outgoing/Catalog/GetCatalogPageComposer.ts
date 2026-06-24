@@ -9,7 +9,7 @@ export type GetCatalogPageComposerType = {
 export class GetCatalogPageComposer implements IOutgoingPacket<GetCatalogPageComposerType> {
     public constructor(private params: GetCatalogPageComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerId,

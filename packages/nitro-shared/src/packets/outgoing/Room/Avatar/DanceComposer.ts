@@ -5,7 +5,7 @@ export type DanceComposerType = object;
 export class DanceComposer implements IOutgoingPacket<DanceComposerType> {
     public constructor(private params: DanceComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

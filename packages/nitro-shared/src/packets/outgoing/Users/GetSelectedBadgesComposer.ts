@@ -5,7 +5,7 @@ export type GetSelectedBadgesComposerType = object;
 export class GetSelectedBadgesComposer implements IOutgoingPacket<GetSelectedBadgesComposerType> {
     public constructor(private params: GetSelectedBadgesComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

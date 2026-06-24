@@ -5,7 +5,7 @@ export type GetBotCommandConfigurationDataComposerType = object;
 export class GetBotCommandConfigurationDataComposer implements IOutgoingPacket<GetBotCommandConfigurationDataComposerType> {
     public constructor(private params: GetBotCommandConfigurationDataComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

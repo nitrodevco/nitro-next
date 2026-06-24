@@ -5,7 +5,7 @@ export type GetHabboClubExtendOfferComposerType = object;
 export class GetHabboClubExtendOfferComposer implements IOutgoingPacket<GetHabboClubExtendOfferComposerType> {
     public constructor(private params: GetHabboClubExtendOfferComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -17,7 +17,7 @@ export type PerformanceLogComposerType = {
 export class PerformanceLogComposer implements IOutgoingPacket<PerformanceLogComposerType> {
     public constructor(private params: PerformanceLogComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.elapsedTime,
             this.params.userAgent,

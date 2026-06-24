@@ -7,7 +7,7 @@ export type GetSellablePetPalettesComposerType = {
 export class GetSellablePetPalettesComposer implements IOutgoingPacket<GetSellablePetPalettesComposerType> {
     public constructor(private params: GetSellablePetPalettesComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.localizationId,
         ];

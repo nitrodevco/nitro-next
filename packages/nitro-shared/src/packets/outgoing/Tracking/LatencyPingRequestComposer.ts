@@ -7,7 +7,7 @@ export type LatencyPingRequestComposerType = {
 export class LatencyPingRequestComposer implements IOutgoingPacket<LatencyPingRequestComposerType> {
     public constructor(private params: LatencyPingRequestComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.requestId,
         ];

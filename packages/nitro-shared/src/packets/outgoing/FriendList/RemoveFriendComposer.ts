@@ -7,7 +7,7 @@ export type RemoveFriendComposerType = {
 export class RemoveFriendComposer implements IOutgoingPacket<RemoveFriendComposerType> {
     public constructor(private params: RemoveFriendComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.friendIds,
         ];

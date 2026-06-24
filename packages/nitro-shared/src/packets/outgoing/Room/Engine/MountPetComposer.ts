@@ -5,7 +5,7 @@ export type MountPetComposerType = object;
 export class MountPetComposer implements IOutgoingPacket<MountPetComposerType> {
     public constructor(private params: MountPetComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -8,7 +8,7 @@ export type NewNavigatorSearchComposerType = {
 export class NewNavigatorSearchComposer implements IOutgoingPacket<NewNavigatorSearchComposerType> {
     public constructor(private params: NewNavigatorSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.searchCodeOriginal,
             this.params.filteringData,

@@ -5,7 +5,7 @@ export type GetIgnoredUsersComposerType = object;
 export class GetIgnoredUsersComposer implements IOutgoingPacket<GetIgnoredUsersComposerType> {
     public constructor(private params: GetIgnoredUsersComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

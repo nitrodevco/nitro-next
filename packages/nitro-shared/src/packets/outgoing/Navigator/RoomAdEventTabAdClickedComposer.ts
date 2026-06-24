@@ -9,7 +9,7 @@ export type RoomAdEventTabAdClickedComposerType = {
 export class RoomAdEventTabAdClickedComposer implements IOutgoingPacket<RoomAdEventTabAdClickedComposerType> {
     public constructor(private params: RoomAdEventTabAdClickedComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.flatId,
             this.params.roomAdName,

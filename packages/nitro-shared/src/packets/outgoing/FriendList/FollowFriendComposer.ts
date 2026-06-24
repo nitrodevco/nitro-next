@@ -7,7 +7,7 @@ export type FollowFriendComposerType = {
 export class FollowFriendComposer implements IOutgoingPacket<FollowFriendComposerType> {
     public constructor(private params: FollowFriendComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.playerId,
         ];

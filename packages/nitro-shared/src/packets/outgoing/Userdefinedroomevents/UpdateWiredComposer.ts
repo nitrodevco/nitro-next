@@ -13,7 +13,7 @@ export type UpdateWiredComposerType = {
 export class UpdateWiredComposer implements IOutgoingPacket<UpdateWiredComposerType> {
     public constructor(private params: UpdateWiredComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.id,
             this.params.intParams,

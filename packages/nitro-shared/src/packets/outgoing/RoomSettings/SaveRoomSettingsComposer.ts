@@ -30,7 +30,7 @@ export type SaveRoomSettingsComposerType = {
 export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSettingsComposerType> {
     public constructor(private params: SaveRoomSettingsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.roomName,

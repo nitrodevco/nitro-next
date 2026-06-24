@@ -8,7 +8,7 @@ export type ShopTargetedOfferViewedComposerType = {
 export class ShopTargetedOfferViewedComposer implements IOutgoingPacket<ShopTargetedOfferViewedComposerType> {
     public constructor(private params: ShopTargetedOfferViewedComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.targetedOfferId,
             this.params.trackingState,

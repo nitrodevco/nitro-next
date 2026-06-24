@@ -9,7 +9,7 @@ export type UpdateRoomFilterComposerType = {
 export class UpdateRoomFilterComposer implements IOutgoingPacket<UpdateRoomFilterComposerType> {
     public constructor(private params: UpdateRoomFilterComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.isAddingWord,

@@ -9,7 +9,7 @@ export type GetGuestRoomComposerType = {
 export class GetGuestRoomComposer implements IOutgoingPacket<GetGuestRoomComposerType> {
     public constructor(private params: GetGuestRoomComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.enterRoom,

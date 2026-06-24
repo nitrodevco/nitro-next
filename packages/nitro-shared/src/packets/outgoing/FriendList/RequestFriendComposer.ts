@@ -7,7 +7,7 @@ export type RequestFriendComposerType = {
 export class RequestFriendComposer implements IOutgoingPacket<RequestFriendComposerType> {
     public constructor(private params: RequestFriendComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.playerName,
         ];

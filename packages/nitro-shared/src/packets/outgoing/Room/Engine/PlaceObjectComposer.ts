@@ -7,7 +7,7 @@ export type PlaceObjectComposerType = {
 export class PlaceObjectComposer implements IOutgoingPacket<PlaceObjectComposerType> {
     public constructor(private params: PlaceObjectComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.data,
         ];

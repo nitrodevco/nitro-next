@@ -7,7 +7,7 @@ export type CancelEventComposerType = {
 export class CancelEventComposer implements IOutgoingPacket<CancelEventComposerType> {
     public constructor(private params: CancelEventComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.advertisementId,
         ];

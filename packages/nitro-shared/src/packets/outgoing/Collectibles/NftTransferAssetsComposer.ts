@@ -5,7 +5,7 @@ export type NftTransferAssetsComposerType = object;
 export class NftTransferAssetsComposer implements IOutgoingPacket<NftTransferAssetsComposerType> {
     public constructor(private params: NftTransferAssetsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

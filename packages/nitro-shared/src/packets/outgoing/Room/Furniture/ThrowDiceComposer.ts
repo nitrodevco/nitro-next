@@ -5,7 +5,7 @@ export type ThrowDiceComposerType = object;
 export class ThrowDiceComposer implements IOutgoingPacket<ThrowDiceComposerType> {
     public constructor(private params: ThrowDiceComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

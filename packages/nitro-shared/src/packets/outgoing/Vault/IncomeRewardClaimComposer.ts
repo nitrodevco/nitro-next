@@ -5,7 +5,7 @@ export type IncomeRewardClaimComposerType = object;
 export class IncomeRewardClaimComposer implements IOutgoingPacket<IncomeRewardClaimComposerType> {
     public constructor(private params: IncomeRewardClaimComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

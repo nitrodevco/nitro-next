@@ -8,7 +8,7 @@ export type SetRandomStateComposerType = {
 export class SetRandomStateComposer implements IOutgoingPacket<SetRandomStateComposerType> {
     public constructor(private params: SetRandomStateComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.objectId,
             this.params.param,

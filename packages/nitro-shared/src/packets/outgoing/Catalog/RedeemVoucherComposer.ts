@@ -7,7 +7,7 @@ export type RedeemVoucherComposerType = {
 export class RedeemVoucherComposer implements IOutgoingPacket<RedeemVoucherComposerType> {
     public constructor(private params: RedeemVoucherComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.code,
         ];

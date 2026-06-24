@@ -5,7 +5,7 @@ export type QuitComposerType = object;
 export class QuitComposer implements IOutgoingPacket<QuitComposerType> {
     public constructor(private params: QuitComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

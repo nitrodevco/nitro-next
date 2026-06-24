@@ -5,7 +5,7 @@ export type RoomDimmerChangeStateComposerType = object;
 export class RoomDimmerChangeStateComposer implements IOutgoingPacket<RoomDimmerChangeStateComposerType> {
     public constructor(private params: RoomDimmerChangeStateComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

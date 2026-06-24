@@ -8,7 +8,7 @@ export type DeclineFriendComposerType = {
 export class DeclineFriendComposer implements IOutgoingPacket<DeclineFriendComposerType> {
     public constructor(private params: DeclineFriendComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.declineAll,
             this.params.friends,

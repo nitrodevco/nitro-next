@@ -8,7 +8,7 @@ export type PurchaseTargetedOfferComposerType = {
 export class PurchaseTargetedOfferComposer implements IOutgoingPacket<PurchaseTargetedOfferComposerType> {
     public constructor(private params: PurchaseTargetedOfferComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.offerId,
             this.params.quantity,

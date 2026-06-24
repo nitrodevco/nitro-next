@@ -5,7 +5,7 @@ export type GetOfficialSongIdComposerType = object;
 export class GetOfficialSongIdComposer implements IOutgoingPacket<GetOfficialSongIdComposerType> {
     public constructor(private params: GetOfficialSongIdComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

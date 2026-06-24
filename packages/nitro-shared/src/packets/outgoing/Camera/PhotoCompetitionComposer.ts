@@ -5,7 +5,7 @@ export type PhotoCompetitionComposerType = object;
 export class PhotoCompetitionComposer implements IOutgoingPacket<PhotoCompetitionComposerType> {
     public constructor(private params: PhotoCompetitionComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

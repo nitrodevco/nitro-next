@@ -7,7 +7,7 @@ export type ForwardToARandomPromotedRoomComposerType = {
 export class ForwardToARandomPromotedRoomComposer implements IOutgoingPacket<ForwardToARandomPromotedRoomComposerType> {
     public constructor(private params: ForwardToARandomPromotedRoomComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.category,
         ];

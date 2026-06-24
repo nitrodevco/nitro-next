@@ -7,7 +7,7 @@ export type GetCurrentTimingCodeComposerType = {
 export class GetCurrentTimingCodeComposer implements IOutgoingPacket<GetCurrentTimingCodeComposerType> {
     public constructor(private params: GetCurrentTimingCodeComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.slotConfig,
         ];

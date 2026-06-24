@@ -9,7 +9,7 @@ export type LatencyPingReportComposerType = {
 export class LatencyPingReportComposer implements IOutgoingPacket<LatencyPingReportComposerType> {
     public constructor(private params: LatencyPingReportComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.averageLatency,
             this.params.validPingAverage,

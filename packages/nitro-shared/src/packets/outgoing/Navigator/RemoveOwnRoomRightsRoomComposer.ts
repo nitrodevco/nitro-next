@@ -7,7 +7,7 @@ export type RemoveOwnRoomRightsRoomComposerType = {
 export class RemoveOwnRoomRightsRoomComposer implements IOutgoingPacket<RemoveOwnRoomRightsRoomComposerType> {
     public constructor(private params: RemoveOwnRoomRightsRoomComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
         ];

@@ -5,7 +5,7 @@ export type PickIssuesComposerType = object;
 export class PickIssuesComposer implements IOutgoingPacket<PickIssuesComposerType> {
     public constructor(private params: PickIssuesComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

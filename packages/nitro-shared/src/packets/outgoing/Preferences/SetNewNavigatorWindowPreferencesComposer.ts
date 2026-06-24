@@ -12,7 +12,7 @@ export type SetNewNavigatorWindowPreferencesComposerType = {
 export class SetNewNavigatorWindowPreferencesComposer implements IOutgoingPacket<SetNewNavigatorWindowPreferencesComposerType> {
     public constructor(private params: SetNewNavigatorWindowPreferencesComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.x,
             this.params.y,

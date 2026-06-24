@@ -8,7 +8,7 @@ export type SetTargetedOfferStateComposerType = {
 export class SetTargetedOfferStateComposer implements IOutgoingPacket<SetTargetedOfferStateComposerType> {
     public constructor(private params: SetTargetedOfferStateComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.targetedOfferId,
             this.params.trackingState,

@@ -7,7 +7,7 @@ export type AcceptFriendComposerType = {
 export class AcceptFriendComposer implements IOutgoingPacket<AcceptFriendComposerType> {
     public constructor(private params: AcceptFriendComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.friends,
         ];

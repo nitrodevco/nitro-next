@@ -7,7 +7,7 @@ export type GetClubOffersComposerType = {
 export class GetClubOffersComposer implements IOutgoingPacket<GetClubOffersComposerType> {
     public constructor(private params: GetClubOffersComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.requestSource,
         ];

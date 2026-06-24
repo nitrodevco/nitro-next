@@ -7,7 +7,7 @@ export type LagWarningReportComposerType = {
 export class LagWarningReportComposer implements IOutgoingPacket<LagWarningReportComposerType> {
     public constructor(private params: LagWarningReportComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.warningCount,
         ];

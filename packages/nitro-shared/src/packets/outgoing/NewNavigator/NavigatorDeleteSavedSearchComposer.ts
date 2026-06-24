@@ -7,7 +7,7 @@ export type NavigatorDeleteSavedSearchComposerType = {
 export class NavigatorDeleteSavedSearchComposer implements IOutgoingPacket<NavigatorDeleteSavedSearchComposerType> {
     public constructor(private params: NavigatorDeleteSavedSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.searchId,
         ];

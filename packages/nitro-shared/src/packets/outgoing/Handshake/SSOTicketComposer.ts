@@ -8,7 +8,7 @@ export type SSOTicketComposerType = {
 export class SSOTicketComposer implements IOutgoingPacket<SSOTicketComposerType> {
     public constructor(private params: SSOTicketComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.ssoTicket,
             this.params.elapsedMilliseconds,

@@ -5,7 +5,7 @@ export type GiveSupplementToPetComposerType = object;
 export class GiveSupplementToPetComposer implements IOutgoingPacket<GiveSupplementToPetComposerType> {
     public constructor(private params: GiveSupplementToPetComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

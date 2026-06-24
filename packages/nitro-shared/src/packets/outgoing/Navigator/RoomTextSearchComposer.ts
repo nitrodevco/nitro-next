@@ -7,7 +7,7 @@ export type RoomTextSearchComposerType = {
 export class RoomTextSearchComposer implements IOutgoingPacket<RoomTextSearchComposerType> {
     public constructor(private params: RoomTextSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.query,
         ];

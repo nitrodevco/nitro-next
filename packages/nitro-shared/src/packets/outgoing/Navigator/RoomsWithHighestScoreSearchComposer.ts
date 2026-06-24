@@ -7,7 +7,7 @@ export type RoomsWithHighestScoreSearchComposerType = {
 export class RoomsWithHighestScoreSearchComposer implements IOutgoingPacket<RoomsWithHighestScoreSearchComposerType> {
     public constructor(private params: RoomsWithHighestScoreSearchComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.adIndex,
         ];

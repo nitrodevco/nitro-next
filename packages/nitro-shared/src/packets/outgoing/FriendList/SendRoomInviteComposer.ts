@@ -8,7 +8,7 @@ export type SendRoomInviteComposerType = {
 export class SendRoomInviteComposer implements IOutgoingPacket<SendRoomInviteComposerType> {
     public constructor(private params: SendRoomInviteComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.message,
             this.params.friendIds,

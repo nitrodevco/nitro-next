@@ -10,7 +10,7 @@ export type PurchaseFromCatalogComposerType = {
 export class PurchaseFromCatalogComposer implements IOutgoingPacket<PurchaseFromCatalogComposerType> {
     public constructor(private params: PurchaseFromCatalogComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.pageId,
             this.params.offerId,

@@ -5,7 +5,7 @@ export type WiredSetRoomSettingsComposerType = object;
 export class WiredSetRoomSettingsComposer implements IOutgoingPacket<WiredSetRoomSettingsComposerType> {
     public constructor(private params: WiredSetRoomSettingsComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

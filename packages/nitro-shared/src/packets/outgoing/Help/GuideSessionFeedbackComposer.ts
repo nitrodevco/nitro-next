@@ -5,7 +5,7 @@ export type GuideSessionFeedbackComposerType = object;
 export class GuideSessionFeedbackComposer implements IOutgoingPacket<GuideSessionFeedbackComposerType> {
     public constructor(private params: GuideSessionFeedbackComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

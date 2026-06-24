@@ -5,7 +5,7 @@ export type DeletePendingCallsForHelpComposerType = object;
 export class DeletePendingCallsForHelpComposer implements IOutgoingPacket<DeletePendingCallsForHelpComposerType> {
     public constructor(private params: DeletePendingCallsForHelpComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

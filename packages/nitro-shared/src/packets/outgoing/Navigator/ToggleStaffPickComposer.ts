@@ -8,7 +8,7 @@ export type ToggleStaffPickComposerType = {
 export class ToggleStaffPickComposer implements IOutgoingPacket<ToggleStaffPickComposerType> {
     public constructor(private params: ToggleStaffPickComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.roomId,
             this.params.isStaffPicked,

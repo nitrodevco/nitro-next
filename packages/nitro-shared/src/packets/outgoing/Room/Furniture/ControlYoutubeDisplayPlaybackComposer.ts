@@ -5,7 +5,7 @@ export type ControlYoutubeDisplayPlaybackComposerType = object;
 export class ControlYoutubeDisplayPlaybackComposer implements IOutgoingPacket<ControlYoutubeDisplayPlaybackComposerType> {
     public constructor(private params: ControlYoutubeDisplayPlaybackComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
         ];
     }

@@ -7,7 +7,7 @@ export type ScrGetUserInfoComposerType = {
 export class ScrGetUserInfoComposer implements IOutgoingPacket<ScrGetUserInfoComposerType> {
     public constructor(private params: ScrGetUserInfoComposerType) { }
 
-    public compose(): (number | string)[] {
+    public compose(): (number | string | boolean)[] {
         return [
             this.params.productName,
         ];
