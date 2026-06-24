@@ -1,11 +1,11 @@
 import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from "@nitrodevco/nitro-shared";
-import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectStateChangedEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
 import { useEffect } from "react";
 
 import { useIsModerator, useRoomControllerLevel, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
-import { useRoomEventDispatcher, useRoomEventHandler } from "#base/hooks";
+import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction } from "#base/hooks";
 
 export const RoomEventHandler = () => {
     const room = useRoomSelector();
@@ -14,6 +14,7 @@ export const RoomEventHandler = () => {
     const isPlayingGame = useRoomIsPlayingGame();
     const { getMouseEventId, setMouseEventId, addCursorOwner, removeCursorOwner } = useRoomMouseActions();
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
+    const { changeItemState } = useRoomObjectInteraction();
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -136,6 +137,14 @@ export const RoomEventHandler = () => {
             }
 
             switch (event.type) {
+                case RoomObjectStateChangedEvent.STATE_CHANGE: {
+                    changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, false);
+                    return;
+                }
+                case RoomObjectStateChangedEvent.STATE_RANDOM: {
+                    changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, true);
+                    return;
+                }
                 case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
                     removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
                     return;

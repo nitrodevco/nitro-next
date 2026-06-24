@@ -1,5 +1,5 @@
-import { NitroLogger, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import { MoveAvatarComposer, type RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
+import { FurnitureUsagePolicyEnum, NitroLogger, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
+import { MoveAvatarComposer, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer, type RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 
 import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from "#base/context";
 
@@ -29,5 +29,23 @@ export const useRoomObjectInteraction = () => {
         return false;
     };
 
-    return { handleMoveTargetFurni };
+    const changeItemState = (objectId: number, category: RoomObjectCategoryEnum, param: number, random: boolean) => {
+        const roomObject = room?.getRoomObject(objectId, category);
+
+        if (!roomObject) return false;
+
+        switch (category) {
+            case RoomObjectCategoryEnum.Floor: {
+                if (!random) send(new UseFurnitureComposer({ objectId, param }));
+                else send(new SetRandomStateComposer({ objectId, param }));
+            }
+            case RoomObjectCategoryEnum.Wall: {
+                send(new UseWallItemComposer({ objectId, param }));
+            }
+        }
+
+        return true;
+    }
+
+    return { handleMoveTargetFurni, changeItemState };
 }
