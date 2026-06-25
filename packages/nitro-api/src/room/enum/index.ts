@@ -9,4 +9,5 @@ export * from './RoomThicknessType';
 export * from './RoomWidgetEnum';
 export * from './RoomWidgetEnumItemExtradataParameter';
 export * from './SlideAvatarMoveType';
+export * from './SpecialRoomEffectType';
 export * from './WiredMovementType';

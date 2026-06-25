@@ -1,18 +1,15 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
 
 export type SpecialRoomEffectMessageType = {
-  // no fields
-
+    effectId: SpecialRoomEffectType;
 };
 
-export class SpecialRoomEffectMessage implements IIncomingPacket<SpecialRoomEffectMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): SpecialRoomEffectMessageType
-  {
+export class SpecialRoomEffectMessage implements IIncomingPacket<SpecialRoomEffectMessageType> {
+    public parse(wrapper: IMessageDataWrapper): SpecialRoomEffectMessageType {
+        const packet: SpecialRoomEffectMessageType = {
+            effectId: wrapper.readInt()
+        };
 
-    const packet: SpecialRoomEffectMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

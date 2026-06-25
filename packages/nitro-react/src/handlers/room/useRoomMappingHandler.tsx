@@ -1,7 +1,7 @@
-import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
-import { LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
+import { RoomGeometryScaleType, SpecialRoomEffectType } from "@nitrodevco/nitro-api";
+import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from "@nitrodevco/nitro-renderer";
 import type { HeightMapMessageType } from "@nitrodevco/nitro-shared";
-import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage } from "@nitrodevco/nitro-shared";
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, RoomZoomEvent, SpecialRoomEffectMessage } from "@nitrodevco/nitro-shared";
 import { useRef } from "react";
 
 import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
@@ -242,16 +242,55 @@ export const useRoomMappingHandler = () => {
     useMessageListener(RoomPropertyMessage, data => {
         if (!room) return;
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         room.updateRoomPlaneType((data.key === "floor") ? data.value : undefined, (data.key === "wallpaper") ? data.value : undefined, (data.key === "landscape") ? data.value : undefined);
     });
 
     useMessageListener(RoomVisualizationSettingsMessage, data => {
         if (!room) return;
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         room.updateRoomPlaneVisibilities(!data.wallsHidden);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         room.updateRoomPlaneThickness(data.wallThickness, data.floorThickness);
+    });
+
+    useMessageListener(SpecialRoomEffectMessage, data => {
+        if (!room) return;
+
+        switch (data.effectId) {
+            case SpecialRoomEffectType.Rotating: {
+                RoomRotatingEffect.init(250, 5000);
+                RoomRotatingEffect.turnVisualizationOn();
+                break;
+            }
+            case SpecialRoomEffectType.Shaking: {
+                RoomShakingEffect.init(250, 5000);
+                RoomShakingEffect.turnVisualizationOn();
+                break;
+            }
+            case SpecialRoomEffectType.Zoom: {
+                room.eventDispatcher.dispatchEvent(new RoomZoomEvent(room.roomId, -1, true));
+                break;
+            }
+            case SpecialRoomEffectType.Disco: {
+                const colors = [
+                    0x0072BB, 0xFF953B, 0xFFD700, 0x9B59B6,
+                    0x0072BB, 0xFF953B, 0xFFD700, 0x9B59B6,
+                    0x000000
+                ];
+
+                let index = 0;
+                const timer = setInterval(() => {
+                    const isLastColor = index === colors.length;
+                    //roomEngine.updateObjectRoomColor(objectId, colors[index], 176, isLastColor);
+
+                    if (++index > colors.length) clearInterval(timer);
+                }, 1000);
+
+                clearInterval(timer);
+                break;
+            }
+        }
     });
 }
