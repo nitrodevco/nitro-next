@@ -1,16 +1,16 @@
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
 export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {
-    public static OBJECT_SELECTED: string = 'RWUROE_OBJECT_SELECTED';
-    public static OBJECT_DESELECTED: string = 'RWUROE_OBJECT_DESELECTED';
-    public static USER_REMOVED: string = 'RWUROE_USER_REMOVED';
-    public static FURNI_REMOVED: string = 'RWUROE_FURNI_REMOVED';
-    public static FURNI_ADDED: string = 'RWUROE_FURNI_ADDED';
-    public static USER_ADDED: string = 'RWUROE_USER_ADDED';
-    public static OBJECT_ROLL_OVER: string = 'RWUROE_OBJECT_ROLL_OVER';
-    public static OBJECT_ROLL_OUT: string = 'RWUROE_OBJECT_ROLL_OUT';
-    public static OBJECT_REQUEST_MANIPULATION: string = 'RWUROE_OBJECT_REQUEST_MANIPULATION';
-    public static OBJECT_DOUBLE_CLICKED: string = 'RWUROE_OBJECT_DOUBLE_CLICKED';
+    public static OBJECT_SELECTED: string = 'RWUROE_OBJECT_SELECTED' as const;
+    public static OBJECT_DESELECTED: string = 'RWUROE_OBJECT_DESELECTED' as const;
+    public static USER_REMOVED: string = 'RWUROE_USER_REMOVED' as const;
+    public static FURNI_REMOVED: string = 'RWUROE_FURNI_REMOVED' as const;
+    public static FURNI_ADDED: string = 'RWUROE_FURNI_ADDED' as const;
+    public static USER_ADDED: string = 'RWUROE_USER_ADDED' as const;
+    public static OBJECT_ROLL_OVER: string = 'RWUROE_OBJECT_ROLL_OVER' as const;
+    public static OBJECT_ROLL_OUT: string = 'RWUROE_OBJECT_ROLL_OUT' as const;
+    public static OBJECT_REQUEST_MANIPULATION: string = 'RWUROE_OBJECT_REQUEST_MANIPULATION' as const;
+    public static OBJECT_DOUBLE_CLICKED: string = 'RWUROE_OBJECT_DOUBLE_CLICKED' as const;
 
     private _id: number;
     private _category: number;

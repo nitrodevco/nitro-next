@@ -1,8 +1,8 @@
 import { RoomEngineObjectEvent } from './RoomEngineObjectEvent';
 
 export class RoomEngineUseProductEvent extends RoomEngineObjectEvent {
-    public static USE_PRODUCT_FROM_ROOM: string = 'REUPE_USE_PRODUCT_FROM_ROOM';
-    public static USE_PRODUCT_FROM_INVENTORY: string = 'REUPE_USE_PRODUCT_FROM_INVENTORY';
+    public static USE_PRODUCT_FROM_ROOM: string = 'REUPE_USE_PRODUCT_FROM_ROOM' as const;
+    public static USE_PRODUCT_FROM_INVENTORY: string = 'REUPE_USE_PRODUCT_FROM_INVENTORY' as const;
 
     private _inventoryStripId: number;
     private _furnitureTypeId: number;

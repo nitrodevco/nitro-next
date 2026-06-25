@@ -1,7 +1,7 @@
 ﻿import { RoomEngineEvent } from './RoomEngineEvent';
 
 export class RoomZoomEvent extends RoomEngineEvent {
-    public static ROOM_ZOOM: string = 'REE_ROOM_ZOOM';
+    public static ROOM_ZOOM: string = 'REE_ROOM_ZOOM' as const;
 
     private _level: number;
     private _isFlipForced: boolean;

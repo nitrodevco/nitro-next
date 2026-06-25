@@ -12,12 +12,12 @@ import { ObjectAdUpdateMessage, ObjectDataUpdateMessage } from '../../../message
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureRoomBrandingLogic extends FurnitureLogic {
-    public static STATE: string = 'state';
-    public static IMAGEURL_KEY: string = 'imageUrl';
-    public static CLICKURL_KEY: string = 'clickUrl';
-    public static OFFSETX_KEY: string = 'offsetX';
-    public static OFFSETY_KEY: string = 'offsetY';
-    public static OFFSETZ_KEY: string = 'offsetZ';
+    public static STATE: string = 'state' as const;
+    public static IMAGEURL_KEY: string = 'imageUrl' as const;
+    public static CLICKURL_KEY: string = 'clickUrl' as const;
+    public static OFFSETX_KEY: string = 'offsetX' as const;
+    public static OFFSETY_KEY: string = 'offsetY' as const;
+    public static OFFSETZ_KEY: string = 'offsetZ' as const;
 
     protected _disableFurnitureSelection: boolean = true;
     protected _hasClickUrl: boolean = false;

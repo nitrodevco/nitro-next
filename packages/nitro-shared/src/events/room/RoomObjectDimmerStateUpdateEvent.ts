@@ -3,7 +3,7 @@
 import { RoomObjectEvent } from './RoomObjectEvent';
 
 export class RoomObjectDimmerStateUpdateEvent extends RoomObjectEvent {
-    public static DIMMER_STATE: string = 'RODSUE_DIMMER_STATE';
+    public static DIMMER_STATE: string = 'RODSUE_DIMMER_STATE' as const;
 
     private _state: number;
     private _presetId: number;

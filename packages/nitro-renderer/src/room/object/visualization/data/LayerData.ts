@@ -3,7 +3,7 @@ import type { BLEND_MODES } from 'pixi.js';
 export class LayerData {
     public static DEFAULT_COUNT: number = 0;
     public static DEFAULT_DIRECTION: number = 0;
-    public static DEFAULT_TAG: string = '';
+    public static DEFAULT_TAG: string = '' as const;
     public static DEFAULT_BLEND_MODE: BLEND_MODES = 'normal';
     public static DEFAULT_ALPHA: number = 255;
     public static DEFAULT_IGNORE_MOUSE: boolean = false;

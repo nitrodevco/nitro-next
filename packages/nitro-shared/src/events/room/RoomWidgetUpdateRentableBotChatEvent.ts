@@ -1,7 +1,7 @@
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
 export class RoomWidgetUpdateRentableBotChatEvent extends RoomWidgetUpdateEvent {
-    public static UPDATE_CHAT: string = 'RWURBCE_UPDATE_CHAT';
+    public static UPDATE_CHAT: string = 'RWURBCE_UPDATE_CHAT' as const;
 
     private _objectId: number;
     private _category: number;

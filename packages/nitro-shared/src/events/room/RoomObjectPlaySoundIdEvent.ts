@@ -3,8 +3,8 @@ import type { IRoomObject } from '@nitrodevco/nitro-api';
 import { RoomObjectFurnitureActionEvent } from './RoomObjectFurnitureActionEvent';
 
 export class RoomObjectPlaySoundIdEvent extends RoomObjectFurnitureActionEvent {
-    public static PLAY_SOUND: string = 'ROPSIE_PLAY_SOUND';
-    public static PLAY_SOUND_AT_PITCH: string = 'ROPSIE_PLAY_SOUND_AT_PITCH';
+    public static PLAY_SOUND: string = 'ROPSIE_PLAY_SOUND' as const;
+    public static PLAY_SOUND_AT_PITCH: string = 'ROPSIE_PLAY_SOUND_AT_PITCH' as const;
 
     private _soundId: string;
     private _pitch: number;

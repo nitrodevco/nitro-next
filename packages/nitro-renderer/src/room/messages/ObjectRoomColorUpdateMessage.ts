@@ -1,7 +1,7 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomColorUpdateMessage extends RoomObjectUpdateMessage {
-    public static BACKGROUND_COLOR: string = 'RORCUM_BACKGROUND_COLOR';
+    public static BACKGROUND_COLOR: string = 'RORCUM_BACKGROUND_COLOR' as const;
 
     private _type: string;
     private _color: number;

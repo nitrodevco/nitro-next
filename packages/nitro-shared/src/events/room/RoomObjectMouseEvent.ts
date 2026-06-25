@@ -3,13 +3,13 @@ import type { IRoomObject } from '@nitrodevco/nitro-api';
 import { RoomObjectEvent } from './RoomObjectEvent';
 
 export class RoomObjectMouseEvent extends RoomObjectEvent {
-    public static CLICK: string = 'ROE_MOUSE_CLICK';
-    public static DOUBLE_CLICK: string = 'ROE_MOUSE_DOUBLE_CLICK';
-    public static MOUSE_MOVE: string = 'ROE_MOUSE_MOVE';
-    public static MOUSE_DOWN: string = 'ROE_MOUSE_DOWN';
-    public static MOUSE_UP: string = 'ROE_MOUSE_UP';
-    public static MOUSE_ENTER: string = 'ROE_MOUSE_ENTER';
-    public static MOUSE_LEAVE: string = 'ROE_MOUSE_LEAVE';
+    public static CLICK: string = 'ROE_MOUSE_CLICK' as const;
+    public static DOUBLE_CLICK: string = 'ROE_MOUSE_DOUBLE_CLICK' as const;
+    public static MOUSE_MOVE: string = 'ROE_MOUSE_MOVE' as const;
+    public static MOUSE_DOWN: string = 'ROE_MOUSE_DOWN' as const;
+    public static MOUSE_UP: string = 'ROE_MOUSE_UP' as const;
+    public static MOUSE_ENTER: string = 'ROE_MOUSE_ENTER' as const;
+    public static MOUSE_LEAVE: string = 'ROE_MOUSE_LEAVE' as const;
 
     private _eventId: number;
     private _altKey: boolean;

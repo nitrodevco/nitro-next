@@ -1,8 +1,8 @@
 ﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomPlaneBitmapMaskData {
-    public static WINDOW: string = 'window';
-    public static HOLE: string = 'hole';
+    public static WINDOW: string = 'window' as const;
+    public static HOLE: string = 'hole' as const;
 
     private _loc: Vector3d;
     private _type: string;

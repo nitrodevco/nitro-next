@@ -6,11 +6,11 @@ export enum RoomObjectUserType {
 }
 
 export class RoomObjectUserTypeName {
-    public static User: string = 'user';
-    public static Pet: string = 'pet';
-    public static Bot: string = 'bot';
-    public static RentableBot: string = 'rentable_bot';
-    public static MonsterPlant: string = 'monsterplant';
+    public static User: string = 'user' as const;
+    public static Pet: string = 'pet' as const;
+    public static Bot: string = 'bot' as const;
+    public static RentableBot: string = 'rentable_bot' as const;
+    public static MonsterPlant: string = 'monsterplant' as const;
 }
 
 export class RoomObjectUserTypeUtils {

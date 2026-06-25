@@ -1,9 +1,9 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomUpdateMessage extends RoomObjectUpdateMessage {
-    public static ROOM_WALL_UPDATE: string = 'RORUM_ROOM_WALL_UPDATE';
-    public static ROOM_FLOOR_UPDATE: string = 'RORUM_ROOM_FLOOR_UPDATE';
-    public static ROOM_LANDSCAPE_UPDATE: string = 'RORUM_ROOM_LANDSCAPE_UPDATE';
+    public static ROOM_WALL_UPDATE: string = 'RORUM_ROOM_WALL_UPDATE' as const;
+    public static ROOM_FLOOR_UPDATE: string = 'RORUM_ROOM_FLOOR_UPDATE' as const;
+    public static ROOM_LANDSCAPE_UPDATE: string = 'RORUM_ROOM_LANDSCAPE_UPDATE' as const;
 
     private _type: string;
     private _value: string;

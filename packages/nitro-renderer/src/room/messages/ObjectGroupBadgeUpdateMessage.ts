@@ -1,7 +1,7 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectGroupBadgeUpdateMessage extends RoomObjectUpdateMessage {
-    public static BADGE_LOADED: string = 'ROGBUM_BADGE_LOADED';
+    public static BADGE_LOADED: string = 'ROGBUM_BADGE_LOADED' as const;
 
     private _badgeId: string;
     private _assetName: string;

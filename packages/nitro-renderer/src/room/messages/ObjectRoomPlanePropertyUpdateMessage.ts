@@ -1,8 +1,8 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomPlanePropertyUpdateMessage extends RoomObjectUpdateMessage {
-    public static WALL_THICKNESS: string = 'RORPPUM_WALL_THICKNESS';
-    public static FLOOR_THICKNESS: string = 'RORPVUM_FLOOR_THICKNESS';
+    public static WALL_THICKNESS: string = 'RORPPUM_WALL_THICKNESS' as const;
+    public static FLOOR_THICKNESS: string = 'RORPVUM_FLOOR_THICKNESS' as const;
 
     private _type: string;
     private _value: number;

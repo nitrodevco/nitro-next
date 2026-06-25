@@ -1,5 +1,5 @@
 ﻿export class AvatarSetType {
-    public static FULL: string = 'full';
-    public static HEAD: string = 'head';
-    public static BODY: string = 'body';
+    public static FULL: string = 'full' as const;
+    public static HEAD: string = 'head' as const;
+    public static BODY: string = 'body' as const;
 }

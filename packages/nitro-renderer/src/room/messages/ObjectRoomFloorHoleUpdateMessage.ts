@@ -1,8 +1,8 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomFloorHoleUpdateMessage extends RoomObjectUpdateMessage {
-    public static ADD: string = 'ORPFHUM_ADD';
-    public static REMOVE: string = 'ORPFHUM_REMOVE';
+    public static ADD: string = 'ORPFHUM_ADD' as const;
+    public static REMOVE: string = 'ORPFHUM_REMOVE' as const;
 
     private _type: string;
     private _id: number;

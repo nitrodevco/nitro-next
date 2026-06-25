@@ -1,7 +1,7 @@
 import { RoomEngineEvent } from "./RoomEngineEvent";
 
 export class RoomDraggedEvent extends RoomEngineEvent {
-    public static ROOM_DRAGGED: string = 'RDE_ROOM_DRAGGED';
+    public static ROOM_DRAGGED: string = 'RDE_ROOM_DRAGGED' as const;
 
     private _offsetX: number;
     private _offsetY: number;

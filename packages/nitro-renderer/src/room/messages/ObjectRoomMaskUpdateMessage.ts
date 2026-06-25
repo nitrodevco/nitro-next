@@ -3,11 +3,11 @@ import type { IVector3D } from '@nitrodevco/nitro-api';
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomMaskUpdateMessage extends RoomObjectUpdateMessage {
-    public static ADD_MASK: string = 'RORMUM_ADD_MASK';
-    public static REMOVE_MASK: string = 'RORMUM_REMOVE_MASK';
-    public static DOOR: string = 'door';
-    public static WINDOW: string = 'window';
-    public static HOLE: string = 'hole';
+    public static ADD_MASK: string = 'RORMUM_ADD_MASK' as const;
+    public static REMOVE_MASK: string = 'RORMUM_REMOVE_MASK' as const;
+    public static DOOR: string = 'door' as const;
+    public static WINDOW: string = 'window' as const;
+    public static HOLE: string = 'hole' as const;
 
     private _type: string;
     private _maskId: string | undefined;

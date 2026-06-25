@@ -5,9 +5,9 @@ import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
 export class FurnitureGuildCustomizedVisualization extends FurnitureAnimatedVisualization {
-    public static PRIMARY_COLOUR_SPRITE_TAG: string = 'COLOR1';
-    public static SECONDARY_COLOUR_SPRITE_TAG: string = 'COLOR2';
-    public static BADGE: string = 'BADGE';
+    public static PRIMARY_COLOUR_SPRITE_TAG: string = 'COLOR1' as const;
+    public static SECONDARY_COLOUR_SPRITE_TAG: string = 'COLOR2' as const;
+    public static BADGE: string = 'BADGE' as const;
     public static DEFAULT_COLOR_1: number = 0xeeeeee;
     public static DEFAULT_COLOR_2: number = 0x4b4b4b;
 

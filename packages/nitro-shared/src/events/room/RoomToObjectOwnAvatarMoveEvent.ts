@@ -3,7 +3,7 @@
 import { RoomToObjectEvent } from './RoomToObjectEvent';
 
 export class RoomToObjectOwnAvatarMoveEvent extends RoomToObjectEvent {
-    public static ROAME_MOVE_TO: string = 'ROAME_MOVE_TO';
+    public static ROAME_MOVE_TO: string = 'ROAME_MOVE_TO' as const;
 
     private _targetLocation: IVector3D;
 

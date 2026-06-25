@@ -5,9 +5,9 @@ import type { ParticleSystemParticle } from '../data';
 import { FurnitureParticleSystemParticle } from './FurnitureParticleSystemParticle';
 
 export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParticle {
-    public static CONE: string = 'cone';
-    public static PLANE: string = 'plane';
-    public static SPHERE: string = 'sphere';
+    public static CONE: string = 'cone' as const;
+    public static PLANE: string = 'plane' as const;
+    public static SPHERE: string = 'sphere' as const;
 
     private _name: string;
     private _roomObjectSpriteId: number = -1;

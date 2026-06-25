@@ -1,8 +1,8 @@
 import { RoomEngineObjectEvent } from './RoomEngineObjectEvent';
 
 export class RoomEngineObjectPlaySoundEvent extends RoomEngineObjectEvent {
-    public static PLAY_SOUND: string = 'REOPSE_PLAY_SOUND';
-    public static PLAY_SOUND_AT_PITCH: string = 'REOPSE_PLAY_SOUND_AT_PITCH';
+    public static PLAY_SOUND: string = 'REOPSE_PLAY_SOUND' as const;
+    public static PLAY_SOUND_AT_PITCH: string = 'REOPSE_PLAY_SOUND_AT_PITCH' as const;
 
     private _soundId: string;
     private _pitch: number;

@@ -2,7 +2,7 @@ import type { RoomMapData } from '../object';
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectRoomMapUpdateMessage extends RoomObjectUpdateMessage {
-    public static UPDATE_MAP: string = 'RORMUM_UPDATE_MAP';
+    public static UPDATE_MAP: string = 'RORMUM_UPDATE_MAP' as const;
 
     private _type: string;
     private _mapData: RoomMapData;

@@ -1,8 +1,8 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
 export class ObjectVisibilityUpdateMessage extends RoomObjectUpdateMessage {
-    public static ENABLED: string = 'ROVUM_ENABLED';
-    public static DISABLED: string = 'ROVUM_DISABLED';
+    public static ENABLED: string = 'ROVUM_ENABLED' as const;
+    public static DISABLED: string = 'ROVUM_DISABLED' as const;
 
     private _type: string;
 

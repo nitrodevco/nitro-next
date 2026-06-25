@@ -20,12 +20,12 @@ import { GetAssetManager } from '../assets';
 import { PetColorResult } from './PetColorResult';
 
 export class RoomContentLoader implements IRoomContentLoader {
-    public static ROOM_CONTENT: string = 'room';
-    public static TILE_CURSOR: string = 'tile_cursor';
-    public static SELECTION_ARROW: string = 'selection_arrow';
-    public static PLACE_HOLDER: string = 'place_holder';
-    public static PLACE_HOLDER_WALL: string = 'wall_place_holder';
-    public static PLACE_HOLDER_PET: string = 'pet_place_holder';
+    public static ROOM_CONTENT: string = 'room' as const;
+    public static TILE_CURSOR: string = 'tile_cursor' as const;
+    public static SELECTION_ARROW: string = 'selection_arrow' as const;
+    public static PLACE_HOLDER: string = 'place_holder' as const;
+    public static PLACE_HOLDER_WALL: string = 'wall_place_holder' as const;
+    public static PLACE_HOLDER_PET: string = 'pet_place_holder' as const;
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
 
     private _iconListener: IRoomContentListener;

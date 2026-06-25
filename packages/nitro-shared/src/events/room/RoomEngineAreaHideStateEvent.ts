@@ -1,7 +1,7 @@
 import { RoomEngineTriggerWidgetEvent } from './RoomEngineTriggerWidgetEvent';
 
 export class RoomEngineAreaHideStateEvent extends RoomEngineTriggerWidgetEvent {
-    public static UPDATE_STATE_AREA_HIDE: string = 'REAHSE_UPDATE_STATE_AREA_HIDE';
+    public static UPDATE_STATE_AREA_HIDE: string = 'REAHSE_UPDATE_STATE_AREA_HIDE' as const;
 
     private _isOn: boolean;
 

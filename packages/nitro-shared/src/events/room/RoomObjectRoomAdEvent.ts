@@ -3,11 +3,11 @@ import type { IRoomObject } from '@nitrodevco/nitro-api';
 import { RoomObjectEvent } from './RoomObjectEvent';
 
 export class RoomObjectRoomAdEvent extends RoomObjectEvent {
-    public static ROOM_AD_LOAD_IMAGE: string = 'RORAE_ROOM_AD_LOAD_IMAGE';
-    public static ROOM_AD_FURNI_CLICK: string = 'RORAE_ROOM_AD_FURNI_CLICK';
-    public static ROOM_AD_FURNI_DOUBLE_CLICK: string = 'RORAE_ROOM_AD_FURNI_DOUBLE_CLICK';
-    public static ROOM_AD_TOOLTIP_SHOW: string = 'RORAE_ROOM_AD_TOOLTIP_SHOW';
-    public static ROOM_AD_TOOLTIP_HIDE: string = 'RORAE_ROOM_AD_TOOLTIP_HIDE';
+    public static ROOM_AD_LOAD_IMAGE: string = 'RORAE_ROOM_AD_LOAD_IMAGE' as const;
+    public static ROOM_AD_FURNI_CLICK: string = 'RORAE_ROOM_AD_FURNI_CLICK' as const;
+    public static ROOM_AD_FURNI_DOUBLE_CLICK: string = 'RORAE_ROOM_AD_FURNI_DOUBLE_CLICK' as const;
+    public static ROOM_AD_TOOLTIP_SHOW: string = 'RORAE_ROOM_AD_TOOLTIP_SHOW' as const;
+    public static ROOM_AD_TOOLTIP_HIDE: string = 'RORAE_ROOM_AD_TOOLTIP_HIDE' as const;
 
     private _imageUrl: string;
     private _clickUrl: string;
