@@ -66,13 +66,13 @@ import { RoomAreaSelectionManager } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
-    public static ROOM_OBJECT_TYPE: string = 'room';
+    public static ROOM_OBJECT_TYPE: string = 'room' as const;
     public static CURSOR_OBJECT_ID: number = -2;
-    public static CURSOR_OBJECT_TYPE: string = 'tile_cursor';
+    public static CURSOR_OBJECT_TYPE: string = 'tile_cursor' as const;
     public static ARROW_OBJECT_ID: number = -3;
-    public static ARROW_OBJECT_TYPE: string = 'selection_arrow';
-    public static OVERLAY: string = 'overlay';
-    public static OVERLAY_ICON_SPRITE: string = 'overlay_icon_sprite';
+    public static ARROW_OBJECT_TYPE: string = 'selection_arrow' as const;
+    public static OVERLAY: string = 'overlay' as const;
+    public static OVERLAY_ICON_SPRITE: string = 'overlay_icon_sprite' as const;
 
     private _roomId: number;
     private _disposed: boolean = false;

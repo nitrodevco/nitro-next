@@ -1,5 +1,6 @@
 import type { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { RoomObjectMoveEvent } from '@nitrodevco/nitro-shared';
 
 import { ObjectMoveUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
@@ -14,6 +15,13 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
     private _lastUpdateTime: number = 0;
     private _changeTime: number = 0;
     private _updateInterval: number = MovingObjectLogic.DEFAULT_UPDATE_INTERVAL;
+
+    public override getEventTypes(): string[] {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        return this.mergeTypes(super.getEventTypes(), [
+            RoomObjectMoveEvent.SLIDE_ANIMATION,
+        ]);
+    }
 
     public override dispose(): void {
         this._liftAmount = 0;
@@ -64,6 +72,9 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
                 this._locationDelta.y = 0;
                 this._locationDelta.z = 0;
             }
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            this.eventHandler.eventDispatcher.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.SLIDE_ANIMATION, this.object));
         }
 
         this._lastUpdateTime = this.time;
@@ -77,10 +88,21 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
         if (message.location) this._location.assign(message.location);
 
         if (message instanceof ObjectMoveUpdateMessage) {
-            if (message.targetLocation) {
-                this._changeTime = this._lastUpdateTime;
-                this._locationDelta.assign(message.targetLocation);
-                this._locationDelta.subtract(this._location);
+            if (message.skipPositionUpdate) return;
+
+            if (message.location) {
+                this._location.assign(message.location);
+
+                this._locationDelta.x = 0;
+                this._locationDelta.y = 0;
+                this._locationDelta.z = 0;
+
+                if (message.targetLocation) {
+                    this._updateInterval = Math.max(1, isNaN(message.animationTime) ? MovingObjectLogic.DEFAULT_UPDATE_INTERVAL : message.animationTime);
+                    this._changeTime = this._lastUpdateTime;
+                    this._locationDelta.assign(message.targetLocation);
+                    this._locationDelta.subtract(this._location);
+                }
             }
 
             return;

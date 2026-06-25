@@ -1,11 +1,12 @@
 import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { MouseEventType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
+import { RoomObjectUpdateMessage } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectEvent, RoomSpriteMouseEvent } from "@nitrodevco/nitro-shared";
-import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectStateChangedEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
+import { RoomEngineObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared";
 import { useEffect } from "react";
 
 import { useIsModerator, useRoomControllerLevel, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
-import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction } from "#base/hooks";
+import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect } from "#base/hooks";
 
 export const RoomEventHandler = () => {
     const room = useRoomSelector();
@@ -15,6 +16,7 @@ export const RoomEventHandler = () => {
     const { getMouseEventId, setMouseEventId, addCursorOwner, removeCursorOwner } = useRoomMouseActions();
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
     const { changeItemState } = useRoomObjectInteraction();
+    const { selectAvatar } = useRoomObjectSelect();
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -145,6 +147,22 @@ export const RoomEventHandler = () => {
                     changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, true);
                     return;
                 }
+                case RoomObjectMoveEvent.POSITION_CHANGED: {
+                    const roomObject = room.getRoomObject(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
+
+                    if (!roomObject) return;
+
+                    room.getRoomObjectSelectionArrow()?.processUpdateMessage(new RoomObjectUpdateMessage(roomObject.getLocation(), undefined));
+                    return;
+                }
+                case RoomObjectMoveEvent.OBJECT_REMOVED: {
+                    selectAvatar(0, false);
+                    return;
+                }
+                case RoomObjectMoveEvent.SLIDE_ANIMATION: {
+                    room.updateRoomObjectMask(event.objectId);
+                    return;
+                }
                 case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
                     removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
                     return;
@@ -164,7 +182,7 @@ export const RoomEventHandler = () => {
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, controllerLevel, handleRoomObjectMouseEvent, changeItemState, removeCursorOwner, addCursorOwner]);
+    }, [room, controllerLevel, handleRoomObjectMouseEvent, changeItemState, removeCursorOwner, addCursorOwner, selectAvatar]);
 
     useEffect(() => {
         if (!room) return;

@@ -3,10 +3,11 @@ export interface IWiredWallMove {
     isDirectionRight: boolean;
     sourceX: number;
     sourceY: number;
-    sourceWallOffset: number;
-    sourceZ: number;
+    sourceOffsetX: number;
+    sourceOffsetY: number;
     targetX: number;
     targetY: number;
-    targetWallOffset: number;
-    targetZ: number;
+    targetOffsetX: number;
+    targetOffsetY: number;
+    animationTime: number;
 }

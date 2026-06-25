@@ -49,12 +49,13 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 isDirectionRight: wrapper.readBoolean(),
                 sourceX: wrapper.readInt(),
                 sourceY: wrapper.readInt(),
-                sourceWallOffset: wrapper.readInt(),
-                sourceZ: parseFloat(wrapper.readString()),
+                sourceOffsetX: wrapper.readInt(),
+                sourceOffsetY: parseFloat(wrapper.readString()),
                 targetX: wrapper.readInt(),
                 targetY: wrapper.readInt(),
-                targetWallOffset: wrapper.readInt(),
-                targetZ: wrapper.readInt()
+                targetOffsetX: wrapper.readInt(),
+                targetOffsetY: wrapper.readInt(),
+                animationTime: wrapper.readInt()
             } as IWiredWallMove;
         }
 
