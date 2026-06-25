@@ -8,3 +8,4 @@ export * from './RoomObjectPlacementSource';
 export * from './RoomThicknessType';
 export * from './RoomWidgetEnum';
 export * from './RoomWidgetEnumItemExtradataParameter';
+export * from './SlideAvatarMoveType';

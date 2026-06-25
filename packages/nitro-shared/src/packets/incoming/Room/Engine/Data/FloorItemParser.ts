@@ -9,7 +9,7 @@ export const FloorItemParser = (wrapper: IMessageDataWrapper): IRoomFloorItem =>
         spriteId: wrapper.readInt(),
         x: wrapper.readInt(),
         y: wrapper.readInt(),
-        rotation: wrapper.readInt(),
+        rotation: ((wrapper.readInt() % 8) * 45),
         z: parseFloat(wrapper.readString()),
         stackHeight: parseFloat(wrapper.readString()),
         extra: wrapper.readInt(),

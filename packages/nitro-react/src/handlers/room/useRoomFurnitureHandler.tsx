@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { LegacyDataType, Vector3d } from "@nitrodevco/nitro-api";
-import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, YouAreNotSpectatorMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-shared";
+import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
+import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, YouAreNotSpectatorMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-shared";
 
 import { useRoomSelector, useRoomSessionActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
@@ -149,6 +146,25 @@ export const useRoomFurnitureHandler = () => {
 
         room.updateRoomObjectWall(item.objectId, location, direction, item.state, item.data);
         // expiration
+    });
+
+    useMessageListener(SlideObjectBundleMessage, data => {
+        if (!room || !room.legacyGeometry) return;
+
+        room.updateRoomObjectFloor(data.rollerItemId, undefined, undefined, 1);
+        room.updateRoomObjectFloor(data.rollerItemId, undefined, undefined, 2);
+
+        for (const heights of data.heights) {
+            const object = room.getRoomObject(heights.objectId, RoomObjectCategoryEnum.Floor);
+
+            if (!object) continue;
+
+            object.processUpdateMessage(new ObjectMoveUpdateMessage(new Vector3d(data.fromX, data.fromY, heights.from), new Vector3d(data.toX, data.toY, heights.to), undefined, true));
+        }
+
+        if (data.avatar) {
+            // TODO
+        }
     });
 
     useMessageListener(DiceValueMessage, data => {

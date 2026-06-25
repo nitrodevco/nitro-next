@@ -25,6 +25,7 @@ export * from './enum/RoomObjectPlacementSource';
 export * from './enum/RoomThicknessType';
 export * from './enum/RoomWidgetEnum';
 export * from './enum/RoomWidgetEnumItemExtradataParameter';
+export * from './enum/SlideAvatarMoveType';
 export * from './object/IPetFigureData';
 export * from './object/IRoomMapData';
 export * from './object/IRoomMapMask';

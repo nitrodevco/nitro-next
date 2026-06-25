@@ -17,6 +17,12 @@ export const RoomCanvas = () => {
     const elementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const ticker = GetTicker();
+
+        ticker.maxFPS = maxFPS;
+    }, [maxFPS]);
+
+    useEffect(() => {
         if (!room) return;
 
         const renderer = GetRenderer();
@@ -53,14 +59,12 @@ export const RoomCanvas = () => {
 
         const ticker = GetTicker();
 
-        ticker.maxFPS = maxFPS;
-
         ticker.add(tick);
 
         return () => {
             ticker.remove(tick);
         }
-    }, [room]);
+    }, [room, mouseDataRef, hasAndResetCursorUpdate, hasCursorOwners, updateRoomCamera]);
 
     useEffect(() => {
         if (!room) return;

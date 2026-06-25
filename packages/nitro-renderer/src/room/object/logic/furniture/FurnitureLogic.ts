@@ -26,16 +26,8 @@ import {
 import { MovingObjectLogic } from '../MovingObjectLogic';
 
 export class FurnitureLogic extends MovingObjectLogic {
-    private static BOUNCING_STEPS: number = -1;
-    private static BOUNCING_Z: number = -1;
-
-    /* if (FurnitureLogic.BOUNCING_STEPS === -1) {
-            FurnitureLogic.BOUNCING_STEPS = GetConfigValue<number>('renderer.furniRotationBounce', 8);
-        }
-
-        if (FurnitureLogic.BOUNCING_Z === -1) {
-            FurnitureLogic.BOUNCING_Z = GetConfigValue<number>('renderer.furniRotationHeight', 0.0625);
-        } */
+    private static BOUNCING_STEPS: number = 8;
+    private static BOUNCING_Z: number = 0.0625;
 
     private _sizeX: number = 0;
     private _sizeY: number = 0;
