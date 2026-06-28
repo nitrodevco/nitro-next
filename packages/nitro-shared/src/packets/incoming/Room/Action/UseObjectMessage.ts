@@ -1,20 +1,18 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UseObjectMessageType = {
-  userId: number;
-  itemType: number;
+    objectId: number;
+    itemType: number;
 };
 
-export class UseObjectMessage implements IIncomingPacket<UseObjectMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UseObjectMessageType
-  {
+export class UseObjectMessage implements IIncomingPacket<UseObjectMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UseObjectMessageType {
 
-    const packet: UseObjectMessageType = {
-      userId: wrapper.readInt(),
-      itemType: wrapper.readInt(),
-    };
+        const packet: UseObjectMessageType = {
+            objectId: wrapper.readInt(),
+            itemType: wrapper.readInt(),
+        };
 
-    return packet;
-  }
+        return packet;
+    }
 }

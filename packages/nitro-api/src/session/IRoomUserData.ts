@@ -1,10 +1,10 @@
-import type { UserTypeEnum } from "./enum";
+import { RoomObjectUserType } from "../room";
 
 export interface IRoomUserData {
     roomIndex: number;
     activityPoints: number;
     name: string;
-    type: UserTypeEnum;
+    type: RoomObjectUserType;
     sex: string;
     figure: string;
     custom: string;

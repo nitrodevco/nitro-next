@@ -1,5 +1,5 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
-import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { LegacyDataType, RoomObjectCategoryEnum, RoomObjectVariableEnum, SlideAvatarMoveType, Vector3d } from "@nitrodevco/nitro-api";
 import { ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
 import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, WiredMovementsMessage } from "@nitrodevco/nitro-shared";
 
@@ -36,7 +36,7 @@ export const useRoomFurnitureHandler = () => {
     }
 
     const roundLocation = (location: IVector3D) => {
-        const geometry = room?.geometry;
+        const geometry = room?.getGeometry();
 
         if (!geometry) return;
 
@@ -186,7 +186,20 @@ export const useRoomFurnitureHandler = () => {
         if (!room) return;
 
         for (const userMove of data.userMoves) {
-            // TODO
+            let canStandUp = false;
+
+            if (userMove.moveType === SlideAvatarMoveType.Slide) {
+                const object = room.getRoomObject(userMove.objectId, RoomObjectCategoryEnum.Unit);
+
+                if (object) canStandUp = object.model.getValue<number>(RoomObjectVariableEnum.FigureCanStandUp) > 0;
+            }
+
+            const source = new Vector3d(userMove.sourceX, userMove.sourceY, userMove.sourceZ);
+            const target = new Vector3d(userMove.targetX, userMove.targetY, userMove.targetZ);
+            const rotation = new Vector3d(userMove.bodyRotation % 8 * 45);
+            const headRotation = userMove.headRotation % 8 * 45;
+
+            room.updateRoomObjectUser(userMove.objectId, source, target, canStandUp, 0, rotation, headRotation, userMove.animationTime);
         }
 
         for (const floorMove of data.floorMoves) {

@@ -7,7 +7,7 @@ export type UserRemoveMessageType = {
 export class UserRemoveMessage implements IIncomingPacket<UserRemoveMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserRemoveMessageType {
         const packet: UserRemoveMessageType = {
-            objectId: wrapper.readInt(),
+            objectId: parseInt(wrapper.readString()),
         };
 
         return packet;

@@ -1,3 +1,4 @@
+export * from './navigator/useNavigatorHandler';
 export * from './room/useRoomChatHandler';
 export * from './room/useRoomDataHandler';
 export * from './room/useRoomDirectoryHandler';
@@ -6,5 +7,5 @@ export * from './room/useRoomMappingHandler';
 export * from './room/useRoomPermissionsHandler';
 export * from './room/useRoomPetPackageHandler';
 export * from './room/useRoomPollHandler';
-export * from './navigator/useNavigatorHandler';
+export * from './room/useRoomUserHandler';
 export * from './user/useUserInfoHandler';

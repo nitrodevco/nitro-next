@@ -1,20 +1,25 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(Avatars: ImmutableArray<RoomAvatarSnapshot>): Unknown type 'ImmutableArray<RoomAvatarSnapshot>'. Add override mapping.
+import { IRoomAvatarUpdate } from './Data/IRoomAvatarUpdate';
+import { UserUpdateParser } from './Data/UserParser';
 
 export type UserUpdateMessageType = {
-  avatars: any;
+    updates: IRoomAvatarUpdate[];
 };
 
-export class UserUpdateMessage implements IIncomingPacket<UserUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserUpdateMessageType
-  {
+export class UserUpdateMessage implements IIncomingPacket<UserUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserUpdateMessageType {
+        const packet: UserUpdateMessageType = {
+            updates: []
+        };
 
-    const packet: UserUpdateMessageType = {
-      avatars: undefined as any, // Unknown type 'ImmutableArray<RoomAvatarSnapshot>'. Add override mapping.
-    };
+        let count = wrapper.readInt();
 
-    return packet;
-  }
+        while (count > 0) {
+            packet.updates.push(UserUpdateParser(wrapper));
+
+            count--;
+        }
+
+        return packet;
+    }
 }

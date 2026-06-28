@@ -1,18 +1,17 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UserTypingMessageType = {
-  // no fields
-
+    objectId: number;
+    isTyping: boolean;
 };
 
-export class UserTypingMessage implements IIncomingPacket<UserTypingMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserTypingMessageType
-  {
+export class UserTypingMessage implements IIncomingPacket<UserTypingMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserTypingMessageType {
+        const packet: UserTypingMessageType = {
+            objectId: wrapper.readInt(),
+            isTyping: !!wrapper.readInt()
+        };
 
-    const packet: UserTypingMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

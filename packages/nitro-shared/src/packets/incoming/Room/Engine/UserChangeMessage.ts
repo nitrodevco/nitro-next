@@ -1,9 +1,9 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UserChangeMessageType = {
-    id: number;
+    objectId: number;
     figure: string;
-    sex: string;
+    gender: string;
     customInfo: string;
     achievementScore: number;
 };
@@ -11,9 +11,9 @@ export type UserChangeMessageType = {
 export class UserChangeMessage implements IIncomingPacket<UserChangeMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserChangeMessageType {
         const packet: UserChangeMessageType = {
-            id: wrapper.readInt(),
+            objectId: wrapper.readInt(),
             figure: wrapper.readString(),
-            sex: wrapper.readString().toUpperCase(),
+            gender: wrapper.readString().toUpperCase(),
             customInfo: wrapper.readString(),
             achievementScore: wrapper.readInt(),
         };

@@ -1,3 +1,4 @@
+
 import type {
     IEventDispatcher,
     ILegacyWallGeometry,
@@ -37,7 +38,8 @@ import {
     EventDispatcher,
     GetConfigValue,
     RoomEngineEvent,
-    RoomEngineObjectEvent
+    RoomEngineObjectEvent,
+    RoomToObjectOwnAvatarMoveEvent
 } from '@nitrodevco/nitro-shared';
 import type { ImageLike, Rectangle } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
@@ -48,9 +50,31 @@ import { FurniId, GetTickerTime } from '../utils';
 import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
+import type {
+    ObjectStateUpdateMessage
+} from './messages';
 import {
+    ObjectAvatarCarryObjectUpdateMessage,
+    ObjectAvatarChatUpdateMessage,
+    ObjectAvatarDanceUpdateMessage,
+    ObjectAvatarEffectUpdateMessage,
+    ObjectAvatarExperienceUpdateMessage,
+    ObjectAvatarExpressionUpdateMessage,
     ObjectAvatarFigureUpdateMessage,
+    ObjectAvatarFlatControlUpdateMessage,
+    ObjectAvatarGestureUpdateMessage,
+    ObjectAvatarGuideStatusUpdateMessage,
+    ObjectAvatarMutedUpdateMessage,
+    ObjectAvatarOwnMessage,
+    ObjectAvatarPetGestureUpdateMessage,
+    ObjectAvatarPlayerValueUpdateMessage,
+    ObjectAvatarPlayingGameUpdateMessage,
+    ObjectAvatarPostureUpdateMessage,
+    ObjectAvatarSignUpdateMessage,
+    ObjectAvatarSleepUpdateMessage,
+    ObjectAvatarTypingUpdateMessage,
     ObjectAvatarUpdateMessage,
+    ObjectAvatarUseObjectUpdateMessage,
     ObjectDataUpdateMessage,
     ObjectHeightUpdateMessage,
     ObjectItemDataUpdateMessage,
@@ -933,6 +957,156 @@ export class Room implements IRoom {
         return true;
     }
 
+    public updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D | undefined = undefined, headDirection: number = NaN, animationTime: number = NaN): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        if (!location) location = object.getLocation();
+        if (!direction) direction = object.getDirection();
+
+        if (isNaN(headDirection)) headDirection = object.model.getValue<number>(RoomObjectVariableEnum.HeadDirection);
+
+        // TODO fixedUserLocation
+
+        object.processUpdateMessage(new ObjectAvatarUpdateMessage(location, target, direction, headDirection, canStandUp, baseY, false, animationTime));
+
+        const ownRoomIndex = false;
+
+        if (ownRoomIndex) {
+            // TODO
+            this.dispatchEvent(new RoomToObjectOwnAvatarMoveEvent(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, target));
+        }
+
+        return true;
+    }
+
+    public updateRoomObjectUserOwn(objectId: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarOwnMessage());
+
+        return true;
+    }
+
+    public updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter: string = ''): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        let message: ObjectStateUpdateMessage | undefined = undefined;
+
+        switch (action) {
+            case RoomObjectVariableEnum.FigureTalk:
+                message = new ObjectAvatarChatUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureSleep:
+                message = new ObjectAvatarSleepUpdateMessage(value === 1);
+                break;
+            case RoomObjectVariableEnum.FigureIsTyping:
+                message = new ObjectAvatarTypingUpdateMessage(value === 1);
+                break;
+            case RoomObjectVariableEnum.FigureIsMuted:
+                message = new ObjectAvatarMutedUpdateMessage(value === 1);
+                break;
+            case RoomObjectVariableEnum.FigureCarryObject:
+                message = new ObjectAvatarCarryObjectUpdateMessage(value, parameter);
+                break;
+            case RoomObjectVariableEnum.FigureUseObject:
+                message = new ObjectAvatarUseObjectUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureDance:
+                message = new ObjectAvatarDanceUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureGainedExperience:
+                message = new ObjectAvatarExperienceUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureNumberValue:
+                message = new ObjectAvatarPlayerValueUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureSign:
+                message = new ObjectAvatarSignUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.FigureExpression:
+                message = new ObjectAvatarExpressionUpdateMessage(value);
+                break;
+            case RoomObjectVariableEnum.IsPlayingGame:
+                message = new ObjectAvatarPlayingGameUpdateMessage(value === 1);
+                break;
+            case RoomObjectVariableEnum.FigureGuideStatus:
+                message = new ObjectAvatarGuideStatusUpdateMessage(value);
+                break;
+        }
+
+        if (!message) return false;
+
+        object.processUpdateMessage(message);
+
+        return true;
+    }
+
+    public updateRoomObjectUserFigure(objectId: number, figure: string, gender: string = '', subType: string = '', isRiding: boolean = false): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarFigureUpdateMessage(figure, gender, subType, isRiding));
+
+        return true;
+    }
+
+    public updateRoomObjectUserFlatControl(objectId: number, level: string): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarFlatControlUpdateMessage(parseInt(level)));
+
+        return true;
+    }
+
+    public updateRoomObjectUserEffect(objectId: number, effectId: number, delay: number = 0): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarEffectUpdateMessage(effectId, delay));
+
+        return true;
+    }
+
+    public updateRoomObjectUserGesture(objectId: number, gestureId: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarGestureUpdateMessage(gestureId));
+
+        return true;
+    }
+
+    public updateRoomObjectUserPetGesture(objectId: number, gesture: string): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarPetGestureUpdateMessage(gesture));
+
+        return true;
+    }
+
+    public updateRoomObjectUserPosture(objectId: number, type: string, parameter: string = ''): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarPostureUpdateMessage(type, parameter));
+
+        return true;
+    }
+
     public removeRoomObjectFloor(objectId: number, isOwner: boolean = false): void {
         if (isOwner && !FurniId.isBuilderClubId(objectId)) {
             const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
@@ -1185,6 +1359,18 @@ export class Room implements IRoom {
         return this.getRoomOverlay()?.getChildByLabel(Room.OVERLAY_ICON_SPRITE) ?? undefined;
     }
 
+    public getPetTypeId(figure: string): number {
+        let type = -1;
+
+        if (figure) {
+            const parts = figure.split(' ');
+
+            if (parts.length > 1) type = parseInt(parts[0]);
+        }
+
+        return type;
+    }
+
     public dispatchEvent(event: INitroEvent): void {
         this._eventDispatcher.dispatchEvent(event);
     }
@@ -1225,24 +1411,8 @@ export class Room implements IRoom {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
     }
 
-    public get geometry(): IRoomGeometry | undefined {
-        return this._canvas?.geometry;
-    }
-
     public get legacyGeometry(): ILegacyWallGeometry | undefined {
         return this._legacyGeometry;
-    }
-
-    private getPetTypeId(figure: string): number {
-        let type = -1;
-
-        if (figure) {
-            const parts = figure.split(' ');
-
-            if (parts.length > 1) type = parseInt(parts[0]);
-        }
-
-        return type;
     }
 
     private getPetType(type: string): string | undefined {

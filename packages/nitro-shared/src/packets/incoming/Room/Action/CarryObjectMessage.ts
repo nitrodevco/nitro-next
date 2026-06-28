@@ -1,20 +1,17 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CarryObjectMessageType = {
-  userId: number;
-  itemType: number;
+    objectId: number;
+    itemType: number;
 };
 
-export class CarryObjectMessage implements IIncomingPacket<CarryObjectMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CarryObjectMessageType
-  {
+export class CarryObjectMessage implements IIncomingPacket<CarryObjectMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CarryObjectMessageType {
+        const packet: CarryObjectMessageType = {
+            objectId: wrapper.readInt(),
+            itemType: wrapper.readInt(),
+        };
 
-    const packet: CarryObjectMessageType = {
-      userId: wrapper.readInt(),
-      itemType: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

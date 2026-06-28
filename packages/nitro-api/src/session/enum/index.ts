@@ -5,4 +5,3 @@ export * from './NoobnessLevelEnum';
 export * from './RoomDoorModeEnum';
 export * from './RoomTradeModeEnum';
 export * from './SecurityLevelEnum';
-export * from './UserTypeEnum';

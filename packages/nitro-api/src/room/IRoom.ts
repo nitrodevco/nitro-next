@@ -14,6 +14,7 @@ import type {
     IRoomObject,
     IRoomObjectController,
     RoomObjectCategoryEnum,
+    RoomObjectUserType,
     RoomObjectVariableEnum,
 } from './object';
 import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
@@ -96,7 +97,7 @@ export interface IRoom {
         location: IVector3D,
         direction: IVector3D,
         headDirection: number,
-        type: number,
+        type: RoomObjectUserType,
         figure: string,
     ): boolean;
     updateRoomObjectFloor(
@@ -130,6 +131,15 @@ export interface IRoom {
     updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean;
     updateRoomObjectWallExpiration(objectId: number, expires: number): boolean;
+    updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D | undefined, headDirection?: number, animationTime?: number): boolean;
+    updateRoomObjectUserOwn(objectId: number): boolean;
+    updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter?: string): boolean;
+    updateRoomObjectUserFigure(objectId: number, figure: string, gender?: string, subType?: string, isRiding?: boolean): boolean;
+    updateRoomObjectUserFlatControl(objectId: number, level: string): boolean;
+    updateRoomObjectUserEffect(objectId: number, effectId: number, delay?: number): boolean;
+    updateRoomObjectUserGesture(objectId: number, gestureId: number): boolean;
+    updateRoomObjectUserPetGesture(objectId: number, gesture: string): boolean;
+    updateRoomObjectUserPosture(objectId: number, type: string, parameter?: string): boolean;
     removeRoomObjectFloor(objectId: number, isOwner?: boolean): void;
     removeRoomObjectWall(objectId: number, isOwner?: boolean): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
@@ -141,11 +151,13 @@ export interface IRoom {
     setLegacyGeometry(geometry: ILegacyWallGeometry): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void;
+    getGeometry(): IRoomGeometry | undefined;
     getRoomObjectRoom(): IRoomObjectController | undefined;
     getRoomObjectCursor(): IRoomObjectController | undefined;
     getRoomObjectSelectionArrow(): IRoomObjectController | undefined;
     getRoomOverlay(): Container | undefined;
     getRoomOverlayIconSprite(): Container | undefined;
+    getPetTypeId(figure: string): number;
     dispatchEvent(event: INitroEvent): void;
     readonly disposed: boolean;
     readonly roomId: number;
@@ -156,6 +168,5 @@ export interface IRoom {
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
-    readonly geometry: IRoomGeometry | undefined;
     readonly legacyGeometry: ILegacyWallGeometry | undefined;
 }

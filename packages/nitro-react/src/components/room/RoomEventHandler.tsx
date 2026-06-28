@@ -90,7 +90,7 @@ export const RoomEventHandler = () => {
             setMouseEventId(category, event.type, event.eventId);
         }
 
-        if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.geometry);
+        if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
     }
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
