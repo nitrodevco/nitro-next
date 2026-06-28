@@ -40,8 +40,6 @@ export class RoomEngine implements IRoomEngine {
 
         room = new Room(roomId);
 
-        room.prepareRoom();
-
         this._rooms.set(roomId, room);
 
         return room;

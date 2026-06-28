@@ -359,7 +359,10 @@ export class RoomPlane implements IRoomPlane {
         const roomCollection = GetAssetManager().getCollection('room');
         const planeVisualizationData = roomCollection?.data?.roomVisualization?.[dataType];
 
-        const plane = planeVisualizationData?.planes?.find(p => p.id === planeId);
+        let plane = planeVisualizationData?.planes?.find(p => p.id === planeId);
+
+        if (!plane) plane = planeVisualizationData?.planes?.find(p => p.id === "default");
+
         const planeVisualization =
             (dataType === 'landscapeData' ? plane?.animatedVisualization : plane?.visualizations)?.find(
                 v => v.size === planeGeometry.scale,

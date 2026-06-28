@@ -1,9 +1,9 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
 import { LegacyDataType, RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
-import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, WiredMovementsMessage, YouAreNotSpectatorMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-shared";
+import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, WiredMovementsMessage } from "@nitrodevco/nitro-shared";
 
-import { useRoomSelector, useRoomSessionActions } from "#base/context";
+import { useRoomSelector } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 import type { IRoomFloorItem } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomFloorItem";
@@ -11,7 +11,6 @@ import type { IRoomWallItem } from "../../../../nitro-shared/src/packets/incomin
 
 export const useRoomFurnitureHandler = () => {
     const room = useRoomSelector();
-    const { setIsPlayingGame, setIsSpectator } = useRoomSessionActions();
 
     const addRoomObjectFloor = (item: IRoomFloorItem) => {
         if (!room) return;
@@ -232,19 +231,5 @@ export const useRoomFurnitureHandler = () => {
         if (!room) return;
 
         room.updateRoomObjectFloor(data.furniId, undefined, undefined, data.status, new LegacyDataType());
-    });
-
-    useMessageListener(YouArePlayingGameMessage, data => {
-        if (!room) return;
-
-        setIsPlayingGame(data.isPlaying);
-    });
-
-    useMessageListener(YouAreNotSpectatorMessage, data => {
-        if (!room) return;
-
-        if (data.roomId !== room.roomId) return;
-
-        setIsSpectator(false);
     });
 }

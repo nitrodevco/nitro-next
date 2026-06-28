@@ -57,6 +57,7 @@ const config = [
             "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
             "@stylistic/array-bracket-spacing": ["error"],
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+            'react-hooks/exhaustive-deps': 'off',
             'react/react-in-jsx-scope': 'off',
             "@typescript-eslint/no-unsafe-member-access": "off",
             "@typescript-eslint/no-unsafe-call": "off",

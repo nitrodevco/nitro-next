@@ -242,16 +242,13 @@ export const useRoomMappingHandler = () => {
     useMessageListener(RoomPropertyMessage, data => {
         if (!room) return;
 
-
         room.updateRoomPlaneType((data.key === "floor") ? data.value : undefined, (data.key === "wallpaper") ? data.value : undefined, (data.key === "landscape") ? data.value : undefined);
     });
 
     useMessageListener(RoomVisualizationSettingsMessage, data => {
         if (!room) return;
 
-
         room.updateRoomPlaneVisibilities(!data.wallsHidden);
-
         room.updateRoomPlaneThickness(data.wallThickness, data.floorThickness);
     });
 

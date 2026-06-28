@@ -36,6 +36,7 @@ import {
 import {
     EventDispatcher,
     GetConfigValue,
+    RoomEngineEvent,
     RoomEngineObjectEvent
 } from '@nitrodevco/nitro-shared';
 import type { ImageLike, Rectangle } from 'pixi.js';
@@ -115,26 +116,7 @@ export class Room implements IRoom {
         this._disposed = true;
     }
 
-    public prepareRoom(): boolean {
-        this.setRoomValue(RoomObjectVariableEnum.RoomIsPublic, 0);
-        this.setRoomValue(RoomObjectVariableEnum.RoomZScale, 1);
-
-        this.createRoomObjectAndInitalize(
-            Room.CURSOR_OBJECT_ID,
-            Room.CURSOR_OBJECT_TYPE,
-            RoomObjectCategoryEnum.Cursor,
-        );
-
-        if (GetConfigValue('renderer.avatarArrowEnabled', false)) this.createRoomObjectAndInitalize(
-            Room.ARROW_OBJECT_ID,
-            Room.ARROW_OBJECT_TYPE,
-            RoomObjectCategoryEnum.Cursor,
-        );
-
-        return true;
-    }
-
-    public getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas {
+    public getRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas {
         if (this._canvas) {
             this._canvas.initialize(width, height);
 
@@ -175,8 +157,20 @@ export class Room implements IRoom {
         return this._canvas;
     }
 
+    public resizeRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): void {
+        if (!this._canvas) return;
+
+        this._canvas.initialize(width, height);
+
+        if (this._canvas.geometry) this._canvas.geometry.scale = scale;
+    }
+
     public applyRoomMap(roomMap: IRoomMapData): void {
         if (!roomMap) return;
+
+        const floorType = '111';
+        const wallType = '201';
+        const landscapeType = '1';
 
         this.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
@@ -187,6 +181,9 @@ export class Room implements IRoom {
         )) as IRoomObjectController;
 
         if (!roomObject || !(roomObject.logic instanceof RoomLogic)) return;
+
+        this.setRoomValue(RoomObjectVariableEnum.RoomIsPublic, 0);
+        this.setRoomValue(RoomObjectVariableEnum.RoomZScale, 1);
 
         const dimensions = roomMap.dimensions;
 
@@ -207,6 +204,27 @@ export class Room implements IRoom {
         }
 
         roomObject.logic.initialize(roomMap);
+
+        if (floorType) {
+            roomObject.processUpdateMessage(
+                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType),
+            );
+            this.setRoomValue(RoomObjectVariableEnum.RoomFloorType, floorType);
+        }
+
+        if (wallType) {
+            roomObject.processUpdateMessage(
+                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType),
+            );
+            this.setRoomValue(RoomObjectVariableEnum.RoomWallType, wallType);
+        }
+
+        if (landscapeType) {
+            roomObject.processUpdateMessage(
+                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType),
+            );
+            this.setRoomValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
+        }
 
         if (roomMap.doors.length) {
             let doorIndex = 0;
@@ -253,30 +271,21 @@ export class Room implements IRoom {
             }
         }
 
-        const floorType = '111';
-        const wallType = '201';
-        const landscapeType = 'default';
+        this.createRoomObjectAndInitalize(
+            Room.CURSOR_OBJECT_ID,
+            Room.CURSOR_OBJECT_TYPE,
+            RoomObjectCategoryEnum.Cursor,
+        );
 
-        if (floorType) {
-            roomObject.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType),
-            );
-            this.setRoomValue(RoomObjectVariableEnum.RoomFloorType, floorType);
-        }
+        if (GetConfigValue('renderer.avatarArrowEnabled', false)) this.createRoomObjectAndInitalize(
+            Room.ARROW_OBJECT_ID,
+            Room.ARROW_OBJECT_TYPE,
+            RoomObjectCategoryEnum.Cursor,
+        );
 
-        if (wallType) {
-            roomObject.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType),
-            );
-            this.setRoomValue(RoomObjectVariableEnum.RoomWallType, wallType);
-        }
+        // update area hide
 
-        if (landscapeType) {
-            roomObject.processUpdateMessage(
-                new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType),
-            );
-            this.setRoomValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
-        }
+        this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.INITIALIZED, this._roomId));
     }
 
     public update(time: number, update: boolean = false): void {

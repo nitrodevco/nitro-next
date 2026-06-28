@@ -18,6 +18,81 @@ export const RoomEventHandler = () => {
     const { changeItemState } = useRoomObjectInteraction();
     const { selectAvatar } = useRoomObjectSelect();
 
+    const handleRoomObjectEvent = (event: RoomObjectEvent) => {
+        if (!room) return;
+
+        if (event instanceof RoomObjectMouseEvent) {
+            handleRoomObjectMouseEvent(event);
+
+            return;
+        }
+
+        switch (event.type) {
+            case RoomObjectStateChangedEvent.STATE_CHANGE: {
+                changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, false);
+                return;
+            }
+            case RoomObjectStateChangedEvent.STATE_RANDOM: {
+                changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, true);
+                return;
+            }
+            case RoomObjectMoveEvent.POSITION_CHANGED: {
+                const roomObject = room.getRoomObject(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
+
+                if (!roomObject) return;
+
+                room.getRoomObjectSelectionArrow()?.processUpdateMessage(new RoomObjectUpdateMessage(roomObject.getLocation(), undefined));
+                return;
+            }
+            case RoomObjectMoveEvent.OBJECT_REMOVED: {
+                selectAvatar(0, false);
+                return;
+            }
+            case RoomObjectMoveEvent.SLIDE_ANIMATION: {
+                room.updateRoomObjectMask(event.objectId);
+                return;
+            }
+            case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
+                removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
+                return;
+            }
+            case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
+                const category = room.getRoomObjectCategoryForType(event.objectType);
+
+                if (
+                    (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
+                    controllerLevel >= RoomControllerLevelEnum.Guest
+                ) addCursorOwner(event.objectId, category);
+                return;
+            }
+        }
+    }
+
+    const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
+        if (!room || !object) return;
+
+        let category = room.getRoomObjectCategoryForType(object.type);
+
+        if (category !== RoomObjectCategoryEnum.Room && (!isPlayingGame || category !== RoomObjectCategoryEnum.Unit)) category = RoomObjectCategoryEnum.Minimum;
+
+        const eventId = getMouseEventId(category, event.type);
+
+        if (eventId === event.eventId) {
+            if (
+                event.type === MouseEventType.MOUSE_CLICK ||
+                event.type === MouseEventType.DOUBLE_CLICK ||
+                event.type === MouseEventType.MOUSE_DOWN ||
+                event.type === MouseEventType.MOUSE_UP ||
+                event.type === MouseEventType.MOUSE_MOVE
+            )
+                return;
+        } else if (event.eventId) {
+            setMouseEventId(category, event.type, event.eventId);
+        }
+
+        if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.geometry);
+    }
+
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
         RoomEngineObjectEvent.DESELECTED,
@@ -131,91 +206,18 @@ export const RoomEventHandler = () => {
     useEffect(() => {
         if (!room) return;
 
-        const handleRoomObjectEvent = (event: RoomObjectEvent) => {
-            if (event instanceof RoomObjectMouseEvent) {
-                handleRoomObjectMouseEvent(event);
-
-                return;
-            }
-
-            switch (event.type) {
-                case RoomObjectStateChangedEvent.STATE_CHANGE: {
-                    changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, false);
-                    return;
-                }
-                case RoomObjectStateChangedEvent.STATE_RANDOM: {
-                    changeItemState(event.objectId, room.getRoomObjectCategoryForType(event.objectType), (event as RoomObjectStateChangedEvent).state, true);
-                    return;
-                }
-                case RoomObjectMoveEvent.POSITION_CHANGED: {
-                    const roomObject = room.getRoomObject(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
-
-                    if (!roomObject) return;
-
-                    room.getRoomObjectSelectionArrow()?.processUpdateMessage(new RoomObjectUpdateMessage(roomObject.getLocation(), undefined));
-                    return;
-                }
-                case RoomObjectMoveEvent.OBJECT_REMOVED: {
-                    selectAvatar(0, false);
-                    return;
-                }
-                case RoomObjectMoveEvent.SLIDE_ANIMATION: {
-                    room.updateRoomObjectMask(event.objectId);
-                    return;
-                }
-                case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
-                    removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
-                    return;
-                }
-                case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
-                    const category = room.getRoomObjectCategoryForType(event.objectType);
-
-                    if (
-                        (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
-                        controllerLevel >= RoomControllerLevelEnum.Guest
-                    ) addCursorOwner(event.objectId, category);
-                    return;
-                }
-            }
-        };
-
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, controllerLevel, handleRoomObjectMouseEvent, changeItemState, removeCursorOwner, addCursorOwner, selectAvatar]);
+    }, [room, handleRoomObjectEvent]);
 
     useEffect(() => {
         if (!room) return;
 
-        const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
-            if (!object) return;
-
-            let category = room.getRoomObjectCategoryForType(object.type);
-
-            if (category !== RoomObjectCategoryEnum.Room && (!isPlayingGame || category !== RoomObjectCategoryEnum.Unit)) category = RoomObjectCategoryEnum.Minimum;
-
-            const eventId = getMouseEventId(category, event.type);
-
-            if (eventId === event.eventId) {
-                if (
-                    event.type === MouseEventType.MOUSE_CLICK ||
-                    event.type === MouseEventType.DOUBLE_CLICK ||
-                    event.type === MouseEventType.MOUSE_DOWN ||
-                    event.type === MouseEventType.MOUSE_UP ||
-                    event.type === MouseEventType.MOUSE_MOVE
-                )
-                    return;
-            } else if (event.eventId) {
-                setMouseEventId(category, event.type, event.eventId);
-            }
-
-            if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.geometry);
-        }
-
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
 
         return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
-    }, [room, isPlayingGame, getMouseEventId, setMouseEventId]);
+    }, [room, handleRoomCanvasMouseEvent]);
 
     return null;
 }

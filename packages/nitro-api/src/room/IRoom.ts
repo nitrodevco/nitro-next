@@ -20,8 +20,8 @@ import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     dispose(): void;
-    prepareRoom(): boolean;
-    getRoomCanvas(width: number, height: number, scale: number): IRoomRenderingCanvas;
+    getRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas;
+    resizeRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): void;
     applyRoomMap(roomMap: IRoomMapData): void;
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
