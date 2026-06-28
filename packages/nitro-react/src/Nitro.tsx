@@ -68,22 +68,33 @@ export const Nitro: FC = () => {
 
     return (
         <>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {!isReady && (
                     <motion.div
-                        key="loading"
+                        key="loading-screen"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        className="size-full"
                     >
                         <LoadingScreenView />
                     </motion.div>
                 )}
+                {isReady && (
+                    <motion.div
+                        key="main-view"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="size-full"
+                    >
+                        <MainView />
+                    </motion.div>
+                )}
             </AnimatePresence>
-            {isReady && <MainView />}
             <div
                 id="draggable-windows-container"
-                className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden"
+                className="absolute top-0 left-0 overflow-hidden pointer-events-none size-full"
             />
         </>
     );

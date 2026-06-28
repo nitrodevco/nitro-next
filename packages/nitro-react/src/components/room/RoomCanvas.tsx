@@ -1,48 +1,43 @@
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
-import { RoomEngineEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect } from 'react';
 
 import { useRoomMouseActions, useRoomSelector } from '#base/context';
-import { useRoomCamera, useRoomEventDispatcher, useRoomMouse } from '#base/hooks';
+import { useRoomCamera, useRoomMouse } from '#base/hooks';
 import { useConfigurationStore } from '#base/stores';
 import { GetPixelRatio } from '#base/utils';
 
-export const RoomCanvas = () => {
+export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
     const room = useRoomSelector();
-    const [isReady, setIsReady] = useState<boolean>(false);
     const { mouseDataRef } = useRoomMouse();
     const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit'] as number) ?? 60;
     const { updateRoomCamera } = useRoomCamera();
     const { hasAndResetCursorUpdate, hasCursorOwners } = useRoomMouseActions();
-    const elementRef = useRef<HTMLDivElement>(null);
-
-    useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, event => {
-        setIsReady(true);
-    });
 
     useEffect(() => {
-        if (!room || !isReady) return;
+        if (!room) return;
 
         const renderer = GetRenderer();
         const stage = GetStage();
         const ticker = GetTicker();
 
-        if (renderer?.canvas) elementRef?.current?.appendChild(renderer.canvas);
-
-        const canvas = room.getRoomCanvas(renderer.width, renderer.height, RoomGeometryScaleType.ZoomedIn);
-
-        if (canvas.master && canvas.master.parent !== stage) stage.addChild(canvas.master);
-
         const handleSize = (width: number, height: number, resolution: number) => {
+            let canvas = room.canvas;
+
+            if (!canvas) canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
+            else {
+                canvas.initialize(width, height);
+            }
+
+            updateRoomCamera(-1);
+
+            if (canvas.master && canvas.master.parent !== stage) stage.addChild(canvas.master);
+
             renderer.canvas.style.width = `${width}px`;
             renderer.canvas.style.height = `${height}px`;
 
-            if (renderer.width !== width || renderer.height !== height || renderer.resolution !== resolution) {
-                canvas.initialize(width, height);
-                renderer.resize(width, height, resolution);
-            }
+            renderer.resize(width, height, resolution);
 
             renderer.render(stage);
         }
@@ -59,7 +54,11 @@ export const RoomCanvas = () => {
             timer = setTimeout(() => handleSize(width, height, resolution), 5);
         });
 
-        if (elementRef.current) observer.observe(elementRef.current);
+        if (ref && ('current' in ref) && ref.current) {
+            ref.current.appendChild(renderer.canvas);
+
+            observer.observe(ref.current);
+        }
 
         const tick = (ticker: Ticker) => {
             if (!room) return;
@@ -97,7 +96,7 @@ export const RoomCanvas = () => {
             clearTimeout(timer);
             ticker.remove(tick);
         }
-    }, [room, isReady, mouseDataRef, hasAndResetCursorUpdate, hasCursorOwners, updateRoomCamera]);
+    }, [room, mouseDataRef, hasAndResetCursorUpdate, hasCursorOwners, updateRoomCamera]);
 
     useEffect(() => {
         const ticker = GetTicker();
@@ -105,5 +104,5 @@ export const RoomCanvas = () => {
         ticker.maxFPS = maxFPS;
     }, [maxFPS]);
 
-    return <div className="size-full" ref={elementRef}></div>;
-};
+    return null;
+});

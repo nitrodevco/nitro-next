@@ -12,4 +12,5 @@ export * from './RoomSessionSlice';
 export * from './RoomStackingHeightMapSlice';
 export * from './RoomStore';
 export * from './selectors/RoomSelectedObjectSelectors';
+export * from './selectors/RoomSelectors';
 export * from './selectors/RoomSessionSelectors';

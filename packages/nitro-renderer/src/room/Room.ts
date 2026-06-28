@@ -111,9 +111,9 @@ export class Room implements IRoom {
 
         this._model.dispose();
 
-        // dispatch room disposed event
-
         this._disposed = true;
+
+        this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.DISPOSED, this._roomId));
     }
 
     public getRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas {

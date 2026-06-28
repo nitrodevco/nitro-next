@@ -20,6 +20,7 @@ export * from './room/selectors/session/useRoomIsMoveBlocked';
 export * from './room/selectors/session/useRoomIsPlayingGame';
 export * from './room/selectors/session/useRoomPermissionsSelector';
 export * from './room/selectors/useRoomCameraSelector';
+export * from './room/selectors/useRoomIsLandingViewVisible';
 export * from './room/selectors/useRoomSelector';
 export * from './room/useRoomContext';
 export * from './user/actions/useUserInfoActions';

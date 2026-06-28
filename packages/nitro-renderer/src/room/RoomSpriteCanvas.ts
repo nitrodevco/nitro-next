@@ -163,6 +163,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         width = width < 1 ? 1 : width;
         height = height < 1 ? 1 : height;
 
+        if (width === this._width && height === this._height) return;
+
         if (!this._background) {
             this._background = new Sprite(Texture.WHITE);
 

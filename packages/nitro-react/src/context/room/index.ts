@@ -17,5 +17,6 @@ export * from './selectors/session/useRoomIsMoveBlocked';
 export * from './selectors/session/useRoomIsPlayingGame';
 export * from './selectors/session/useRoomPermissionsSelector';
 export * from './selectors/useRoomCameraSelector';
+export * from './selectors/useRoomIsLandingViewVisible';
 export * from './selectors/useRoomSelector';
 export * from './useRoomContext';

@@ -139,6 +139,8 @@ export const useRoomCamera = () => {
             return;
         }
 
+        if (time === -1) cameraDataRef.current.scaleChanged = true;
+
         cameraData.targetObjectLocation = goalLocation;
 
         let targetZ = Math.floor(goalLocation.z) + 1;

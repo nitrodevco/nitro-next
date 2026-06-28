@@ -8,4 +8,5 @@ export * from './session/useRoomIsMoveBlocked';
 export * from './session/useRoomIsPlayingGame';
 export * from './session/useRoomPermissionsSelector';
 export * from './useRoomCameraSelector';
+export * from './useRoomIsLandingViewVisible';
 export * from './useRoomSelector';
