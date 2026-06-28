@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {
     IObjectVisualizationData,
     IPlaneVisualization,
@@ -7,9 +5,6 @@ import type {
     IRoomObjectModel,
     IRoomObjectSprite,
     IRoomPlane
-} from '@nitrodevco/nitro-api';
-import {
-    RoomThicknessType
 } from '@nitrodevco/nitro-api';
 import {
     RoomGeometryScaleType,
@@ -29,17 +24,17 @@ import { RoomPlane } from './RoomPlane';
 import { RoomVisualizationData } from './RoomVisualizationData';
 
 export class RoomVisualization extends RoomObjectSpriteVisualization implements IPlaneVisualization {
-    private static FLOOR_COLOR: number = 0xffffff;
-    private static FLOOR_COLOR_LEFT: number = 0xdddddd;
-    private static FLOOR_COLOR_RIGHT: number = 0xbbbbbb;
-    private static WALL_COLOR_TOP: number = 0xffffff;
-    private static WALL_COLOR_SIDE: number = 0xcccccc;
-    private static WALL_COLOR_BOTTOM: number = 0x999999;
-    private static WALL_COLOR_BORDER: number = 0x999999;
-    private static LANDSCAPE_COLOR_TOP: number = 0xffffff;
-    private static LANDSCAPE_COLOR_SIDE: number = 0xcccccc;
-    private static LANDSCAPE_COLOR_BOTTOM: number = 0x999999;
-    private static ROOM_DEPTH_OFFSET: number = 1000;
+    private static FLOOR_COLOR: number = 0xffffff as const;
+    private static FLOOR_COLOR_LEFT: number = 0xdddddd as const;
+    private static FLOOR_COLOR_RIGHT: number = 0xbbbbbb as const;
+    private static WALL_COLOR_TOP: number = 0xffffff as const;
+    private static WALL_COLOR_SIDE: number = 0xcccccc as const;
+    private static WALL_COLOR_BOTTOM: number = 0x999999 as const;
+    private static WALL_COLOR_BORDER: number = 0x999999 as const;
+    private static LANDSCAPE_COLOR_TOP: number = 0xffffff as const;
+    private static LANDSCAPE_COLOR_SIDE: number = 0xcccccc as const;
+    private static LANDSCAPE_COLOR_BOTTOM: number = 0x999999 as const;
+    private static ROOM_DEPTH_OFFSET: number = 1000 as const;
 
     protected _data: RoomVisualizationData | undefined = undefined;
 
@@ -49,8 +44,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     private _directionX: number = 0;
     private _directionY: number = 0;
     private _directionZ: number = 0;
-    private _floorThickness: RoomThicknessType = RoomThicknessType.Normal;
-    private _wallThickness: RoomThicknessType = RoomThicknessType.Normal;
+    private _floorThickness: number = NaN;
+    private _wallThickness: number = NaN;
     private _holeUpdateTime: number = NaN;
     private _planes: RoomPlane[] = [];
     private _visiblePlanes: RoomPlane[] = [];
@@ -213,13 +208,13 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         return false;
     }
 
-    private updateThickness(k: IRoomObjectModel): boolean {
-        if (this.updateModelCounter === k.updateCounter) return false;
+    private updateThickness(model: IRoomObjectModel): boolean {
+        if (this.updateModelCounter === model.updateCounter) return false;
 
-        const floorThickness = k.getValue<number>(RoomObjectVariableEnum.RoomFloorThickness);
-        const wallThickness = k.getValue<number>(RoomObjectVariableEnum.RoomWallThickness);
+        const floorThickness = model.getValue<number>(RoomObjectVariableEnum.RoomFloorThickness);
+        const wallThickness = model.getValue<number>(RoomObjectVariableEnum.RoomWallThickness);
 
-        if ((floorThickness !== this._floorThickness || wallThickness !== this._wallThickness)) {
+        if (!isNaN(this._floorThickness) && !isNaN(this._wallThickness) && (floorThickness !== this._floorThickness || wallThickness !== this._wallThickness)) {
             this._floorThickness = floorThickness;
             this._wallThickness = wallThickness;
 
@@ -231,10 +226,10 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         return false;
     }
 
-    private updateHole(k: IRoomObjectModel): boolean {
-        if (this.updateModelCounter === k.updateCounter) return false;
+    private updateHole(model: IRoomObjectModel): boolean {
+        if (this.updateModelCounter === model.updateCounter) return false;
 
-        const holeUpdate = k.getValue<number>(RoomObjectVariableEnum.RoomFloorHoleUpdateTime);
+        const holeUpdate = model.getValue<number>(RoomObjectVariableEnum.RoomFloorHoleUpdateTime);
 
         if (!isNaN(holeUpdate) && holeUpdate !== this._holeUpdateTime) {
             this._holeUpdateTime = holeUpdate;
@@ -327,8 +322,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected initializeRoomPlanes(): void {
         if (!this.object || this._isPlaneSet) return;
 
-        this._roomPlaneParser.floorThicknessMultiplier = this._floorThickness;
-        this._roomPlaneParser.wallThicknessMultiplier = this._wallThickness;
+        if (!isNaN(this._floorThickness)) this._roomPlaneParser.floorThicknessMultiplier = this._floorThickness;
+        if (!isNaN(this._wallThickness)) this._roomPlaneParser.wallThicknessMultiplier = this._wallThickness;
 
         this._roomPlaneParser.clearHighlightArea();
 

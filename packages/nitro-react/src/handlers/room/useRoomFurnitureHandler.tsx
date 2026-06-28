@@ -37,7 +37,7 @@ export const useRoomFurnitureHandler = () => {
     }
 
     const roundLocation = (location: IVector3D) => {
-        const geometry = room?.getGeometry();
+        const geometry = room?.geometry;
 
         if (!geometry) return;
 
@@ -106,13 +106,12 @@ export const useRoomFurnitureHandler = () => {
         if (!room) return;
 
         const item = data.floorItem;
-
         const location = new Vector3d(item.x, item.y, item.z);
         const direction = new Vector3d(item.rotation);
 
         room.updateRoomObjectFloor(item.objectId, location, direction, item.stuffData.state, item.stuffData, item.extra);
         room.updateRoomObjectFloorHeight(item.objectId, item.stackHeight);
-        // TODO update expiration
+        room.updateRoomObjectFloorExpiration(item.objectId, item.expires);
     });
 
     useMessageListener(ItemAddMessage, data => {
@@ -162,7 +161,7 @@ export const useRoomFurnitureHandler = () => {
         const direction = new Vector3d(room.legacyGeometry.getDirection(wallPosition.direction));
 
         room.updateRoomObjectWall(item.objectId, location, direction, item.state, item.data);
-        // expiration
+        room.updateRoomObjectWallExpiration(item.objectId, item.expires);
     });
 
     useMessageListener(SlideObjectBundleMessage, data => {

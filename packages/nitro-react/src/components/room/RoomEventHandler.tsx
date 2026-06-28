@@ -209,7 +209,7 @@ export const RoomEventHandler = () => {
                 setMouseEventId(category, event.type, event.eventId);
             }
 
-            if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
+            if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.geometry);
         }
 
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);

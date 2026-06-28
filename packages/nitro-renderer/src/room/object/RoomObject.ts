@@ -172,7 +172,7 @@ export class RoomObject implements IRoomObjectController {
     }
 
     public get mouseHandler(): IRoomObjectMouseHandler {
-        return this._logic as IRoomObjectMouseHandler;
+        return this._logic;
     }
 
     public get logic(): IRoomObjectEventHandler {

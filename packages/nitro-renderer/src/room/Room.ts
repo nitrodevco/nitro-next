@@ -339,10 +339,6 @@ export class Room implements IRoom {
         return true;
     }
 
-    public getGeometry(): IRoomGeometry | undefined {
-        return this._canvas?.geometry;
-    }
-
     public getRoomObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager {
         let manager = this._objectManagers.get(category);
 
@@ -592,155 +588,6 @@ export class Room implements IRoom {
         return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Unit);
     }
 
-    public updateRoomObjectFloor(
-        objectId: number,
-        location: IVector3D | undefined,
-        direction: IVector3D | undefined,
-        state: number,
-        data?: IObjectData,
-        extra?: number,
-    ): boolean {
-        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
-
-        if (!object) return false;
-
-        object.processUpdateMessage(new RoomObjectUpdateMessage(location, direction));
-        object.processUpdateMessage(new ObjectDataUpdateMessage(state, data, extra));
-
-        return true;
-    }
-
-    public updateRoomObjectWall(
-        objectId: number,
-        location: IVector3D | undefined,
-        direction: IVector3D | undefined,
-        state: number,
-        data: string
-    ): boolean {
-        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-
-        if (!object || !object.logic) return false;
-
-        const stuffData = new LegacyDataType();
-
-        stuffData.setString(data);
-
-        object.processUpdateMessage(new RoomObjectUpdateMessage(location, direction));
-        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
-
-        this.updateRoomObjectMask(objectId);
-
-        return true;
-    }
-
-    public updateRoomObjectWallState(
-        objectId: number,
-        state: number,
-        data: string
-    ): boolean {
-        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-
-        if (!object || !object.logic) return false;
-
-        const stuffData = new LegacyDataType();
-
-        stuffData.setString(data);
-
-        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
-
-        return true;
-    }
-
-    public updateRoomObjectWallItemData(
-        objectId: number,
-        data: string
-    ): boolean {
-        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-
-        if (!object || !object.logic) return false;
-
-        object.processUpdateMessage(new ObjectItemDataUpdateMessage(data));
-
-        return true;
-    }
-
-    public updateRoomObjectFloorHeight(objectId: number, height: number): boolean {
-        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
-
-        if (!object) return false;
-
-        object.processUpdateMessage(new ObjectHeightUpdateMessage(undefined, undefined, height));
-
-        return true;
-    }
-
-    public updateRoomObjectMask(objectId: number, add: boolean = true): boolean {
-        const maskName = RoomObjectCategoryEnum.Wall + '_' + objectId;
-        const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-
-        let maskUpdate: ObjectRoomMaskUpdateMessage | undefined = undefined;
-
-        if (roomObject && roomObject.model) {
-            if (roomObject.model.getValue<boolean>(RoomObjectVariableEnum.FurnitureUsesPlaneMask)) {
-                const maskType = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurniturePlaneMaskType);
-                const location = roomObject.getLocation();
-
-                if (add)
-                    maskUpdate = new ObjectRoomMaskUpdateMessage(
-                        ObjectRoomMaskUpdateMessage.ADD_MASK,
-                        maskName,
-                        maskType,
-                        location,
-                    );
-                else maskUpdate = new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.REMOVE_MASK, maskName);
-            }
-        } else {
-            maskUpdate = new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.REMOVE_MASK, maskName);
-        }
-
-        const roomObjectRoom = this.getRoomObjectRoom();
-
-        if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
-
-        return true;
-    }
-
-    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean {
-        const room = this.getRoomObjectRoom();
-
-        if (!room) return false;
-
-        if (floorType && floorType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType));
-
-        if (wallType && wallType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType));
-
-        if (landscapeType && landscapeType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType));
-
-        return true;
-    }
-
-    public updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible: boolean = true): boolean {
-        const room = this.getRoomObjectRoom();
-
-        if (!room) return false;
-
-        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.WALL_VISIBILITY, wallVisible));
-        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.FLOOR_VISIBILITY, floorVisible));
-
-        return true;
-    }
-
-    public updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean {
-        const room = this.getRoomObjectRoom();
-
-        if (!room) return false;
-
-        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS, wallThickness as number));
-        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS, floorThickness as number));
-
-        return true;
-    }
-
     public addFurnitureFloorByTypeId(
         objectId: number,
         typeId: number,
@@ -902,6 +749,177 @@ export class Room implements IRoom {
         this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, objectId, RoomObjectCategoryEnum.Unit),
         );
+
+        return true;
+    }
+
+    public updateRoomObjectFloor(
+        objectId: number,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
+        state: number,
+        data?: IObjectData,
+        extra?: number,
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new RoomObjectUpdateMessage(location, direction));
+        object.processUpdateMessage(new ObjectDataUpdateMessage(state, data, extra));
+
+        return true;
+    }
+
+    public updateRoomObjectWall(
+        objectId: number,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
+        state: number,
+        data: string
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        const stuffData = new LegacyDataType();
+
+        stuffData.setString(data);
+
+        object.processUpdateMessage(new RoomObjectUpdateMessage(location, direction));
+        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
+
+        this.updateRoomObjectMask(objectId);
+
+        return true;
+    }
+
+    public updateRoomObjectWallState(
+        objectId: number,
+        state: number,
+        data: string
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        const stuffData = new LegacyDataType();
+
+        stuffData.setString(data);
+
+        object.processUpdateMessage(new ObjectDataUpdateMessage(state, stuffData));
+
+        return true;
+    }
+
+    public updateRoomObjectWallItemData(
+        objectId: number,
+        data: string
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        object.processUpdateMessage(new ObjectItemDataUpdateMessage(data));
+
+        return true;
+    }
+
+    public updateRoomObjectFloorHeight(objectId: number, height: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectHeightUpdateMessage(undefined, undefined, height));
+
+        return true;
+    }
+
+    public updateRoomObjectMask(objectId: number, add: boolean = true): boolean {
+        const maskName = RoomObjectCategoryEnum.Wall + '_' + objectId;
+        const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        let maskUpdate: ObjectRoomMaskUpdateMessage | undefined = undefined;
+
+        if (roomObject && roomObject.model) {
+            if (roomObject.model.getValue<boolean>(RoomObjectVariableEnum.FurnitureUsesPlaneMask)) {
+                const maskType = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurniturePlaneMaskType);
+                const location = roomObject.getLocation();
+
+                if (add)
+                    maskUpdate = new ObjectRoomMaskUpdateMessage(
+                        ObjectRoomMaskUpdateMessage.ADD_MASK,
+                        maskName,
+                        maskType,
+                        location,
+                    );
+                else maskUpdate = new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.REMOVE_MASK, maskName);
+            }
+        } else {
+            maskUpdate = new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.REMOVE_MASK, maskName);
+        }
+
+        const roomObjectRoom = this.getRoomObjectRoom();
+
+        if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
+
+        return true;
+    }
+
+    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        if (floorType && floorType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType));
+
+        if (wallType && wallType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_WALL_UPDATE, wallType));
+
+        if (landscapeType && landscapeType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_LANDSCAPE_UPDATE, landscapeType));
+
+        return true;
+    }
+
+    public updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible: boolean = true): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.WALL_VISIBILITY, wallVisible));
+        room.processUpdateMessage(new ObjectRoomPlaneVisibilityUpdateMessage(ObjectRoomPlaneVisibilityUpdateMessage.FLOOR_VISIBILITY, floorVisible));
+
+        return true;
+    }
+
+    public updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS, wallThickness as number));
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS, floorThickness as number));
+
+        return true;
+    }
+
+    public updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+        if (!object) return false;
+
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+
+        return true;
+    }
+
+    public updateRoomObjectWallExpiration(objectId: number, expires: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object) return false;
+
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
 
         return true;
     }
@@ -1118,6 +1136,10 @@ export class Room implements IRoom {
         sprite.parent?.removeChild(sprite);
     }
 
+    public getGeometry(): IRoomGeometry | undefined {
+        return this._canvas?.geometry;
+    }
+
     public setLegacyGeometry(geometry: ILegacyWallGeometry) {
         if (this._legacyGeometry) {
             this._legacyGeometry.dispose();
@@ -1192,6 +1214,10 @@ export class Room implements IRoom {
 
     public get isAreaSelectionMode(): boolean {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
+    }
+
+    public get geometry(): IRoomGeometry | undefined {
+        return this._canvas?.geometry;
     }
 
     public get legacyGeometry(): ILegacyWallGeometry | undefined {

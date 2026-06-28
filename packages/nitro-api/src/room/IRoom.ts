@@ -26,7 +26,6 @@ export interface IRoom {
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
-    getGeometry(): IRoomGeometry | undefined;
     getRoomObjectManager(category: number): IRoomObjectManager | undefined;
     getTotalObjectsForManager(category: RoomObjectCategoryEnum): number;
     getObjectInstanceId(object: IRoomObject): number;
@@ -48,35 +47,6 @@ export interface IRoom {
     createRoomObjectFloor(id: number, type: string): IRoomObject | undefined;
     createRoomObjectWall(id: number, type: string): IRoomObject | undefined;
     createRoomObjectUser(id: number, type: string): IRoomObject | undefined;
-    updateRoomObjectFloor(
-        objectId: number,
-        location: IVector3D | undefined,
-        direction: IVector3D | undefined,
-        state: number,
-        data?: IObjectData,
-        extra?: number,
-    ): boolean;
-    updateRoomObjectWall(
-        objectId: number,
-        location: IVector3D | undefined,
-        direction: IVector3D | undefined,
-        state: number,
-        data: string
-    ): boolean
-    updateRoomObjectWallState(
-        objectId: number,
-        state: number,
-        data: string
-    ): boolean;
-    updateRoomObjectWallItemData(
-        objectId: number,
-        data: string
-    ): boolean;
-    updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
-    updateRoomObjectMask(objectId: number, add?: boolean): boolean;
-    updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean;
-    updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible?: boolean): boolean;
-    updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     addFurnitureFloorByTypeId(
         objectId: number,
         typeId: number,
@@ -129,6 +99,37 @@ export interface IRoom {
         type: number,
         figure: string,
     ): boolean;
+    updateRoomObjectFloor(
+        objectId: number,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
+        state: number,
+        data?: IObjectData,
+        extra?: number,
+    ): boolean;
+    updateRoomObjectWall(
+        objectId: number,
+        location: IVector3D | undefined,
+        direction: IVector3D | undefined,
+        state: number,
+        data: string
+    ): boolean
+    updateRoomObjectWallState(
+        objectId: number,
+        state: number,
+        data: string
+    ): boolean;
+    updateRoomObjectWallItemData(
+        objectId: number,
+        data: string
+    ): boolean;
+    updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
+    updateRoomObjectMask(objectId: number, add?: boolean): boolean;
+    updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean;
+    updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible?: boolean): boolean;
+    updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
+    updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean;
+    updateRoomObjectWallExpiration(objectId: number, expires: number): boolean;
     removeRoomObjectFloor(objectId: number, isOwner?: boolean): void;
     removeRoomObjectWall(objectId: number, isOwner?: boolean): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
@@ -155,5 +156,6 @@ export interface IRoom {
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
+    readonly geometry: IRoomGeometry | undefined;
     readonly legacyGeometry: ILegacyWallGeometry | undefined;
 }

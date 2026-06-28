@@ -33,7 +33,7 @@ export const useRoomObjectValidation = () => {
         if (sizeX < 1) sizeX = 1;
         if (sizeY < 1) sizeY = 1;
 
-        const scale = room.getGeometry()?.scale ?? RoomGeometryScaleType.ZoomedIn;
+        const scale = room.geometry?.scale ?? RoomGeometryScaleType.ZoomedIn;
         const sitOffset = furniData.canSitOn ? 0.5 : 0;
         const scaledX = (scale / 2 + event.spriteOffsetX + event.localX) / (scale / 4);
         const scaledY = (event.spriteOffsetY + event.localY + ((sizeZ - sitOffset) * scale) / 2) / (scale / 4);
