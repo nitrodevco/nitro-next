@@ -1,6 +1,6 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
-import { LegacyDataType, RoomObjectCategoryEnum, RoomObjectVariableEnum, SlideAvatarMoveType, Vector3d } from "@nitrodevco/nitro-api";
-import { ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
+import { AvatarAction, LegacyDataType, RoomObjectCategoryEnum, RoomObjectVariableEnum, SlideAvatarMoveType, Vector3d } from "@nitrodevco/nitro-api";
+import { LegacyWallGeometry, ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
 import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, WiredMovementsMessage } from "@nitrodevco/nitro-shared";
 
 import { useRoomSelector } from "#base/context";
@@ -38,17 +38,44 @@ export const useRoomFurnitureHandler = () => {
     const roundLocation = (location: IVector3D) => {
         const geometry = room?.getGeometry();
 
-        if (!geometry) return;
+        let adjustedZ = location.z;
 
-        const screenPosition = geometry.getScreenPosition(location);
-        const zReferencePosition = new Vector3d(location.x, location.y, location.z + 0.01);
-        const referenceScreenPosition = geometry.getScreenPosition(zReferencePosition);
-        const screenY = screenPosition.y;
-        const pixelsPerZUnit = (screenY - referenceScreenPosition.y) * 100;
-        const fractionalPixelOffset = screenY - Math.round(screenY);
-        const adjustedZ = location.z + fractionalPixelOffset / pixelsPerZUnit;
+        if (geometry) {
+            const screenPosition = geometry.getScreenPosition(location);
+            const zReferencePosition = new Vector3d(location.x, location.y, location.z + 0.01);
+            const referenceScreenPosition = geometry.getScreenPosition(zReferencePosition);
+            const screenY = screenPosition.y;
+            const pixelsPerZUnit = (screenY - referenceScreenPosition.y) * 100;
+            const fractionalPixelOffset = screenY - Math.round(screenY);
+
+            adjustedZ = location.z + fractionalPixelOffset / pixelsPerZUnit;
+        }
 
         return new Vector3d(location.x, location.y, adjustedZ);
+    }
+
+    const setUserMovePosture = (objectId: number, moveType: SlideAvatarMoveType) => {
+        if (!room) return;
+
+        const object = room.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object || object.type === 'monsterplant') return;
+
+        let posture = '';
+
+        switch (moveType) {
+            case SlideAvatarMoveType.Move:
+                posture = AvatarAction.POSTURE_WALK;
+                break;
+            case SlideAvatarMoveType.Slide: {
+                posture = object.model.getValue<string>(RoomObjectVariableEnum.FigurePosture);
+
+                if (posture === AvatarAction.POSTURE_WALK) posture = AvatarAction.POSTURE_STAND;
+                break;
+            }
+        }
+
+        room.updateRoomObjectUserPosture(objectId, posture);
     }
 
     useMessageListener(ObjectAddMessage, data => {
@@ -174,11 +201,18 @@ export const useRoomFurnitureHandler = () => {
 
             if (!object) continue;
 
-            object.processUpdateMessage(new ObjectMoveUpdateMessage(new Vector3d(data.fromX, data.fromY, heights.from), new Vector3d(data.toX, data.toY, heights.to), undefined, true));
+            const source = new Vector3d(data.fromX, data.fromY, heights.fromHeight);
+            const target = new Vector3d(data.toX, data.toY, heights.toHeight);
+
+            object.processUpdateMessage(new ObjectMoveUpdateMessage(source, target, undefined, true));
         }
 
         if (data.avatar) {
-            // TODO
+            const source = new Vector3d(data.fromX, data.fromY, data.avatar.fromHeight);
+            const target = new Vector3d(data.toX, data.toY, data.avatar.toHeight);
+
+            room.updateRoomObjectUser(data.avatar.objectId, source, target);
+            setUserMovePosture(data.avatar.objectId, data.avatar.moveType);
         }
     });
 
@@ -196,10 +230,10 @@ export const useRoomFurnitureHandler = () => {
 
             const source = new Vector3d(userMove.sourceX, userMove.sourceY, userMove.sourceZ);
             const target = new Vector3d(userMove.targetX, userMove.targetY, userMove.targetZ);
-            const rotation = new Vector3d(userMove.bodyRotation % 8 * 45);
-            const headRotation = userMove.headRotation % 8 * 45;
+            const direction = new Vector3d(userMove.bodyRotation % 8 * 45);
+            const headDirection = userMove.headRotation % 8 * 45;
 
-            room.updateRoomObjectUser(userMove.objectId, source, target, canStandUp, 0, rotation, headRotation, userMove.animationTime);
+            room.updateRoomObjectUser(userMove.objectId, roundLocation(source), roundLocation(target), canStandUp, 0, direction, headDirection, userMove.animationTime);
         }
 
         for (const floorMove of data.floorMoves) {
@@ -209,9 +243,9 @@ export const useRoomFurnitureHandler = () => {
 
             const source = new Vector3d(floorMove.sourceX, floorMove.sourceY, floorMove.sourceZ);
             const target = new Vector3d(floorMove.targetX, floorMove.targetY, floorMove.targetZ);
-            const rotation = new Vector3d(floorMove.rotation % 8 * 45);
+            const direction = new Vector3d(floorMove.rotation % 8 * 45);
 
-            object.processUpdateMessage(new ObjectMoveUpdateMessage(roundLocation(source), roundLocation(target), rotation, true, floorMove.animationTime));
+            object.processUpdateMessage(new ObjectMoveUpdateMessage(roundLocation(source), roundLocation(target), direction, true, floorMove.animationTime));
         }
 
         for (const wallMove of data.wallMoves) {
@@ -220,7 +254,7 @@ export const useRoomFurnitureHandler = () => {
 
             if (!object || !legacyGeometry) continue;
 
-            const direction = wallMove.isDirectionRight ? 'l' : 'r';
+            const direction = wallMove.isDirectionRight ? LegacyWallGeometry.L : LegacyWallGeometry.R;
             const source = legacyGeometry.getLocation(wallMove.sourceX, wallMove.sourceY, wallMove.sourceOffsetX, wallMove.sourceOffsetY, direction);
             const target = legacyGeometry.getLocation(wallMove.targetX, wallMove.targetY, wallMove.targetOffsetX, wallMove.targetOffsetY, direction);
 
@@ -229,8 +263,11 @@ export const useRoomFurnitureHandler = () => {
             room.updateRoomObjectMask(wallMove.objectId);
         }
 
-        for (const userDirections of data.userDirections) {
-            // TODO
+        for (const userDirection of data.userDirections) {
+            const direction = new Vector3d(userDirection.bodyRotation % 8 * 45);
+            const headDirection = userDirection.headRotation % 8 * 45;
+
+            room.updateRoomObjectUserDirection(userDirection.objectId, direction, headDirection);
         }
     });
 

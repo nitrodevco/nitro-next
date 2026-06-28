@@ -1,6 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 import { IRoomAvatarUpdate } from './Data/IRoomAvatarUpdate';
-import { UserUpdateParser } from './Data/UserParser';
+import { UserUpdateParser } from './Data/UserUpdateParser';
 
 export type UserUpdateMessageType = {
     updates: IRoomAvatarUpdate[];

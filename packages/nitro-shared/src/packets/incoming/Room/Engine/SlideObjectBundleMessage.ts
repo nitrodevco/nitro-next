@@ -5,9 +5,9 @@ export type SlideObjectBundleMessageType = {
     fromY: number;
     toX: number;
     toY: number;
-    heights: { objectId: number; from: number; to: number; }[];
+    heights: { objectId: number; fromHeight: number; toHeight: number; }[];
     rollerItemId: number;
-    avatar: { moveType: SlideAvatarMoveType, objectId: number, from: number; to: number; } | undefined;
+    avatar: { moveType: SlideAvatarMoveType, objectId: number, fromHeight: number; toHeight: number; } | undefined;
 };
 
 export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBundleMessageType> {
@@ -27,8 +27,8 @@ export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBund
         while (count > 0) {
             packet.heights.push({
                 objectId: wrapper.readInt(),
-                from: parseFloat(wrapper.readString()),
-                to: parseFloat(wrapper.readString())
+                fromHeight: parseFloat(wrapper.readString()),
+                toHeight: parseFloat(wrapper.readString())
             });
 
             count--;
@@ -40,8 +40,8 @@ export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBund
             packet.avatar = {
                 moveType: wrapper.readInt(),
                 objectId: wrapper.readInt(),
-                from: parseFloat(wrapper.readString()),
-                to: parseFloat(wrapper.readString())
+                fromHeight: parseFloat(wrapper.readString()),
+                toHeight: parseFloat(wrapper.readString())
 
             }
         }

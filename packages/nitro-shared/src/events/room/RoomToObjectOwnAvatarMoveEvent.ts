@@ -5,15 +5,15 @@ import { RoomToObjectEvent } from './RoomToObjectEvent';
 export class RoomToObjectOwnAvatarMoveEvent extends RoomToObjectEvent {
     public static ROAME_MOVE_TO: string = 'ROAME_MOVE_TO' as const;
 
-    private _targetLocation: IVector3D;
+    private _targetLocation: IVector3D | undefined;
 
-    constructor(type: string, targetLocation: IVector3D) {
+    constructor(type: string, targetLocation: IVector3D | undefined) {
         super(type);
 
         this._targetLocation = targetLocation;
     }
 
-    public get targetLocation(): IVector3D {
+    public get targetLocation(): IVector3D | undefined {
         return this._targetLocation;
     }
 }

@@ -4,8 +4,8 @@ import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { type ILegacyWallGeometry, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class LegacyWallGeometry implements ILegacyWallGeometry {
-    private static L: string = 'l';
-    private static R: string = 'r';
+    public static L: string = 'l' as const;
+    public static R: string = 'r' as const;
 
     private _isDisposed: boolean = false;
     private _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedIn;

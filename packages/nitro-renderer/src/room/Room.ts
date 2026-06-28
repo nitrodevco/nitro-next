@@ -57,6 +57,7 @@ import {
     ObjectAvatarCarryObjectUpdateMessage,
     ObjectAvatarChatUpdateMessage,
     ObjectAvatarDanceUpdateMessage,
+    ObjectAvatarDirectionUpdateMessage,
     ObjectAvatarEffectUpdateMessage,
     ObjectAvatarExperienceUpdateMessage,
     ObjectAvatarExpressionUpdateMessage,
@@ -957,7 +958,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D | undefined = undefined, headDirection: number = NaN, animationTime: number = NaN): boolean {
+    public updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D | undefined = undefined, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D | undefined = undefined, headDirection: number = NaN, animationTime: number = NaN): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (!object) return false;
@@ -977,6 +978,16 @@ export class Room implements IRoom {
             // TODO
             this.dispatchEvent(new RoomToObjectOwnAvatarMoveEvent(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, target));
         }
+
+        return true;
+    }
+
+    public updateRoomObjectUserDirection(objectId: number, direction: IVector3D, headDirection: number): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarDirectionUpdateMessage(undefined, direction, headDirection));
 
         return true;
     }

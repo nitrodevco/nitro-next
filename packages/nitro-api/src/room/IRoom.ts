@@ -131,7 +131,8 @@ export interface IRoom {
     updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean;
     updateRoomObjectWallExpiration(objectId: number, expires: number): boolean;
-    updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D | undefined, headDirection?: number, animationTime?: number): boolean;
+    updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D | undefined, canStandUp?: boolean, baseY?: number, direction?: IVector3D | undefined, headDirection?: number, animationTime?: number): boolean;
+    updateRoomObjectUserDirection(objectId: number, direction: IVector3D, headDirection: number): boolean;
     updateRoomObjectUserOwn(objectId: number): boolean;
     updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter?: string): boolean;
     updateRoomObjectUserFigure(objectId: number, figure: string, gender?: string, subType?: string, isRiding?: boolean): boolean;

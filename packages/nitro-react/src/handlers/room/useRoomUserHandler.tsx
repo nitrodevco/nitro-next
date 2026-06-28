@@ -1,4 +1,5 @@
 
+import type { IVector3D } from "@nitrodevco/nitro-api";
 import { PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
@@ -48,6 +49,20 @@ export const useRoomUserHandler = () => {
         if (!room) return;
 
         const zScale = room.getRoomValue<number>(RoomObjectVariableEnum.RoomZScale) || 1;
+
+        for (const update of data.updates) {
+            const height = (update.height / zScale);
+
+            const location = new Vector3d(update.sourceX, update.sourceY, (update.sourceZ + height));
+            const direction = new Vector3d(update.bodyRotation);
+
+            let target: IVector3D | undefined = undefined;
+
+            if (update.didMove) target = new Vector3d(update.targetX, update.targetY, update.targetZ);
+
+            room.updateRoomObjectUser(update.objectId, location, target, update.canStandUp, height, direction, update.headRotation);
+            room.updateRoomObjectUserFlatControl(update.objectId, '');
+        }
     });
 
     useMessageListener(UserRemoveMessage, data => {

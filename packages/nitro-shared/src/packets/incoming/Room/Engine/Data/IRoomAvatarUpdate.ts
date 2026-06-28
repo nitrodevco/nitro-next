@@ -1,9 +1,17 @@
+import { IRoomAvatarAction } from "./IRoomAvatarAction";
+
 export interface IRoomAvatarUpdate {
     objectId: number;
-    x: number;
-    y: number;
-    z: number;
+    sourceX: number;
+    sourceY: number;
+    sourceZ: number;
     headRotation: number;
     bodyRotation: number;
-    status: string;
+    targetX: number;
+    targetY: number;
+    targetZ: number;
+    height: number;
+    didMove: boolean;
+    canStandUp: boolean;
+    actions: IRoomAvatarAction[];
 }
