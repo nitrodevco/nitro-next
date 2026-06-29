@@ -1,7 +1,7 @@
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-shared";
 import { useEffect, useState } from "react";
 
-import { RoomWrapper } from "./components";
+import { InventoryView, NavigatorView, RoomWrapper, ToolbarView } from "./components";
 import { useWebSocketContext } from "./context";
 import { useNavigatorHandler, useUserInfoHandler } from "./handlers";
 
@@ -31,5 +31,17 @@ export const MainView = () => {
 
     if (!isReady) return null;
 
-    return <RoomWrapper />;
-}
+    return (
+        <div className="relative size-full">
+            {/* Layer 0: Room canvas — fills the entire viewport, sits behind everything */}
+            <RoomWrapper />
+
+            {/* Layer 1: Toolbar — pinned to the bottom */}
+            <ToolbarView />
+
+            {/* Draggable windows are portaled into #draggable-windows-container in Nitro.tsx */}
+            <NavigatorView />
+            <InventoryView />
+        </div>
+    );
+};

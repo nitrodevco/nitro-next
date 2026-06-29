@@ -94,7 +94,7 @@ export const Nitro: FC = () => {
             </AnimatePresence>
             <div
                 id="draggable-windows-container"
-                className="absolute top-0 left-0 overflow-hidden pointer-events-none size-full"
+                className="absolute top-0 left-0 pointer-events-none size-full"
             />
         </>
     );
