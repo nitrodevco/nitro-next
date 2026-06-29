@@ -5,3 +5,4 @@ export * from './RoomSelectedObjectActions';
 export * from './RoomSessionActions';
 export * from './RoomSettingActions';
 export * from './RoomStackingHeightMapActions';
+export * from './RoomUsersActions';

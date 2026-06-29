@@ -1,9 +1,9 @@
 
-import type { IVector3D } from "@nitrodevco/nitro-api";
+import type { IRoomPetData, IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
 import { PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
-import { useOwnUserId, useRoomSelector, useRoomSessionActions } from "#base/context";
+import { useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 import type { IRoomAvatar } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatar";
@@ -16,9 +16,12 @@ export const useRoomUserHandler = () => {
     const room = useRoomSelector();
     const ownUserId = useOwnUserId();
     const { setOwnRoomIndex } = useRoomSessionActions();
+    const { updateUsers, updateUserPartial, removeUser } = useRoomUsersActions();
 
     useMessageListener(UsersMessage, data => {
         if (!room) return;
+
+        const datas: IRoomUserData[] = [];
 
         for (const avatar of data.avatars) {
             const location = new Vector3d(avatar.x, avatar.y, avatar.z);
@@ -31,18 +34,151 @@ export const useRoomUserHandler = () => {
                 room.updateRoomObjectUserOwn(avatar.objectId);
             }
 
-            if (avatar.avatarType === RoomObjectUserType.Pet) {
-                const avatarPet = avatar as unknown as IRoomAvatar & IRoomAvatarPet;
+            switch (avatar.avatarType) {
+                case RoomObjectUserType.User: {
+                    const avatarUser = avatar as IRoomAvatar & IRoomAvatarUser;
 
-                room.updateRoomObjectUserFigure(avatarPet.objectId, avatarPet.figure, 'm', avatarPet.subType, avatarPet.isRiding);
+                    datas.push({
+                        objectId: avatarUser.objectId,
+                        name: avatarUser.name,
+                        type: avatarUser.avatarType,
+                        sex: avatarUser.gender,
+                        figure: avatarUser.figure,
+                        custom: avatarUser.motto,
+                        webID: avatarUser.webId,
+                        activityPoints: avatarUser.activityPoints,
+                        groupId: avatarUser.groupId,
+                        groupName: avatarUser.groupName,
+                        groupStatus: avatarUser.groupStatus,
+                        isModerator: avatarUser.isModerator,
+                        ownerId: -1,
+                        ownerName: '',
+                        rarityLevel: -1,
+                        hasSaddle: false,
+                        isRiding: false,
+                        canBreed: false,
+                        canHarvest: false,
+                        canRevive: false,
+                        hasBreedingPermission: false,
+                        petLevel: -1,
+                        petPosture: '',
+                        botSkills: []
+                    });
 
-                if (room.getPetTypeId(avatarPet.figure) === PetType.MONSTERPLANT) room.updateRoomObjectUserPosture(avatarPet.objectId, avatarPet.petPosture);
-            } else {
-                const avatarUser = avatar as unknown as IRoomAvatar & (IRoomAvatarUser | IRoomAvatarBot | IRoomAvatarRentableBot);
+                    room.updateRoomObjectUserFigure(avatarUser.objectId, avatarUser.figure, avatarUser.gender);
 
-                room.updateRoomObjectUserFigure(avatarUser.objectId, avatarUser.figure, avatarUser.gender);
+                    break;
+                }
+                case RoomObjectUserType.Bot: {
+                    const avatarBot = avatar as IRoomAvatar & IRoomAvatarBot;
+
+                    datas.push({
+                        objectId: avatarBot.objectId,
+                        name: avatarBot.name,
+                        type: avatarBot.avatarType,
+                        sex: avatarBot.gender,
+                        figure: avatarBot.figure,
+                        custom: avatarBot.motto,
+                        webID: avatarBot.webId,
+                        activityPoints: 0,
+                        groupId: -1,
+                        groupName: '',
+                        groupStatus: -1,
+                        isModerator: false,
+                        ownerId: -1,
+                        ownerName: '',
+                        rarityLevel: -1,
+                        hasSaddle: false,
+                        isRiding: false,
+                        canBreed: false,
+                        canHarvest: false,
+                        canRevive: false,
+                        hasBreedingPermission: false,
+                        petLevel: -1,
+                        petPosture: '',
+                        botSkills: []
+                    });
+
+                    room.updateRoomObjectUserFigure(avatarBot.objectId, avatarBot.figure, avatarBot.gender);
+
+                    break;
+                }
+                case RoomObjectUserType.RentableBot: {
+                    const avatarRentableBot = avatar as IRoomAvatar & IRoomAvatarRentableBot;
+
+                    datas.push({
+                        objectId: avatarRentableBot.objectId,
+                        name: avatarRentableBot.name,
+                        type: avatarRentableBot.avatarType,
+                        sex: avatarRentableBot.gender,
+                        figure: avatarRentableBot.figure,
+                        custom: avatarRentableBot.motto,
+                        webID: avatarRentableBot.webId,
+                        activityPoints: 0,
+                        groupId: -1,
+                        groupName: '',
+                        groupStatus: -1,
+                        isModerator: false,
+                        ownerId: avatarRentableBot.ownerId,
+                        ownerName: avatarRentableBot.ownerName,
+                        rarityLevel: -1,
+                        hasSaddle: false,
+                        isRiding: false,
+                        canBreed: false,
+                        canHarvest: false,
+                        canRevive: false,
+                        hasBreedingPermission: false,
+                        petLevel: -1,
+                        petPosture: '',
+                        botSkills: avatarRentableBot.skills
+                    });
+
+                    room.updateRoomObjectUserFigure(avatarRentableBot.objectId, avatarRentableBot.figure, avatarRentableBot.gender);
+
+                    break;
+                }
+                case RoomObjectUserType.Pet: {
+                    const avatarPet = avatar as IRoomAvatar & IRoomAvatarPet;
+
+                    datas.push({
+                        objectId: avatarPet.objectId,
+                        name: avatarPet.name,
+                        type: avatarPet.avatarType,
+                        sex: '',
+                        figure: avatarPet.figure,
+                        custom: avatarPet.motto,
+                        webID: avatarPet.webId,
+                        activityPoints: 0,
+                        groupId: -1,
+                        groupName: '',
+                        groupStatus: -1,
+                        isModerator: false,
+                        ownerId: avatarPet.ownerId,
+                        ownerName: avatarPet.ownerName,
+                        rarityLevel: avatarPet.rarityLevel,
+                        hasSaddle: avatarPet.hasSaddle,
+                        isRiding: avatarPet.isRiding,
+                        canBreed: avatarPet.canBreed,
+                        canHarvest: avatarPet.canHarvest,
+                        canRevive: avatarPet.canRevive,
+                        hasBreedingPermission: avatarPet.hasBreedingPermission,
+                        petLevel: avatarPet.petLevel,
+                        petPosture: avatarPet.petPosture,
+                        botSkills: []
+                    });
+
+                    room.updateRoomObjectUserFigure(avatarPet.objectId, avatarPet.figure, 'm', avatarPet.subType, avatarPet.isRiding);
+
+                    if (room.getPetTypeId(avatarPet.figure) === PetType.MONSTERPLANT) room.updateRoomObjectUserPosture(avatarPet.objectId, avatarPet.petPosture);
+
+                    break;
+                }
             }
         }
+
+        updateUsers(datas);
+
+        console.log(datas);
     });
 
     useMessageListener(UserUpdateMessage, data => {
@@ -69,12 +205,23 @@ export const useRoomUserHandler = () => {
         if (!room) return;
 
         room.removeRoomObject(data.objectId, RoomObjectCategoryEnum.Unit);
+
+        removeUser(data.objectId);
     });
 
     useMessageListener(UserChangeMessage, data => {
         if (!room) return;
 
         room.updateRoomObjectUserFigure(data.objectId, data.figure, data.gender);
+
+        updateUserPartial(data.objectId, {
+            figure: data.figure,
+            sex: data.gender,
+            custom: data.customInfo,
+            activityPoints: data.achievementScore,
+            hasSaddle: false,
+            isRiding: false
+        });
     });
 
     useMessageListener(ExpressionMessage, data => {
