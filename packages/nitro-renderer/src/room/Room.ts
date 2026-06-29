@@ -1,6 +1,7 @@
 
 import type {
     IEventDispatcher,
+    IGraphicAssetCollection,
     ILegacyWallGeometry,
     INitroEvent,
     IObjectData,
@@ -473,11 +474,15 @@ export class Room implements IRoom {
         category: RoomObjectCategoryEnum,
     ): IRoomObject | undefined {
         let assetName = type;
-        let asset = GetRoomContentLoader().getCollection(assetName);
+        let asset: IGraphicAssetCollection | undefined = undefined;
+        let visualizationType = type;
+        let logicType = type;
         let isLoading = false;
 
-        if (!asset) {
-            if (GetRoomContentLoader().isLoaderType(type)) {
+        if (GetRoomContentLoader().isLoaderType(type)) {
+            asset = GetRoomContentLoader().getCollection(assetName);
+
+            if (!asset) {
                 isLoading = true;
 
                 GetRoomContentLoader().downloadAsset(type)
@@ -489,54 +494,53 @@ export class Room implements IRoom {
                     .catch(err => NitroLogger.error(err));
 
                 assetName = GetRoomContentLoader().getPlaceholderName(type);
+                asset = GetRoomContentLoader().getCollection(assetName);
+
+                if (!asset) return undefined;
             }
+
+            if (asset.data.visualizationType) visualizationType = asset.data.visualizationType;
+            if (asset.data.logicType) logicType = asset.data.logicType;
         }
 
-        asset = GetRoomContentLoader().getCollection(assetName);
+        const visualization = GetRoomObjectVisualizationFactory().getVisualization(visualizationType);
 
-        if (!asset) return undefined;
+        if (!visualization) return undefined;
 
-        const visualization = GetRoomObjectVisualizationFactory().getVisualization(asset.data.visualizationType);
+        visualization.asset = asset;
+
         const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
             assetName,
-            asset.data.visualizationType,
-            asset.data,
+            visualizationType,
+            asset?.data ?? undefined,
         );
 
-        if (visualization) {
-            visualization.asset = asset;
+        if (!visualizationData || !visualization.initialize(visualizationData)) return undefined;
 
-            if (!visualizationData || !visualization.initialize(visualizationData)) return undefined;
+        const object = this.getRoomObjectManager(category).createObject(objectId, 1, type);
 
-            const object = this.getRoomObjectManager(category).createObject(objectId, 1, type);
+        if (!object) return undefined;
 
-            if (object) {
-                this._objects.set(this.getObjectInstanceId(object), object);
+        this._objects.set(this.getObjectInstanceId(object), object);
 
-                object.setVisualization(visualization);
+        object.setVisualization(visualization);
 
-                const logic = GetRoomObjectLogicFactory().getLogic(asset.data.logicType);
+        const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
-                if (logic) {
-                    logic.eventHandler = this._eventHandler;
+        if (logic) {
+            logic.eventHandler = this._eventHandler;
 
-                    object.setLogic(logic);
-                    object.logic.initialize(asset.data);
-                }
-
-                object.model.setValue(RoomObjectVariableEnum.ObjectRoomId, this._roomId);
-
-                if (!isLoading) {
-                    this.objectInitialized(object.id, category);
-
-                    object.isReady = true;
-                }
-
-                return object;
-            }
+            object.setLogic(logic);
+            object.logic.initialize(asset?.data ?? undefined);
         }
 
-        return undefined;
+        if (!isLoading) {
+            this.objectInitialized(object.id, category);
+
+            object.isReady = true;
+        }
+
+        return object;
     }
 
     public objectInitialized(objectId: number, category: RoomObjectCategoryEnum): void {

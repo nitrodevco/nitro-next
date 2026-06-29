@@ -9,14 +9,13 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_CHANGE]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.particleSystems && asset.logic.particleSystems.length)
-            this.object.model.setValue<IParticleSystem[]>(
-                RoomObjectVariableEnum.FurnitureFireworksData,
-                asset.logic.particleSystems,
-            );
+        if (asset?.logic?.particleSystems) this.object.model.setValue<IParticleSystem[]>(
+            RoomObjectVariableEnum.FurnitureFireworksData,
+            asset.logic.particleSystems
+        );
     }
 
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {

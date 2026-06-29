@@ -10,17 +10,10 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.ROOM_LINK]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (
-            asset.logic &&
-            asset.logic.action &&
-            asset.logic.action.link &&
-            asset.logic.action.link !== '' &&
-            asset.logic.action.link.length > 0
-        )
-            this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureInternalLink, asset.logic.action.link);
+        if (asset?.logic?.action?.link) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureInternalLink, asset.logic.action.link ?? '');
     }
 
     public override dispose(): void {

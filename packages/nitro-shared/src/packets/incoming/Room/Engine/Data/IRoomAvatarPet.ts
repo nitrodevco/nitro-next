@@ -7,6 +7,7 @@ export interface IRoomAvatarPet {
     isRiding: boolean;
     canBreed: boolean;
     canHarvest: boolean;
+    canRevive: boolean;
     hasBreedingPermission: boolean;
     petLevel: number;
     petPosture: string;

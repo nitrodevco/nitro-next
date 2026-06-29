@@ -19,7 +19,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
 
     private _id: number = RoomObjectSpriteVisualization.VISUALIZATION_COUNTER++;
     private _object: IRoomObjectController;
-    private _asset: IGraphicAssetCollection;
+    private _asset: IGraphicAssetCollection | undefined = undefined;
     protected _sprites: IRoomObjectSprite[] = [];
 
     protected _scale: RoomGeometryScaleType = RoomGeometryScaleType.ZoomedIn;
@@ -192,11 +192,11 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
         this._object = object;
     }
 
-    public get asset(): IGraphicAssetCollection {
+    public get asset(): IGraphicAssetCollection | undefined {
         return this._asset;
     }
 
-    public set asset(asset: IGraphicAssetCollection) {
+    public set asset(asset: IGraphicAssetCollection | undefined) {
         if (this._asset) this._asset.removeReference();
 
         this._asset = asset;

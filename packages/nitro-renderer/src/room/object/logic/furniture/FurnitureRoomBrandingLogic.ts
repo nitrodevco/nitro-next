@@ -26,7 +26,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         if (this._disableFurnitureSelection)

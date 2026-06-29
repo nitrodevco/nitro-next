@@ -65,7 +65,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         return this.mergeTypes(super.getEventTypes(), types);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         if (!asset) return;
 
         if (asset.logic) {

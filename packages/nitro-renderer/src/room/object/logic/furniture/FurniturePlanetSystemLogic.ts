@@ -3,13 +3,12 @@ import { type IAssetData, type IAssetLogicPlanetSystem, RoomObjectVariableEnum }
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurniturePlanetSystemLogic extends FurnitureLogic {
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.planetSystems)
-            this.object.model.setValue<IAssetLogicPlanetSystem[]>(
-                RoomObjectVariableEnum.FurniturePlanetsystemData,
-                asset.logic.planetSystems,
-            );
+        if (asset?.logic?.planetSystems) this.object.model.setValue<IAssetLogicPlanetSystem[]>(
+            RoomObjectVariableEnum.FurniturePlanetsystemData,
+            asset.logic.planetSystems
+        );
     }
 }

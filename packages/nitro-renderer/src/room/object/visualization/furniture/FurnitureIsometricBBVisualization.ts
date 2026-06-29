@@ -50,7 +50,7 @@ export class FurnitureIsometricBBVisualization extends FurnitureBBVisualization 
             matrix,
         );
 
-        if (newTexture) this.asset.addAsset(`${this._imageUrl}_0`, newTexture, sprite.x, sprite.y, asset.flipH, asset.flipV, false, true);
+        if (newTexture) this.asset?.addAsset(`${this._imageUrl}_0`, newTexture, sprite.x, sprite.y, asset.flipH, asset.flipV, false, true);
 
         this._needsTransform = false;
     }

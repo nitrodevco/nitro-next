@@ -24,7 +24,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
         ]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         if (asset.logic && asset.logic.soundSample) {
@@ -109,7 +109,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
             heightScaled = Math.min(
                 0,
                 FurnitureSoundBlockLogic.LOWEST_SEMITONE +
-                    (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
+                (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
             );
         }
 

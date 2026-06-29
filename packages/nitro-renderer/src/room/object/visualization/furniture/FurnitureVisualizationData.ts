@@ -41,7 +41,7 @@ export class FurnitureVisualizationData implements IObjectVisualizationData {
     private _lastSizeData: SizeData | undefined = undefined;
     private _lastSizeDataScale: RoomGeometryScaleType = -1;
 
-    public initialize(asset: IAssetData): boolean {
+    public initialize(asset: IAssetData | undefined): boolean {
         this.reset();
 
         if (!asset) return false;

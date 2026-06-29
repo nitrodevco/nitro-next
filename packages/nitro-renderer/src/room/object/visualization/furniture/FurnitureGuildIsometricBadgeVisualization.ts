@@ -141,6 +141,6 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
     }
 
     private getBitmapAsset(name: string): Texture | undefined {
-        return this.asset.getAsset(name)?.texture || undefined;
+        return this.asset?.getAsset(name)?.texture ?? undefined;
     }
 }

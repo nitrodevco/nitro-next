@@ -5,5 +5,5 @@ import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
 
 export interface IRoomObjectVisualizationFactory {
     getVisualization(type: string | undefined): IRoomObjectGraphicVisualization | undefined;
-    getVisualizationData(type: string, visualization: string | undefined, asset: IAssetData): IObjectVisualizationData | undefined;
+    getVisualizationData(type: string, visualization: string | undefined, asset: IAssetData | undefined): IObjectVisualizationData | undefined;
 }

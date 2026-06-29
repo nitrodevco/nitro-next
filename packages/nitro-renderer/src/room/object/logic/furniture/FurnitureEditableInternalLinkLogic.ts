@@ -12,11 +12,10 @@ export class FurnitureEditableInternalLinkLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.INERNAL_LINK]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.action && asset.logic.action.startState === 1)
-            this._showStateOnceRendered = true;
+        if (asset?.logic?.action && asset.logic.action.startState === 1) this._showStateOnceRendered = true;
     }
 
     public override update(time: number): void {

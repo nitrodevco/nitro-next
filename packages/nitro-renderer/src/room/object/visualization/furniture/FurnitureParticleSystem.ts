@@ -257,7 +257,7 @@ export class FurnitureParticleSystem {
 
                     if (particle.frames && particle.frames.length > 0)
                         for (const name of particle.frames) {
-                            const asset = this._visualization.asset.getAsset(name);
+                            const asset = this._visualization.asset?.getAsset(name);
 
                             if (asset) frames.push(asset);
                         }

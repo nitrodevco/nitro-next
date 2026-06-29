@@ -15,7 +15,7 @@ export class FurnitureStickieLogic extends FurnitureLogic {
         ]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         this.updateColor();

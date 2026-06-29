@@ -11,7 +11,7 @@ import {
 import { GetAvatarRenderManager } from '../../../../avatar';
 
 export class AvatarVisualizationData implements IObjectVisualizationData {
-    public initialize(asset: IAssetData): boolean {
+    public initialize(asset: IAssetData | undefined): boolean {
         return true;
     }
 

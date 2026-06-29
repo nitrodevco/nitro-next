@@ -9,13 +9,12 @@ export class FurnitureCreditLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.CREDITFURNI]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         let creditValue = 0;
 
-        if (asset.logic && asset.logic.credits && asset.logic.credits !== '' && asset.logic.credits.length > 0)
-            creditValue = parseInt(asset.logic.credits);
+        if (asset?.logic) creditValue = parseInt(asset.logic.credits ?? '0');
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCreditValue, creditValue);
     }

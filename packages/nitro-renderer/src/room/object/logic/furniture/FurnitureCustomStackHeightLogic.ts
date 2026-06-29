@@ -9,7 +9,7 @@ export class FurnitureCustomStackHeightLogic extends FurnitureMultiStateLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.STACK_HEIGHT]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlwaysStackable, 1);

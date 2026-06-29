@@ -12,10 +12,10 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.INERNAL_LINK]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.action) {
+        if (asset?.logic?.action) {
             this.object.model.setValue<string>(
                 RoomObjectVariableEnum.FurnitureInternalLink,
                 asset.logic.action.link ?? '',

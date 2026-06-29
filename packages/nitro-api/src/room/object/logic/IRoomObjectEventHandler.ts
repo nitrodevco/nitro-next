@@ -1,10 +1,11 @@
+import { IAssetData } from '#api/asset/IAssetData';
 import type { IRoomEventHandler } from '../../IRoomEventHandler';
 import type { IRoomObjectController } from '../IRoomObjectController';
 import type { IRoomObjectUpdateMessage } from '../IRoomObjectUpdateMessage';
 import type { IRoomObjectMouseHandler } from './IRoomObjectMouseHandler';
 
 export interface IRoomObjectEventHandler extends IRoomObjectMouseHandler {
-    initialize(data: unknown): void;
+    initialize(data: IAssetData | undefined): void;
     dispose(): void;
     update(totalTimeRunning: number): void;
     processUpdateMessage(message: IRoomObjectUpdateMessage): void;

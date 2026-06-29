@@ -33,7 +33,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
     }
 
     private refreshThumbnail(): void {
-        if (this.asset == null) return;
+        if (!this.asset) return;
 
         if (this._thumbnailImageNormal) {
             this.addThumbnailAsset(this._thumbnailImageNormal, 64);
@@ -59,7 +59,7 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
                     const thumbnail = this.generateTransformedThumbnail(texture, asset);
                     const assetName = this.getThumbnailAssetName(scale);
 
-                    this.asset.addAsset(assetName, thumbnail, asset.offsetX, asset.offsetY, false, false, false, true);
+                    this.asset?.addAsset(assetName, thumbnail, asset.offsetX, asset.offsetY, false, false, false, true);
                 }
 
                 return;

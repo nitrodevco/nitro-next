@@ -1,14 +1,14 @@
 import { RoomObjectUserType } from "../room";
 
 export interface IRoomUserData {
-    roomIndex: number;
-    activityPoints: number;
+    objectId: number;
     name: string;
     type: RoomObjectUserType;
     sex: string;
     figure: string;
     custom: string;
     webID: number;
+    activityPoints: number;
     groupId: number;
     groupName: string;
     groupStatus: number;
@@ -22,6 +22,7 @@ export interface IRoomUserData {
     canRevive: boolean;
     hasBreedingPermission: boolean;
     petLevel: number;
+    petPosture: string;
     botSkills: number[];
     isModerator: boolean;
 }

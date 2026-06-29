@@ -26,7 +26,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
         super.dispose();
 
         if (this._imageUrl) {
-            this.asset.disposeAsset(this._imageUrl);
+            this.asset?.disposeAsset(this._imageUrl);
         }
     }
 
@@ -62,7 +62,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
 
         if (imageUrl === this._imageUrl) return false;
 
-        if (this._imageUrl !== undefined) this.asset.disposeAsset(this._imageUrl);
+        if (this._imageUrl !== undefined) this.asset?.disposeAsset(this._imageUrl);
 
         return true;
     }
@@ -138,7 +138,7 @@ export class FurnitureBrandedImageVisualization extends FurnitureVisualization {
                 break;
         }
 
-        this.asset.addAsset(`${this._imageUrl}_${frame}`, texture, x, y, flipH, flipV, false, true);
+        this.asset?.addAsset(`${this._imageUrl}_${frame}`, texture, x, y, flipH, flipV, false, true);
     }
 
     protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {

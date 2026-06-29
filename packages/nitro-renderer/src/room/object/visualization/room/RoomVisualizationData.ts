@@ -6,8 +6,8 @@ export class RoomVisualizationData implements IObjectVisualizationData {
     private _maskManager: PlaneMaskManager = new PlaneMaskManager();
     private _initialized: boolean = false;
 
-    public initialize(asset: IAssetData): boolean {
-        if (!asset.roomVisualization) return false;
+    public initialize(asset: IAssetData | undefined): boolean {
+        if (!asset || !asset.roomVisualization) return false;
 
         if (asset.roomVisualization.maskData) this._maskManager.initialize(asset.roomVisualization.maskData);
 

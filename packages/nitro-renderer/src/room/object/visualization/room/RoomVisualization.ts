@@ -87,7 +87,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
 
         super.initialize(data);
 
-        this._data.setGraphicAssetCollection(this.asset);
+        if (this.asset) this._data.setGraphicAssetCollection(this.asset);
 
         return true;
     }

@@ -8,13 +8,12 @@ export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         let maskType = '';
 
-        if (asset.logic && asset.logic.maskType && asset.logic.maskType !== '' && asset.logic.maskType.length > 0)
-            maskType = asset.logic.maskType;
+        if (asset?.logic?.maskType) maskType = asset.logic.maskType ?? '';
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, false);
         this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);

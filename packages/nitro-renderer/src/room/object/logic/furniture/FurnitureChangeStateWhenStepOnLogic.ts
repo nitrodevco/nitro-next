@@ -5,7 +5,7 @@ import { RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-shared';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureChangeStateWhenStepOnLogic extends FurnitureLogic {
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
         this.addEventListener<RoomToObjectOwnAvatarMoveEvent>(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, event => {

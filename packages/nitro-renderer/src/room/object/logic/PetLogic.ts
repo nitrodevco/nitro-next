@@ -41,7 +41,7 @@ export class PetLogic extends MovingObjectLogic {
         ]);
     }
 
-    public override initialize(asset: IAssetData): void {
+    public override initialize(asset: IAssetData | undefined): void {
         if (!asset) return;
 
         if (asset.logic) {
