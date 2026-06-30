@@ -8,6 +8,7 @@ import { HotelView } from "#base/views/hotel-view/HotelView";
 
 import { RoomCanvas } from "./RoomCanvas";
 import { RoomEventHandler } from "./RoomEventHandler";
+import { RoomWidgets } from "./RoomWidgets";
 
 export const RoomContainer = () => {
     const [isReady, setIsReady] = useState<boolean>(false);
@@ -31,7 +32,7 @@ export const RoomContainer = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="size-full"
+                        className="z-0 size-full"
                     >
                         <HotelView />
                     </motion.div>
@@ -39,13 +40,14 @@ export const RoomContainer = () => {
                 {isReady && (
                     <>
                         <RoomEventHandler />
+                        <RoomWidgets />
                         <motion.div
                             ref={elementRef}
                             key="room-canvas"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="size-full"
+                            className="z-0 size-full"
                         >
                             <RoomCanvas ref={elementRef} />
                         </motion.div>

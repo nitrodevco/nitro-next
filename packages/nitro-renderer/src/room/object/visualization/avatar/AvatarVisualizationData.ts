@@ -23,7 +23,9 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
         gender?: string,
         avatarListener?: IAvatarImageListener,
         effectListener?: IAvatarEffectListener,
-    ): IAvatarImage {
+    ): IAvatarImage | undefined {
+        return undefined;
+
         let avatarImage: IAvatarImage;
 
         if (size > RoomGeometryScaleType.AvatarSizeNormal)

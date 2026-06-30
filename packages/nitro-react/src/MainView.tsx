@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { RoomWrapper } from "./components";
 import { useWebSocketContext } from "./context";
 import { useNavigatorHandler, useUserInfoHandler } from "./handlers";
+import { ToolbarView } from "./views/toolbar/ToolbarView";
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
@@ -31,5 +32,14 @@ export const MainView = () => {
 
     if (!isReady) return null;
 
-    return <RoomWrapper />;
+    return (
+        <>
+            <RoomWrapper />
+            <div
+                id="ui-container"
+                className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
+                <ToolbarView />
+            </div>
+        </>
+    );
 }

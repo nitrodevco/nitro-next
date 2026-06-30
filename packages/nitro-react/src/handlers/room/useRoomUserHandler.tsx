@@ -177,8 +177,6 @@ export const useRoomUserHandler = () => {
         }
 
         updateUsers(datas);
-
-        console.log(datas);
     });
 
     useMessageListener(UserUpdateMessage, data => {
