@@ -1,10 +1,5 @@
 {
     "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "composite": true,
-        "outDir": "dist",
-        "rootDir": "src"
-    },
     "references": [
         {
             "path": "../nitro-api"
@@ -12,8 +7,6 @@
     ],
     "include": [
         "src/**/*",
-        "../nitro-api/src/events/IEventDispatcher.ts",
-        "../nitro-api/src/events/INitroEvent.ts"
     ],
     "exclude": [
         "dist",

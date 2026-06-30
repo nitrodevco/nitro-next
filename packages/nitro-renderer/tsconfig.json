@@ -1,11 +1,5 @@
 {
     "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "composite": true,
-        "types": [
-            "node"
-        ]
-    },
     "references": [
         {
             "path": "../nitro-api"
@@ -15,12 +9,13 @@
         },
     ],
     "include": [
-        "src/**/*",
-        "eslint.config.js",
-        "vite.config.ts"
+        "src/**/*"
     ],
     "exclude": [
         "dist",
-        "node_modules"
+        "node_modules",
+        "eslint.config.js",
+        "prettier.config.js",
+        "vite.config.ts"
     ]
 }

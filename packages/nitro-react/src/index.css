@@ -1,7 +1,60 @@
 @import 'tailwindcss';
 
-html,
-body {
+@theme {
+    /* Panel & window chrome */
+    --color-habbo-bg:              #0d1520;
+    --color-habbo-panel:           #1e2d4a;
+    --color-habbo-panel-light:     #263659;
+    --color-habbo-panel-mid:       #2b3d65;
+    --color-habbo-panel-hover:     #304470;
+
+    /* Header / title bar */
+    --color-habbo-header:          #151f34;
+    --color-habbo-header-light:    #1a2840;
+    --color-habbo-header-border:   #0a1020;
+
+    /* Borders */
+    --color-habbo-border:          #0f1828;
+    --color-habbo-border-light:    #3a4f7a;
+    --color-habbo-highlight:       #4a6494;
+
+    /* Gold / primary accent */
+    --color-habbo-gold:            #f5c518;
+    --color-habbo-gold-dark:       #c89a00;
+    --color-habbo-gold-light:      #ffe066;
+    --color-habbo-gold-muted:      #b8960a;
+
+    /* Text */
+    --color-habbo-text:            #e8edf5;
+    --color-habbo-text-muted:      #8a9bb8;
+    --color-habbo-text-faint:      #5a6b88;
+
+    /* Status / semantic */
+    --color-habbo-online:          #4caf50;
+    --color-habbo-danger:          #e53935;
+    --color-habbo-warn:            #fb8c00;
+    --color-habbo-info:            #1e88e5;
+
+    /* Toolbar */
+    --color-habbo-toolbar:         #0c1525;
+    --color-habbo-toolbar-btn:     #1a2540;
+    --color-habbo-toolbar-active:  #253660;
+
+    /* Sizing */
+    --spacing-toolbar-h:           54px;
+    --spacing-card-header-h:       32px;
+    --spacing-nav-w:               420px;
+    --spacing-nav-h:               440px;
+    --spacing-inv-w:               528px;
+    --spacing-inv-h:               320px;
+
+    /* Typography */
+    --font-sans:                   'Ubuntu', system-ui, sans-serif;
+    --font-size-base:              0.875rem;
+}
+
+/* ─── Reset ─── */
+html, body {
     padding: 0;
     margin: 0;
     width: 100%;
@@ -10,11 +63,23 @@ body {
     -webkit-user-select: none;
     user-select: none;
     scrollbar-width: thin;
+    scrollbar-color: var(--color-habbo-border-light) var(--color-habbo-panel);
     zoom: reset;
 }
 
-*,
-*:focus,
-*:hover {
+*, *:focus, *:hover {
     outline: none;
 }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track { background: var(--color-habbo-panel); }
+::-webkit-scrollbar-thumb {
+    background: var(--color-habbo-border-light);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-habbo-highlight); }
+

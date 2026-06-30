@@ -21,14 +21,16 @@
     },
     "prettier.prettierPath": "./node_modules/prettier/index.cjs",
     "prettier.configPath": "prettier.config.js",
-    "eslint.workingDirectory": { "mode": "location" },
+    "eslint.workingDirectory": {
+        "mode": "location"
+    },
     "eslint.validate": [
         "javascript",
         "javascriptreact",
         "typescript",
         "typescriptreact"
     ],
-    "tailwindCSS.experimental.configFile": "packages/nitro-react/src/index.css",
+    "tailwindCSS.experimental.configFile": "packages/nitro-react/tailwind.config.js",
     "tailwindCSS.experimental.classRegex": [
         [
             "classes\\s*=\\s*([^;]*);",

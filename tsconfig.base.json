@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
+        "target": "ES2025",
         "lib": [
-            "ES2022",
+            "ES2025",
             "DOM",
             "DOM.Iterable"
         ],
@@ -15,6 +15,9 @@
         "esModuleInterop": true,
         "allowJs": true,
         "composite": true,
-        "noImplicitOverride": true
+        "noImplicitOverride": true,
+        "types": [
+            "node"
+        ]
     }
 }

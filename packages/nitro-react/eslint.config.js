@@ -19,6 +19,8 @@ const config = [
             '**/.vite/**',
             '**/coverage/**',
             '**/*.d.ts',
+            'eslint.config.js',
+            'prettier.config.js',
         ]
     },
     js.configs.recommended,
@@ -35,6 +37,7 @@ const config = [
         languageOptions: {
             parserOptions: {
                 projectService: true,
+                allowDefaultProject: true,
                 tsconfigRootDir: import.meta.dirname,
             },
             globals: {

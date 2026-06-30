@@ -17,6 +17,8 @@ const config = [
             '**/.vite/**',
             '**/coverage/**',
             '**/*.d.ts',
+            'eslint.config.js',
+            'prettier.config.js',
         ]
     },
     js.configs.recommended,

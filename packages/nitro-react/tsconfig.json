@@ -1,11 +1,7 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "noEmit": true,
         "jsx": "react-jsx",
-        "types": [
-            "node"
-        ],
         "paths": {
             "#base/components": [
                 "./src/components/index.ts"
@@ -46,14 +42,15 @@
     ],
     "include": [
         "src/**/*",
-        "themes/**/*",
-        "vite.config.ts",
-        "postcss.config.js",
-        "tailwind.config.js",
-        "eslint.config.js"
+        "themes/**/*"
     ],
     "exclude": [
         "dist",
-        "node_modules"
+        "node_modules",
+        "eslint.config.js",
+        "postcss.config.js",
+        "prettier.config.js",
+        "tailwind.config.js",
+        "vite.config.ts"
     ]
 }
