@@ -1,10 +1,10 @@
 import type { IActionDefinition } from './IActionDefinition';
 
 export interface IActiveActionData {
-    id: string;
-    actionType: string | undefined;
-    actionParameter: string | undefined;
-    startFrame: number;
+    readonly id: string;
+    readonly actionType: string | undefined;
+    actionParameter: string;
     definition: IActionDefinition | undefined;
+    readonly startFrame: number;
     overridingAction: string | undefined;
 }
