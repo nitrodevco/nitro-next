@@ -30,7 +30,7 @@
         "typescript",
         "typescriptreact"
     ],
-    "tailwindCSS.experimental.configFile": "packages/nitro-react/tailwind.config.js",
+    "tailwindCSS.experimental.configFile": "./packages/nitro-react/tailwind.config.js",
     "tailwindCSS.experimental.classRegex": [
         [
             "classes\\s*=\\s*([^;]*);",
@@ -43,6 +43,14 @@
         [
             "classes\\s*=\\s*([^;]*);",
             "\\`([^\\`]*)\\`"
+        ],
+        [
+            "cn\\(([^)]*)\\)",
+            "[\"'`]([^\"'`]*)"
+        ],
+        [
+            "cva\\(([^,]+)",
+            "[\"'`]([^\"'`]*)"
         ]
     ],
     "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
