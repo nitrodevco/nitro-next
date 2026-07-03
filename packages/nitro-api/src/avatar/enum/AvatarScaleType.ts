@@ -1,4 +1,4 @@
-﻿export class AvatarScaleType {
-    public static LARGE: string = 'h' as const;
-    public static SMALL: string = 'sh' as const;
+﻿export enum AvatarScaleType {
+    Large = 'h',
+    Small = 'sh'
 }

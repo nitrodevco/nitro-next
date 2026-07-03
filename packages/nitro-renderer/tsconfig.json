@@ -1,5 +1,24 @@
 {
     "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "paths": {
+            "#renderer/assets": [
+                "./src/assets/index.ts"
+            ],
+            "#renderer/avatar": [
+                "./src/avatar/index.ts"
+            ],
+            "#renderer/room": [
+                "./src/room/index.ts"
+            ],
+            "#renderer/session": [
+                "./src/session/index.ts"
+            ],
+            "#renderer/utils": [
+                "./src/utils/index.ts"
+            ],
+        }
+    },
     "references": [
         {
             "path": "../nitro-api"

@@ -9,13 +9,13 @@ export class AvatarCanvas {
     private readonly _offset: Point;
     private readonly _regPoint: Point;
 
-    constructor(geometry: IAssetAvatarGeometry, scale: string) {
+    constructor(geometry: IAssetAvatarGeometry, scale: AvatarScaleType) {
         this._id = geometry.id;
         this._width = geometry.width;
         this._height = geometry.height;
         this._offset = new Point(geometry.dx, geometry.dy);
 
-        if (scale == AvatarScaleType.LARGE) this._regPoint = new Point(((this._width - 64) / 2), 0);
+        if (scale == AvatarScaleType.Large) this._regPoint = new Point(((this._width - 64) / 2), 0);
         else this._regPoint = new Point(((this._width - 32) / 2), 0);
     }
 
