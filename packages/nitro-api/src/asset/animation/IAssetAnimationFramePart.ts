@@ -1,7 +1,7 @@
 import type { IAssetAnimationFramePartItem } from './IAssetAnimationFramePartItem';
 
 export interface IAssetAnimationFramePart {
-    id?: string;
+    id: string;
     frame?: number;
     base?: string;
     action?: string;

@@ -2,7 +2,7 @@
 import type { IAnimationLayerData } from './IAnimationLayerData';
 
 export interface IAnimationManager {
-    animations: Map<any, any>;
-    getAnimation(_arg_1: string): IAnimation;
-    getLayerData(_arg_1: string, _arg_2: number, _arg_3: string): IAnimationLayerData;
+    getAnimation(name: string): IAnimation | undefined
+    getLayerData(name: string, frameCount: number, spriteId: string): IAnimationLayerData | undefined;
+    readonly animations: Map<string, IAnimation>;
 }

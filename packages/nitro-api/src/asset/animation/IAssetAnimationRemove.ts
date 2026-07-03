@@ -1,3 +1,3 @@
 export interface IAssetAnimationRemove {
-    id?: string;
+    id: string;
 }

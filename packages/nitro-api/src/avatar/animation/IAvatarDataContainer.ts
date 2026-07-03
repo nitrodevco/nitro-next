@@ -1,11 +1,11 @@
 ﻿import type { Filter } from 'pixi.js';
 
 export interface IAvatarDataContainer {
-    ink: number;
-    colorTransform: Filter;
-    paletteIsGrayscale: boolean;
-    reds: number[];
-    greens: number[];
-    blues: number[];
-    alphas: number[];
+    readonly ink: number;
+    readonly reds: number[] | undefined;
+    readonly greens: number[] | undefined;
+    readonly blues: number[] | undefined;
+    readonly alphas: number[] | undefined;
+    readonly paletteIsGrayscale: boolean;
+    readonly colorTransform: Filter | undefined;
 }
