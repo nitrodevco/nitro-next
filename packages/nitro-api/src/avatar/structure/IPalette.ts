@@ -1,9 +1,9 @@
-import type { IAdvancedMap } from '#api/utils';
-
+import { IFigureDataPalette } from '#api/asset/avatar';
 import type { IPartColor } from './IPartColor';
 
 export interface IPalette {
-    getColor(id: number): IPartColor;
-    id: number;
-    colors: IAdvancedMap<string, IPartColor>;
+    append(data: IFigureDataPalette): void;
+    getColor(id: number): IPartColor | undefined;
+    readonly id: number;
+    readonly colors: Map<number, IPartColor>;
 }

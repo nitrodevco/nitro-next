@@ -2,7 +2,7 @@ import type { IFigureDataHiddenLayer } from './IFigureDataHiddenLayer';
 import type { IFigureDataPart } from './IFigureDataPart';
 
 export interface IFigureDataSet {
-    id?: number;
+    id: number;
     gender?: string;
     club?: number;
     colorable?: boolean;

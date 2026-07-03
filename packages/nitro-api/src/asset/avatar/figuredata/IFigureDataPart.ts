@@ -1,7 +1,7 @@
 export interface IFigureDataPart {
-    id?: number;
-    type?: string;
+    id: number;
+    type: string;
     colorable?: boolean;
-    index?: number;
+    index: number;
     colorindex?: number;
 }

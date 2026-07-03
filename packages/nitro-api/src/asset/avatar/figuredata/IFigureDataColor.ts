@@ -1,5 +1,5 @@
 export interface IFigureDataColor {
-    id?: number;
+    id: number;
     index?: number;
     club?: number;
     selectable?: boolean;

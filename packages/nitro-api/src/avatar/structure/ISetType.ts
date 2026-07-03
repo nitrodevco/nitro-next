@@ -1,12 +1,17 @@
+import { IFigureDataSetType } from '#api/asset/index';
 import type { IAdvancedMap } from '#api/utils';
 
 import type { IFigurePartSet } from './IFigurePartSet';
 
 export interface ISetType {
-    getPartSet(_arg_1: number): IFigurePartSet;
-    isMandatory(_arg_1: string, _arg_2: number): boolean;
+    dispose(): void;
+    cleanUp(data: IFigureDataSetType): void;
+    append(setType: IFigureDataSetType): void;
+    getDefaultPartSet(gender: string): IFigurePartSet | undefined;
+    getPartSet(id: number): IFigurePartSet | undefined;
+    isMandatory(gender: string, _arg_2: number): boolean;
     optionalFromClubLevel(_arg_1: string): number;
-    type: string;
-    paletteID: number;
-    partSets: IAdvancedMap<string, IFigurePartSet>;
+    readonly type: string;
+    readonly paletteId: number;
+    readonly partSets: Map<number, IFigurePartSet>;
 }

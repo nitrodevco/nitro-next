@@ -1,15 +1,16 @@
 import type { IFigurePart } from './IFigurePart';
 
 export interface IFigurePartSet {
-    getPart(_arg_1: string, _arg_2: number): IFigurePart;
-    id: number;
-    type: string;
-    gender: string;
-    clubLevel: number;
-    isColorable: boolean;
-    isSelectable: boolean;
-    parts: IFigurePart[];
-    hiddenLayers: string[];
-    isPreSelectable: boolean;
-    isSellable: boolean;
+    dispose(): void;
+    getPart(type: string, id: number): IFigurePart | undefined;
+    readonly id: number;
+    readonly type: string;
+    readonly gender: string;
+    readonly clubLevel: number;
+    readonly isColorable: boolean;
+    readonly isSelectable: boolean;
+    readonly parts: IFigurePart[];
+    readonly hiddenLayers: string[];
+    readonly isPreSelectable: boolean;
+    readonly isSellable: boolean;
 }
