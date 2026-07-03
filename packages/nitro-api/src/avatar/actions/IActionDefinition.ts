@@ -1,18 +1,25 @@
+import { IAssetAvatarActionType } from "#api/asset/index";
+
 export interface IActionDefinition {
-    id: string;
-    state: string;
-    precedence: number;
-    activePartSet: string;
-    isMain: boolean;
-    isDefault: boolean;
-    assetPartDefinition: string;
-    lay: string;
-    geometryType: string;
-    isAnimation: boolean;
-    startFromFrameZero: boolean;
-    isAnimated(_arg_1: string): boolean;
-    getPrevents(_arg_1: string): string[];
-    getPreventHeadTurn(_arg_1: string): boolean;
-    setOffsets(_arg_1: string, _arg_2: number, _arg_3: []): void;
-    getOffsets(_arg_1: string, _arg_2: number): number[] | undefined;
+    getOffsets(size: string, direction: number): [number, number, number];
+    setOffsets(size: string, direction: number, offset: [number, number, number]): void
+    getType(id: number): IAssetAvatarActionType | undefined;
+    getParameterValue(id: string): string;
+    getPrevents(typeId: number): string[];
+    getPreventHeadTurn(typeId: number): boolean;
+    isAnimated(typeId: number): boolean;
+    readonly id: string;
+    readonly state: string;
+    readonly precedence: number;
+    readonly activePartSet: string | undefined;
+    readonly assetPartDefinition: string;
+    readonly lay: string | undefined;
+    readonly geometryType: string;
+    readonly isMain: boolean;
+    readonly isDefault: boolean;
+    readonly isAnimation: boolean;
+    readonly startFromFrameZero: boolean;
+    readonly prevents: string[];
+    readonly preventHeadTurn: boolean;
+    readonly params: Map<string, string>;
 }

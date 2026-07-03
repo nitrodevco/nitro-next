@@ -1,4 +1,7 @@
 export * from './actions/IAssetAvatarAction';
+export * from './actions/IAssetAvatarActionData';
+export * from './actions/IAssetAvatarActionOffset';
+export * from './actions/IAssetAvatarActionOffsetConfig';
 export * from './actions/IAssetAvatarActionParam';
 export * from './actions/IAssetAvatarActionType';
 export * from './animations/IAssetAvatarAnimation';
