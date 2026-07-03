@@ -1,7 +1,8 @@
+import { AvatarFigurePartType } from '#api/avatar/enum';
 import type { IFigureDataSet } from './IFigureDataSet';
 
 export interface IFigureDataSetType {
-    type?: string;
+    type: AvatarFigurePartType;
     paletteId?: number;
     mandatory_m_0?: boolean;
     mandatory_f_0?: boolean;

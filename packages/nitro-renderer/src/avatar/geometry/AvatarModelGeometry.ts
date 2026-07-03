@@ -1,4 +1,4 @@
-﻿import type { IAssetAvatarGeometryConfig, IAvatarImage } from '@nitrodevco/nitro-api';
+﻿import type { AvatarGeometryType, IAssetAvatarGeometryConfig, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { AvatarCanvas } from '../structure';
 import { AvatarSet } from './AvatarSet';
@@ -134,8 +134,8 @@ export class AvatarModelGeometry {
         return new Map<string, GeometryBodyPart>();
     }
 
-    public getBodyPart(k: string, _arg_2: string): GeometryBodyPart | undefined {
-        return this.getBodyPartsOfType(k).get(_arg_2);
+    public getBodyPart(geometryType: AvatarGeometryType, partId: string): GeometryBodyPart | undefined {
+        return this.getBodyPartsOfType(geometryType).get(partId);
     }
 
     public getBodyPartOfItem(k: string, _arg_2: string, _arg_3: IAvatarImage): GeometryBodyPart | undefined {

@@ -1,5 +1,8 @@
 ﻿import { IAddDataContainer } from "./IAddDataContainer";
 import { IAnimationLayerData } from "./IAnimationLayerData";
+import { IAvatarDataContainer } from "./IAvatarDataContainer";
+import { IDirectionDataContainer } from "./IDirectionDataContainer";
+import { ISpriteDataContainer } from "./ISpriteDataContainer";
 
 export interface IAnimation {
     frameCount(name?: string): number;
@@ -13,8 +16,10 @@ export interface IAnimation {
     hasDirectionData(): boolean;
     hasAddData(): boolean;
     readonly id: string;
-    spriteData: any;
-    removeData: any;
-    addData: any;
-    resetOnToggle: boolean;
+    readonly spriteData: ISpriteDataContainer[];
+    readonly avatarData: IAvatarDataContainer | undefined;
+    readonly directionData: IDirectionDataContainer | undefined;
+    readonly removeData: string[];
+    readonly addData: IAddDataContainer[];
+    readonly resetOnToggle: boolean;
 }

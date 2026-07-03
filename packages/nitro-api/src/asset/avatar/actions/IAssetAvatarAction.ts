@@ -1,3 +1,4 @@
+import { AvatarGeometryType } from "#api/avatar";
 import { IAssetAvatarActionParam } from "./IAssetAvatarActionParam";
 import { IAssetAvatarActionType } from "./IAssetAvatarActionType";
 
@@ -10,7 +11,7 @@ export interface IAssetAvatarAction {
     readonly animation?: boolean;
     readonly startFromFrameZero?: boolean;
     readonly preventHeadTurn?: boolean;
-    readonly geometryType: 'horizontal' | 'vertical' | 'sitting' | 'swim';
+    readonly geometryType: AvatarGeometryType;
     readonly activePartSet?: string;
     readonly assetPartDefinition: string;
     readonly prevents?: string[];

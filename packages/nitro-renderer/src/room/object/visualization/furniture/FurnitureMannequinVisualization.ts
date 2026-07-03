@@ -114,9 +114,9 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
             FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
             this._avatarImage
         ) {
-            this._avatarImage.setDirection(AvatarSetType.FULL, this.direction);
+            this._avatarImage.setDirection(AvatarSetType.Full, this.direction);
 
-            return this._avatarImage.processAsTexture(AvatarSetType.FULL, false);
+            return this._avatarImage.processAsTexture(AvatarSetType.Full, false);
         }
 
         return super.getTexture(scale, layerId, asset);

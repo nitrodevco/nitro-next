@@ -1,6 +1,8 @@
 ﻿export enum AvatarFigurePartType {
+    None = '',
     Standard = 'std',
     Body = 'bd',
+    BodySwim = 'bds',
     Shoes = 'sh',
     Legs = 'lg',
     Chest = 'ch',
@@ -16,15 +18,18 @@
     ChestPrint = 'cp',
     LeftHandItem = 'li',
     LeftHand = 'lh',
+    LeftHandSwim = 'lhs',
     LeftSleeve = 'ls',
     RightHand = 'rh',
+    RightHandSwim = 'rhs',
     RightSleeve = 'rs',
     Face = 'fc',
     Eyes = 'ey',
     HairBig = 'hrb',
     RightHandItem = 'ri',
     LeftCoatSleeve = 'lc',
-    RightCoatSleeve = 'rc'
+    RightCoatSleeve = 'rc',
+    Ss = 'ss'
 }
 
 const DEFAULT_FRAME = 0;

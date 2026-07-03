@@ -43,10 +43,6 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         }
     }
 
-    public get items(): Map<string, string> {
-        return this._items;
-    }
-
     public get id(): string {
         return this._id;
     }
@@ -81,5 +77,9 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
 
     public get action(): IActiveActionData {
         return this._action;
+    }
+
+    public get items(): Map<string, string> {
+        return this._items;
     }
 }

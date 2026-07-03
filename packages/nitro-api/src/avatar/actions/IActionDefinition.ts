@@ -1,4 +1,5 @@
 import { IAssetAvatarActionType } from "#api/asset/index";
+import { AvatarGeometryType } from "../enum";
 
 export interface IActionDefinition {
     getOffsets(size: string, direction: number): [number, number, number];
@@ -14,7 +15,7 @@ export interface IActionDefinition {
     readonly activePartSet: string | undefined;
     readonly assetPartDefinition: string;
     readonly lay: string | undefined;
-    readonly geometryType: string;
+    readonly geometryType: AvatarGeometryType;
     readonly isMain: boolean;
     readonly isDefault: boolean;
     readonly isAnimation: boolean;

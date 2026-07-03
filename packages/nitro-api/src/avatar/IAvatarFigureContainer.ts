@@ -1,9 +1,9 @@
 ﻿export interface IAvatarFigureContainer {
-    getPartTypeIds(): IterableIterator<string>;
-    hasPartType(_arg_1: string): boolean;
-    getPartSetId(_arg_1: string): number;
-    getPartColorIds(_arg_1: string): number[];
-    updatePart(_arg_1: string, _arg_2: number, _arg_3: number[]): void;
-    removePart(_arg_1: string): void;
+    getPartTypeIds(): string[];
+    hasPartType(type: string): boolean;
+    getPartSetId(type: string): number;
+    getPartColorIds(type: string): number[];
+    updatePart(type: string, partSetId: number, colorIds: number[]): void;
+    removePart(type: string): void;
     getFigureString(): string;
 }

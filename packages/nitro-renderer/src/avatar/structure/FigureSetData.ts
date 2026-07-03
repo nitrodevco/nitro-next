@@ -1,10 +1,10 @@
-import type { IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@nitrodevco/nitro-api';
+import type { AvatarFigurePartType, AvatarGenderType, IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@nitrodevco/nitro-api';
 
 import { Palette, SetType } from './figure';
 
 export class FigureSetData implements IFigureSetData, IStructureData {
     private _palettes: Map<number, Palette>;
-    private _setTypes: Map<string, SetType>;
+    private _setTypes: Map<AvatarFigurePartType, SetType>;
 
     constructor() {
         this._palettes = new Map();
@@ -18,25 +18,9 @@ export class FigureSetData implements IFigureSetData, IStructureData {
     public parse(data: IFigureData): boolean {
         if (!data) return false;
 
-        if (data.palettes) {
-            for (const palette of data.palettes) {
-                const newPalette = new Palette(palette);
+        if (data.palettes) for (const palette of data.palettes) this._palettes.set(palette.id, new Palette(palette));
 
-                if (!newPalette) continue;
-
-                this._palettes.set(newPalette.id, newPalette);
-            }
-        }
-
-        if (data.setTypes) {
-            for (const set of data.setTypes) {
-                const newSet = new SetType(set);
-
-                if (!newSet) continue;
-
-                this._setTypes.set(newSet.type, newSet);
-            }
-        }
+        if (data.setTypes) for (const set of data.setTypes) this._setTypes.set(set.type, new SetType(set));
 
         return true;
     }
@@ -82,11 +66,11 @@ export class FigureSetData implements IFigureSetData, IStructureData {
         return false;
     }
 
-    public getMandatorySetTypeIds(gender: string, _arg_2: number): string[] {
+    public getMandatorySetTypeIds(gender: AvatarGenderType, count: number): string[] {
         const types: string[] = [];
 
         for (const set of this._setTypes.values()) {
-            if (!set || !set.isMandatory(gender, _arg_2)) continue;
+            if (!set || !set.isMandatory(gender, count)) continue;
 
             types.push(set.type);
         }
@@ -94,11 +78,11 @@ export class FigureSetData implements IFigureSetData, IStructureData {
         return types;
     }
 
-    public getDefaultPartSet(type: string, gender: string): IFigurePartSet | undefined {
+    public getDefaultPartSet(type: AvatarFigurePartType, gender: AvatarGenderType): IFigurePartSet | undefined {
         return this._setTypes.get(type)?.getDefaultPartSet(gender);
     }
 
-    public getSetType(type: string): ISetType | undefined {
+    public getSetType(type: AvatarFigurePartType): ISetType | undefined {
         return this._setTypes.get(type);
     }
 

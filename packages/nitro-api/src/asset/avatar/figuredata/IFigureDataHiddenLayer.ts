@@ -1,3 +1,5 @@
+import { AvatarFigurePartType } from "#api/avatar/enum";
+
 export interface IFigureDataHiddenLayer {
-    partType?: string;
+    partType?: AvatarFigurePartType;
 }

@@ -1,4 +1,5 @@
-﻿import type { IFigurePartSet } from './IFigurePartSet';
+﻿import { AvatarFigurePartType } from '../enum';
+import type { IFigurePartSet } from './IFigurePartSet';
 import type { IPalette } from './IPalette';
 import type { ISetType } from './ISetType';
 

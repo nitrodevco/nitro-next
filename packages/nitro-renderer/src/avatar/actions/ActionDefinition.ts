@@ -1,4 +1,4 @@
-import type { IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
+import type { AvatarGeometryType, IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
 
 import { ActionType } from './ActionType';
 
@@ -9,7 +9,7 @@ export class ActionDefinition implements IActionDefinition {
     private _activePartSet: string | undefined;
     private _assetPartDefinition: string;
     private _lay: string | undefined;
-    private _geometryType: string;
+    private _geometryType: AvatarGeometryType;
     private _isMain: boolean;
     private _isDefault: boolean;
     private _isAnimation: boolean;
@@ -128,7 +128,7 @@ export class ActionDefinition implements IActionDefinition {
         return this._lay;
     }
 
-    public get geometryType(): string {
+    public get geometryType(): AvatarGeometryType {
         return this._geometryType;
     }
 

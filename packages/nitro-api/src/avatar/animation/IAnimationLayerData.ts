@@ -1,11 +1,14 @@
 ﻿import type { IActiveActionData } from '../actions';
 
 export interface IAnimationLayerData {
-    id: string;
-    action: IActiveActionData;
-    animationFrame: number;
-    dx: number;
-    dy: number;
-    dz: number;
-    dd: number;
+    readonly id: string;
+    readonly animationFrame: number;
+    readonly dx: number;
+    readonly dy: number;
+    readonly dz: number;
+    readonly dd: number;
+    readonly type: string;
+    readonly base: number;
+    readonly action: IActiveActionData;
+    readonly items: Map<string, string>;
 }

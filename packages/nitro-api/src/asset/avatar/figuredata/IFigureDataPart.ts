@@ -1,6 +1,8 @@
+import { AvatarFigurePartType } from "#api/avatar/enum";
+
 export interface IFigureDataPart {
     id: number;
-    type: string;
+    type: AvatarFigurePartType;
     colorable?: boolean;
     index: number;
     colorindex?: number;

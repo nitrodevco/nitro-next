@@ -1,21 +1,22 @@
-import type { IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
+import type { AvatarFigurePartType, AvatarGenderType, IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
 
 import { FigurePartSet } from './FigurePartSet';
 
 export class SetType implements ISetType {
-    private _type: string;
+    private _type: AvatarFigurePartType;
     private _paletteId: number;
     private _partSets: Map<number, IFigurePartSet>;
-    private _isMandatory: Record<string, [boolean, boolean]>;
+    private _isMandatory: Record<AvatarGenderType, [boolean, boolean]>;
 
     constructor(data: IFigureDataSetType) {
-        this._type = data.type ?? '';
+        this._type = data.type;
         this._paletteId = data.paletteId ?? -1;
         this._partSets = new Map();
 
         this._isMandatory = {
             'F': [data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false],
-            'M': [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false]
+            'M': [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false],
+            'U': [false, false]
         }
 
         this.append(data);
@@ -47,7 +48,7 @@ export class SetType implements ISetType {
         for (const set of setType.sets) this._partSets.set(set.id, new FigurePartSet(this._type, set));
     }
 
-    public getDefaultPartSet(gender: string): IFigurePartSet | undefined {
+    public getDefaultPartSet(gender: AvatarGenderType): IFigurePartSet | undefined {
         for (const set of this._partSets.values()) {
             if (set && (set.clubLevel === 0) && ((set.gender === gender) || (set.gender === 'U'))) return set;
         }
@@ -59,17 +60,15 @@ export class SetType implements ISetType {
         return this._partSets.get(id);
     }
 
-    public isMandatory(gender: string, _arg_2: number): boolean {
-        return this._isMandatory[gender.toUpperCase()][Math.min(_arg_2, 1)];
+    public isMandatory(gender: AvatarGenderType, count: number): boolean {
+        return this._isMandatory[gender][Math.min(count, 1)];
     }
 
-    public optionalFromClubLevel(k: string): number {
-        const _local_2 = this._isMandatory[k.toUpperCase()];
-
-        return _local_2.indexOf(false);
+    public optionalFromClubLevel(gender: AvatarGenderType): number {
+        return this._isMandatory[gender]?.indexOf(false);
     }
 
-    public get type(): string {
+    public get type(): AvatarFigurePartType {
         return this._type;
     }
 

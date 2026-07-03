@@ -1,4 +1,4 @@
-import type { IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
+import type { AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { AnimationActionPart } from './AnimationActionPart';
@@ -7,7 +7,7 @@ export class AnimationAction {
     public static DEFAULT_OFFSET: Point = new Point(0, 0);
 
     private _id: string;
-    private _actionParts: Map<string, AnimationActionPart> = new Map();
+    private _actionParts: Map<AvatarFigurePartType, AnimationActionPart> = new Map();
     private _bodyPartOffsets: Map<number, Map<number, Map<string, Point>>> = new Map();
     private _frameCount: number = 0;
     private _frameIndexes: number[] = [];
@@ -78,7 +78,7 @@ export class AnimationAction {
         }
     }
 
-    public getPart(type: string): AnimationActionPart | undefined {
+    public getPart(type: AvatarFigurePartType): AnimationActionPart | undefined {
         return this._actionParts.get(type);
     }
 
