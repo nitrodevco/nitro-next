@@ -101,7 +101,7 @@ export class GeometryBodyPart extends Node3D {
         return !!existingPart;
     }
 
-    public getParts(matrix: Matrix4x4, loc: Vector3D, _arg_3: unknown[], _arg_4: IAvatarImage): string[] {
+    public getParts(matrix: Matrix4x4, loc: Vector3D, _arg_3: unknown[], avatar: IAvatarImage): string[] {
         const parts: [number, GeometryItem][] = [];
 
         for (const part of this._parts.values()) {
@@ -112,7 +112,7 @@ export class GeometryBodyPart extends Node3D {
             parts.push([part.getDistance(loc), part]);
         }
 
-        const existingDynamic = this._dynamicParts.get(_arg_4);
+        const existingDynamic = this._dynamicParts.get(avatar);
 
         if (existingDynamic) {
             for (const index in existingDynamic) {

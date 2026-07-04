@@ -68,8 +68,8 @@ export class AvatarImageCache {
         for (const cache of this._cache.values()) cache.setAction(action, 0);
     }
 
-    public setDirection(k: string, _arg_2: number): void {
-        const parts = this._structure.getBodyPartsUnordered(k);
+    public setDirection(setType: AvatarSetType, direction: number): void {
+        const parts = this._structure.getBodyPartsUnordered(setType);
 
         if (parts) {
             for (const part of parts) {
@@ -77,7 +77,7 @@ export class AvatarImageCache {
 
                 if (!actionCache) continue;
 
-                actionCache.direction = _arg_2;
+                actionCache.direction = direction;
             }
         }
     }

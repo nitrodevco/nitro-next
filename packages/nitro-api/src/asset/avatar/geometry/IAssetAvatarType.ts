@@ -1,6 +1,7 @@
+import { AvatarGeometryType } from "#api/avatar/enum";
 import { IAssetAvatarBodyPart } from "./IAssetAvatarBodyPart";
 
 export interface IAssetAvatarType {
-    id: string;
+    id: AvatarGeometryType;
     bodyParts: IAssetAvatarBodyPart[];
 }
