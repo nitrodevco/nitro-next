@@ -1,32 +1,29 @@
-import type { IActionDefinition, IActiveActionData } from "@nitrodevco/nitro-api";
+import type { AvatarActionStateType, IActionDefinition, IActiveActionData } from "@nitrodevco/nitro-api";
 
 export class ActiveActionData implements IActiveActionData {
-    private _type: string;
+    private _type: AvatarActionStateType;
     private _parameter: number;
     private _definition: IActionDefinition | undefined = undefined;
     private _startFrame: number;
     private _overridingAction: string;
 
-    constructor(type: string, parameter: number = 1, startFrame: number = 0) {
-        this._type = type ?? '';
-        this._parameter = parameter ?? 1;
-        this._startFrame = startFrame ?? 0;
+    constructor(type: AvatarActionStateType, parameter: number = 1, startFrame: number = 0) {
+        this._type = type;
+        this._parameter = parameter;
+        this._startFrame = startFrame;
         this._overridingAction = '';
     }
 
     public dispose(): void {
-        this._type = '';
-        this._parameter = 1;
-        this._definition = undefined;
     }
 
     public get id(): string {
         if (!this._definition) return '';
 
-        return this._definition.id + '_' + this._parameter;
+        return `${this._definition.id}_${this._parameter}`;
     }
 
-    public get actionType(): string {
+    public get type(): AvatarActionStateType {
         return this._type;
     }
 

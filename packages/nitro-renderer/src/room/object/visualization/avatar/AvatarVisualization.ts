@@ -1,8 +1,8 @@
 import type { IRoomObject, IRoomObjectModel } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarActionStateTypeUtilities, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import {
     AlphaTolerance,
-    AvatarAction,
     AvatarGuideStatus,
     AvatarSetType,
     type IAdvancedMap,
@@ -68,11 +68,11 @@ export class AvatarVisualization
     private _disposed: boolean = false;
 
     private _figure: string | undefined = undefined;
-    private _gender: string | undefined = undefined;
+    private _gender: AvatarGenderType = AvatarGenderType.Male;
     private _direction: number = -1;
     private _headDirection: number = -1;
-    private _posture: string = '';
-    private _postureParameter: string = '';
+    private _posture: AvatarActionStateType = AvatarActionStateType.Stand;
+    private _postureParameter: number = 0;
     private _canStandUp: boolean = false;
     private _postureOffset: number = 0;
     private _verticalOffset: number = 0;
@@ -145,7 +145,7 @@ export class AvatarVisualization
         let didScaleUpdate = false;
         let didEffectUpdate = false;
         let otherUpdate = false;
-        let objectUpdate = false;
+        let objectUpdate: boolean;
 
         const updateModel = this.updateModel(model, scale);
 
@@ -237,7 +237,8 @@ export class AvatarVisualization
                 const highlightEnabled =
                     this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1 &&
                     this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
-                const avatarImage = this._avatarImage.processAsTexture(AvatarSetType.FULL, highlightEnabled);
+
+                const avatarImage = this._avatarImage.getImage(AvatarSetType.Full, highlightEnabled);
 
                 if (avatarImage) {
                     sprite.texture = avatarImage;
@@ -383,7 +384,7 @@ export class AvatarVisualization
     }
 
     private createAvatarImage(scale: RoomGeometryScaleType, effectId: number): IAvatarImage | undefined {
-        let cachedImage: IAvatarImage | undefined = undefined;
+        let cachedImage: IAvatarImage | undefined;
         let imageName = 'avatarImage' + scale.toString();
 
         if (!effectId) {
@@ -431,12 +432,12 @@ export class AvatarVisualization
         let direction = object.getDirection().x - geometry.direction.x;
         let headDirection = this._headDirection - geometry.direction.x;
 
-        if (this._posture === 'float') headDirection = direction;
+        if (this._posture === AvatarActionStateType.Float) headDirection = direction;
 
         direction = ((direction % 360) + 360) % 360;
         headDirection = ((headDirection % 360) + 360) % 360;
 
-        if (this._posture === 'sit' && this._canStandUp) {
+        if (this._posture === AvatarActionStateType.Sit && this._canStandUp) {
             direction -= (direction % 90) - 45;
             headDirection -= (headDirection % 90) - 45;
         }
@@ -449,7 +450,7 @@ export class AvatarVisualization
             direction = direction - (135 - 22.5);
             direction = (direction + 360) % 360;
 
-            this._avatarImage?.setDirectionAngle(AvatarSetType.FULL, direction);
+            this._avatarImage?.setDirectionAngle(AvatarSetType.Full, direction);
         }
 
         if (headDirection !== this._headAngle || _arg_4) {
@@ -461,7 +462,7 @@ export class AvatarVisualization
                 headDirection = headDirection - (135 - 22.5);
                 headDirection = (headDirection + 360) % 360;
 
-                this._avatarImage?.setDirectionAngle(AvatarSetType.HEAD, headDirection);
+                this._avatarImage?.setDirectionAngle(AvatarSetType.Head, headDirection);
             }
         }
 
@@ -519,7 +520,7 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        const posture = model.getValue<string>(RoomObjectVariableEnum.FigurePosture);
+        const posture = model.getValue<AvatarActionStateType>(RoomObjectVariableEnum.FigurePosture);
 
         if (posture !== this._posture) {
             this._posture = posture;
@@ -527,7 +528,7 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        const postureParameter = model.getValue<string>(RoomObjectVariableEnum.FigurePostureParameter);
+        const postureParameter = model.getValue<number>(RoomObjectVariableEnum.FigurePostureParameter);
 
         if (postureParameter !== this._postureParameter) {
             this._postureParameter = postureParameter;
@@ -608,6 +609,7 @@ export class AvatarVisualization
 
         if (this._sleep) {
             if (!idleAddition)
+                // eslint-disable-next-line no-useless-assignment
                 idleAddition = this.addAddition(
                     new FloatingIdleZAddition(AvatarVisualization.FLOATING_IDLE_Z_ID, this),
                 );
@@ -621,6 +623,7 @@ export class AvatarVisualization
 
         if (isMuted) {
             if (!mutedAddition)
+                // eslint-disable-next-line no-useless-assignment
                 mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.MUTED_BUBBLE_ID, this));
 
             needsUpdate = true;
@@ -637,6 +640,7 @@ export class AvatarVisualization
 
             if (isTyping) {
                 if (!typingAddition)
+                    // eslint-disable-next-line no-useless-assignment
                     typingAddition = this.addAddition(
                         new TypingBubbleAddition(AvatarVisualization.TYPING_BUBBLE_ID, this),
                     );
@@ -670,6 +674,7 @@ export class AvatarVisualization
 
         if (isPlayingGame) {
             if (!gameClickAddition)
+                // eslint-disable-next-line no-useless-assignment
                 gameClickAddition = this.addAddition(
                     new GameClickTargetAddition(AvatarVisualization.GAME_CLICK_TARGET_ID),
                 );
@@ -683,6 +688,7 @@ export class AvatarVisualization
 
         if (numberValue > 0) {
             if (!numberAddition)
+                // eslint-disable-next-line no-useless-assignment
                 numberAddition = this.addAddition(
                     new NumberBubbleAddition(AvatarVisualization.NUMBER_BUBBLE_ID, numberValue, this),
                 );
@@ -706,7 +712,7 @@ export class AvatarVisualization
 
         this.updateScale(scale);
 
-        const gender = model.getValue<string>(RoomObjectVariableEnum.Gender);
+        const gender = model.getValue<AvatarGenderType>(RoomObjectVariableEnum.Gender);
 
         if (gender !== this._gender) {
             this._gender = gender;
@@ -768,7 +774,7 @@ export class AvatarVisualization
     private updateScale(scale: RoomGeometryScaleType): void {
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) this._blink = false;
 
-        if (this._posture === 'sit' || this._posture === 'lay') {
+        if (this._posture === AvatarActionStateType.Sit || this._posture === AvatarActionStateType.Lay) {
             this._postureOffset = scale / 2;
         } else {
             this._postureOffset = 0;
@@ -777,12 +783,10 @@ export class AvatarVisualization
         this._layInside = false;
         this._isLaying = false;
 
-        if (this._posture === 'lay') {
+        if (this._posture === AvatarActionStateType.Lay) {
             this._isLaying = true;
 
-            const _local_2 = parseInt(this._postureParameter);
-
-            if (_local_2 < 0) this._layInside = true;
+            if (this._postureParameter < 0) this._layInside = true;
         }
     }
 
@@ -791,30 +795,30 @@ export class AvatarVisualization
 
         this._avatarImage.initActionAppends();
 
-        this._avatarImage.appendAction(AvatarAction.POSTURE, this._posture, this._postureParameter);
+        this._avatarImage.appendAction(AvatarActionStateType.Posture, this._posture, this._postureParameter);
 
         if (this._gesture > 0)
-            this._avatarImage.appendAction(AvatarAction.GESTURE, AvatarAction.getGesture(this._gesture));
+            this._avatarImage.appendAction(AvatarActionStateType.Gesture, AvatarActionStateTypeUtilities.getGesture(this._gesture) ?? 0);
 
-        if (this._dance > 0) this._avatarImage.appendAction(AvatarAction.DANCE, this._dance);
+        if (this._dance > 0) this._avatarImage.appendAction(AvatarActionStateType.Dance, this._dance);
 
-        if (this._sign > -1) this._avatarImage.appendAction(AvatarAction.SIGN, this._sign);
+        if (this._sign > -1) this._avatarImage.appendAction(AvatarActionStateType.Sign, this._sign);
 
-        if (this._carryObject > 0) this._avatarImage.appendAction(AvatarAction.CARRY_OBJECT, this._carryObject);
+        if (this._carryObject > 0) this._avatarImage.appendAction(AvatarActionStateType.CarryObject, this._carryObject);
 
-        if (this._useObject > 0) this._avatarImage.appendAction(AvatarAction.USE_OBJECT, this._useObject);
+        if (this._useObject > 0) this._avatarImage.appendAction(AvatarActionStateType.UseObject, this._useObject);
 
-        if (this._talk) this._avatarImage.appendAction(AvatarAction.TALK);
+        if (this._talk) this._avatarImage.appendAction(AvatarActionStateType.Talk);
 
-        if (this._sleep || this._blink) this._avatarImage.appendAction(AvatarAction.SLEEP);
+        if (this._sleep || this._blink) this._avatarImage.appendAction(AvatarActionStateType.Sleep);
 
         if (this._expression > 0) {
-            const expression = AvatarAction.getExpression(this._expression);
+            const expression = AvatarActionStateTypeUtilities.getExpression(this._expression);
 
             if (expression !== undefined) {
                 switch (expression) {
-                    case AvatarAction.DANCE:
-                        this._avatarImage.appendAction(AvatarAction.DANCE, 2);
+                    case AvatarActionStateType.Dance:
+                        this._avatarImage.appendAction(AvatarActionStateType.Dance, 2);
                         break;
                     default:
                         this._avatarImage.appendAction(expression);
@@ -823,7 +827,7 @@ export class AvatarVisualization
             }
         }
 
-        if (this._effect > 0) this._avatarImage.appendAction(AvatarAction.EFFECT, this._effect);
+        if (this._effect > 0) this._avatarImage.appendAction(AvatarActionStateType.Effect, this._effect);
 
         this._avatarImage.endActionAppends();
 
@@ -839,9 +843,7 @@ export class AvatarVisualization
 
         this._extraSpritesStartIndex = spriteCount;
 
-        if (this._additions) {
-            for (const addition of this._additions.values()) this.createSprite();
-        }
+        if (this._additions) for (const addition of this._additions.values()) this.createSprite();
     }
 
     private updateFigure(figure: string): boolean {
@@ -912,7 +914,7 @@ export class AvatarVisualization
         if (!sprite) return;
 
         let hasShadow =
-            this._posture === 'mv' || this._posture === 'std' || (this._posture === 'sit' && this._canStandUp);
+            this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
 
         if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT) hasShadow = false;
 
@@ -920,30 +922,25 @@ export class AvatarVisualization
             sprite.visible = true;
 
             if (!this._shadow || scale !== this._scale) {
-                let offsetX = 0;
-                let offsetY = 0;
 
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-                if (scale < 48) {
+                if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
                     sprite.libraryAssetName = 'sh_std_sd_1_0_0';
 
                     this._shadow = GetAssetManager().getAsset(sprite.libraryAssetName);
 
-                    offsetX = -8;
-                    offsetY = this._canStandUp ? 6 : -3;
+                    sprite.offsetX = -8;
+                    sprite.offsetY = this._canStandUp ? 6 : -3;
                 } else {
                     sprite.libraryAssetName = 'h_std_sd_1_0_0';
 
                     this._shadow = GetAssetManager().getAsset(sprite.libraryAssetName);
 
-                    offsetX = -17;
-                    offsetY = this._canStandUp ? 10 : -7;
+                    sprite.offsetX = -17;
+                    sprite.offsetY = this._canStandUp ? 10 : -7;
                 }
 
                 if (this._shadow && this._shadow.texture) {
                     sprite.texture = this._shadow.texture;
-                    sprite.offsetX = offsetX;
-                    sprite.offsetY = offsetY;
                     sprite.alpha = 50;
                     sprite.relativeDepth = 1;
                 } else {

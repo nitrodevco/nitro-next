@@ -1,10 +1,10 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { AvatarAction } from '@nitrodevco/nitro-api';
+import { AvatarActionState, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
-import { GetAssetManager } from '../../../../../assets';
-import { GetTickerTime } from '../../../../../utils';
+import { GetAssetManager } from '#renderer/assets';
+import { GetTickerTime } from '#renderer/utils';
+
 import { ExpressionAddition } from './ExpressionAddition';
 
 export class FloatingHeartAddition extends ExpressionAddition {
@@ -61,9 +61,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             this._offsetY = -70;
         }
 
-        if (this.visualization.posture === AvatarAction.POSTURE_SIT) {
+        if (this.visualization.posture === AvatarActionState.Sit) {
             this._offsetY += additionScale / 2;
-        } else if (this.visualization.posture === AvatarAction.POSTURE_LAY) {
+        } else if (this.visualization.posture === AvatarActionState.Lay) {
             this._offsetY += additionScale;
         }
 

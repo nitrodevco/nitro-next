@@ -1,4 +1,4 @@
-﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
+﻿import type { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
 import type { AvatarStructure } from '../AvatarStructure';
 import { AddDataContainer } from './AddDataContainer';
@@ -19,7 +19,7 @@ export class Animation implements IAnimation {
     private _removeData: AvatarFigurePartType[] = [];
     private _addData: IAddDataContainer[] = [];
     private _overrideFrames: Map<string, AvatarAnimationLayerData[][]> = new Map();
-    private _overriddenActions: Map<string, string> | undefined = undefined;
+    private _overriddenActions: Map<AvatarActionStateType, string> | undefined = undefined;
     private _resetOnToggle: boolean;
 
     constructor(structure: AvatarStructure, data: IAssetAnimation) {
@@ -72,13 +72,13 @@ export class Animation implements IAnimation {
         return (this._overriddenActions.size > 0);
     }
 
-    public overriddenActionNames(): string[] {
-        if (!this._overriddenActions) return Animation.EMPTY_ARRAY as string[];
+    public overriddenActionNames(): AvatarActionStateType[] {
+        if (!this._overriddenActions) return Animation.EMPTY_ARRAY as AvatarActionStateType[];
 
         return this._overriddenActions.keys().toArray();
     }
 
-    public overridingAction(name: string): string | undefined {
+    public overridingAction(name: AvatarActionStateType): string | undefined {
         return this._overriddenActions?.get(name);
     }
 

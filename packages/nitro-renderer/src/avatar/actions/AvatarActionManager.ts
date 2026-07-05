@@ -70,9 +70,9 @@ export class AvatarActionManager {
         let canvasOffsets: number[] = [];
 
         for (const activeAction of actions) {
-            if (!activeAction || !activeAction.actionType) continue;
+            if (!activeAction || !activeAction.type) continue;
 
-            const action = this._actions.get(activeAction.actionType);
+            const action = this._actions.get(activeAction.type);
             const offsets = action && action.getOffsets(size, direction);
 
             if (offsets) canvasOffsets = offsets;
@@ -89,7 +89,7 @@ export class AvatarActionManager {
         for (const action of actions) {
             if (!action) continue;
 
-            const definition = this._actions.get(action.actionType);
+            const definition = this._actions.get(action.type);
 
             if (!definition) continue;
 
@@ -110,7 +110,7 @@ export class AvatarActionManager {
         for (const action of actions) {
             if (!action) continue;
 
-            const localAction = this._actions.get(action.actionType);
+            const localAction = this._actions.get(action.type);
 
             if (localAction) preventions = preventions.concat(localAction.getPrevents(action.actionParameter));
         }
@@ -118,9 +118,9 @@ export class AvatarActionManager {
         for (const action of actions) {
             if (!action) continue;
 
-            let actionType = action.actionType;
+            let actionType = action.type;
 
-            if (action.actionType === 'fx') actionType = (actionType + ('.' + action.actionParameter));
+            if (action.type === 'fx') actionType = (actionType + ('.' + action.actionParameter));
 
             if (preventions.indexOf(actionType) >= 0) continue;
 

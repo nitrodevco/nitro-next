@@ -1,29 +1,34 @@
-import type { Container, Texture } from 'pixi.js';
+import type { Container, RenderTexture, Texture } from 'pixi.js';
 
-import type { IAnimationLayerData, ISpriteDataContainer } from './animation';
+import type { IAnimationLayerData, IAvatarDataContainer, ISpriteDataContainer } from './animation';
 import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
 import type { IPartColor } from './structure';
+import { AvatarActionStateType, AvatarFigurePartType, AvatarScaleType, AvatarSetType } from './enum';
+import { IGraphicAsset } from '../asset';
 
 export interface IAvatarImage {
     dispose(): void;
-    setDirection(_arg_1: string, _arg_2: number): void;
-    setDirectionAngle(_arg_1: string, _arg_2: number): void;
-    updateAnimationByFrames(_arg_1?: number): void;
-    getScale(): string;
-    getSprites(): ISpriteDataContainer[];
-    getLayerData(_arg_1: ISpriteDataContainer): IAnimationLayerData;
-    processAsTexture(setType: string, hightlight?: boolean, texture?: Texture): Texture;
-    processAsImageUrl(setType: string): string;
-    processAsContainer(setType: string): Container;
-    getDirection(): number;
-    getFigure(): IAvatarFigureContainer;
-    getPartColor(_arg_1: string): IPartColor;
-    isAnimating(): boolean;
-    getCanvasOffsets(): number[];
+    setDirection(setType: AvatarSetType, direction: number): void;
+    setDirectionAngle(setType: AvatarSetType, angle: number): void;
+    getLayerData(sprite: ISpriteDataContainer): IAnimationLayerData | undefined;
+    updateAnimationByFrames(frame?: number): void;
+    resetAnimationFrameCounter(): void;
+    getImage(setType: AvatarSetType, hightlight: boolean, scale?: number): RenderTexture | undefined;
     initActionAppends(): void;
     endActionAppends(): void;
-    appendAction(_arg_1: string, ..._args: any[]): boolean;
+    appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number)[]): boolean;
+    getFigure(): IAvatarFigureContainer;
+    getScale(): AvatarScaleType;
+    getPartColor(partType: AvatarFigurePartType): IPartColor | undefined;
+    getSprites(): ISpriteDataContainer[];
+    getCanvasOffsets(): number[];
+    getAsset(name: string): IGraphicAsset | undefined;
+    getDirection(): number;
+    isAnimating(): boolean;
     isPlaceholder(): boolean;
-    animationHasResetOnToggle: boolean;
-    resetAnimationFrameCounter(): void;
+    forceActionUpdate(): void;
+    readonly animationHasResetOnToggle: boolean;
+    readonly mainAction: string;
+    readonly avatarSpriteData: IAvatarDataContainer | undefined;
+    readonly disposed: boolean;
 }

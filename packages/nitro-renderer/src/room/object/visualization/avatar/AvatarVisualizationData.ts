@@ -1,3 +1,6 @@
+import type {
+    AvatarGenderType
+} from '@nitrodevco/nitro-api';
 import {
     AvatarScaleType,
     type IAssetData,
@@ -8,7 +11,7 @@ import {
     RoomGeometryScaleType,
 } from '@nitrodevco/nitro-api';
 
-import { GetAvatarRenderManager } from '../../../../avatar';
+import { GetAvatarRenderManager } from '#renderer/avatar';
 
 export class AvatarVisualizationData implements IObjectVisualizationData {
     public initialize(asset: IAssetData | undefined): boolean {
@@ -20,32 +23,26 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
     public createAvatarImage(
         figure: string,
         size: RoomGeometryScaleType,
-        gender?: string,
-        avatarListener?: IAvatarImageListener,
-        effectListener?: IAvatarEffectListener,
+        gender: AvatarGenderType,
+        avatarListener: IAvatarImageListener,
+        effectListener: IAvatarEffectListener | undefined = undefined,
     ): IAvatarImage | undefined {
-        return undefined;
-
-        let avatarImage: IAvatarImage;
-
         if (size > RoomGeometryScaleType.AvatarSizeNormal)
-            avatarImage = GetAvatarRenderManager().createAvatarImage(
+            return GetAvatarRenderManager().createAvatarImage(
                 figure,
-                AvatarScaleType.LARGE,
-                gender ?? 'm', // TODO FIX
-                avatarListener,
-                effectListener,
-            );
-        else
-            avatarImage = GetAvatarRenderManager().createAvatarImage(
-                figure,
-                AvatarScaleType.SMALL,
-                gender ?? 'm', // TODO FIX
+                AvatarScaleType.Large,
+                gender,
                 avatarListener,
                 effectListener,
             );
 
-        return avatarImage;
+        return GetAvatarRenderManager().createAvatarImage(
+            figure,
+            AvatarScaleType.Small,
+            gender,
+            avatarListener,
+            effectListener,
+        );
     }
 
     public get layerCount(): number {

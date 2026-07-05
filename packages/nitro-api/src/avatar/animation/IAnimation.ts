@@ -1,4 +1,4 @@
-﻿import { AvatarBodyPartType, AvatarFigurePartType } from "../enum";
+﻿import { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType } from "../enum";
 import { IAddDataContainer } from "./IAddDataContainer";
 import { IAnimationLayerData } from "./IAnimationLayerData";
 import { IAvatarDataContainer } from "./IAvatarDataContainer";
@@ -8,7 +8,7 @@ import { ISpriteDataContainer } from "./ISpriteDataContainer";
 export interface IAnimation {
     frameCount(name?: string): number;
     hasOverriddenActions(): boolean;
-    overriddenActionNames(): string[];
+    overriddenActionNames(): AvatarActionStateType[];
     overridingAction(name: string): string | undefined;
     getAnimatedBodyPartIds(frameCount: number, name?: string): AvatarBodyPartType[];
     getLayerData(frameCount: number, spriteId: string, name?: string): IAnimationLayerData | undefined;
