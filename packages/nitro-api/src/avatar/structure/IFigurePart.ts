@@ -1,7 +1,9 @@
+import { AvatarFigurePartType } from "../enum";
+
 export interface IFigurePart {
     dispose(): void;
     readonly id: number;
-    readonly type: string;
+    readonly type: AvatarFigurePartType;
     readonly index: number;
     readonly colorLayerIndex: number;
     readonly paletteMap: number;

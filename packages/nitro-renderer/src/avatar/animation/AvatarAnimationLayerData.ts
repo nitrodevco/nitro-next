@@ -1,5 +1,5 @@
 ﻿
-import type { IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarFigurePartType, IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
 
 import { ActiveActionData } from '../actions';
 
@@ -7,7 +7,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
     public static BODYPART: string = 'bodypart';
     public static FX: string = 'fx';
 
-    private _id: string;
+    private _id: AvatarBodyPartType | string;
     private _action: IActiveActionData;
     private _animationFrame: number;
     private _dx: number;
@@ -16,7 +16,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
     private _directionOffset: number;
     private _type: string;
     private _base: number;
-    private _items: Map<string, string>;
+    private _items: Map<AvatarFigurePartType, number>;
 
     constructor(part: IAssetAnimationFramePart, type: string, definition: IActionDefinition | undefined) {
         this._id = part.id;
@@ -33,7 +33,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
             for (const item of part.items) {
                 if (!item || !item.id || !item.base) continue;
 
-                this._items.set(item.id, item.base);
+                this._items.set(item.id, parseInt(item.base));
             }
         }
 
@@ -43,7 +43,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         }
     }
 
-    public get id(): string {
+    public get id(): AvatarBodyPartType | string {
         return this._id;
     }
 
@@ -79,7 +79,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         return this._action;
     }
 
-    public get items(): Map<string, string> {
+    public get items(): Map<AvatarFigurePartType, number> {
         return this._items;
     }
 }

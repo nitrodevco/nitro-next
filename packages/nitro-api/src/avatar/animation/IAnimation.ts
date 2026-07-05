@@ -1,4 +1,5 @@
-﻿import { IAddDataContainer } from "./IAddDataContainer";
+﻿import { AvatarBodyPartType, AvatarFigurePartType } from "../enum";
+import { IAddDataContainer } from "./IAddDataContainer";
 import { IAnimationLayerData } from "./IAnimationLayerData";
 import { IAvatarDataContainer } from "./IAvatarDataContainer";
 import { IDirectionDataContainer } from "./IDirectionDataContainer";
@@ -9,7 +10,7 @@ export interface IAnimation {
     hasOverriddenActions(): boolean;
     overriddenActionNames(): string[];
     overridingAction(name: string): string | undefined;
-    getAnimatedBodyPartIds(frameCount: number, name?: string): string[];
+    getAnimatedBodyPartIds(frameCount: number, name?: string): AvatarBodyPartType[];
     getLayerData(frameCount: number, spriteId: string, name?: string): IAnimationLayerData | undefined;
     getAddData(id: string): IAddDataContainer | undefined;
     hasAvatarData(): boolean;
@@ -19,7 +20,7 @@ export interface IAnimation {
     readonly spriteData: ISpriteDataContainer[];
     readonly avatarData: IAvatarDataContainer | undefined;
     readonly directionData: IDirectionDataContainer | undefined;
-    readonly removeData: string[];
+    readonly removeData: AvatarFigurePartType[];
     readonly addData: IAddDataContainer[];
     readonly resetOnToggle: boolean;
 }

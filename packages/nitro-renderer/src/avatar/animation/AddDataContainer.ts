@@ -1,15 +1,15 @@
-﻿import type { IAddDataContainer, IAssetAnimationAdd } from "@nitrodevco/nitro-api";
+﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAssetAnimationAdd } from "@nitrodevco/nitro-api";
 
 export class AddDataContainer implements IAddDataContainer {
-    private _id: string;
-    private _align: string;
+    private _id: AvatarFigurePartType | string;
+    private _align: AvatarBodyPartType | undefined;
     private _base: string;
     private _ink: number;
     private _blend: number;
 
     constructor(data: IAssetAnimationAdd) {
-        this._id = data.id ?? '';
-        this._align = data.align ?? '';
+        this._id = data.id;
+        this._align = data.align;
         this._base = data.base ?? '';
         this._ink = data.ink ?? 0;
         this._blend = 0;
@@ -25,11 +25,11 @@ export class AddDataContainer implements IAddDataContainer {
         }
     }
 
-    public get id(): string {
+    public get id(): AvatarFigurePartType | string {
         return this._id;
     }
 
-    public get align(): string {
+    public get align(): AvatarBodyPartType | undefined {
         return this._align;
     }
 

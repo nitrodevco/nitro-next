@@ -7,17 +7,17 @@ import { AvatarAnimationFrame } from './structure';
 export class AvatarImagePartContainer {
     private _bodyPartId: string;
     private _partType: AvatarFigurePartType;
-    private _flippedPartType: AvatarFigurePartType;
+    private _flippedPartType: AvatarFigurePartType | undefined;
     private _partId: number;
-    private _color: IPartColor;
-    private _frames: AvatarAnimationFrame[];
+    private _color: IPartColor | undefined;
+    private _frames: (AvatarAnimationFrame | number)[];
     private _action: IActionDefinition;
     private _isColorable: boolean;
     private _isBlendable: boolean;
     private _blendTransform: AdjustmentFilter | undefined;
     private _paletteMapId: number;
 
-    constructor(bodyPartId: string, partType: AvatarFigurePartType, partId: number, partColor: IPartColor, frames: AvatarAnimationFrame[], action: IActionDefinition, isColorable: boolean, paletteMapId: number, flippedPartType: AvatarFigurePartType = AvatarFigurePartType.None, isBlendable: boolean = false, _arg_11: number = 1) {
+    constructor(bodyPartId: string, partType: AvatarFigurePartType, partId: number, partColor: IPartColor | undefined, frames: (AvatarAnimationFrame | number)[], action: IActionDefinition, isColorable: boolean, paletteMapId: number, flippedPartType: AvatarFigurePartType | undefined = undefined, isBlendable: boolean = false, _arg_11: number = 1) {
         this._bodyPartId = bodyPartId;
         this._partType = partType;
         this._partId = partId;
@@ -83,7 +83,7 @@ export class AvatarImagePartContainer {
         return this._partId;
     }
 
-    public get color(): IPartColor {
+    public get color(): IPartColor | undefined {
         return this._color;
     }
 
@@ -103,7 +103,7 @@ export class AvatarImagePartContainer {
         return this._paletteMapId;
     }
 
-    public get flippedPartType(): AvatarFigurePartType {
+    public get flippedPartType(): AvatarFigurePartType | undefined {
         return this._flippedPartType;
     }
 

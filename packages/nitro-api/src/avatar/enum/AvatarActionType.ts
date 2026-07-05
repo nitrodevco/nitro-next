@@ -1,154 +1,68 @@
+import { AvatarActionStateType } from "./AvatarActionStateType";
+
 export enum AvatarActionType {
-    None = '',
-    CarryObject = 'cri',
-    Dance = 'dance',
-    Effect = 'fx',
-
-    // Expressions
-    Expression = 'expression',
-    BlowAKiss = 'blow',
-    Cry = 'cry',
-    Idle = 'idle',
-    Laugh = 'laugh',
-    Respect = 'respect',
-    RideJump = 'ridejump',
-    SnowboardOllie = 'sbollie',
-    Snowboard360 = 'sb360',
-    Wave = 'wave',
-
-    // Gestures
-    Gesture = 'gest',
-    Aggravated = 'agr',
-    Sad = 'sad',
-    Smile = 'sml',
-    Surprised = 'srp',
-
-    // Guide & Status
-    GuideStatus = 'guide',
-    Muted = 'muted',
-    PlayingGame = 'playing_game',
-
-    // Pet Gestures
-    PetBlink = 'eyb',
-    PetCrazy = 'crz',
-    PetJoy = 'joy',
-    PetMiserable = 'mis',
-    PetPuzzled = 'puz',
-    PetTongue = 'tng',
-
-    // Postures
-    Posture = 'posture',
-    Float = 'float',
-    Lay = 'lay',
-    Sit = 'sit',
-    Stand = 'std',
-    Swim = 'swim',
-    Walk = 'mv',
-
-    // Other Actions
-    Sign = 'sign',
-    Sleep = 'sleep',
-    Talk = 'talk',
-    Blink = 'blink',
-    Typing = 'typing',
-    UseObject = 'usei',
-    Vote = 'vote',
-
-    // Snowwar
-    SnowwarDieBack = 'swdieback',
-    SnowwarDieFront = 'swdiefront',
-    SnowwarPick = 'swpick',
-    SnowwarRun = 'swrun',
-    SnowwarThrow = 'swthrow'
+    Default = 'Default',
+    Lay = 'Lay',
+    Float = 'Float',
+    Swim = 'Swim',
+    Sit = 'Sit',
+    Snowboard360 = 'Snowboard360',
+    SnowboardOllie = 'SnowboardOllie',
+    SnowboardUp = 'SnowboardUp',
+    SnowboardSquat = 'SnowboardSquat',
+    RideJump = 'RideJump',
+    Respect = 'Respect',
+    Wave = 'Wave',
+    Sign = 'Sign',
+    Blow = 'Blow',
+    Laugh = 'Laugh',
+    Idle = 'Idle',
+    AvatarEffect = 'AvatarEffect',
+    Dance = 'Dance',
+    UseItem = 'UseItem',
+    CarryItem = 'CarryItem',
+    Talk = 'Talk',
+    Gesture = 'Gesture',
+    GestureSmile = 'GestureSmile',
+    GestureSad = 'GestureSad',
+    GestureAngry = 'GestureAngry',
+    GestureSurprised = 'GestureSurprised',
+    Sleep = 'Sleep',
+    Move = 'Move',
 }
 
 export class AvatarActionTypeUtilities {
-    public static GESTURE_MAP = [
-        AvatarActionType.None,
-        AvatarActionType.Smile,
-        AvatarActionType.Aggravated,
-        AvatarActionType.Surprised,
-        AvatarActionType.Sad,
-        AvatarActionType.PetJoy,
-        AvatarActionType.PetCrazy,
-        AvatarActionType.PetTongue,
-        AvatarActionType.PetBlink,
-        AvatarActionType.PetMiserable,
-        AvatarActionType.PetPuzzled,
-    ];
 
-    public static EXPRESSION_MAP = [
-        AvatarActionType.None,
-        AvatarActionType.Wave,
-        AvatarActionType.BlowAKiss,
-        AvatarActionType.Laugh,
-        AvatarActionType.Cry,
-        AvatarActionType.Idle,
-        AvatarActionType.Dance,
-        AvatarActionType.Respect,
-        AvatarActionType.SnowboardOllie,
-        AvatarActionType.Snowboard360,
-        AvatarActionType.RideJump,
-    ];
-
-    public static getExpression(expressionId: number): AvatarActionType | undefined {
-        return AvatarActionTypeUtilities.EXPRESSION_MAP[expressionId];
-    }
-
-    public static getExpressionId(expression: AvatarActionType): number {
-        return AvatarActionTypeUtilities.EXPRESSION_MAP.indexOf(expression);
-    }
-
-    public static getExpressionTimeout(expressionId: number): number {
-        switch (expressionId) {
-            case 1:
-                return 5000;
-            case 2:
-                return 1400;
-            case 3:
-                return 2000;
-            case 4:
-                return 2000;
-            case 5:
-                return 0;
-            case 6:
-                return 700;
-            case 7:
-                return 2000;
-            case 8:
-                return 1500;
-            case 9:
-                return 1500;
-            case 10:
-                return 1500;
-            default:
-                return 0;
+    public static actionTypeToState(type: AvatarActionType): string {
+        switch (type) {
+            case AvatarActionType.Lay: return AvatarActionStateType.Lay;
+            case AvatarActionType.Float: return AvatarActionStateType.Float;
+            case AvatarActionType.Swim: return AvatarActionStateType.Swim;
+            case AvatarActionType.Sit: return AvatarActionStateType.Sit;
+            case AvatarActionType.Snowboard360: return AvatarActionStateType.Snowboard360;
+            case AvatarActionType.SnowboardOllie: return AvatarActionStateType.SnowboardOllie;
+            case AvatarActionType.SnowboardUp: return AvatarActionStateType.SnowboardUp;
+            case AvatarActionType.SnowboardSquat: return AvatarActionStateType.Snowboard360;
+            case AvatarActionType.RideJump: return AvatarActionStateType.RideJump;
+            case AvatarActionType.Respect: return AvatarActionStateType.Respect;
+            case AvatarActionType.Wave: return AvatarActionStateType.Wave;
+            case AvatarActionType.Sign: return AvatarActionStateType.Sign;
+            case AvatarActionType.Blow: return AvatarActionStateType.BlowAKiss;
+            case AvatarActionType.Laugh: return AvatarActionStateType.Laugh;
+            case AvatarActionType.Idle: return AvatarActionStateType.Idle;
+            case AvatarActionType.AvatarEffect: return AvatarActionStateType.Effect;
+            case AvatarActionType.Dance: return AvatarActionStateType.Dance;
+            case AvatarActionType.UseItem: return AvatarActionStateType.UseObject;
+            case AvatarActionType.CarryItem: return AvatarActionStateType.CarryObject;
+            case AvatarActionType.Talk: return AvatarActionStateType.Talk;
+            case AvatarActionType.Gesture: return AvatarActionStateType.Gesture;
+            case AvatarActionType.GestureSmile: return AvatarActionStateType.Smile;
+            case AvatarActionType.GestureSad: return AvatarActionStateType.Sad;
+            case AvatarActionType.GestureAngry: return AvatarActionStateType.Angry;
+            case AvatarActionType.GestureSurprised: return AvatarActionStateType.Surprised;
+            case AvatarActionType.Sleep: return AvatarActionStateType.Sleep;
+            case AvatarActionType.Move: return AvatarActionStateType.Walk;
+            default: return AvatarActionStateType.Stand;
         }
-    }
-
-    public static getGestureId(gesture: AvatarActionType): number {
-        return AvatarActionTypeUtilities.GESTURE_MAP.indexOf(gesture);
-    }
-
-    public static getGesture(gestureId: number): AvatarActionType | undefined {
-        return AvatarActionTypeUtilities.GESTURE_MAP[gestureId];
-    }
-
-    public static idToAvatarActionState(id: string): string {
-        if (id === 'Lay') return 'lay';
-        if (id === 'Float') return 'float';
-        if (id === 'Swim') return 'swim';
-        if (id === 'Sit') return 'sit';
-        if (id === 'Respect') return 'respect';
-        if (id === 'Wave') return 'wave';
-        if (id === 'Idle') return 'idle';
-        if (id === 'Dance') return 'dance';
-        if (id === 'UseItem') return 'usei';
-        if (id === 'CarryItem') return 'cri';
-        if (id === 'Talk') return 'talk';
-        if (id === 'Sleep') return 'Sleep';
-        if (id === 'Move') return 'mv';
-
-        return 'std';
     }
 }

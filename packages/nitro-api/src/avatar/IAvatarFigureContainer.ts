@@ -1,9 +1,11 @@
-﻿export interface IAvatarFigureContainer {
-    getPartTypeIds(): string[];
-    hasPartType(type: string): boolean;
-    getPartSetId(type: string): number;
-    getPartColorIds(type: string): number[];
-    updatePart(type: string, partSetId: number, colorIds: number[]): void;
-    removePart(type: string): void;
+﻿import { AvatarFigurePartType } from "./enum";
+
+export interface IAvatarFigureContainer {
+    getPartTypeIds(): AvatarFigurePartType[];
+    hasPartType(type: AvatarFigurePartType): boolean;
+    getPartSetId(type: AvatarFigurePartType): number;
+    getPartColorIds(type: AvatarFigurePartType): number[];
+    updatePart(type: AvatarFigurePartType, setId: number, colorIds: number[]): void;
+    removePart(type: AvatarFigurePartType): void;
     getFigureString(): string;
 }

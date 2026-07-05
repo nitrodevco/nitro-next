@@ -1,40 +1,38 @@
-import type { AvatarSetType, IAvatarFigureContainer } from "@nitrodevco/nitro-api";
+import type { AvatarFigurePartType, IAvatarFigureContainer } from "@nitrodevco/nitro-api";
 
 export class AvatarFigureContainer implements IAvatarFigureContainer {
-    private _parts: Map<string, Map<string, unknown>> = new Map();
+    private _parts: Map<AvatarFigurePartType, { type: AvatarFigurePartType, setId: number, colorIds: number[] }> = new Map();
 
     constructor(figure: string) {
         this.parseFigure(figure);
     }
 
-    public getPartTypeIds(): string[] {
+    public getPartTypeIds(): AvatarFigurePartType[] {
         return this._parts.keys().toArray();
     }
 
-    public hasPartType(type: string): boolean {
+    public hasPartType(type: AvatarFigurePartType): boolean {
         return !!this._parts.get(type);
     }
 
-    public getPartSetId(type: string): number {
-        return this._parts.get(type)?.get('setid') as number ?? 0;
+    public getPartSetId(type: AvatarFigurePartType): number {
+        return this._parts.get(type)?.setId ?? 0;
     }
 
-    public getPartColorIds(type: string): number[] {
-        return this._parts.get(type)?.get('colorids') as number[] ?? [];
+    public getPartColorIds(type: AvatarFigurePartType): number[] {
+        return this._parts.get(type)?.colorIds ?? [];
     }
 
-    public updatePart(type: string, partSetId: number, colorIds: number[]): void {
-        const set: Map<string, unknown> = new Map();
-
-        set.set('type', type);
-        set.set('setid', partSetId);
-        set.set('colorids', colorIds);
-
+    public updatePart(type: AvatarFigurePartType, setId: number, colorIds: number[]): void {
         this._parts.delete(type);
-        this._parts.set(type, set);
+        this._parts.set(type, {
+            type,
+            setId,
+            colorIds
+        });
     }
 
-    public removePart(type: string): void {
+    public removePart(type: AvatarFigurePartType): void {
         this._parts.delete(type);
     }
 
@@ -64,19 +62,19 @@ export class AvatarFigureContainer implements IAvatarFigureContainer {
             const pieces = part.split('-');
 
             if (pieces.length >= 2) {
-                const type = pieces[0] as AvatarSetType;
+                const type = pieces[0] as AvatarFigurePartType;
                 const setId = parseInt(pieces[1]);
-                const colors: number[] = [];
+                const colorIds: number[] = [];
 
                 let index = 2;
 
                 while (index < pieces.length) {
-                    colors.push(parseInt(pieces[index]));
+                    colorIds.push(parseInt(pieces[index]));
 
                     index++;
                 }
 
-                this.updatePart(type, setId, colors);
+                this.updatePart(type, setId, colorIds);
             }
         }
     }

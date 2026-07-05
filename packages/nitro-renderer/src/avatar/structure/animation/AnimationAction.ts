@@ -1,4 +1,4 @@
-import type { AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { AnimationActionPart } from './AnimationActionPart';
@@ -8,7 +8,7 @@ export class AnimationAction {
 
     private _id: string;
     private _actionParts: Map<AvatarFigurePartType, AnimationActionPart> = new Map();
-    private _bodyPartOffsets: Map<number, Map<number, Map<string, Point>>> = new Map();
+    private _bodyPartOffsets: Map<number, Map<number, Map<AvatarBodyPartType, Point>>> = new Map();
     private _frameCount: number = 0;
     private _frameIndexes: number[] = [];
 
@@ -35,7 +35,7 @@ export class AnimationAction {
 
                 this._frameCount = Math.max(this._frameCount, frameId);
 
-                const directions: Map<number, Map<string, Point>> = new Map();
+                const directions: Map<number, Map<AvatarBodyPartType, Point>> = new Map();
 
                 this._bodyPartOffsets.set(frameId, directions);
 
@@ -45,7 +45,7 @@ export class AnimationAction {
 
                         const directionId = direction.id;
 
-                        const offsets: Map<string, Point> = new Map();
+                        const offsets: Map<AvatarBodyPartType, Point> = new Map();
 
                         directions.set(directionId, offsets);
 
@@ -82,22 +82,11 @@ export class AnimationAction {
         return this._actionParts.get(type);
     }
 
-    public getFrameBodyPartOffset(frameId: number, frameCount: number, partId: string): Point {
+    public getFrameBodyPartOffset(frameId: number, frameCount: number, bodyPartId: AvatarBodyPartType): Point {
         const frameIndex = (frameCount % this._frameIndexes.length);
         const frameNumber = this._frameIndexes[frameIndex];
-        const offsets = this._bodyPartOffsets.get(frameNumber);
 
-        if (!offsets) return AnimationAction.DEFAULT_OFFSET;
-
-        const frameOffset = offsets.get(frameId);
-
-        if (!frameOffset) return AnimationAction.DEFAULT_OFFSET;
-
-        const offset = frameOffset.get(partId);
-
-        if (!offset) return AnimationAction.DEFAULT_OFFSET;
-
-        return offset;
+        return this._bodyPartOffsets.get(frameNumber)?.get(frameId)?.get(bodyPartId) ?? AnimationAction.DEFAULT_OFFSET;
     }
 
     public get id(): string {

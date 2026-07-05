@@ -1,3 +1,5 @@
+import { AvatarBodyPartType } from "#api/avatar/enum";
+
 export interface IAssetAvatarBodyPartRef {
-    id: string;
+    id: AvatarBodyPartType;
 }

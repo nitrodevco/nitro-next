@@ -1,10 +1,10 @@
-import { AvatarGeometryType } from "#api/avatar";
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from "#api/avatar";
 import { IAssetAvatarActionParam } from "./IAssetAvatarActionParam";
 import { IAssetAvatarActionType } from "./IAssetAvatarActionType";
 
 export interface IAssetAvatarAction {
-    readonly id: string;
-    readonly state: string;
+    readonly id: AvatarActionType;
+    readonly state: AvatarActionStateType;
     readonly precedence: number;
     readonly main?: boolean;
     readonly isDefault?: boolean;
@@ -12,7 +12,7 @@ export interface IAssetAvatarAction {
     readonly startFromFrameZero?: boolean;
     readonly preventHeadTurn?: boolean;
     readonly geometryType: AvatarGeometryType;
-    readonly activePartSet?: string;
+    readonly activePartSet?: AvatarPartSetType;
     readonly assetPartDefinition: string;
     readonly prevents?: string[];
     readonly lay?: string;

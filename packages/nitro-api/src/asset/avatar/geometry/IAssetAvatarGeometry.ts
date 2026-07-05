@@ -1,5 +1,7 @@
+import { AvatarGeometryType } from "#api/avatar/enum";
+
 export interface IAssetAvatarGeometry {
-    id: string;
+    id: AvatarGeometryType;
     width: number;
     height: number;
     dx: number;

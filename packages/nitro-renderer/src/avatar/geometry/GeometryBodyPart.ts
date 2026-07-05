@@ -1,4 +1,4 @@
-﻿import type { IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
+﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { GeometryItem } from './GeometryItem';
 import type { Matrix4x4 } from './Matrix4x4';
@@ -6,7 +6,7 @@ import { Node3D } from './Node3D';
 import type { Vector3D } from './Vector3D';
 
 export class GeometryBodyPart extends Node3D {
-    private _id: string;
+    private _id: AvatarBodyPartType;
     private _radius: number;
     private _parts: Map<string, GeometryItem> = new Map();
     private _dynamicParts: Map<IAvatarImage, Record<string, GeometryItem>> = new Map();
@@ -101,7 +101,7 @@ export class GeometryBodyPart extends Node3D {
         return !!existingPart;
     }
 
-    public getParts(matrix: Matrix4x4, loc: Vector3D, _arg_3: unknown[], avatar: IAvatarImage): string[] {
+    public getParts(matrix: Matrix4x4, loc: Vector3D, activeParts: string[], avatar: IAvatarImage): AvatarFigurePartType[] {
         const parts: [number, GeometryItem][] = [];
 
         for (const part of this._parts.values()) {
@@ -137,22 +137,14 @@ export class GeometryBodyPart extends Node3D {
             return 0;
         });
 
-        const partIds: string[] = [];
-
-        for (const part of parts) {
-            if (!part) continue;
-
-            partIds.push(part[1].id);
-        }
-
-        return partIds;
+        return parts.map(x => x[1].id);;
     }
 
     public getDistance(loc: Vector3D): number {
         return Math.min(Math.abs(((loc.z - this.transformedLocation.z) - this._radius)), Math.abs(((loc.z - this.transformedLocation.z) + this._radius)));
     }
 
-    public get id(): string {
+    public get id(): AvatarBodyPartType {
         return this._id;
     }
 

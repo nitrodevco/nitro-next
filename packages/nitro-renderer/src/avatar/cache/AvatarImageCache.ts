@@ -1,6 +1,6 @@
 
 
-import type { AvatarSetType, IActiveActionData, IAvatarImage } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarImage } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
@@ -25,15 +25,15 @@ export class AvatarImageCache {
     private _assets: AssetAliasCollection;
     private _scale: AvatarScaleType;
     private _geometryType: AvatarGeometryType;
-    private _cache: Map<string, AvatarImageBodyPartCache> = new Map();
+    private _cache: Map<AvatarBodyPartType, AvatarImageBodyPartCache> = new Map();
     private _canvas: AvatarCanvas | undefined = undefined;
     private _defaultAction: string = 'std';
     private _unionImages: ImageData[] = [];
     private _matrix: Matrix = new Matrix();
     private _disposed: boolean = false;
 
-    constructor(k: AvatarStructure, avatar: IAvatarImage, assets: AssetAliasCollection, scale: AvatarScaleType) {
-        this._structure = k;
+    constructor(structure: AvatarStructure, avatar: IAvatarImage, assets: AssetAliasCollection, scale: AvatarScaleType) {
+        this._structure = structure;
         this._avatar = avatar;
         this._assets = assets;
         this._scale = scale;
@@ -82,14 +82,8 @@ export class AvatarImageCache {
         }
     }
 
-    public setAction(k: IActiveActionData, _arg_2: number): void {
-        const _local_3 = this._structure.getActiveBodyPartIds(k, this._avatar);
-
-        for (const _local_4 of _local_3) {
-            const _local_5 = this.getBodyPartCache(_local_4);
-
-            if (_local_5) _local_5.setAction(k, _arg_2);
-        }
+    public setAction(action: IActiveActionData, time: number): void {
+        for (const _local_4 of this._structure.getActiveBodyPartIds(action, this._avatar)) this.getBodyPartCache(_local_4)?.setAction(action, time);
     }
 
     public setGeometryType(type: AvatarGeometryType): void {
@@ -108,7 +102,7 @@ export class AvatarImageCache {
         this._canvas = undefined;
     }
 
-    public getImageContainer(setType: AvatarSetType, frameNumber: number): AvatarImageBodyPartContainer | undefined {
+    public getImageContainer(setType: AvatarBodyPartType, frameNumber: number): AvatarImageBodyPartContainer | undefined {
         let cache = this.getBodyPartCache(setType);
 
         if (!cache) {
@@ -127,7 +121,7 @@ export class AvatarImageCache {
 
         let activeAction = action;
         let removes: string[] = [];
-        let layerItems: Map<string, string> = new Map();
+        let layerItems: Map<AvatarFigurePartType, number> = new Map();
         const point = new Point();
 
         if (action.definition.isAnimation) {
@@ -213,7 +207,7 @@ export class AvatarImageCache {
         return bodyPartContainer;
     }
 
-    public getBodyPartCache(k: string): AvatarImageBodyPartCache {
+    public getBodyPartCache(k: AvatarBodyPartType): AvatarImageBodyPartCache {
         let existing = this._cache.get(k);
 
         if (!existing) {
@@ -267,7 +261,7 @@ export class AvatarImageCache {
                     else if (direction === 5) assetDirection = 1;
                     else if (direction === 6) assetDirection = 0;
 
-                    if (container.flippedPartType !== partType) partType = container.flippedPartType;
+                    if (container.flippedPartType && container.flippedPartType !== partType) partType = container.flippedPartType;
                 }
             }
 

@@ -1,8 +1,8 @@
-import type { IFigureDataPart, IFigurePart } from "@nitrodevco/nitro-api";
+import type { AvatarFigurePartType, IFigureDataPart, IFigurePart } from "@nitrodevco/nitro-api";
 
 export class FigurePart implements IFigurePart {
     private _id: number;
-    private _type: string;
+    private _type: AvatarFigurePartType;
     private _index: number;
     private _colorLayerIndex: number;
     private _paletteMapId: number;
@@ -25,7 +25,7 @@ export class FigurePart implements IFigurePart {
         return this._id;
     }
 
-    public get type(): string {
+    public get type(): AvatarFigurePartType {
         return this._type;
     }
 

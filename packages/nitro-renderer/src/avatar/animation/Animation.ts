@@ -1,4 +1,4 @@
-﻿import type { IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
+﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
 import type { AvatarStructure } from '../AvatarStructure';
 import { AddDataContainer } from './AddDataContainer';
@@ -16,7 +16,7 @@ export class Animation implements IAnimation {
     private _spriteData: ISpriteDataContainer[] | undefined = undefined;
     private _avatarData: IAvatarDataContainer | undefined = undefined;
     private _directionData: IDirectionDataContainer | undefined = undefined;
-    private _removeData: string[] = [];
+    private _removeData: AvatarFigurePartType[] = [];
     private _addData: IAddDataContainer[] = [];
     private _overrideFrames: Map<string, AvatarAnimationLayerData[][]> = new Map();
     private _overriddenActions: Map<string, string> | undefined = undefined;
@@ -24,7 +24,7 @@ export class Animation implements IAnimation {
 
     constructor(structure: AvatarStructure, data: IAssetAnimation) {
         this._id = data.name;
-        this._description = this._id;
+        this._description = data.desc ?? this._id;
         this._resetOnToggle = data.resetOnToggle ?? false;
 
         if (data.sprites && data.sprites.length) {
@@ -82,46 +82,34 @@ export class Animation implements IAnimation {
         return this._overriddenActions?.get(name);
     }
 
-    public getAnimatedBodyPartIds(frameCount: number, name: string = ''): string[] {
-        const ids: string[] = [];
+    public getAnimatedBodyPartIds(frameCount: number, name: string = ''): AvatarBodyPartType[] {
+        const ids: AvatarBodyPartType[] = [];
 
         for (const layer of this.getFrame(frameCount, name)) {
-            if (layer.type === AvatarAnimationLayerData.BODYPART) ids.push(layer.id);
+            if (layer.type === AvatarAnimationLayerData.BODYPART) ids.push(layer.id as AvatarBodyPartType);
 
             else if (layer.type === AvatarAnimationLayerData.FX) {
-                if (this._addData && this._addData.length) {
-                    for (const _local_5 of this._addData) {
-                        if (_local_5.id === layer.id) ids.push(_local_5.align);
-                    }
-                }
+                if (this._addData && this._addData.length) for (const _local_5 of this._addData) if (_local_5.id === layer.id && _local_5.align) ids.push(_local_5.align);
             }
         }
 
         return ids;
     }
 
-    public getLayerData(frameCount: number, spriteId: string, name: string = ''): IAnimationLayerData | undefined {
+    public getLayerData(frameCount: number, spriteId: AvatarBodyPartType, name: string = ''): IAnimationLayerData | undefined {
         for (const layer of this.getFrame(frameCount, name)) {
-            if (layer.id === spriteId) return layer;
+            if (layer.id === spriteId as string) return layer;
 
             if (layer.type === AvatarAnimationLayerData.FX) {
-                if (this._addData && this._addData.length) {
-                    for (const addData of this._addData) {
-                        if (((addData.align === spriteId) && (addData.id === layer.id))) return layer;
-                    }
-                }
+                if (this._addData && this._addData.length) for (const addData of this._addData) if (((addData.align === spriteId) && (addData.id === layer.id))) return layer;
             }
         }
 
         return undefined;
     }
 
-    public getAddData(id: string): IAddDataContainer | undefined {
-        if (this._addData) {
-            for (const add of this._addData) {
-                if (add.id === id) return add;
-            }
-        }
+    public getAddData(id: AvatarFigurePartType | string): IAddDataContainer | undefined {
+        if (this._addData) for (const add of this._addData) if (add.id === id) return add;
 
         return undefined;
     }
@@ -154,8 +142,8 @@ export class Animation implements IAnimation {
         return this._directionData;
     }
 
-    public get removeData(): string[] {
-        return this._removeData ?? Animation.EMPTY_ARRAY as string[];
+    public get removeData(): AvatarFigurePartType[] {
+        return this._removeData ?? Animation.EMPTY_ARRAY as AvatarFigurePartType[];
     }
 
     public get addData(): IAddDataContainer[] {

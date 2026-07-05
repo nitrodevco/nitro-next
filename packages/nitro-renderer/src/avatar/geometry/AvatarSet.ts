@@ -1,11 +1,11 @@
-﻿import type { AvatarSetType, IAssetAvatarSet } from "@nitrodevco/nitro-api";
+﻿import type { AvatarBodyPartType, AvatarSetType, IAssetAvatarSet } from "@nitrodevco/nitro-api";
 
 export class AvatarSet {
     private readonly _id: AvatarSetType;
     private readonly _isMain: boolean;
     private readonly _avatarSets: Map<AvatarSetType, AvatarSet> = new Map();
-    private readonly _bodyParts: string[] = [];
-    private readonly _allBodyParts: string[] = [];
+    private readonly _bodyParts: AvatarBodyPartType[] = [];
+    private readonly _allBodyParts: AvatarBodyPartType[] = [];
 
     constructor(set: IAssetAvatarSet) {
         this._id = set.id;
@@ -40,7 +40,7 @@ export class AvatarSet {
         return undefined;
     }
 
-    public getBodyParts(): string[] {
+    public getBodyParts(): AvatarBodyPartType[] {
         return [...this._allBodyParts];
     }
 

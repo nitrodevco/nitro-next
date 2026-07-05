@@ -1,6 +1,8 @@
+import { AvatarFigurePartType } from "#api/avatar/enum";
+
 export interface IAssetAvatarPartSetItem {
-    setType: string;
-    flippedSetType?: string;
-    removeSetType?: string;
+    setType: AvatarFigurePartType;
+    flippedSetType?: AvatarFigurePartType;
+    removeSetType?: AvatarFigurePartType;
     swim?: string;
 }

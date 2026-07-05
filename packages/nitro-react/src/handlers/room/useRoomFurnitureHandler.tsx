@@ -1,5 +1,5 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
-import { AvatarActionType, LegacyDataType, RoomObjectCategoryEnum, RoomObjectVariableEnum, SlideAvatarMoveType, Vector3d } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, LegacyDataType, RoomObjectCategoryEnum, RoomObjectVariableEnum, SlideAvatarMoveType, Vector3d } from "@nitrodevco/nitro-api";
 import { LegacyWallGeometry, ObjectMoveUpdateMessage } from "@nitrodevco/nitro-renderer";
 import { DiceValueMessage, ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectsDataUpdateMessage, ObjectsMessage, ObjectUpdateMessage, OneWayDoorStatusMessage, SlideObjectBundleMessage, WiredMovementsMessage } from "@nitrodevco/nitro-shared";
 
@@ -61,16 +61,16 @@ export const useRoomFurnitureHandler = () => {
 
         if (!object || object.type === 'monsterplant') return;
 
-        let posture = '';
+        let posture = AvatarActionStateType.None;
 
         switch (moveType) {
             case SlideAvatarMoveType.Move:
-                posture = AvatarActionType.Walk;
+                posture = AvatarActionStateType.Walk;
                 break;
             case SlideAvatarMoveType.Slide: {
-                posture = object.model.getValue<string>(RoomObjectVariableEnum.FigurePosture);
+                posture = object.model.getValue<AvatarActionStateType>(RoomObjectVariableEnum.FigurePosture);
 
-                if (posture === AvatarActionType.Walk) posture = AvatarActionType.Stand;
+                if (posture === AvatarActionStateType.Walk) posture = AvatarActionStateType.Stand;
                 break;
             }
         }

@@ -1,5 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { AvatarActionType } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, type IMessageDataWrapper } from "@nitrodevco/nitro-api";
 
 import { IRoomAvatarUpdate } from "./IRoomAvatarUpdate";
 
@@ -31,7 +30,7 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
 
         if (pieces.length >= 2) {
             switch (pieces[0]) {
-                case AvatarActionType.Walk: {
+                case AvatarActionStateType.Walk: {
                     const values = pieces[1].split(',');
 
                     if (values.length >= 3) {
@@ -43,13 +42,13 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
 
                     break;
                 }
-                case AvatarActionType.Sit: {
+                case AvatarActionStateType.Sit: {
                     if (pieces.length >= 3) item.canStandUp = (pieces[2] === '1');
 
                     item.height = parseFloat(pieces[1]);
                     break;
                 }
-                case AvatarActionType.Lay: {
+                case AvatarActionStateType.Lay: {
                     item.height = Math.abs(parseFloat(pieces[1]));
                     break;
                 }

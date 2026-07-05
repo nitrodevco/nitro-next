@@ -1,12 +1,12 @@
-import type { AvatarGeometryType, IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
+import type { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType, AvatarScaleType, IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
 
 import { ActionType } from './ActionType';
 
 export class ActionDefinition implements IActionDefinition {
-    private _id: string;
-    private _state: string;
+    private _id: AvatarActionType;
+    private _state: AvatarActionStateType;
     private _precedence: number;
-    private _activePartSet: string | undefined;
+    private _activePartSet: AvatarPartSetType | undefined;
     private _assetPartDefinition: string;
     private _lay: string | undefined;
     private _geometryType: AvatarGeometryType;
@@ -19,7 +19,7 @@ export class ActionDefinition implements IActionDefinition {
     private _types: Map<number, ActionType>;
     private _params: Map<string, string>;
     private _defaultParameterValue: string;
-    private _canvasOffsets: Map<string, Map<number, [number, number, number]>>;
+    private _canvasOffsets: Map<AvatarScaleType, Map<number, [number, number, number]>>;
 
     constructor(data: IAssetAvatarAction) {
         this._id = data.id;
@@ -60,11 +60,11 @@ export class ActionDefinition implements IActionDefinition {
         }
     }
 
-    public getOffsets(size: string, direction: number): [number, number, number] {
+    public getOffsets(size: AvatarScaleType, direction: number): [number, number, number] {
         return this._canvasOffsets.get(size)?.get(direction) ?? [0, 0, 0];
     }
 
-    public setOffsets(size: string, direction: number, offset: [number, number, number]): void {
+    public setOffsets(size: AvatarScaleType, direction: number, offset: [number, number, number]): void {
         let existing = this._canvasOffsets.get(size);
 
         if (!existing) {
@@ -104,11 +104,11 @@ export class ActionDefinition implements IActionDefinition {
         return type.isAnimated ?? false;
     }
 
-    public get id(): string {
+    public get id(): AvatarActionType {
         return this._id;
     }
 
-    public get state(): string {
+    public get state(): AvatarActionStateType {
         return this._state;
     }
 
@@ -116,7 +116,7 @@ export class ActionDefinition implements IActionDefinition {
         return this._precedence;
     }
 
-    public get activePartSet(): string | undefined {
+    public get activePartSet(): AvatarPartSetType | undefined {
         return this._activePartSet;
     }
 

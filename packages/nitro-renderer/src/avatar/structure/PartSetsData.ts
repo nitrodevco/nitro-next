@@ -1,11 +1,11 @@
-import type { IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
+import type { AvatarFigurePartType, AvatarPartSetType, IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
 
 import type { ActionDefinition } from '../actions';
 import { ActivePartSet, PartDefinition } from './parts';
 
 export class PartSetsData implements IFigureSetData {
     private _parts: Map<string, PartDefinition> = new Map();
-    private _activePartSets: Map<string, ActivePartSet> = new Map();
+    private _activePartSets: Map<AvatarPartSetType, ActivePartSet> = new Map();
 
     public parse(data: IAssetAvatarPartSets): boolean {
         if (data.partSet && (data.partSet.length > 0)) {
@@ -47,7 +47,7 @@ export class PartSetsData implements IFigureSetData {
         return false;
     }
 
-    public getActiveParts(definition: IActionDefinition): string[] {
+    public getActiveParts(definition: IActionDefinition): AvatarFigurePartType[] {
         if (!definition.activePartSet) return [];
 
         return this._activePartSets.get(definition.activePartSet)?.parts ?? [];
@@ -79,7 +79,7 @@ export class PartSetsData implements IFigureSetData {
         return this._parts;
     }
 
-    public get activePartSets(): Map<string, ActivePartSet> {
+    public get activePartSets(): Map<AvatarPartSetType, ActivePartSet> {
         return this._activePartSets;
     }
 }

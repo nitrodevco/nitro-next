@@ -1,5 +1,7 @@
+import { AvatarBodyPartType } from "#api/avatar";
+
 export interface IAssetAvatarBodyPartOffset {
-    id: string;
+    id: AvatarBodyPartType;
     dx: number;
     dy: number;
 }

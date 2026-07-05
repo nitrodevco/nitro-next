@@ -1,9 +1,10 @@
+import { AvatarGenderType } from '#api/avatar/enum';
 import type { IFigureDataHiddenLayer } from './IFigureDataHiddenLayer';
 import type { IFigureDataPart } from './IFigureDataPart';
 
 export interface IFigureDataSet {
     id: number;
-    gender?: string;
+    gender?: AvatarGenderType;
     club?: number;
     colorable?: boolean;
     selectable?: boolean;

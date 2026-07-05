@@ -1,4 +1,4 @@
-import { AvatarGeometryType, AvatarScaleType, AvatarSetType, type IAssetAvatarGeometryConfig } from "@nitrodevco/nitro-api";
+import { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, type IAssetAvatarGeometryConfig } from "@nitrodevco/nitro-api";
 
 export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
     direction: 0,
@@ -91,28 +91,28 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     main: true,
                     bodyParts: [
                         {
-                            id: 'top'
+                            id: AvatarBodyPartType.Top
                         },
                         {
-                            id: 'bottom'
+                            id: AvatarBodyPartType.Bottom
                         },
                         {
-                            id: 'behind'
+                            id: AvatarBodyPartType.Behind
                         },
                         {
-                            id: 'torso'
+                            id: AvatarBodyPartType.Torso
                         },
                         {
-                            id: 'leftitem'
+                            id: AvatarBodyPartType.LeftItem
                         },
                         {
-                            id: 'rightitem'
+                            id: AvatarBodyPartType.RightItem
                         },
                         {
-                            id: 'leftarm'
+                            id: AvatarBodyPartType.LeftArm
                         },
                         {
-                            id: 'rightarm'
+                            id: AvatarBodyPartType.RightArm
                         }
                     ]
                 },
@@ -120,47 +120,47 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     id: AvatarSetType.Head,
                     bodyParts: [
                         {
-                            id: 'head'
+                            id: AvatarBodyPartType.Head
                         }
                     ]
                 }
             ]
         }
     ],
-    'types': [
+    types: [
         {
             id: AvatarGeometryType.Vertical,
             bodyParts: [
                 {
-                    id: 'top',
+                    id: AvatarBodyPartType.Top,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 2.0
                 },
                 {
-                    id: 'bottom',
+                    id: AvatarBodyPartType.Bottom,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.001
                 },
                 {
-                    id: 'behind',
+                    id: AvatarBodyPartType.Behind,
                     x: 0,
                     y: 0,
                     z: 0.2,
                     radius: 0.3
                 },
                 {
-                    id: 'torso',
+                    id: AvatarBodyPartType.Torso,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.4,
                     items: [
                         {
-                            id: 'bd',
+                            id: AvatarFigurePartType.Body,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -171,7 +171,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'bds',
+                            id: AvatarFigurePartType.BodySwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -182,7 +182,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'ch',
+                            id: AvatarFigurePartType.Chest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -193,7 +193,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'sh',
+                            id: AvatarFigurePartType.Shoes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -204,7 +204,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lg',
+                            id: AvatarFigurePartType.Legs,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -215,7 +215,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ss',
+                            id: AvatarFigurePartType.Ss,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -226,7 +226,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cp',
+                            id: AvatarFigurePartType.ChestPrint,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -237,7 +237,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'wa',
+                            id: AvatarFigurePartType.WaistAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -248,7 +248,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cc',
+                            id: AvatarFigurePartType.CoatChest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -259,7 +259,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ca',
+                            id: AvatarFigurePartType.ChestAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -272,14 +272,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftitem',
+                    id: AvatarBodyPartType.LeftItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'li',
+                            id: AvatarFigurePartType.LeftHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -292,14 +292,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightitem',
+                    id: AvatarBodyPartType.RightItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'ri',
+                            id: AvatarFigurePartType.RightHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -312,14 +312,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftarm',
+                    id: AvatarBodyPartType.LeftArm,
                     x: -1,
                     y: 0,
                     z: -0.51,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'lh',
+                            id: AvatarFigurePartType.LeftHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -330,7 +330,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lhs',
+                            id: AvatarFigurePartType.LeftHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -341,7 +341,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ls',
+                            id: AvatarFigurePartType.LeftSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -352,7 +352,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lc',
+                            id: AvatarFigurePartType.LeftCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -365,14 +365,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightarm',
+                    id: AvatarBodyPartType.RightArm,
                     x: 1,
                     y: 0,
                     z: -0.51,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'rh',
+                            id: AvatarFigurePartType.RightHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -383,7 +383,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rhs',
+                            id: AvatarFigurePartType.RightHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -394,7 +394,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rs',
+                            id: AvatarFigurePartType.RightSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -405,7 +405,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rc',
+                            id: AvatarFigurePartType.RightCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -418,14 +418,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'head',
+                    id: AvatarBodyPartType.Head,
                     x: 0,
                     y: 0,
                     z: 0,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'hd',
+                            id: AvatarFigurePartType.Head,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -436,7 +436,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fc',
+                            id: AvatarFigurePartType.Face,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -447,7 +447,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ey',
+                            id: AvatarFigurePartType.Eyes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -458,7 +458,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'hr',
+                            id: AvatarFigurePartType.Hair,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -469,7 +469,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'hrb',
+                            id: AvatarFigurePartType.HairBig,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -480,7 +480,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fa',
+                            id: AvatarFigurePartType.FaceAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -491,7 +491,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ea',
+                            id: AvatarFigurePartType.EyeAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -502,7 +502,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ha',
+                            id: AvatarFigurePartType.HeadAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -513,7 +513,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'he',
+                            id: AvatarFigurePartType.HeadAccessoryExtra,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -531,35 +531,35 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
             id: AvatarGeometryType.Sitting,
             bodyParts: [
                 {
-                    id: 'top',
+                    id: AvatarBodyPartType.Top,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 2.0
                 },
                 {
-                    id: 'bottom',
+                    id: AvatarBodyPartType.Bottom,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.001
                 },
                 {
-                    id: 'behind',
+                    id: AvatarBodyPartType.Behind,
                     x: 0,
                     y: 0,
                     z: 0.2,
                     radius: 0.3
                 },
                 {
-                    id: 'torso',
+                    id: AvatarBodyPartType.Torso,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.4,
                     items: [
                         {
-                            id: 'bd',
+                            id: AvatarFigurePartType.Body,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -570,7 +570,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'bds',
+                            id: AvatarFigurePartType.BodySwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -581,7 +581,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'ch',
+                            id: AvatarFigurePartType.Chest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -592,7 +592,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'sh',
+                            id: AvatarFigurePartType.Shoes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -603,7 +603,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lg',
+                            id: AvatarFigurePartType.Legs,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -614,7 +614,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ss',
+                            id: AvatarFigurePartType.Ss,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -625,7 +625,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cp',
+                            id: AvatarFigurePartType.ChestPrint,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -636,7 +636,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'wa',
+                            id: AvatarFigurePartType.WaistAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -647,7 +647,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cc',
+                            id: AvatarFigurePartType.CoatChest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -658,7 +658,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ca',
+                            id: AvatarFigurePartType.ChestAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -671,14 +671,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftitem',
+                    id: AvatarBodyPartType.LeftItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'li',
+                            id: AvatarFigurePartType.LeftHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -691,14 +691,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightitem',
+                    id: AvatarBodyPartType.RightItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'ri',
+                            id: AvatarFigurePartType.RightHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -711,14 +711,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftarm',
+                    id: AvatarBodyPartType.LeftArm,
                     x: -1,
                     y: 0,
                     z: -0.51,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'lh',
+                            id: AvatarFigurePartType.LeftHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -729,7 +729,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lhs',
+                            id: AvatarFigurePartType.LeftHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -740,7 +740,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ls',
+                            id: AvatarFigurePartType.LeftSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -751,7 +751,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lc',
+                            id: AvatarFigurePartType.LeftCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -764,14 +764,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightarm',
+                    id: AvatarBodyPartType.RightArm,
                     x: 1,
                     y: 0,
                     z: -0.51,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'rh',
+                            id: AvatarFigurePartType.RightHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -782,7 +782,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rhs',
+                            id: AvatarFigurePartType.RightHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -793,7 +793,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rs',
+                            id: AvatarFigurePartType.RightSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -804,7 +804,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rc',
+                            id: AvatarFigurePartType.RightCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -817,14 +817,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'head',
+                    id: AvatarBodyPartType.Head,
                     x: 0,
                     y: 0,
                     z: 0,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'hd',
+                            id: AvatarFigurePartType.Head,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -835,7 +835,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fc',
+                            id: AvatarFigurePartType.Face,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -846,7 +846,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ey',
+                            id: AvatarFigurePartType.Eyes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -857,7 +857,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'hr',
+                            id: AvatarFigurePartType.Hair,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -868,7 +868,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'hrb',
+                            id: AvatarFigurePartType.HairBig,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -879,7 +879,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fa',
+                            id: AvatarFigurePartType.FaceAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -890,7 +890,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ea',
+                            id: AvatarFigurePartType.EyeAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -901,7 +901,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ha',
+                            id: AvatarFigurePartType.HeadAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -912,7 +912,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'he',
+                            id: AvatarFigurePartType.HeadAccessoryExtra,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -930,14 +930,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
             id: AvatarGeometryType.Horizontal,
             bodyParts: [
                 {
-                    id: 'torso',
+                    id: AvatarBodyPartType.Torso,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.4,
                     items: [
                         {
-                            id: 'bd',
+                            id: AvatarFigurePartType.Body,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -948,7 +948,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'bds',
+                            id: AvatarFigurePartType.BodySwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -959,7 +959,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'ch',
+                            id: AvatarFigurePartType.Chest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -970,7 +970,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cp',
+                            id: AvatarFigurePartType.ChestPrint,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -981,7 +981,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'sh',
+                            id: AvatarFigurePartType.Shoes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -992,7 +992,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lg',
+                            id: AvatarFigurePartType.Legs,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1003,7 +1003,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ss',
+                            id: AvatarFigurePartType.Ss,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1014,7 +1014,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'wa',
+                            id: AvatarFigurePartType.WaistAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1025,7 +1025,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cc',
+                            id: AvatarFigurePartType.CoatChest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1036,7 +1036,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ca',
+                            id: AvatarFigurePartType.ChestAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1049,14 +1049,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftitem',
+                    id: AvatarBodyPartType.LeftItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'li',
+                            id: AvatarFigurePartType.LeftHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1069,14 +1069,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightitem',
+                    id: AvatarBodyPartType.RightItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'ri',
+                            id: AvatarFigurePartType.RightHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1089,14 +1089,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftarm',
+                    id: AvatarBodyPartType.LeftArm,
                     x: -1,
                     y: 0,
                     z: -0.51,
                     radius: 0.6,
                     items: [
                         {
-                            id: 'lh',
+                            id: AvatarFigurePartType.LeftHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1107,7 +1107,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lhs',
+                            id: AvatarFigurePartType.LeftHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1118,7 +1118,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ls',
+                            id: AvatarFigurePartType.LeftSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1129,7 +1129,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lc',
+                            id: AvatarFigurePartType.LeftCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1142,14 +1142,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightarm',
+                    id: AvatarBodyPartType.RightArm,
                     x: 1,
                     y: 0,
                     z: -0.51,
                     radius: 0.6,
                     items: [
                         {
-                            id: 'rh',
+                            id: AvatarFigurePartType.RightHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1160,7 +1160,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rhs',
+                            id: AvatarFigurePartType.RightHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1171,7 +1171,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rs',
+                            id: AvatarFigurePartType.RightSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1182,7 +1182,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rc',
+                            id: AvatarFigurePartType.RightCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1195,14 +1195,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'head',
+                    id: AvatarBodyPartType.Head,
                     x: 0,
                     y: 0,
                     z: 0,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'hd',
+                            id: AvatarFigurePartType.Head,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1213,7 +1213,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fc',
+                            id: AvatarFigurePartType.Face,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1224,7 +1224,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ey',
+                            id: AvatarFigurePartType.Eyes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1235,7 +1235,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'hr',
+                            id: AvatarFigurePartType.Hair,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1246,7 +1246,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'hrb',
+                            id: AvatarFigurePartType.HairBig,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1257,7 +1257,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fa',
+                            id: AvatarFigurePartType.FaceAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1268,7 +1268,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ea',
+                            id: AvatarFigurePartType.EyeAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1279,7 +1279,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ha',
+                            id: AvatarFigurePartType.HeadAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1290,7 +1290,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'he',
+                            id: AvatarFigurePartType.HeadAccessoryExtra,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1308,14 +1308,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
             id: AvatarGeometryType.SnowwarsHorizontal,
             bodyParts: [
                 {
-                    id: 'torso',
+                    id: AvatarBodyPartType.Torso,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.4,
                     items: [
                         {
-                            id: 'bd',
+                            id: AvatarFigurePartType.Body,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1326,7 +1326,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'bds',
+                            id: AvatarFigurePartType.BodySwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1337,7 +1337,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'ch',
+                            id: AvatarFigurePartType.Chest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1348,7 +1348,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cp',
+                            id: AvatarFigurePartType.ChestPrint,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1359,7 +1359,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'sh',
+                            id: AvatarFigurePartType.Shoes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1370,7 +1370,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lg',
+                            id: AvatarFigurePartType.Legs,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1381,7 +1381,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ss',
+                            id: AvatarFigurePartType.Ss,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1392,7 +1392,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'wa',
+                            id: AvatarFigurePartType.WaistAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1403,7 +1403,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'cc',
+                            id: AvatarFigurePartType.CoatChest,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1414,7 +1414,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ca',
+                            id: AvatarFigurePartType.ChestAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1427,14 +1427,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftitem',
+                    id: AvatarBodyPartType.LeftItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'li',
+                            id: AvatarFigurePartType.LeftHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1447,14 +1447,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightitem',
+                    id: AvatarBodyPartType.RightItem,
                     x: 0,
                     y: 0,
                     z: -0.29,
                     radius: 0.3,
                     items: [
                         {
-                            id: 'ri',
+                            id: AvatarFigurePartType.RightHandItem,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1467,14 +1467,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'leftarm',
+                    id: AvatarBodyPartType.LeftArm,
                     x: -1,
                     y: 0,
                     z: -0.51,
                     radius: 0.6,
                     items: [
                         {
-                            id: 'lh',
+                            id: AvatarFigurePartType.LeftHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1485,7 +1485,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lhs',
+                            id: AvatarFigurePartType.LeftHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1496,7 +1496,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ls',
+                            id: AvatarFigurePartType.LeftSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1507,7 +1507,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'lc',
+                            id: AvatarFigurePartType.LeftCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1520,14 +1520,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'rightarm',
+                    id: AvatarBodyPartType.RightArm,
                     x: 1,
                     y: 0,
                     z: -0.51,
                     radius: 0.6,
                     items: [
                         {
-                            id: 'rh',
+                            id: AvatarFigurePartType.RightHand,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1538,7 +1538,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rhs',
+                            id: AvatarFigurePartType.RightHandSwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1549,7 +1549,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rs',
+                            id: AvatarFigurePartType.RightSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1560,7 +1560,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'rc',
+                            id: AvatarFigurePartType.RightCoatSleeve,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1573,14 +1573,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'head',
+                    id: AvatarBodyPartType.Head,
                     x: 0,
                     y: 0,
                     z: 0,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'hd',
+                            id: AvatarFigurePartType.Head,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1591,7 +1591,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fc',
+                            id: AvatarFigurePartType.Face,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1602,7 +1602,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ey',
+                            id: AvatarFigurePartType.Eyes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1613,7 +1613,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'hr',
+                            id: AvatarFigurePartType.Hair,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1624,7 +1624,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'hrb',
+                            id: AvatarFigurePartType.HairBig,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1635,7 +1635,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fa',
+                            id: AvatarFigurePartType.FaceAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1646,7 +1646,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ea',
+                            id: AvatarFigurePartType.EyeAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1657,7 +1657,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ha',
+                            id: AvatarFigurePartType.HeadAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1668,7 +1668,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'he',
+                            id: AvatarFigurePartType.HeadAccessoryExtra,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1686,14 +1686,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
             id: AvatarGeometryType.Swim,
             bodyParts: [
                 {
-                    id: 'torso',
+                    id: AvatarBodyPartType.Torso,
                     x: 0,
                     y: 0,
                     z: 0.0,
                     radius: 0.4,
                     items: [
                         {
-                            id: 'bds',
+                            id: AvatarFigurePartType.BodySwim,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1704,7 +1704,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'ss',
+                            id: AvatarFigurePartType.Ss,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1717,14 +1717,14 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                     ]
                 },
                 {
-                    id: 'head',
+                    id: AvatarBodyPartType.Head,
                     x: 0,
                     y: 0,
                     z: 0,
                     radius: 0.5,
                     items: [
                         {
-                            id: 'hd',
+                            id: AvatarFigurePartType.Head,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1735,7 +1735,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fc',
+                            id: AvatarFigurePartType.Face,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1746,7 +1746,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ey',
+                            id: AvatarFigurePartType.Eyes,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1757,7 +1757,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'hr',
+                            id: AvatarFigurePartType.Hair,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1768,7 +1768,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'hrb',
+                            id: AvatarFigurePartType.HairBig,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1779,7 +1779,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: true
                         },
                         {
-                            id: 'fa',
+                            id: AvatarFigurePartType.FaceAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1790,7 +1790,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ea',
+                            id: AvatarFigurePartType.EyeAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1801,7 +1801,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'ha',
+                            id: AvatarFigurePartType.HeadAccessory,
                             x: 0,
                             y: 0,
                             z: 0,
@@ -1812,7 +1812,7 @@ export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
                             double: false
                         },
                         {
-                            id: 'he',
+                            id: AvatarFigurePartType.HeadAccessoryExtra,
                             x: 0,
                             y: 0,
                             z: 0,

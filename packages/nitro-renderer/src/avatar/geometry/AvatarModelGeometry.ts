@@ -1,4 +1,4 @@
-import type { AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarImage } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { AvatarCanvas } from '../structure';
 import { AvatarSet } from './AvatarSet';
@@ -9,9 +9,8 @@ import { Vector3D } from './Vector3D';
 export class AvatarModelGeometry {
     private _camera: Vector3D;
     private _avatarSet: AvatarSet;
-    private _geometryTypes: Map<AvatarGeometryType, Map<string, GeometryBodyPart>> = new Map();
+    private _geometryTypes: Map<AvatarGeometryType, Map<AvatarBodyPartType, GeometryBodyPart>> = new Map();
     private _itemIdToBodyPartMap: Map<AvatarGeometryType, Map<string, GeometryBodyPart>> = new Map();
-    private _transformation: Matrix4x4 = new Matrix4x4();
     private _canvases: Map<AvatarScaleType, Map<AvatarGeometryType, AvatarCanvas>> = new Map();
 
     constructor(config: IAssetAvatarGeometryConfig) {
@@ -43,7 +42,7 @@ export class AvatarModelGeometry {
             for (const type of config.types) {
                 if (!type) continue;
 
-                const bodyParts: Map<string, GeometryBodyPart> = new Map();
+                const bodyParts: Map<AvatarBodyPartType, GeometryBodyPart> = new Map();
                 const itemIds: Map<string, GeometryBodyPart> = new Map();
 
                 if (type.bodyParts && (type.bodyParts.length > 0)) {
@@ -76,7 +75,7 @@ export class AvatarModelGeometry {
         }
     }
 
-    public getBodyPartIdsInAvatarSet(setType: AvatarSetType): string[] {
+    public getBodyPartIdsInAvatarSet(setType: AvatarSetType): AvatarBodyPartType[] {
         return this._avatarSet.findAvatarSet(setType)?.getBodyParts() ?? [];
     }
 
@@ -88,8 +87,8 @@ export class AvatarModelGeometry {
         return this._canvases.get(scale)?.get(geometryType) ?? undefined;
     }
 
-    public getBodyPart(geometryType: AvatarGeometryType, partId: string): GeometryBodyPart | undefined {
-        return this.getBodyPartsOfType(geometryType).get(partId);
+    public getBodyPart(geometryType: AvatarGeometryType, bodyPartId: AvatarBodyPartType): GeometryBodyPart | undefined {
+        return this.getBodyPartsOfType(geometryType).get(bodyPartId);
     }
 
     public getBodyPartOfItem(geometryType: AvatarGeometryType, _arg_2: string, avatar: IAvatarImage): GeometryBodyPart | undefined {
@@ -114,20 +113,18 @@ export class AvatarModelGeometry {
         return undefined;
     }
 
-    public getBodyPartsAtAngle(setType: AvatarSetType, _arg_2: number, geometryType: AvatarGeometryType): string[] {
+    public getBodyPartsAtAngle(setType: AvatarSetType, direction: number, geometryType: AvatarGeometryType): AvatarBodyPartType[] {
         if (!geometryType) return [];
 
         const geometryParts = this.getBodyPartsOfType(geometryType);
         const parts = this.getBodyPartsInAvatarSet(geometryParts, setType);
         const sets: [number, GeometryBodyPart][] = [];
-        const ids: string[] = [];
-
-        this._transformation = Matrix4x4.getYRotationMatrix(_arg_2);
+        const transformation = Matrix4x4.getYRotationMatrix(direction);
 
         for (const part of parts.values()) {
             if (!part) continue;
 
-            part.applyTransform(this._transformation);
+            part.applyTransform(transformation);
 
             sets.push([part.getDistance(this._camera), part]);
         }
@@ -143,24 +140,14 @@ export class AvatarModelGeometry {
             return 0;
         });
 
-        for (const set of sets) {
-            if (!set) continue;
-
-            ids.push(set[1].id);
-        }
-
-        return ids;
+        return sets.map(x => x[1].id);
     }
 
-    public getParts(geometryType: AvatarGeometryType, partId: string, _arg_3: number, _arg_4: unknown[], avatar: IAvatarImage): string[] {
-        if (this.hasBodyPart(geometryType, partId)) {
-            const part = this.getBodyPartsOfType(geometryType).get(partId);
+    public getParts(geometryType: AvatarGeometryType, bodyPartId: AvatarBodyPartType, direction: number, activeParts: string[], avatar: IAvatarImage): AvatarFigurePartType[] {
+        if (this.hasBodyPart(geometryType, bodyPartId)) {
+            const part = this.getBodyPartsOfType(geometryType).get(bodyPartId);
 
-            if (part) {
-                this._transformation = Matrix4x4.getYRotationMatrix(_arg_3);
-
-                return part.getParts(this._transformation, this._camera, _arg_4, avatar);
-            }
+            if (part) return part.getParts(Matrix4x4.getYRotationMatrix(direction), this._camera, activeParts, avatar);
         }
 
         return [];
@@ -170,20 +157,20 @@ export class AvatarModelGeometry {
         return !!this._geometryTypes.get(geometryType);
     }
 
-    private hasBodyPart(geometryType: AvatarGeometryType, partId: string): boolean {
+    private hasBodyPart(geometryType: AvatarGeometryType, bodyPartId: AvatarBodyPartType): boolean {
         if (this.typeExists(geometryType)) {
             const existing = this._geometryTypes.get(geometryType);
 
-            if (existing && existing.get(partId)) return true;
+            if (existing && existing.get(bodyPartId)) return true;
         }
 
         return false;
     }
 
-    private getBodyPartsOfType(geometryType: AvatarGeometryType): Map<string, GeometryBodyPart> {
-        if (this.typeExists(geometryType)) return this._geometryTypes.get(geometryType) ?? new Map<string, GeometryBodyPart>();
+    private getBodyPartsOfType(geometryType: AvatarGeometryType): Map<AvatarBodyPartType, GeometryBodyPart> {
+        if (this.typeExists(geometryType)) return this._geometryTypes.get(geometryType) ?? new Map<AvatarBodyPartType, GeometryBodyPart>();
 
-        return new Map<string, GeometryBodyPart>();
+        return new Map<AvatarBodyPartType, GeometryBodyPart>();
     }
 
     private getBodyPartsInAvatarSet(k: Map<string, GeometryBodyPart>, setType: AvatarSetType): GeometryBodyPart[] {

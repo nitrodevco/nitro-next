@@ -1,1291 +1,1291 @@
-import { AvatarFigurePartType, type IAssetAvatarAnimation } from "@nitrodevco/nitro-api";
+import { AvatarBodyPartType, AvatarFigurePartType, type IAssetAvatarAnimation } from "@nitrodevco/nitro-api";
 
 export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
     {
-        'id': 'Default',
-        'parts': [
+        id: 'Default',
+        parts: [
             {
-                'setType': AvatarFigurePartType.Body,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.Body,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.BodySwim,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.BodySwim,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Legs,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.Legs,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Shoes,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.Shoes,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Chest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.Chest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.CoatChest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.CoatChest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftHand,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.LeftHand,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftHandSwim,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.LeftHandSwim,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightHand,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.RightHand,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightHandSwim,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.RightHandSwim,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.LeftSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.RightSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.HeadAccessoryExtra,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.HeadAccessoryExtra,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.WaistAccessory,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.WaistAccessory,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             }
         ]
     },
     {
-        'id': 'Sit',
-        'parts': [
+        id: 'Sit',
+        parts: [
             {
-                'setType': AvatarFigurePartType.Body,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.Body,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.BodySwim,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.BodySwim,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Legs,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.Legs,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Shoes,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.Shoes,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Chest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.Chest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.CoatChest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.CoatChest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'sit' },
-                    { 'number': 1, 'assetPartDefinition': 'sit' },
-                    { 'number': 2, 'assetPartDefinition': 'sit' },
-                    { 'number': 3, 'assetPartDefinition': 'sit' },
-                    { 'number': 4, 'assetPartDefinition': 'sit' },
-                    { 'number': 5, 'assetPartDefinition': 'sit' },
-                    { 'number': 6, 'assetPartDefinition': 'sit' },
-                    { 'number': 7, 'assetPartDefinition': 'sit' }
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'sit' },
+                    { number: 1, assetPartDefinition: 'sit' },
+                    { number: 2, assetPartDefinition: 'sit' },
+                    { number: 3, assetPartDefinition: 'sit' },
+                    { number: 4, assetPartDefinition: 'sit' },
+                    { number: 5, assetPartDefinition: 'sit' },
+                    { number: 6, assetPartDefinition: 'sit' },
+                    { number: 7, assetPartDefinition: 'sit' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.WaistAccessory,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'std' },
-                    { 'number': 1, 'assetPartDefinition': 'std' },
-                    { 'number': 2, 'assetPartDefinition': 'std' },
-                    { 'number': 3, 'assetPartDefinition': 'std' },
-                    { 'number': 4, 'assetPartDefinition': 'std' },
-                    { 'number': 5, 'assetPartDefinition': 'std' },
-                    { 'number': 6, 'assetPartDefinition': 'std' },
-                    { 'number': 7, 'assetPartDefinition': 'std' }
+                setType: AvatarFigurePartType.WaistAccessory,
+                frames: [
+                    { number: 0, assetPartDefinition: 'std' },
+                    { number: 1, assetPartDefinition: 'std' },
+                    { number: 2, assetPartDefinition: 'std' },
+                    { number: 3, assetPartDefinition: 'std' },
+                    { number: 4, assetPartDefinition: 'std' },
+                    { number: 5, assetPartDefinition: 'std' },
+                    { number: 6, assetPartDefinition: 'std' },
+                    { number: 7, assetPartDefinition: 'std' }
                 ]
             }
         ]
     },
     {
-        'id': 'Lay',
-        'parts': [
+        id: 'Lay',
+        parts: [
             {
-                'setType': AvatarFigurePartType.Body,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.Body,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.BodySwim,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.BodySwim,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Legs,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.Legs,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Shoes,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.Shoes,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Chest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.Chest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.CoatChest,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.CoatChest,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.WaistAccessory,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.WaistAccessory,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.HeadAccessoryExtra,
-                'frames': [
-                    { 'number': 0, 'assetPartDefinition': 'lay' },
-                    { 'number': 1, 'assetPartDefinition': 'lay' },
-                    { 'number': 2, 'assetPartDefinition': 'lay' },
-                    { 'number': 3, 'assetPartDefinition': 'lay' },
-                    { 'number': 4, 'assetPartDefinition': 'lay' },
-                    { 'number': 5, 'assetPartDefinition': 'lay' },
-                    { 'number': 6, 'assetPartDefinition': 'lay' },
-                    { 'number': 7, 'assetPartDefinition': 'lay' }
+                setType: AvatarFigurePartType.HeadAccessoryExtra,
+                frames: [
+                    { number: 0, assetPartDefinition: 'lay' },
+                    { number: 1, assetPartDefinition: 'lay' },
+                    { number: 2, assetPartDefinition: 'lay' },
+                    { number: 3, assetPartDefinition: 'lay' },
+                    { number: 4, assetPartDefinition: 'lay' },
+                    { number: 5, assetPartDefinition: 'lay' },
+                    { number: 6, assetPartDefinition: 'lay' },
+                    { number: 7, assetPartDefinition: 'lay' }
                 ]
             }
         ]
     },
     {
-        'id': 'Move',
-        'parts': [
+        id: 'Move',
+        parts: [
             {
-                'setType': AvatarFigurePartType.Body,
-                'frames': [
+                setType: AvatarFigurePartType.Body,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.BodySwim,
-                'frames': [
+                setType: AvatarFigurePartType.BodySwim,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Ss,
-                'frames': [
+                setType: AvatarFigurePartType.Ss,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Legs,
-                'frames': [
+                setType: AvatarFigurePartType.Legs,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Shoes,
-                'frames': [
+                setType: AvatarFigurePartType.Shoes,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftHand,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftHandSwim,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHandSwim,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.LeftSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightHand,
-                'frames': [
+                setType: AvatarFigurePartType.RightHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightHandSwim,
-                'frames': [
+                setType: AvatarFigurePartType.RightHandSwim,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.RightSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Chest,
-                'frames': [
+                setType: AvatarFigurePartType.Chest,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wlk'
+                        number: 0,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wlk'
+                        number: 1,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 2,
-                        'assetPartDefinition': 'wlk'
+                        number: 2,
+                        assetPartDefinition: 'wlk'
                     },
                     {
-                        'number': 3,
-                        'assetPartDefinition': 'wlk'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        'id': 'Wave',
-        'parts': [
-            {
-                'setType': AvatarFigurePartType.LeftHand,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.LeftHandSwim,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.LeftSleeve,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.Chest,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 2,
-                        'assetPartDefinition': 'wav'
-                    },
-                    {
-                        'number': 3,
-                        'assetPartDefinition': 'wav'
+                        number: 3,
+                        assetPartDefinition: 'wlk'
                     }
                 ]
             }
         ]
     },
     {
-        'id': 'Talk',
-        'parts': [
+        id: 'Wave',
+        parts: [
             {
-                'setType': AvatarFigurePartType.Head,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'spk'
+                        number: 0,
+                        assetPartDefinition: 'wav'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'spk'
+                        number: 1,
+                        assetPartDefinition: 'wav'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Face,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHandSwim,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'spk'
+                        number: 0,
+                        assetPartDefinition: 'wav'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'spk'
+                        number: 1,
+                        assetPartDefinition: 'wav'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.FaceAccessory,
-                'frames': [
+                setType: AvatarFigurePartType.LeftSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'spk'
+                        number: 0,
+                        assetPartDefinition: 'wav'
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'spk'
+                        number: 1,
+                        assetPartDefinition: 'wav'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'wav'
+                    },
+                    {
+                        number: 1,
+                        assetPartDefinition: 'wav'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.Chest,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'wav'
+                    },
+                    {
+                        number: 1,
+                        assetPartDefinition: 'wav'
+                    },
+                    {
+                        number: 2,
+                        assetPartDefinition: 'wav'
+                    },
+                    {
+                        number: 3,
+                        assetPartDefinition: 'wav'
                     }
                 ]
             }
         ]
     },
     {
-        'id': 'Sign',
-        'parts': [
+        id: 'Talk',
+        parts: [
             {
-                'setType': AvatarFigurePartType.LeftHand,
-                'frames': [
+                setType: AvatarFigurePartType.Head,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'sig'
+                        number: 0,
+                        assetPartDefinition: 'spk'
+                    },
+                    {
+                        number: 1,
+                        assetPartDefinition: 'spk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftHandItem,
-                'frames': [
+                setType: AvatarFigurePartType.Face,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'sig'
+                        number: 0,
+                        assetPartDefinition: 'spk'
+                    },
+                    {
+                        number: 1,
+                        assetPartDefinition: 'spk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.FaceAccessory,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
+                        number: 0,
+                        assetPartDefinition: 'spk'
+                    },
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wav'
+                        number: 1,
+                        assetPartDefinition: 'spk'
                     }
                 ]
             }
         ]
     },
     {
-        'id': 'Respect',
-        'parts': [
+        id: 'Sign',
+        parts: [
             {
-                'setType': AvatarFigurePartType.LeftHand,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'respect',
-                        'repeats': 15
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'respect',
-                        'repeats': 15
+                        number: 0,
+                        assetPartDefinition: 'sig'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHandItem,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wav',
-                        'repeats': 15
-                    },
-                    {
-                        'number': 1,
-                        'assetPartDefinition': 'wav',
-                        'repeats': 15
+                        number: 0,
+                        assetPartDefinition: 'sig'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.LeftCoatSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.LeftSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'wav',
-                        'repeats': 15
-                    },
+                        number: 0,
+                        assetPartDefinition: 'wav'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'wav',
-                        'repeats': 15
+                        number: 0,
+                        assetPartDefinition: 'wav'
                     }
                 ]
             }
         ]
     },
     {
-        'id': 'Blow',
-        'parts': [
+        id: 'Respect',
+        parts: [
             {
-                'setType': AvatarFigurePartType.RightHand,
-                'frames': [
+                setType: AvatarFigurePartType.LeftHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'blw',
-                        'repeats': 10
+                        number: 0,
+                        assetPartDefinition: 'respect',
+                        repeats: 15
                     },
                     {
-                        'number': 1,
-                        'assetPartDefinition': 'blw',
-                        'repeats': 10
+                        number: 1,
+                        assetPartDefinition: 'respect',
+                        repeats: 15
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.LeftSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'drk'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'drk'
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.RightHandItem,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': ''
-                    }
-                ]
-            },
-            {
-                'setType': AvatarFigurePartType.Eyes,
-                'frames': [
-                    {
-                        'number': 0,
-                        'assetPartDefinition': 'std',
-                        'repeats': 10
+                        number: 0,
+                        assetPartDefinition: 'wav',
+                        repeats: 15
                     },
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'eyb',
-                        'repeats': 10
+                        number: 1,
+                        assetPartDefinition: 'wav',
+                        repeats: 15
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Face,
-                'frames': [
+                setType: AvatarFigurePartType.LeftCoatSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'std',
-                        'repeats': 10
+                        number: 0,
+                        assetPartDefinition: 'wav',
+                        repeats: 15
                     },
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'blw',
-                        'repeats': 10
+                        number: 1,
+                        assetPartDefinition: 'wav',
+                        repeats: 15
                     }
                 ]
             }
         ]
     },
     {
-        'id': 'Laugh',
-        'parts': [
+        id: 'Blow',
+        parts: [
             {
-                'setType': AvatarFigurePartType.RightHand,
-                'frames': [
+                setType: AvatarFigurePartType.RightHand,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'blw'
+                        number: 0,
+                        assetPartDefinition: 'blw',
+                        repeats: 10
+                    },
+                    {
+                        number: 1,
+                        assetPartDefinition: 'blw',
+                        repeats: 10
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.RightSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'drk'
+                        number: 0,
+                        assetPartDefinition: 'drk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightCoatSleeve,
-                'frames': [
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'drk'
+                        number: 0,
+                        assetPartDefinition: 'drk'
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.RightHandItem,
-                'frames': [
+                setType: AvatarFigurePartType.RightHandItem,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': ''
+                        number: 0,
+                        assetPartDefinition: ''
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Eyes,
-                'frames': [
+                setType: AvatarFigurePartType.Eyes,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'std',
-                        'repeats': 2
+                        number: 0,
+                        assetPartDefinition: 'std',
+                        repeats: 10
+                    },
+                    {
+                        number: 0,
+                        assetPartDefinition: 'eyb',
+                        repeats: 10
                     }
                 ]
             },
             {
-                'setType': AvatarFigurePartType.Face,
-                'frames': [
+                setType: AvatarFigurePartType.Face,
+                frames: [
                     {
-                        'number': 0,
-                        'assetPartDefinition': 'sml'
+                        number: 0,
+                        assetPartDefinition: 'std',
+                        repeats: 10
+                    },
+                    {
+                        number: 0,
+                        assetPartDefinition: 'blw',
+                        repeats: 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'Laugh',
+        parts: [
+            {
+                setType: AvatarFigurePartType.RightHand,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'blw'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.RightSleeve,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'drk'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.RightCoatSleeve,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'drk'
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.RightHandItem,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: ''
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.Eyes,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'std',
+                        repeats: 2
+                    }
+                ]
+            },
+            {
+                setType: AvatarFigurePartType.Face,
+                frames: [
+                    {
+                        number: 0,
+                        assetPartDefinition: 'sml'
                     }
                 ]
             }
         ],
-        'offsets': {
-            'frames': [
+        offsets: {
+            frames: [
                 {
-                    'id': 0,
-                    'directions': [
+                    id: 0,
+                    directions: [
                         {
-                            'id': 0,
-                            'bodyParts': [
+                            id: 0,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 1,
-                            'bodyParts': [
+                            id: 1,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 2,
-                            'bodyParts': [
+                            id: 2,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 3,
-                            'bodyParts': [
+                            id: 3,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 4,
-                            'bodyParts': [
+                            id: 4,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 5,
-                            'bodyParts': [
+                            id: 5,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 6,
-                            'bodyParts': [
+                            id: 6,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         },
                         {
-                            'id': 7,
-                            'bodyParts': [
+                            id: 7,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 1
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 1
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    'id': 1,
-                    'directions': [
+                    id: 1,
+                    directions: [
                         {
-                            'id': 0,
-                            'bodyParts': [
+                            id: 0,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 1,
-                            'bodyParts': [
+                            id: 1,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 2,
-                            'bodyParts': [
+                            id: 2,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 3,
-                            'bodyParts': [
+                            id: 3,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 4,
-                            'bodyParts': [
+                            id: 4,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 5,
-                            'bodyParts': [
+                            id: 5,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 6,
-                            'bodyParts': [
+                            id: 6,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         },
                         {
-                            'id': 7,
-                            'bodyParts': [
+                            id: 7,
+                            bodyParts: [
                                 {
-                                    'id': 'head',
-                                    'dx': 0,
-                                    'dy': 0
+                                    id: AvatarBodyPartType.Head,
+                                    dx: 0,
+                                    dy: 0
                                 }
                             ]
                         }

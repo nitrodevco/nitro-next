@@ -1,416 +1,416 @@
-import type { IAssetAvatarPartSets } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, AvatarPartSetType, type IAssetAvatarPartSets } from "@nitrodevco/nitro-api";
 
 export const HabboAvatarPartSets: IAssetAvatarPartSets = {
-    'partSet': [
+    partSet: [
         {
-            'setType': 'ri',
-            'flippedSetType': 'ri'
+            setType: AvatarFigurePartType.RightHandItem,
+            flippedSetType: AvatarFigurePartType.RightHandItem
         },
         {
-            'setType': 'ri',
-            'flippedSetType': 'ri'
+            setType: AvatarFigurePartType.RightHandItem,
+            flippedSetType: AvatarFigurePartType.RightHandItem
         },
         {
-            'setType': 'rh',
-            'flippedSetType': 'lh'
+            setType: AvatarFigurePartType.RightHand,
+            flippedSetType: AvatarFigurePartType.LeftHand
         },
         {
-            'setType': 'rhs',
-            'flippedSetType': 'lhs'
+            setType: AvatarFigurePartType.RightHandSwim,
+            flippedSetType: AvatarFigurePartType.LeftHandSwim
         },
         {
-            'setType': 'rs',
-            'swim': '0',
-            'flippedSetType': 'ls'
+            setType: AvatarFigurePartType.RightSleeve,
+            swim: '0',
+            flippedSetType: AvatarFigurePartType.LeftSleeve
         },
         {
-            'setType': 'rc',
-            'flippedSetType': 'lc'
+            setType: AvatarFigurePartType.RightCoatSleeve,
+            flippedSetType: AvatarFigurePartType.LeftCoatSleeve
         },
         {
-            'setType': 'bd'
+            setType: AvatarFigurePartType.Body
         },
         {
-            'setType': 'bds'
+            setType: AvatarFigurePartType.BodySwim
         },
         {
-            'setType': 'ss'
+            setType: AvatarFigurePartType.Ss
         },
         {
-            'setType': 'sh'
+            setType: AvatarFigurePartType.Shoes
         },
         {
-            'setType': 'lg'
+            setType: AvatarFigurePartType.Legs
         },
         {
-            'setType': 'ch'
+            setType: AvatarFigurePartType.Chest
         },
         {
-            'setType': 'cp'
+            setType: AvatarFigurePartType.ChestPrint
         },
         {
-            'setType': 'cc'
+            setType: AvatarFigurePartType.CoatChest
         },
         {
-            'setType': 'hd'
+            setType: AvatarFigurePartType.Head
         },
         {
-            'setType': 'fc'
+            setType: AvatarFigurePartType.Face
         },
         {
-            'setType': 'ey'
+            setType: AvatarFigurePartType.Eyes
         },
         {
-            'setType': 'hr'
+            setType: AvatarFigurePartType.Hair
         },
         {
-            'setType': 'hrb',
-            'removeSetType': 'hr'
+            setType: AvatarFigurePartType.HairBig,
+            removeSetType: AvatarFigurePartType.Hair
         },
         {
-            'setType': 'li',
-            'flippedSetType': 'li'
+            setType: AvatarFigurePartType.LeftHandItem,
+            flippedSetType: AvatarFigurePartType.LeftHandItem
         },
         {
-            'setType': 'lh',
-            'flippedSetType': 'rh'
+            setType: AvatarFigurePartType.LeftHand,
+            flippedSetType: AvatarFigurePartType.RightHand
         },
         {
-            'setType': 'lhs',
-            'flippedSetType': 'rhs'
+            setType: AvatarFigurePartType.LeftHandSwim,
+            flippedSetType: AvatarFigurePartType.RightHandSwim
         },
         {
-            'setType': 'ls',
-            'flippedSetType': 'rs'
+            setType: AvatarFigurePartType.LeftSleeve,
+            flippedSetType: AvatarFigurePartType.RightSleeve
         },
         {
-            'setType': 'lc',
-            'flippedSetType': 'rc'
+            setType: AvatarFigurePartType.LeftCoatSleeve,
+            flippedSetType: AvatarFigurePartType.RightCoatSleeve
         },
         {
-            'setType': 'wa'
+            setType: AvatarFigurePartType.WaistAccessory
         },
         {
-            'setType': 'ea'
+            setType: AvatarFigurePartType.EyeAccessory
         },
         {
-            'setType': 'ca'
+            setType: AvatarFigurePartType.ChestAccessory
         },
         {
-            'setType': 'fa'
+            setType: AvatarFigurePartType.FaceAccessory
         },
         {
-            'setType': 'ha'
+            setType: AvatarFigurePartType.HeadAccessory
         },
         {
-            'setType': 'he'
+            setType: AvatarFigurePartType.HeadAccessoryExtra
         }
     ],
     'activePartSets': [
         {
-            'id': 'figure',
-            'activeParts': [
+            id: AvatarPartSetType.Figure,
+            activeParts: [
                 {
-                    'setType': 'rh'
+                    setType: AvatarFigurePartType.RightHand
                 },
                 {
-                    'setType': 'rh'
+                    setType: AvatarFigurePartType.RightHand
                 },
                 {
-                    'setType': 'rhs'
+                    setType: AvatarFigurePartType.RightHandSwim
                 },
                 {
-                    'setType': 'rs'
+                    setType: AvatarFigurePartType.RightSleeve
                 },
                 {
-                    'setType': 'rc'
+                    setType: AvatarFigurePartType.RightCoatSleeve
                 },
                 {
-                    'setType': 'bd'
+                    setType: AvatarFigurePartType.Body
                 },
                 {
-                    'setType': 'bds'
+                    setType: AvatarFigurePartType.BodySwim
                 },
                 {
-                    'setType': 'ss'
+                    setType: AvatarFigurePartType.Ss
                 },
                 {
-                    'setType': 'sh'
+                    setType: AvatarFigurePartType.Shoes
                 },
                 {
-                    'setType': 'lg'
+                    setType: AvatarFigurePartType.Legs
                 },
                 {
-                    'setType': 'ch'
+                    setType: AvatarFigurePartType.Chest
                 },
                 {
-                    'setType': 'cp'
+                    setType: AvatarFigurePartType.ChestPrint
                 },
                 {
-                    'setType': 'cc'
+                    setType: AvatarFigurePartType.CoatChest
                 },
                 {
-                    'setType': 'wa'
+                    setType: AvatarFigurePartType.WaistAccessory
                 },
                 {
-                    'setType': 'hd'
+                    setType: AvatarFigurePartType.Head
                 },
                 {
-                    'setType': 'fc'
+                    setType: AvatarFigurePartType.Face
                 },
                 {
-                    'setType': 'ey'
+                    setType: AvatarFigurePartType.Eyes
                 },
                 {
-                    'setType': 'hr'
+                    setType: AvatarFigurePartType.Hair
                 },
                 {
-                    'setType': 'hrb'
+                    setType: AvatarFigurePartType.HairBig
                 },
                 {
-                    'setType': 'lh'
+                    setType: AvatarFigurePartType.LeftHand
                 },
                 {
-                    'setType': 'lhs'
+                    setType: AvatarFigurePartType.LeftHandSwim
                 },
                 {
-                    'setType': 'ls'
+                    setType: AvatarFigurePartType.LeftSleeve
                 },
                 {
-                    'setType': 'lc'
+                    setType: AvatarFigurePartType.LeftCoatSleeve
                 },
                 {
-                    'setType': 'ea'
+                    setType: AvatarFigurePartType.EyeAccessory
                 },
                 {
-                    'setType': 'ca'
+                    setType: AvatarFigurePartType.ChestAccessory
                 },
                 {
-                    'setType': 'fa'
+                    setType: AvatarFigurePartType.FaceAccessory
                 },
                 {
-                    'setType': 'ha'
+                    setType: AvatarFigurePartType.HeadAccessory
                 },
                 {
-                    'setType': 'he'
+                    setType: AvatarFigurePartType.HeadAccessoryExtra
                 }
             ]
         },
         {
-            'id': 'head',
-            'activeParts': [
+            id: AvatarPartSetType.Head,
+            activeParts: [
                 {
-                    'setType': 'hd'
+                    setType: AvatarFigurePartType.Head
                 },
                 {
-                    'setType': 'fc'
+                    setType: AvatarFigurePartType.Face
                 },
                 {
-                    'setType': 'ey'
+                    setType: AvatarFigurePartType.Eyes
                 },
                 {
-                    'setType': 'hr'
+                    setType: AvatarFigurePartType.Hair
                 },
                 {
-                    'setType': 'hrb'
+                    setType: AvatarFigurePartType.HairBig
                 },
                 {
-                    'setType': 'ea'
+                    setType: AvatarFigurePartType.EyeAccessory
                 },
                 {
-                    'setType': 'fa'
+                    setType: AvatarFigurePartType.FaceAccessory
                 },
                 {
-                    'setType': 'ha'
+                    setType: AvatarFigurePartType.HeadAccessory
                 },
                 {
-                    'setType': 'he'
+                    setType: AvatarFigurePartType.HeadAccessoryExtra
                 }
             ]
         },
         {
-            'id': 'speak',
-            'activeParts': [
+            id: AvatarPartSetType.Speak,
+            activeParts: [
                 {
-                    'setType': 'hd'
+                    setType: AvatarFigurePartType.Head
                 },
                 {
-                    'setType': 'hr'
+                    setType: AvatarFigurePartType.Hair
                 },
                 {
-                    'setType': 'hrb'
+                    setType: AvatarFigurePartType.HairBig
                 },
                 {
-                    'setType': 'fc'
+                    setType: AvatarFigurePartType.Face
                 },
                 {
-                    'setType': 'fa'
+                    setType: AvatarFigurePartType.FaceAccessory
                 },
                 {
-                    'setType': 'ha'
+                    setType: AvatarFigurePartType.HeadAccessory
                 }
             ]
         },
         {
-            'id': 'gesture',
-            'activeParts': [
+            id: AvatarPartSetType.Gesture,
+            activeParts: [
                 {
-                    'setType': 'ey'
+                    setType: AvatarFigurePartType.Eyes
                 },
                 {
-                    'setType': 'fc'
+                    setType: AvatarFigurePartType.Face
                 }
             ]
         },
         {
-            'id': 'eye',
-            'activeParts': [
+            id: AvatarPartSetType.Eye,
+            activeParts: [
                 {
-                    'setType': 'ey'
+                    setType: AvatarFigurePartType.Eyes
                 }
             ]
         },
         {
-            'id': 'handRight',
-            'activeParts': [
+            id: AvatarPartSetType.HandRight,
+            activeParts: [
                 {
-                    'setType': 'rh'
+                    setType: AvatarFigurePartType.RightHand
                 },
                 {
-                    'setType': 'rhs'
+                    setType: AvatarFigurePartType.RightHandSwim
                 },
                 {
-                    'setType': 'rs'
+                    setType: AvatarFigurePartType.RightSleeve
                 },
                 {
-                    'setType': 'rc'
+                    setType: AvatarFigurePartType.RightCoatSleeve
                 },
                 {
-                    'setType': 'ri'
+                    setType: AvatarFigurePartType.RightHandItem
                 }
             ]
         },
         {
-            'id': 'handRightAndHead',
-            'activeParts': [
+            id: AvatarPartSetType.HandRightAndHead,
+            activeParts: [
                 {
-                    'setType': 'rh'
+                    setType: AvatarFigurePartType.RightHand
                 },
                 {
-                    'setType': 'rhs'
+                    setType: AvatarFigurePartType.RightHandSwim
                 },
                 {
-                    'setType': 'rs'
+                    setType: AvatarFigurePartType.RightSleeve
                 },
                 {
-                    'setType': 'rc'
+                    setType: AvatarFigurePartType.RightCoatSleeve
                 },
                 {
-                    'setType': 'ri'
+                    setType: AvatarFigurePartType.RightHandItem
                 },
                 {
-                    'setType': 'ey'
+                    setType: AvatarFigurePartType.Eyes
                 },
                 {
-                    'setType': 'fc'
+                    setType: AvatarFigurePartType.Face
                 },
                 {
-                    'setType': 'hd'
+                    setType: AvatarFigurePartType.Head
                 }
             ]
         },
         {
-            'id': 'handLeft',
-            'activeParts': [
+            id: AvatarPartSetType.HandLeft,
+            activeParts: [
                 {
-                    'setType': 'lh'
+                    setType: AvatarFigurePartType.LeftHand
                 },
                 {
-                    'setType': 'lhs'
+                    setType: AvatarFigurePartType.LeftHandSwim
                 },
                 {
-                    'setType': 'ls'
+                    setType: AvatarFigurePartType.LeftSleeve
                 },
                 {
-                    'setType': 'lc'
+                    setType: AvatarFigurePartType.LeftCoatSleeve
                 },
                 {
-                    'setType': 'li'
+                    setType: AvatarFigurePartType.LeftHandItem
                 }
             ]
         },
         {
-            'id': 'walk',
-            'activeParts': [
+            id: AvatarPartSetType.Walk,
+            activeParts: [
                 {
-                    'setType': 'bd'
+                    setType: AvatarFigurePartType.Body
                 },
                 {
-                    'setType': 'bds'
+                    setType: AvatarFigurePartType.BodySwim
                 },
                 {
-                    'setType': 'ss'
+                    setType: AvatarFigurePartType.Ss
                 },
                 {
-                    'setType': 'lg'
+                    setType: AvatarFigurePartType.Legs
                 },
                 {
-                    'setType': 'lh'
+                    setType: AvatarFigurePartType.LeftHand
                 },
                 {
-                    'setType': 'lhs'
+                    setType: AvatarFigurePartType.LeftHandSwim
                 },
                 {
-                    'setType': 'rh'
+                    setType: AvatarFigurePartType.RightHand
                 },
                 {
-                    'setType': 'rhs'
+                    setType: AvatarFigurePartType.RightHandSwim
                 },
                 {
-                    'setType': 'ls'
+                    setType: AvatarFigurePartType.LeftSleeve
                 },
                 {
-                    'setType': 'lc'
+                    setType: AvatarFigurePartType.LeftCoatSleeve
                 },
                 {
-                    'setType': 'rs'
+                    setType: AvatarFigurePartType.RightSleeve
                 },
                 {
-                    'setType': 'rc'
+                    setType: AvatarFigurePartType.RightCoatSleeve
                 },
                 {
-                    'setType': 'sh'
+                    setType: AvatarFigurePartType.Shoes
                 }
             ]
         },
         {
-            'id': 'sit',
-            'activeParts': [
+            id: AvatarPartSetType.Sit,
+            activeParts: [
                 {
-                    'setType': 'bd'
+                    setType: AvatarFigurePartType.Body
                 },
                 {
-                    'setType': 'bds'
+                    setType: AvatarFigurePartType.BodySwim
                 },
                 {
-                    'setType': 'ss'
+                    setType: AvatarFigurePartType.Ss
                 },
                 {
-                    'setType': 'lg'
+                    setType: AvatarFigurePartType.Legs
                 },
                 {
-                    'setType': 'sh'
+                    setType: AvatarFigurePartType.Shoes
                 },
                 {
-                    'setType': 'cc'
+                    setType: AvatarFigurePartType.CoatChest
                 }
             ]
         },
         {
-            'id': 'itemRight',
-            'activeParts': [
+            id: AvatarPartSetType.ItemRight,
+            activeParts: [
                 {
-                    'setType': 'ri'
+                    setType: AvatarFigurePartType.RightHandItem
                 }
             ]
         }

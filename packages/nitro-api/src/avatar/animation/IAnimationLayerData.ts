@@ -1,4 +1,5 @@
 ﻿import type { IActiveActionData } from '../actions';
+import { AvatarFigurePartType } from '../enum';
 
 export interface IAnimationLayerData {
     readonly id: string;
@@ -10,5 +11,5 @@ export interface IAnimationLayerData {
     readonly type: string;
     readonly base: number;
     readonly action: IActiveActionData;
-    readonly items: Map<string, string>;
+    readonly items: Map<AvatarFigurePartType, number>;
 }

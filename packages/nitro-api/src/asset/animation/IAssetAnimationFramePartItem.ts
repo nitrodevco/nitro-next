@@ -1,4 +1,6 @@
+import { AvatarFigurePartType } from "#api/avatar";
+
 export interface IAssetAnimationFramePartItem {
-    id?: string;
+    id?: AvatarFigurePartType;
     base?: string;
 }

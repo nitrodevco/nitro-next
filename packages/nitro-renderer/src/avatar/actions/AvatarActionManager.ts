@@ -1,4 +1,4 @@
-import type { IActiveActionData, IAssetAvatarActionData, IAssetAvatarActionOffset } from '@nitrodevco/nitro-api';
+import type { AvatarScaleType, IActiveActionData, IAssetAvatarActionData, IAssetAvatarActionOffset } from '@nitrodevco/nitro-api';
 
 import { ActionDefinition } from './ActionDefinition';
 
@@ -29,16 +29,11 @@ export class AvatarActionManager {
             if (!action) continue;
 
             for (const canvasOffset of offset.offsets) {
-                const size = canvasOffset.size ?? '';
-                const direction = canvasOffset.direction;
-
-                if ((size === '') || (direction === undefined)) continue;
-
                 const x = canvasOffset.x ?? 0;
                 const y = canvasOffset.y ?? 0;
                 const z = canvasOffset.z ?? 0;
 
-                action.setOffsets(size, direction, [x, y, z]);
+                action.setOffsets(canvasOffset.size, canvasOffset.direction, [x, y, z]);
             }
         }
     }
@@ -71,7 +66,7 @@ export class AvatarActionManager {
         return undefined;
     }
 
-    public getCanvasOffsets(actions: IActiveActionData[], size: string, direction: number): number[] {
+    public getCanvasOffsets(actions: IActiveActionData[], size: AvatarScaleType, direction: number): number[] {
         let canvasOffsets: number[] = [];
 
         for (const activeAction of actions) {

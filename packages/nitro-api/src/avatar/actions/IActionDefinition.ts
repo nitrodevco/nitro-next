@@ -1,5 +1,5 @@
 import { IAssetAvatarActionType } from "#api/asset/index";
-import { AvatarGeometryType } from "../enum";
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from "../enum";
 
 export interface IActionDefinition {
     getOffsets(size: string, direction: number): [number, number, number];
@@ -9,10 +9,10 @@ export interface IActionDefinition {
     getPrevents(typeId: number): string[];
     getPreventHeadTurn(typeId: number): boolean;
     isAnimated(typeId: number): boolean;
-    readonly id: string;
-    readonly state: string;
+    readonly id: AvatarActionType;
+    readonly state: AvatarActionStateType;
     readonly precedence: number;
-    readonly activePartSet: string | undefined;
+    readonly activePartSet: AvatarPartSetType | undefined;
     readonly assetPartDefinition: string;
     readonly lay: string | undefined;
     readonly geometryType: AvatarGeometryType;

@@ -1,10 +1,11 @@
+import { AvatarActionType, AvatarBodyPartType } from '#api/avatar';
 import type { IAssetAnimationFramePartItem } from './IAssetAnimationFramePartItem';
 
 export interface IAssetAnimationFramePart {
-    id: string;
+    id: AvatarBodyPartType | string;
     frame?: number;
     base?: string;
-    action?: string;
+    action?: AvatarActionType;
     dx?: number;
     dy?: number;
     dz?: number;

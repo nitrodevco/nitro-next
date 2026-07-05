@@ -1,7 +1,7 @@
-import type { IAssetAvatarActivePartSet } from "@nitrodevco/nitro-api";
+import type { AvatarFigurePartType, IAssetAvatarActivePartSet } from "@nitrodevco/nitro-api";
 
 export class ActivePartSet {
-    private _parts: string[];
+    private _parts: AvatarFigurePartType[];
 
     constructor(data: IAssetAvatarActivePartSet) {
         this._parts = [];
@@ -15,7 +15,7 @@ export class ActivePartSet {
         }
     }
 
-    public get parts(): string[] {
+    public get parts(): AvatarFigurePartType[] {
         return this._parts;
     }
 }

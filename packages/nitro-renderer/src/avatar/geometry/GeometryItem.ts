@@ -1,10 +1,10 @@
-﻿import type { IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
+﻿import type { AvatarFigurePartType, IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
 
 import { Node3D } from './Node3D';
 import { Vector3D } from './Vector3D';
 
 export class GeometryItem extends Node3D {
-    private _id: string;
+    private _id: AvatarFigurePartType;
     private _radius: number;
     private _normal: Vector3D;
     private _isDoubleSided: boolean;
@@ -27,7 +27,7 @@ export class GeometryItem extends Node3D {
         return Math.min(x, y);
     }
 
-    public get id(): string {
+    public get id(): AvatarFigurePartType {
         return this._id;
     }
 
