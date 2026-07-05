@@ -1,6 +1,6 @@
 import type { AvatarBodyPartType, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAnimation, IAnimationLayerData, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, IAssetAvatarPartSetItem, IAssetAvatarPartSets } from '@nitrodevco/nitro-api';
 import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
-import { AvatarDirectionAngle, type IActionDefinition, type IActiveActionData, type IAssetAnimation, type IAssetAvatarGeometryConfig, type IAssetManager, type IAvatarFigureContainer, type IAvatarImage, type IFigureData, type IFigurePartSet, type IPartColor, type IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarDirectionAngle, type IActionDefinition, type IActiveActionData, type IAssetAnimation, type IAssetAvatarGeometryConfig, type IAvatarFigureContainer, type IAvatarImage, type IFigureData, type IFigurePartSet, type IPartColor, type IStructureData } from '@nitrodevco/nitro-api';
 import type { Point } from 'pixi.js';
 
 import type { ActionDefinition } from './actions';
@@ -18,7 +18,7 @@ export class AvatarStructure {
     private _animationData: AvatarAnimationData = new AvatarAnimationData();
     private _animationManager: AnimationManager = new AnimationManager();
     private _actionManager: AvatarActionManager = new AvatarActionManager();
-    private _mandatorySetTypeIds: Map<AvatarGenderType, Record<number, string[]>> = new Map();
+    private _mandatorySetTypeIds: Map<AvatarGenderType, Record<number, AvatarFigurePartType[]>> = new Map();
     private _defaultAction: IActionDefinition | undefined = undefined;
 
     public initGeometry(data: IAssetAvatarGeometryConfig): void {
@@ -51,24 +51,8 @@ export class AvatarStructure {
         this._figureData.injectJSON(data);
     }
 
-    public registerAnimations(k: IAssetManager, _arg_2: string = 'fx', _arg_3: number = 200): void {
-        let index = 0;
-
-        while (index < _arg_3) {
-            const collection = k.getCollection((_arg_2 + index));
-
-            if (collection) {
-                const animationData = collection.data;
-
-                if (animationData.animations) this._animationManager.registerAnimation(this, animationData.animations);
-            }
-
-            index++;
-        }
-    }
-
-    public registerAnimation(data: IAssetAnimation[]): void {
-        this._animationManager.registerAnimation(this, data);
+    public registerAnimations(data: IAssetAnimation[]): void {
+        this._animationManager.registerAnimations(this, data);
     }
 
     public getPartColor(container: IAvatarFigureContainer, partType: AvatarFigurePartType, layerId: number = 0): IPartColor | undefined {
@@ -119,7 +103,7 @@ export class AvatarStructure {
         return count;
     }
 
-    public getMandatorySetTypeIds(gender: AvatarGenderType, _arg_2: number): string[] {
+    public getMandatorySetTypeIds(gender: AvatarGenderType, _arg_2: number): AvatarFigurePartType[] {
         if (!this._mandatorySetTypeIds.has(gender)) {
             this._mandatorySetTypeIds.set(gender, {});
         }

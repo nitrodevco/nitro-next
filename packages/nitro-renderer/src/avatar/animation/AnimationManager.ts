@@ -6,7 +6,7 @@ import { Animation } from './Animation';
 export class AnimationManager implements IAnimationManager {
     private _animations: Map<string, IAnimation> = new Map();
 
-    public registerAnimation(structure: AvatarStructure, animations: IAssetAnimation[]): boolean {
+    public registerAnimations(structure: AvatarStructure, animations: IAssetAnimation[]): boolean {
         if (!animations) return false;
 
         for (const animation of animations) this._animations.set(animation.name, new Animation(structure, animation));

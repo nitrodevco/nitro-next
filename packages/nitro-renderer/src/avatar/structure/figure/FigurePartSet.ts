@@ -1,12 +1,13 @@
 
-import type { IFigureDataSet, IFigurePart, IFigurePartSet } from '@nitrodevco/nitro-api';
+import type { AvatarFigurePartType, IFigureDataSet, IFigurePart, IFigurePartSet } from '@nitrodevco/nitro-api';
+import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
 import { FigurePart } from './FigurePart';
 
 export class FigurePartSet implements IFigurePartSet {
     private _id: number;
-    private _type: string;
-    private _gender: string;
+    private _type: AvatarFigurePartType;
+    private _gender: AvatarGenderType;
     private _clubLevel: number;
     private _isColorable: boolean;
     private _isSelectable: boolean;
@@ -15,10 +16,10 @@ export class FigurePartSet implements IFigurePartSet {
     private _isPreSelectable: boolean;
     private _isSellable: boolean;
 
-    constructor(type: string, data: IFigureDataSet) {
+    constructor(type: AvatarFigurePartType, data: IFigureDataSet) {
         this._id = data.id;
         this._type = type;
-        this._gender = data.gender ?? '';
+        this._gender = data.gender ?? AvatarGenderType.Unisex;
         this._clubLevel = data.club ?? 0;
         this._isColorable = data.colorable ?? false;
         this._isSelectable = data.selectable ?? false;
@@ -57,7 +58,7 @@ export class FigurePartSet implements IFigurePartSet {
         this._hiddenLayers = [];
     }
 
-    public getPart(type: string, id: number): IFigurePart | undefined {
+    public getPart(type: AvatarFigurePartType, id: number): IFigurePart | undefined {
         for (const part of this._parts) {
             if ((part.type !== type) || (part.id !== id)) continue;
 
@@ -71,11 +72,11 @@ export class FigurePartSet implements IFigurePartSet {
         return this._id;
     }
 
-    public get type(): string {
+    public get type(): AvatarFigurePartType {
         return this._type;
     }
 
-    public get gender(): string {
+    public get gender(): AvatarGenderType {
         return this._gender;
     }
 

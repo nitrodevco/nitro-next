@@ -1,4 +1,4 @@
 export interface IAvatarImageListener {
     resetFigure(figure: string): void;
-    dispose(): void;
+    readonly disposed: boolean;
 }

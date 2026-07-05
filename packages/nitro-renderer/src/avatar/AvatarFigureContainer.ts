@@ -66,12 +66,12 @@ export class AvatarFigureContainer implements IAvatarFigureContainer {
                 const setId = parseInt(pieces[1]);
                 const colorIds: number[] = [];
 
-                let index = 2;
+                let i = 2;
 
-                while (index < pieces.length) {
-                    colorIds.push(parseInt(pieces[index]));
+                while (i < pieces.length) {
+                    colorIds.push(parseInt(pieces[i]));
 
-                    index++;
+                    i++;
                 }
 
                 this.updatePart(type, setId, colorIds);

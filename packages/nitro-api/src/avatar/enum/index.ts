@@ -1,5 +1,6 @@
 export * from './AvatarActionStateType';
 export * from './AvatarActionType';
+export * from './AvatarAssetDownloadStatus';
 export * from './AvatarBodyPartType';
 export * from './AvatarDirectionAngle';
 export * from './AvatarFigurePartType';

@@ -49,7 +49,7 @@ export class SetType implements ISetType {
 
     public getDefaultPartSet(gender: AvatarGenderType): IFigurePartSet | undefined {
         for (const set of this._partSets.values()) {
-            if (set && (set.clubLevel === 0) && ((set.gender === gender) || (set.gender === 'U'))) return set;
+            if (set && (set.clubLevel === 0) && ((set.gender === gender) || (set.gender === AvatarGenderType.Unisex))) return set;
         }
 
         return undefined;
