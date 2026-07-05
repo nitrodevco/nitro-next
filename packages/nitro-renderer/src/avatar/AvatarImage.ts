@@ -191,8 +191,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             const set = _local_6[partCount];
             const part = this._cache.getImageContainer(set, this._frameCounter);
 
-            console.log(part);
-
             if (part && part.image) {
                 isCachable &&= part.isCacheable;
 
@@ -549,7 +547,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private setActionToParts(action: IActiveActionData, time: number): void {
-        console.log(action);
         if (!action?.definition?.assetPartDefinition) return;
 
         if (action.definition.isMain) {

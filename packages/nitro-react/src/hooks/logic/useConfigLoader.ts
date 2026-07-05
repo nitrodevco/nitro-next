@@ -17,7 +17,7 @@ export const useConfigLoader = () => {
             'asset.urls.furni': 'https://assets.nitrodev.co/bundled/furniture/%libname%.nitro',
             'asset.urls.icons.furni': 'https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png',
             'asset.urls.pet': 'https://assets.nitrodev.co/bundled/pet/%libname%.nitro',
-            'asset.urls.avatar': 'https://assets.nitrodev.co/bundled/figure/%libname%.nitro',
+            'asset.urls.avatar': 'https://assets.nitrodev.co/bundled/figures/%libname%.nitro',
             'asset.urls.effect': 'https://assets.nitrodev.co/bundled/effects/%libname%.nitro',
             'fps.limit': 60,
             'socket.url': 'ws://localhost:9001',

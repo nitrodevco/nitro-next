@@ -31,6 +31,8 @@ export class AvatarAssetDownloadManager {
 
             const downloadLibrary = new AvatarAssetDownloadLibrary(library.id, library.revision ?? 0, assetUrl, lib => this.onLibraryLoaded(lib));
 
+            if (!library.parts?.length) continue;
+
             for (const part of library.parts) {
                 const partString = `${part.type}:${part.id}`;
 

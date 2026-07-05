@@ -52,8 +52,6 @@ export const useAvatarLoader = () => {
             await loadFigureMapAsync(figureMapUrl);
             await loadEffectMapAsync(effectMapUrl);
 
-            console.log(GetAvatarRenderManager());
-
             setIsAvatarReady(true);
         }
 
