@@ -14,9 +14,11 @@ export class SetType implements ISetType {
         this._paletteId = data.paletteId ?? -1;
         this._partSets = new Map();
 
-        this._isMandatory[AvatarGenderType.Female] = [data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false];
-        this._isMandatory[AvatarGenderType.Male] = [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false];
-        this._isMandatory[AvatarGenderType.Unisex] = [false, false];
+        this._isMandatory = {
+            'F': [data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false],
+            'M': [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false],
+            'U': [false, false]
+        };
 
         this.append(data);
     }

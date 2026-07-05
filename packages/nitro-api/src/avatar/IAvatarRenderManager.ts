@@ -1,4 +1,4 @@
-import type { IAssetManager, IGraphicAsset } from '../asset';
+import type { IAssetManager, IEffectMapLibrary, IFigureMapLibrary, IGraphicAsset } from '../asset';
 import { AvatarGenderType, AvatarScaleType } from './enum';
 import type { IAvatarEffectListener } from './IAvatarEffectListener';
 import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
@@ -8,6 +8,8 @@ import type { IAvatarStructure, IStructureData } from './structure';
 
 export interface IAvatarRenderManager {
     init(): void;
+    processFigureMap(data: IFigureMapLibrary[], assetUrl: string);
+    processEffectMap(data: IEffectMapLibrary[], assetUrl: string);
     createFigureContainer(figure: string): IAvatarFigureContainer;
     isFigureContainerReady(container: IAvatarFigureContainer): boolean;
     createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType, listener: IAvatarImageListener, effectListener?: IAvatarEffectListener | undefined): IAvatarImage | undefined;
@@ -17,6 +19,7 @@ export interface IAvatarRenderManager {
     getFigureStringWithFigureIds(figure: string, gender: AvatarGenderType, setIds: number[]): string;
     getMandatoryAvatarPartSetIds(gender: AvatarGenderType, _arg_2: number): string[];
     getAssetByName(name: string): IGraphicAsset | undefined;
+    refreshAliases(): void;
     readonly structure: IAvatarStructure;
     readonly structureData: IStructureData;
 }

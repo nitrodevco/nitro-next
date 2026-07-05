@@ -1,5 +1,4 @@
 import type { IAvatarEffectListener, IEffectAssetDownloadLibrary, IEffectMapLibrary } from '@nitrodevco/nitro-api';
-import { GetConfigValue } from '@nitrodevco/nitro-shared';
 
 import type { AvatarStructure } from './AvatarStructure';
 import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
@@ -16,15 +15,13 @@ export class EffectAssetDownloadManager {
     private _pendingDownloadQueue: EffectAssetDownloadLibrary[] = [];
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _assetUrl: string = '';
     private _isReady: boolean;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;
-        this._assetUrl = GetConfigValue<string>('asset.urls.effect', '');
     }
 
-    public processEffectMap(data: IEffectMapLibrary[]): void {
+    public processEffectMap(data: IEffectMapLibrary[], assetUrl: string): void {
         if (!data) return;
 
         for (const library of data) {
@@ -32,7 +29,7 @@ export class EffectAssetDownloadManager {
 
             this._libraryNames.push(library.lib);
 
-            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, this._assetUrl, lib => this.onLibraryLoaded(lib));
+            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, assetUrl, lib => this.onLibraryLoaded(lib));
 
             let existing = this._effectMap.get(library.id);
 

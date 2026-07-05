@@ -1,4 +1,4 @@
-import { AvatarActionState, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
@@ -54,7 +54,7 @@ export class FloatingIdleZAddition implements IAvatarAddition {
         );
 
         let additionScale = RoomGeometryScaleType.ZoomedIn;
-        let offsetX = 0;
+        let offsetX: number;
 
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             if (
@@ -86,9 +86,9 @@ export class FloatingIdleZAddition implements IAvatarAddition {
             this._offsetY = -70;
         }
 
-        if (this._visualization.posture === AvatarActionState.Sit) {
+        if (this._visualization.posture === AvatarActionStateType.Sit) {
             this._offsetY += additionScale / 2;
-        } else if (this._visualization.posture === AvatarActionState.Lay) {
+        } else if (this._visualization.posture === AvatarActionStateType.Lay) {
             this._offsetY += additionScale - 0.3 * additionScale;
         }
 

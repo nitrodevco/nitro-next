@@ -1,5 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarActionState, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
@@ -24,8 +24,8 @@ export class MutedBubbleAddition implements IAvatarAddition {
         if (!sprite || !this._visualization) return;
 
         let additionScale = RoomGeometryScaleType.ZoomedIn;
-        let offsetX = 0;
-        let offsetY = 0;
+        let offsetX: number;
+        let offsetY: number;
 
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_muted_small');
@@ -40,8 +40,8 @@ export class MutedBubbleAddition implements IAvatarAddition {
             offsetY = -110;
         }
 
-        if (this._visualization.posture === AvatarActionState.Sit) offsetY += additionScale / 2;
-        else if (this._visualization.posture === AvatarActionState.Lay) offsetY += scale;
+        if (this._visualization.posture === AvatarActionStateType.Sit) offsetY += additionScale / 2;
+        else if (this._visualization.posture === AvatarActionStateType.Lay) offsetY += scale;
 
         if (this._asset) {
             sprite.visible = true;

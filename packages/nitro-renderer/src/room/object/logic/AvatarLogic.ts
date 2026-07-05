@@ -1,6 +1,6 @@
 import type { IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 import {
-    AvatarActionTypeUtilities,
+    AvatarActionStateTypeUtilities,
     type IRoomGeometry,
     type IRoomObjectModel,
     type IVector3D,
@@ -168,7 +168,7 @@ export class AvatarLogic extends MovingObjectLogic {
         if (message instanceof ObjectAvatarExpressionUpdateMessage) {
             this.object.model.setValue(RoomObjectVariableEnum.FigureExpression, message.expressionType);
 
-            this._animationEndTimestamp = AvatarActionTypeUtilities.getExpressionTimeout(
+            this._animationEndTimestamp = AvatarActionStateTypeUtilities.getExpressionTimeout(
                 this.object.model.getValue<number>(RoomObjectVariableEnum.FigureExpression),
             );
 

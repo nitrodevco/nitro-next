@@ -103,14 +103,7 @@ export class AvatarImageCache {
     }
 
     public getImageContainer(setType: AvatarBodyPartType, frameNumber: number): AvatarImageBodyPartContainer | undefined {
-        let cache = this.getBodyPartCache(setType);
-
-        if (!cache) {
-            cache = new AvatarImageBodyPartCache();
-
-            this._cache.set(setType, cache);
-        }
-
+        const cache = this.getBodyPartCache(setType);
         let direction = cache.direction;
         let action = cache.action;
         let frame = frameNumber;

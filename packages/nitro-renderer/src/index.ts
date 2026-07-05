@@ -46,8 +46,6 @@ export * from './avatar/geometry/Matrix4x4';
 export * from './avatar/geometry/Node3D';
 export * from './avatar/geometry/Vector3D';
 export * from './avatar/GetAvatarRenderManager';
-export * from './avatar/pets/PetCustomPart';
-export * from './avatar/pets/PetFigureData';
 export * from './avatar/PlaceHolderAvatarImage';
 export * from './avatar/structure/animation/AnimationAction';
 export * from './avatar/structure/animation/AnimationActionPart';

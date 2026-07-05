@@ -1,5 +1,4 @@
 import type { IAvatarAssetDownloadLibrary, IAvatarFigureContainer, IAvatarImageListener, IFigureMapLibrary } from '@nitrodevco/nitro-api';
-import { GetConfigValue } from '@nitrodevco/nitro-shared';
 
 import { AvatarAssetDownloadLibrary } from './AvatarAssetDownloadLibrary';
 import type { AvatarStructure } from './AvatarStructure';
@@ -16,15 +15,13 @@ export class AvatarAssetDownloadManager {
     private _pendingDownloadQueue: AvatarAssetDownloadLibrary[] = [];
     private _currentDownloads: AvatarAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _assetUrl: string = '';
     private _isReady: boolean = false;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;
-        this._assetUrl = GetConfigValue<string>('asset.urls.avatar', '');
     }
 
-    public processFigureMap(data: IFigureMapLibrary[]): void {
+    public processFigureMap(data: IFigureMapLibrary[], assetUrl: string): void {
         if (!data) return;
 
         for (const library of data) {
@@ -32,7 +29,7 @@ export class AvatarAssetDownloadManager {
 
             this._libraryNames.push(library.id);
 
-            const downloadLibrary = new AvatarAssetDownloadLibrary(library.id, library.revision ?? 0, this._assetUrl, lib => this.onLibraryLoaded(lib));
+            const downloadLibrary = new AvatarAssetDownloadLibrary(library.id, library.revision ?? 0, assetUrl, lib => this.onLibraryLoaded(lib));
 
             for (const part of library.parts) {
                 const partString = `${part.type}:${part.id}`;

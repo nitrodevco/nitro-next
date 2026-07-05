@@ -66,8 +66,8 @@ export class FigureSetData implements IFigureSetData, IStructureData {
         return false;
     }
 
-    public getMandatorySetTypeIds(gender: AvatarGenderType, count: number): string[] {
-        const types: string[] = [];
+    public getMandatorySetTypeIds(gender: AvatarGenderType, count: number): AvatarFigurePartType[] {
+        const types: AvatarFigurePartType[] = [];
 
         for (const set of this._setTypes.values()) {
             if (!set || !set.isMandatory(gender, count)) continue;

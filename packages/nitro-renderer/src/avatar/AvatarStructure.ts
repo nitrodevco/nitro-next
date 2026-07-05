@@ -104,15 +104,23 @@ export class AvatarStructure {
     }
 
     public getMandatorySetTypeIds(gender: AvatarGenderType, _arg_2: number): AvatarFigurePartType[] {
-        if (!this._mandatorySetTypeIds.has(gender)) {
-            this._mandatorySetTypeIds.set(gender, {});
+        let get = this._mandatorySetTypeIds.get(gender);
+
+        if (!get) {
+            get = {};
+
+            this._mandatorySetTypeIds.set(gender, get);
         }
 
-        if (this._mandatorySetTypeIds[gender][_arg_2]) return this._mandatorySetTypeIds[gender][_arg_2];
+        let value = get[_arg_2];
 
-        this._mandatorySetTypeIds[gender][_arg_2] = this._figureData.getMandatorySetTypeIds(gender, _arg_2);
+        if (value === undefined) {
+            value = this._figureData.getMandatorySetTypeIds(gender, _arg_2);
 
-        return this._mandatorySetTypeIds[gender][_arg_2];
+            get[_arg_2] = value;
+        }
+
+        return value;
     }
 
     public getDefaultPartSet(partType: AvatarFigurePartType, gender: AvatarGenderType): IFigurePartSet | undefined {

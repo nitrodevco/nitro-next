@@ -1,6 +1,6 @@
 
-import type { IRoomPetData, IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
-import { PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, AvatarFigurePartType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
 import { useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from "#base/context";
@@ -196,6 +196,66 @@ export const useRoomUserHandler = () => {
 
             room.updateRoomObjectUser(update.objectId, location, target, update.canStandUp, height, direction, update.headRotation);
             room.updateRoomObjectUserFlatControl(update.objectId, '');
+
+            let isPosture = true;
+            let postureUpdate = false;
+            let postureType: string = AvatarFigurePartType.Standard;
+            let something = false;
+            let somethingElse = false;
+            let parameter = '';
+
+            for (const action of update.actions) {
+                switch (action.key) {
+                    case 'flatctrl': {
+                        room.updateRoomObjectUserFlatControl(update.objectId, action.value);
+                        break;
+                    }
+                    case 'sign': {
+                        if (update.actions.length === 1) isPosture = false;
+
+                        room.updateRoomObjectUserAction(update.objectId, RoomObjectVariableEnum.FigureSign, parseInt(action.value));
+                        break;
+                    }
+                    case 'gst': {
+                        if (update.actions.length === 1) isPosture = false;
+
+                        room.updateRoomObjectUserPetGesture(update.objectId, action.value);
+                        break;
+                    }
+                    case 'wav':
+                    case 'mv': {
+                        something = true;
+                        postureUpdate = true;
+                        break;
+                    }
+                    case 'swim': {
+                        somethingElse = true;
+                        postureUpdate = true;
+                        break;
+                    }
+                    case 'wf': {
+                        break;
+                    }
+                    case 'trd': {
+                        break;
+                    }
+                    default: {
+                        postureUpdate = true;
+                        break;
+                    }
+                }
+
+                postureType = action.key;
+                parameter = action.value;
+            }
+
+            if (!something && somethingElse) {
+                postureUpdate = true;
+                postureType = AvatarActionStateType.Float;
+            }
+
+            if (postureUpdate) room.updateRoomObjectUserPosture(update.objectId, postureType, parameter);
+            else if (isPosture) room.updateRoomObjectUserPosture(update.objectId, AvatarFigurePartType.Standard);
         }
     });
 

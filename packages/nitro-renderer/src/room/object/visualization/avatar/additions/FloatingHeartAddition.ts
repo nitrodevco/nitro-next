@@ -1,5 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarActionState, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
@@ -27,7 +27,7 @@ export class FloatingHeartAddition extends ExpressionAddition {
         this._scale = scale;
 
         let additionScale = RoomGeometryScaleType.ZoomedIn;
-        let offsetX = 0;
+        let offsetX: number;
 
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             this._asset = GetAssetManager().getTexture('avatar_addition_user_blowkiss_small');
@@ -61,9 +61,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             this._offsetY = -70;
         }
 
-        if (this.visualization.posture === AvatarActionState.Sit) {
+        if (this.visualization.posture === AvatarActionStateType.Sit) {
             this._offsetY += additionScale / 2;
-        } else if (this.visualization.posture === AvatarActionState.Lay) {
+        } else if (this.visualization.posture === AvatarActionStateType.Lay) {
             this._offsetY += additionScale;
         }
 

@@ -1,5 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarActionState, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AvatarGuideStatus } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -31,8 +31,8 @@ export class GuideStatusBubbleAddition implements IAvatarAddition {
         sprite.alpha = 255;
 
         let additionScale = 64;
-        let offsetX = 0;
-        let offsetY = 0;
+        let offsetX: number;
+        let offsetY: number;
 
         this._asset = GetAssetManager().getTexture(
             this._status === AvatarGuideStatus.GUIDE
@@ -49,9 +49,9 @@ export class GuideStatusBubbleAddition implements IAvatarAddition {
             offsetY = -120;
         }
 
-        if (this._visualization.posture === AvatarActionState.Sit) {
+        if (this._visualization.posture === AvatarActionStateType.Sit) {
             offsetY += additionScale / 2;
-        } else if (this._visualization.posture === AvatarActionState.Lay) {
+        } else if (this._visualization.posture === AvatarActionStateType.Lay) {
             offsetY += scale;
         }
 

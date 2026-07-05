@@ -958,7 +958,7 @@ export class AvatarVisualization
         return this._direction;
     }
 
-    public get posture(): string {
+    public get posture(): AvatarActionStateType {
         return this._posture;
     }
 

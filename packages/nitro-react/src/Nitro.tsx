@@ -12,15 +12,17 @@ import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader } from '
 import { GetPixelRatio } from '#base/utils';
 
 import { useWebSocketContext } from './context';
+import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/LoadingScreenView';
 
 export const Nitro: FC = () => {
     const [isEngineReady, setIsEngineReady] = useState(false);
 
-    useConfigLoader();
+    const { isConfigReady } = useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
+    const { isAvatarReady } = useAvatarLoader();
     const { isAuthenticated, connect } = useWebSocketContext();
 
     useEffect(() => {
@@ -64,7 +66,7 @@ export const Nitro: FC = () => {
         void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
     }, []);
 
-    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady();
+    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isAvatarReady;
 
     return (
         <>

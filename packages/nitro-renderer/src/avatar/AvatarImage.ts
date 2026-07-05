@@ -5,7 +5,7 @@ import { AdvancedMap } from '@nitrodevco/nitro-shared';
 import type { Filter } from 'pixi.js';
 import { ColorMatrixFilter, Container, RenderTexture } from 'pixi.js';
 
-import { GetTickerTime, TextureUtils } from '#renderer/utils';
+import { GetTickerTime } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
 import type { AssetAliasCollection } from './alias';
@@ -182,8 +182,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         const _local_6 = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
 
-        TextureUtils.clearRenderTexture(this._image);
-
         const container = new Container();
 
         let isCachable = true;
@@ -192,6 +190,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         while (partCount >= 0) {
             const set = _local_6[partCount];
             const part = this._cache.getImageContainer(set, this._frameCounter);
+
+            console.log(part);
 
             if (part && part.image) {
                 isCachable &&= part.isCacheable;
@@ -549,6 +549,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private setActionToParts(action: IActiveActionData, time: number): void {
+        console.log(action);
         if (!action?.definition?.assetPartDefinition) return;
 
         if (action.definition.isMain) {

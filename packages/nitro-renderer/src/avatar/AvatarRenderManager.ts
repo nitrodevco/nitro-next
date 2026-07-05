@@ -38,20 +38,18 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._structure.actionManager.updateActions(HabboAvatarActions);
         this._structure.initAnimation(HabboAvatarAnimations);
         this._structure.initFigureData(HabboAvatarFigureDataDefault);
+    }
 
-        // load figure map
-        const figureMap: IFigureMapLibrary[] = [];
-        this._avatarAssetDownloadManager.processFigureMap(figureMap);
+    public processFigureMap(data: IFigureMapLibrary[], assetUrl: string) {
+        this._avatarAssetDownloadManager.processFigureMap(data, assetUrl);
         this._avatarAssetDownloadManager.processMissingLibraries();
         this._avatarAssetDownloadManager.processPendingContainers();
+    }
 
-        // load effect map
-        const effectMap: IEffectMapLibrary[] = [];
-        this._effectAssetDownloadManager.processEffectMap(effectMap);
+    public processEffectMap(data: IEffectMapLibrary[], assetUrl: string) {
+        this._effectAssetDownloadManager.processEffectMap(data, assetUrl);
         this._effectAssetDownloadManager.processMissingLibraries();
         this._effectAssetDownloadManager.processPendingDownloads();
-
-        this._aliasCollection.init();
     }
 
     public createFigureContainer(figure: string): IAvatarFigureContainer {
@@ -145,6 +143,10 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
     public getAssetByName(name: string): IGraphicAsset | undefined {
         return this._aliasCollection.getAsset(name);
+    }
+
+    public refreshAliases(): void {
+        this._aliasCollection.init();
     }
 
     public get isReady(): boolean {
