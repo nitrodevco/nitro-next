@@ -24,6 +24,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private static DEFAULT_DIRECTION: number = 2;
     private static DEFAULT_AVATAR_SET: string = AvatarSetType.Full;
     private static MAX_IMAGE_CACHE: number = 5;
+    private static INACTIVE_ACTION_CACHE_LIFETIME: number = 60000;
+    private static CACHE_CLEANUP_INTERVAL: number = 30000;
 
     protected _structure: AvatarStructure;
     protected _assets: AssetAliasCollection;
@@ -64,6 +66,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private _cachedBodyPartsDirection: number = -1;
     private _cachedBodyPartsGeometryType: AvatarGeometryType = AvatarGeometryType.Vertical;
     private _cachedBodyPartsAvatarSet: AvatarSetType = AvatarSetType.Full;
+    private _lastCacheCleanupTime: number = 0;
 
     constructor(structure: AvatarStructure, assets: AssetAliasCollection, container: AvatarFigureContainer | undefined, scale: AvatarScaleType, effectManager: EffectAssetDownloadManager | undefined = undefined, effectListener: IAvatarEffectListener | undefined = undefined) {
         this._structure = structure;
@@ -139,6 +142,14 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     public updateAnimationByFrames(frame: number = 1): void {
         this._frameCounter += frame;
         this._changes = true;
+
+        const time = GetTickerTime();
+
+        if ((time - this._lastCacheCleanupTime) >= AvatarImage.CACHE_CLEANUP_INTERVAL) {
+            this._lastCacheCleanupTime = time;
+
+            this._cache.disposeInactiveActions(AvatarImage.INACTIVE_ACTION_CACHE_LIFETIME);
+        }
     }
 
     public resetAnimationFrameCounter(): void {
@@ -170,13 +181,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         const avatarCanvas = this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType);
 
         if (!avatarCanvas) return undefined;
-
-        if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
-            if (this._image && !this._isCachedImage) this._image.destroy(true);
-
-            this._image = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
-            this._isCachedImage = false;
-        }
 
         const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
         const container = new Container();
@@ -219,23 +223,30 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             container.filters = filters;
         }
 
+        const canCacheImage = !!(cacheKey && isCachable);
+        let renderTarget: RenderTexture;
+
+        if (canCacheImage) {
+            renderTarget = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+        } else if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
+            if (this._image && !this._isCachedImage) this._image.destroy(true);
+
+            renderTarget = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+        } else {
+            renderTarget = this._image;
+        }
+
         GetRenderer().render({
-            target: this._image,
+            target: renderTarget,
             container,
             clear: true
         });
 
-        if (cacheKey && isCachable) {
-            const imageClone = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+        if (canCacheImage) this.cacheFullImage(cacheKey, renderTarget);
 
-            GetRenderer().render({
-                target: imageClone,
-                container,
-                clear: true
-            });
-
-            this.cacheFullImage(cacheKey, imageClone);
-        }
+        this._image = renderTarget;
+        this._isCachedImage = canCacheImage;
+        this._changes = false;
 
         return this._image;
     }
@@ -406,7 +417,15 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private getFullImage(key: string): RenderTexture | undefined {
-        return this._fullImageCache.get(key);
+        const texture = this._fullImageCache.get(key);
+
+        if (texture) {
+            // touch the entry so it counts as most-recently-used for LRU eviction
+            this._fullImageCache.delete(key);
+            this._fullImageCache.set(key, texture);
+        }
+
+        return texture;
     }
 
     private cacheFullImage(key: string, texture: RenderTexture): void {
@@ -419,6 +438,15 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         }
 
         this._fullImageCache.set(key, texture);
+
+        while (this._fullImageCache.size > AvatarImage.MAX_IMAGE_CACHE) {
+            const oldestKey = this._fullImageCache.keys().next().value;
+
+            if (oldestKey === undefined) break;
+
+            this._fullImageCache.get(oldestKey)?.destroy(true);
+            this._fullImageCache.delete(oldestKey);
+        }
     }
 
     private resetActions(): boolean {
