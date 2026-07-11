@@ -7,10 +7,6 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
             flippedSetType: AvatarFigurePartType.RightHandItem
         },
         {
-            setType: AvatarFigurePartType.RightHandItem,
-            flippedSetType: AvatarFigurePartType.RightHandItem
-        },
-        {
             setType: AvatarFigurePartType.RightHand,
             flippedSetType: AvatarFigurePartType.LeftHand
         },
@@ -25,6 +21,7 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
         },
         {
             setType: AvatarFigurePartType.RightCoatSleeve,
+            swim: '0',
             flippedSetType: AvatarFigurePartType.LeftCoatSleeve
         },
         {
@@ -37,10 +34,12 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
             setType: AvatarFigurePartType.Ss
         },
         {
-            setType: AvatarFigurePartType.Shoes
+            setType: AvatarFigurePartType.Shoes,
+            swim: '0'
         },
         {
-            setType: AvatarFigurePartType.Legs
+            setType: AvatarFigurePartType.Legs,
+            swim: '0'
         },
         {
             setType: AvatarFigurePartType.Chest
@@ -81,20 +80,24 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
         },
         {
             setType: AvatarFigurePartType.LeftSleeve,
+            swim: '0',
             flippedSetType: AvatarFigurePartType.RightSleeve
         },
         {
             setType: AvatarFigurePartType.LeftCoatSleeve,
+            swim: '0',
             flippedSetType: AvatarFigurePartType.RightCoatSleeve
         },
         {
-            setType: AvatarFigurePartType.WaistAccessory
+            setType: AvatarFigurePartType.WaistAccessory,
+            swim: '0'
         },
         {
             setType: AvatarFigurePartType.EyeAccessory
         },
         {
-            setType: AvatarFigurePartType.ChestAccessory
+            setType: AvatarFigurePartType.ChestAccessory,
+            swim: '0'
         },
         {
             setType: AvatarFigurePartType.FaceAccessory
@@ -110,9 +113,6 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
         {
             id: AvatarPartSetType.Figure,
             activeParts: [
-                {
-                    setType: AvatarFigurePartType.RightHand
-                },
                 {
                     setType: AvatarFigurePartType.RightHand
                 },
@@ -413,6 +413,71 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                     setType: AvatarFigurePartType.RightHandItem
                 }
             ]
-        }
+        },
+        {
+            id: AvatarPartSetType.Swim,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.BodySwim
+                },
+                {
+                    setType: AvatarFigurePartType.Ss
+                },
+                {
+                    setType: AvatarFigurePartType.LeftHandSwim
+                },
+                {
+                    setType: AvatarFigurePartType.RightHandSwim
+                },
+            ]
+        },
+        {
+            id: AvatarPartSetType.SnowWarnRun,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Chest
+                }
+            ]
+        },
+        {
+            id: AvatarPartSetType.SnowWarPick,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Chest
+                },
+                {
+                    setType: AvatarFigurePartType.Head
+                }
+            ]
+        },
+        {
+            id: AvatarPartSetType.SnowWarDieFront,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Chest
+                }, {
+                    setType: AvatarFigurePartType.Head
+                }
+            ]
+        },
+        {
+            id: AvatarPartSetType.SnowWarDieBack,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Chest
+                },
+                {
+                    setType: AvatarFigurePartType.Head
+                }
+            ]
+        },
+        {
+            id: AvatarPartSetType.SnowWarThrow,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Chest
+                }
+            ]
+        },
     ]
 };

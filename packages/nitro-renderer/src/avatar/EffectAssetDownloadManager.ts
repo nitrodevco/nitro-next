@@ -15,7 +15,7 @@ export class EffectAssetDownloadManager {
     private _pendingDownloadQueue: EffectAssetDownloadLibrary[] = [];
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _isReady: boolean;
+    private _isReady: boolean = true;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;

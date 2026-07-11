@@ -10,5 +10,10 @@ export enum AvatarPartSetType {
     Walk = 'walk',
     Sit = 'sit',
     ItemRight = 'itemRight',
-    Swim = 'swim'
+    Swim = 'swim',
+    SnowWarnRun = 'snowwarrun',
+    SnowWarPick = 'snowwarpick',
+    SnowWarDieFront = 'snowwardiefront',
+    SnowWarDieBack = 'snowwardieback',
+    SnowWarThrow = 'snowwarthrow'
 }

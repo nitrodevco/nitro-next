@@ -224,7 +224,9 @@ export class AvatarImageCache {
         let assetPartDefinition = action.definition.assetPartDefinition;
         let isCacheable = true;
 
-        for (const container of containers) {
+        for (let i = containers.length - 1; i >= 0; i--) {
+            const container = containers[i];
+
             let color = 16777215;
 
             if ((direction === 7 && (container.partType === AvatarFigurePartType.Face || container.partType === AvatarFigurePartType.Eyes)) || (container.partType === AvatarFigurePartType.RightHandItem && !container.partId)) continue;

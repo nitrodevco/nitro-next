@@ -118,9 +118,9 @@ export class AvatarActionManager {
         for (const action of actions) {
             if (!action) continue;
 
-            let actionType = action.type;
+            let actionType = action.type as string;
 
-            if (action.type === 'fx') actionType = (actionType + ('.' + action.actionParameter));
+            if (action.type as string === 'fx') actionType = (actionType + ('.' + action.actionParameter));
 
             if (preventions.indexOf(actionType) >= 0) continue;
 

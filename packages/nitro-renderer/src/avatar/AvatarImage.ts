@@ -178,40 +178,33 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             this._isCachedImage = false;
         }
 
-        const _local_6 = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
-
+        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
         const container = new Container();
 
         let isCachable = true;
-        let partCount = (_local_6.length - 1);
 
-        while (partCount >= 0) {
-            const set = _local_6[partCount];
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const set = parts[i];
             const part = this._cache.getImageContainer(set, this._frameCounter);
 
-            if (part && part.image) {
-                isCachable &&= part.isCacheable;
+            if (!part || !part.image) continue;
 
-                const point = part.regPoint.clone();
+            isCachable &&= part.isCacheable;
 
-                point.x += avatarCanvas.offset.x;
-                point.y += avatarCanvas.offset.y;
+            const point = part.regPoint.clone();
 
-                point.x += avatarCanvas.regPoint.x;
-                point.y += avatarCanvas.regPoint.y;
+            point.x += avatarCanvas.offset.x;
+            point.y += avatarCanvas.offset.y;
 
-                const partContainer = new Container();
+            point.x += avatarCanvas.regPoint.x;
+            point.y += avatarCanvas.regPoint.y;
 
-                partContainer.addChild(part.image);
+            const partContainer = new Container();
 
-                if (partContainer) {
-                    partContainer.position.set(point.x, point.y);
+            partContainer.addChild(part.image);
+            partContainer.position.set(point.x, point.y);
 
-                    container.addChild(partContainer);
-                }
-            }
-
-            partCount--;
+            container.addChild(partContainer);
         }
 
         if (this._avatarSpriteData) {
@@ -237,7 +230,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
             GetRenderer().render({
                 target: imageClone,
-                container
+                container,
+                clear: true
             });
 
             this.cacheFullImage(cacheKey, imageClone);

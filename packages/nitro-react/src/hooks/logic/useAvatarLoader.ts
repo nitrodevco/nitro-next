@@ -11,9 +11,10 @@ export const useAvatarLoader = () => {
     const effectMapUrl = useConfigurationStore(state => state.config['effectmap.url']) as string | undefined;
     const avatarAssetUrl = useConfigurationStore(state => state.config['asset.urls.avatar']) as string | undefined;
     const effectAssetUrl = useConfigurationStore(state => state.config['asset.urls.effect']) as string | undefined;
+    const figureDataUrl = useConfigurationStore(state => state.config['figuredata.url']) as string | undefined;
 
     useEffect(() => {
-        if (isAvatarReady || !figureMapUrl || !effectMapUrl) return;
+        if (isAvatarReady || !figureMapUrl || !effectMapUrl || !figureDataUrl) return;
 
         const loadFigureMapAsync = async (url: string) => {
             if (!url || !url.length || !avatarAssetUrl) return;
@@ -47,10 +48,25 @@ export const useAvatarLoader = () => {
             }
         };
 
+        const loadFigureDataAsync = async (url: string) => {
+            if (!url || !url.length || !avatarAssetUrl) return;
+
+            try {
+                const response = await fetch(url);
+
+                if (response.status !== 200) throw new Error('Invalid figuredata url');
+
+                GetAvatarRenderManager().structure.injectFigureData(await response.json());
+            } catch (e) {
+                NitroLogger.error(e);
+            }
+        };
+
         const prepare = async () => {
             GetAvatarRenderManager().init();
             await loadFigureMapAsync(figureMapUrl);
             await loadEffectMapAsync(effectMapUrl);
+            await loadFigureDataAsync(figureDataUrl);
 
             setIsAvatarReady(true);
         }

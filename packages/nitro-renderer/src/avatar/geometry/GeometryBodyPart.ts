@@ -137,7 +137,7 @@ export class GeometryBodyPart extends Node3D {
             return 0;
         });
 
-        return parts.map(x => x[1].id);;
+        return parts.map(x => x[1].id);
     }
 
     public getDistance(loc: Vector3D): number {

@@ -11,6 +11,7 @@ export const useConfigLoader = () => {
             'production.version': 'WIN63-202601121721-391685409',
             'gamedata.urls.externalTexts': 'https://assets.nitrodev.co/gamedata/ExternalTexts.json',
             'furnituredata.url': 'https://assets.nitrodev.co/gamedata/FurnitureData.json',
+            'figuredata.url': 'https://assets.nitrodev.co/gamedata/FigureData.json',
             'figuremap.url': 'https://assets.nitrodev.co/gamedata/FigureMap.json',
             'effectmap.url': 'https://assets.nitrodev.co/gamedata/EffectMap.json',
             'asset.urls.generic': 'https://assets.nitrodev.co/bundled/generic/%libname%.nitro',

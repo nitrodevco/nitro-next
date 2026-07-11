@@ -15,7 +15,7 @@ export class AvatarAssetDownloadManager {
     private _pendingDownloadQueue: AvatarAssetDownloadLibrary[] = [];
     private _currentDownloads: AvatarAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _isReady: boolean = false;
+    private _isReady: boolean = true;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;
