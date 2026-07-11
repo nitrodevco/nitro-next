@@ -95,7 +95,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
             asset.x,
             asset.y,
             asset.flipH,
-            asset.flipV,);
+            asset.flipV,
+        );
     }
 
     public getPaletteColors(paletteId: number): number[] {

@@ -1,11 +1,10 @@
-import type { AvatarBodyPartType, AvatarFigurePartType, AvatarScaleType, IAdvancedMap, IAnimationLayerData, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarFigurePartType, AvatarScaleType, IAnimationLayerData, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarSetType, type IActiveActionData, type IAvatarDataContainer, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import { AdvancedMap } from '@nitrodevco/nitro-shared';
 import type { Filter } from 'pixi.js';
 import { ColorMatrixFilter, Container, RenderTexture } from 'pixi.js';
 
-import { GetTickerTime } from '#renderer/utils';
+import { GetRenderer, GetTickerTime } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
 import type { AssetAliasCollection } from './alias';
@@ -37,7 +36,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     protected _headDirection: number;
     protected _actions: ActiveActionData[];
     protected _defaultAction: IActiveActionData;
-    protected _fullImageCache: IAdvancedMap<string, RenderTexture>;
+    protected _fullImageCache: Map<string, RenderTexture>;
     protected _isCachedImage: boolean;
     protected _image: RenderTexture | undefined;
     protected _avatarSpriteData: IAvatarDataContainer | undefined = undefined;
@@ -58,7 +57,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private _sortedActions: IActiveActionData[];
     private _lastActionsString: string;
     private _currentActionsString: string;
-    private _fullImageCacheSize: number = 5;
     private _useFullImageCache: boolean = false;
     private _effectIdInUse: number = -1;
     private _animationFrameCount: number = 0;
@@ -84,7 +82,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this._defaultAction = new ActiveActionData(AvatarActionStateType.Stand);
         this._defaultAction.definition = this._structure.getActionDefinition(AvatarImage.DEFAULT_ACTION);
         this.resetActions();
-        this._fullImageCache = new AdvancedMap();
+        this._fullImageCache = new Map();
         this._isCachedImage = false;
         this._image = undefined;
     }
@@ -103,9 +101,9 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         }
 
         if (this._fullImageCache) {
-            for (const k of this._fullImageCache.getValues()) k.destroy(true);
+            for (const image of this._fullImageCache.values()) image.destroy(true);
 
-            this._fullImageCache.reset();
+            this._fullImageCache.clear();
         }
 
         this._disposed = true;
@@ -228,7 +226,22 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             container.filters = filters;
         }
 
-        if (cacheKey && isCachable) this.cacheFullImage(cacheKey, this._image);
+        GetRenderer().render({
+            target: this._image,
+            container,
+            clear: true
+        });
+
+        if (cacheKey && isCachable) {
+            const imageClone = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+
+            GetRenderer().render({
+                target: imageClone,
+                container
+            });
+
+            this.cacheFullImage(cacheKey, imageClone);
+        }
 
         return this._image;
     }
@@ -399,29 +412,19 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private getFullImage(key: string): RenderTexture | undefined {
-        return this._fullImageCache[key];
+        return this._fullImageCache.get(key);
     }
 
     private cacheFullImage(key: string, texture: RenderTexture): void {
-        const existing = this._fullImageCache.getValue(key);
+        const existing = this._fullImageCache.get(key);
 
         if (existing) {
-            this._fullImageCache.remove(key);
+            this._fullImageCache.delete(key);
 
             existing.destroy(true);
         }
 
-        if (this._fullImageCache.length === AvatarImage.MAX_IMAGE_CACHE) {
-            const oldestKey = this._fullImageCache.getKey(0);
-
-            if (oldestKey) {
-                const removed = this._fullImageCache.remove(oldestKey);
-
-                if (removed) removed.destroy(true);
-            }
-        }
-
-        this._fullImageCache.add(key, texture);
+        this._fullImageCache.set(key, texture);
     }
 
     private resetActions(): boolean {

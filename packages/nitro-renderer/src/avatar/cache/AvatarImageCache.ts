@@ -108,7 +108,7 @@ export class AvatarImageCache {
         let action = cache.action;
         let frame = frameNumber;
 
-        if (!action?.definition || !direction) return undefined;
+        if (!action?.definition) return undefined;
 
         if (action.definition.startFromFrameZero) frame -= action.startFrame;
 
