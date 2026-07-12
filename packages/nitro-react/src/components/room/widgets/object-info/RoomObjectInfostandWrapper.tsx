@@ -27,7 +27,7 @@ export const RoomObjectInfostandWrapper = () => {
     if (selectedObjectId < 0) return null;
 
     return (
-        <div className="relative flex flex-col min-w-[190px] min-h-[190px] max-w-[190px] max-h-[190px] size-full [border-image-source:var(--infostand-bg-image)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] p-1 pointer-events-auto font-goldfish gap-1">
+        <div className="relative flex flex-col min-w-[190px] max-w-[190px] size-full [border-image-source:var(--infostand-bg-image)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] p-1 pointer-events-auto font-goldfish gap-1">
             <RoomObjectInfostand selectedObjectId={selectedObjectId} selectedObjectCategory={selectedObjectCategory} onClose={onClose} />
         </div>);
 }
