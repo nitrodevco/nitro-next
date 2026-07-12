@@ -20,7 +20,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const [isReady, setIsReady] = useState<boolean>(false);
     const { incomingByHeader, incomingCtors, incomingHeaderByCtor, registerManyIncoming } = useCommunicationIncoming();
     const { outgoingHeaderByComposerName, registerManyOutgoing } = useCommunicationOutgoing();
-    const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
+    //const socketUrl = useConfigurationStore(x => x.config['socket.url'] as string) ?? undefined;
     const production = useConfigurationStore(x => x.config['production.version'] as string) ?? undefined;
     const ws = useRef<WebSocket | undefined>(undefined);
     const wsBuffer = useRef<ArrayBuffer>(new ArrayBuffer(0));
@@ -30,6 +30,9 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
     const connect = () => {
         try {
+            const params = new URLSearchParams(window.location.search);
+            const socketUrl = params.get('socketUrl') ?? '';
+
             if (!socketUrl || !socketUrl.length || ws.current) return;
 
             ws.current = new WebSocket(socketUrl);
