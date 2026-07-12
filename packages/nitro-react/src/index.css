@@ -1,60 +1,105 @@
 @import 'tailwindcss';
 
+@font-face {
+    font-family: Ubuntu;
+    src: url('./assets/flash/webfonts/Ubuntu.woff');
+}
+
+@font-face {
+    font-family: GameUbuntu;
+    src: url('./assets/flash/webfonts/UbuntuCondensed.woff');
+}
+
+@font-face {
+    font-family: Goldfish;
+    src: url('./assets/flash/webfonts/Volter.woff');
+}
+
+@font-face {
+    font-family: Goldfish-Bold;
+    src: url('./assets/flash/webfonts/VolterBold.woff');
+}
+
+@font-face {
+    font-family: UbuntuItalics;
+    src: url('./assets/flash/webfonts/Ubuntu-i.ttf');
+}
+
+@font-face {
+    font-family: UbuntuItalicsBold;
+    src: url('./assets/flash/webfonts/UbuntuBoldItalic.woff');
+}
+
+@font-face {
+    font-family: UbuntuBold;
+    src: url('./assets/flash/webfonts/UbuntuBold.woff');
+}
+
+@font-face {
+    font-family: UbuntuMedium;
+    src: url('./assets/flash/webfonts/UbuntuSemi.woff');
+}
+
 @theme {
     /* Panel & window chrome */
-    --color-habbo-bg:              #0d1520;
-    --color-habbo-panel:           #1e2d4a;
-    --color-habbo-panel-light:     #263659;
-    --color-habbo-panel-mid:       #2b3d65;
-    --color-habbo-panel-hover:     #304470;
+    --color-habbo-bg: #0d1520;
+    --color-habbo-panel: #1e2d4a;
+    --color-habbo-panel-light: #263659;
+    --color-habbo-panel-mid: #2b3d65;
+    --color-habbo-panel-hover: #304470;
 
     /* Header / title bar */
-    --color-habbo-header:          #151f34;
-    --color-habbo-header-light:    #1a2840;
-    --color-habbo-header-border:   #0a1020;
+    --color-habbo-header: #151f34;
+    --color-habbo-header-light: #1a2840;
+    --color-habbo-header-border: #0a1020;
 
     /* Borders */
-    --color-habbo-border:          #0f1828;
-    --color-habbo-border-light:    #3a4f7a;
-    --color-habbo-highlight:       #4a6494;
+    --color-habbo-border: #0f1828;
+    --color-habbo-border-light: #3a4f7a;
+    --color-habbo-highlight: #4a6494;
 
     /* Gold / primary accent */
-    --color-habbo-gold:            #f5c518;
-    --color-habbo-gold-dark:       #c89a00;
-    --color-habbo-gold-light:      #ffe066;
-    --color-habbo-gold-muted:      #b8960a;
+    --color-habbo-gold: #f5c518;
+    --color-habbo-gold-dark: #c89a00;
+    --color-habbo-gold-light: #ffe066;
+    --color-habbo-gold-muted: #b8960a;
 
     /* Text */
-    --color-habbo-text:            #e8edf5;
-    --color-habbo-text-muted:      #8a9bb8;
-    --color-habbo-text-faint:      #5a6b88;
+    --color-habbo-text: #e8edf5;
+    --color-habbo-text-muted: #8a9bb8;
+    --color-habbo-text-faint: #5a6b88;
 
     /* Status / semantic */
-    --color-habbo-online:          #4caf50;
-    --color-habbo-danger:          #e53935;
-    --color-habbo-warn:            #fb8c00;
-    --color-habbo-info:            #1e88e5;
+    --color-habbo-online: #4caf50;
+    --color-habbo-danger: #e53935;
+    --color-habbo-warn: #fb8c00;
+    --color-habbo-info: #1e88e5;
 
     /* Toolbar */
-    --color-habbo-toolbar:         #0c1525;
-    --color-habbo-toolbar-btn:     #1a2540;
-    --color-habbo-toolbar-active:  #253660;
+    --color-habbo-toolbar: #0c1525;
+    --color-habbo-toolbar-btn: #1a2540;
+    --color-habbo-toolbar-active: #253660;
 
     /* Sizing */
-    --spacing-toolbar-h:           54px;
-    --spacing-card-header-h:       32px;
-    --spacing-nav-w:               420px;
-    --spacing-nav-h:               440px;
-    --spacing-inv-w:               528px;
-    --spacing-inv-h:               320px;
+    --spacing-toolbar-h: 54px;
+    --spacing-card-header-h: 32px;
+    --spacing-nav-w: 420px;
+    --spacing-nav-h: 440px;
+    --spacing-inv-w: 528px;
+    --spacing-inv-h: 320px;
 
     /* Typography */
-    --font-sans:                   'Ubuntu', system-ui, sans-serif;
-    --font-size-base:              0.875rem;
+    --font-sans: 'Ubuntu', system-ui, sans-serif;
+    --font-size-base: 0.875rem;
+
+    --infostand-bg-image: url('./assets/flash/buttons/toggle_bg.png');
+    --infostand-bg-thumb: url('./assets/flash/infostand/thumb_bg.png');
+    --infostand-close-bg-image: url('./assets/flash/infostand/info_close.png');
 }
 
 /* ─── Reset ─── */
-html, body {
+html,
+body {
     padding: 0;
     margin: 0;
     width: 100%;
@@ -65,9 +110,29 @@ html, body {
     scrollbar-width: thin;
     scrollbar-color: var(--color-habbo-border-light) var(--color-habbo-panel);
     zoom: reset;
+    font-family: Ubuntu;
 }
 
-*, *:focus, *:hover {
+.font-bold {
+    font-family: UbuntuBold;
+    font-weight: 400;
+}
+
+.font-goldfish {
+    font-family: Goldfish;
+}
+
+.goldfish-bold {
+    font-family: Goldfish-Bold;
+}
+
+.font-italic {
+    font-family: UbuntuItalics;
+}
+
+*,
+*:focus,
+*:hover {
     outline: none;
 }
 
@@ -76,10 +141,13 @@ html, body {
     width: 6px;
     height: 6px;
 }
-::-webkit-scrollbar-track { background: var(--color-habbo-panel); }
+::-webkit-scrollbar-track {
+    background: var(--color-habbo-panel);
+}
 ::-webkit-scrollbar-thumb {
     background: var(--color-habbo-border-light);
     border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-habbo-highlight); }
-
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-habbo-highlight);
+}

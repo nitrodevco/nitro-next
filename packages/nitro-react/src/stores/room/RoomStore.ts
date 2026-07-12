@@ -11,7 +11,8 @@ import type { RoomSessionSlice } from "./RoomSessionSlice";
 import { createRoomSessionSlice, RoomSessionSliceInitialState } from "./RoomSessionSlice";
 import type { RoomStackingHeightMapSlice } from "./RoomStackingHeightMapSlice";
 import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from "./RoomStackingHeightMapSlice";
-import { createRoomUsersSlice, RoomUsersSlice, RoomUsersSliceInitialState } from "./RoomUsersSlice";
+import type { RoomUsersSlice } from "./RoomUsersSlice";
+import { createRoomUsersSlice, RoomUsersSliceInitialState } from "./RoomUsersSlice";
 
 type State = {
     room: IRoom | undefined;

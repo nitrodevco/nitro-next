@@ -1,5 +1,6 @@
-export interface IRoomPetData {
-    id: number;
+import { IRoomObjectData } from "./IRoomObjectData";
+
+export interface IRoomPetData extends IRoomObjectData {
     level: number;
     maximumLevel: number;
     experience: number;

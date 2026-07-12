@@ -1,6 +1,7 @@
 import type { RoomStore } from "../RoomStore"
 
 export type RoomUsersActions = {
+    getUserByRoomObjectId: RoomStore['getUserByRoomObjectId'];
     updateUsers: RoomStore['updateUsers'];
     updateUser: RoomStore['updateUser'];
     updateUserPartial: RoomStore['updateUserPartial'];
@@ -9,6 +10,7 @@ export type RoomUsersActions = {
 }
 
 export const extractRoomUsersActions = (store: RoomStore) => ({
+    getUserDataByIndex: store.getUserByRoomObjectId,
     updateUsers: store.updateUsers,
     updateUser: store.updateUser,
     updateUserPartial: store.updateUserPartial,

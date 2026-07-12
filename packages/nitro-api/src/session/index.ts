@@ -1,4 +1,5 @@
 export * from './IFurnitureData';
+export * from './IRoomObjectData';
 export * from './IRoomPetData';
 export * from './IRoomUserData';
 export * from './IUserInfo';

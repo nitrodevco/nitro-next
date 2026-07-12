@@ -30,7 +30,7 @@
         "typescript",
         "typescriptreact"
     ],
-    "tailwindCSS.experimental.configFile": "./packages/nitro-react/tailwind.config.js",
+    "tailwindCSS.experimental.configFile": "./packages/nitro-react/src/index.css",
     "tailwindCSS.experimental.classRegex": [
         [
             "classes\\s*=\\s*([^;]*);",

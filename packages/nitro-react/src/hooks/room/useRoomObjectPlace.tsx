@@ -130,7 +130,7 @@ export const useRoomObjectPlace = () => {
                     if (placed && selectedObject.posture) placed.model.setValue(RoomObjectVariableEnum.FigurePosture, selectedObject.posture);
                 }
             } else if (event instanceof RoomObjectWallMouseEvent && selectedObject.category === RoomObjectCategoryEnum.Wall) {
-                room.addFurnitureWallByTypeId(selectedObject.objectId, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, parseInt(selectedObject.instanceData), 0);
+                room.addFurnitureWallByTypeId(selectedObject.objectId, selectedObject.typeId, selectedObject.loc, selectedObject.dir, 0, selectedObject.instanceData, 0);
             }
 
             roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);

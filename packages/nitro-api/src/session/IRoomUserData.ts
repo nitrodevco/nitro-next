@@ -1,10 +1,12 @@
+import { AvatarGenderType } from "../avatar";
 import { RoomObjectUserType } from "../room";
+import { IRoomObjectData } from "./IRoomObjectData";
 
-export interface IRoomUserData {
+export interface IRoomUserData extends IRoomObjectData {
     objectId: number;
     name: string;
     type: RoomObjectUserType;
-    sex: string;
+    gender: AvatarGenderType;
     figure: string;
     custom: string;
     webID: number;

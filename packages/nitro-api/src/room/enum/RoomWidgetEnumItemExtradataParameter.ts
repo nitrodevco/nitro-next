@@ -1,4 +1,5 @@
 ﻿export class RoomWidgetEnumItemExtradataParameter {
+    public static INFOSTAND_EXTRA_PARAM: string = 'RWEIEP_INFOSTAND_EXTRA_PARAM' as const;
     public static JUKEBOX: string = 'RWEIEP_JUKEBOX' as const;
     public static USABLE_PRODUCT: string = 'RWEIEP_USABLE_PRODUCT' as const;
     public static SONGDISK: string = 'RWEIEP_SONGDISK' as const;

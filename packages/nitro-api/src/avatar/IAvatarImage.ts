@@ -1,4 +1,4 @@
-import type { Container, RenderTexture, Texture } from 'pixi.js';
+import type { Container, ImageLike, RenderTexture, Texture } from 'pixi.js';
 
 import type { IAnimationLayerData, IAvatarDataContainer, ISpriteDataContainer } from './animation';
 import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
@@ -14,6 +14,7 @@ export interface IAvatarImage {
     updateAnimationByFrames(frame?: number): void;
     resetAnimationFrameCounter(): void;
     getImage(setType: AvatarSetType, hightlight: boolean, scale?: number): RenderTexture | undefined;
+    getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, scale?: number): Promise<ImageLike | undefined>;
     initActionAppends(): void;
     endActionAppends(): void;
     appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number)[]): boolean;

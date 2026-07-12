@@ -1,4 +1,4 @@
-import { IRoomUserData, RoomControllerLevelEnum, RoomDoorModeEnum, RoomTradeModeEnum } from "@nitrodevco/nitro-api";
+import type { IRoomUserData } from "@nitrodevco/nitro-api";
 import type { StateCreator } from "zustand";
 
 type State = {
@@ -7,6 +7,7 @@ type State = {
 }
 
 type Actions = {
+    getUserByRoomObjectId: (objectId: number) => IRoomUserData | undefined;
     updateUsers: (datas: IRoomUserData[]) => void;
     updateUser: (data: IRoomUserData) => void;
     updateUserPartial: (objectId: number, data: Partial<IRoomUserData>) => void;
@@ -23,6 +24,9 @@ export type RoomUsersSlice = State & Actions;
 
 export const createRoomUsersSlice: StateCreator<RoomUsersSlice, [], [], RoomUsersSlice> = (set, get, store) => ({
     ...RoomUsersSliceInitialState,
+    getUserByRoomObjectId: (objectId: number) => {
+        return get().usersByRoomObjectId[objectId];
+    },
     updateUsers: (datas: IRoomUserData[]) => set(x => {
         const updates = datas.reduce((acc, data) => ({
             ...acc,
