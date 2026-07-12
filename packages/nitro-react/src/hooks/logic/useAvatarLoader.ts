@@ -1,12 +1,11 @@
 import type { IEffectMapLibrary, IFigureMapLibrary } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useConfigurationStore } from '#base/stores';
 
 export const useAvatarLoader = () => {
-    const [isAvatarReady, setIsAvatarReady] = useState(false);
     const figureMapUrl = useConfigurationStore(state => state.config['figuremap.url']) as string | undefined;
     const effectMapUrl = useConfigurationStore(state => state.config['effectmap.url']) as string | undefined;
     const avatarAssetUrl = useConfigurationStore(state => state.config['asset.urls.avatar']) as string | undefined;
@@ -14,7 +13,7 @@ export const useAvatarLoader = () => {
     const figureDataUrl = useConfigurationStore(state => state.config['figuredata.url']) as string | undefined;
 
     useEffect(() => {
-        if (isAvatarReady || !figureMapUrl || !effectMapUrl || !figureDataUrl) return;
+        if (!figureMapUrl || !effectMapUrl || !figureDataUrl) return;
 
         const loadFigureMapAsync = async (url: string) => {
             if (!url || !url.length || !avatarAssetUrl) return;
@@ -62,17 +61,10 @@ export const useAvatarLoader = () => {
             }
         };
 
-        const prepare = async () => {
-            GetAvatarRenderManager().init();
-            await loadFigureMapAsync(figureMapUrl);
-            await loadEffectMapAsync(effectMapUrl);
-            await loadFigureDataAsync(figureDataUrl);
+        GetAvatarRenderManager().init();
 
-            setIsAvatarReady(true);
-        }
-
-        void prepare();
-    }, [isAvatarReady, figureMapUrl, effectMapUrl]);
-
-    return { isAvatarReady };
+        void loadFigureMapAsync(figureMapUrl);
+        void loadEffectMapAsync(effectMapUrl);
+        void loadFigureDataAsync(figureDataUrl);
+    }, [figureMapUrl, effectMapUrl]);
 };

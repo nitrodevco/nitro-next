@@ -1,4 +1,5 @@
 import type {
+    IEventDispatcher,
     IFurnitureData,
     IGraphicAsset,
     IGraphicAssetCollection,
@@ -13,7 +14,7 @@ import {
     RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
 } from '@nitrodevco/nitro-api';
-import { GetConfigValue, NitroLogger } from '@nitrodevco/nitro-shared';
+import { GetConfigValue, NitroLogger, RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
@@ -30,6 +31,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     private _iconListener: IRoomContentListener;
     private _images: Map<string, HTMLImageElement> = new Map();
+    private _events: Map<string, IEventDispatcher> = new Map();
 
     private _activeObjects: { [index: string]: number } = {};
     private _activeObjectTypes: Map<number, string> = new Map();
@@ -243,6 +245,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public downloadImage(id: number, type: string, param: string): boolean {
         let typeName: string = '';
+        // eslint-disable-next-line no-useless-assignment
         let assetUrls: string[] = [];
 
         if (type && type.indexOf(',') >= 0) {
@@ -285,7 +288,50 @@ export class RoomContentLoader implements IRoomContentLoader {
         return false;
     }
 
-    public async downloadAsset(type: string): Promise<boolean> {
+    public downloadAsset(type: string, events: IEventDispatcher): void {
+        const assetUrl: string = this.getAssetUrls(type)?.[0];
+
+        if (!assetUrl || !assetUrl.length || this._pendingContentTypes.indexOf(type) >= 0 || this.getOrRemoveEventDispatcher(type)) return;
+
+        this._pendingContentTypes.push(type);
+        this._events.set(type, events);
+
+        GetAssetManager().downloadAsset(assetUrl)
+            .then(flag => {
+                if (!flag) {
+                    this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
+
+                    return;
+                }
+
+                const petIndex = this._pets[type];
+                const collection = this.getCollection(type);
+
+                if (petIndex && collection && collection.data.palettes) {
+                    const palettes: Map<number, IPetColorResult> = new Map();
+
+                    for (const palette of collection.data.palettes) {
+                        const paletteData = collection.palettes.get(palette.id);
+
+                        if (!paletteData) continue;
+
+                        palettes.set(
+                            palette.id,
+                            new PetColorResult(paletteData.primaryColor, paletteData.secondaryColor, palette.breed ?? 0, palette.colorTag ?? -1, palette.id, palette.master ?? false, palette.tags ?? []),
+                        );
+                    }
+
+                    this._petColors.set(petIndex, palettes);
+                }
+
+                this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
+            })
+            .catch(err => {
+                this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
+            });
+    }
+
+    public async downloadAssetAsync(type: string): Promise<boolean> {
         const assetUrl: string = this.getAssetUrls(type)?.[0];
 
         if (!assetUrl || !assetUrl.length) return false;
@@ -374,6 +420,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public getAssetIconUrl(type: string, colorIndex: string): string | undefined {
         let assetName: string = '';
+        // eslint-disable-next-line no-useless-assignment
         let assetUrls: string[] = [];
 
         if (type && type.indexOf(',') >= 0) {
@@ -415,5 +462,13 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public get pets(): { [index: string]: number } {
         return this._pets;
+    }
+
+    private getOrRemoveEventDispatcher(type: string, remove: boolean = false): IEventDispatcher | undefined {
+        const existing = this._events.get(type);
+
+        if (remove && existing) this._events.delete(type);
+
+        return existing;
     }
 }

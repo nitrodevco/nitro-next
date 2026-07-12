@@ -15,7 +15,7 @@ export class AvatarAssetDownloadManager {
     private _pendingDownloadQueue: AvatarAssetDownloadLibrary[] = [];
     private _currentDownloads: AvatarAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _isReady: boolean = true;
+    private _isReady: boolean = false;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;
@@ -78,23 +78,25 @@ export class AvatarAssetDownloadManager {
         const libraries = this.getAvatarFigurePendingLibraries(container);
 
         if (libraries.length) {
-            if (!listener.disposed) {
-                let listeners = this._figureListeners.get(figure);
+            let listeners = this._figureListeners.get(figure);
 
-                if (!listeners) {
-                    listeners = [];
+            if (!listeners) {
+                listeners = [];
 
-                    this._figureListeners.set(figure, listeners);
-                }
-
-                listeners.push(listener);
+                this._figureListeners.set(figure, listeners);
             }
+
+            listeners.push(listener);
 
             this._incompleteFigures.set(figure, libraries);
 
             for (const library of libraries) this.downloadLibrary(library);
         }
         else if (!listener.disposed) listener.resetFigure(figure);
+    }
+
+    public setReady(): void {
+        this._isReady = true;
     }
 
     private getAvatarFigurePendingLibraries(container: IAvatarFigureContainer): AvatarAssetDownloadLibrary[] {

@@ -22,8 +22,9 @@ export const Nitro: FC = () => {
     const { isConfigReady } = useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
-    const { isAvatarReady } = useAvatarLoader();
     const { isAuthenticated, connect } = useWebSocketContext();
+
+    useAvatarLoader();
 
     useEffect(() => {
         if (!isEngineReady) return;
@@ -47,12 +48,12 @@ export const Nitro: FC = () => {
 
                 try {
                     await GetRoomEngine().init();
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.ROOM_CONTENT);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.TILE_CURSOR);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.SELECTION_ARROW);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_WALL);
-                    await GetRoomContentLoader().downloadAsset(RoomContentLoader.PLACE_HOLDER_PET);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
+                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
 
                     setIsEngineReady(true);
                 } catch (err) {
@@ -66,7 +67,7 @@ export const Nitro: FC = () => {
         void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
     }, []);
 
-    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isAvatarReady;
+    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady();
 
     return (
         <>

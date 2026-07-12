@@ -1,5 +1,5 @@
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, GetTicker, RoomEnterEffect } from '@nitrodevco/nitro-renderer';
+import { GetRenderer, GetStage, GetTicker } from '@nitrodevco/nitro-renderer';
 import type { Ticker } from 'pixi.js';
 import { forwardRef, useEffect } from 'react';
 
@@ -67,8 +67,6 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
             const time = ticker.lastTime;
             const update = false;
 
-            RoomEnterEffect.turnVisualizationOn();
-
             room.update(time, update);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
@@ -83,8 +81,6 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
             }
 
             if (hasAndResetCursorUpdate()) renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
-
-            RoomEnterEffect.turnVisualizationOff();
 
             renderer.render(stage);
         }

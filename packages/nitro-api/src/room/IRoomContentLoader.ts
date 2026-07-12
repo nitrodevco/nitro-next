@@ -10,7 +10,8 @@ import type { IRoomContentListener } from './IRoomContentListener';
 export interface IRoomContentLoader {
     init(): Promise<void>;
     processFurnitureData(furnitureData: IFurnitureData[]): void;
-    downloadAsset(type: string): Promise<boolean>;
+    downloadAsset(type: string, events: IEventDispatcher): void;
+    downloadAssetAsync(type: string): Promise<boolean>;
     isLoaderType(type: string): boolean;
     getCollection(name: string): IGraphicAssetCollection | undefined;
     getPlaceholderName(type: string): string;

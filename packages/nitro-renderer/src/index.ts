@@ -309,4 +309,5 @@ export * from './utils/GetTickerTime';
 export * from './utils/NitroBundle';
 export * from './utils/NumberBank';
 export * from './utils/PaletteMapFilter';
+export * from './utils/TexturePool';
 export * from './utils/TextureUtils';

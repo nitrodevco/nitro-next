@@ -1,10 +1,10 @@
 import type { AvatarBodyPartType, AvatarFigurePartType, AvatarScaleType, IAnimationLayerData, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarSetType, type IActiveActionData, type IAvatarDataContainer, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import type { Filter } from 'pixi.js';
-import { ColorMatrixFilter, Container, RenderTexture } from 'pixi.js';
+import type { Filter, RenderTexture } from 'pixi.js';
+import { ColorMatrixFilter, Container } from 'pixi.js';
 
-import { GetRenderer, GetTickerTime } from '#renderer/utils';
+import { GetRenderer, GetTickerTime, TexturePool } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
 import type { AssetAliasCollection } from './alias';
@@ -91,7 +91,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (this._disposed) return;
 
         if (this._image) {
-            this._image.destroy(true);
+            TexturePool.releaseTexture(this._image);
 
             this._image = undefined;
         }
@@ -101,7 +101,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         }
 
         if (this._fullImageCache) {
-            for (const image of this._fullImageCache.values()) image.destroy(true);
+            for (const image of this._fullImageCache.values()) TexturePool.releaseTexture(image);
 
             this._fullImageCache.clear();
         }
@@ -172,9 +172,9 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (!avatarCanvas) return undefined;
 
         if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
-            if (this._image && !this._isCachedImage) this._image.destroy(true);
+            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
 
-            this._image = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+            this._image = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
             this._isCachedImage = false;
         }
 
@@ -226,15 +226,17 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         });
 
         if (cacheKey && isCachable) {
-            const imageClone = RenderTexture.create({ width: avatarCanvas.width, height: avatarCanvas.height });
+            const imageClone = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
 
-            GetRenderer().render({
-                target: imageClone,
-                container,
-                clear: true
-            });
+            if (imageClone) {
+                GetRenderer().render({
+                    target: imageClone,
+                    container,
+                    clear: true
+                });
 
-            this.cacheFullImage(cacheKey, imageClone);
+                this.cacheFullImage(cacheKey, imageClone);
+            }
         }
 
         return this._image;
@@ -415,7 +417,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (existing) {
             this._fullImageCache.delete(key);
 
-            existing.destroy(true);
+            TexturePool.releaseTexture(existing);
         }
 
         this._fullImageCache.set(key, texture);

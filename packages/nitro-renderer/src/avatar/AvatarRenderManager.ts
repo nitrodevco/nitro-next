@@ -43,12 +43,14 @@ export class AvatarRenderManager implements IAvatarRenderManager {
     public processFigureMap(data: IFigureMapLibrary[], assetUrl: string) {
         this._avatarAssetDownloadManager.processFigureMap(data, assetUrl);
         this._avatarAssetDownloadManager.processMissingLibraries();
+        this._avatarAssetDownloadManager.setReady();
         this._avatarAssetDownloadManager.processPendingContainers();
     }
 
     public processEffectMap(data: IEffectMapLibrary[], assetUrl: string) {
         this._effectAssetDownloadManager.processEffectMap(data, assetUrl);
         this._effectAssetDownloadManager.processMissingLibraries();
+        this._avatarAssetDownloadManager.setReady();
         this._effectAssetDownloadManager.processPendingDownloads();
     }
 

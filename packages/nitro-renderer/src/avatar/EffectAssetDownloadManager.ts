@@ -15,7 +15,7 @@ export class EffectAssetDownloadManager {
     private _pendingDownloadQueue: EffectAssetDownloadLibrary[] = [];
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
-    private _isReady: boolean = true;
+    private _isReady: boolean = false;
 
     constructor(structure: AvatarStructure) {
         this._structure = structure;
@@ -68,24 +68,28 @@ export class EffectAssetDownloadManager {
             return;
         }
 
-        const pendingLibraries = this.getAvatarEffectPendingLibraries(id);
+        const libraries = this.getAvatarEffectPendingLibraries(id);
 
-        if (pendingLibraries && pendingLibraries.length) {
-            if (listener && !listener.disposed) {
-                let listeners = this._effectListeners.get(id);
+        if (libraries.length) {
+            let listeners = this._effectListeners.get(id);
 
-                if (!listeners) listeners = [];
-
-                listeners.push(listener);
+            if (!listeners) {
+                listeners = [];
 
                 this._effectListeners.set(id, listeners);
             }
 
-            this._incompleteEffects.set(id, pendingLibraries);
+            listeners.push(listener);
 
-            for (const library of pendingLibraries) this.downloadLibrary(library);
+            this._incompleteEffects.set(id, libraries);
+
+            for (const library of libraries) this.downloadLibrary(library);
         }
         else if (!listener.disposed) listener.resetEffect(id);
+    }
+
+    public setReady(): void {
+        this._isReady = true;
     }
 
     private getAvatarEffectPendingLibraries(id: number): EffectAssetDownloadLibrary[] {

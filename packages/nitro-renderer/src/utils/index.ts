@@ -5,4 +5,6 @@ export * from './GetTicker';
 export * from './GetTickerTime';
 export * from './NitroBundle';
 export * from './NumberBank';
+export * from './PaletteMapFilter';
+export * from './TexturePool';
 export * from './TextureUtils';

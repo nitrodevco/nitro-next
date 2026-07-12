@@ -28,7 +28,6 @@ import {
 import {
     GetObjectDataForFlags,
     LegacyDataType,
-    NitroLogger,
     ObjectDataFlagsEnum,
     RoomObjectCategoryEnum,
     RoomObjectUserTypeUtils,
@@ -38,6 +37,7 @@ import {
 import {
     EventDispatcher,
     GetConfigValue,
+    RoomContentLoadedEvent,
     RoomEngineEvent,
     RoomEngineObjectEvent,
     RoomToObjectOwnAvatarMoveEvent
@@ -108,6 +108,7 @@ export class Room implements IRoom {
     private _model: IRoomObjectModel = new RoomObjectModel();
     private _objects: Map<number, IRoomObject> = new Map();
     private _objectManagers: Map<RoomObjectCategoryEnum, IRoomObjectManager> = new Map();
+    private _pendingContentTypes: string[] = [];
     private _updateCategories: RoomObjectCategoryEnum[] = [
         RoomObjectCategoryEnum.Floor,
         RoomObjectCategoryEnum.Wall,
@@ -115,6 +116,7 @@ export class Room implements IRoom {
         RoomObjectCategoryEnum.Cursor,
         RoomObjectCategoryEnum.Room,
     ];
+    private _skipContentProcessingForNextFrame: boolean = false;
     private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
     private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
@@ -124,6 +126,10 @@ export class Room implements IRoom {
         this._eventDispatcher = new EventDispatcher();
         this._eventHandler = new RoomEventHandler(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
+
+        this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_SUCCESS, event => this.onRoomContentLoadedEvent(event));
+        this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_FAILURE, event => this.onRoomContentLoadedEvent(event));
+        this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_CANCEL, event => this.onRoomContentLoadedEvent(event));
     }
 
     public dispose(): void {
@@ -309,13 +315,15 @@ export class Room implements IRoom {
             RoomObjectCategoryEnum.Cursor,
         );
 
-        // update area hide
+        // TODO update area hide
 
         this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.INITIALIZED, this._roomId));
     }
 
     public update(time: number, update: boolean = false): void {
         if (this._disposed) return;
+
+        this.processPendingContentTypes();
 
         for (const category of this._updateCategories) {
             const objects = this.getRoomObjectManager(category)?.objects;
@@ -485,13 +493,7 @@ export class Room implements IRoom {
             if (!asset) {
                 isLoading = true;
 
-                GetRoomContentLoader().downloadAsset(type)
-                    .then(flag => {
-                        if (!flag) return;
-
-                        this.reinitializeRoomObjectsByType(type);
-                    })
-                    .catch(err => NitroLogger.error(err));
+                GetRoomContentLoader().downloadAsset(type, this._eventDispatcher);
 
                 assetName = GetRoomContentLoader().getPlaceholderName(type);
                 asset = GetRoomContentLoader().getCollection(assetName);
@@ -934,8 +936,8 @@ export class Room implements IRoom {
 
         if (!room) return false;
 
-        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS, wallThickness as number));
-        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS, floorThickness as number));
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.WALL_THICKNESS, wallThickness));
+        room.processUpdateMessage(new ObjectRoomPlanePropertyUpdateMessage(ObjectRoomPlanePropertyUpdateMessage.FLOOR_THICKNESS, floorThickness));
 
         return true;
     }
@@ -1282,6 +1284,7 @@ export class Room implements IRoom {
         let type: string | undefined = undefined;
         let colorIndex = 0;
 
+        // eslint-disable-next-line no-useless-assignment
         let image: ImageLike | undefined = undefined;
 
         if (realRoomObject) {
@@ -1299,8 +1302,6 @@ export class Room implements IRoom {
                 type = RoomObjectUserTypeUtils.getAvatarTypeName(objectId);
 
                 if (type === RoomObjectUserTypeName.Pet) {
-                    type = this.getPetType(extra);
-
                     const petFigureData = new PetFigureData(extra);
 
                     image = await this.getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, true, petFigureData.customParts, posture);
@@ -1475,5 +1476,41 @@ export class Room implements IRoom {
         sprite.scale.set(1);
 
         this.getRoomOverlay()?.addChild(sprite);
+    }
+
+    private onRoomContentLoadedEvent(event: RoomContentLoadedEvent): void {
+        const contentType = event.contentType;
+
+        if (this._pendingContentTypes.indexOf(contentType) >= 0) return;
+
+        this._pendingContentTypes.push(contentType);
+    }
+
+    private processPendingContentTypes(): void {
+        if (this._skipContentProcessingForNextFrame) {
+            this._skipContentProcessingForNextFrame = false;
+
+            return;
+        }
+
+        const now = performance.now();
+
+        while (this._pendingContentTypes.length) {
+            const type = this._pendingContentTypes.shift();
+
+            if (!type) continue;
+
+            const collection = GetRoomContentLoader().getCollection(type);
+
+            if (!collection) continue;
+
+            this.reinitializeRoomObjectsByType(type);
+
+            if ((performance.now() - now) >= 40) {
+                this._skipContentProcessingForNextFrame = true;
+
+                break;
+            }
+        }
     }
 }

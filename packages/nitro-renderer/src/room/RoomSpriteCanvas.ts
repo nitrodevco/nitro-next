@@ -370,6 +370,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             return sortableCache.spriteCount;
         }
 
+        // eslint-disable-next-line no-useless-assignment
         update = true;
 
         let x = vector.x;
@@ -515,12 +516,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             this.updateEnterRoomEffect(extendedSprite, objectSprite);
 
+            // eslint-disable-next-line no-useless-assignment
             update = true;
         }
 
         const posChanged = extendedSprite.x !== sprite.x || extendedSprite.y !== sprite.y;
         const offsetChanged = extendedSprite.offsetX !== objectSprite.offsetX || extendedSprite.offsetY !== objectSprite.offsetY;
 
+        // eslint-disable-next-line no-useless-assignment
         if (posChanged || offsetChanged) update = true;
 
         extendedSprite.x = sprite.x;
@@ -607,10 +610,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         this._activeSpriteCount = spriteCount;
     }
 
-    private updateEnterRoomEffect(sprite: ExtendedSprite, _arg_2: IRoomObjectSprite): void {
-        if (!RoomEnterEffect.isVisualizationOn() || !_arg_2) return;
+    private updateEnterRoomEffect(sprite: ExtendedSprite, spriteData: IRoomObjectSprite): void {
+        if (!RoomEnterEffect.isVisualizationOn() || !spriteData) return;
 
-        switch (_arg_2.spriteType) {
+        switch (spriteData.spriteType) {
             case RoomObjectSpriteTypeEnum.AvatarOwn:
                 return;
             case RoomObjectSpriteTypeEnum.RoomPlane:
@@ -705,6 +708,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         buttonDown: boolean = false,
     ): boolean {
         let didHitSprite = false;
+        // eslint-disable-next-line no-useless-assignment
         let mouseEvent: IRoomSpriteMouseEvent | undefined = undefined;
         let spriteId = this._activeSpriteCount - 1;
 
