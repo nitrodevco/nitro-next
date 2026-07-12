@@ -965,8 +965,4 @@ export class AvatarVisualization
     public get angle(): number {
         return this._angle;
     }
-
-    public get disposed(): boolean {
-        return this._disposed;
-    }
 }

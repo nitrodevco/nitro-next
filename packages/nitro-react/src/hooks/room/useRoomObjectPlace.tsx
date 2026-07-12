@@ -1,5 +1,5 @@
 import type { IRoomObjectController } from "@nitrodevco/nitro-api";
-import { NitroLogger, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { NitroLogger, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
 import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { PlaceObjectComposer, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
@@ -54,9 +54,11 @@ export const useRoomObjectPlace = () => {
 
             if (objectPlacementSource !== RoomObjectPlacementSource.CATALOG) {
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    if (selectedObject.typeId === RoomObjectType.PET) {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+                    if (selectedObject.typeId === RoomObjectUserType.Pet) {
                         NitroLogger.sendPacket(`new PetPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
-                    } else if (selectedObject.typeId === RoomObjectType.RENTABLE_BOT) {
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+                    } else if (selectedObject.typeId === RoomObjectUserType.RentableBot) {
                         NitroLogger.sendPacket(`new BotPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
                     }
                 } else if (roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureIsStickie) !== undefined) {

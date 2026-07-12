@@ -1,5 +1,6 @@
 
 import type { IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
+import { AvatarGenderType } from "@nitrodevco/nitro-api";
 import { AvatarActionStateType, AvatarFigurePartType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
@@ -39,10 +40,11 @@ export const useRoomUserHandler = () => {
                     const avatarUser = avatar as IRoomAvatar & IRoomAvatarUser;
 
                     datas.push({
+                        id: avatarUser.objectId,
                         objectId: avatarUser.objectId,
                         name: avatarUser.name,
                         type: avatarUser.avatarType,
-                        sex: avatarUser.gender,
+                        gender: avatarUser.gender.toUpperCase() as AvatarGenderType,
                         figure: avatarUser.figure,
                         custom: avatarUser.motto,
                         webID: avatarUser.webId,
@@ -73,10 +75,11 @@ export const useRoomUserHandler = () => {
                     const avatarBot = avatar as IRoomAvatar & IRoomAvatarBot;
 
                     datas.push({
+                        id: avatarBot.objectId,
                         objectId: avatarBot.objectId,
                         name: avatarBot.name,
                         type: avatarBot.avatarType,
-                        sex: avatarBot.gender,
+                        gender: avatarBot.gender.toUpperCase() as AvatarGenderType,
                         figure: avatarBot.figure,
                         custom: avatarBot.motto,
                         webID: avatarBot.webId,
@@ -107,10 +110,11 @@ export const useRoomUserHandler = () => {
                     const avatarRentableBot = avatar as IRoomAvatar & IRoomAvatarRentableBot;
 
                     datas.push({
+                        id: avatarRentableBot.objectId,
                         objectId: avatarRentableBot.objectId,
                         name: avatarRentableBot.name,
                         type: avatarRentableBot.avatarType,
-                        sex: avatarRentableBot.gender,
+                        gender: avatarRentableBot.gender.toUpperCase() as AvatarGenderType,
                         figure: avatarRentableBot.figure,
                         custom: avatarRentableBot.motto,
                         webID: avatarRentableBot.webId,
@@ -141,10 +145,11 @@ export const useRoomUserHandler = () => {
                     const avatarPet = avatar as IRoomAvatar & IRoomAvatarPet;
 
                     datas.push({
+                        id: avatarPet.objectId,
                         objectId: avatarPet.objectId,
                         name: avatarPet.name,
                         type: avatarPet.avatarType,
-                        sex: '',
+                        gender: AvatarGenderType.Unisex,
                         figure: avatarPet.figure,
                         custom: avatarPet.motto,
                         webID: avatarPet.webId,
@@ -274,7 +279,7 @@ export const useRoomUserHandler = () => {
 
         updateUserPartial(data.objectId, {
             figure: data.figure,
-            sex: data.gender,
+            gender: data.gender.toUpperCase() as AvatarGenderType,
             custom: data.customInfo,
             activityPoints: data.achievementScore,
             hasSaddle: false,

@@ -122,10 +122,6 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         return super.getTexture(scale, layerId, asset);
     }
 
-    public get disposed(): boolean {
-        return this._disposed;
-    }
-
     protected override get data(): FurnitureMannequinVisualizationData {
         return this._data as FurnitureMannequinVisualizationData;
     }

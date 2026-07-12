@@ -4,6 +4,7 @@ export class FurnitureData implements IFurnitureData {
     constructor(
         public readonly type: FurnitureType,
         public readonly id: number,
+        public readonly objectId: number,
         public readonly fullName: string,
         public className: string,
         public readonly category: string,
@@ -31,7 +32,7 @@ export class FurnitureData implements IFurnitureData {
         public readonly furniLine: string,
         public readonly environment: string,
         public readonly rare: boolean,
-    ) {}
+    ) { }
 
     public get isExternalImage(): boolean {
         return !(this.className.indexOf('external_image') === -1);

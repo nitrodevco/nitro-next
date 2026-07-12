@@ -85,7 +85,7 @@ export class EffectAssetDownloadManager {
 
             for (const library of libraries) this.downloadLibrary(library);
         }
-        else if (!listener.disposed) listener.resetEffect(id);
+        else listener.resetEffect(id);
     }
 
     public setReady(): void {
@@ -157,11 +157,7 @@ export class EffectAssetDownloadManager {
             const listeners = this._effectListeners.get(id);
 
             if (listeners) {
-                for (const listener of listeners) {
-                    if (listener?.disposed) continue;
-
-                    listener.resetEffect(id);
-                }
+                for (const listener of listeners) listener.resetEffect(id);
             }
 
             this._effectListeners.delete(id);

@@ -1,10 +1,10 @@
 import type { AvatarBodyPartType, AvatarFigurePartType, AvatarScaleType, IAnimationLayerData, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarSetType, type IActiveActionData, type IAvatarDataContainer, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import type { Filter, RenderTexture } from 'pixi.js';
+import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
 import { ColorMatrixFilter, Container } from 'pixi.js';
 
-import { GetRenderer, GetTickerTime, TexturePool } from '#renderer/utils';
+import { GetRenderer, GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
 import type { AssetAliasCollection } from './alias';
@@ -240,6 +240,73 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         }
 
         return this._image;
+    }
+
+    public async getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, scale: number = 1): Promise<ImageLike | undefined> {
+        if (!this._mainAction?.definition) return undefined;
+
+        if (!this._actionsSorted) this.endActionAppends();
+
+        const avatarCanvas = this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType);
+
+        if (!avatarCanvas) return undefined;
+
+        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
+        const container = new Container();
+
+        let isCachable = true;
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const set = parts[i];
+            const part = this._cache.getImageContainer(set, this._frameCounter);
+
+            if (!part || !part.image) continue;
+
+            isCachable &&= part.isCacheable;
+
+            const point = part.regPoint.clone();
+
+            point.x += avatarCanvas.offset.x;
+            point.y += avatarCanvas.offset.y;
+
+            point.x += avatarCanvas.regPoint.x;
+            point.y += avatarCanvas.regPoint.y;
+
+            const partContainer = new Container();
+
+            partContainer.addChild(part.image);
+            partContainer.position.set(point.x, point.y);
+
+            container.addChild(partContainer);
+        }
+
+        if (this._avatarSpriteData) {
+            const filters: Filter[] = [];
+
+            if (!container.filters) container.filters = [];
+
+            if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
+
+            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+
+            container.filters = filters;
+        }
+
+        const texture = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+
+        if (!texture) return undefined;
+
+        GetRenderer().render({
+            target: texture,
+            container,
+            clear: true
+        });
+
+        const image = TextureUtils.generateImage(texture);
+
+        TexturePool.releaseTexture(texture);
+
+        return image;
     }
 
     public initActionAppends(): void {

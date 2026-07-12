@@ -5,9 +5,8 @@ import { createStore } from 'zustand';
 import { FurnitureData } from './FurnitureData';
 
 type State = {
-    floorItems: Map<string, IFurnitureData>;
-    wallItems: Map<string, IFurnitureData>;
-    allItems: IFurnitureData[];
+    floorItems: Map<number, IFurnitureData>;
+    wallItems: Map<number, IFurnitureData>;
     furnitureLoaded: boolean;
 };
 
@@ -19,7 +18,6 @@ type Actions = {
 const initialState: State = {
     floorItems: new Map(),
     wallItems: new Map(),
-    allItems: [],
     furnitureLoaded: false,
 };
 
@@ -28,7 +26,7 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
     parseFloorItems: (data: any) => {
         if (!data || !data.furnitype) return;
 
-        const addedFloorItems: IFurnitureData[] = [];
+        const floorItems: IFurnitureData[] = [];
 
         for (const furniture of data.furnitype) {
             if (!furniture) continue;
@@ -56,6 +54,7 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
 
             const furnitureData = new FurnitureData(
                 FurnitureType.FLOOR,
+                furniture.id,
                 furniture.id,
                 furniture.classname,
                 className,
@@ -86,17 +85,17 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
                 furniture.rare,
             );
 
-            addedFloorItems.push(furnitureData);
+            floorItems.push(furnitureData);
         }
 
-        if (!addedFloorItems.length) return;
+        if (!floorItems.length) return;
 
-        set(state => {
-            const map = new Map(state.floorItems);
+        set(() => {
+            const map = new Map(floorItems.map(x => {
+                return [x.id, x]
+            }));
 
-            for (const item of addedFloorItems) {
-                map.set(item.type, item);
-            }
+            console.log(map);
 
             return { floorItems: map };
         });
@@ -104,13 +103,14 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
     parseWallItems: (data: any) => {
         if (!data || !data.furnitype) return;
 
-        const addedWallItems: IFurnitureData[] = [];
+        const wallItems: IFurnitureData[] = [];
 
         for (const furniture of data.furnitype) {
             if (!furniture) continue;
 
             const furnitureData = new FurnitureData(
                 FurnitureType.WALL,
+                furniture.id,
                 furniture.id,
                 furniture.classname,
                 furniture.classname,
@@ -141,17 +141,15 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
                 furniture.rare,
             );
 
-            addedWallItems.push(furnitureData);
+            wallItems.push(furnitureData);
         }
 
-        if (!addedWallItems.length) return;
+        if (!wallItems.length) return;
 
-        set(state => {
-            const map = new Map(state.wallItems);
-
-            for (const item of addedWallItems) {
-                map.set(item.type, item);
-            }
+        set(() => {
+            const map = new Map(wallItems.map(x => {
+                return [x.id, x]
+            }));
 
             return { wallItems: map };
         });

@@ -8,7 +8,7 @@ import { HotelView } from "#base/views/hotel-view/HotelView";
 
 import { RoomCanvas } from "./RoomCanvas";
 import { RoomEventHandler } from "./RoomEventHandler";
-import { RoomWidgets } from "./RoomWidgets";
+import { RoomWidgets } from "./widgets/RoomWidgets";
 
 export const RoomContainer = () => {
     const [isReady, setIsReady] = useState<boolean>(false);

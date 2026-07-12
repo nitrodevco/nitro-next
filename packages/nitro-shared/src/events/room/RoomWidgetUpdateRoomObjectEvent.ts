@@ -1,3 +1,4 @@
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
 export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {
@@ -12,23 +13,23 @@ export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {
     public static OBJECT_REQUEST_MANIPULATION: string = 'RWUROE_OBJECT_REQUEST_MANIPULATION' as const;
     public static OBJECT_DOUBLE_CLICKED: string = 'RWUROE_OBJECT_DOUBLE_CLICKED' as const;
 
-    private _id: number;
+    private _objectId: number;
     private _category: number;
     private _roomId: number;
 
-    constructor(type: string, id: number, category: number, roomId: number) {
+    constructor(type: string, objectId: number, category: RoomObjectCategoryEnum, roomId: number) {
         super(type);
 
-        this._id = id;
+        this._objectId = objectId;
         this._category = category;
         this._roomId = roomId;
     }
 
-    public get id(): number {
-        return this._id;
+    public get objectId(): number {
+        return this._objectId;
     }
 
-    public get category(): number {
+    public get category(): RoomObjectCategoryEnum {
         return this._category;
     }
 

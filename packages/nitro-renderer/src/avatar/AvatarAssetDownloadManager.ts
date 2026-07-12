@@ -92,7 +92,7 @@ export class AvatarAssetDownloadManager {
 
             for (const library of libraries) this.downloadLibrary(library);
         }
-        else if (!listener.disposed) listener.resetFigure(figure);
+        else listener.resetFigure(figure);
     }
 
     public setReady(): void {
@@ -178,11 +178,7 @@ export class AvatarAssetDownloadManager {
             const listeners = this._figureListeners.get(figure);
 
             if (listeners) {
-                for (const listener of listeners) {
-                    if (listener?.disposed) continue;
-
-                    listener.resetFigure(figure);
-                }
+                for (const listener of listeners) listener.resetFigure(figure);
             }
 
             this._figureListeners.delete(figure);
