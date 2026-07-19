@@ -4,7 +4,7 @@ import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
-    private _timer: any;
+    private _timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.ROOM_LINK]);
@@ -20,7 +20,7 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
         if (this._timer) {
             clearTimeout(this._timer);
 
-            this._timer = null;
+            this._timer = undefined;
         }
 
         super.dispose();
@@ -32,13 +32,13 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
         if (this._timer) {
             clearTimeout(this._timer);
 
-            this._timer = null;
+            this._timer = undefined;
         }
 
         this._timer = setTimeout(() => {
             this.setAutomaticStateIndex(0);
 
-            this._timer = null;
+            this._timer = undefined;
         }, 2500);
 
         this.handleRoomObjectEvent(

@@ -22,12 +22,10 @@ export class AssetAliasCollection {
 
             if (!aliases) continue;
 
-            for (const name in aliases) {
-                const alias = aliases[name];
+            for (const alias of aliases) {
+                const assetAlias = new AssetAlias(alias);
 
-                if (!alias) continue;
-
-                this._aliases.set(name, new AssetAlias(name, alias));
+                this._aliases.set(assetAlias.name, assetAlias);
             }
         }
     }

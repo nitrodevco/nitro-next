@@ -20,6 +20,7 @@ const config = [
             '**/*.d.ts',
             'eslint.config.js',
             'prettier.config.js',
+            'vite.config.js'
         ]
     },
     js.configs.recommended,

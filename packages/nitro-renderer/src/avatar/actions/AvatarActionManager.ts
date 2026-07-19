@@ -40,7 +40,7 @@ export class AvatarActionManager {
 
     public getActionDefinition(id: string): ActionDefinition | undefined {
         for (const action of this._actions.values()) {
-            if (!action || (action.id !== id)) continue;
+            if (!action || (action.id !== id as unknown)) continue;
 
             return action;
         }

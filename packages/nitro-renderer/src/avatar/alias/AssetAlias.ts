@@ -6,8 +6,8 @@ export class AssetAlias {
     private _flipH: boolean;
     private _flipV: boolean;
 
-    constructor(name: string, alias: IAssetAlias) {
-        this._name = name ?? '';
+    constructor(alias: IAssetAlias) {
+        this._name = alias.name ?? '';
         this._link = alias.link ?? '';
         this._flipH = alias.flipH ?? false;
         this._flipV = alias.flipV ?? false;
