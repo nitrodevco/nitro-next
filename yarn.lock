@@ -826,6 +826,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hono/node-server@npm:^2.0.10":
+  version: 2.0.10
+  resolution: "@hono/node-server@npm:2.0.10"
+  peerDependencies:
+    hono: ^4
+  checksum: 10c0/a7428b134bfd6dbacb12e0cf66b3ac0c4d7fd136fa9aa47049f5ed98cf2dabd678e8239275d26885f285d192d040b41e01f526ac72f8a62e136067752159f0f7
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.2":
   version: 0.19.2
   resolution: "@humanfs/core@npm:0.19.2"
@@ -973,6 +982,7 @@ __metadata:
   resolution: "@nitrodevco/nitro-imager@workspace:packages/nitro-imager"
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@hono/node-server": "npm:^2.0.10"
     "@nitrodevco/nitro-api": "workspace:*"
     "@nitrodevco/nitro-renderer": "workspace:*"
     "@pixi/node": "npm:^8.0.0"
@@ -988,6 +998,7 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:^13.0.0"
     eslint-plugin-unused-imports: "npm:^4.4.1"
     gl: "npm:^8.1.6"
+    hono: "npm:^4.12.31"
     jszip: "npm:^3.10.1"
     node-fetch: "npm:^3.3.2"
     pako: "npm:^2.1.0"
@@ -3628,6 +3639,13 @@ __metadata:
   dependencies:
     hermes-estree: "npm:0.25.1"
   checksum: 10c0/3abaa4c6f1bcc25273f267297a89a4904963ea29af19b8e4f6eabe04f1c2c7e9abd7bfc4730ddb1d58f2ea04b6fee74053d8bddb5656ec6ebf6c79cc8d14202c
+  languageName: node
+  linkType: hard
+
+"hono@npm:^4.12.31":
+  version: 4.12.31
+  resolution: "hono@npm:4.12.31"
+  checksum: 10c0/f80be65cd657cc353b3e478d55424a373d11801b2a1ffc96d94def813c6d852e76bea4437f5df252b15caca98742040d26950bc9c865d8720b89a00a9eac5249
   languageName: node
   linkType: hard
 

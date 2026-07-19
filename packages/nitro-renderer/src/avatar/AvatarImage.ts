@@ -1,7 +1,7 @@
 import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, AvatarSetType, type IActiveActionData, IAnimationLayerData, type IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
 import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
-import { ColorMatrixFilter, Container } from 'pixi.js';
+import { ColorMatrixFilter, Container, Sprite } from 'pixi.js';
 
 import { GetRenderer, GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
@@ -308,6 +308,73 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return image;
     }
 
+    public async getCroppedBase64Async(setType: AvatarSetType, hightlight: boolean, scale: number = 1): Promise<string | undefined> {
+        if (!this._mainAction?.definition) return undefined;
+
+        if (!this._actionsSorted) this.endActionAppends();
+
+        const avatarCanvas = this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType);
+
+        if (!avatarCanvas) return undefined;
+
+        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
+        const container = new Container();
+
+        let isCachable = true;
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const set = parts[i];
+            const part = this._cache.getImageContainer(set, this._frameCounter);
+
+            if (!part || !part.image) continue;
+
+            isCachable &&= part.isCacheable;
+
+            const point = part.regPoint.clone();
+
+            point.x += avatarCanvas.offset.x;
+            point.y += avatarCanvas.offset.y;
+
+            point.x += avatarCanvas.regPoint.x;
+            point.y += avatarCanvas.regPoint.y;
+
+            const partContainer = new Container();
+
+            partContainer.addChild(part.image);
+            partContainer.position.set(point.x, point.y);
+
+            container.addChild(partContainer);
+        }
+
+        if (this._avatarSpriteData) {
+            const filters: Filter[] = [];
+
+            if (!container.filters) container.filters = [];
+
+            if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
+
+            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+
+            container.filters = filters;
+        }
+
+        const texture = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+
+        if (!texture) return undefined;
+
+        GetRenderer().render({
+            target: texture,
+            container,
+            clear: true
+        });
+
+        const base64 = await GetRenderer().extract.base64(new Sprite(texture));
+
+        TexturePool.releaseTexture(texture);
+
+        return base64;
+    }
+
     public initActionAppends(): void {
         this._actions = [];
         this._actionsSorted = false;
@@ -511,7 +578,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private isHeadTurnPreventedByAction(): boolean {
-        for (const action of this._sortedActions) {
+        if (this._sortedActions) for (const action of this._sortedActions) {
             const _local_2 = this._structure.getActionDefinitionWithState(action.type);
 
             if (_local_2 && _local_2.getPreventHeadTurn(action.actionParameter)) return true;

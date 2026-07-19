@@ -5,8 +5,8 @@ import type { AvatarImageActionCache } from './AvatarImageActionCache';
 export class AvatarImageBodyPartCache {
     private _cache: Map<string, AvatarImageActionCache> = new Map();
     private _currentAction: IActiveActionData | undefined = undefined;
-    private _currentDirection: number;
-    private _disposed: boolean;
+    private _currentDirection: number = 0;
+    private _disposed: boolean = false;
 
     public dispose(): void {
         if (!this._disposed) {

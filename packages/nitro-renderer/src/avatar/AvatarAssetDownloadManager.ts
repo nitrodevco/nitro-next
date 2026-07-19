@@ -95,6 +95,14 @@ export class AvatarAssetDownloadManager {
         else listener.resetFigure(figure);
     }
 
+    public async downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void> {
+        if (!this._isReady) return;
+
+        const libraries = this.getAvatarFigurePendingLibraries(container);
+
+        if (libraries.length) for (const library of libraries) await this.downloadLibraryAsync(library);
+    }
+
     public setReady(): void {
         this._isReady = true;
     }
@@ -143,6 +151,12 @@ export class AvatarAssetDownloadManager {
         this.processDownloadQueue();
     }
 
+    private async downloadLibraryAsync(library: AvatarAssetDownloadLibrary): Promise<void> {
+        if (!library || library.isLoaded) return;
+
+        await library.downloadAssetAsync();
+    }
+
     private processDownloadQueue(): void {
         while (this._pendingDownloadQueue.length) {
             const library = this._pendingDownloadQueue.shift();
@@ -151,7 +165,7 @@ export class AvatarAssetDownloadManager {
 
             this._currentDownloads.push(library);
 
-            void library.downloadAsset();
+            library.downloadAsset();
         }
     }
 

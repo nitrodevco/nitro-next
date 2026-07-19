@@ -88,6 +88,14 @@ export class EffectAssetDownloadManager {
         else listener.resetEffect(id);
     }
 
+    public async downloadAvatarEffectAsync(id: number): Promise<void> {
+        if (!this._isReady) return;
+
+        const libraries = this.getAvatarEffectPendingLibraries(id);
+
+        if (libraries.length) for (const library of libraries) await this.downloadLibraryAsync(library);
+    }
+
     public setReady(): void {
         this._isReady = true;
     }
@@ -118,6 +126,12 @@ export class EffectAssetDownloadManager {
         this._pendingDownloadQueue.push(library);
 
         this.processDownloadQueue();
+    }
+
+    private async downloadLibraryAsync(library: EffectAssetDownloadLibrary): Promise<void> {
+        if (!library || library.isLoaded) return;
+
+        await library.downloadAssetAsync();
     }
 
     private processDownloadQueue(): void {

@@ -6,6 +6,7 @@
         "dev": "tsx watch ./src/Main.ts"
     },
     "dependencies": {
+        "@hono/node-server": "^2.0.10",
         "@nitrodevco/nitro-api": "workspace:*",
         "@nitrodevco/nitro-renderer": "workspace:*",
         "@pixi/node": "^8.0.0",
@@ -14,6 +15,7 @@
         "cross-fetch": "^4.1.0",
         "dotenv": "^17.4.2",
         "gl": "^8.1.6",
+        "hono": "^4.12.31",
         "jszip": "^3.10.1",
         "node-fetch": "^3.3.2",
         "pako": "^2.1.0",

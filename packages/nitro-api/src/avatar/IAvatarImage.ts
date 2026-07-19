@@ -15,6 +15,7 @@ export interface IAvatarImage {
     resetAnimationFrameCounter(): void;
     getImage(setType: AvatarSetType, hightlight: boolean, scale?: number): RenderTexture | undefined;
     getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, scale?: number): Promise<ImageLike | undefined>;
+    getCroppedBase64Async(setType: AvatarSetType, hightlight: boolean, scale?: number): Promise<string | undefined>;
     initActionAppends(): void;
     endActionAppends(): void;
     appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number)[]): boolean;

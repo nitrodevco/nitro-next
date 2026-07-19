@@ -236,7 +236,7 @@ export class AvatarImageCache {
 
             let partType = container.partType;
             let assetDirection = direction;
-            // eslint-disable-next-line no-useless-assignment
+
             let frameNumber = 0;
             let flipH = false;
 

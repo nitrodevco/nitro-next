@@ -1,5 +1,5 @@
 import type { IAssetAnimation, IEffectAssetDownloadLibrary } from "@nitrodevco/nitro-api";
-import { AvatarAssetDownloadStatus } from "@nitrodevco/nitro-api";
+import { AvatarAssetDownloadStatus, NitroLogger } from "@nitrodevco/nitro-api";
 
 import { GetAssetManager } from "#renderer/assets";
 
@@ -24,7 +24,31 @@ export class EffectAssetDownloadLibrary implements IEffectAssetDownloadLibrary {
         if (GetAssetManager().getCollection(this._libraryName)) this._state = AvatarAssetDownloadStatus.Loaded;
     }
 
-    public async downloadAsset(): Promise<void> {
+    public downloadAsset(): void {
+        if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
+
+        const asset = GetAssetManager().getCollection(this._libraryName);
+
+        if (asset) return;
+
+        this._state = AvatarAssetDownloadStatus.Loading;
+
+        const library = this as unknown as IEffectAssetDownloadLibrary;
+
+        GetAssetManager().downloadAsset(this._assetUrl).then(flag => {
+            if (!flag) return;
+
+            this._state = AvatarAssetDownloadStatus.Loaded;
+
+            const collection = GetAssetManager().getCollection(this._libraryName);
+
+            if (collection) this._animations = collection.data?.animations ?? [];
+
+            void this._onDownloaded(library);
+        }).catch(err => NitroLogger.error(err));
+    }
+
+    public async downloadAssetAsync(): Promise<void> {
         if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
 
         const asset = GetAssetManager().getCollection(this._libraryName);

@@ -75,8 +75,22 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         return new PlaceHolderAvatarImage(this._structure, this._aliasCollection, this._placeHolderFigure, size, this._effectAssetDownloadManager);
     }
 
+    public async createAvatarImageAsync(figure: string, size: AvatarScaleType, gender: AvatarGenderType): Promise<IAvatarImage | undefined> {
+        const container = new AvatarFigureContainer(figure);
+
+        if (gender) this.validateAvatarFigure(container, gender);
+
+        if (!this._avatarAssetDownloadManager.isAvatarFigureContainerReady(container)) await this._avatarAssetDownloadManager.downloadAvatarFigureAsync(container);
+
+        return new AvatarImage(this._structure, this._aliasCollection, container, size, this._effectAssetDownloadManager, undefined);
+    }
+
     public downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void {
         this._avatarAssetDownloadManager.downloadAvatarFigure(container, listener);
+    }
+
+    public async downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void> {
+        await this._avatarAssetDownloadManager.downloadAvatarFigureAsync(container);
     }
 
     public getFigureClubLevel(container: IAvatarFigureContainer, gender: AvatarGenderType, searchParts: string[] = []): number {
