@@ -14,16 +14,13 @@
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript,javascriptreact,typescript,typescriptreact]": {
-        "js/ts.preferences.importModuleSpecifier": "shortest",
+        "js/ts.preferences.importModuleSpecifier": "non-relative",
     },
     "[json]": {
         "editor.tabSize": 4
     },
     "prettier.prettierPath": "./node_modules/prettier/index.cjs",
     "prettier.configPath": "prettier.config.js",
-    "eslint.workingDirectory": {
-        "mode": "location"
-    },
     "eslint.validate": [
         "javascript",
         "javascriptreact",

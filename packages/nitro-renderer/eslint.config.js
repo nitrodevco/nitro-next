@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import stylistic from "@stylistic/eslint-plugin";
 import prettier from 'eslint-config-prettier';
+import importPlugin from "eslint-plugin-import";
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
@@ -26,6 +27,7 @@ const config = [
     prettier,
     {
         plugins: {
+            "import": importPlugin,
             'simple-import-sort': simpleImportSort,
             'unused-imports': unusedImports,
             '@stylistic': stylistic
@@ -44,6 +46,7 @@ const config = [
             'no-debugger': 'warn',
             'no-else-return': 'warn',
             'no-lonely-if': 'warn',
+            "import/no-duplicates": "warn",
             'simple-import-sort/imports': 'warn',
             'simple-import-sort/exports': 'warn',
             'unused-imports/no-unused-imports': 'warn',
