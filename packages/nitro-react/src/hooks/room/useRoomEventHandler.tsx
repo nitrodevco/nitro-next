@@ -1,6 +1,6 @@
 
-import { MouseEventType, NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
-import { ClickFurniComposer, MoveAvatarComposer, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { MouseEventType, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
+import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
 
 import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector, useWebSocketContext } from '#base/context';
 
@@ -46,6 +46,8 @@ export const useRoomEventHandler = () => {
                         send(new ClickFurniComposer({ objectId: event.objectId, param: 0 }));
                     } else if (category === RoomObjectCategoryEnum.Wall) {
                         send(new ClickFurniComposer({ objectId: -Math.abs(event.objectId), param: 0 }));
+                    } else if (category === RoomObjectCategoryEnum.Unit) {
+                        send(new ClickCharacterComposer({ objectId: event.objectId }));
                     }
                 }
 

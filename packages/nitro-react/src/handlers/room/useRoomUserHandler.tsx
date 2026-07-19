@@ -2,16 +2,11 @@
 import type { IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
 import { AvatarGenderType } from "@nitrodevco/nitro-api";
 import { AvatarActionStateType, AvatarFigurePartType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from "@nitrodevco/nitro-shared";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
 import { useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
-
-import type { IRoomAvatar } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatar";
-import type { IRoomAvatarBot } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatarBot";
-import type { IRoomAvatarPet } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatarPet";
-import type { IRoomAvatarRentableBot } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatarRentableBot";
-import type { IRoomAvatarUser } from "../../../../nitro-shared/src/packets/incoming/Room/Engine/Data/IRoomAvatarUser";
 
 export const useRoomUserHandler = () => {
     const room = useRoomSelector();
@@ -37,6 +32,7 @@ export const useRoomUserHandler = () => {
 
             switch (avatar.avatarType) {
                 case RoomObjectUserType.User: {
+                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarUser = avatar as IRoomAvatar & IRoomAvatarUser;
 
                     datas.push({
@@ -72,6 +68,7 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.Bot: {
+                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarBot = avatar as IRoomAvatar & IRoomAvatarBot;
 
                     datas.push({
@@ -107,6 +104,7 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.RentableBot: {
+                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarRentableBot = avatar as IRoomAvatar & IRoomAvatarRentableBot;
 
                     datas.push({
@@ -142,6 +140,7 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.Pet: {
+                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarPet = avatar as IRoomAvatar & IRoomAvatarPet;
 
                     datas.push({

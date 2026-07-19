@@ -294,8 +294,8 @@ import {
     YoutubeControlVideoMessage,
     YoutubeDisplayPlaylistsMessage,
     YoutubeDisplayVideoMessage,
+    WhisperMessage
 } from './incoming';
-import { WhisperMessage } from './incoming';
 import { IncomingHeader } from './IncomingHeader';
 
 export const GetIncomingPackets = () => {
