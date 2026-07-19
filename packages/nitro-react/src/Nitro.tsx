@@ -2,7 +2,8 @@ import {
     GetRoomContentLoader,
     GetRoomEngine,
     PrepareRenderer,
-    RoomContentLoader
+    RoomContentLoader,
+    TexturePool
 } from '@nitrodevco/nitro-renderer';
 import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
@@ -45,6 +46,8 @@ export const Nitro: FC = () => {
                     preference: 'webgpu',
                     preserveDrawingBuffer: false,
                 });
+
+                TexturePool.startAutoCleanup();
 
                 try {
                     await GetRoomEngine().init();

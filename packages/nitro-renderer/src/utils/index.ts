@@ -1,3 +1,4 @@
+export * from './ExtendedSprite';
 export * from './FurniId';
 export * from './GetRenderer';
 export * from './GetStage';

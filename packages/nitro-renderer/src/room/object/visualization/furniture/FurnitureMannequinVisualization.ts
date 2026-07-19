@@ -116,7 +116,9 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
         ) {
             this._avatarImage.setDirection(AvatarSetType.Full, this.direction);
 
-            return this._avatarImage.processAsTexture(AvatarSetType.Full, false);
+            const image = this._avatarImage.getImage(AvatarSetType.Full, false);
+
+            if (image) return image;
         }
 
         return super.getTexture(scale, layerId, asset);

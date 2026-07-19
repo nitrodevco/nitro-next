@@ -14,11 +14,11 @@ export const InfostandFurniView = (props: InfostandFurniViewProps) => {
         <>
             <div className="flex items-center justify-between w-full px-2 py-1 gap-1 text-white goldfish-bold text-[9px] border-b-[0.5px] border-black">
                 {props.data.localizedName}
-                <i className="[background:var(--infostand-close-bg-image)] w-[13px] h-[13px] cursor-pointer" onClick={e => props.onClose()} />
+                <i className="[background:var(--infostand-close-bg-image)] w-3.25 h-3.25 cursor-pointer" onClick={e => props.onClose()} />
             </div>
             <div className="flex-1 gap-1 p-1 size-full">
                 <div className="flex items-center justify-center w-full overflow-hidden">
-                    <FurnitureImage type={props.data.className} colorIndex={props.data.colorIndex} />
+                    <FurnitureImage type={props.data.className} colorIndex={props.data.colorIndex} direction={4} />
                 </div>
             </div>
         </>

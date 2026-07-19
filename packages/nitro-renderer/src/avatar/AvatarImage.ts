@@ -1,6 +1,5 @@
-import type { AvatarBodyPartType, AvatarFigurePartType, AvatarScaleType, IAnimationLayerData, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, AvatarSetType, type IActiveActionData, IAnimationLayerData, type IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
-import { AvatarDirectionAngle, AvatarSetType, type IActiveActionData, type IAvatarDataContainer, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
 import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
 import { ColorMatrixFilter, Container } from 'pixi.js';
 
@@ -302,7 +301,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             clear: true
         });
 
-        const image = TextureUtils.generateImage(texture);
+        const image = await TextureUtils.generateImage(texture);
 
         TexturePool.releaseTexture(texture);
 

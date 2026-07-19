@@ -95,8 +95,6 @@ export const FurnitureDataStore = createStore<State & Actions>((set, get) => ({
                 return [x.id, x]
             }));
 
-            console.log(map);
-
             return { floorItems: map };
         });
     },

@@ -13,11 +13,10 @@ import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/
 import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
-import { TextureUtils } from '../utils';
+import { ExtendedSprite, TextureUtils } from '../utils';
 import type { RoomObjectCacheItem } from './object';
 import { RoomObjectCache } from './object';
 import {
-    ExtendedSprite,
     ObjectMouseData,
     RoomEnterEffect,
     RoomGeometry,

@@ -7,12 +7,12 @@ import type {
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
-import { Container, Sprite } from 'pixi.js';
-import { RenderTexture, TilingSprite } from 'pixi.js';
-import { Matrix, Point, Texture } from 'pixi.js';
+import type { RenderTexture } from 'pixi.js';
+import { Container, Matrix, Point, Sprite, Texture, TilingSprite } from 'pixi.js';
 
-import { GetAssetManager } from '../../../../assets';
-import { GetRenderer } from '../../../../utils';
+import { GetAssetManager } from '#renderer/assets';
+import { GetRenderer, TexturePool } from '#renderer/utils';
+
 import { RoomGeometry } from '../../../utils';
 import type { PlaneMaskManager } from './mask';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
@@ -93,9 +93,9 @@ export class RoomPlane implements IRoomPlane {
     private _rectangleMasks: RoomPlaneRectangleMask[] = [];
     private _maskChanged = false;
 
-    private _planeSprite?: TilingSprite;
-    private _planeTexture?: RenderTexture;
-    private _maskTexture?: RenderTexture | undefined;
+    private _planeSprite: TilingSprite | undefined = undefined;
+    private _planeTexture: RenderTexture | undefined = undefined;
+    private _maskTexture: RenderTexture | undefined = undefined;
 
     private _planeOffsetX = 0;
     private _planeOffsetY = 0;
@@ -151,12 +151,12 @@ export class RoomPlane implements IRoomPlane {
         this._planeSprite = undefined;
 
         if (this._planeTexture) {
-            this._planeTexture.destroy(true);
+            TexturePool.releaseTexture(this._planeTexture);
             this._planeTexture = undefined;
         }
 
         if (this._maskTexture) {
-            this._maskTexture.destroy(true);
+            TexturePool.releaseTexture(this._maskTexture);
             this._maskTexture = undefined;
         }
 
@@ -248,8 +248,8 @@ export class RoomPlane implements IRoomPlane {
 
                     const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - xEnd.x));
                     const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - yEnd.y));
-                    const renderMaxX = Math.trunc(this._textureMaxX * Math.abs((origin.x - xEnd.x)));
-                    const renderMaxY = Math.trunc(this._textureMaxY * Math.abs((origin.y - yEnd.y)));
+                    const _renderMaxX = Math.trunc(this._textureMaxX * Math.abs((origin.x - xEnd.x)));
+                    const _renderMaxY = Math.trunc(this._textureMaxY * Math.abs((origin.y - yEnd.y)));
 
                     this._planeOffsetX = renderOffsetX;
                     this._planeOffsetY = renderOffsetY;
@@ -272,9 +272,15 @@ export class RoomPlane implements IRoomPlane {
                 tint: color
             });
 
-            if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) this._planeTexture.resize(this._width, this._height);
+            if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) {
+                TexturePool.releaseTexture(this._planeTexture);
 
-            if (!this._planeTexture) this._planeTexture = RenderTexture.create({ width: this._width, height: this._height, dynamic: true });
+                this._planeTexture = undefined;
+            }
+
+            if (!this._planeTexture) this._planeTexture = TexturePool.createRenderTexture(this._width, this._height);
+
+            if (!this._planeTexture) return false;
 
             this._planeTexture.source.label = `room_plane_${this._uniqueId}`;
 
@@ -556,9 +562,13 @@ export class RoomPlane implements IRoomPlane {
 
         if (!masks.length) return undefined;
 
-        if (this._maskTexture && (this._maskTexture.width !== width || this._maskTexture.height !== height)) this._maskTexture.resize(width, height);
+        if (this._maskTexture && (this._maskTexture.width !== width || this._maskTexture.height !== height)) {
+            TexturePool.releaseTexture(this._maskTexture);
 
-        if (!this._maskTexture) this._maskTexture = RenderTexture.create({ width, height, dynamic: true });
+            this._maskTexture = undefined;
+        }
+
+        if (!this._maskTexture) this._maskTexture = TexturePool.createRenderTexture(width, height);
 
         const container = new Container();
 

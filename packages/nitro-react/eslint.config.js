@@ -58,7 +58,6 @@ const config = [
             'simple-import-sort/imports': 'warn',
             'simple-import-sort/exports': 'warn',
             'unused-imports/no-unused-imports': 'warn',
-            '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
             "@stylistic/function-paren-newline": ["error", "multiline-arguments"],
             "@stylistic/array-bracket-spacing": ["error"],

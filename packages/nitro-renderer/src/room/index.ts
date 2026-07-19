@@ -225,7 +225,6 @@ export * from './RoomContentLoader';
 export * from './RoomEngine';
 export * from './RoomEventHandler';
 export * from './RoomSpriteCanvas';
-export * from './utils/ExtendedSprite';
 export * from './utils/LegacyWallGeometry';
 export * from './utils/ObjectMouseData';
 export * from './utils/RoomAreaSelectionManager';

@@ -1,4 +1,3 @@
-export * from './ExtendedSprite';
 export * from './LegacyWallGeometry';
 export * from './ObjectMouseData';
 export * from './RoomAreaSelectionManager';

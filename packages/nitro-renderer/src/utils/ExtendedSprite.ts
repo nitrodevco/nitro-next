@@ -2,7 +2,7 @@ import { AlphaTolerance } from '@nitrodevco/nitro-api';
 import type { TextureSource } from 'pixi.js';
 import { Sprite, Texture } from 'pixi.js';
 
-import { TextureUtils } from '../../utils';
+import { TextureUtils } from '.';
 
 export class ExtendedSprite extends Sprite {
     private static readonly _hitMaps = new WeakMap<TextureSource, Uint8Array>();
@@ -16,6 +16,10 @@ export class ExtendedSprite extends Sprite {
     private _skipMouseHandling: boolean = false;
     private _geometryUpdateId: number = -1;
     private _objectUpdateId: number = -1;
+
+    public static removeHitmap(source: TextureSource): void {
+        this._hitMaps.delete(source);
+    }
 
     public needsUpdate(geometryUpdateId: number, objectUpdateId: number): boolean {
         if (this._geometryUpdateId === geometryUpdateId && this._objectUpdateId === objectUpdateId) return false;
