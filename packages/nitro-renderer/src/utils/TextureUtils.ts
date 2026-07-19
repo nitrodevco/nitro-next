@@ -1,4 +1,3 @@
-
 import type { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions } from 'pixi.js';
 import { Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
@@ -142,7 +141,6 @@ export class TextureUtils {
 
         if (!ctx) return texture;
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         ctx.drawImage(texture.source.resource, frame.x, frame.y, frame.width, frame.height, 0, 0, frame.width, frame.height);
 
         const imageData = ctx.getImageData(0, 0, frame.width, frame.height);

@@ -45,14 +45,14 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
                     prevLocation = Vector3d.sum(location, Vector3d.product(difference, 0.5));
 
                 super.processUpdateMessage(
-                    new ObjectMoveUpdateMessage(prevLocation, message.location, message.direction!),
+                    new ObjectMoveUpdateMessage(prevLocation, message.location, message.direction),
                 );
 
                 return;
             }
 
             super.processUpdateMessage(
-                new ObjectMoveUpdateMessage(message.location, message.location, message.direction!),
+                new ObjectMoveUpdateMessage(message.location, message.location, message.direction),
             );
         }
 

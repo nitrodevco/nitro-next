@@ -1,6 +1,4 @@
-import type { IObjectVisualizationData } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { IObjectVisualizationData, RoomGeometryScaleType, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
 import { AnimationData, AnimationFrame, AnimationStateData } from '../data';
 import { FurnitureAnimatedVisualizationData } from './FurnitureAnimatedVisualizationData';

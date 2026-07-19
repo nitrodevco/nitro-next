@@ -1,4 +1,4 @@
-import type { IAssetVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import type { IAssetGesture, IAssetPosture, IAssetVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import type { AnimationSizeData, SizeData } from '../data';
 import { PetSizeData } from '../data';
@@ -21,21 +21,20 @@ export class PetVisualizationData extends FurnitureAnimatedVisualizationData {
         return super.defineVisualizations(visualizations);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected override processVisualElement(sizeData: SizeData, key: string, data: any): boolean {
+    protected override processVisualElement(sizeData: SizeData, key: string, data: object): boolean {
         if (!sizeData || !key || !data) return false;
 
         switch (key) {
             case 'postures':
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                if (!(sizeData instanceof PetSizeData) || !sizeData.processPostures(data)) return false;
+
+                if (!(sizeData instanceof PetSizeData) || !sizeData.processPostures(data as { defaultPosture?: string; postures: IAssetPosture[] })) return false;
                 break;
             case 'gestures':
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                if (!(sizeData instanceof PetSizeData) || !sizeData.processGestures(data)) return false;
+
+                if (!(sizeData instanceof PetSizeData) || !sizeData.processGestures(data as IAssetGesture[])) return false;
                 break;
             default:
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
                 if (!super.processVisualElement(sizeData, key, data)) return false;
                 break;
         }

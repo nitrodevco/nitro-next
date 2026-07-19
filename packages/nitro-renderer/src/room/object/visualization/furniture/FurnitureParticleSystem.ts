@@ -1,11 +1,9 @@
-import type {
-    RoomGeometryScaleType
-} from '@nitrodevco/nitro-api';
 import {
     type IAdvancedMap,
     type IGraphicAsset,
     type IParticleSystem,
     type IRoomObjectSprite,
+    RoomGeometryScaleType,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-shared';

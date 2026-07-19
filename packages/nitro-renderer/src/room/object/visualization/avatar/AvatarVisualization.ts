@@ -1,6 +1,3 @@
-import type { IRoomObject, IRoomObjectModel } from '@nitrodevco/nitro-api';
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, AvatarActionStateTypeUtilities, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import {
     AlphaTolerance,
     AvatarGuideStatus,
@@ -12,9 +9,11 @@ import {
     type IGraphicAsset,
     type IObjectVisualizationData,
     type IRoomGeometry,
+    IRoomObject, IRoomObjectModel,
     RoomObjectSpriteTypeEnum,
     RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-shared';
 import { Texture } from 'pixi.js';
 

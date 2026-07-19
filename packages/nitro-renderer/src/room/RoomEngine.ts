@@ -11,9 +11,8 @@ import {
     ObjectDataFlagsEnum,
     RoomObjectCategoryEnum,
     RoomObjectUserTypeName,
-    Vector3d,
+    RoomObjectVariableEnum, Vector3d
 } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { type ImageLike } from 'pixi.js';
 
 import { PetFigureData } from '../session';

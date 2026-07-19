@@ -1,6 +1,5 @@
 import type { AvatarFigurePartType, AvatarScaleType, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IAvatarStructure, IEffectMapLibrary, IFigureMapLibrary, IFigurePartSet, IGraphicAsset, IStructureData } from '@nitrodevco/nitro-api';
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
-import { AvatarSetType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, AvatarSetType } from '@nitrodevco/nitro-api';
 
 import { AssetAliasCollection } from './alias';
 import { AvatarAssetDownloadManager } from './AvatarAssetDownloadManager';

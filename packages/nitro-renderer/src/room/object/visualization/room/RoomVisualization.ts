@@ -7,9 +7,9 @@ import type {
     IRoomPlane
 } from '@nitrodevco/nitro-api';
 import {
-    RoomGeometryScaleType,
+    AlphaTolerance, RoomGeometryScaleType,
+    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, Vector3d
 } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { ToInt32 } from '@nitrodevco/nitro-shared';
 import type { Filter } from 'pixi.js';
 import { Rectangle, Texture } from 'pixi.js';

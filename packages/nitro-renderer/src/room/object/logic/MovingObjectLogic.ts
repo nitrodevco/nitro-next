@@ -17,7 +17,6 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
     private _updateInterval: number = MovingObjectLogic.DEFAULT_UPDATE_INTERVAL;
 
     public override getEventTypes(): string[] {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return this.mergeTypes(super.getEventTypes(), [
             RoomObjectMoveEvent.SLIDE_ANIMATION,
         ]);
@@ -73,7 +72,6 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
                 this._locationDelta.z = 0;
             }
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             this.eventHandler.eventDispatcher.dispatchEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.SLIDE_ANIMATION, this.object));
         }
 

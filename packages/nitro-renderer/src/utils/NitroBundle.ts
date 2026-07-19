@@ -18,7 +18,6 @@ export class NitroBundle {
 
                 switch (name.slice(name.lastIndexOf('.') + 1)) {
                     case 'json': {
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                         bundle.files[name] = JSON.parse(NitroBundle.TEXT_DECODER.decode(await file.async('arraybuffer')));
                         break;
                     }

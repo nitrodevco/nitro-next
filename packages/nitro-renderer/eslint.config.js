@@ -46,6 +46,7 @@ const config = [
             'no-debugger': 'warn',
             'no-else-return': 'warn',
             'no-lonely-if': 'warn',
+            "no-useless-assignment": "off",
             "import/no-duplicates": "warn",
             'simple-import-sort/imports': 'warn',
             'simple-import-sort/exports': 'warn',

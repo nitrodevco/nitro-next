@@ -1,7 +1,5 @@
-import type {
-    AvatarGenderType
-} from '@nitrodevco/nitro-api';
 import {
+    AvatarGenderType,
     AvatarScaleType,
     type IAssetData,
     type IAvatarEffectListener,

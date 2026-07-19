@@ -1,8 +1,8 @@
-import type { IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 import {
     AvatarActionStateTypeUtilities,
     type IRoomGeometry,
     type IRoomObjectModel,
+    IRoomObjectUpdateMessage, IRoomSpriteMouseEvent,
     type IVector3D,
     MouseEventType,
     RoomObjectVariableEnum,

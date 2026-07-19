@@ -1,6 +1,5 @@
 import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, RoomGeometryScaleType, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import type { BLEND_MODES, Filter } from 'pixi.js';
 import { Texture } from 'pixi.js';
 

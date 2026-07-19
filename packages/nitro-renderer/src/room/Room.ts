@@ -20,16 +20,14 @@ import type {
     RoomThicknessType
 } from '@nitrodevco/nitro-api';
 import {
-    RoomGeometryScaleType
-} from '@nitrodevco/nitro-api';
-import {
-    RoomObjectUserTypeName
-} from '@nitrodevco/nitro-api';
-import {
     GetObjectDataForFlags,
     LegacyDataType,
     ObjectDataFlagsEnum,
+    RoomGeometryScaleType
+    ,
     RoomObjectCategoryEnum,
+    RoomObjectUserTypeName
+    ,
     RoomObjectUserTypeUtils,
     RoomObjectVariableEnum,
     Vector3d,
@@ -42,9 +40,8 @@ import {
     RoomEngineObjectEvent,
     RoomToObjectOwnAvatarMoveEvent
 } from '@nitrodevco/nitro-shared';
-import type { ImageLike, Rectangle } from 'pixi.js';
+import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
-import { type PointData, Sprite } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { FurniId, GetTickerTime } from '../utils';

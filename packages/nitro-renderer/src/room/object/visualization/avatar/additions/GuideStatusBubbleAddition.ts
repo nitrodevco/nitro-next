@@ -1,6 +1,5 @@
 import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { AvatarGuideStatus } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarGuideStatus, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
