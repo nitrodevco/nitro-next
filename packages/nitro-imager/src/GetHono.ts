@@ -1,5 +1,5 @@
 import { AvatarActionStateType, AvatarExpressionStates, AvatarGenderType, AvatarGeometryType, AvatarGestureStates, AvatarPostureStates, AvatarScaleType, AvatarSetType, IAvatarImage, RoomGeometryScaleType } from "@nitrodevco/nitro-api";
-import { AvatarVisualization, GetAvatarRenderManager, GetRenderer } from "@nitrodevco/nitro-renderer";
+import { GetAvatarRenderManager, GetRenderer } from "@nitrodevco/nitro-renderer";
 import { Hono } from "hono";
 import { Container, Point, Sprite, Texture } from "pixi.js";
 
@@ -183,16 +183,6 @@ const ProcessAvatarSprites = (container: Container, avatar: IAvatarImage, avatar
 
         addonSprite.x = (asset.offsetX - RoomGeometryScaleType.ZoomedIn / 2 + offsetX);
         addonSprite.y = (asset.offsetY + offsetY);
-
-        const postureOffset = 0;
-
-        if (sprite.hasStaticY) {
-            const verticalOffset = 0;
-
-            addonSprite.y += (verticalOffset * RoomGeometryScaleType.ZoomedIn) / (2 * AvatarVisualization.BASE_Y_SCALE);
-        } else {
-            addonSprite.y += postureOffset;
-        }
 
         // if(sprite.ink === 33) ctx.globalCompositeOperation = 'lighter';
 

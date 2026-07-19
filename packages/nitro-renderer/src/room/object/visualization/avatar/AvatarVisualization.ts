@@ -608,7 +608,7 @@ export class AvatarVisualization
 
         if (this._sleep) {
             if (!idleAddition)
-                // eslint-disable-next-line no-useless-assignment
+
                 idleAddition = this.addAddition(
                     new FloatingIdleZAddition(AvatarVisualization.FLOATING_IDLE_Z_ID, this),
                 );
@@ -622,7 +622,7 @@ export class AvatarVisualization
 
         if (isMuted) {
             if (!mutedAddition)
-                // eslint-disable-next-line no-useless-assignment
+
                 mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.MUTED_BUBBLE_ID, this));
 
             needsUpdate = true;
@@ -639,7 +639,7 @@ export class AvatarVisualization
 
             if (isTyping) {
                 if (!typingAddition)
-                    // eslint-disable-next-line no-useless-assignment
+
                     typingAddition = this.addAddition(
                         new TypingBubbleAddition(AvatarVisualization.TYPING_BUBBLE_ID, this),
                     );
@@ -673,7 +673,7 @@ export class AvatarVisualization
 
         if (isPlayingGame) {
             if (!gameClickAddition)
-                // eslint-disable-next-line no-useless-assignment
+
                 gameClickAddition = this.addAddition(
                     new GameClickTargetAddition(AvatarVisualization.GAME_CLICK_TARGET_ID),
                 );
@@ -687,7 +687,7 @@ export class AvatarVisualization
 
         if (numberValue > 0) {
             if (!numberAddition)
-                // eslint-disable-next-line no-useless-assignment
+
                 numberAddition = this.addAddition(
                     new NumberBubbleAddition(AvatarVisualization.NUMBER_BUBBLE_ID, numberValue, this),
                 );
