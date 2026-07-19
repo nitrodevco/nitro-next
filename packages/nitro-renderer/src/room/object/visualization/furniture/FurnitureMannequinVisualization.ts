@@ -1,15 +1,15 @@
-import { AvatarSetType, IAvatarImage, IAvatarImageListener, IGraphicAsset, type IObjectVisualizationData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, AvatarSetType, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, type IObjectVisualizationData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
 import { FurnitureMannequinVisualizationData } from './FurnitureMannequinVisualizationData';
 import { FurnitureVisualization } from './FurnitureVisualization';
-export class FurnitureMannequinVisualization extends FurnitureVisualization implements IAvatarImageListener {
+export class FurnitureMannequinVisualization extends FurnitureVisualization implements IAvatarImageListener, IAvatarEffectListener {
     private static AVATAR_IMAGE_SPRITE_TAG: string = 'avatar_image';
 
     private _mannequinScale: RoomGeometryScaleType = RoomGeometryScaleType.None;
     private _figure: string = '';
-    private _gender: string = '';
+    private _gender: AvatarGenderType = AvatarGenderType.Male;
     private _avatarImage: IAvatarImage | undefined = undefined;
     private _avatarWidth: number = 90;
     private _avatarHeight: number = 130;
@@ -58,7 +58,7 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
             if (figure) {
                 this._figure = `${figure}.${this._placeHolderFigure}`;
                 this._gender =
-                    this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureMannequinGender) ?? '';
+                    this.object.model.getValue<AvatarGenderType>(RoomObjectVariableEnum.FurnitureMannequinGender) ?? AvatarGenderType.Male;
 
                 this.updateAvatar();
             }
@@ -78,10 +78,16 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
             this._avatarImage = undefined;
         }
 
-        this._avatarImage = this.data.createAvatarImage(this._figure, this._mannequinScale, this._gender, this);
+        this._avatarImage = this.data.createAvatarImage(this._figure, this._mannequinScale, this._gender, this, this);
     }
 
     public resetFigure(figure: string): void {
+        this.updateAvatar();
+
+        this._needsUpdate = true;
+    }
+
+    public resetEffect(effect: number): void {
         this.updateAvatar();
 
         this._needsUpdate = true;

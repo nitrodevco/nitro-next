@@ -2,6 +2,13 @@
     "name": "@nitrodevco/nitro-renderer",
     "private": true,
     "type": "module",
+    "imports": {
+        "#renderer/assets": "./src/assets/index.ts",
+        "#renderer/avatar": "./src/avatar/index.ts",
+        "#renderer/room": "./src/room/index.ts",
+        "#renderer/session": "./src/session/index.ts",
+        "#renderer/utils": "./src/utils/index.ts"
+    },
     "exports": {
         ".": "./src/index.ts"
     },

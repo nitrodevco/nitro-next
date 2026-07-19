@@ -7,5 +7,4 @@ export * from './ColorConverter';
 export * from './EvaWireDataWrapper';
 export * from './GetConfigValue';
 export * from './Int32';
-export * from './NitroLogger';
 export * from './Short';

@@ -1,0 +1,36 @@
+{
+    "name": "@nitrodevco/nitro-imager",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch ./src/Main.ts"
+    },
+    "dependencies": {
+        "@nitrodevco/nitro-api": "workspace:*",
+        "@nitrodevco/nitro-renderer": "workspace:*",
+        "@pixi/node": "^8.0.0",
+        "@xmldom/xmldom": "~0.8.11",
+        "canvas": "^3.2.3",
+        "cross-fetch": "^4.1.0",
+        "dotenv": "^17.4.2",
+        "gl": "^8.1.6",
+        "jszip": "^3.10.1",
+        "node-fetch": "^3.3.2",
+        "pako": "^2.1.0",
+        "pixi.js": "^8.18.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/pako": "^2.0.4",
+        "eslint": "^10.6.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-simple-import-sort": "^13.0.0",
+        "eslint-plugin-unused-imports": "^4.4.1",
+        "prettier": "^3.8.3",
+        "tsx": "4.23.1",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.21.1"
+    }
+}

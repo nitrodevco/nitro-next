@@ -1,3 +1,4 @@
+import { NitroLogger } from '@nitrodevco/nitro-api';
 import {
     GetRoomContentLoader,
     GetRoomEngine,
@@ -5,7 +6,6 @@ import {
     RoomContentLoader,
     TexturePool
 } from '@nitrodevco/nitro-renderer';
-import { NitroLogger } from '@nitrodevco/nitro-shared';
 import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 

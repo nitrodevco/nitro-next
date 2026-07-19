@@ -9,12 +9,13 @@ import type {
 } from '@nitrodevco/nitro-api';
 import {
     FurnitureType,
+    NitroLogger,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
 } from '@nitrodevco/nitro-api';
-import { GetConfigValue, NitroLogger, RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
+import { GetConfigValue, RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
@@ -245,7 +246,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public downloadImage(id: number, type: string, param: string): boolean {
         let typeName: string = '';
-        // eslint-disable-next-line no-useless-assignment
+
         let assetUrls: string[] = [];
 
         if (type && type.indexOf(',') >= 0) {
@@ -420,7 +421,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public getAssetIconUrl(type: string, colorIndex: string): string | undefined {
         let assetName: string = '';
-        // eslint-disable-next-line no-useless-assignment
+
         let assetUrls: string[] = [];
 
         if (type && type.indexOf(',') >= 0) {
