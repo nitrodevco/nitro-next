@@ -54,6 +54,8 @@ export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary {
         }
 
         this._state = AvatarAssetDownloadStatus.Loaded;
+
+        void this._onDownloaded(this);
     }
 
     public get libraryName(): string {

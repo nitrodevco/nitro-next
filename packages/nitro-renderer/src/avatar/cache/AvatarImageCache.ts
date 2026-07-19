@@ -1,6 +1,6 @@
 
 
-import type { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarImage } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
@@ -11,7 +11,6 @@ import { AvatarAnimationLayerData } from '../animation';
 import { AvatarImageBodyPartContainer } from '../AvatarImageBodyPartContainer';
 import type { AvatarImagePartContainer } from '../AvatarImagePartContainer';
 import type { AvatarStructure } from '../AvatarStructure';
-import type { AvatarCanvas } from '../structure';
 import { AvatarImageActionCache } from './AvatarImageActionCache';
 import { AvatarImageBodyPartCache } from './AvatarImageBodyPartCache';
 import { AvatarImageDirectionCache } from './AvatarImageDirectionCache';
@@ -26,7 +25,7 @@ export class AvatarImageCache {
     private _scale: AvatarScaleType;
     private _geometryType: AvatarGeometryType;
     private _cache: Map<AvatarBodyPartType, AvatarImageBodyPartCache> = new Map();
-    private _canvas: AvatarCanvas | undefined = undefined;
+    private _canvas: IAvatarCanvas | undefined = undefined;
     private _defaultAction: string = 'std';
     private _unionImages: ImageData[] = [];
     private _matrix: Matrix = new Matrix();

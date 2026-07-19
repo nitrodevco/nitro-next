@@ -1,4 +1,4 @@
-import type { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarImage } from '@nitrodevco/nitro-api';
+import type { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { AvatarCanvas } from '../structure';
 import { AvatarSet } from './AvatarSet';
@@ -11,7 +11,7 @@ export class AvatarModelGeometry {
     private _avatarSet: AvatarSet;
     private _geometryTypes: Map<AvatarGeometryType, Map<AvatarBodyPartType, GeometryBodyPart>> = new Map();
     private _itemIdToBodyPartMap: Map<AvatarGeometryType, Map<string, GeometryBodyPart>> = new Map();
-    private _canvases: Map<AvatarScaleType, Map<AvatarGeometryType, AvatarCanvas>> = new Map();
+    private _canvases: Map<AvatarScaleType, Map<AvatarGeometryType, IAvatarCanvas>> = new Map();
 
     constructor(config: IAssetAvatarGeometryConfig) {
         this._camera = new Vector3D(0, 0, 10);
@@ -30,7 +30,7 @@ export class AvatarModelGeometry {
                 if (!canvas) continue;
 
                 const scale = canvas.scale;
-                const geometries = new Map<AvatarGeometryType, AvatarCanvas>();
+                const geometries = new Map<AvatarGeometryType, IAvatarCanvas>();
 
                 if (canvas.geometries && (canvas.geometries.length > 0)) for (const geometry of canvas.geometries) geometries.set(geometry.id, new AvatarCanvas(geometry, scale));
 
@@ -83,7 +83,7 @@ export class AvatarModelGeometry {
         return this._avatarSet.findAvatarSet(setType)?.isMain ?? false;
     }
 
-    public getCanvas(scale: AvatarScaleType, geometryType: AvatarGeometryType): AvatarCanvas | undefined {
+    public getCanvas(scale: AvatarScaleType, geometryType: AvatarGeometryType): IAvatarCanvas | undefined {
         return this._canvases.get(scale)?.get(geometryType) ?? undefined;
     }
 

@@ -3,7 +3,7 @@ import '@pixi/node';
 
 import { serve } from '@hono/node-server';
 import { NitroLogger } from '@nitrodevco/nitro-api';
-import { PrepareRenderer } from '@nitrodevco/nitro-renderer';
+import { GetRoomEngine, PrepareRenderer } from '@nitrodevco/nitro-renderer';
 
 import { GetHono } from './GetHono';
 import { AvatarLoader } from './loaders/AvatarLoader';
@@ -16,6 +16,8 @@ const init = async () => {
         NitroLogger.log(`Preparing Imager`);
         await PrepareRenderer({});
         await AvatarLoader();
+
+        await GetRoomEngine().init();
 
         serve({
             fetch: GetHono().fetch,

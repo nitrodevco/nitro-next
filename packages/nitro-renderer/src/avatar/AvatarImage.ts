@@ -472,6 +472,24 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return true;
     }
 
+    public getTotalFrameCount(): number {
+        const actions = this._sortedActions;
+
+        let frameCount = this._animationFrameCount;
+
+        for (const action of actions) {
+            if (!action?.definition) continue;
+
+            const animation = this._structure.animationManager.getAnimation(`${action.definition.state}.${action.actionParameter}`);
+
+            if (!animation) continue;
+
+            frameCount = Math.max(frameCount, animation.frameCount(action.overridingAction));
+        }
+
+        return frameCount;
+    }
+
     public getFigure(): IAvatarFigureContainer {
         return this._figure;
     }
@@ -528,8 +546,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return this._animationHasResetOnToggle;
     }
 
-    public get mainAction(): string {
-        return this._mainAction.type;
+    public get mainAction(): IActiveActionData {
+        return this._mainAction;
     }
 
     public get avatarSpriteData(): IAvatarDataContainer | undefined {

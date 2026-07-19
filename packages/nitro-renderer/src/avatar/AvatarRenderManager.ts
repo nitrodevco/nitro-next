@@ -49,7 +49,7 @@ export class AvatarRenderManager implements IAvatarRenderManager {
     public processEffectMap(data: IEffectMapLibrary[], assetUrl: string) {
         this._effectAssetDownloadManager.processEffectMap(data, assetUrl);
         this._effectAssetDownloadManager.processMissingLibraries();
-        this._avatarAssetDownloadManager.setReady();
+        this._effectAssetDownloadManager.setReady();
         this._effectAssetDownloadManager.processPendingDownloads();
     }
 
@@ -91,6 +91,10 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
     public async downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void> {
         await this._avatarAssetDownloadManager.downloadAvatarFigureAsync(container);
+    }
+
+    public async downloadAvatarEffectAsync(effectId: number): Promise<void> {
+        await this._effectAssetDownloadManager.downloadAvatarEffectAsync(effectId);
     }
 
     public getFigureClubLevel(container: IAvatarFigureContainer, gender: AvatarGenderType, searchParts: string[] = []): number {

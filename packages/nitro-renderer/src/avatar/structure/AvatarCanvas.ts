@@ -1,8 +1,8 @@
-﻿import type { IAssetAvatarGeometry } from "@nitrodevco/nitro-api";
+﻿import type { IAssetAvatarGeometry, IAvatarCanvas } from "@nitrodevco/nitro-api";
 import { AvatarScaleType } from "@nitrodevco/nitro-api";
 import { Point } from "pixi.js";
 
-export class AvatarCanvas {
+export class AvatarCanvas implements IAvatarCanvas {
     private readonly _id: string;
     private readonly _width: number;
     private readonly _height: number;

@@ -16,6 +16,7 @@ export interface IAvatarRenderManager {
     createAvatarImageAsync(figure: string, size: AvatarScaleType, gender: AvatarGenderType): Promise<IAvatarImage | undefined>;
     downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void;
     downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void>;
+    downloadAvatarEffectAsync(effectId: number): Promise<void>;
     getFigureClubLevel(container: IAvatarFigureContainer, gender: AvatarGenderType, searchParts?: string[]): number;
     isValidFigureSetForGender(setId: number, gender: AvatarGenderType): boolean;
     getFigureStringWithFigureIds(figure: string, gender: AvatarGenderType, setIds: number[]): string;

@@ -1,6 +1,7 @@
-import { AvatarActionStateType, AvatarExpressionStates, AvatarGenderType, AvatarGestureStates, AvatarPostureStates, AvatarScaleType, AvatarSetType } from "@nitrodevco/nitro-api";
-import { GetAvatarRenderManager } from "@nitrodevco/nitro-renderer";
+import { AvatarActionStateType, AvatarExpressionStates, AvatarGenderType, AvatarGeometryType, AvatarGestureStates, AvatarPostureStates, AvatarScaleType, AvatarSetType, IAvatarImage, RoomGeometryScaleType } from "@nitrodevco/nitro-api";
+import { AvatarVisualization, GetAvatarRenderManager, GetRenderer } from "@nitrodevco/nitro-renderer";
 import { Hono } from "hono";
+import { Container, Point, Sprite, Texture } from "pixi.js";
 
 import { ParseEnum } from "./ParseEnum";
 import { ParseIntInRange } from "./ParseIntInRange";
@@ -21,10 +22,10 @@ hono.get('/avatar', async (c) => {
     const danceId = query.danceId !== undefined ? ParseIntInRange(query.danceId, 0, 4, 0) : undefined;
     const effectId = query.effectId !== undefined ? Number(query.effectId) || undefined : undefined;
     const frameNumber = query.frameNumber !== undefined ? Number(query.frameNumber) : 0;
+    const animate = query.animate !== undefined ? true : false;
 
     avatar.setDirection(AvatarSetType.Full, direction);
     avatar.setDirection(AvatarSetType.Head, headDirection);
-
     avatar.initActionAppends();
 
     if (query.posture !== undefined) {
@@ -61,19 +62,142 @@ hono.get('/avatar', async (c) => {
 
     if (danceId !== undefined && danceId > 0) avatar.appendAction(AvatarActionStateType.Dance, danceId);
 
-    if (effectId !== undefined && effectId > 0) avatar.appendAction(AvatarActionStateType.Effect, effectId);
+    if (effectId !== undefined && effectId > 0) {
+        await GetAvatarRenderManager().downloadAvatarEffectAsync(effectId);
 
-    if (frameNumber > 0) avatar.updateAnimationByFrames(frameNumber);
+        avatar.appendAction(AvatarActionStateType.Effect, effectId);
+    }
 
-    let buffer = await avatar.getCroppedBase64Async(setType, false, 1);
+    avatar.endActionAppends();
 
-    if (!buffer) return c.json({ error: '' }, 400);
+    let totalFrames: number = 0;
+
+    if (!animate) {
+        if (frameNumber > 0) avatar.updateAnimationByFrames(frameNumber);
+
+        totalFrames = 1;
+    } else {
+        totalFrames = (avatar.getTotalFrameCount() * 2) || 1;
+    }
+
+    const avatarCanvas = GetAvatarRenderManager().structure.getCanvas(AvatarScaleType.Large, avatar.mainAction.definition?.geometryType ?? AvatarGeometryType.Vertical);
+
+    if (!avatarCanvas) return c.json({ error: '' }, 400);
+
+    const container = new Container();
+    const sprite = new Sprite(Texture.EMPTY);
+
+    sprite.width = avatarCanvas.width;
+    sprite.height = avatarCanvas.height;
+
+    container.addChild(sprite);
+
+    for (let i = 0; i < totalFrames; i++) {
+        if (totalFrames && (i > 0)) avatar.updateAnimationByFrames(1);
+
+        const texture = avatar.getImage(setType, false, 1);
+
+        if (!texture) continue;
+
+        const avatarSprite = new Sprite(texture);
+        const avatarOffset = new Point();
+        const canvasOffset = new Point();
+
+        canvasOffset.x = ((sprite.width - texture.width) / 2);
+        canvasOffset.y = ((sprite.height - texture.height) / 2);
+
+        for (const sprite of avatar.getSprites()) {
+            if (sprite.id !== 'avatar') continue;
+
+            const layerData = avatar.getLayerData(sprite);
+
+            avatarOffset.x = sprite.getDirectionOffsetX(direction);
+            avatarOffset.y = sprite.getDirectionOffsetY(direction);
+
+            if (!layerData) continue;
+
+            avatarOffset.x += layerData.dx;
+            avatarOffset.y += layerData.dy;
+        }
+
+        avatarSprite.x = avatarOffset.x;
+        avatarSprite.y = avatarOffset.y;
+
+        const sizeOffset = new Point(((texture.width - RoomGeometryScaleType.ZoomedIn) / 2), (texture.height - (RoomGeometryScaleType.ZoomedIn / 4)));
+        const canvasWithOffset = new Point(canvasOffset.x + sizeOffset.x, canvasOffset.y + sizeOffset.y);
+
+        //ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, false);
+
+        container.addChild(avatarSprite);
+
+        //ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, true);
+    }
+
+    let buffer = await GetRenderer().extract.base64(container);
 
     buffer = buffer.includes(',') ? buffer.split(',')[1] : buffer;
+
+    container.destroy();
+    avatar.dispose();
 
     c.header('Content-Type', `image/png`);
 
     return c.body(Buffer.from(buffer, 'base64'));
 });
+
+const ProcessAvatarSprites = (container: Container, avatar: IAvatarImage, avatarOffset: Point, canvasOffset: Point, frontSprites: boolean = true) => {
+    for (const sprite of avatar.getSprites()) {
+        if (sprite.id === 'avatar') continue;
+
+        const layerData = avatar.getLayerData(sprite);
+        const avatarDirection = avatar.getDirection();
+
+        let offsetX = sprite.getDirectionOffsetX(avatarDirection);
+        let offsetY = sprite.getDirectionOffsetY(avatarDirection);
+        const offsetZ = sprite.getDirectionOffsetZ(avatarDirection);
+        let direction = sprite.hasDirections ? avatarDirection : 0;
+        let frame = 0;
+
+        if (!frontSprites) {
+            if (offsetZ >= 0) continue;
+        }
+        else if (offsetZ < 0) continue;
+
+        if (layerData) {
+            frame = layerData.animationFrame;
+            offsetX = (offsetX + layerData.dx);
+            offsetY = (offsetY + layerData.dy);
+            direction = (direction + layerData.dd);
+        }
+
+        if (direction < 0) direction = (direction + 8);
+
+        if (direction > 7) direction = (direction - 8);
+
+        const assetName = `${avatar.getScale()}_${sprite.member}_${direction}_${frame}`;
+        const asset = avatar.getAsset(assetName);
+
+        if (!asset?.texture) continue;
+
+        const addonSprite = new Sprite(asset.texture);
+
+        addonSprite.x = (asset.offsetX - RoomGeometryScaleType.ZoomedIn / 2 + offsetX);
+        addonSprite.y = (asset.offsetY + offsetY);
+
+        const postureOffset = 0;
+
+        if (sprite.hasStaticY) {
+            const verticalOffset = 0;
+
+            addonSprite.y += (verticalOffset * RoomGeometryScaleType.ZoomedIn) / (2 * AvatarVisualization.BASE_Y_SCALE);
+        } else {
+            addonSprite.y += postureOffset;
+        }
+
+        // if(sprite.ink === 33) ctx.globalCompositeOperation = 'lighter';
+
+        container.addChild(addonSprite);
+    }
+}
 
 export const GetHono = () => hono;

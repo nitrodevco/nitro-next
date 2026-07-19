@@ -5,6 +5,7 @@ import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
 import type { IPartColor } from './structure';
 import { AvatarActionStateType, AvatarFigurePartType, AvatarScaleType, AvatarSetType } from './enum';
 import { IGraphicAsset } from '../asset';
+import { IActiveActionData } from './actions';
 
 export interface IAvatarImage {
     dispose(): void;
@@ -19,6 +20,7 @@ export interface IAvatarImage {
     initActionAppends(): void;
     endActionAppends(): void;
     appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number)[]): boolean;
+    getTotalFrameCount(): number;
     getFigure(): IAvatarFigureContainer;
     getScale(): AvatarScaleType;
     getPartColor(partType: AvatarFigurePartType): IPartColor | undefined;
@@ -30,7 +32,7 @@ export interface IAvatarImage {
     isPlaceholder(): boolean;
     forceActionUpdate(): void;
     readonly animationHasResetOnToggle: boolean;
-    readonly mainAction: string;
+    readonly mainAction: IActiveActionData;
     readonly avatarSpriteData: IAvatarDataContainer | undefined;
     readonly disposed: boolean;
 }

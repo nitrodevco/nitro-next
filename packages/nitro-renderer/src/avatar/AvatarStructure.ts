@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, type IActionDefinition, type IActiveActionData, IAnimation, IAnimationLayerData, type IAssetAnimation, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, type IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, type IAvatarFigureContainer, type IAvatarImage, type IFigureData, type IFigurePartSet, type IPartColor, type IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, type IActionDefinition, type IActiveActionData, IAnimation, IAnimationLayerData, type IAssetAnimation, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, type IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IAvatarCanvas, type IAvatarFigureContainer, type IAvatarImage, IAvatarStructure, type IFigureData, type IFigurePartSet, type IPartColor, type IStructureData } from '@nitrodevco/nitro-api';
 import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
 import type { Point } from 'pixi.js';
 
@@ -7,10 +7,9 @@ import { AvatarActionManager } from './actions';
 import { AnimationManager } from './animation';
 import { AvatarImagePartContainer } from './AvatarImagePartContainer';
 import { AvatarModelGeometry } from './geometry';
-import type { AvatarCanvas } from './structure';
 import { AnimationAction, AvatarAnimationData, FigureSetData, PartSetsData } from './structure';
 
-export class AvatarStructure {
+export class AvatarStructure implements IAvatarStructure {
     private _geometry: AvatarModelGeometry | undefined = undefined;
     private _figureData: FigureSetData = new FigureSetData();
     private _partSetsData: PartSetsData = new PartSetsData();
@@ -130,7 +129,7 @@ export class AvatarStructure {
         return this._actionManager.getCanvasOffsets(actions, size, direction);
     }
 
-    public getCanvas(scaleType: AvatarScaleType, geometryType: AvatarGeometryType): AvatarCanvas | undefined {
+    public getCanvas(scaleType: AvatarScaleType, geometryType: AvatarGeometryType): IAvatarCanvas | undefined {
         return this._geometry?.getCanvas(scaleType, geometryType);
     }
 

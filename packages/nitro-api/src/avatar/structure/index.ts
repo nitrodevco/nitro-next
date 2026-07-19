@@ -1,3 +1,4 @@
+export * from './IAvatarCanvas';
 export * from './IAvatarStructure';
 export * from './IFigurePart';
 export * from './IFigurePartSet';
