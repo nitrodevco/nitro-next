@@ -64,13 +64,13 @@ export const InfostandUserView = (props: InfostandUserViewProps) => {
             </div>
             <hr className="infostand-separator" />
             <div className="flex-1 gap-1 p-1 size-full">
-                <div className="flex items-center justify-center w-full max-w-17 [border-image-source:var(--infostand-bg-thumb)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] overflow-hidden">
+                <div className="infostand-avatar-container">
                     <AvatarImage figure={props.data.figure} gender={props.data.gender} direction={4} />
                 </div>
             </div>
             <hr className="infostand-separator" />
             <div className="flex w-full p-1">
-                <div className="flex px-2 py-0.5 gap-1 items-center w-full min-h-(--nitro-infostand-motto-height) [border-image-source:var(--infostand-bg-thumb)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] overflow-hidden font-goldfish">
+                <div className="infostand-motto-container">
                     {!isOwnUser && <p className="text-[9px] text-white">{motto.length === 0 ? getLocalizationValue('infostand.motto.change') : motto}</p>}
                     {isOwnUser && <>
                         <i className="cursor-pointer nitro-icon pencil-icon shrink-0" onClick={e => setIsEditingMotto(true)} />

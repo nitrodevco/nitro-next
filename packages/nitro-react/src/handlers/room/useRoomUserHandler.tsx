@@ -1,7 +1,6 @@
 
 import type { IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
-import { AvatarGenderType } from "@nitrodevco/nitro-api";
-import { AvatarActionStateType, AvatarFigurePartType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import type { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from "@nitrodevco/nitro-shared";
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-shared";
 
@@ -32,12 +31,12 @@ export const useRoomUserHandler = () => {
 
             switch (avatar.avatarType) {
                 case RoomObjectUserType.User: {
-                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarUser = avatar as IRoomAvatar & IRoomAvatarUser;
 
                     datas.push({
                         id: avatarUser.objectId,
                         objectId: avatarUser.objectId,
+                        category: RoomObjectCategoryEnum.Unit,
                         name: avatarUser.name,
                         userType: avatarUser.avatarType,
                         gender: avatarUser.gender.toUpperCase() as AvatarGenderType,
@@ -68,12 +67,12 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.Bot: {
-                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarBot = avatar as IRoomAvatar & IRoomAvatarBot;
 
                     datas.push({
                         id: avatarBot.objectId,
                         objectId: avatarBot.objectId,
+                        category: RoomObjectCategoryEnum.Unit,
                         name: avatarBot.name,
                         userType: avatarBot.avatarType,
                         gender: avatarBot.gender.toUpperCase() as AvatarGenderType,
@@ -104,12 +103,12 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.RentableBot: {
-                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarRentableBot = avatar as IRoomAvatar & IRoomAvatarRentableBot;
 
                     datas.push({
                         id: avatarRentableBot.objectId,
                         objectId: avatarRentableBot.objectId,
+                        category: RoomObjectCategoryEnum.Unit,
                         name: avatarRentableBot.name,
                         userType: avatarRentableBot.avatarType,
                         gender: avatarRentableBot.gender.toUpperCase() as AvatarGenderType,
@@ -140,12 +139,12 @@ export const useRoomUserHandler = () => {
                     break;
                 }
                 case RoomObjectUserType.Pet: {
-                    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
                     const avatarPet = avatar as IRoomAvatar & IRoomAvatarPet;
 
                     datas.push({
                         id: avatarPet.objectId,
                         objectId: avatarPet.objectId,
+                        category: RoomObjectCategoryEnum.Unit,
                         name: avatarPet.name,
                         userType: avatarPet.avatarType,
                         gender: AvatarGenderType.Unisex,

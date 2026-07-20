@@ -145,21 +145,13 @@
         .infostand-close {
             @apply [background:var(--infostand-close-bg-image)] w-3.25 h-3.25 cursor-pointer shrink-0;
         }
-    }
 
-    .nitro-button {
-        @apply flex items-center pointer-events-auto cursor-pointer;
-    }
-
-    .infostand-button {
-        @apply [border-image-source:var(--infostand-button-bg)] [border-image-slice:3_3_3_3_fill] [border-image-width:3px] text-[9px] text-white h-6.25 p-2 font-goldfish;
-
-        &:hover {
-            @apply [border-image-source:var(--infostand-button-hover-bg)];
+        .infostand-avatar-container {
+            @apply flex items-center justify-center w-full max-w-17 [border-image-source:var(--infostand-bg-thumb)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] overflow-hidden;
         }
 
-        &:active {
-            @apply [border-image-source:var(--infostand-button-active-bg)];
+        .infostand-motto-container {
+            @apply flex px-2 py-0.5 gap-1 items-center w-full min-h-(--nitro-infostand-motto-height) [border-image-source:var(--infostand-bg-thumb)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] overflow-hidden font-goldfish;
         }
     }
 }

@@ -1,4 +1,5 @@
 export enum RoomObjectUserType {
+    None = 0,
     User = 1,
     Pet = 2,
     Bot = 3,

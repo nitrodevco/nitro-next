@@ -1,5 +1,6 @@
 import { FurniturePickupMode, FurnitureUsagePolicyEnum, type IRoomFurnitureData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from "@nitrodevco/nitro-api";
 
+import { Button } from "#base/components";
 import { FurnitureImage } from "#base/components/FurnitureImage";
 import { useIsModerator, useOwnUserId, useRoomPermissionsSelector } from "#base/context";
 import { useRoomObjectInteraction, useRoomObjectModify } from "#base/hooks";
@@ -67,11 +68,11 @@ export const InfostandFurniView = (props: InfostandFurniViewProps) => {
                 </div>
             </div>
             <div className="flex justify-end gap-2">
-                {canMove && <div className="nitro-button infostand-button" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_MOVE)}>{getLocalizationValue('infostand.button.move')}</div>}
-                {canRotate && <div className="nitro-button infostand-button" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)}>{getLocalizationValue('infostand.button.rotate')}</div>}
-                {pickupMode === FurniturePickupMode.Eject && <div className="nitro-button infostand-button" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_EJECT)}>{getLocalizationValue(`infostand.button.eject`)}</div>}
-                {pickupMode === FurniturePickupMode.Full && <div className="nitro-button infostand-button" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_PICKUP)}>{getLocalizationValue(`infostand.button.pickup`)}</div>}
-                {canUse && <div className="nitro-button infostand-button" onClick={e => changeItemState(data.objectId, data.category, 0, false)}>{getLocalizationValue('infostand.button.use')}</div>}
+                {canMove && <Button variant="infostand" size="sm" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_MOVE)}>{getLocalizationValue('infostand.button.move')}</Button>}
+                {canRotate && <Button variant="infostand" size="sm" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)}>{getLocalizationValue('infostand.button.rotate')}</Button>}
+                {pickupMode === FurniturePickupMode.Eject && <Button variant="infostand" size="sm" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_EJECT)}>{getLocalizationValue(`infostand.button.eject`)}</Button>}
+                {pickupMode === FurniturePickupMode.Full && <Button variant="infostand" size="sm" onClick={e => modifyRoomObject(data.objectId, data.category, RoomObjectOperationType.OBJECT_PICKUP)}>{getLocalizationValue(`infostand.button.pickup`)}</Button>}
+                {canUse && <Button variant="infostand" size="sm" onClick={e => changeItemState(data.objectId, data.category, 0, false)}>{getLocalizationValue('infostand.button.use')}</Button>}
             </div>
         </div>
     );
