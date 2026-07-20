@@ -2,7 +2,7 @@ import { type IRoomUserData } from "@nitrodevco/nitro-api";
 import { ChangeMottoComposer } from "@nitrodevco/nitro-shared";
 import { KeyboardEvent, useEffect, useState } from "react";
 
-import { AvatarImage } from "#base/components/AvatarImage";
+import { AvatarImage } from "#base/components";
 import { useOwnUserId, useWebSocketContext } from "#base/context";
 import { useConfigValue } from "#base/hooks";
 import { useLocalizationStore } from "#base/stores";

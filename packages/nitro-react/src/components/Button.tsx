@@ -20,9 +20,9 @@ const buttonVariants = cva(
     }
 );
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'infostand';
-    size?: 'sm';
+type ButtonVariantProps = NonNullable<Parameters<typeof buttonVariants>[0]>;
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Omit<ButtonVariantProps, 'className'> {
     className?: string;
 }
 

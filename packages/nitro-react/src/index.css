@@ -80,6 +80,13 @@
     --color-habbo-toolbar-btn: #1a2540;
     --color-habbo-toolbar-active: #253660;
 
+    /* Toolbar chrome (classic pixel skin, used by ToolbarView) */
+    --color-toolbar-bg: #2e2d2cc2;
+    --color-toolbar-border: #0000004d;
+    --color-toolbar-divider: #454442;
+    --color-toolbar-shadow-highlight: #53524ec2;
+    --color-toolbar-shadow-shade: #494845c2;
+
     /* Sizing */
     --spacing-toolbar-h: 54px;
     --spacing-card-header-h: 32px;

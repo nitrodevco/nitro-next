@@ -1,6 +1,10 @@
 import { RoomGeometryScaleType, Vector3d } from "@nitrodevco/nitro-api";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect } from "react";
+
+import { useImageState } from "#base/hooks";
+
+import { SpriteImage } from "./SpriteImage";
 
 type FurnitureImageProps = {
     type: string;
@@ -12,9 +16,7 @@ type FurnitureImageProps = {
 
 export const FurnitureImage = forwardRef<HTMLDivElement, FurnitureImageProps>((props, ref) => {
     const { type, colorIndex = 0, direction = 2, scale = RoomGeometryScaleType.ZoomedIn, extra = 0 } = props;
-    const [randomValue, setRandomValue] = useState<number>(-1);
-    const [imageData, setImageData] = useState<{ width: number, height: number, url: string }>({ width: 0, height: 0, url: '' });
-    const disposed = useRef<boolean>(false);
+    const { imageState, setImageState, disposed } = useImageState();
 
     useEffect(() => {
         if (!type) return;
@@ -24,7 +26,7 @@ export const FurnitureImage = forwardRef<HTMLDivElement, FurnitureImageProps>((p
 
             if (!image || disposed.current) return;
 
-            setImageData({
+            setImageState({
                 width: image.width,
                 height: image.height,
                 url: image.src
@@ -32,21 +34,9 @@ export const FurnitureImage = forwardRef<HTMLDivElement, FurnitureImageProps>((p
         }
 
         void load();
-    }, [type, colorIndex, direction, scale, extra]);
+    }, [type, colorIndex, direction, scale, extra, disposed, setImageState]);
 
-    useEffect(() => {
-        return () => {
-            disposed.current = true;
-        }
-    }, []);
-
-    return (
-        <div ref={ref} style={{
-            width: imageData.width,
-            height: imageData.height,
-            backgroundImage: `url(${imageData.url})`,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-        }} />
-    )
+    return <SpriteImage ref={ref} image={imageState} />;
 });
+
+FurnitureImage.displayName = 'FurnitureImage';

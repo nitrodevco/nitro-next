@@ -1,7 +1,6 @@
 import { FurniturePickupMode, FurnitureUsagePolicyEnum, type IRoomFurnitureData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from "@nitrodevco/nitro-api";
 
-import { Button } from "#base/components";
-import { FurnitureImage } from "#base/components/FurnitureImage";
+import { Button, FurnitureImage } from "#base/components";
 import { useIsModerator, useOwnUserId, useRoomPermissionsSelector } from "#base/context";
 import { useRoomObjectInteraction, useRoomObjectModify } from "#base/hooks";
 import { useLocalizationStore } from "#base/stores";

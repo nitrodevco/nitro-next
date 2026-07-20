@@ -21,3 +21,4 @@ export * from './room/useRoomObjectSelect';
 export * from './room/useRoomObjectSelected';
 export * from './room/useRoomObjectValidation';
 export * from './useConfigValue';
+export * from './useImageState';

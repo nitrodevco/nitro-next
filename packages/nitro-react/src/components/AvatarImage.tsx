@@ -1,7 +1,11 @@
 import type { AvatarGenderType } from "@nitrodevco/nitro-api";
 import { AvatarScaleType, AvatarSetType } from "@nitrodevco/nitro-api";
 import { GetAvatarRenderManager } from "@nitrodevco/nitro-renderer";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
+
+import { useImageState } from "#base/hooks";
+
+import { SpriteImage } from "./SpriteImage";
 
 type AvatarImageProps = {
     figure: string;
@@ -13,20 +17,19 @@ type AvatarImageProps = {
 export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>((props, ref) => {
     const { figure, gender, headOnly = false, direction = 0 } = props;
     const [randomValue, setRandomValue] = useState<number>(-1);
-    const [imageData, setImageData] = useState<{ width: number, height: number, url: string }>({ width: 0, height: 0, url: '' });
-    const disposed = useRef<boolean>(false);
+    const { imageState, setImageState, disposed } = useImageState();
 
     useEffect(() => {
         if (!figure) return;
 
         const avatarImage = GetAvatarRenderManager().createAvatarImage(figure, AvatarScaleType.Large, gender, {
-            resetFigure: (figure: string) => {
+            resetFigure: () => {
                 if (disposed.current) return;
 
                 setRandomValue(Math.random());
             }
         }, {
-            resetEffect: (effect: number) => {
+            resetEffect: () => {
                 if (disposed.current) return;
 
                 setRandomValue(Math.random());
@@ -35,18 +38,16 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>((props, 
 
         if (!avatarImage) return;
 
-        let setType = AvatarSetType.Full;
+        const setType = headOnly ? AvatarSetType.Head : AvatarSetType.Full;
 
-        if (headOnly) setType = AvatarSetType.Head;
-
-        avatarImage?.setDirection(setType, direction);
+        avatarImage.setDirection(setType, direction);
 
         const load = async () => {
             const image = await avatarImage.getCroppedImageAsync(setType, false, 1);
 
-            if (!image) return;
+            if (!image || disposed.current) return;
 
-            setImageData({
+            setImageState({
                 width: image.width,
                 height: image.height,
                 url: image.src
@@ -54,22 +55,9 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>((props, 
         }
 
         void load();
-    }, [figure, direction, randomValue]);
+    }, [figure, gender, headOnly, direction, randomValue, disposed, setImageState]);
 
-    useEffect(() => {
-        return () => {
-            disposed.current = true;
-        }
-    }, []);
-
-    return (
-        <div ref={ref} style={{
-            width: imageData.width,
-            height: imageData.height,
-            backgroundImage: `url(${imageData.url})`,
-            backgroundPosition: 'center -8px',
-            backgroundRepeat: 'no-repeat',
-            pointerEvents: 'none'
-        }} />
-    )
+    return <SpriteImage ref={ref} image={imageState} backgroundPosition="center -8px" style={{ pointerEvents: 'none' }} />;
 });
+
+AvatarImage.displayName = 'AvatarImage';
