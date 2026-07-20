@@ -12,7 +12,7 @@ export const InfoBubbleNameView = forwardRef<HTMLDivElement, InfoBubbleNameProps
     ({ nameData, className, children, ...props }, ref) => (
         <div
             ref={ref}
-            className={cn(`flex`, className)}
+            className={cn(`flex contextmenu-container name-only`, className)}
             {...props}
         >
             {nameData.name}

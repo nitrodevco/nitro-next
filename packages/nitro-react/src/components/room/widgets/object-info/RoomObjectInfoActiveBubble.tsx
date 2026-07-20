@@ -15,8 +15,6 @@ export const RoomObjectInfoActiveBubble = (props: RoomObjectInfoBubblesProps) =>
     const { activeBubble, activeData } = props;
     const ownUserId = useOwnUserId();
 
-    console.log(activeBubble, activeData);
-
     if (activeBubble) return <RoomObjectInfoNameBubble nameData={activeBubble} />;
 
     if (!activeData) return null;

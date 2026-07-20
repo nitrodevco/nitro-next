@@ -103,6 +103,9 @@
 
     --nitro-infostand-width: 190px;
     --nitro-infostand-motto-height: 25px;
+
+    --context-menu-name-bg: url('./assets/flash/room/name_bg.png');
+    --context-menu-pointer-after: url('./assets/flash/room/pointer_after.png');
 }
 
 @utility pixel-text {
@@ -152,6 +155,16 @@
 
         .infostand-motto-container {
             @apply flex px-2 py-0.5 gap-1 items-center w-full min-h-(--nitro-infostand-motto-height) [border-image-source:var(--infostand-bg-thumb)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] overflow-hidden font-goldfish;
+        }
+    }
+
+    .contextmenu-container {
+        &.name-only {
+            @apply [border-image-source:var(--context-menu-name-bg)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px] px-1.5 py-4.5 w-[unset] text-center text-[14px];
+
+            &:after {
+                @apply content-[''] [background-image:var(--context-menu-pointer-after)] bg-no-repeat w-2.75 h-2.25 absolute -bottom-1.25 left-0 right-0 m-auto;
+            }
         }
     }
 }
