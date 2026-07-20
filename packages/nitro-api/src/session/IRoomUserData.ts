@@ -5,7 +5,7 @@ import { IRoomObjectData } from "./IRoomObjectData";
 export interface IRoomUserData extends IRoomObjectData {
     objectId: number;
     name: string;
-    type: RoomObjectUserType;
+    userType: RoomObjectUserType;
     gender: AvatarGenderType;
     figure: string;
     custom: string;

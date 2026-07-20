@@ -22,6 +22,7 @@ export const useConfigLoader = () => {
             'asset.urls.effect': 'https://assets.nitrodev.co/bundled/effects/%libname%.nitro',
             'fps.limit': 60,
             'socket.url': 'ws://localhost:9001',
+            'motto.max.length': 38,
             'renderer.petTypes': [
                 'dog',
                 'cat',

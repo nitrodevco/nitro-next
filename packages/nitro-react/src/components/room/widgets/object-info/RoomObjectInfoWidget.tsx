@@ -1,6 +1,6 @@
 import { useRoomObjectRollOut, useRoomObjectRollOver } from "#base/hooks";
 
-import { RoomObjectInfostandWrapper } from "./RoomObjectInfostandWrapper";
+import { RoomObjectInfostand } from "./RoomObjectInfostand";
 
 export const RoomObjectInfoWidget = () => {
     useRoomObjectRollOver(event => {
@@ -14,7 +14,7 @@ export const RoomObjectInfoWidget = () => {
     return (
         <>
             <div className="absolute right-[4px] bottom-[calc(var(--spacing-toolbar-h)+7px)] z-30">
-                <RoomObjectInfostandWrapper />
+                <RoomObjectInfostand />
             </div>
         </>
     );

@@ -1,5 +1,7 @@
 
-import type {
+import {
+    FurnitureUsagePolicyEnum,
+    GetObjectDataForFlags,
     IEventDispatcher,
     IGraphicAssetCollection,
     ILegacyWallGeometry,
@@ -16,20 +18,18 @@ import type {
     IRoomObjectManager,
     IRoomObjectModel,
     IRoomRenderingCanvas,
-    IVector3D, RoomObjectUserType,
-    RoomThicknessType
-} from '@nitrodevco/nitro-api';
-import {
-    GetObjectDataForFlags,
-    LegacyDataType,
+    IVector3D, LegacyDataType,
     ObjectDataFlagsEnum,
     RoomGeometryScaleType
     ,
     RoomObjectCategoryEnum,
+    RoomObjectUserType,
     RoomObjectUserTypeName
     ,
     RoomObjectUserTypeUtils,
     RoomObjectVariableEnum,
+    RoomThicknessType
+    ,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import {
@@ -634,7 +634,7 @@ export class Room implements IRoom {
         objectData?: IObjectData,
         extra: number = NaN,
         expires: number = -1,
-        usagePolicy: number = 0,
+        usagePolicy: FurnitureUsagePolicyEnum = FurnitureUsagePolicyEnum.Nobody,
         ownerId: number = 0,
         ownerName: string = '',
         realRoomObject: boolean = true,
@@ -667,7 +667,7 @@ export class Room implements IRoom {
         objectData?: IObjectData,
         extra: number = NaN,
         expires: number = -1,
-        usagePolicy: number = 0,
+        usagePolicy: FurnitureUsagePolicyEnum = FurnitureUsagePolicyEnum.Nobody,
         ownerId: number = 0,
         ownerName: string = '',
         realRoomObject: boolean = true,
@@ -712,7 +712,7 @@ export class Room implements IRoom {
         state: number,
         data: string,
         expires: number = -1,
-        usagePolicy: number = 0,
+        usagePolicy: FurnitureUsagePolicyEnum = FurnitureUsagePolicyEnum.Nobody,
         ownerId: number = 0,
         ownerName: string = '',
         realRoomObject: boolean = true,
@@ -1281,7 +1281,6 @@ export class Room implements IRoom {
         let type: string | undefined = undefined;
         let colorIndex = 0;
 
-        // eslint-disable-next-line no-useless-assignment
         let image: ImageLike | undefined = undefined;
 
         if (realRoomObject) {

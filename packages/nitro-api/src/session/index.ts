@@ -1,4 +1,5 @@
 export * from './IFurnitureData';
+export * from './IRoomFurnitureData';
 export * from './IRoomObjectData';
 export * from './IRoomPetData';
 export * from './IRoomUserData';
@@ -10,8 +11,8 @@ export * from './enum/NoobnessLevelEnum';
 export * from './enum/RoomDoorModeEnum';
 export * from './enum/RoomTradeModeEnum';
 export * from './enum/SecurityLevelEnum';
-export * from './pet/IPetCustomPart';
-export * from './pet/PetType';
 export * from './polls/IPollChoice';
 export * from './polls/IPollQuestion';
 export * from './polls/IQuestion';
+export * from './pet/IPetCustomPart';
+export * from './pet/PetType';

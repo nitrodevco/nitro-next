@@ -67,8 +67,9 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>((props, 
             width: imageData.width,
             height: imageData.height,
             backgroundImage: `url(${imageData.url})`,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
+            backgroundPosition: 'center -8px',
+            backgroundRepeat: 'no-repeat',
+            pointerEvents: 'none'
         }} />
     )
 });

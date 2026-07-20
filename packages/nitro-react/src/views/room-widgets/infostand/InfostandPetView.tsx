@@ -8,5 +8,7 @@ type InfostandPetViewProps = {
 export const InfostandPetView = (props: InfostandPetViewProps) => {
     if (!props.data) return null;
 
-    return null;
+    return (
+        <div className="infostand-container"></div>
+    );
 }

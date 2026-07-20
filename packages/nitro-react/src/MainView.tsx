@@ -37,7 +37,7 @@ export const MainView = () => {
             <RoomWrapper />
             <div
                 id="ui-container"
-                className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
+                className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full [image-rendering:pixelated]">
                 <ToolbarView />
             </div>
         </>

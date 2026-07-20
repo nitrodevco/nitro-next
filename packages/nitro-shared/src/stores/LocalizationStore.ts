@@ -8,6 +8,8 @@ type State = {
 };
 
 type Actions = {
+    getLocalizationValue: (key: string, defaultValue?: string) => string;
+    getLocalizationValueParams: (key: string, params: string[], replacements: string[]) => string;
     setLocalization: (localization: Record<string, string>) => void;
     setLocalizationForFurniture: (furniture: IFurnitureData[]) => void;
 };
@@ -20,6 +22,21 @@ const initialState: State = {
 
 export const LocalizationStore = createStore<State & Actions>((set, get) => ({
     ...initialState,
+    getLocalizationValue: (key: string, defaultValue?: string) => {
+        return get().localization[key] ?? defaultValue;
+    },
+    getLocalizationValueParams: (key: string, params: string[], replacements: string[]) => {
+        let value = get().localization[key];
+
+        if (value) for (let i = 0; i < params.length; i++) {
+            const param = params[i];
+            const replacement = replacements[i];
+
+            value = value.replace(`%${param}%`, replacement);
+        }
+
+        return value ?? '';
+    },
     setLocalization: (localizations: Record<string, string>) =>
         set(state => {
             return {

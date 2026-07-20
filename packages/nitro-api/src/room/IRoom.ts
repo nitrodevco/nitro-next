@@ -87,7 +87,7 @@ export interface IRoom {
         state: number,
         data: string,
         expires?: number,
-        usagePolicy?: number,
+        usagePolicy?: FurnitureUsagePolicyEnum,
         ownerId?: number,
         ownerName?: string,
         realRoomObject?: boolean,
