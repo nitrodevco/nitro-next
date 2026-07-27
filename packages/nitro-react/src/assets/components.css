@@ -1,0 +1,31 @@
+@layer components {
+    .nitro-tooltip {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        max-width: 320px;
+        padding: 3px 6px;
+        border-radius: 10px;
+        background-color: rgb(0 0 0 / 0.8);
+        color: #fff;
+        font-size: 0.68rem;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+
+        pointer-events: none;
+
+        will-change: transform;
+        animation: nitro-tooltip-in 90ms ease-out;
+    }
+
+    @keyframes nitro-tooltip-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+}

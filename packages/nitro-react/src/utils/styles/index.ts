@@ -1,6 +1,7 @@
 export * from './AlignContentType';
 export * from './AlignItemsType';
 export * from './AlignSelfType';
+export * from './CursorType';
 export * from './DisplayType';
 export * from './FlexDirectionType';
 export * from './FlexGrowType';
@@ -19,3 +20,4 @@ export * from './JustifyItemsType';
 export * from './JustifySelfType';
 export * from './OverflowType';
 export * from './PositionType';
+export * from './TextColorType';

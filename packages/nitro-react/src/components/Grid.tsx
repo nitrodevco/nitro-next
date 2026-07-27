@@ -1,7 +1,9 @@
-import { forwardRef,type HTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 
 import { cn, cva } from '#base/utils';
 import { AlignContentType, AlignItemsType, AlignSelfType, DisplayType, GapType, GridColSpanType, GridColStartType, GridColumnsType, GridFlowType, GridRowSpanType, GridRowsType, JustifyContentType, JustifyItemsType, JustifySelfType, OverflowType, PositionType } from '#base/utils/styles';
+
+import { Base, type BaseProps } from './Base';
 
 const gridVariants = cva(
     '',
@@ -38,13 +40,10 @@ const gridVariants = cva(
 
 type GridVariantProps = NonNullable<Parameters<typeof gridVariants>[0]>;
 
-interface GridProps extends HTMLAttributes<HTMLDivElement>, Omit<GridVariantProps, 'display' | 'className'> {
-    className?: string;
+export interface GridProps extends Omit<BaseProps, 'display'>, Omit<GridVariantProps, 'display' | 'className'> {
     center?: boolean;
     inline?: boolean;
     maxContent?: boolean;
-    fullWidth?: boolean;
-    fullHeight?: boolean;
 }
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
@@ -53,8 +52,6 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
         center,
         inline,
         maxContent,
-        fullWidth,
-        fullHeight,
         columns,
         rows,
         colSpan,
@@ -76,7 +73,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
         position,
         ...props
     }, ref) => (
-        <div
+        <Base
             ref={ref}
             className={cn(
                 gridVariants({
@@ -102,8 +99,6 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
                     position
                 }),
                 maxContent && 'basis-[max-content]',
-                fullWidth && 'w-full',
-                fullHeight && 'h-full',
                 className
             )}
             {...props}

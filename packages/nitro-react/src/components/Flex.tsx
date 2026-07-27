@@ -1,7 +1,9 @@
-import { forwardRef,type HTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 
 import { cn, cva } from '#base/utils';
 import { AlignContentType, AlignItemsType, AlignSelfType, DisplayType, FlexDirectionType, FlexGrowType, FlexShrinkType, FlexType, FlexWrapType, GapType, JustifyContentType, JustifySelfType, OverflowType, PositionType } from '#base/utils/styles';
+
+import { Base, type BaseProps } from './Base';
 
 const flexVariants = cva(
     '',
@@ -35,14 +37,11 @@ const flexVariants = cva(
 
 type FlexVariantProps = NonNullable<Parameters<typeof flexVariants>[0]>;
 
-export interface FlexProps extends HTMLAttributes<HTMLDivElement>, Omit<FlexVariantProps, 'display' | 'className'> {
-    className?: string;
+export interface FlexProps extends Omit<BaseProps, 'display'>, Omit<FlexVariantProps, 'display' | 'className'> {
     column?: boolean;
     reverse?: boolean;
     center?: boolean;
     inline?: boolean;
-    fullWidth?: boolean;
-    fullHeight?: boolean;
 }
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
@@ -52,8 +51,6 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>(
         reverse,
         center,
         inline,
-        fullWidth,
-        fullHeight,
         direction,
         justify,
         align,
@@ -79,7 +76,7 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>(
         );
 
         return (
-            <div
+            <Base
                 ref={ref}
                 className={cn(
                     flexVariants({
@@ -102,8 +99,6 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>(
                         overflowY,
                         position
                     }),
-                    fullWidth && 'w-full',
-                    fullHeight && 'h-full',
                     className
                 )}
                 {...props}

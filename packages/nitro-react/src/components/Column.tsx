@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { Flex,type FlexProps } from './Flex';
+import { Flex, type FlexProps } from './Flex';
 
 export type ColumnProps = Omit<FlexProps, 'direction' | 'column'>;
 

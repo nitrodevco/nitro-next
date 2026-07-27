@@ -69,7 +69,7 @@ export const InfostandUserView = (props: InfostandUserViewProps) => {
                     <div className="infostand-motto-container">
                         {!userData.isOwnUser && <p className="text-[9px] text-white">{motto.length === 0 ? getLocalizationValue('infostand.motto.change') : motto}</p>}
                         {userData.isOwnUser && <>
-                            <NitroIcon icon="pencil-icon" className="cursor-pointer shrink-0" onClick={e => setIsEditingMotto(true)} />
+                            <NitroIcon icon="pencil-icon" cursor="pointer" className="shrink-0" onClick={e => setIsEditingMotto(true)} />
                             {!isEditingMotto && <p className="text-[9px] text-white font-goldfish flex-1 min-w-0 overflow-hidden wrap-break-word">{motto}</p>}
                             {isEditingMotto && <input type="text" className="p-0 border-0 size-full text-[9px] flex-1 min-w-0" maxLength={mottoMaxLength} value={motto} onChange={e => setMotto(e.target.value)} onKeyDown={onMottoKeyDown} autoFocus={true} />}
                         </>}

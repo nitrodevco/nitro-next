@@ -55,4 +55,12 @@ export function cva<V extends Record<string, Record<string, string>>>(
     };
 }
 
+export function extractNumber(value: number | string | undefined, fallback: number): number {
+    if (value == null) return fallback;
+
+    const parsed = Number(value);
+
+    return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 export type { VariantProps };

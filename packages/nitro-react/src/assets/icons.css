@@ -1,5 +1,5 @@
 .nitro-icon {
-    @apply inline-block outline-0 bg-transparent bg-no-repeat bg-center;
+    @apply outline-0 bg-transparent bg-no-repeat bg-center;
 
     &.icon-nitro-light {
         background-image: url('./flash/nitro/nitro-n-light.svg');
