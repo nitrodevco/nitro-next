@@ -24,6 +24,9 @@
             "#base/utils": [
                 "./src/utils/index.ts"
             ],
+            "#base/utils/styles": [
+                "./src/utils/styles/index.ts"
+            ],
             "#base/*": [
                 "./src/*"
             ],

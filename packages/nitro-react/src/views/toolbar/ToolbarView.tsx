@@ -5,8 +5,8 @@ import { AvatarImage } from '#base/components/AvatarImage';
 import { useOwnUserFigure, useOwnUserGender } from '#base/context';
 import { cn } from '#base/utils';
 
-import { ToolbarMeMenu } from './ToolbarMeMenu';
-import { ToolbarProgressionMenu } from './ToolbarProgressionMenu';
+import { ToolbarMeMenuView } from './ToolbarMeMenuView';
+import { ToolbarProgressionMenuView } from './ToolbarProgressionMenuView';
 
 export const ToolbarView = () => {
     const [isMeExpanded, setMeExpanded] = useState(false);
@@ -25,8 +25,8 @@ export const ToolbarView = () => {
 
     return (
         <>
-            {isMeExpanded && <ToolbarMeMenu ref={meElementRef} />}
-            {isProgressionExpanded && <ToolbarProgressionMenu ref={progressionElementRef} />}
+            {isMeExpanded && <ToolbarMeMenuView ref={meElementRef} />}
+            {isProgressionExpanded && <ToolbarProgressionMenuView ref={progressionElementRef} />}
             <div className="nitro-toolbar">
                 <div className={cn('toolbar-left', leftSideCollapsed && 'collapsed')}>
                     <div className={cn('toolbar-collapse', leftSideCollapsed && 'active')} onClick={_ => setLeftSideCollapsed(prev => !prev)} />
