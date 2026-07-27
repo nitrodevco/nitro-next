@@ -289,32 +289,7 @@ export const TextColorType = {
     'rose-700': 'text-rose-700',
     'rose-800': 'text-rose-800',
     'rose-900': 'text-rose-900',
-    'rose-950': 'text-rose-950',
-    'habbo-bg': 'text-habbo-bg',
-    'habbo-panel': 'text-habbo-panel',
-    'habbo-panel-light': 'text-habbo-panel-light',
-    'habbo-panel-mid': 'text-habbo-panel-mid',
-    'habbo-panel-hover': 'text-habbo-panel-hover',
-    'habbo-header': 'text-habbo-header',
-    'habbo-header-light': 'text-habbo-header-light',
-    'habbo-header-border': 'text-habbo-header-border',
-    'habbo-border': 'text-habbo-border',
-    'habbo-border-light': 'text-habbo-border-light',
-    'habbo-highlight': 'text-habbo-highlight',
-    'habbo-gold': 'text-habbo-gold',
-    'habbo-gold-dark': 'text-habbo-gold-dark',
-    'habbo-gold-light': 'text-habbo-gold-light',
-    'habbo-gold-muted': 'text-habbo-gold-muted',
-    'habbo-text': 'text-habbo-text',
-    'habbo-text-muted': 'text-habbo-text-muted',
-    'habbo-text-faint': 'text-habbo-text-faint',
-    'habbo-online': 'text-habbo-online',
-    'habbo-danger': 'text-habbo-danger',
-    'habbo-warn': 'text-habbo-warn',
-    'habbo-info': 'text-habbo-info',
-    'habbo-toolbar': 'text-habbo-toolbar',
-    'habbo-toolbar-btn': 'text-habbo-toolbar-btn',
-    'habbo-toolbar-active': 'text-habbo-toolbar-active'
+    'rose-950': 'text-rose-950'
 };
 
 export type TextColorType = keyof typeof TextColorType;
