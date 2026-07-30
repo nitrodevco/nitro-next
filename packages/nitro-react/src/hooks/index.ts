@@ -5,6 +5,7 @@ export * from './logic/useAvatarLoader';
 export * from './logic/useConfigLoader';
 export * from './logic/useFrameDrag';
 export * from './logic/useFurnitureDataLoader';
+export * from './logic/useInventoryFurniItems';
 export * from './logic/useLocalizationLoader';
 export * from './room/useRoomCamera';
 export * from './room/useRoomCursorUpdate';

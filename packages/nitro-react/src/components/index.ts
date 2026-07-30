@@ -21,5 +21,6 @@ export * from './room/widgets/object-menu/RoomObjectMenuNameBubble';
 export * from './room/widgets/object-menu/RoomObjectMenuWidget';
 export * from './room/widgets/RoomWidgets';
 export * from './Scaler';
+export * from './Scrollbar';
 export * from './TabContainerButton';
 export * from './TabContext';
