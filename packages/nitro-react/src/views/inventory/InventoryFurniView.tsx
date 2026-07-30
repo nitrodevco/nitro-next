@@ -1,25 +1,24 @@
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { useRef } from 'react';
+import { useState } from 'react';
 
-import { Border, FurnitureImage, Scrollbar } from '#base/components';
-import { Dropmenu } from '#base/components/Dropmenu';
-import { useInventoryFurniItems } from '#base/hooks/logic/useInventoryFurniItems';
+import { Border, FurnitureImage, ItemGrid } from '#base/components';
+import { Dropmenu, type DropmenuOption } from '#base/components/Dropmenu';
+import { type InventoryFurniFilter, type InventoryFurniItem, useInventoryFurniItems } from '#base/hooks/logic/useInventoryFurniItems';
 
-const COLUMN_COUNT = 4;
-const ROW_SIZE = 58;
+const FILTER_OPTIONS: DropmenuOption[] = [
+    { value: 'all', label: 'All items' },
+    { value: 'floor', label: 'Floor items' },
+    { value: 'wall', label: 'Wall items' },
+];
+
+const renderFurniItem = (item: InventoryFurniItem) => (
+    <div className="flex items-center justify-center w-full h-full rounded bg-black/15">
+        <FurnitureImage type={item.className} />
+    </div>
+);
 
 export const InventoryFurniView = () => {
-    const { items, isLoadingMore, loadMore } = useInventoryFurniItems();
-    const scrollRef = useRef<HTMLDivElement>(null);
-
-    const rowCount = Math.ceil(items.length / COLUMN_COUNT);
-
-    const rowVirtualizer = useVirtualizer({
-        count: rowCount,
-        getScrollElement: () => scrollRef.current,
-        estimateSize: () => ROW_SIZE,
-        overscan: 4,
-    });
+    const [filter, setFilter] = useState<InventoryFurniFilter>('all');
+    const { items, isLoadingMore, loadMore } = useInventoryFurniItems(filter);
 
     return (
         <div className="flex flex-col h-full min-h-0 gap-1.5">
@@ -27,42 +26,20 @@ export const InventoryFurniView = () => {
                 <Border variant="0">
                     <input type="text"></input>
                 </Border>
-                <Dropmenu variant="100" />
+                <Dropmenu
+                    variant="100"
+                    options={FILTER_OPTIONS}
+                    value={filter}
+                    onChange={(value) => setFilter(value as InventoryFurniFilter)}
+                />
             </Border>
-            <Scrollbar
-                ref={scrollRef}
-                variant="3"
-                className="flex-1 min-h-0"
+            <ItemGrid
+                items={items}
+                getItemKey={(item) => item.id}
+                renderItem={renderFurniItem}
+                isLoadingMore={isLoadingMore}
                 onScrollEnd={loadMore}
-            >
-                <div style={{ height: rowVirtualizer.getTotalSize() + (isLoadingMore ? ROW_SIZE : 0), position: 'relative' }}>
-                    {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-                        const rowItems = items.slice(virtualRow.index * COLUMN_COUNT, virtualRow.index * COLUMN_COUNT + COLUMN_COUNT);
-
-                        return (
-                            <div
-                                key={virtualRow.key}
-                                className="absolute top-0 left-0 flex w-full gap-1"
-                                style={{ height: virtualRow.size, transform: `translateY(${virtualRow.start}px)` }}
-                            >
-                                {rowItems.map((item) => (
-                                    <div key={item.id} className="flex items-center justify-center rounded bg-black/15 size-13.5">
-                                        <FurnitureImage type={item.className} />
-                                    </div>
-                                ))}
-                            </div>
-                        );
-                    })}
-                    {isLoadingMore && (
-                        <div
-                            className="absolute left-0 flex items-center justify-center w-full text-xs text-white"
-                            style={{ top: rowVirtualizer.getTotalSize(), height: ROW_SIZE }}
-                        >
-                            Loading…
-                        </div>
-                    )}
-                </div>
-            </Scrollbar>
+            />
         </div>
     );
 }

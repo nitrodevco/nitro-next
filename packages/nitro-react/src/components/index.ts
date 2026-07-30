@@ -8,6 +8,7 @@ export * from './Frame';
 export * from './FrameTitleBar';
 export * from './FurnitureImage';
 export * from './Header';
+export * from './ItemGrid';
 export * from './NitroIcon';
 export * from './room/RoomCanvas';
 export * from './room/RoomContainer';

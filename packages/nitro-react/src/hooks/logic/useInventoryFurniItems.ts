@@ -8,6 +8,8 @@ export type InventoryFurniItem = {
     className: string;
 };
 
+export type InventoryFurniFilter = 'all' | 'floor' | 'wall';
+
 const PAGE_SIZE = 30;
 /**
  * `FurniListEventMessage` (nitro-shared) doesn't parse its item array yet — the inventory
@@ -18,17 +20,36 @@ const PAGE_SIZE = 30;
 const MOCK_TOTAL = 240;
 const MOCK_FETCH_DELAY_MS = 300;
 
-export const useInventoryFurniItems = () => {
+export const useInventoryFurniItems = (filter: InventoryFurniFilter = 'all') => {
     const floorItems = useFurnitureDataStore((state) => state.floorItems);
-    const classNames = useMemo(() => Array.from(floorItems.values()).map((item: IFurnitureData) => item.className), [floorItems]);
+    const wallItems = useFurnitureDataStore((state) => state.wallItems);
+
+    const classNames = useMemo(() => {
+        const floorPool: IFurnitureData[] = filter !== 'wall' ? Array.from(floorItems.values()) : [];
+        const wallPool: IFurnitureData[] = filter !== 'floor' ? Array.from(wallItems.values()) : [];
+
+        return floorPool.concat(wallPool).map((item) => item.className);
+    }, [floorItems, wallItems, filter]);
 
     const [loadedCount, setLoadedCount] = useState(PAGE_SIZE);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [prevFilter, setPrevFilter] = useState(filter);
     const pendingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    // Cancels any in-flight mock "fetch" tied to the previous filter — runs on unmount and whenever
+    // `filter` changes (before the state reset below takes effect), so a stale timeout can't bump
+    // `loadedCount` for a filter that's no longer selected.
     useEffect(() => () => {
         if (pendingTimeoutRef.current != null) clearTimeout(pendingTimeoutRef.current);
-    }, []);
+    }, [filter]);
+
+    // Reset pagination when the filter changes, following React's "adjust state during render" pattern
+    // instead of an effect — https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+    if (filter !== prevFilter) {
+        setPrevFilter(filter);
+        setLoadedCount(PAGE_SIZE);
+        setIsLoadingMore(false);
+    }
 
     const items = useMemo<InventoryFurniItem[]>(() => {
         if (!classNames.length) return [];
