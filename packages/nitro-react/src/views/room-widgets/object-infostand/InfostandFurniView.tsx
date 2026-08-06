@@ -1,24 +1,12 @@
-import { FurniturePickupMode, IRoomFurnitureData } from "@nitrodevco/nitro-api";
+import { FurniturePickupMode } from "@nitrodevco/nitro-api";
 
-import { FurnitureImage } from "#base/components";
+import { FurnitureImage, useInfostandFurniContext, useObjectInfostandContext } from "#base/components";
 import { useLocalizationStore } from "#base/stores";
 import { Border, Button, CloseButton } from "#base/theme";
 
-type InfostandFurniViewProps = {
-    furniData: IRoomFurnitureData;
-    canMove: boolean;
-    canRotate: boolean;
-    canUse: boolean;
-    pickupMode: FurniturePickupMode;
-    hasButtons: boolean;
-    canSeeFurniId: boolean;
-    godMode: boolean;
-    processAction: (action: string) => void;
-    onClose: () => void;
-}
-
-export const InfostandFurniView = (props: InfostandFurniViewProps) => {
-    const { furniData, canMove, canRotate, canUse, pickupMode, hasButtons, canSeeFurniId, godMode, processAction, onClose } = props;
+export const InfostandFurniView = () => {
+    const { furniData, canMove, canRotate, canUse, pickupMode, hasButtons, canSeeFurniId, godMode, processAction } = useInfostandFurniContext();
+    const { onClose } = useObjectInfostandContext();
     const getLocalizationValue = useLocalizationStore(x => x.getLocalizationValue);
     const getLocalizationValueParams = useLocalizationStore(x => x.getLocalizationValueParams);
 

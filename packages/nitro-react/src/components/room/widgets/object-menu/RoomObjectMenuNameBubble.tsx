@@ -4,6 +4,7 @@ import { useRoomObjectName } from "#base/hooks";
 import { InfoBubbleNameView } from "#base/views/room-widgets/object-menu/InfoBubbleNameView";
 
 import { RoomObjectMenuBubble } from "./RoomObjectMenuBubble";
+import { RoomObjectMenuNameContext } from "./RoomObjectMenuNameContext";
 
 type RoomObjectInfoNameBubbleProps = {
     objectData: ISimpleRoomObjectData;
@@ -17,6 +18,8 @@ export const RoomObjectMenuNameBubble = (props: RoomObjectInfoNameBubbleProps) =
 
     return (
         <RoomObjectMenuBubble objectData={objectData} userType={nameData.userType} fades={true}>
-            <InfoBubbleNameView nameData={nameData} />
+            <RoomObjectMenuNameContext value={{ nameData }}>
+                <InfoBubbleNameView />
+            </RoomObjectMenuNameContext>
         </RoomObjectMenuBubble>);
 }

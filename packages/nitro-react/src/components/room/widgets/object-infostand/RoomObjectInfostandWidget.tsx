@@ -7,6 +7,7 @@ import { InfostandPetView } from "#base/views/room-widgets/object-infostand/Info
 import { InfostandUserView } from "#base/views/room-widgets/object-infostand/InfostandUserView";
 
 import { InfostandFurni } from "./InfostandFurni";
+import { ObjectInfostandContext } from "./ObjectInfostandContext";
 
 export const RoomObjectInfostandWidget = () => {
     const [selectedData, setSelectedData] = useState<ISimpleRoomObjectData | undefined>(undefined);
@@ -29,36 +30,40 @@ export const RoomObjectInfostandWidget = () => {
 
     if (!selectedData || !room) return null;
 
-    switch (selectedData.category) {
-        case RoomObjectCategoryEnum.Floor:
-        case RoomObjectCategoryEnum.Wall: {
-            return <InfostandFurni objectData={selectedData} onClose={onClose} />;
-        }
-        case RoomObjectCategoryEnum.Unit: {
-            const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
+    const renderContent = () => {
+        switch (selectedData.category) {
+            case RoomObjectCategoryEnum.Floor:
+            case RoomObjectCategoryEnum.Wall: {
+                return <InfostandFurni />;
+            }
+            case RoomObjectCategoryEnum.Unit: {
+                const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
 
-            if (!roomObject) return null;
+                if (!roomObject) return null;
 
-            const userType = RoomObjectUserTypeUtils.getAvatarType(roomObject.type);
+                const userType = RoomObjectUserTypeUtils.getAvatarType(roomObject.type);
 
-            if (!userType) return null;
+                if (!userType) return null;
 
-            switch (userType) {
-                case RoomObjectUserType.Pet: {
-                    return <InfostandPetView objectData={selectedData} onClose={onClose} />;
-                }
-                case RoomObjectUserType.User: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
-                }
-                case RoomObjectUserType.Bot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
-                }
-                case RoomObjectUserType.RentableBot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                switch (userType) {
+                    case RoomObjectUserType.Pet: {
+                        return <InfostandPetView />;
+                    }
+                    case RoomObjectUserType.User:
+                    case RoomObjectUserType.Bot:
+                    case RoomObjectUserType.RentableBot: {
+                        return <InfostandUserView />;
+                    }
                 }
             }
         }
+
+        return null;
     }
 
-    return null;
+    return (
+        <ObjectInfostandContext value={{ objectData: selectedData, onClose }}>
+            {renderContent()}
+        </ObjectInfostandContext>
+    );
 }

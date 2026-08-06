@@ -1,9 +1,9 @@
-import { useWallet } from "#base/context";
+import { useWalletContext } from "#base/components";
 import { useLocalizationStore } from "#base/stores";
 import { Border, Button, NitroIcon } from "#base/theme";
 
 export const PurseView = () => {
-    const currency = useWallet();
+    const { currency } = useWalletContext();
     const getLocalizationValue = useLocalizationStore(x => x.getLocalizationValue);
 
     const kinds = [

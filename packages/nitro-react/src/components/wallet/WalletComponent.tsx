@@ -1,20 +1,27 @@
 import { GetCreditsInfoComposer, GetNftCreditsComposer } from "@nitrodevco/nitro-shared";
+import type { ReactNode } from "react";
 import { useEffect } from "react";
 
 import { useWallet, useWebSocketContext } from "#base/context";
 
-export const WalletComponent = () => {
+import { WalletContext } from "./WalletContext";
+
+type WalletComponentProps = {
+    children: ReactNode;
+}
+
+export const WalletComponent = ({ children }: WalletComponentProps) => {
     const currency = useWallet();
     const { send } = useWebSocketContext();
-
-    useEffect(() => {
-        console.log('changed', currency);
-    }, [currency]);
 
     useEffect(() => {
         send(new GetCreditsInfoComposer({}));
         send(new GetNftCreditsComposer({}));
     }, []);
 
-    return null;
+    return (
+        <WalletContext value={{ currency }}>
+            {children}
+        </WalletContext>
+    );
 }

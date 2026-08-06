@@ -1,13 +1,8 @@
-import { IRoomObjectNameData } from "@nitrodevco/nitro-api";
-
+import { useRoomObjectMenuNameContext } from "#base/components";
 import { Bubble } from "#base/theme";
 
-interface InfoBubbleNameProps {
-    nameData: IRoomObjectNameData;
-}
-
-export const InfoBubbleNameView = (props: InfoBubbleNameProps) => {
-    const { nameData } = props;
+export const InfoBubbleNameView = () => {
+    const { nameData } = useRoomObjectMenuNameContext();
 
     if (!nameData) return null;
 

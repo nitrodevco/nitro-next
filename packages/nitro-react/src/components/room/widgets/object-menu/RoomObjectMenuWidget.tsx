@@ -7,6 +7,7 @@ import { InfoBubbleAvatarView } from "#base/views/room-widgets/object-menu/InfoB
 import { InfoBubbleOwnAvatarView } from "#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView";
 
 import { RoomObjectMenuBubble } from "./RoomObjectMenuBubble";
+import { RoomObjectMenuContext } from "./RoomObjectMenuContext";
 import { RoomObjectMenuNameBubble } from "./RoomObjectMenuNameBubble";
 
 export const RoomObjectMenuWidget = () => {
@@ -74,10 +75,12 @@ export const RoomObjectMenuWidget = () => {
                 }
                 case RoomObjectUserType.User: {
                     return (
-                        <RoomObjectMenuBubble objectData={selectedData} userType={userType}>
-                            {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarView objectData={selectedData} onClose={onClose} />}
-                            {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarView objectData={selectedData} onClose={onClose} />}
-                        </RoomObjectMenuBubble>
+                        <RoomObjectMenuContext value={{ objectData: selectedData, onClose }}>
+                            <RoomObjectMenuBubble objectData={selectedData} userType={userType}>
+                                {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarView />}
+                                {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarView />}
+                            </RoomObjectMenuBubble>
+                        </RoomObjectMenuContext>
                     );
                 }
             }

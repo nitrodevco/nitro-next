@@ -1,16 +1,14 @@
-import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from "@nitrodevco/nitro-api";
+import { FurniturePickupMode, FurnitureUsagePolicyEnum, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from "@nitrodevco/nitro-api";
 
 import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector } from "#base/context";
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from "#base/hooks";
 import { InfostandFurniView } from "#base/views/room-widgets/object-infostand/InfostandFurniView";
 
-type InfostandFurniViewProps = {
-    objectData: ISimpleRoomObjectData;
-    onClose: () => void;
-}
+import { InfostandFurniContext } from "./InfostandFurniContext";
+import { useObjectInfostandContext } from "./useObjectInfostandContext";
 
-export const InfostandFurni = (props: InfostandFurniViewProps) => {
-    const { objectData, onClose } = props;
+export const InfostandFurni = () => {
+    const { objectData } = useObjectInfostandContext();
     const { objectId, category } = objectData;
     const furniData = useRoomFurnitureData(objectId, category);
     const ownUserId = useOwnUserId();
@@ -70,5 +68,9 @@ export const InfostandFurni = (props: InfostandFurniViewProps) => {
         }
     }
 
-    return <InfostandFurniView furniData={furniData} canMove={canMove} canRotate={canRotate} canUse={canUse} pickupMode={pickupMode} hasButtons={hasButtons} canSeeFurniId={canSeeFurniId} godMode={godMode} processAction={processAction} onClose={onClose} />;
+    return (
+        <InfostandFurniContext value={{ furniData, canMove, canRotate, canUse, pickupMode, hasButtons, canSeeFurniId, godMode, processAction }}>
+            <InfostandFurniView />
+        </InfostandFurniContext>
+    );
 }

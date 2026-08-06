@@ -1,21 +1,15 @@
-import { ISimpleRoomObjectData } from "@nitrodevco/nitro-api";
 import { ChangeMottoComposer } from "@nitrodevco/nitro-shared";
 import { KeyboardEvent, useEffect, useState } from "react";
 
-import { AvatarImage } from "#base/components/AvatarImage";
+import { AvatarImage, useObjectInfostandContext } from "#base/components";
 import { useWebSocketContext } from "#base/context";
 import { useConfigValue, useRoomUserData } from "#base/hooks";
 import { useLocalizationStore } from "#base/stores";
 import { Border, CloseButton, NitroIcon } from "#base/theme";
 
-type InfostandUserViewProps = {
-    objectData: ISimpleRoomObjectData;
-    onClose: () => void;
-}
-
-export const InfostandUserView = (props: InfostandUserViewProps) => {
-    const { objectData, onClose } = props;
-    const { objectId, category } = objectData;
+export const InfostandUserView = () => {
+    const { objectData, onClose } = useObjectInfostandContext();
+    const { objectId } = objectData;
     const userData = useRoomUserData(objectId)!;
     const [isEditingMotto, setIsEditingMotto] = useState<boolean>(false);
     const [motto, setMotto] = useState<string>(userData?.motto ?? '');

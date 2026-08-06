@@ -1,16 +1,12 @@
-import { AvatarActionStateType, AvatarExpressionEnum, ISimpleRoomObjectData, PostureTypeEnum } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, AvatarExpressionEnum, PostureTypeEnum } from "@nitrodevco/nitro-api";
 import { AvatarExpressionComposer, ChangePostureComposer, DanceComposer, DropCarryItemComposer, SignComposer } from "@nitrodevco/nitro-shared";
 import { useState } from "react";
 
+import { useRoomObjectMenuContext } from "#base/components";
 import { useOwnHasClub, useOwnIsDancing, useRoomCanDecorate, useWebSocketContext } from "#base/context";
 import { useRoomUserData } from "#base/hooks";
 import { useLocalizationStore } from "#base/stores";
 import { Bubble, Button, NitroIcon } from "#base/theme";
-
-interface InfoBubbleOwnAvatarViewProps {
-    objectData: ISimpleRoomObjectData;
-    onClose: () => void;
-}
 
 const MODE_NORMAL = 0;
 const MODE_CLUB_DANCES = 1;
@@ -18,9 +14,9 @@ const MODE_NAME_CHANGE = 2;
 const MODE_EXPRESSIONS = 3;
 const MODE_SIGNS = 4;
 
-export const InfoBubbleOwnAvatarView = (props: InfoBubbleOwnAvatarViewProps) => {
-    const { objectData, onClose } = props;
-    const { objectId, category } = objectData;
+export const InfoBubbleOwnAvatarView = () => {
+    const { objectData, onClose } = useRoomObjectMenuContext();
+    const { objectId } = objectData;
     const userData = useRoomUserData(objectId);
     const isOwnDancing = useOwnIsDancing();
     const hasHabboClub = useOwnHasClub();

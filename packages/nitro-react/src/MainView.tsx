@@ -43,17 +43,18 @@ export const MainView = () => {
             <div
                 id="ui-container"
                 className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
-                <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
-                    <PurseView />
-                    <div className="flex flex-col items-end w-48">
-                        <ActivityPointsView />
-                        <NotificationCenterView />
+                <WalletComponent>
+                    <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
+                        <PurseView />
+                        <div className="flex flex-col items-end w-48">
+                            <ActivityPointsView />
+                            <NotificationCenterView />
+                        </div>
                     </div>
-                </div>
+                </WalletComponent>
                 <ToolbarView />
                 <InventoryComponent />
                 <MessengerComponent />
-                <WalletComponent />
             </div>
         </>
     );

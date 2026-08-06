@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useSystemContext } from "#base/context";
+import { useInventoryContext } from "#base/components";
 import { useLocalizationStore } from "#base/stores";
 import { Frame, TabButton, TabContent, TabContext } from "#base/theme";
 
@@ -12,10 +12,10 @@ import { InventoryPetsView } from "./InventoryPetsView";
 export const InventoryView = () => {
     const [activeTab, setActiveTab] = useState<string>('furni');
     const getLocalizationValue = useLocalizationStore(x => x.getLocalizationValue);
-    const { toggleWindow } = useSystemContext();
+    const { close } = useInventoryContext();
 
     return (
-        <Frame id="inventory" variant="3" className="absolute left-5 top-5 w-122.5 h-85.5" caption={getLocalizationValue('inventory.title')} onClose={() => toggleWindow('inventory')}>
+        <Frame id="inventory" variant="3" className="absolute left-5 top-5 w-122.5 h-85.5" caption={getLocalizationValue('inventory.title')} onClose={close}>
             <TabContext data-name="tabs">
                 <TabButton onClick={() => setActiveTab('furni')} aria-selected={activeTab === 'furni'}>
                     {getLocalizationValue('inventory.furni')}

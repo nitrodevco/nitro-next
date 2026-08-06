@@ -1,16 +1,12 @@
-import { ISimpleRoomObjectData, RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
+import { RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
 import { AmbassadorAlertComposer, AssignRightsComposer, BanUserWithDurationComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, RemoveRightsComposer, SetRelationshipStatusComposer, UnignoreUserComposer } from "@nitrodevco/nitro-shared";
 import { useState } from "react";
 
+import { useRoomObjectMenuContext } from "#base/components";
 import { useOwnIsAmbassador, useOwnRespectData, useOwnRoomObjectId, useRoomPermissionsSelector, useRoomSelector, useRoomSettingsSelector, useWebSocketContext } from "#base/context";
 import { useRoomUserData } from "#base/hooks";
 import { useLocalizationStore } from "#base/stores";
 import { Bubble, Button, NitroIcon } from "#base/theme";
-
-interface InfoBubbleAvatarViewProps {
-    objectData: ISimpleRoomObjectData;
-    onClose: () => void;
-}
 
 const MODE_NORMAL = 0;
 const MODE_MODERATE = 1;
@@ -20,9 +16,9 @@ const MODE_AMBASSADOR = 4;
 const MODE_AMBASSADOR_MUTE = 5;
 const MODE_RELATIONSHIP = 6;
 
-export const InfoBubbleAvatarView = (props: InfoBubbleAvatarViewProps) => {
-    const { objectData, onClose } = props;
-    const { objectId, category } = objectData;
+export const InfoBubbleAvatarView = () => {
+    const { objectData, onClose } = useRoomObjectMenuContext();
+    const { objectId } = objectData;
     const room = useRoomSelector();
     const ownObjectId = useOwnRoomObjectId();
     const userData = useRoomUserData(objectId);
