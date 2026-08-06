@@ -8,7 +8,7 @@ import { InfostandFurniContext } from "./InfostandFurniContext";
 import { useObjectInfostandContext } from "./useObjectInfostandContext";
 
 export const InfostandFurni = () => {
-    const { objectData } = useObjectInfostandContext();
+    const { objectData, onClose } = useObjectInfostandContext();
     const { objectId, category } = objectData;
     const furniData = useRoomFurnitureData(objectId, category);
     const ownUserId = useOwnUserId();
@@ -69,7 +69,7 @@ export const InfostandFurni = () => {
     }
 
     return (
-        <InfostandFurniContext value={{ furniData, canMove, canRotate, canUse, pickupMode, hasButtons, canSeeFurniId, godMode, processAction }}>
+        <InfostandFurniContext value={{ furniData, canMove, canRotate, canUse, pickupMode, hasButtons, canSeeFurniId, godMode, processAction, onClose }}>
             <InfostandFurniView />
         </InfostandFurniContext>
     );

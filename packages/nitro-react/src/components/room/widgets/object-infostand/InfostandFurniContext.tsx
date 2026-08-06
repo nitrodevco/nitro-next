@@ -11,6 +11,7 @@ export type InfostandFurniContextValue = {
     canSeeFurniId: boolean;
     godMode: boolean;
     processAction: (action: string) => void;
+    onClose: () => void;
 }
 
 export const InfostandFurniContext = createContext<InfostandFurniContextValue | undefined>(undefined);
