@@ -58,16 +58,16 @@ export function useScrollbarController({
     const recompute = useCallback(() => {
         const viewport = viewportRef.current;
         const track = trackRef.current;
-        if (!viewport || !track) return;
+        if (!viewport) return;
 
         const clientSize = isVertical ? viewport.clientHeight : viewport.clientWidth;
         const scrollSize = isVertical ? viewport.scrollHeight : viewport.scrollWidth;
         const scrollPos = isVertical ? viewport.scrollTop : viewport.scrollLeft;
-        const trackSize = isVertical ? track.clientHeight : track.clientWidth;
+        const trackSize = track ? (isVertical ? track.clientHeight : track.clientWidth) : 0;
         const scrollMax = Math.max(0, scrollSize - clientSize);
 
         const ratio = scrollSize > 0 ? clientSize / scrollSize : 1;
-        const thumbSize = Math.min(trackSize, Math.max(minThumbSize, trackSize * ratio));
+        const thumbSize = trackSize > 0 ? Math.min(trackSize, Math.max(minThumbSize, trackSize * ratio)) : minThumbSize;
         const availableTrack = Math.max(0, trackSize - thumbSize);
         const thumbOffset = scrollMax > 0 ? (scrollPos / scrollMax) * availableTrack : 0;
 
@@ -90,14 +90,14 @@ export function useScrollbarController({
 
     useEffect(() => {
         const viewport = viewportRef.current;
-        const track = trackRef.current;
-        if (!viewport || !track) return;
+        if (!viewport) return;
 
         recompute();
 
         const observer = new ResizeObserver(recompute);
         observer.observe(viewport);
-        observer.observe(track);
+        const track = trackRef.current;
+        if (track) observer.observe(track);
         const content = contentRef.current;
         if (content) observer.observe(content);
 
@@ -106,7 +106,7 @@ export function useScrollbarController({
             observer.disconnect();
             viewport.removeEventListener('scroll', recompute);
         };
-    }, [viewportRef, contentRef, recompute]);
+    }, [viewportRef, contentRef, recompute, state.scrollable]);
 
     const onThumbPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
         const viewport = viewportRef.current;

@@ -45,24 +45,25 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         const showHorizontal = orientation === 'horizontal' || orientation === 'both';
 
         return (
-            <div ref={ref} className={cn('flex size-full min-h-0 min-w-0 gap-px', className)}>
+            <div ref={ref} className={cn('flex size-full min-h-0 min-w-0 gap-px', className)} {...props}>
                 <div ref={viewportRef} className={cn('min-h-0 min-w-0 flex-1 scrollbar-none [&::-webkit-scrollbar]:hidden', showVertical && 'overflow-y-auto', showHorizontal && 'overflow-x-auto', viewportClassName)}>
                     <div ref={contentRef} className={cn(contentClassName, 'relative w-full')}>
                         {children}
                     </div>
                 </div>
-                <ScrollbarVertical
-                    viewportRef={viewportRef}
-                    contentRef={contentRef}
-                    variant={variant}
-                    defaultVariant={defaultVariant}
-                    tintColor={tintColor}
-                    step={step}
-                    minThumbSize={minThumbSize}
-                    reachThreshold={orientation === 'both' ? undefined : reachThreshold}
-                    onReachStart={orientation === 'both' ? undefined : onReachStart}
-                    onReachEnd={orientation === 'both' ? undefined : onReachEnd}
-                />
+                {showVertical && (
+                    <ScrollbarVertical
+                        viewportRef={viewportRef}
+                        contentRef={contentRef}
+                        variant={variant}
+                        defaultVariant={defaultVariant}
+                        tintColor={tintColor}
+                        step={step}
+                        minThumbSize={minThumbSize}
+                        reachThreshold={orientation === 'both' ? undefined : reachThreshold}
+                        onReachStart={orientation === 'both' ? undefined : onReachStart}
+                        onReachEnd={orientation === 'both' ? undefined : onReachEnd}
+                    />)}
                 {showHorizontal && (
                     <ScrollbarHorizontal
                         viewportRef={viewportRef}

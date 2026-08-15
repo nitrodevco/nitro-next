@@ -4,18 +4,18 @@ import { CatalogNavigationSetItemView } from "./CatalogNavigationSetItemView";
 
 type CatalogNavigationSetViewProps = {
     node: ICatalogNode;
-    child?: boolean;
+    depth?: number;
 }
 
 export const CatalogNavigationSetView = (props: CatalogNavigationSetViewProps) => {
-    const { node, child = false } = props;
+    const { node, depth = 0 } = props;
 
     if (!node.children.length) return null;
 
     return (
-        <div className="flex flex-col gap-0.5">
+        <div className="catalog-navigation-list">
             {node.children.map(x => {
-                return x.visible ? <CatalogNavigationSetItemView key={x.pageId} node={x} child={child} /> : null;
+                return x.visible ? <CatalogNavigationSetItemView key={x.pageId} node={x} depth={depth} /> : null;
             })}
         </div>
     )

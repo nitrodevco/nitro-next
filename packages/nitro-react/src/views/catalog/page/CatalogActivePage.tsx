@@ -11,5 +11,13 @@ export const CatalogActivePage = () => {
         case 'default_3x3': {
             return <CatalogLayoutDefaultView />;
         }
+        case 'default_3x3_color_grouping': {
+            return <CatalogLayoutDefaultView />;
+        }
+        default: {
+            if (activePage.offers.length) return <CatalogLayoutDefaultView />;
+
+            return null;
+        }
     }
 }

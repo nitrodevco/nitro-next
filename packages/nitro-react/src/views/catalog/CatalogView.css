@@ -1,23 +1,265 @@
-.catalog-icon-clear {
-    background: url('/assets/catalog/x_icon.png');
-    height: 11px;
-    width: 11px;
+/* The catalog follows the fixed geometry of catalog_ubuntu_with_tabs_xml. */
+.catalog-window {
+    width: 570px;
+    height: 635px;
 }
 
-.catalog-small-coin {
-    background: url('/assets/catalog/small_coin.png');
-    height: 11px;
-    width: 11px;
+.catalog-tabs {
+    flex: 0 0 30px;
+    width: calc(100% - 18px);
+    min-height: 30px;
+    max-height: 30px;
+    margin: 5px 10px 0 8px;
+    padding: 0;
+    overflow: hidden;
 }
 
-.catalog-small-diamond {
-    background: url('/assets/catalog/small_diamond.png');
-    height: 11px;
-    width: 11px;
+.catalog-tabs > * {
+    min-height: 32px;
+    max-height: 32px;
 }
 
-.catalog-small-ducket {
-    background: url('/assets/catalog/small_ducket.png');
-    height: 11px;
-    width: 11px;
+.catalog-header {
+    position: relative;
+    z-index: 30;
+    flex: 0 0 90px;
+    width: 100%;
+    height: 90px;
+    padding: 0 1px;
+}
+
+.catalog-header-surface {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 2px solid #376275;
+    border-top: 0;
+    background: #0e3f52;
+}
+
+.catalog-header-art {
+    position: absolute;
+    inset: 0;
+    background-position: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+}
+
+.catalog-header-icon {
+    position: absolute;
+    top: 30px;
+    left: 23px;
+    display: grid;
+    width: 40px;
+    height: 35px;
+    place-items: center;
+}
+
+.catalog-header-icon img {
+    image-rendering: pixelated;
+    transform: scale(2);
+}
+
+.catalog-header-copy {
+    position: absolute;
+    top: 9px;
+    right: 12px;
+    left: 79px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    pointer-events: none;
+}
+
+.catalog-header-title {
+    height: 24px;
+    overflow: hidden;
+    font-family: UbuntuBold, sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.catalog-header-description {
+    display: -webkit-box;
+    max-height: 45px;
+    overflow: hidden;
+    font-family: Ubuntu, sans-serif;
+    font-size: 12px;
+    line-height: 15px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.catalog-body {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    gap: 8px;
+    padding: 6px 10px 10px 8px;
+    overflow: hidden;
+}
+
+.catalog-sidebar {
+    display: flex;
+    flex: 0 0 184px;
+    flex-direction: column;
+    width: 184px;
+    min-width: 0;
+    min-height: 0;
+    gap: 4px;
+}
+
+.catalog-page-column {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    margin-bottom: 1px;
+    gap: 5px;
+}
+
+.catalog-search {
+    display: flex;
+    flex: 0 0 24px;
+    align-items: center;
+    justify-content: center;
+    width: 184px;
+    min-height: 24px;
+    max-height: 24px;
+    padding: 0 6px;
+    gap: 6px;
+}
+
+.catalog-search-input {
+    min-width: 0;
+    flex: 1 1 auto;
+    color: #666;
+    font-family: Ubuntu, sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.catalog-navigation {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    padding: 5px 3px;
+    overflow: hidden;
+}
+
+.catalog-navigation-scroll {
+    gap: 0;
+    color: #666;
+}
+
+.catalog-navigation-content,
+.catalog-navigation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.catalog-navigation-item {
+    display: flex;
+    width: 100%;
+    height: 21px;
+    min-height: 21px;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    color: #666;
+    text-align: left;
+    cursor: pointer;
+}
+
+.catalog-navigation-row {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    min-width: 0;
+    align-items: center;
+    padding-right: 5px;
+}
+
+.catalog-navigation-item:is(:hover, .is-active) {
+    border-bottom-color: #b4b4ae;
+    background: #82d1ed;
+}
+
+.catalog-navigation-item:is(:hover, .is-active) .catalog-navigation-row {
+    height: 16px;
+    background: #63c5e9;
+}
+
+.catalog-navigation-icon {
+    display: grid;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    place-items: center;
+    overflow: hidden;
+}
+
+.catalog-navigation-icon img {
+    max-width: 18px;
+    max-height: 18px;
+    image-rendering: pixelated;
+}
+
+.catalog-navigation-copy {
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-items: center;
+    padding-left: 6px;
+}
+
+.catalog-navigation-label {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    color: #666;
+    font-family: UbuntuBold, sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.catalog-navigation-label.is-child {
+    color: #52819a;
+    font-family: UbuntuItalicsBold, sans-serif;
+}
+
+.catalog-navigation-item:is(:hover, .is-active) .catalog-navigation-label {
+    color: #fff;
+    text-shadow: 0 -1px #b4b4ae;
+}
+
+.catalog-navigation-disclosure {
+    flex: 0 0 auto;
+    margin-left: 4px;
+    filter: brightness(0) invert(60%);
+}
+
+.catalog-product-preview {
+    flex: 0 0 240px;
+    height: 240px;
+    min-height: 240px;
+    overflow: hidden;
+}
+
+.catalog-product-grid-region {
+    flex: 1 1 auto;
+    min-height: 0;
 }
