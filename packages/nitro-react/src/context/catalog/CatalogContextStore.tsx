@@ -6,6 +6,7 @@ type State = {
     rootNode: ICatalogNode | undefined;
     offersToNodes: Record<number, ICatalogNode[]>;
     activeNodes: ICatalogNode[];
+    openNodeIds: number[];
     isBusy: boolean;
     activePageId: number;
     activePage: IActivePage | undefined;
@@ -17,7 +18,7 @@ type State = {
 type Actions = {
     setRootNode: (rootNode: ICatalogNode) => void;
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => void;
-    setActiveNodes: (activeNodes: ICatalogNode[]) => void;
+    setNavigationState: (activeNodes: ICatalogNode[], openNodeIds: number[]) => void;
     setIsBusy: (isBusy: boolean) => void;
     setActivePageId: (activePageId: number) => void;
     setActivePage: (activePage: IActivePage) => void;
@@ -32,6 +33,7 @@ const initialState: State = {
     rootNode: undefined,
     offersToNodes: {},
     activeNodes: [],
+    openNodeIds: [],
     isBusy: false,
     activePageId: -1,
     activePage: undefined,
@@ -42,12 +44,12 @@ const initialState: State = {
 
 export type CatalogContextStore = State & Actions;
 
-export const createCatalogContextStore = (catalogType: CatalogTypeEnum) => createStore<CatalogContextStore>()((set, get, store) => ({
+export const createCatalogContextStore = (catalogType: CatalogTypeEnum) => createStore<CatalogContextStore>()(set => ({
     ...initialState,
     catalogType,
     setRootNode: (rootNode: ICatalogNode | undefined) => set({ rootNode }),
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => set({ offersToNodes }),
-    setActiveNodes: (activeNodes: ICatalogNode[]) => set({ activeNodes }),
+    setNavigationState: (activeNodes: ICatalogNode[], openNodeIds: number[]) => set({ activeNodes, openNodeIds }),
     setIsBusy: (isBusy: boolean) => set({ isBusy }),
     setActivePageId: (activePageId: number) => set({ activePageId }),
     setActivePage: (activePage: IActivePage | undefined) => set({ activePage }),

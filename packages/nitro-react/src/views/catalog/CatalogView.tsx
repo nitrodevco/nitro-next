@@ -19,7 +19,7 @@ export const CatalogView = () => {
         <Frame id="catalog" variant="3" className="w-142.5 h-150" caption={t('catalog.title')} onClose={hideCatalog} contentClassName="p-0!">
             <TabContext className="-mb-0.5" data-name="tabs">
                 {rootNode.children.map(x =>
-                    x.visible ? <TabButton key={x.pageId} className="w-full" aria-selected={x.isActive} onClick={_ => activateNode(x)}>{x.localization.length ? x.localization : x.pageName}</TabButton> : null)}
+                    x.visible ? <TabButton key={x.pageId} className="w-full" aria-selected={activeNodes.includes(x)} onClick={_ => activateNode(x)}>{x.localization.length ? x.localization : x.pageName}</TabButton> : null)}
             </TabContext>
             <CatalogHeaderView />
             <div className="flex h-full p-2 gap-1.5 overflow-hidden">
