@@ -1114,25 +1114,25 @@
     }
 }
 
-&.catalog-icon-clear {
+.catalog-icon-clear {
     background: url('/assets/catalog/x_icon.png');
     height: 11px;
     width: 11px;
 }
 
-&.catalog-small-coin {
+.catalog-small-coin {
     background: url('/assets/catalog/small_coin.png');
     height: 11px;
     width: 11px;
 }
 
-&.catalog-small-diamond {
-    background: url('/assets/catalog/small_diamong.png');
+.catalog-small-diamond {
+    background: url('/assets/catalog/small_diamond.png');
     height: 11px;
     width: 11px;
 }
 
-&.catalog-small-ducket {
+.catalog-small-ducket {
     background: url('/assets/catalog/small_ducket.png');
     height: 11px;
     width: 11px;

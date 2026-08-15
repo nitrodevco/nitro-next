@@ -16,18 +16,18 @@ export const CatalogView = () => {
     if (!rootNode) return null;
 
     return (
-        <Frame id="catalog" variant="3" className="w-142.5 h-150" caption={t('catalog.title')} onClose={hideCatalog} contentClassName="p-0!">
-            <TabContext className="-mb-0.5" data-name="tabs">
+        <Frame id="catalog" variant="3" className="catalog-window" caption={t('catalog.title')} onClose={hideCatalog} contentClassName="p-0!">
+            <TabContext className="catalog-tabs" data-name="tabs">
                 {rootNode.children.map(x =>
                     x.visible ? <TabButton key={x.pageId} className="w-full" aria-selected={x.isActive} onClick={_ => activateNode(x)}>{x.localization.length ? x.localization : x.pageName}</TabButton> : null)}
             </TabContext>
             <CatalogHeaderView />
-            <div className="flex h-full p-2 gap-1.5 overflow-hidden">
-                <div className="flex flex-col flex-4 w-full gap-0.5">
+            <div className="catalog-body">
+                <div className="catalog-sidebar">
                     <CatalogSearchView />
                     <CatalogNavigationView node={activeNodes[0]?.children[0]} />
                 </div>
-                <div className="flex flex-col flex-8 size-full gap-1">
+                <div className="catalog-page-column">
                     <CatalogActivePage />
                 </div>
             </div>

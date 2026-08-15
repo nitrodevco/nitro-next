@@ -46,6 +46,8 @@ export const ScrollbarHorizontal = forwardRef<HTMLDivElement, ScrollbarHorizonta
             }
         }
 
+        if (!controller.scrollable) return null;
+
         return (
             <div ref={ref} className={cn('flex flex-row items-stretch', className)} {...props}>
                 <VariantCascadeProvider map={ownCascade}>
