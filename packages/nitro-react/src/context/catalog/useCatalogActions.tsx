@@ -5,7 +5,7 @@ import { useCatalogContext } from "./useCatalogContext";
 export const useCatalogActions = () => useCatalogContext(useShallow(x => ({
     setRootNode: x.setRootNode,
     setOffersToNodes: x.setOffersToNodes,
-    setActiveNodes: x.setActiveNodes,
+    setNavigationState: x.setNavigationState,
     setIsBusy: x.setIsBusy,
     setActivePageId: x.setActivePageId,
     setActivePage: x.setActivePage,

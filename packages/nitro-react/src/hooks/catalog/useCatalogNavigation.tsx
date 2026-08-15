@@ -7,8 +7,8 @@ import { useCatalogNodeActions } from "./useCatalogNodeActions";
 import { useCatalogVisibility } from "./useCatalogVisibility";
 
 export const useCatalogNavigation = () => {
-    const { catalogType, activeNodes, rootNode } = useCatalogSelectors();
-    const { setActiveNodes, setIsBusy, setActivePageId, setActivePage, setActiveOffer, setRequestedPage } = useCatalogActions();
+    const { catalogType, activeNodes, openNodeIds, rootNode } = useCatalogSelectors();
+    const { setNavigationState, setIsBusy, setActivePageId, setActivePage, setActiveOffer, setRequestedPage } = useCatalogActions();
     const { getNodeByPageId, getNodeByPageName, getNodesByOfferId } = useCatalogNodeActions();
     const { isCatalogVisible, showCatalog } = useCatalogVisibility();
     const { send } = useWebSocketContext();
@@ -71,27 +71,22 @@ export const useCatalogNavigation = () => {
         nodes.reverse();
 
         const prevNodes = [...activeNodes];
+        const nextOpenNodeIds = new Set(openNodeIds);
         const isActive = prevNodes.indexOf(targetNode) >= 0;
-        const isOpen = targetNode.isOpen;
+        const isOpen = nextOpenNodeIds.has(targetNode.pageId);
 
         for (const n of prevNodes) {
-            n.isActive = false;
-
-            if (nodes.indexOf(n) === -1) n.isOpen = false;
+            if (nodes.indexOf(n) === -1) nextOpenNodeIds.delete(n.pageId);
         }
 
         for (const n of nodes) {
-            n.isActive = true;
-
-            if (n.parent) n.isOpen = true;
-
-            if (n === targetNode.parent && n.children.length) n.isOpen = true;
+            if (n.parent) nextOpenNodeIds.add(n.pageId);
         }
 
-        if (isActive && isOpen) targetNode.isOpen = false;
-        else targetNode.isOpen = true;
+        if (isActive && isOpen) nextOpenNodeIds.delete(targetNode.pageId);
+        else nextOpenNodeIds.add(targetNode.pageId);
 
-        setActiveNodes(nodes);
+        setNavigationState(nodes, [...nextOpenNodeIds]);
 
         if (targetNode.pageId > -1) loadCatalogPage(targetNode.pageId, offerId);
     }
