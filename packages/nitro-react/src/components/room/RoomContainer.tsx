@@ -1,4 +1,4 @@
-import { RoomEngineEvent } from "@nitrodevco/nitro-shared";
+import { RoomEngineEvent } from "@nitrodevco/nitro-api";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
 

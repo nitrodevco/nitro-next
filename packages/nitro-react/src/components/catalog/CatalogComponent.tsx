@@ -1,4 +1,4 @@
-import { BuildersClubQueryFurniCountComposer, GetCatalogIndexComposer, GetClubGiftInfoComposer, GetGiftWrappingConfigurationComposer } from "@nitrodevco/nitro-shared";
+import { BuildersClubQueryFurniCountComposer, GetCatalogIndexComposer, GetClubGiftInfoComposer, GetGiftWrappingConfigurationComposer } from "@nitrodevco/nitro-packets";
 import { useEffect } from "react";
 
 import { useCatalogSelectors, useIsWindowVisible, useWebSocketContext } from "#base/context";

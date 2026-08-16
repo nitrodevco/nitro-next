@@ -1,8 +1,7 @@
-import type { IRoomObjectController } from "@nitrodevco/nitro-api";
-import { NitroLogger, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomObjectController, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
+import { NitroLogger, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectTileMouseEvent, RoomObjectUserType, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
+import { PlaceObjectComposer } from "@nitrodevco/nitro-packets";
 import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
-import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
-import { PlaceObjectComposer, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
 
 import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from "#base/context";
 

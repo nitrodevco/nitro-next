@@ -1,6 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
@@ -19,7 +18,7 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);
 
-        if (message instanceof ObjectDataUpdateMessage) this.updateClothingData(message.data.getLegacyString());
+        if (message instanceof ObjectDataUpdateMessage && message.data) this.updateClothingData(message.data.getLegacyString());
     }
 
     public override useObject(): void {

@@ -1,4 +1,4 @@
-import { IMessengerSearchResult } from "@nitrodevco/nitro-shared";
+import { IMessengerSearchResult } from "@nitrodevco/nitro-packets";
 
 import { useFriendsSelector, useTranslation } from "#base/context";
 import { Accordion, ScrollArea } from "#base/theme";

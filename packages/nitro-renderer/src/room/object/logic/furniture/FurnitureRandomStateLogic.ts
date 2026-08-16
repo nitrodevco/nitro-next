@@ -1,4 +1,4 @@
-import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

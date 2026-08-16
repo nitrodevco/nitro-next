@@ -16,4 +16,5 @@ export * from './useRoomObjectRollOver';
 export * from './useRoomObjectSelect';
 export * from './useRoomObjectSelected';
 export * from './useRoomObjectValidation';
+export * from './useRoomPreviewer';
 export * from './useRoomUserData';

@@ -1,4 +1,4 @@
-import { OpenFlatConnectionComposer } from "@nitrodevco/nitro-shared";
+import { OpenFlatConnectionComposer } from "@nitrodevco/nitro-packets";
 import { useEffect } from "react";
 
 import { RoomContextProvider, useWebSocketContext } from "#base/context";

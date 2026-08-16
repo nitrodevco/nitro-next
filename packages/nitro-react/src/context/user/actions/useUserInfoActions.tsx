@@ -1,6 +1,11 @@
 import { useShallow } from "zustand/shallow";
 
-import { useUserContext } from "#base/context";
-import { extractUserInfoActions } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useUserInfoActions = () => useUserContext(useShallow(extractUserInfoActions));
+export const useUserInfoActions = () => useUserContext(useShallow(x => ({
+    setUserInfo: x.setUserInfo,
+    setName: x.setName,
+    setFigure: x.setFigure,
+    setAccountSafetyLocked: x.setAccountSafetyLocked,
+    setEmailVerified: x.setEmailVerified
+})));

@@ -1010,6 +1010,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@nitrodevco/nitro-packets@workspace:*, @nitrodevco/nitro-packets@workspace:packages/nitro-packets":
+  version: 0.0.0-use.local
+  resolution: "@nitrodevco/nitro-packets@workspace:packages/nitro-packets"
+  dependencies:
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@nitrodevco/nitro-react@workspace:packages/nitro-react":
   version: 0.0.0-use.local
   resolution: "@nitrodevco/nitro-react@workspace:packages/nitro-react"
@@ -1017,8 +1025,8 @@ __metadata:
     "@babel/core": "npm:^8.0.1"
     "@eslint/js": "npm:^10.0.1"
     "@nitrodevco/nitro-api": "workspace:*"
+    "@nitrodevco/nitro-packets": "workspace:*"
     "@nitrodevco/nitro-renderer": "workspace:*"
-    "@nitrodevco/nitro-shared": "workspace:*"
     "@rolldown/plugin-babel": "npm:^0.2.3"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@tailwindcss/forms": "npm:^0.5.11"
@@ -1061,7 +1069,6 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^10.0.1"
     "@nitrodevco/nitro-api": "workspace:*"
-    "@nitrodevco/nitro-shared": "workspace:*"
     "@pixi/gif": "npm:^3.0.1"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/howler": "npm:^2.2.13"
@@ -1083,31 +1090,6 @@ __metadata:
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.21.1"
     vite: "npm:^8.0.14"
-  languageName: unknown
-  linkType: soft
-
-"@nitrodevco/nitro-shared@workspace:*, @nitrodevco/nitro-shared@workspace:packages/nitro-shared":
-  version: 0.0.0-use.local
-  resolution: "@nitrodevco/nitro-shared@workspace:packages/nitro-shared"
-  dependencies:
-    "@eslint/js": "npm:^10.0.1"
-    "@nitrodevco/nitro-api": "workspace:*"
-    "@stylistic/eslint-plugin": "npm:^5.10.0"
-    eslint: "npm:^10.6.0"
-    eslint-config-prettier: "npm:^10.1.8"
-    eslint-plugin-react-compiler: "npm:^19.1.0-rc.2"
-    eslint-plugin-react-hooks: "npm:^7.1.1"
-    eslint-plugin-react-refresh: "npm:^0.5.3"
-    eslint-plugin-simple-import-sort: "npm:^13.0.0"
-    eslint-plugin-unused-imports: "npm:^4.4.1"
-    pixi.js: "npm:^8.18.1"
-    prettier: "npm:^3.8.3"
-    typescript: "npm:^5.9.3"
-    typescript-eslint: "npm:^8.21.1"
-    zustand: "npm:^5.0.13"
-  peerDependencies:
-    pixi.js: ^8.16.0
-    zustand: ^5.0.13
   languageName: unknown
   linkType: soft
 

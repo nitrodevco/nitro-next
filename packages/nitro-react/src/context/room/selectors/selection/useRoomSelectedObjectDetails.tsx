@@ -1,6 +1,9 @@
 import { useShallow } from "zustand/shallow";
 
-import { useRoomContext } from "#base/context";
-import { selectSelectedObjectDetails } from "#base/stores";
+import { useRoomContext } from "../../useRoomContext";
 
-export const useRoomSelectedObjectDetails = () => useRoomContext(useShallow(selectSelectedObjectDetails));
+export const useRoomSelectedObjectDetails = () => useRoomContext(useShallow(x => ({
+    selectedAvatarId: x.selectedAvatarId,
+    selectedObjectId: x.selectedObjectId,
+    selectedObjectCategory: x.selectedObjectCategory
+})));

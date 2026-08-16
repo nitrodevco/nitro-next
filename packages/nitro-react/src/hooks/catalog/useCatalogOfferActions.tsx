@@ -1,10 +1,21 @@
 import { CatalogPricingModelEnum, CatalogPricingTypeEnum, CatalogTypeEnum, FurnitureTypeEnum, ICatalogOffer, IProduct, IPurchasableOffer } from "@nitrodevco/nitro-api";
 
-import { useCatalogSelectors, useFurnitureDataActions } from "#base/context";
+import { useCatalogSelectors, useFurnitureDataSelector } from "#base/context";
 
 export const useCatalogOfferActions = () => {
     const { catalogType } = useCatalogSelectors();
-    const { getFurnitureData, getProductData } = useFurnitureDataActions();
+    const { floorItems, wallItems, productData } = useFurnitureDataSelector();
+
+    const getFurnitureData = (classId: number, productType: FurnitureTypeEnum) => {
+        switch (productType) {
+            case FurnitureTypeEnum.Floor:
+                return floorItems[classId];
+            case FurnitureTypeEnum.Wall:
+                return wallItems[classId];
+        }
+
+        return undefined;
+    }
 
     const stripAddonProducts = (products: IProduct[]) => {
         if (products.length === 1) return products;
@@ -43,7 +54,7 @@ export const useCatalogOfferActions = () => {
     const processOffer = (offer: ICatalogOffer) => {
         if (!offer || !offer.products.length) return undefined;
 
-        const productData = getProductData(offer.localizationId);
+        const pData = productData[offer.localizationId];
         const products: IProduct[] = [];
 
         let badgeCode: string | undefined = undefined;
@@ -58,7 +69,7 @@ export const useCatalogOfferActions = () => {
                 classId: product.spriteId,
                 extraParam: product.extraParam,
                 productCount: product.quantity,
-                productData,
+                productData: pData,
                 furnitureData,
                 isUnique: product.isUnique,
                 uniqueSize: product.uniqueSize,

@@ -1,6 +1,9 @@
 import { useShallow } from "zustand/shallow";
 
-import { useSystemContext } from "#base/context";
-import { extractFurnitureDataActions } from "#base/stores";
+import { useSystemContext } from "../useSystemContext";
 
-export const useFurnitureDataActions = () => useSystemContext(useShallow(extractFurnitureDataActions));
+export const useFurnitureDataActions = () => useSystemContext(useShallow(x => ({
+    parseFloorItems: x.parseFloorItems,
+    parseWallItems: x.parseWallItems,
+    parseProductData: x.parseProductData
+})));

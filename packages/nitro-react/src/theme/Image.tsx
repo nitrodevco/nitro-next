@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 
-import { useConfigurationStore } from "#base/stores";
+import { useConfigValue } from "#base/context";
 
 import { cn } from "./utils";
 
@@ -13,7 +13,7 @@ interface ImageProps extends HTMLAttributes<HTMLImageElement> {
 export const Image = forwardRef<HTMLImageElement, ImageProps>(
     ({ className, placeholderClassName, src, onLoad, onError, ...props }, ref) => {
         const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
-        const loadingIconUrl = useConfigurationStore(state => state.config['loading.icon.url']) as string | undefined;
+        const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
 
         useEffect(() => {
             setStatus('loading');

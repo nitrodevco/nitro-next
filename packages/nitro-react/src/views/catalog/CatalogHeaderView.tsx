@@ -1,12 +1,11 @@
-import { useCatalogSelectors } from "#base/context";
-import { useConfigurationStore } from "#base/stores";
+import { useCatalogSelectors, useConfigValue } from "#base/context";
 import { BitmapText } from "#base/theme";
 
 export const CatalogHeaderView = () => {
     const { activePage, activeNodes } = useCatalogSelectors();
     const activeNode = activeNodes.find(x => x.pageId === activePage?.pageId);
-    const catalogIconUrl = useConfigurationStore(state => state.config['catalog.icons.url']) as string | undefined;
-    const catalogImageUrl = useConfigurationStore(state => state.config['asset.urls.catalog']) as string | undefined ?? '';
+    const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
+    const catalogImageUrl = useConfigValue<string>('asset.urls.catalog') ?? '';
 
     let headerImageUrl = catalogImageUrl.replace('%name%', 'catalog_header_roombuilder');
 

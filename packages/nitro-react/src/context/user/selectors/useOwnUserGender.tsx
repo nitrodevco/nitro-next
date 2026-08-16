@@ -1,4 +1,3 @@
-import { useUserContext } from '#base/context';
-import { selectOwnUserGender } from '#base/stores';
+import { useUserContext } from "../useUserContext";
 
-export const useOwnUserGender = () => useUserContext(selectOwnUserGender);
+export const useOwnUserGender = () => useUserContext(x => x.sex);

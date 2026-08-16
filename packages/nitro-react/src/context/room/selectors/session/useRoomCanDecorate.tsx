@@ -1,6 +1,6 @@
 import { RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
 
-import { useOwnIsModerator } from "#base/context";
+import { useOwnIsModerator } from "#base/context/user";
 
 import { useRoomPermissionsSelector } from "./useRoomPermissionsSelector";
 

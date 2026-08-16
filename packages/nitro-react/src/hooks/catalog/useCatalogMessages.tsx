@@ -1,8 +1,12 @@
 import { FurnitureTypeEnum, ICatalogNode, IPurchasableOffer } from "@nitrodevco/nitro-api";
-import { CatalogIndexMessage, CatalogPageMessage, CatalogPublishedMessage, ProductOfferEventMessage } from "@nitrodevco/nitro-shared";
+import { CatalogIndexMessage, CatalogPageMessage, CatalogPublishedMessage, ProductOfferEventMessage } from "@nitrodevco/nitro-packets";
 
 import { useCatalogActions, useCatalogSelectors } from "#base/context";
-import { useCatalogNavigation, useCatalogOfferActions, useCatalogVisibility, useMessageListener } from "#base/hooks";
+import { useMessageListener } from "#base/hooks";
+
+import { useCatalogNavigation } from "./useCatalogNavigation";
+import { useCatalogOfferActions } from "./useCatalogOfferActions";
+import { useCatalogVisibility } from "./useCatalogVisibility";
 
 export const useCatalogMessages = () => {
     const { catalogType, activePageId, activePage } = useCatalogSelectors();

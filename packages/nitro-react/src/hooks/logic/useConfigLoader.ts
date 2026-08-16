@@ -1,13 +1,23 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useConfigurationStore } from '#base/stores';
+import { useConfigActions, useConfigData } from '#base/context';
 
 export const useConfigLoader = () => {
-    const [isConfigReady, setIsConfigReady] = useState(false);
-    const setConfig = useConfigurationStore(x => x.setConfig);
+    const [isReady, setIsReady] = useState(false);
+    const [needsUpdate, setNeedsUpdate] = useState(true);
+    const config = useConfigData();
+    const { setConfig } = useConfigActions();
 
     useEffect(() => {
+        window.NitroParsedConfig = { ...config };
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsReady(true);
+    }, [config]);
+
+    useEffect(() => {
+        if (!needsUpdate) return;
+
         if (!window.NitroConfig) throw new Error('NitroConfig is not defined!');
 
         const urls: string[] = [];
@@ -36,11 +46,14 @@ export const useConfigLoader = () => {
 
             if (urlParams.size > 0) urlParams.forEach((value, key) => dataToProcess[key] = value);
 
+            window.NitroParsedConfig = { ...dataToProcess };
+
             setConfig(dataToProcess);
-            setIsConfigReady(true);
+            setNeedsUpdate(false);
         }
 
         void load(urls);
-    }, []);
-    return { isConfigReady };
+    }, [needsUpdate]);
+
+    return { isConfigReady: isReady };
 };

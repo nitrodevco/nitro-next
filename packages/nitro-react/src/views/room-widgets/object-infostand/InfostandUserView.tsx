@@ -1,10 +1,10 @@
 import { ISimpleRoomObjectData } from "@nitrodevco/nitro-api";
-import { ChangeMottoComposer } from "@nitrodevco/nitro-shared";
+import { ChangeMottoComposer } from "@nitrodevco/nitro-packets";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 import { AvatarImage } from "#base/components/AvatarImage";
-import { useTranslation, useWebSocketContext } from "#base/context";
-import { useConfigValue, useRoomUserData } from "#base/hooks";
+import { useConfigValue, useTranslation, useWebSocketContext } from "#base/context";
+import { useRoomUserData } from "#base/hooks";
 import { Border, CloseButton, NitroIcon } from "#base/theme";
 
 type InfostandUserViewProps = {
@@ -18,7 +18,7 @@ export const InfostandUserView = (props: InfostandUserViewProps) => {
     const userData = useRoomUserData(objectId)!;
     const [isEditingMotto, setIsEditingMotto] = useState<boolean>(false);
     const [motto, setMotto] = useState<string>(userData?.motto ?? '');
-    const mottoMaxLength = useConfigValue<number>('motto.max.length', 38) ?? 38;
+    const mottoMaxLength = useConfigValue<number>('motto.max.length') ?? 38;
     const t = useTranslation();
     const { send } = useWebSocketContext();
 

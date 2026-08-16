@@ -1,4 +1,4 @@
-import { GetGuestRoomResultMessage } from "@nitrodevco/nitro-shared";
+import { GetGuestRoomResultMessage } from "@nitrodevco/nitro-packets";
 
 import { useRoomSettingActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";

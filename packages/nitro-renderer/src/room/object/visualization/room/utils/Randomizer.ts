@@ -1,4 +1,4 @@
-﻿import { ToInt32 } from '@nitrodevco/nitro-shared';
+﻿import { ToInt32 } from '@nitrodevco/nitro-api';
 
 export class Randomizer {
     public static DEFAULT_SEED: number = 1;
@@ -37,7 +37,7 @@ export class Randomizer {
         this._modulus = k;
     }
 
-    public dispose(): void {}
+    public dispose(): void { }
 
     public getRandomValues(k: number, _arg_2: number, _arg_3: number): number[] {
         const _local_4: number[] = [];

@@ -1,6 +1,6 @@
 
-import { MouseEventType, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName } from '@nitrodevco/nitro-api';
-import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { MouseEventType, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectOperationType, RoomObjectTileMouseEvent, RoomObjectUserTypeName, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-api';
+import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer } from '@nitrodevco/nitro-packets';
 
 import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector, useWebSocketContext } from '#base/context';
 

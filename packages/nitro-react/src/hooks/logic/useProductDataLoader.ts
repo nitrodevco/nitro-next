@@ -1,13 +1,12 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useFurnitureDataActions } from '#base/context';
-import { useConfigurationStore } from '#base/stores';
+import { useConfigValue, useFurnitureDataActions } from '#base/context';
 
 export const useProductDataLoader = () => {
     const [needsUpdate, setNeedsUpdate] = useState(true);
     const { parseProductData } = useFurnitureDataActions();
-    const productdataUrl = useConfigurationStore(state => state.config['productdata.url']) as string | undefined;
+    const productdataUrl = useConfigValue<string>('productdata.url') ?? '';
 
     const isProductDataReady = () => {
         return !needsUpdate;

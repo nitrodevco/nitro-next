@@ -1,4 +1,4 @@
-import { PollContentsEventMessage, PollErrorEventMessage, PollOfferEventMessage } from "@nitrodevco/nitro-shared";
+import { PollContentsEventMessage, PollErrorEventMessage, PollOfferEventMessage } from "@nitrodevco/nitro-packets";
 
 import { useMessageListener } from "#base/hooks";
 

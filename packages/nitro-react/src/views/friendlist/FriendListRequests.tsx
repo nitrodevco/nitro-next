@@ -1,5 +1,5 @@
 
-import { useFriendsRequestsSelector } from "#base/context/user";
+import { useFriendRequestsSelector } from "#base/context/user";
 import { ScrollArea } from "#base/theme";
 
 import { FriendListRequestsFooter } from "./footers/FriendListRequestsFooter";
@@ -11,7 +11,7 @@ interface FriendListRequestsProps {
 }
 
 export const FriendListRequests = (props: FriendListRequestsProps) => {
-    const requests = useFriendsRequestsSelector()
+    const requests = useFriendRequestsSelector()
 
     if (!Object.keys(requests).length) return null;
 

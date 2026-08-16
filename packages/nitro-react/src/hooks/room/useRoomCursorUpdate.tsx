@@ -1,7 +1,6 @@
-import { RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
+import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
 import { ObjectTileCursorUpdateMessage } from "@nitrodevco/nitro-renderer";
-import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
-import { RoomObjectTileMouseEvent } from "@nitrodevco/nitro-shared";
 
 import { useRoomSelector } from "#base/context";
 

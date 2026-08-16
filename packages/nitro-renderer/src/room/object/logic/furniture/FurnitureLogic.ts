@@ -7,13 +7,13 @@ import type {
     IRoomSpriteMouseEvent,
     IVector3D,
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import {
-    RoomObjectMouseEvent,
+    MouseEventType, RoomObjectMouseEvent,
     RoomObjectRoomAdEvent,
     RoomObjectStateChangedEvent,
-    RoomObjectWidgetRequestEvent,
-} from '@nitrodevco/nitro-shared';
+    RoomObjectVariableEnum, RoomObjectWidgetRequestEvent,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 
 import {
     ObjectDataUpdateMessage,
@@ -142,7 +142,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         if (message instanceof ObjectDataUpdateMessage) {
             this.object.setState(message.state, 0);
 
-            if (message.data) message.data.writeRoomObjectModel(this.object.model);
+            message.data?.writeRoomObjectModel(this.object.model);
 
             this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtras, message.extra);
             this.object.model.setValue(RoomObjectVariableEnum.FurnitureStateUpdateTime, this.lastUpdateTime);

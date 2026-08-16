@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
-import type { RoomStore } from '#base/stores';
-
 import { RoomContext } from './RoomContext';
+import { RoomStore } from './store';
 
 export const useRoomContext = <T,>(selector: (state: RoomStore) => T) => {
     const ctx = useContext(RoomContext);

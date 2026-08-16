@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 
 import { FriendsContext } from './FriendsContext';
-import { FriendsContextStore } from './FriendsContextStore';
+import { FriendsContextStore } from './store/FriendsContextStore';
 
 export const useFriendsContext = <T,>(selector: (state: FriendsContextStore) => T) => {
     const store = useContext(FriendsContext);

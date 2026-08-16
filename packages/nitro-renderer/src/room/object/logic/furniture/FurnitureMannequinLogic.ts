@@ -1,5 +1,5 @@
 import { type IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
@@ -17,7 +17,7 @@ export class FurnitureMannequinLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectDataUpdateMessage) {
-            message.data.writeRoomObjectModel(this.object.model);
+            message.data?.writeRoomObjectModel(this.object.model);
 
             const data = new MapDataType();
 

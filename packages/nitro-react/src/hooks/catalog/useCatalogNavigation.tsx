@@ -1,5 +1,5 @@
 import { CatalogRequestedPageUtilities, IActivePage, ICatalogNode, ICatalogPageLocalization, IPurchasableOffer } from "@nitrodevco/nitro-api";
-import { GetCatalogPageComposer } from "@nitrodevco/nitro-shared";
+import { GetCatalogPageComposer } from "@nitrodevco/nitro-packets";
 
 import { useCatalogActions, useCatalogSelectors, useWebSocketContext } from "#base/context";
 

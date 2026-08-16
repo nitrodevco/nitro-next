@@ -22,10 +22,7 @@
     "references": [
         {
             "path": "../nitro-api"
-        },
-        {
-            "path": "../nitro-shared"
-        },
+        }
     ],
     "include": [
         "src/**/*"

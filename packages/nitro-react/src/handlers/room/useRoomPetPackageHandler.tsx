@@ -1,4 +1,4 @@
-import { OpenPetPackageRequestedMessage, OpenPetPackageResultMessage } from "@nitrodevco/nitro-shared";
+import { OpenPetPackageRequestedMessage, OpenPetPackageResultMessage } from "@nitrodevco/nitro-packets";
 
 import { useMessageListener } from "#base/hooks";
 

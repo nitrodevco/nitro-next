@@ -1,5 +1,4 @@
-import { ISimpleRoomObjectData, RoomObjectUserType } from "@nitrodevco/nitro-api";
-import { RoomRenderedEvent } from "@nitrodevco/nitro-shared";
+import { ISimpleRoomObjectData, RoomObjectUserType, RoomRenderedEvent } from "@nitrodevco/nitro-api";
 import { PointData, Rectangle } from "pixi.js";
 import { ReactNode, useEffect, useRef } from "react";
 

@@ -1,5 +1,5 @@
 import { RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
-import { YouAreControllerMessage, YouAreNotControllerMessage, YouAreNotSpectatorMessage, YouAreOwnerMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-shared";
+import { YouAreControllerMessage, YouAreNotControllerMessage, YouAreNotSpectatorMessage, YouAreOwnerMessage, YouArePlayingGameMessage } from "@nitrodevco/nitro-packets";
 
 import { useRoomPermissionActions, useRoomSessionActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";

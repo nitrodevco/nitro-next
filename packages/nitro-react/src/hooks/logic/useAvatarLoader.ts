@@ -3,14 +3,14 @@ import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
-import { useConfigurationStore } from '#base/stores';
+import { useConfigValue } from '#base/context';
 
 export const useAvatarLoader = () => {
-    const figureMapUrl = useConfigurationStore(state => state.config['figuremap.url']) as string | undefined;
-    const effectMapUrl = useConfigurationStore(state => state.config['effectmap.url']) as string | undefined;
-    const avatarAssetUrl = useConfigurationStore(state => state.config['asset.urls.avatar']) as string | undefined;
-    const effectAssetUrl = useConfigurationStore(state => state.config['asset.urls.effect']) as string | undefined;
-    const figureDataUrl = useConfigurationStore(state => state.config['figuredata.url']) as string | undefined;
+    const figureMapUrl = useConfigValue<string>('figuremap.url') ?? '';
+    const effectMapUrl = useConfigValue<string>('effectmap.url') ?? '';
+    const avatarAssetUrl = useConfigValue<string>('asset.urls.avatar') ?? '';
+    const effectAssetUrl = useConfigValue<string>('asset.urls.effect') ?? '';
+    const figureDataUrl = useConfigValue<string>('figuredata.url') ?? '';
 
     useEffect(() => {
         if (!figureMapUrl || !effectMapUrl || !figureDataUrl) return;

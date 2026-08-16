@@ -1,13 +1,12 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useSystemActions } from '#base/context';
-import { useConfigurationStore } from '#base/stores';
+import { useConfigValue, useSystemActions } from '#base/context';
 
 export const useLocalizationLoader = () => {
     const [needsUpdate, setNeedsUpdate] = useState<boolean>(true);
     const { setLocalization } = useSystemActions();
-    const localizationUrl = useConfigurationStore(state => state.config['gamedata.urls.externalTexts']) as string | undefined;
+    const localizationUrl = useConfigValue<string>('gamedata.urls.externalTexts') ?? '';
 
     const isLocalizationReady = () => !needsUpdate;
 

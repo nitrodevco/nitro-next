@@ -1,4 +1,3 @@
-import { useUserContext } from "#base/context";
-import { selectOwnUserId } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useOwnUserId = () => useUserContext(selectOwnUserId);
+export const useOwnUserId = () => useUserContext(x => x.userId);

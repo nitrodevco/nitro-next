@@ -9,8 +9,7 @@ import type {
     RoomGeometryScaleType,
     RoomObjectSpriteData
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectSpriteTypeEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { RoomSpriteMouseEvent } from '@nitrodevco/nitro-shared';
+import { MouseEventType, RoomObjectSpriteTypeEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { ExtendedSprite, TextureUtils } from '../utils';

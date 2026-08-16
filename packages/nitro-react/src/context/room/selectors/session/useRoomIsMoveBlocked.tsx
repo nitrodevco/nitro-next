@@ -1,4 +1,3 @@
-import { useRoomContext } from "#base/context";
-import { selectIsMoveBlocked } from "#base/stores";
+import { useRoomContext } from "../../useRoomContext";
 
-export const useRoomIsMoveBlocked = () => useRoomContext(selectIsMoveBlocked);
+export const useRoomIsMoveBlocked = () => useRoomContext(x => x.isMoveBlocked);

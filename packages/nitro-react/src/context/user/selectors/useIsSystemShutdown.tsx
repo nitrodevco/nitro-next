@@ -1,4 +1,3 @@
-import { useUserContext } from "#base/context";
-import { selectIsSystemShutdown } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useIsSystemShutdown = () => useUserContext(selectIsSystemShutdown);
+export const useIsSystemShutdown = () => useUserContext(x => x.systemShutdown);

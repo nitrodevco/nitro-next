@@ -1,4 +1,4 @@
-import { SendRoomInviteComposer } from "@nitrodevco/nitro-shared";
+import { SendRoomInviteComposer } from "@nitrodevco/nitro-packets";
 import { useState } from "react";
 
 import { useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from "#base/context";

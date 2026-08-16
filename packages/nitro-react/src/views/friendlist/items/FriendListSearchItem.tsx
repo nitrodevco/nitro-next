@@ -1,4 +1,4 @@
-import { IMessengerSearchResult } from "@nitrodevco/nitro-shared";
+import { IMessengerSearchResult } from "@nitrodevco/nitro-packets";
 import { memo } from "react";
 
 import { useFriendsActions } from "#base/context";

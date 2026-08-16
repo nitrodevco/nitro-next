@@ -1,4 +1,4 @@
-import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, ShoutMessage, WhisperMessage } from "@nitrodevco/nitro-shared";
+import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, ShoutMessage, WhisperMessage } from "@nitrodevco/nitro-packets";
 
 import { useMessageListener } from "#base/hooks";
 

@@ -1,10 +1,10 @@
 import { FurnitureUsagePolicyEnum, GetObjectDataForFlags, IFurnitureData, IRoomFurnitureData, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
 
-import { useFurnitureData, useRoomSelector, useTranslation } from "#base/context"
+import { useFurnitureDataSelector, useRoomSelector, useTranslation } from "#base/context"
 
 export const useRoomFurnitureData = (objectId: number, category: RoomObjectCategoryEnum) => {
     const room = useRoomSelector();
-    const { floorItems, wallItems } = useFurnitureData();
+    const { floorItems, wallItems } = useFurnitureDataSelector();
     const roomObject = room?.getRoomObject(objectId, category);
     const t = useTranslation();
 

@@ -8,9 +8,8 @@ import type {
 } from '@nitrodevco/nitro-api';
 import {
     AlphaTolerance, RoomGeometryScaleType,
-    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, Vector3d
+    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, ToInt32, Vector3d
 } from '@nitrodevco/nitro-api';
-import { ToInt32 } from '@nitrodevco/nitro-shared';
 import type { Filter } from 'pixi.js';
 import { Rectangle, Texture } from 'pixi.js';
 

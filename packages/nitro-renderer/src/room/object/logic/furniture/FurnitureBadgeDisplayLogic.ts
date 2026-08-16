@@ -1,6 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, StringDataType } from '@nitrodevco/nitro-api';
-import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectBadgeAssetEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '../../../../utils';
 import { ObjectDataUpdateMessage, ObjectGroupBadgeUpdateMessage } from '../../../messages';

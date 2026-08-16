@@ -1,6 +1,10 @@
 import { useShallow } from "zustand/shallow";
 
-import { useUserContext } from "#base/context";
-import { extractUserWalletActions } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useUserWalletActions = () => useUserContext(useShallow(extractUserWalletActions));
+export const useUserWalletActions = () => useUserContext(useShallow(x => ({
+    setCredits: x.setCredits,
+    setEmeralds: x.setEmeralds,
+    setSilver: x.setSilver,
+    setActivityPoints: x.setActivityPoints
+})));

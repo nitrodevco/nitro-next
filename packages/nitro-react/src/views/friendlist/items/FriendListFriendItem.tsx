@@ -1,4 +1,4 @@
-import { IMessengerFriend } from "@nitrodevco/nitro-shared";
+import { IMessengerFriend } from "@nitrodevco/nitro-packets";
 import { memo, useRef } from "react";
 
 import { useFriendsActions, useFriendsSelectors } from "#base/context";

@@ -1,5 +1,5 @@
 import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import { MoveAvatarComposer, type RoomObjectMouseEvent, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from "@nitrodevco/nitro-shared";
+import { MoveAvatarComposer, type RoomObjectMouseEvent, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from "@nitrodevco/nitro-packets";
 
 import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from "#base/context";
 

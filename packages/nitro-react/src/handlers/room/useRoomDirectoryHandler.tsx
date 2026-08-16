@@ -1,5 +1,5 @@
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
-import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-shared";
+import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
 
 import { useRoomActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";

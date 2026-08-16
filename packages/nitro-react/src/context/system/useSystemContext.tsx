@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
-import { SystemStore } from '#base/stores';
-
+import { SystemStore } from './store';
 import { SystemContext } from './SystemContext';
 
 export const useSystemContext = <T,>(selector: (state: SystemStore) => T) => {

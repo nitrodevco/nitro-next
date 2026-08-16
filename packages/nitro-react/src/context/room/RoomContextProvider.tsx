@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
-import { createRoomStore } from '#base/stores';
-
 import { RoomContext } from './RoomContext';
+import { createRoomStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;

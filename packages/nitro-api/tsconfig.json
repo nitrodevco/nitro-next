@@ -8,6 +8,9 @@
             "#api/avatar/*": [
                 "./src/avatar/*"
             ],
+            "#api/catalog/*": [
+                "./src/catalog/*"
+            ],
             "#api/communication/*": [
                 "./src/communication/*"
             ],

@@ -1,6 +1,9 @@
 import { useShallow } from "zustand/shallow";
 
-import { useUserContext } from "#base/context";
-import { selectOwnRespectData } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useOwnRespectData = () => useUserContext(useShallow(selectOwnRespectData));
+export const useOwnRespectData = () => useUserContext(useShallow(x => ({
+    respectTotal: x.respectTotal,
+    respectLeft: x.respectLeft,
+    petRespectLeft: x.petRespectLeft
+})));

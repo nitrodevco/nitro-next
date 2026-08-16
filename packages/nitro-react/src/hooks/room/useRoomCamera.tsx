@@ -1,19 +1,17 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
-import { RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { Room } from "@nitrodevco/nitro-renderer";
-import { RoomDraggedEvent } from "@nitrodevco/nitro-shared";
 import { Matrix, Point, Rectangle } from "pixi.js";
 import { useRef } from "react";
 
-import { useRoomCameraSelector, useRoomSelector } from "#base/context";
+import { useConfigValue, useRoomCameraSelector, useRoomSelector } from "#base/context";
 
-import { useConfigValue } from "../useConfigValue";
 import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
 
 export const useRoomCamera = () => {
     const room = useRoomSelector();
     const { targetId, targetCategory, cameraFollowDisabled, followDuration } = useRoomCameraSelector();
-    const moveSpeedDenominator = useConfigValue<number>('camera.move.speed', 12);
+    const moveSpeedDenominator = useConfigValue<number>('camera.move.speed') ?? 12;
     const cameraDataRef = useRef<{
         currentLocation: IVector3D | undefined;
         targetLocation: IVector3D | undefined;
@@ -90,7 +88,7 @@ export const useRoomCamera = () => {
 
         const sinFactor = Math.sin((Math.PI * diff.length) / cameraData.moveDistance);
         const minSpeed = threshold * 0.5;
-        const maxSpeed = cameraData.moveDistance / moveSpeedDenominator!;
+        const maxSpeed = cameraData.moveDistance / moveSpeedDenominator;
 
         let speed = minSpeed + (maxSpeed - minSpeed) * sinFactor;
 

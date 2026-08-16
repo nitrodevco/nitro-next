@@ -1,7 +1,6 @@
 import type { IRoomObject } from "@nitrodevco/nitro-api";
-import { MouseEventType, RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
+import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { RoomDragEvent, RoomDraggedEvent, RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
 import { useEffect, useRef } from "react";
 
 import { useRoomInteractionSelector, useRoomSelector } from "#base/context";

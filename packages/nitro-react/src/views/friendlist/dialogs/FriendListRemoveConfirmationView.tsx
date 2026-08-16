@@ -1,4 +1,4 @@
-import { RemoveFriendComposer } from "@nitrodevco/nitro-shared";
+import { RemoveFriendComposer } from "@nitrodevco/nitro-packets";
 
 import { useFriendsActions, useFriendsSelector, useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from "#base/context";
 import { Border, Button, Frame } from "#base/theme";

@@ -36,11 +36,11 @@ export default defineConfig({
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }
+                    if (id.includes('/packages/nitro-packets/')) {
+                        return 'nitro-packets';
+                    }
                     if (id.includes('/packages/nitro-renderer/')) {
                         return 'nitro-renderer';
-                    }
-                    if (id.includes('/packages/nitro-shared/')) {
-                        return 'nitro-shared';
                     }
                     if (id.includes('node_modules')) {
                         return 'vendor';
@@ -68,7 +68,7 @@ export default defineConfig({
                 find: '@nitrodevco/nitro-renderer',
                 replacement: r('../nitro-renderer/src'),
             },
-            { find: '@nitrodevco/nitro-shared', replacement: r('../nitro-shared/src') },
+            { find: '@nitrodevco/nitro-packets', replacement: r('../nitro-packets/src') }
         ],
     },
     server: {

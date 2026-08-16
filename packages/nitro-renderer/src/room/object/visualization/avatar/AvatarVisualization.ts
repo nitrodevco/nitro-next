@@ -13,8 +13,7 @@ import {
     RoomObjectSpriteTypeEnum,
     RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { AdvancedMap } from '@nitrodevco/nitro-shared';
+import { AdvancedMap, AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';

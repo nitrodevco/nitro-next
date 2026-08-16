@@ -1,5 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectPlaySoundIdEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectPlaySoundIdEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

@@ -4,14 +4,14 @@
             "@nitrodevco/nitro-api": [
                 "./packages/nitro-api/src"
             ],
+            "@nitrodevco/nitro-packets": [
+                "./packages/nitro-packets/src"
+            ],
             "@nitrodevco/nitro-react": [
                 "./packages/nitro-react/src"
             ],
             "@nitrodevco/nitro-renderer": [
                 "./packages/nitro-renderer/src"
-            ],
-            "@nitrodevco/nitro-shared": [
-                "./packages/nitro-shared/src"
             ]
         }
     },
@@ -21,13 +21,13 @@
             "path": "./packages/nitro-api"
         },
         {
+            "path": "./packages/nitro-packets"
+        },
+        {
             "path": "./packages/nitro-react"
         },
         {
             "path": "./packages/nitro-renderer"
-        },
-        {
-            "path": "./packages/nitro-shared"
         }
     ]
 }

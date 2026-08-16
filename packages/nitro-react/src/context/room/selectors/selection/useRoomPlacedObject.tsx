@@ -1,4 +1,3 @@
-import { useRoomContext } from "#base/context";
-import { selectPlacedObject } from "#base/stores";
+import { useRoomContext } from "../../useRoomContext";
 
-export const useRoomPlacedObject = () => useRoomContext(selectPlacedObject);
+export const useRoomPlacedObject = () => useRoomContext(x => x.placedObject);

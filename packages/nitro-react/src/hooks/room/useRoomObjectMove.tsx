@@ -1,7 +1,5 @@
-import type { IRoomObjectController, ISelectedRoomObjectData, IVector3D } from "@nitrodevco/nitro-api";
-import { RoomObjectCategoryEnum, Vector3d } from "@nitrodevco/nitro-api";
-import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-shared";
-import { RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from "@nitrodevco/nitro-shared";
+import type { IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
+import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
 
 import { useRoomSelector } from "#base/context";
 

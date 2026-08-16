@@ -1,10 +1,10 @@
 import { FurnitureTypeEnum, IProduct } from "@nitrodevco/nitro-api";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 
-import { useConfigurationStore } from "#base/stores";
+import { useConfigValue } from "#base/context";
 
 export const useProductIconUrl = (product: IProduct) => {
-    const catalogAssetUrl = useConfigurationStore(x => x.config['catalog.asset.url'] as string) ?? undefined;
+    const catalogAssetUrl = useConfigValue<string>('catalog.asset.url') ?? '';
 
     switch (product.productType) {
         case FurnitureTypeEnum.Floor:

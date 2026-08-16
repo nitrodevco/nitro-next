@@ -1,6 +1,5 @@
 import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, NumberDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectStateChangedEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { MouseEventType, NumberDataType, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
@@ -14,7 +13,7 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectDataUpdateMessage) {
-            message.data.writeRoomObjectModel(this.object.model);
+            message.data?.writeRoomObjectModel(this.object.model);
 
             if (this.isRealRoomObject()) this.setupObject();
         }

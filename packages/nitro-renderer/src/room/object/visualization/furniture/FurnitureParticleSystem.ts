@@ -6,7 +6,7 @@ import {
     RoomGeometryScaleType,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { AdvancedMap } from '@nitrodevco/nitro-shared';
+import { AdvancedMap } from '@nitrodevco/nitro-api';
 import type { Graphics } from 'pixi.js';
 import { AlphaFilter, Matrix, Point, Sprite, Texture } from 'pixi.js';
 

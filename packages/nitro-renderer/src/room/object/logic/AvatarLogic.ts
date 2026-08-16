@@ -8,7 +8,7 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '../../../utils';
 import {

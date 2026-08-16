@@ -1,6 +1,6 @@
 import { type CSSProperties, type PointerEvent as ReactPointerEvent, useEffect, useId, useRef, useState } from 'react';
 
-import { useFrameStackStore } from '#base/stores';
+import { useWindowActions, useWindowZIndex } from '#base/context';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';
 
 type DragState = {
@@ -33,12 +33,12 @@ export const useFrameDrag = (id: string | undefined) => {
 
     const [offset, setOffset] = useState(() => (id && getStoredFramePosition(id)) || { dx: 0, dy: 0 });
 
-    const zIndex = useFrameStackStore((state) => state.zIndexById[stackId] ?? 100);
-    const bringToFront = useFrameStackStore((state) => state.bringToFront);
+    const zIndex = useWindowZIndex(stackId);
+    const { bringWindowToFront } = useWindowActions();
 
     useEffect(() => {
-        bringToFront(stackId);
-    }, [stackId, bringToFront]);
+        bringWindowToFront(stackId);
+    }, [stackId, bringWindowToFront]);
 
     const stopDragging = () => {
         const listeners = activeListenersRef.current;
@@ -113,7 +113,7 @@ export const useFrameDrag = (id: string | undefined) => {
     }
 
     const handleActivate = () => {
-        bringToFront(stackId);
+        bringWindowToFront(stackId);
     }
 
     const style: CSSProperties = {

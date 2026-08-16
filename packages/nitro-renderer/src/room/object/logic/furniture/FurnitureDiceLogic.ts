@@ -1,7 +1,5 @@
-import type { IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType } from '@nitrodevco/nitro-api';
-import type { RoomObjectEvent } from '@nitrodevco/nitro-shared';
-import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-shared';
+import type { IRoomGeometry, IRoomSpriteMouseEvent, RoomObjectEvent } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

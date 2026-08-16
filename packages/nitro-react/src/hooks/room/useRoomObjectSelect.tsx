@@ -1,8 +1,7 @@
 
 import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
-import { NitroLogger, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
-import { RoomEngineObjectEvent } from '@nitrodevco/nitro-shared';
 
 import { useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomSelectedObjectDetails, useRoomSelector } from '#base/context';
 

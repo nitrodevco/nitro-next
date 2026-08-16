@@ -26,6 +26,7 @@ export interface IRoom {
     applyRoomMap(roomMap: IRoomMapData): void;
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
+    getRoomInstanceRenderingCanvasOffset(): PointData;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getRoomObjectManager(category: number): IRoomObjectManager | undefined;
     getTotalObjectsForManager(category: RoomObjectCategoryEnum): number;
@@ -143,6 +144,7 @@ export interface IRoom {
     updateRoomObjectUserPosture(objectId: number, type: string, parameter?: string): boolean;
     removeRoomObjectFloor(objectId: number, isOwner?: boolean): void;
     removeRoomObjectWall(objectId: number, isOwner?: boolean): void;
+    removeRoomObjectUser(objectId: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;
     getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly?: boolean, customParts?: IPetCustomPart[], posture?: string): Promise<ImageLike | undefined>;

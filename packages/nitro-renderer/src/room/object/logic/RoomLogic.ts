@@ -4,8 +4,7 @@ import type {
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
 } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { ColorConverter, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-shared';
+import { ColorConverter, MouseEventType, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import {

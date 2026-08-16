@@ -1,0 +1,15 @@
+{
+    "name": "@nitrodevco/nitro-packets",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    }
+}

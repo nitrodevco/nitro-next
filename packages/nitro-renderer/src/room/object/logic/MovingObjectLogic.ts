@@ -1,6 +1,5 @@
 import type { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { RoomObjectMoveEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { ObjectMoveUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';

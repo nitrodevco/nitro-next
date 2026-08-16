@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 
 import { CatalogContext } from './CatalogContext';
-import { CatalogContextStore } from './CatalogContextStore';
+import { CatalogContextStore } from './store/CatalogContextStore';
 
 export const useCatalogContext = <T,>(selector: (state: CatalogContextStore) => T) => {
     const store = useContext(CatalogContext);

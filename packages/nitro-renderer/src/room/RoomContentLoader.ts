@@ -9,13 +9,12 @@ import type {
 } from '@nitrodevco/nitro-api';
 import {
     FurnitureTypeEnum,
-    NitroLogger,
-    RoomObjectCategoryEnum,
+    GetConfigValue, NitroLogger,
+    RoomContentLoadedEvent, RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectUserTypeName,
-    RoomObjectUserTypeUtils,
+    RoomObjectUserTypeUtils
 } from '@nitrodevco/nitro-api';
-import { GetConfigValue, RoomContentLoadedEvent } from '@nitrodevco/nitro-shared';
 import type { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
@@ -50,11 +49,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     private _pendingContentTypes: string[] = [];
 
     public async init(): Promise<void> {
-        //this.processFurnitureData(FurnitureDataStore.getState().allItems);
-
-
-        const petTypes = GetConfigValue<string[]>('renderer.petTypes', []);
-
+        const petTypes = GetConfigValue<string[]>('renderer.petTypes') ?? [];
 
         if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
 
@@ -235,7 +230,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public getPetNameForType(type: number): string | undefined {
 
-        return GetConfigValue<string[]>('renderer.petTypes', [])?.[type] ?? undefined;
+        return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
     }
 
     public isLoaderType(type: string): boolean {
@@ -327,7 +322,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
                 this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
             })
-            .catch(err => {
+            .catch(_err => {
                 this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
             });
     }
@@ -442,19 +437,19 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.generic', '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.furni', '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.icons.furni', '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.icons.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
-        return GetConfigValue<string>('asset.urls.pet', '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public setIconListener(listener: IRoomContentListener): void {

@@ -1,8 +1,8 @@
 import { ICatalogNode } from "@nitrodevco/nitro-api"
 import { useState } from "react";
 
+import { useConfigValue } from "#base/context";
 import { useCatalogNavigation } from "#base/hooks";
-import { useConfigurationStore } from "#base/stores";
 import { BitmapText, cn } from "#base/theme";
 
 import { CatalogNavigationSetView } from "./CatalogNavigationSetView";
@@ -15,7 +15,7 @@ type CatalogNavigationSetItemViewProps = {
 export const CatalogNavigationSetItemView = (props: CatalogNavigationSetItemViewProps) => {
     const { node, depth = 0 } = props;
     const { activateNode } = useCatalogNavigation();
-    const catalogIconUrl = useConfigurationStore(state => state.config['catalog.icons.url']) as string | undefined;
+    const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
     const hasChildren = node.children.length > 0;
     const [isHovered, setIsHovered] = useState(false);
     const isHighlighted = node.isActive || isHovered;

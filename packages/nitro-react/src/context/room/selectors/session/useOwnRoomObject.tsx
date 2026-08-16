@@ -1,6 +1,6 @@
 import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
 
-import { useRoomSelector } from "../useRoomSelector"
+import { useRoomSelector } from "../useRoomSelector";
 import { useOwnRoomObjectId } from "./useOwnRoomObjectId";
 
 export const useOwnRoomObject = () => {

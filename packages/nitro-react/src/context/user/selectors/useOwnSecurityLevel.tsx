@@ -1,4 +1,3 @@
-import { useUserContext } from "#base/context";
-import { selectOwnSecurityLevel } from "#base/stores";
+import { useUserContext } from "../useUserContext";
 
-export const useOwnSecurityLevel = () => useUserContext(selectOwnSecurityLevel);
+export const useOwnSecurityLevel = () => useUserContext(x => x.securityLevel);

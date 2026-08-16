@@ -1,5 +1,4 @@
-import type { FurnitureTypeEnum } from './enum';
-import { IRoomObjectData } from './IRoomObjectData';
+import type { FurnitureSpecialType, FurnitureTypeEnum } from './enum';
 
 export interface IFurnitureData {
     readonly type: FurnitureTypeEnum;
@@ -23,7 +22,7 @@ export interface IFurnitureData {
     readonly rentCouldBeUsedForBuyout: boolean;
     readonly availableForBuildersClub: boolean;
     readonly customParams: string;
-    readonly specialType: number;
+    readonly specialType: FurnitureSpecialType;
     readonly canStandOn: boolean;
     readonly canSitOn: boolean;
     readonly canLayOn: boolean;

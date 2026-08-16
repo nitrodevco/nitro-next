@@ -1,6 +1,6 @@
 import { ClubLevelEnum } from "@nitrodevco/nitro-api";
 
-import { useOwnClubLevel } from "./useOwnClubLevel"
+import { useOwnClubLevel } from "./useOwnClubLevel";
 
 export const useOwnHasClub = () => {
     const ownClubLevel = useOwnClubLevel();

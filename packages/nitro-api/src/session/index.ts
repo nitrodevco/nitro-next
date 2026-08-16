@@ -12,6 +12,7 @@ export * from './ISimpleRoomObjectData';
 export * from './IUserInfo';
 export * from './enum/ChangeUserNameResultMessageCode';
 export * from './enum/ClubLevelEnum';
+export * from './enum/FurnitureSpecialType';
 export * from './enum/FurnitureTypeEnum';
 export * from './enum/NoobnessLevelEnum';
 export * from './enum/RoomChatBubbleWidthType';

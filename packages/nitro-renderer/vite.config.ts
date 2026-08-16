@@ -21,9 +21,6 @@ export default defineConfig({
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }
-                    if (id.includes('/packages/nitro-shared/')) {
-                        return 'nitro-shared';
-                    }
                     if (id.includes('node_modules')) return 'vendor';
                 },
             },
@@ -34,8 +31,7 @@ export default defineConfig({
         tsconfigPaths: true,
         dedupe: ['pixi.js'],
         alias: {
-            '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src'),
-            '@nitrodevco/nitro-shared': path.resolve(__dirname, '../nitro-shared/src'),
+            '@nitrodevco/nitro-api': path.resolve(__dirname, '../nitro-api/src')
         },
     },
 });

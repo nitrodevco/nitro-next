@@ -1,4 +1,4 @@
-import { CreditBalanceEventMessage, EmeraldBalanceMessage, HabboActivityPointNotificationMessage, SilverBalanceMessage } from "@nitrodevco/nitro-shared";
+import { CreditBalanceEventMessage, EmeraldBalanceMessage, HabboActivityPointNotificationMessage, SilverBalanceMessage } from "@nitrodevco/nitro-packets";
 
 import { useUserWalletActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";

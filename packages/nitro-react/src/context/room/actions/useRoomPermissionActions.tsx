@@ -1,6 +1,8 @@
 import { useShallow } from "zustand/shallow";
 
 import { useRoomContext } from "#base/context";
-import { extractRoomPermissionActions } from "#base/stores";
 
-export const useRoomPermissionActions = () => useRoomContext(useShallow(extractRoomPermissionActions));
+export const useRoomPermissionActions = () => useRoomContext(useShallow(x => ({
+    setControllerLevel: x.setControllerLevel,
+    setIsRoomOwner: x.setIsRoomOwner
+})));

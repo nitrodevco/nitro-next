@@ -1,4 +1,4 @@
-import { RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-shared"
+import { RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-api";
 
 import { useRoomEventDispatcher } from "./useRoomEventDispatcher"
 

@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
-import type { UserStore } from '#base/stores';
-
+import { UserStore } from './store';
 import { UserContext } from './UserContext';
 
 export const useUserContext = <T,>(selector: (state: UserStore) => T) => {

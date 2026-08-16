@@ -1,18 +1,16 @@
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomRenderedEvent } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetStage, GetTicker } from '@nitrodevco/nitro-renderer';
-import { RoomRenderedEvent } from '@nitrodevco/nitro-shared';
 import type { Ticker } from 'pixi.js';
 import { forwardRef, useEffect } from 'react';
 
-import { useRoomMouseActions, useRoomSelector } from '#base/context';
+import { useConfigValue, useRoomMouseActions, useRoomSelector } from '#base/context';
 import { useRoomCamera, useRoomMouse } from '#base/hooks';
-import { useConfigurationStore } from '#base/stores';
 import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
     const room = useRoomSelector();
     const { mouseDataRef } = useRoomMouse();
-    const maxFPS = useConfigurationStore<number>(state => state.config['fps.limit'] as number) ?? 60;
+    const maxFPS = useConfigValue<number>('fps.limit') ?? 60;
     const { updateRoomCamera } = useRoomCamera();
     const { hasAndResetCursorUpdate, hasCursorOwners } = useRoomMouseActions();
 

@@ -1,12 +1,12 @@
 import { IFurnitureData, IRoomObjectNameData, ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
 
-import { useFurnitureData, useRoomSelector, useRoomUsersActions, useTranslation } from "#base/context";
+import { useFurnitureDataSelector, useRoomSelector, useRoomUsersActions, useTranslation } from "#base/context";
 
 export const useRoomObjectName = (objectData: ISimpleRoomObjectData) => {
     const { objectId, category } = objectData;
     const room = useRoomSelector();
     const roomObject = room?.getRoomObject(objectId, category);
-    const { floorItems, wallItems } = useFurnitureData();
+    const { floorItems, wallItems } = useFurnitureDataSelector();
     const { getUserDataByIndex } = useRoomUsersActions();
     const t = useTranslation();
 

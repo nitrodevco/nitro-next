@@ -3,7 +3,7 @@ import {
     RoomObjectVariableEnum,
     RoomWidgetEnumItemExtradataParameter,
 } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

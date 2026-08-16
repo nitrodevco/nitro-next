@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
-import { createSystemStore } from '#base/stores';
-
+import { createSystemStore } from './store';
 import { SystemContext } from './SystemContext';
 
 type ProviderProps = {

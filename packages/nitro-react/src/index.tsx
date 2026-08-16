@@ -11,7 +11,8 @@ declare global {
     interface Window {
         NitroConfig: {
             "nitro.config.url": string;
-        }
+        };
+        NitroParsedConfig: Record<string, unknown>;
     }
 }
 

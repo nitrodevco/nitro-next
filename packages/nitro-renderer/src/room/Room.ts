@@ -1,6 +1,8 @@
 
 import {
+    EventDispatcher,
     FurnitureUsagePolicyEnum,
+    GetConfigValue,
     GetObjectDataForFlags,
     IEventDispatcher,
     IGraphicAssetCollection,
@@ -20,6 +22,9 @@ import {
     IRoomRenderingCanvas,
     IVector3D, LegacyDataType,
     ObjectDataFlagsEnum,
+    RoomContentLoadedEvent,
+    RoomEngineEvent,
+    RoomEngineObjectEvent,
     RoomGeometryScaleType
     ,
     RoomObjectCategoryEnum,
@@ -30,16 +35,9 @@ import {
     RoomObjectVariableEnum,
     RoomThicknessType
     ,
-    Vector3d,
+    RoomToObjectOwnAvatarMoveEvent,
+    Vector3d
 } from '@nitrodevco/nitro-api';
-import {
-    EventDispatcher,
-    GetConfigValue,
-    RoomContentLoadedEvent,
-    RoomEngineEvent,
-    RoomEngineObjectEvent,
-    RoomToObjectOwnAvatarMoveEvent
-} from '@nitrodevco/nitro-shared';
 import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
 
@@ -306,7 +304,7 @@ export class Room implements IRoom {
             RoomObjectCategoryEnum.Cursor,
         );
 
-        if (GetConfigValue('renderer.avatarArrowEnabled', false)) this.createRoomObjectAndInitalize(
+        if (GetConfigValue<boolean>('renderer.avatarArrowEnabled') ?? false) this.createRoomObjectAndInitalize(
             Room.ARROW_OBJECT_ID,
             Room.ARROW_OBJECT_TYPE,
             RoomObjectCategoryEnum.Cursor,
@@ -363,6 +361,20 @@ export class Room implements IRoom {
         rectangle.y += (Math.round(canvas.height / 2) + canvas.screenOffsetY);
 
         return rectangle;
+    }
+
+    public getRoomInstanceRenderingCanvasOffset(): PointData {
+        const offset = {
+            x: 0,
+            y: 0
+        };
+
+        if (this._canvas) {
+            offset.x = this._canvas.screenOffsetX;
+            offset.y = this._canvas.screenOffsetY;
+        }
+
+        return offset;
     }
 
     public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
@@ -1198,6 +1210,10 @@ export class Room implements IRoom {
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
         this.updateRoomObjectMask(objectId, false);
+    }
+
+    public removeRoomObjectUser(objectId: number): void {
+        this.removeRoomObject(objectId, RoomObjectCategoryEnum.Unit);
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {

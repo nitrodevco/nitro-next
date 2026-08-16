@@ -1,4 +1,4 @@
-import type { NitroEvent } from '@nitrodevco/nitro-shared';
+import { NitroEvent } from '@nitrodevco/nitro-api';
 import { useEffect } from 'react';
 
 import { useRoomSelector } from '#base/context';

@@ -9,8 +9,8 @@
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",
+        "@nitrodevco/nitro-packets": "workspace:*",
         "@nitrodevco/nitro-renderer": "workspace:*",
-        "@nitrodevco/nitro-shared": "workspace:*",
         "@tanstack/react-virtual": "^3.13.25",
         "dompurify": "^3.4.5",
         "motion": "12.40.0",

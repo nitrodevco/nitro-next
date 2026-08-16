@@ -1,7 +1,6 @@
 import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
-import { useState } from "react";
 
-import { CatalogContext, createCatalogContextStore } from "#base/context";
+import { CatalogContextProvider } from "#base/context";
 
 import { CatalogComponent } from "./CatalogComponent";
 
@@ -9,13 +8,10 @@ type CatalogWrapperProps = {
     catalogType: CatalogTypeEnum;
 }
 
-export const CatalogWrapper = (props: CatalogWrapperProps) => {
-    const { catalogType } = props;
-    const [catalogCtx] = useState(() => createCatalogContextStore(catalogType));
-
+export const CatalogWrapper = ({ catalogType }: CatalogWrapperProps) => {
     return (
-        <CatalogContext value={catalogCtx}>
+        <CatalogContextProvider catalogType={catalogType}>
             <CatalogComponent />
-        </CatalogContext>
+        </CatalogContextProvider>
     );
 }

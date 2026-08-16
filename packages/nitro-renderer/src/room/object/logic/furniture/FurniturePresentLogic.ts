@@ -5,8 +5,7 @@ import type {
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
 } from '@nitrodevco/nitro-api';
-import { MapDataType, MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-shared';
+import { MapDataType, MouseEventType, RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage, ObjectModelDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
