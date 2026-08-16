@@ -262,10 +262,43 @@
 }
 
 .catalog-product-preview {
+    position: relative;
     flex: 0 0 240px;
     height: 240px;
     min-height: 240px;
     overflow: hidden;
+}
+
+.catalog-product-preview-rotation-controls {
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    z-index: 1;
+    display: flex;
+    gap: 4px;
+}
+
+.catalog-product-preview-rotate-button {
+    position: relative;
+    width: 25px;
+    min-width: 25px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0;
+}
+
+.catalog-product-preview-rotate-button .habbo-icon {
+    position: absolute;
+    top: 7px;
+    filter: brightness(0);
+}
+
+.catalog-product-preview-rotate-button.is-left .habbo-icon {
+    left: 7px;
+}
+
+.catalog-product-preview-rotate-button.is-right .habbo-icon {
+    left: 9px;
 }
 
 .catalog-product-grid-region {
