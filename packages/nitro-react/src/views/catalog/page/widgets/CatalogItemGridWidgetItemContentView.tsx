@@ -19,7 +19,7 @@ export const CatalogItemGridWidgetItemContentView = (
     return (
         <>
             <div
-                className="absolute grid place-items-center"
+                className="absolute grid place-items-center overflow-hidden"
                 style={{
                     top: template.artwork.top,
                     left: template.artwork.left,
