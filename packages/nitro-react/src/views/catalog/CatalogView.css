@@ -206,8 +206,23 @@
 }
 
 .catalog-navigation-item:is(:hover, .is-active) .catalog-navigation-row {
-    height: 16px;
-    background: #63c5e9;
+    background: linear-gradient(
+        to bottom,
+        transparent 2px,
+        #63c5e9 2px,
+        #63c5e9 18px,
+        transparent 18px
+    );
+}
+
+.catalog-navigation-item.is-child:is(:hover, .is-active) .catalog-navigation-row {
+    background: linear-gradient(
+        to bottom,
+        transparent 2px,
+        #63c5e9 2px,
+        #63c5e9 17px,
+        transparent 17px
+    );
 }
 
 .catalog-navigation-icon {
@@ -234,12 +249,14 @@
     height: 17px;
     min-width: 0;
     flex: 1 1 auto;
+    align-self: flex-start;
+    margin-top: 2px;
     overflow: hidden;
 }
 
 .catalog-navigation-label.is-child {
+    margin-top: 1px;
     margin-left: 1px;
-    transform: translateY(-1px);
 }
 
 .catalog-navigation-disclosure {

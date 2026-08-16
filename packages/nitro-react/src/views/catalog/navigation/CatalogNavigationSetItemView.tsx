@@ -24,7 +24,7 @@ export const CatalogNavigationSetItemView = (props: CatalogNavigationSetItemView
         <>
             <button
                 type="button"
-                className={cn('catalog-navigation-item', node.isActive && 'is-active')}
+                className={cn('catalog-navigation-item', depth > 0 && 'is-child', node.isActive && 'is-active')}
                 aria-current={node.isActive ? 'page' : undefined}
                 aria-expanded={hasChildren ? node.isOpen : undefined}
                 onPointerEnter={() => setIsHovered(true)}
