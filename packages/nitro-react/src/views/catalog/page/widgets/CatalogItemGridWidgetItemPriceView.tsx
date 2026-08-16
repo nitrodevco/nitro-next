@@ -34,7 +34,9 @@ const PriceLine = (props: PriceLineProps) => {
                 className="relative block h-[17px] shrink-0">
                 {amount}
             </BitmapText>
-            <NitroIcon icon={icon} className="mt-1" />
+            <span className="relative mt-1 size-3.5 shrink-0">
+                <NitroIcon icon={icon} className="absolute left-px top-px" />
+            </span>
         </div>
     );
 }
