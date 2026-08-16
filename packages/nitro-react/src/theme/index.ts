@@ -4,6 +4,7 @@ export * from './AccordionContext';
 export * from './AccordionItem';
 export * from './AccordionTrigger';
 export * from './Border';
+export * from './BitmapText';
 export * from './Bubble';
 export * from './BubblePointer';
 export * from './Button';

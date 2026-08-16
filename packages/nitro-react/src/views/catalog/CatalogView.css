@@ -229,25 +229,17 @@
 }
 
 .catalog-navigation-label {
+    position: relative;
+    display: block;
+    height: 17px;
     min-width: 0;
     flex: 1 1 auto;
     overflow: hidden;
-    color: #666;
-    font-family: UbuntuBold, sans-serif;
-    font-size: 12px;
-    line-height: 17px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .catalog-navigation-label.is-child {
-    color: #52819a;
-    font-family: UbuntuItalicsBold, sans-serif;
-}
-
-.catalog-navigation-item:is(:hover, .is-active) .catalog-navigation-label {
-    color: #fff;
-    text-shadow: 0 -1px #b4b4ae;
+    margin-left: 1px;
+    transform: translateY(-1px);
 }
 
 .catalog-navigation-disclosure {
