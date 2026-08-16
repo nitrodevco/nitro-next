@@ -1,5 +1,6 @@
 import { useCatalogSelectors } from "#base/context";
 import { useConfigurationStore } from "#base/stores";
+import { BitmapText } from "#base/theme";
 
 export const CatalogHeaderView = () => {
     const { activePage, activeNodes } = useCatalogSelectors();
@@ -22,7 +23,12 @@ export const CatalogHeaderView = () => {
                     <img src={catalogIconUrl?.replace('%name%', activeNode?.icon.toString() ?? '1')} alt="" />
                 </div>
                 <div className="catalog-header-copy">
-                    <span className="catalog-header-title">{activeNode?.localization ?? ''}</span>
+                    <BitmapText
+                        recipe="bold-18"
+                        color="#ffffff"
+                        className="catalog-header-title">
+                        {activeNode?.localization ?? ''}
+                    </BitmapText>
                     {headerDescription.length > 0 && <span className="catalog-header-description">{headerDescription}</span>}
                 </div>
             </div>

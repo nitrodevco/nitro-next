@@ -84,13 +84,9 @@
 }
 
 .catalog-header-title {
+    position: relative;
     height: 24px;
     overflow: hidden;
-    font-family: UbuntuBold, sans-serif;
-    font-size: 18px;
-    line-height: 24px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .catalog-header-description {

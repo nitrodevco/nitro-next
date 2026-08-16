@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes } from 'react';
 
+import { BitmapText, type BitmapTextRecipe } from './bitmap-text';
 import { CloseButton } from './CloseButton';
 import { cn, cva, useCascadedVariant, useTintedVars, VariantCascadeProvider, type VariantProps } from './utils';
 import { VARIANT_CASCADE_CONFIG } from './VariantConfig';
@@ -68,10 +69,12 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HeaderVariantProps
     className?: string;
     tintColor?: string;
     defaultVariant?: string;
+    captionTextRecipe?: BitmapTextRecipe;
+    captionTextColor?: string;
 }
 
 export const Header = forwardRef<HTMLDivElement, HeaderProps>(
-    ({ caption, onClose, className, variant, defaultVariant, tintColor, style, children, ...props }, ref) => {
+    ({ caption, onClose, className, variant, defaultVariant, tintColor, captionTextRecipe, captionTextColor = '#ffffff', style, children, ...props }, ref) => {
         const cascadedVariant = useCascadedVariant('header');
         const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['header']?.[resolvedVariant as string];
@@ -90,7 +93,20 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
                 <VariantCascadeProvider map={ownCascade}>
                     <div className="relative flex items-center justify-center h-full">
                         <div className="flex flex-1 items-center justify-center z-20 w-full">
-                            <span className="text-center leading-3.75 px-2" style={{ backgroundColor: resolvedTint }}>{caption}</span>
+                            {captionTextRecipe ? (
+                                <span className="flex h-[17px] items-start px-2" style={{ backgroundColor: resolvedTint }}>
+                                    <BitmapText
+                                        recipe={captionTextRecipe}
+                                        color={captionTextColor}
+                                        align="center"
+                                        autoWidth
+                                        className="relative block h-[17px] shrink-0">
+                                        {caption}
+                                    </BitmapText>
+                                </span>
+                            ) : (
+                                <span className="text-center leading-3.75 px-2" style={{ backgroundColor: resolvedTint }}>{caption}</span>
+                            )}
                         </div>
                         <div className="flex shrink-0 items-center justify-center z-20 absolute right-0" style={{ backgroundColor: resolvedTint }}>
                             <CloseButton className="" onClick={onClose} data-no-drag />

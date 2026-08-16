@@ -2,6 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 
 import { useFrameDrag } from '#base/hooks';
 
+import type { BitmapTextRecipe } from './bitmap-text';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { Scaler } from './Scaler';
@@ -85,10 +86,12 @@ interface FrameProps extends HTMLAttributes<HTMLDivElement>, FrameVariantProps {
     contentClassName?: string;
     tintColor?: string;
     defaultVariant?: string;
+    captionTextRecipe?: BitmapTextRecipe;
+    captionTextColor?: string;
 }
 
 export const Frame = forwardRef<HTMLDivElement, FrameProps>(
-    ({ id, caption, onClose, className, contentClassName, variant, defaultVariant, tintColor, style, children, ...props }, ref) => {
+    ({ id, caption, onClose, className, contentClassName, variant, defaultVariant, tintColor, captionTextRecipe, captionTextColor, style, children, ...props }, ref) => {
         const cascadedVariant = useCascadedVariant('frame');
         const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['frame']?.[resolvedVariant as string];
@@ -115,7 +118,14 @@ export const Frame = forwardRef<HTMLDivElement, FrameProps>(
             >
                 {overlayClassName && <div aria-hidden className={cn('pointer-events-none absolute inset-0', overlayClassName)} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    <Header caption={caption} onClose={onClose} onPointerDown={onHeaderPointerDown} className="cursor-grab active:cursor-grabbing" />
+                    <Header
+                        caption={caption}
+                        captionTextRecipe={captionTextRecipe}
+                        captionTextColor={captionTextColor}
+                        onClose={onClose}
+                        onPointerDown={onHeaderPointerDown}
+                        className="cursor-grab active:cursor-grabbing"
+                    />
                     <div className={cn('flex px-0.75 pt-px pb-1 size-full overflow-hidden', contentClassName)}>
                         <ContentArea>
                             {children}

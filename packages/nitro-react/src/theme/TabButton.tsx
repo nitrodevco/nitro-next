@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes } from 'react';
 
+import { BitmapText, type BitmapTextRecipe } from './bitmap-text';
 import { cn, cva, useCascadedVariant, VariantCascadeProvider, type VariantProps } from './utils';
 import { VARIANT_CASCADE_CONFIG } from './VariantConfig';
 
@@ -31,10 +32,23 @@ type TabButtonVariantProps = VariantProps<typeof tabButtonVariantsConfig>;
 interface TabButtonProps extends HTMLAttributes<HTMLDivElement>, TabButtonVariantProps {
     className?: string;
     defaultVariant?: string;
+    textRecipe?: BitmapTextRecipe;
+    textColor?: string;
 }
 
 export const TabButton = forwardRef<HTMLDivElement, TabButtonProps>(
-    ({ className, variant, defaultVariant, children, ...props }, ref) => {
+    (
+        {
+            className,
+            variant,
+            defaultVariant,
+            textRecipe,
+            textColor = '#000000',
+            children,
+            ...props
+        },
+        ref,
+    ) => {
         const cascadedVariant = useCascadedVariant('tabButton');
         const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['tabButton']?.[resolvedVariant as string];
@@ -44,7 +58,17 @@ export const TabButton = forwardRef<HTMLDivElement, TabButtonProps>(
                 className={cn(tabButtonVariants({ variant: resolvedVariant }), className)}
                 {...props}
             >
-                <VariantCascadeProvider map={ownCascade}>{children}</VariantCascadeProvider>
+                <VariantCascadeProvider map={ownCascade}>
+                    {textRecipe && (typeof children === 'string' || typeof children === 'number') ? (
+                        <BitmapText
+                            recipe={textRecipe}
+                            color={textColor}
+                            align="center"
+                            className="relative block h-[18px] w-full">
+                            {children}
+                        </BitmapText>
+                    ) : children}
+                </VariantCascadeProvider>
             </div>
         );
     }
