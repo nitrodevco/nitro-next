@@ -46,6 +46,9 @@ export const Nitro: FC = () => {
                     roundPixels: false,
                     preference: 'webgpu',
                     preserveDrawingBuffer: false,
+                    webgl: {
+                        multiView: true,
+                    },
                 });
 
                 TexturePool.startAutoCleanup();

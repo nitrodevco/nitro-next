@@ -75,6 +75,7 @@ import {
     ObjectDataUpdateMessage,
     ObjectHeightUpdateMessage,
     ObjectItemDataUpdateMessage,
+    ObjectMoveUpdateMessage,
     ObjectRoomMaskUpdateMessage,
     ObjectRoomPlanePropertyUpdateMessage,
     ObjectRoomPlaneVisibilityUpdateMessage,
@@ -115,6 +116,7 @@ export class Room implements IRoom {
     private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
     private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
+    private _isInitialized: boolean = false;
 
     constructor(roomId: number) {
         this._roomId = roomId;
@@ -311,6 +313,8 @@ export class Room implements IRoom {
         );
 
         // TODO update area hide
+
+        this._isInitialized = true;
 
         this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.INITIALIZED, this._roomId));
     }
@@ -561,7 +565,7 @@ export class Room implements IRoom {
 
         if (!object) return;
 
-        const dataFormat = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureDataFormat);
+        const dataFormat = object.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
 
         if (!isNaN(dataFormat)) {
             const data = GetObjectDataForFlags(dataFormat);
@@ -843,6 +847,21 @@ export class Room implements IRoom {
         return true;
     }
 
+    public updateRoomObjectWallLocation(
+        objectId: number,
+        location: IVector3D | undefined
+    ): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
+
+        if (!object || !object.logic) return false;
+
+        object.logic.processUpdateMessage(new ObjectMoveUpdateMessage(location, undefined, undefined));
+
+        this.updateRoomObjectMask(objectId);
+
+        return true;
+    }
+
     public updateRoomObjectWallState(
         objectId: number,
         state: number,
@@ -911,6 +930,24 @@ export class Room implements IRoom {
         const roomObjectRoom = this.getRoomObjectRoom();
 
         if (roomObjectRoom && maskUpdate) roomObjectRoom.logic.processUpdateMessage(maskUpdate);
+
+        return true;
+    }
+
+    public updateRoomObjectState(objectId: number, category: RoomObjectCategoryEnum): boolean {
+        const object = this.getRoomObject(objectId, category);
+
+        if (!object?.logic) return false;
+
+        const currentState = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex);
+        const nextState = Number.isFinite(currentState) ? currentState + 1 : 1;
+        const dataFormat = object.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
+        const data = GetObjectDataForFlags(dataFormat);
+        const extra = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+
+        object.model.setValue(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, nextState);
+        data?.initializeFromRoomObjectModel(object.model);
+        object.processUpdateMessage(new ObjectDataUpdateMessage(nextState, data, Number.isFinite(extra) ? extra : 0));
 
         return true;
     }
@@ -1148,7 +1185,7 @@ export class Room implements IRoom {
                     if (!disabledPickingAnimation) {
                         const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
                         const extras = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
-                        const dataKey = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDataFormat);
+                        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
                         const objectData = GetObjectDataForFlags(dataKey);
                         /* const icon = this.getFurnitureFloorIcon(typeId, null, extras, objectData).data;
 
@@ -1441,6 +1478,10 @@ export class Room implements IRoom {
 
     public get legacyGeometry(): ILegacyWallGeometry | undefined {
         return this._legacyGeometry;
+    }
+
+    public get isInitialized(): boolean {
+        return this._isInitialized;
     }
 
     private getPetType(type: string): string | undefined {

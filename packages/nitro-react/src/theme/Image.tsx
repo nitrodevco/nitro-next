@@ -12,16 +12,17 @@ interface ImageProps extends HTMLAttributes<HTMLImageElement> {
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(
     ({ className, placeholderClassName, src, onLoad, onError, ...props }, ref) => {
-        const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
-        const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
+        const normalizedSrc = src?.trim() || undefined;
+        const loadingIconUrl = useConfigValue<string>('loading.icon.url')?.trim() || '/assets/icons/loading_icon.png';
+        const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>(normalizedSrc ? 'loading' : 'error');
 
         useEffect(() => {
-            setStatus('loading');
-        }, [src]);
+            setStatus(normalizedSrc ? 'loading' : 'error');
+        }, [normalizedSrc]);
 
         return (
             <div className="relative flex items-center justify-center size-full">
-                {status !== 'loaded' && (
+                {status === 'loading' && (
                     <img
                         src={loadingIconUrl}
                         className={cn(
@@ -32,7 +33,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
                 )}
                 {status !== 'error' && <img
                     ref={ref}
-                    src={src}
+                    src={normalizedSrc}
                     onLoad={e => {
                         setStatus('loaded');
                         onLoad?.(e);

@@ -1,53 +1,79 @@
 
 import { FurnitureSpecialType, FurnitureTypeEnum, RoomId, Vector3d } from "@nitrodevco/nitro-api";
-import { GetAvatarRenderManager } from "@nitrodevco/nitro-renderer";
 import { useEffect, useRef } from "react";
 
-import { useCatalogSelectors, useOwnUserLook } from "#base/context"
+import { useCatalogSelectors } from "#base/context";
 import { useCatalogOfferActions, useRoomPreviewer } from "#base/hooks";
 import { BitmapText, ContainerButton } from "#base/theme";
+
+const CATALOG_ROOM_PREVIEW_OPTIONS = { centerWallItems: true } as const;
 
 export const CatalogProductViewWidgetView = () => {
     const { activeOffer } = useCatalogSelectors();
     const { getOfferProduct } = useCatalogOfferActions();
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const { addFurnitureIntoRoom } = useRoomPreviewer(RoomId.TEMP_ROOM_CATALOG, canvasRef);
-    const { ownFigure, ownGender } = useOwnUserLook();
+    const {
+        isReady,
+        canRotate,
+        addFurnitureIntoRoom,
+        addWallItemIntoRoom,
+        resetRoomPreview,
+        rotatePreviewObject,
+        changePreviewObjectState,
+        setAddViewOffset
+    } = useRoomPreviewer(RoomId.TEMP_ROOM_CATALOG, canvasRef, CATALOG_ROOM_PREVIEW_OPTIONS);
     const product = activeOffer ? getOfferProduct(activeOffer) : undefined;
     const productName = product?.productData?.name || product?.furnitureData.localizedName || '';
 
     useEffect(() => {
-        if (!activeOffer) return;
+        if (!isReady) return;
 
-        const product = getOfferProduct(activeOffer);
+        setAddViewOffset({ x: 0, y: product?.isUnique ? -15 : 0 });
 
-        if (!product) return;
+        if (!product) {
+            resetRoomPreview(false);
+            return;
+        }
 
         switch (product.productType) {
             case FurnitureTypeEnum.Floor: {
                 if (!product.furnitureData) return;
 
                 if (product.furnitureData.specialType === FurnitureSpecialType.FigurePurchasableSet) {
-                    const customParts = product.furnitureData.customParams.split(',').map(value => parseInt(value));
-                    const figureSets: number[] = [];
-
-                    for (const part of customParts) {
-                        if (GetAvatarRenderManager().isValidFigureSetForGender(part, ownGender)) figureSets.push(part);
-                    }
-
-                    const figureString = GetAvatarRenderManager().getFigureStringWithFigureIds(ownFigure, ownGender, figureSets);
-
-                    //add avatar
+                    resetRoomPreview(false);
                 } else {
                     addFurnitureIntoRoom(product.classId, new Vector3d(90));
                 }
+
+                break;
             }
+            case FurnitureTypeEnum.Wall: {
+                switch (product.furnitureData.specialType) {
+                    case FurnitureSpecialType.WallPaper:
+                    case FurnitureSpecialType.Floor:
+                    case FurnitureSpecialType.Landscape:
+                        resetRoomPreview(false);
+                        break;
+                    default:
+                        addWallItemIntoRoom(product.classId, new Vector3d(90), product.extraParam);
+                        break;
+                }
+
+                break;
+            }
+            default:
+                resetRoomPreview(false);
+                break;
         }
-    }, [activeOffer]);
+    }, [product, isReady]);
 
     return (
         <div className="relative flex overflow-hidden size-full bg-black">
-            <canvas ref={canvasRef} className="absolute" />
+            <canvas
+                key="catalog-room-preview"
+                ref={canvasRef}
+                className="absolute"
+                onClick={() => changePreviewObjectState()} />
             {activeOffer && (
                 <>
                     <BitmapText
@@ -61,19 +87,23 @@ export const CatalogProductViewWidgetView = () => {
                             variant="5"
                             type="button"
                             aria-label="Rotate preview left"
-                            className="catalog-product-preview-rotate-button is-left">
+                            className="catalog-product-preview-rotate-button is-left"
+                            disabled={!canRotate}
+                            onClick={() => rotatePreviewObject(false)}>
                             <span className="habbo-icon icon-arrow-left" />
                         </ContainerButton>
                         <ContainerButton
                             variant="5"
                             type="button"
                             aria-label="Rotate preview right"
-                            className="catalog-product-preview-rotate-button is-right">
+                            className="catalog-product-preview-rotate-button is-right"
+                            disabled={!canRotate}
+                            onClick={() => rotatePreviewObject(true)}>
                             <span className="habbo-icon icon-arrow-right" />
                         </ContainerButton>
                     </div>
                 </>
             )}
         </div>
-    )
-}
+    );
+};

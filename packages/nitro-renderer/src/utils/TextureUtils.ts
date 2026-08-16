@@ -1,5 +1,5 @@
 import type { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions } from 'pixi.js';
-import { Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { getCanvasTexture, hasCachedCanvasTexture, Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
 import { GetRenderer } from './GetRenderer';
 
@@ -93,6 +93,30 @@ export class TextureUtils {
             });
 
         return target;
+    }
+
+    public static renderToCanvas(
+        container: Container,
+        canvas: HTMLCanvasElement,
+        clear: boolean = true,
+    ): Texture {
+        const target = getCanvasTexture(canvas);
+        const width = Math.max(1, canvas.width);
+        const height = Math.max(1, canvas.height);
+
+        if (target.source.pixelWidth !== width || target.source.pixelHeight !== height) {
+            target.source.resize(width, height, 1);
+        }
+
+        return this.writeToTexture(container, target, clear);
+    }
+
+    public static releaseCanvas(canvas: HTMLCanvasElement): void {
+        if (!hasCachedCanvasTexture(canvas)) return;
+
+        const target = getCanvasTexture(canvas);
+
+        if (!target.destroyed) target.destroy(true);
     }
 
     public static flipTextureHorizontal(texture: Texture) {

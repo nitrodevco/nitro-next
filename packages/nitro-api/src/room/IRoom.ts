@@ -115,7 +115,11 @@ export interface IRoom {
         direction: IVector3D | undefined,
         state: number,
         data: string
-    ): boolean
+    ): boolean;
+    updateRoomObjectWallLocation(
+        objectId: number,
+        location: IVector3D | undefined
+    ): boolean;
     updateRoomObjectWallState(
         objectId: number,
         state: number,
@@ -127,6 +131,7 @@ export interface IRoom {
     ): boolean;
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
     updateRoomObjectMask(objectId: number, add?: boolean): boolean;
+    updateRoomObjectState(objectId: number, category: RoomObjectCategoryEnum): boolean;
     updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean;
     updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible?: boolean): boolean;
     updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
@@ -172,4 +177,5 @@ export interface IRoom {
     readonly areaSelection: IRoomAreaSelectionManager;
     readonly isAreaSelectionMode: boolean;
     readonly legacyGeometry: ILegacyWallGeometry | undefined;
+    readonly isInitialized: boolean;
 }

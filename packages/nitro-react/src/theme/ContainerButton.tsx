@@ -79,7 +79,7 @@ const containerButtonTintableVars: Partial<Record<string, string[]>> = {
     '103': ['button-103-default-src', 'button-103-pressed-src'],
 };
 
-const containerButtonVariants = cva('flex items-center justify-center pointer-events-auto leading-0 cursor-pointer', { variants: containerButtonVariantsConfig, defaultVariants: { variant: '0' } });
+const containerButtonVariants = cva('flex items-center justify-center pointer-events-auto leading-0 not-aria-disabled:cursor-pointer', { variants: containerButtonVariantsConfig, defaultVariants: { variant: '0' } });
 const containerButtonOverlayVariants = cva('', { variants: containerButtonOverlayVariantsConfig, defaultVariants: { variant: '0' } });
 
 type ContainerButtonVariantProps = VariantProps<typeof containerButtonVariantsConfig>;
@@ -91,7 +91,7 @@ interface ContainerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, 
 }
 
 export const ContainerButton = forwardRef<HTMLButtonElement, ContainerButtonProps>(
-    ({ className, variant, defaultVariant, tintColor, style, children, ...props }, ref) => {
+    ({ className, variant, defaultVariant, tintColor, style, children, disabled, ...props }, ref) => {
         const cascadedVariant = useCascadedVariant('containerButton');
         const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['containerButton']?.[resolvedVariant];
@@ -104,6 +104,8 @@ export const ContainerButton = forwardRef<HTMLButtonElement, ContainerButtonProp
                 ref={ref}
                 className={cn(containerButtonVariants({ variant: resolvedVariant }), overlayClassName && 'relative', className)}
                 style={{ ...style, ...tintStyle }}
+                disabled={disabled}
+                aria-disabled={disabled || undefined}
                 {...props}
             >
                 {overlayClassName && <div aria-hidden className={cn('pointer-events-none absolute inset-0', overlayClassName)} />}
