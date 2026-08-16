@@ -15,7 +15,7 @@ export const CatalogItemGridWidgetView = () => {
     const cellSize = getCatalogGridCellSize(activePage.offers);
 
     return (
-        <Border variant="6" className="size-full">
+        <Border variant="6" blend={0.5} className="size-full">
             <InfiniteGrid<IPurchasableOffer>
                 key="catalog-grid"
                 items={activePage.offers}
