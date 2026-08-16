@@ -269,6 +269,17 @@
     overflow: hidden;
 }
 
+.catalog-product-preview-name {
+    position: absolute;
+    top: 12px;
+    right: 70px;
+    left: 10px;
+    z-index: 1;
+    height: 17px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
 .catalog-product-preview-rotation-controls {
     position: absolute;
     top: 8px;
