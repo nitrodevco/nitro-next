@@ -2,9 +2,9 @@ import { IPurchasableOffer } from "@nitrodevco/nitro-api";
 
 import { useCatalogSelectors } from "#base/context";
 import { useCatalogNavigation, useCatalogOfferProduct, useProductIconUrl } from "#base/hooks";
-import { Image } from "#base/theme";
 
-import { CatalogItemGridWidgetItemPriceView } from "./CatalogItemGridWidgetItemPriceView";
+import { getCatalogGridItemTemplate } from "./catalogGridItemTemplate";
+import { CatalogItemGridWidgetItemContentView } from "./CatalogItemGridWidgetItemContentView";
 import { CatalogItemGridWidgetItemSelectedView } from "./CatalogItemGridWidgetItemSelectedView";
 
 type CatalogItemGridWidgetItemViewProps = {
@@ -22,12 +22,15 @@ export const CatalogItemGridWidgetItemView = (props: CatalogItemGridWidgetItemVi
 
     if (activeOffer === offer) return <CatalogItemGridWidgetItemSelectedView offer={offer} />;
 
+    const template = getCatalogGridItemTemplate(offer);
+
     return (
-        <div className="flex items-center justify-center size-full p-0.5 cursor-pointer">
-            <div className="size-full flex flex-col items-center justify-center gap-0.75 min-h-0 py-0.75 overflow-hidden" onClick={() => selectOffer(offer)} data-active={activeOffer === offer}>
-                <Image src={iconUrl} />
-                <CatalogItemGridWidgetItemPriceView offer={offer} />
-            </div>
+        <div
+            className="relative cursor-pointer overflow-hidden"
+            style={{ width: template.width, height: template.height }}
+            onClick={() => selectOffer(offer)}
+            data-active={activeOffer === offer}>
+            <CatalogItemGridWidgetItemContentView offer={offer} iconUrl={iconUrl} />
         </div>
     );
 }

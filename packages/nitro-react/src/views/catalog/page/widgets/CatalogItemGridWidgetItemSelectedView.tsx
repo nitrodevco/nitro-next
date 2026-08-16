@@ -1,9 +1,10 @@
 import { IPurchasableOffer } from "@nitrodevco/nitro-api";
 
 import { useCatalogOfferProduct, useProductIconUrl } from "#base/hooks";
-import { Border, Image } from "#base/theme";
+import { Border } from "#base/theme";
 
-import { CatalogItemGridWidgetItemPriceView } from "./CatalogItemGridWidgetItemPriceView";
+import { getCatalogGridItemTemplate } from "./catalogGridItemTemplate";
+import { CatalogItemGridWidgetItemContentView } from "./CatalogItemGridWidgetItemContentView";
 
 type CatalogItemGridWidgetItemViewProps = {
     offer: IPurchasableOffer;
@@ -16,12 +17,40 @@ export const CatalogItemGridWidgetItemSelectedView = (props: CatalogItemGridWidg
 
     if (!offer || !product) return null;
 
+    const template = getCatalogGridItemTemplate(offer);
+    const highlightStyle = {
+        width: template.width,
+        height: template.highlightHeight,
+    };
+    const highlightInnerStyle = {
+        top: template.highlightInset,
+        left: template.highlightInset,
+        width: template.width - template.highlightInset * 2,
+        height: template.highlightHeight - template.highlightInset * 2,
+    };
+
     return (
-        <Border variant="3" tintColor="#63c5e9" className="flex items-center justify-center size-full p-0.5">
-            <Border variant="3" className="size-full flex flex-col items-center justify-center gap-0.75 min-h-0 py-0.75 overflow-hidden">
-                <Image src={iconUrl} />
-                <CatalogItemGridWidgetItemPriceView offer={offer} />
-            </Border>
-        </Border>
+        <div
+            className="relative overflow-hidden"
+            style={{ width: template.width, height: template.height }}>
+            <Border
+                variant="2"
+                tintColor="#a1a19b"
+                className="absolute left-0 top-0"
+                style={highlightStyle}
+            />
+            <Border
+                variant="3"
+                tintColor="#63c5e9"
+                className="absolute left-0 top-0"
+                style={highlightStyle}
+            />
+            <Border
+                variant="3"
+                className="absolute"
+                style={highlightInnerStyle}
+            />
+            <CatalogItemGridWidgetItemContentView offer={offer} iconUrl={iconUrl} />
+        </div>
     );
 }

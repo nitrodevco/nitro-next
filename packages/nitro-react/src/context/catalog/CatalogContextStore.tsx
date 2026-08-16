@@ -21,7 +21,7 @@ type Actions = {
     setIsBusy: (isBusy: boolean) => void;
     setActivePageId: (activePageId: number) => void;
     setActivePage: (activePage: IActivePage) => void;
-    setActiveOffer: (activeOffer: IPurchasableOffer) => void;
+    setActiveOffer: (activeOffer: IPurchasableOffer | undefined) => void;
     setFrontPageItems: (frontPageItems: ICatalogFrontPageItem[]) => void;
     setRequestedPage: (requestedPage: ICatalogRequestedPage) => void;
     resetCatalog: () => void;
@@ -42,7 +42,7 @@ const initialState: State = {
 
 export type CatalogContextStore = State & Actions;
 
-export const createCatalogContextStore = (catalogType: CatalogTypeEnum) => createStore<CatalogContextStore>()((set, get, store) => ({
+export const createCatalogContextStore = (catalogType: CatalogTypeEnum) => createStore<CatalogContextStore>()(set => ({
     ...initialState,
     catalogType,
     setRootNode: (rootNode: ICatalogNode | undefined) => set({ rootNode }),

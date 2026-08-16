@@ -48,6 +48,8 @@ export const useCatalogNavigation = () => {
     }
 
     const activateNode = (targetNode: ICatalogNode, offerId: number = -1) => {
+        setActiveOffer(undefined);
+
         if (targetNode.parent?.pageName && targetNode.parent.pageName === 'root') {
             for (const child of targetNode.children) {
                 if (!child.visible) continue;

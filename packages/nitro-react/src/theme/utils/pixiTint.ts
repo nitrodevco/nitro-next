@@ -4,7 +4,7 @@ import { Container, Graphics, Sprite } from 'pixi.js';
 const cache = new Map<string, Promise<string | undefined>>();
 
 export function tintImage(url: string, tintColor: string | undefined = undefined, blend: number = 0): Promise<string | undefined> {
-    const key = `${url}::${tintColor}`;
+    const key = `${url}::${tintColor}::${blend}`;
     const cached = cache.get(key);
 
     if (cached) return cached;

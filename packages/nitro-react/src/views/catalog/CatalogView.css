@@ -276,3 +276,36 @@
     flex: 1 1 auto;
     min-height: 0;
 }
+
+.catalog-purchase-region {
+    position: relative;
+    flex: 0 0 55px;
+    height: 55px;
+    min-height: 55px;
+    overflow: hidden;
+}
+
+.catalog-purchase-empty {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    overflow: hidden;
+}
+
+.catalog-purchase-empty-surface {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+}
+
+.catalog-purchase-empty-label {
+    position: absolute;
+    z-index: 10;
+    top: 5px;
+    right: 9px;
+    left: 10px;
+    height: 19px;
+    overflow: hidden;
+}

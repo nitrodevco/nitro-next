@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 
-export type BitmapTextRecipe = 'bold-12' | 'bold-italic-12';
+export type BitmapTextRecipe = 'bold-12' | 'bold-14' | 'bold-italic-12';
 
 type BitmapGlyph = {
     x: number;
@@ -19,6 +19,7 @@ type BitmapFontMetrics = {
     ascent: number;
     descent: number;
     lineHeight: number;
+    fieldGutterX?: number;
     coordinateMode?: string;
     phaseCount?: number;
     glyphs: Record<string, BitmapGlyph>;
@@ -34,6 +35,8 @@ type BitmapTextProps = {
     children?: string | number;
     recipe: BitmapTextRecipe;
     color: string;
+    align?: 'left' | 'center' | 'right';
+    autoWidth?: boolean;
     shadowColor?: string;
     shadowX?: number;
     shadowY?: number;
@@ -44,6 +47,10 @@ const FONT_SOURCES: Record<BitmapTextRecipe, { image: string; metrics: string }>
     'bold-12': {
         image: '/assets/flash/fonts/bold-12.png',
         metrics: '/assets/flash/fonts/bold-12.json',
+    },
+    'bold-14': {
+        image: '/assets/flash/fonts/bold-14.png',
+        metrics: '/assets/flash/fonts/bold-14.json',
     },
     'bold-italic-12': {
         image: '/assets/flash/fonts/bold-italic-12.png',
@@ -103,7 +110,7 @@ const layoutGlyphs = (metrics: BitmapFontMetrics, text: string) => {
     ) {
         let cursorTwips = 0;
 
-        return Array.from(text).flatMap(character => {
+        const glyphs = Array.from(text).flatMap(character => {
             const sourceGlyph = getGlyph(metrics, character);
 
             if (!sourceGlyph) return [];
@@ -126,12 +133,14 @@ const layoutGlyphs = (metrics: BitmapFontMetrics, text: string) => {
 
             return [positioned];
         });
+
+        return { glyphs, width: cursorTwips / FLASH_TWIPS_PER_PIXEL };
     }
 
     let cursor = 0;
     let previous = '';
 
-    return Array.from(text).flatMap(character => {
+    const glyphs = Array.from(text).flatMap(character => {
         const glyph = getGlyph(metrics, character);
 
         if (!glyph) return [];
@@ -144,6 +153,8 @@ const layoutGlyphs = (metrics: BitmapFontMetrics, text: string) => {
 
         return [positioned];
     });
+
+    return { glyphs, width: cursor };
 };
 
 const paintMask = (
@@ -152,6 +163,7 @@ const paintMask = (
     text: string,
     width: number,
     height: number,
+    align: NonNullable<BitmapTextProps['align']>,
 ) => {
     const { image, metrics } = font;
     const usesFlashCoordinates = metrics.coordinateMode === 'flash-text-field';
@@ -165,7 +177,15 @@ const paintMask = (
     context.clearRect(0, 0, width, height);
     context.imageSmoothingEnabled = false;
 
-    for (const { glyph, x } of layoutGlyphs(metrics, text)) {
+    const layout = layoutGlyphs(metrics, text);
+    const lineStart =
+        align === 'center'
+            ? (width - layout.width) / 2
+            : align === 'right'
+              ? width - layout.width
+              : 0;
+
+    for (const { glyph, x } of layout.glyphs) {
         if (glyph.width <= 0 || glyph.height <= 0) continue;
 
         const destinationY =
@@ -179,7 +199,7 @@ const paintMask = (
             glyph.y,
             glyph.width,
             glyph.height,
-            usesFlashCoordinates ? x : Math.round(x),
+            usesFlashCoordinates ? lineStart + x : Math.round(lineStart + x),
             usesFlashCoordinates ? destinationY : Math.round(destinationY),
             glyph.width,
             glyph.height,
@@ -204,6 +224,8 @@ export const BitmapText = (props: BitmapTextProps) => {
         children,
         recipe,
         color,
+        align = 'left',
+        autoWidth = false,
         shadowColor,
         shadowX = 0,
         shadowY = 0,
@@ -224,8 +246,16 @@ export const BitmapText = (props: BitmapTextProps) => {
 
             if (!active || !font || !container || !canvas) return;
 
-            const width = Math.floor(container.clientWidth);
+            const width = autoWidth
+                ? Math.ceil(
+                      layoutGlyphs(font.metrics, text).width +
+                          (font.metrics.fieldGutterX ?? 0) * 2,
+                  )
+                : Math.floor(container.clientWidth);
             const height = Math.floor(container.clientHeight);
+
+            if (autoWidth) container.style.width = `${width}px`;
+            else container.style.removeProperty('width');
 
             if (width <= 0 || height <= 0) return;
 
@@ -247,12 +277,12 @@ export const BitmapText = (props: BitmapTextProps) => {
 
             context.clearRect(0, 0, width, height);
             context.imageSmoothingEnabled = false;
-            paintMask(scratchContext, font, text, width, height);
+            paintMask(scratchContext, font, text, width, height, align);
 
             if (shadowColor) {
                 tintMask(scratchContext, width, height, shadowColor);
                 context.drawImage(scratch, shadowX, shadowY);
-                paintMask(scratchContext, font, text, width, height);
+                paintMask(scratchContext, font, text, width, height, align);
             }
 
             tintMask(scratchContext, width, height, color);
@@ -280,7 +310,7 @@ export const BitmapText = (props: BitmapTextProps) => {
             active = false;
             observer?.disconnect();
         };
-    }, [color, recipe, shadowColor, shadowX, shadowY, text]);
+    }, [align, autoWidth, color, recipe, shadowColor, shadowX, shadowY, text]);
 
     return (
         <span ref={containerRef} className={className}>

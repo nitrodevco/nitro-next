@@ -1,5 +1,12 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Fragment, Key, ReactElement, useEffect, useRef, useState } from 'react';
+import {
+    Fragment,
+    type Key,
+    type ReactElement,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react';
 
 import { ScrollbarVertical } from './ScrollbarVertical';
 
@@ -7,96 +14,110 @@ export const InfiniteGrid = <T,>(props: {
     items: T[];
     itemWidth?: number;
     minHeight?: number;
+    horizontalGap?: number;
+    verticalGap?: number;
     overrideColumnCount?: number;
     itemRender: (item: T, index?: number) => ReactElement;
     getKey: (item: T) => Key;
 }) => {
-    const { items = [], itemWidth = 45, minHeight = 45, overrideColumnCount = 0, itemRender, getKey } = props;
-    const [columnCount, setColumnCount] = useState(0);
+    const {
+        items = [],
+        itemWidth = 45,
+        minHeight = 45,
+        horizontalGap = 4,
+        verticalGap = 4,
+        overrideColumnCount = 0,
+        itemRender,
+        getKey,
+    } = props;
+    const [columnCount, setColumnCount] = useState(1);
     const elementRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const rowCount = Math.ceil(items.length / columnCount);
+    const rowPitch = minHeight + verticalGap;
 
     const virtualizer = useVirtualizer({
-        count: (Math.ceil((items.length / (columnCount || 1))) || 1),
+        count: rowCount,
         overscan: 1,
         getScrollElement: () => elementRef.current,
-        estimateSize: () => minHeight,
+        estimateSize: () => rowPitch,
     });
 
-    useEffect(() => {
-        if (!elementRef?.current) return;
+    useLayoutEffect(() => {
+        const element = elementRef.current;
 
-        let previousWidth = -1;
-        let debounceTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+        if (!element) return;
 
-        const setColumnsForWidth = (width: number, force: boolean = false) => {
-            width = Math.floor(width);
+        const updateColumnCount = (width: number) => {
+            const nextColumnCount =
+                overrideColumnCount ||
+                Math.max(
+                    1,
+                    Math.floor(
+                        (Math.floor(width) + horizontalGap) /
+                            (itemWidth + horizontalGap),
+                    ),
+                );
 
-            if (width === previousWidth) return;
-
-            previousWidth = width;
-
-            if (debounceTimeout) clearTimeout(debounceTimeout);
-
-            if (force) {
-                setColumnCount(overrideColumnCount || Math.max(1, Math.min(12, Math.ceil(previousWidth / (itemWidth + 4)))));
-
-                return;
-            }
-
-            debounceTimeout = setTimeout(() => {
-                setColumnCount(overrideColumnCount || Math.max(1, Math.min(12, Math.ceil(previousWidth / (itemWidth + 4)))));
-            }, 10);
+            setColumnCount(nextColumnCount);
         };
 
         const resizeObserver = new ResizeObserver(entries => {
-            const entry = entries?.[0];
+            const entry = entries[0];
 
-            if (entry) setColumnsForWidth(entry.contentRect.width);
+            if (entry) updateColumnCount(entry.contentRect.width);
         });
 
-        resizeObserver.observe(elementRef.current);
+        resizeObserver.observe(element);
 
-        const initialSize = elementRef.current.getBoundingClientRect();
+        const initialSize = element.getBoundingClientRect();
 
-        if (initialSize) setColumnsForWidth(initialSize.width, true);
+        updateColumnCount(initialSize.width);
 
-        return () => {
-            if (debounceTimeout) clearTimeout(debounceTimeout);
+        return () => resizeObserver.disconnect();
+    }, [horizontalGap, itemWidth, overrideColumnCount]);
 
-            resizeObserver.disconnect();
-        };
-    }, [itemWidth, overrideColumnCount]);
+    const contentHeight = Math.max(
+        0,
+        virtualizer.getTotalSize() - (rowCount ? verticalGap : 0),
+    );
 
     return (
-        <div className="flex size-full min-h-0 min-w-0 gap-0.5 p-1 overflow-hidden">
+        <div className="flex size-full min-h-0 min-w-0 p-1 overflow-hidden">
             <div
                 ref={elementRef}
-                className="min-h-0 min-w-0 flex-1 overflow-y-auto pr-1.5 py-0.5 scrollbar-none [&::-webkit-scrollbar]:hidden">
+                className="min-h-0 min-w-0 flex-1 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden"
+            >
                 <div
                     ref={contentRef}
-                    className="flex flex-col w-full *:pb-1 *:last:pb-0 relative"
+                    className="relative w-full"
                     style={{
-                        height: `${virtualizer.getTotalSize()}px`
-                    }}>
+                        height: `${contentHeight}px`,
+                    }}
+                >
                     {virtualizer.getVirtualItems().map(virtualRow => (
                         <div
                             key={virtualRow.key}
                             data-index={virtualRow.index}
                             ref={virtualizer.measureElement}
-                            className={`grid grid-cols-${columnCount} gap-1 absolute top-0 left-0 w-full`}
+                            className="grid absolute top-0 left-0"
                             style={{
-                                minHeight: `${minHeight}px`,
-                                transform: `translateY(${virtualRow.start}px)`
-                            }}>
-                            {Array.from(Array(columnCount)).map((e, i) => {
-                                const item = items[i + (virtualRow.index * columnCount)];
+                                width: `${columnCount * itemWidth + Math.max(0, columnCount - 1) * horizontalGap}px`,
+                                height: `${minHeight + (virtualRow.index < rowCount - 1 ? verticalGap : 0)}px`,
+                                gridTemplateColumns: `repeat(${columnCount}, ${itemWidth}px)`,
+                                gridTemplateRows: `${minHeight}px`,
+                                columnGap: `${horizontalGap}px`,
+                                transform: `translateY(${virtualRow.start}px)`,
+                            }}
+                        >
+                            {Array.from({ length: columnCount }, (_, i) => {
+                                const item = items[i + virtualRow.index * columnCount];
 
                                 if (!item) return null;
 
                                 return (
                                     <Fragment key={getKey(item)}>
-                                        {(item && itemRender(item, i)) ?? null}
+                                        {itemRender(item, i)}
                                     </Fragment>
                                 );
                             })}
