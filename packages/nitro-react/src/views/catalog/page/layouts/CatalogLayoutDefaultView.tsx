@@ -7,7 +7,8 @@ import { CatalogPurchaseWidgetView } from "../widgets/CatalogPurchaseWidgetView"
 
 export const CatalogLayoutDefaultView = () => {
     const { activeOffer } = useCatalogSelectors();
-    const productName = activeOffer?.products[0]?.productData?.name ?? "";
+    const product = activeOffer?.products[0];
+    const productName = product?.productData?.name || product?.furnitureData.localizedName || "";
 
     return (
         <>
