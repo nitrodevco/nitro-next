@@ -32,7 +32,8 @@ let package = Package(
         ),
         .target(
             name: "NitroAvatar",
-            dependencies: ["NitroCore", "NitroAssets"]
+            dependencies: ["NitroCore", "NitroAssets"],
+            resources: [.copy("Resources")]
         ),
         .target(
             name: "NitroRoom",
@@ -45,6 +46,10 @@ let package = Package(
         .testTarget(
             name: "NitroAssetsTests",
             dependencies: ["NitroAssets"]
+        ),
+        .testTarget(
+            name: "NitroAvatarTests",
+            dependencies: ["NitroAvatar"]
         ),
     ]
 )

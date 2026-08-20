@@ -2,27 +2,46 @@ import Foundation
 import SpriteKit
 
 import NitroAssets
+import NitroAvatar
 import NitroCore
 import NitroRoom
 
 /// Minimal SpriteKit room scene: owns the asset pipeline and room camera (`RoomGeometry`) and
-/// places `FurnitureNode`s at their projected screen position. This is intentionally small - the
-/// floor/wall plane baking (`RoomPlane`) and the avatar pipeline are not wired in yet, see the
-/// package README for current coverage.
+/// places `FurnitureNode`s/`AvatarNode`s at their projected screen position. This is intentionally
+/// small - the floor/wall plane baking (`RoomPlane`) isn't wired in yet, see the package README
+/// for current coverage.
 open class RoomScene: SKScene {
-    public let assetManager = AssetManager()
+    public let assetManager: AssetManager
     public let objectLayer = SKNode()
+
+    public let avatarAssets: AssetAliasCollection
+    /// `nil` only if the bundled default avatar geometry/part-set resources failed to decode -
+    /// shouldn't happen with the package as shipped. Real figure data (`figuredata.json`) still
+    /// needs to be injected via `avatarStructure?.injectFigureData(...)` before avatars have any
+    /// real clothing to draw - see `AvatarDefaults.makeStructure()`'s doc comment.
+    public let avatarStructure: AvatarStructure?
+    public let avatarCompositor: AvatarCompositor?
 
     /// Matches the live room camera constructed by `RoomSpriteCanvas.ts`: yaw -135, pitch 30,
     /// at tile (11,11,5), scale 64 (zoomed in).
-    public let geometry = RoomGeometry(
-        scale: .zoomedIn,
-        direction: Vector3d(-135, 30, 0),
-        location: Vector3d(11, 11, 5),
-        depth: Vector3d(-135, 0.5, 0)
-    )
+    public let geometry: RoomGeometry
 
     public override init(size: CGSize) {
+        let manager = AssetManager()
+        let aliasCollection = AssetAliasCollection(assetManager: manager)
+        let structure = AvatarDefaults.makeStructure()
+
+        assetManager = manager
+        avatarAssets = aliasCollection
+        avatarStructure = structure
+        avatarCompositor = structure.map { AvatarCompositor(structure: $0, assets: aliasCollection) }
+        geometry = RoomGeometry(
+            scale: .zoomedIn,
+            direction: Vector3d(-135, 30, 0),
+            location: Vector3d(11, 11, 5),
+            depth: Vector3d(-135, 0.5, 0)
+        )
+
         super.init(size: size)
 
         addChild(objectLayer)
@@ -58,6 +77,36 @@ open class RoomScene: SKScene {
             scale: Int(geometry.scale), cameraDirectionX: geometry.direction.x,
             objectDirectionX: objectDirectionX, selectedColorId: selectedColorId
         )
+
+        objectLayer.addChild(node)
+
+        return node
+    }
+
+    /// Places a standing avatar at `tile`, facing `direction` (0-7). Requires `avatarStructure` to
+    /// have real figure data injected first (see `avatarStructure`'s doc comment) and the relevant
+    /// avatar part `.nitro` bundles already loaded into `assetManager`/`avatarAssets`.
+    @discardableResult
+    public func placeAvatar(figure: AvatarFigureContainer, at tile: Vector3d, direction: Int) -> AvatarNode? {
+        guard let compositor = avatarCompositor else {
+            NitroLogger.warn("RoomScene: avatar structure failed to load from bundled defaults")
+
+            return nil
+        }
+
+        guard let standAction = AvatarDefaults.standAction() else {
+            NitroLogger.warn("RoomScene: no default Stand action available")
+
+            return nil
+        }
+
+        avatarAssets.reset()
+
+        let node = AvatarNode(compositor: compositor)
+
+        node.position = geometry.getScreenPoint(tile)
+
+        guard node.refresh(figure: figure, direction: direction, action: standAction) else { return nil }
 
         objectLayer.addChild(node)
 

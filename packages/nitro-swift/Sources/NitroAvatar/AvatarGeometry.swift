@@ -54,14 +54,21 @@ public struct AvatarGeometryNode {
 
 /// Swift port of the shared depth-sort pattern used by both `GeometryBodyPart.getParts` and
 /// `AvatarModelGeometry.getBodyPartsAtAngle`: rotate every node's static location around the
-/// model's Y axis for the current facing direction, then sort by distance-to-camera along Z.
+/// model's Y axis, then sort by distance-to-camera along Z.
+///
+/// `angleDegrees` is taken as-is (no direction-index lookup here) because the two TS call sites
+/// disagree on what they pass: `AvatarModelGeometry.getBodyPartsAtAngle` resolves the 0-7 facing
+/// index through `AvatarDirectionAngle.DIRECTION_TO_ANGLE` first, while `AvatarModelGeometry.getParts`
+/// (the one that actually decides which figure layers are visible) passes the raw 0-7 index straight
+/// into `Matrix4x4.getYRotationMatrix` *without* that lookup - i.e. it rotates by at most 7 degrees,
+/// not by the compass angle. That looks like a bug, but it's the live behavior, so callers below
+/// replicate it exactly rather than "fixing" it - see `AvatarModelGeometry.getParts`'s doc comment.
 ///
 /// Returns ids ordered **nearest-camera-first**; per `AvatarImage.getImage`, callers composite by
 /// iterating this list in *reverse* (back-to-front painter's algorithm), so the nearest part to
 /// the camera is drawn last, i.e. on top.
-public func sortAvatarNodesByDepth(_ nodes: [AvatarGeometryNode], direction: Int, camera: Vector3d) -> [String] {
-    let angleIndex = ((direction % 8) + 8) % 8
-    let matrix = Matrix4x4.yRotationMatrix(degrees: Double(AvatarDirectionAngle.directionToAngle[angleIndex]))
+public func sortAvatarNodesByDepth(_ nodes: [AvatarGeometryNode], angleDegrees: Double, camera: Vector3d) -> [String] {
+    let matrix = Matrix4x4.yRotationMatrix(degrees: angleDegrees)
 
     let keyed: [(id: String, key: Double)] = nodes.map { node in
         let needsTransform = node.location.x != 0 || node.location.y != 0 || node.location.z != 0

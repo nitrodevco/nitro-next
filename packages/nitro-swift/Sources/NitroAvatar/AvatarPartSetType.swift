@@ -1,0 +1,20 @@
+/// Mirrors `AvatarPartSetType` (packages/nitro-api/src/avatar/enum/AvatarPartSetType.ts).
+public enum AvatarPartSetType: String, Sendable {
+    case figure = "figure"
+    case head = "head"
+    case speak = "speak"
+    case gesture = "gesture"
+    case eye = "eye"
+    case handRight = "handRight"
+    case handRightAndHead = "handRightAndHead"
+    case handLeft = "handLeft"
+    case walk = "walk"
+    case sit = "sit"
+    case itemRight = "itemRight"
+    case swim = "swim"
+    case snowWarRun = "snowwarrun"
+    case snowWarPick = "snowwarpick"
+    case snowWarDieFront = "snowwardiefront"
+    case snowWarDieBack = "snowwardieback"
+    case snowWarThrow = "snowwarthrow"
+}

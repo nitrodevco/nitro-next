@@ -54,7 +54,7 @@ public final class GraphicAssetPalette {
                 space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
             ) else { return nil }
 
-            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
 
             let pixels = rawBuffer.bindMemory(to: UInt8.self)
             var index = 0

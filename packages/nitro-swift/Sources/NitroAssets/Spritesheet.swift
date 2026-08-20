@@ -60,7 +60,7 @@ public final class NitroSpritesheet {
         // CGImage.cropping(to:) expects, so no axis flip is needed here.
         let packedWidth = frame.rotated ? frame.frame.h : frame.frame.w
         let packedHeight = frame.rotated ? frame.frame.w : frame.frame.h
-        let cropRect = CGRect(x: frame.frame.x, y: frame.frame.y, width: packedWidth, height: packedHeight)
+        let cropRect = CGRect(x: CGFloat(frame.frame.x), y: CGFloat(frame.frame.y), width: CGFloat(packedWidth), height: CGFloat(packedHeight))
 
         guard var piece = sheetImage.cropping(to: cropRect) else { return nil }
 
@@ -91,7 +91,7 @@ public final class NitroSpritesheet {
 
         ctx.translateBy(x: 0, y: CGFloat(height))
         ctx.rotate(by: -CGFloat.pi / 2)
-        ctx.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+        ctx.draw(image, in: CGRect(x: 0, y: 0, width: CGFloat(image.width), height: CGFloat(image.height)))
 
         return ctx.makeImage()
     }

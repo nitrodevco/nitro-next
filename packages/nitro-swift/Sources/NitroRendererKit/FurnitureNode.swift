@@ -44,7 +44,7 @@ public final class FurnitureNode: SKNode {
         let sprite = SKSpriteNode(texture: layer.texture)
 
         sprite.anchorPoint = CGPoint(x: 0, y: 1) // TS offsets are top-left registered
-        sprite.position = CGPoint(x: layer.offsetX, y: -layer.offsetY) // screen Y grows downward
+        sprite.position = CGPoint(x: CGFloat(layer.offsetX), y: CGFloat(-layer.offsetY)) // screen Y grows downward
         sprite.xScale = layer.flipH ? -1 : 1
         sprite.yScale = layer.flipV ? -1 : 1
         sprite.alpha = CGFloat(max(0, min(255, layer.alpha)) / 255)
@@ -56,7 +56,7 @@ public final class FurnitureNode: SKNode {
             // SpriteKit's colorBlendFactor *mixes* toward `color` rather than multiplying like
             // Pixi's `tint`, so this is an approximation - exact for the common 0xFFFFFF
             // (untinted) case, visually close for tinted "colorable" furniture variants.
-            sprite.color = FurnitureNode.skColor(from: layer.color)
+            sprite.color = skColor(fromRGB: layer.color)
             sprite.colorBlendFactor = 1
         }
 
@@ -73,11 +73,4 @@ public final class FurnitureNode: SKNode {
         }
     }
 
-    private static func skColor(from rgb: UInt32) -> SKColor {
-        let r = CGFloat((rgb >> 16) & 0xFF) / 255
-        let g = CGFloat((rgb >> 8) & 0xFF) / 255
-        let b = CGFloat(rgb & 0xFF) / 255
-
-        return SKColor(red: r, green: g, blue: b, alpha: 1)
-    }
 }

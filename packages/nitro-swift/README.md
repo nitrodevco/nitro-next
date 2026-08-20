@@ -27,14 +27,22 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   should render for a given room scale/direction/color). Ports:
   `packages/nitro-renderer/src/room/utils/RoomGeometry.ts`,
   `packages/nitro-renderer/src/room/object/visualization/{data,furniture}/*`.
-- **NitroAvatar** - `AvatarFigureContainer` (figure-string parse/serialize),
-  `AvatarFigurePartType`/`AvatarGenderType`, and the body-part depth-sort algorithm
-  (`sortAvatarNodesByDepth`, `Matrix4x4` Y-rotation) used to order layered avatar sprites per
-  facing direction. Ports: `packages/nitro-renderer/src/avatar/AvatarFigureContainer.ts`,
-  `packages/nitro-renderer/src/avatar/geometry/*`.
-- **NitroRendererKit** - the SpriteKit adapter layer: `FurnitureNode` (turns a
-  `FurnitureVisualization` layer list into `SKSpriteNode`s) and `RoomScene` (owns the
-  `AssetManager` + room camera, places furniture at a projected screen position).
+- **NitroAvatar** - the avatar compositing pipeline: `AvatarFigureContainer` (figure-string
+  parse/serialize), `FigureSetData`/`Palette`/`SetType`/`FigurePartSet` (the figuredata.json
+  catalog), `PartSetsData`/`ActivePartSet` (which figure parts an action activates),
+  `AvatarModelGeometry` (config-driven body-part depth-sort, via `sortAvatarNodesByDepth` +
+  `Matrix4x4` Y-rotation), `AvatarStructure` (figure+action -> visible layers), and
+  `AvatarCompositor` (asset naming/fallback/mirroring + the union-image placement math -> final
+  positioned layers). `AssetAliasCollection` resolves avatar asset names through a bundle's
+  `aliases`. The client's built-in default geometry/part-set/action tables
+  (`HabboAvatarGeometry`/`HabboAvatarPartSets`/`HabboAvatarActionsDefault`/
+  `HabboAvatarFigureDataDefault`) are bundled as JSON resources (extracted verbatim from the TS
+  source via a build-time script, not hand-transcribed) and loaded through `AvatarDefaults`. Ports:
+  `packages/nitro-renderer/src/avatar/**` (see the "Status" section below for what's out of scope).
+- **NitroRendererKit** - the SpriteKit adapter layer: `FurnitureNode`/`AvatarNode` (turn a
+  `FurnitureVisualization`/`AvatarCompositor` layer list into `SKSpriteNode`s) and `RoomScene`
+  (owns the `AssetManager` + room camera + avatar structure, places furniture/avatars at their
+  projected screen position).
 
 ## Status
 
@@ -45,7 +53,13 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   specific (non-textbook) Euler rotation composition.
 - Static furniture layer resolution: asset naming, direction fallback, size fallback
   (nearest-by-ratio), per-layer offset/alpha/color/blend-mode/depth, the shadow layer.
-- Figure-string parsing and the avatar depth-sort algorithm.
+- Static-pose avatar compositing: figure-string parsing, the figuredata.json catalog
+  (palettes/colors/part sets/hidden layers), config-driven body-part depth-sorting, `AvatarStructure.getParts`'
+  figure->visible-layers resolution (including the mirrored-direction/flip-in-place asset-naming
+  logic for directions 4-6), and the union-image placement math that positions every layer within
+  the avatar canvas. Verified against the live TS source down to specific quirks (e.g.
+  `AvatarModelGeometry.getParts` rotating by the raw 0-7 direction index rather than the resolved
+  compass angle - a bug in the original that's replicated deliberately, see `AvatarGeometry.swift`).
 
 **Explicitly not yet ported** (scoped out rather than faked):
 - **Room floor/wall/landscape plane rendering** (`RoomPlane`, `RoomVisualization`): the TS version
@@ -59,12 +73,17 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   transition animations, and the ~55 concrete `Furniture*Logic` classes (movers, blinking lights,
   dice, etc.). Not started - `FurnitureVisualization` currently only renders the static (frame 0)
   case.
-- **Avatar compositing**: figure-data catalog parsing (`FigureSetData`/`Palette`/`FigurePartSet`),
-  `AvatarStructure.getParts` (figure+action -> visible layers), the action precedence/combination
-  system, keyframe animation playback (`Animation`/`AnimationAction`), and `AvatarImageCache`'s
-  actual sprite compositing. `AvatarFigureContainer` and the depth-sort are the pieces in place;
-  the rest is a substantial follow-up (see the architecture notes gathered during this port for a
-  detailed spec of each piece).
+- **Avatar animation & actions**: keyframe animation playback (`Animation`/`AnimationAction`,
+  `AvatarAnimationFrame`), the action precedence/combination system (`AvatarActionManager.filterActions`/
+  `sortActions` - only a single caller-supplied `ActionDefinition` is supported, not simultaneous
+  actions like "wave while walking"), gestures, and FX/effect-injected layers
+  (`layerItems`/`animation.addData`). Only the "Stand" posture is wired up (from the client's
+  built-in default action table); the full action catalog (Walk/Sit/Wave/...) is normally fetched
+  per-hotel like figuredata and isn't loaded. `AvatarImagePartContainer.getFrameDefinition` always
+  returns `nil` as a result. `AvatarImageCache`'s multi-level caching
+  (body-part/action/direction) also isn't ported - not needed for a static pose, would matter for
+  animated ones (see `AvatarCompositor`'s doc comment for the "recompute every call" tradeoff this
+  implies).
 - `LegacyWallGeometry` (legacy wall-item position string format) - only needed for
   import/export of the old placement-string format, not live rendering.
 
