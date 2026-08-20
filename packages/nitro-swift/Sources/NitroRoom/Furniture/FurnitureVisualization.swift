@@ -21,6 +21,23 @@ public protocol FurnitureVisualizing: AnyObject {
     ) -> [FurnitureLayerDraw]
 }
 
+/// Per-layer override a composed visualization (`FurnitureAnimatedVisualization`,
+/// `FurnitureGiftWrappedVisualization`, ...) can supply to `FurnitureVisualization.computeLayers`
+/// for one layer - the generalized Swift-composition equivalent of the TS class hierarchy's
+/// `getFrameNumber`/`getLayerXOffset`/`getLayerYOffset` overrides. `nil` fields fall back to the
+/// static-furniture default (frame `0`, no extra offset).
+public struct FurnitureLayerOverride {
+    public var frameNumber: Double?
+    public var extraOffsetX: Double
+    public var extraOffsetY: Double
+
+    public init(frameNumber: Double? = nil, extraOffsetX: Double = 0, extraOffsetY: Double = 0) {
+        self.frameNumber = frameNumber
+        self.extraOffsetX = extraOffsetX
+        self.extraOffsetY = extraOffsetY
+    }
+}
+
 /// One resolved, ready-to-draw furniture layer - the Swift equivalent of what `FurnitureVisualization.updateSprite`
 /// (packages/nitro-renderer/src/room/object/visualization/furniture/FurnitureVisualization.ts) would have written
 /// onto a pooled `IRoomObjectSprite`. Kept as a plain value type instead of a stateful sprite object since this
@@ -53,12 +70,11 @@ public struct FurnitureLayerDraw {
 /// `computeLayers` simply recomputes the full layer list each call (see `GraphicAsset`'s doc comment
 /// for the same "drop the JS-GC-motivated caching, keep the math" rationale).
 ///
-/// Animated furniture reuses this same layer-resolution/asset-naming/offset math rather than
-/// duplicating it: `FurnitureAnimatedVisualization` (which owns the actual animation-id/frame state
-/// machine - see its doc comment for why that's a standalone class, not a TS-style subclass of this
-/// one) supplies a `frameProvider` closure here instead. This is the Swift-composition equivalent
-/// of the TS class's `getFrameNumber`/`getLayerXOffset`/`getLayerYOffset` being overridden by the
-/// `FurnitureAnimatedVisualization` subclass.
+/// Every composed visualization variant (`FurnitureAnimatedVisualization`,
+/// `FurnitureGiftWrappedVisualization`, ...) reuses this same layer-resolution/asset-naming/offset
+/// math rather than duplicating it, supplying a `layerOverride`/`alphaOverride` closure pair
+/// instead of subclassing - see `FurnitureLayerOverride` and `FurnitureAnimatedVisualization`'s doc
+/// comment for why composition, not a TS-style subclass hierarchy, is this port's shape here.
 public final class FurnitureVisualization: FurnitureVisualizing {
     public static let depthMultiplier = (0.5).squareRoot()
     private static let additionalLayerCount = 1 // the synthetic shadow layer
@@ -90,12 +106,15 @@ public final class FurnitureVisualization: FurnitureVisualizing {
     ) -> [FurnitureLayerDraw] {
         computeLayers(
             scale: scale, direction: direction, selectedColorId: selectedColorId, alphaMultiplier: alphaMultiplier,
-            furnitureLift: furnitureLift, lookThrough: lookThrough, frameProvider: nil
+            furnitureLift: furnitureLift, lookThrough: lookThrough, layerOverride: nil, alphaOverride: nil
         )
     }
 
-    /// The `frameProvider`-accepting overload `FurnitureAnimatedVisualization` calls - not part of
-    /// the public/`FurnitureVisualizing` surface, see that class's doc comment.
+    /// The override-accepting overload composed visualization variants call - not part of the
+    /// public/`FurnitureVisualizing` surface, see `FurnitureLayerOverride`'s doc comment.
+    /// `alphaOverride` receives `(direction, layerId, defaultAlpha)` and is only consulted for
+    /// non-shadow layers, matching the original's `updateSprite` never routing the shadow layer's
+    /// alpha through the overridable `getLayerAlpha`.
     func computeLayers(
         scale: Int,
         direction: Int,
@@ -103,7 +122,8 @@ public final class FurnitureVisualization: FurnitureVisualizing {
         alphaMultiplier: Double,
         furnitureLift: Double,
         lookThrough: Bool,
-        frameProvider: ((Int) -> AnimationFrame?)?
+        layerOverride: ((Int) -> FurnitureLayerOverride?)?,
+        alphaOverride: ((Int, Int, Double) -> Double)?
     ) -> [FurnitureLayerDraw] {
         let size = data.getValidSize(scale)
 
@@ -123,7 +143,7 @@ public final class FurnitureVisualization: FurnitureVisualizing {
                 scale: scale, size: size, isRegularSize: isRegularSize, direction: direction, layerId: layerId,
                 shadowLayerIndex: shadowLayerIndex, selectedColorId: selectedColorId,
                 alphaMultiplier: alphaMultiplier, furnitureLift: furnitureLift, lookThrough: lookThrough,
-                frame: frameProvider?(layerId)
+                override: layerOverride?(layerId), alphaOverride: alphaOverride
             ) {
                 results.append(draw)
             }
@@ -150,7 +170,7 @@ public final class FurnitureVisualization: FurnitureVisualizing {
     private func computeLayer(
         scale: Int, size: Int, isRegularSize: Bool, direction: Int, layerId: Int, shadowLayerIndex: Int,
         selectedColorId: Int, alphaMultiplier: Double, furnitureLift: Double, lookThrough: Bool,
-        frame: AnimationFrame?
+        override: FurnitureLayerOverride?, alphaOverride: ((Int, Int, Double) -> Double)?
     ) -> FurnitureLayerDraw? {
         guard layerId < FurnitureVisualizationData.layerLetters.count else { return nil }
 
@@ -159,7 +179,7 @@ public final class FurnitureVisualization: FurnitureVisualizing {
 
         guard !letter.isEmpty else { return nil }
 
-        let frameNumberString = frame.map { FurnitureVisualization.jsFrameNumberString($0.id) } ?? "0"
+        let frameNumberString = override?.frameNumber.map { FurnitureVisualization.jsFrameNumberString($0) } ?? "0"
         let assetName = isRegularSize
             ? "\(data.type)_\(size)_\(letter)_\(direction)_\(frameNumberString)"
             : "\(data.type)_icon_\(letter)"
@@ -171,14 +191,14 @@ public final class FurnitureVisualization: FurnitureVisualizing {
         if isShadow {
             let liftOffset = (furnitureLift * (Double(scale) / 2)).rounded(.up)
 
-            // Matches `FurnitureAnimatedVisualization.getLayerYOffset`: the animation frame's `.y`
-            // is added on top of the shadow's lift-derived offset. Its `.x` is never applied here -
+            // Matches `FurnitureAnimatedVisualization.getLayerYOffset`: an override's extra Y offset
+            // is added on top of the shadow's lift-derived offset. Extra X is never applied here -
             // the original's `updateSprite` shadow branch sets `offsetX` straight from the asset,
             // without ever calling the (overridable) `getLayerXOffset`.
             return FurnitureLayerDraw(
                 layerId: layerId, assetName: assetName, texture: asset.texture,
                 flipH: asset.flipH, flipV: asset.flipV,
-                offsetX: asset.offsetX, offsetY: asset.offsetY + liftOffset + (frame?.y ?? 0),
+                offsetX: asset.offsetX, offsetY: asset.offsetY + liftOffset + (override?.extraOffsetY ?? 0),
                 alpha: 48 * alphaMultiplier * lookThroughFactor,
                 color: ColorData.defaultColor, blendMode: LayerData.defaultBlendMode,
                 relativeDepth: 1 * FurnitureVisualization.depthMultiplier,
@@ -186,14 +206,15 @@ public final class FurnitureVisualization: FurnitureVisualizing {
             )
         }
 
-        let alpha = data.getLayerAlpha(scale, direction, layerId) * alphaMultiplier * lookThroughFactor
+        let defaultAlpha = data.getLayerAlpha(scale, direction, layerId) * alphaMultiplier * lookThroughFactor
+        let alpha = alphaOverride?(direction, layerId, defaultAlpha) ?? defaultAlpha
         let relativeDepth = (data.getLayerZOffset(scale, direction, layerId) - Double(layerId) * 0.001) * FurnitureVisualization.depthMultiplier
 
         return FurnitureLayerDraw(
             layerId: layerId, assetName: assetName, texture: asset.texture,
             flipH: asset.flipH, flipV: asset.flipV,
-            offsetX: asset.offsetX + data.getLayerXOffset(scale, direction, layerId) + (frame?.x ?? 0),
-            offsetY: asset.offsetY + data.getLayerYOffset(scale, direction, layerId) + (frame?.y ?? 0),
+            offsetX: asset.offsetX + data.getLayerXOffset(scale, direction, layerId) + (override?.extraOffsetX ?? 0),
+            offsetY: asset.offsetY + data.getLayerYOffset(scale, direction, layerId) + (override?.extraOffsetY ?? 0),
             alpha: alpha, color: data.getLayerColor(scale, layerId, selectedColorId),
             blendMode: data.getLayerBlendMode(scale, direction, layerId),
             relativeDepth: relativeDepth,

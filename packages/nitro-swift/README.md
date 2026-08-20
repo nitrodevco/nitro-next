@@ -64,26 +64,51 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on
-  top of the same layer-resolution code rather than duplicating it - see `FurnitureVisualization`'s
-  doc comment). The animation state machine handles transition animations
-  (`AnimationData.getTransitionTo/FromAnimationId`), per-layer frame-repeat stepping, and the
-  run-length-collapsed keyframe sequences (`AnimationFrameSequenceData`), including a faithfully
-  replicated bug in the original's `AnimationFrameData.y` getter (it returns `_x`, not `_y` - see
-  `AnimationFrameData.swift`). `FurnitureVisualizationFactory` auto-detects which to build from
-  whether the furniture's asset data declares an `animations` table, since this port has no
-  server-driven furniture-metadata factory to make that choice from (see its doc comment). Not
-  ported: the ~20 concrete `Furniture*Visualization` subclasses (`PetVisualization`,
-  `FurnitureCounterClockVisualization`, `FurnitureFireworksVisualization`, ...) and the ~55
-  `Furniture*Logic` classes that customize animation-id selection per furniture type - both are
-  state/message-driven against a `RoomObject`/`RoomObjectModel` this port has no equivalent of (no
-  networking layer). `FurnitureAnimatedVisualization` exposes the pieces that matter as explicit
-  methods instead (`setState`/`setAutomaticStateIndex`/`tick`) - see its doc comment.
+  top of the same layer-resolution code via a small `FurnitureLayerOverride` hook rather than
+  duplicating it - see `FurnitureVisualization`'s doc comment). The animation state machine handles
+  transition animations (`AnimationData.getTransitionTo/FromAnimationId`), per-layer frame-repeat
+  stepping, and the run-length-collapsed keyframe sequences (`AnimationFrameSequenceData`),
+  including a faithfully replicated bug in the original's `AnimationFrameData.y` getter (it returns
+  `_x`, not `_y` - see `AnimationFrameData.swift`).
+- **Furniture visualization variants** - `FurnitureVisualizationFactory` picks the concrete class
+  from `IAssetData.visualizationType`, a field genuinely present in the `.nitro` bundle's own asset
+  manifest (not server-supplied furnidata - see the factory's doc comment for a correction of an
+  earlier, wrong claim to the contrary). Ported: `FurnitureResettingAnimatedVisualization` (trivial
+  flag flip), `FurnitureCounterClockVisualization` (digit-wheel clock face from raw state),
+  `FurnitureVoteCounterVisualization`/`FurnitureVoteMajorityVisualization` (digit-wheel + hide-when-unset,
+  reading from `RoomObjectModel`), `FurnitureSoundBlockVisualization` (fractional-speed frame-rate
+  scaling via an accumulator - see its doc comment for the one deliberate `Int`-vs-`number`
+  precision difference from the original), `FurnitureQueueTileVisualization` (self-contained
+  animation-queue sequencing), and `FurnitureGiftWrappedVisualization` (packet/ribbon frame
+  selection from `RoomFurnitureData.extra`, composed with `FurnitureVisualization` the same way
+  `FurnitureAnimatedVisualization` is, since it's static furniture with no animation frames
+  involved). `FurnitureCuboidVisualization`/`FurnitureStickieVisualization` are empty subclasses in
+  the original (identical to the base) and need no separate Swift type. Not ported: the remaining
+  ~14 concrete subclasses (particle systems - `FurnitureFireworksVisualization`,
+  `FurniturePlanetSystemVisualization`, ...; external image/video - `FurnitureYoutubeVisualization`,
+  `FurnitureExternalImageVisualization`; badges/branding - `FurnitureBadgeDisplayVisualization`,
+  `FurnitureGuildCustomizedVisualization`; `FurnitureMannequinVisualization`; `FurnitureBottleVisualization`) -
+  these need either real network/CDN-fetched content or a fuller particle/render-texture pipeline
+  this port doesn't have yet; unrecognized `visualizationType`s fall back to plain static/animated
+  rendering via animation-table detection, so these still render (without their specific
+  customizations) rather than failing to load.
+- **`RoomObjectModel`/`RoomObjectVariableEnum`/`FurnitureLogicData`** - a typed per-instance
+  key/value store (`RoomObjectModel`, ported in full for its key list even though only the
+  furniture-logic subset is exercised here) that the variants above read from, populated by
+  `FurnitureLogicData.parse(from:)` with the asset-driven (non-networked) portion of
+  `FurnitureLogic.initialize` - footprint dimensions, center point, allowed rotation directions,
+  and custom variable names, straight out of the `.nitro` bundle's `logic` JSON. The
+  message/input-driven remainder of `FurnitureLogic` and the ~55 concrete `Furniture*Logic`
+  subclasses (dice rolls, multi-state cycling, mouse/click handling, widget events, the
+  rotate-bounce animation, all server-message parsing) stay out of scope - see
+  `FurnitureLogicData`'s doc comment for why a click-driven "next state" genuinely can't be computed
+  client-side the way the original's server-authoritative logic does.
 - `RoomFurnitureData` - the placement/ownership record (tile, direction, state, expiry, owner) a
   networking layer would normally hand to `RoomScene.placeFurniture`; ported as a plain constructible
   value (minus the original's `data: IObjectData` field, a full server-message parser out of scope
   for the same reason as the rest of the networking layer). `RoomScene.placeFurniture(from:selectedColorId:)`
-  consumes one directly, applying its `state` before the first render so an animated item starts on
-  the right animation instead of flashing the default one for a frame.
+  consumes one directly, applying its `state`/`extra` before the first render so an animated or
+  gift-wrapped item starts correctly rendered instead of flashing the default look for a frame.
 - Static-pose avatar compositing: figure-string parsing, the figuredata.json catalog
   (palettes/colors/part sets/hidden layers), config-driven body-part depth-sorting, `AvatarStructure.getParts`'
   figure->visible-layers resolution (including the mirrored-direction/flip-in-place asset-naming

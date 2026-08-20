@@ -119,12 +119,15 @@ open class RoomScene: SKScene {
 
     /// Places one instance of an already-loaded furniture type at `tile` (room tile coordinates,
     /// z = stack height) facing `objectDirectionX` (0-315, step 45). `state` (if the furniture
-    /// turns out to be animated) is applied before the first render, so the placed item starts on
-    /// its correct animation rather than flashing the default one for a frame - see
-    /// `placeFurniture(from:selectedColorId:)` for the `RoomFurnitureData`-driven equivalent.
+    /// turns out to be animated) and `extra` (if it turns out to be gift-wrapped -
+    /// `FurnitureGiftWrappedVisualization.setExtra`) are applied before the first render, so the
+    /// placed item starts on its correct animation/packet graphic rather than flashing the default
+    /// one for a frame - see `placeFurniture(from:selectedColorId:)` for the `RoomFurnitureData`-driven
+    /// equivalent, which passes both through automatically.
     @discardableResult
     public func placeFurniture(
-        type: String, at tile: Vector3d, objectDirectionX: Double, selectedColorId: Int = 0, state: Int? = nil
+        type: String, at tile: Vector3d, objectDirectionX: Double, selectedColorId: Int = 0,
+        state: Int? = nil, extra: Double? = nil
     ) -> FurnitureNode? {
         guard let collection = assetManager.getCollection(type) else {
             NitroLogger.warn("RoomScene: no loaded collection for furniture type \(type)")
@@ -142,6 +145,10 @@ open class RoomScene: SKScene {
             animated.setState(state)
         }
 
+        if let extra, extra.isFinite, let giftWrapped = visualization as? FurnitureGiftWrappedVisualization {
+            giftWrapped.setExtra(extra)
+        }
+
         let node = FurnitureNode(visualization: visualization)
 
         node.position = geometry.getScreenPoint(tile)
@@ -155,15 +162,15 @@ open class RoomScene: SKScene {
         return node
     }
 
-    /// `RoomFurnitureData`-driven placement: the record's `location`/`direction.x`/`state` are used
-    /// straight from the placement data, since this port has no server-driven color/model layer to
-    /// pull `selectedColorId` from either (see `RoomFurnitureData`'s doc comment) - pass it
-    /// explicitly if the host app tracks it separately.
+    /// `RoomFurnitureData`-driven placement: the record's `location`/`direction.x`/`state`/`extra`
+    /// are used straight from the placement data, since this port has no server-driven color/model
+    /// layer to pull `selectedColorId` from either (see `RoomFurnitureData`'s doc comment) - pass
+    /// it explicitly if the host app tracks it separately.
     @discardableResult
     public func placeFurniture(from furnitureData: RoomFurnitureData, selectedColorId: Int = 0) -> FurnitureNode? {
         placeFurniture(
             type: furnitureData.type, at: furnitureData.location, objectDirectionX: furnitureData.direction.x,
-            selectedColorId: selectedColorId, state: furnitureData.state
+            selectedColorId: selectedColorId, state: furnitureData.state, extra: furnitureData.extra
         )
     }
 

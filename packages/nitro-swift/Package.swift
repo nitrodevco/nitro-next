@@ -53,7 +53,7 @@ let package = Package(
         ),
         .testTarget(
             name: "NitroRoomTests",
-            dependencies: ["NitroCore", "NitroRoom"]
+            dependencies: ["NitroCore", "NitroAssets", "NitroRoom"]
         ),
     ]
 )

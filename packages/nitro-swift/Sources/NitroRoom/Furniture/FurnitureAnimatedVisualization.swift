@@ -8,39 +8,52 @@ import NitroAssets
 /// for every layer, handling transition animations (`AnimationData.getTransitionTo/FromAnimationId`)
 /// and per-layer frame-repeat stepping exactly as the original does.
 ///
-/// This is a standalone class rather than a Swift subclass of `FurnitureVisualization` - the TS
-/// original is a subclass of `RoomObjectSpriteVisualization`, driven by a `RoomObject`/`RoomObjectModel`
-/// pair (`this.object.getState(0)`, `this.object.model.getValue(RoomObjectVariableEnum...)`) that
-/// this port has no equivalent of (see the README's "no networking/logic layer" scoping). Rather
-/// than fabricate that machinery, the pieces of `updateObject`/`updateModel` that actually drive
-/// animation selection are exposed as explicit methods a caller (`NitroRendererKit`) invokes
-/// directly: `setState(_:)` replaces the `object.getState(0)` poll, `setAutomaticStateIndex(_:)`
-/// replaces the `FurnitureAutomaticStateIndex` model-variable read, and `tick(scale:)` replaces the
-/// per-frame `updateAnimation` call. `updateModel`'s `FurnitureStateUpdateTime`-triggered forced
-/// re-animation (relevant only when `usesAnimationResetting` is true, which no concrete subclass
-/// ported here sets - see below) has no equivalent and is dropped rather than faked.
+/// This is a standalone class composed with `FurnitureVisualization` rather than a Swift subclass
+/// of it - the TS original is a subclass of `RoomObjectSpriteVisualization`, driven by a
+/// `RoomObject`/`RoomObjectModel` pair (`this.object.getState(0)`,
+/// `this.object.model.getValue(RoomObjectVariableEnum...)`) that this port has no networking-driven
+/// equivalent of (see the README's "no networking layer" scoping). Rather than fabricate that
+/// machinery, the pieces of `updateObject`/`updateModel` that actually drive animation selection
+/// are exposed as explicit methods a caller (`NitroRendererKit`, or a concrete subclass below)
+/// invokes directly: `setState(_:)` replaces the `object.getState(0)` poll,
+/// `setAutomaticStateIndex(_:)` replaces the `FurnitureAutomaticStateIndex` model-variable read,
+/// and `tick(scale:)` replaces the per-frame `updateAnimation` call. `updateModel`'s
+/// `FurnitureStateUpdateTime`-triggered forced re-animation has no equivalent and is dropped rather
+/// than faked (nothing in this port tracks a message-arrival timestamp to compare against).
 ///
-/// The ~20 concrete `Furniture*Visualization` subclasses (`FurnitureCounterClockVisualization`,
-/// `PetVisualization`, `FurnitureFireworksVisualization`, ...) that customize animation-id selection
-/// or add extra sprites are, like the ~55 `Furniture*Logic` classes, out of scope for this port -
-/// see the README. `usesAnimationResetting` is exposed as a settable flag (default `false`, matching
-/// the base class) rather than an overridable method for the same reason `SizeData.createAnimationData`
-/// is a plain method: there is no subclass in this port that would need to override it.
-public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
+/// Not `final` - a handful of the ~20 concrete `Furniture*Visualization` subclasses are genuinely
+/// self-contained animation-sequencing/frame-number variations with no server-message dependency
+/// (`FurnitureCounterClockVisualization`, `FurnitureVoteCounterVisualization`,
+/// `FurnitureVoteMajorityVisualization`, `FurnitureSoundBlockVisualization`,
+/// `FurnitureQueueTileVisualization`, `FurnitureResettingAnimatedVisualization` - see their own
+/// files) and are ported as same-module subclasses, overriding `getFrameNumber`/`getLayerAlpha`/
+/// `setAnimation`/`updateAnimations`/`tick` exactly where the TS originals do. `model` (a
+/// `RoomObjectModel`) stands in for the pieces of `object.model` those variants read from
+/// (vote counts, sound-block speed, ...) - populate it from whatever source the host app has for
+/// that per-instance state. The remaining subclasses - particle systems, external image/video,
+/// badges, guild customization, mannequins - stay out of scope; see the README for the full
+/// breakdown of what's ported here versus what still needs real furniture metadata or a
+/// networking layer.
+public class FurnitureAnimatedVisualization: FurnitureVisualizing {
     public static let defaultAnimationId = 0
 
     private let visualization: FurnitureVisualization
     public var data: FurnitureVisualizationData { visualization.data }
+    /// Stands in for `object.model` - see the class doc comment. Populate the keys a given
+    /// subclass reads (e.g. `.furnitureVoteCounterCount`) from whatever tracks that state.
+    public let model = RoomObjectModel()
 
-    private var state: Int = -1
+    /// The raw value last passed to `setState` - `object.getState(0)` in TS. Distinct from
+    /// `animationId`: this is the *requested* logic state, before transition-animation resolution.
+    public private(set) var currentState: Int = -1
     public var frameIncrease: Int = 1
     public var usesAnimationResetting: Bool = false
 
-    private let animationData = AnimationStateData()
-    private var animationScale: Int = RoomGeometryScaleType.none.rawValue
-    private var animatedLayerCount: Int = 0
-    private var directionChanged: Bool = false
-    private var direction: Int = 0
+    let animationData = AnimationStateData()
+    var animationScale: Int = RoomGeometryScaleType.none.rawValue
+    var animatedLayerCount: Int = 0
+    var directionChanged: Bool = false
+    public private(set) var direction: Int = 0
 
     public init(data: FurnitureVisualizationData, collection: GraphicAssetCollection) {
         visualization = FurnitureVisualization(data: data, collection: collection)
@@ -75,11 +88,11 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
     /// Replaces the `object.getState(0)` poll in `updateObject` - call this whenever the caller's
     /// notion of this furniture's logic state changes.
     public func setState(_ state: Int) {
-        guard state != self.state else { return }
+        guard state != currentState else { return }
 
         setAnimation(state)
 
-        self.state = state
+        currentState = state
     }
 
     /// Replaces the `FurnitureAutomaticStateIndex` model-variable read in `updateModel`.
@@ -87,8 +100,8 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
         setAnimation(data.getAnimationId(animationScale, index))
     }
 
-    private func setAnimation(_ animationId: Int) {
-        setSubAnimation(animationId, allowTransition: state >= 0)
+    func setAnimation(_ animationId: Int) {
+        setSubAnimation(animationId, allowTransition: currentState >= 0)
     }
 
     @discardableResult
@@ -173,7 +186,7 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
         return animationData.animationAfterTransitionId
     }
 
-    private func resetAllAnimationFrames() {
+    func resetAllAnimationFrames() {
         animationData.setLayerCount(animatedLayerCount)
     }
 
@@ -197,7 +210,7 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
         return update
     }
 
-    private func updateAnimations(_ scale: Int) -> Int {
+    func updateAnimations(_ scale: Int) -> Int {
         if animationData.animationOver, !directionChanged { return 0 }
 
         let update = updateFramesForAnimation(scale)
@@ -296,6 +309,23 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
         return update
     }
 
+    /// `FurnitureAnimatedVisualization.getFrameNumber` in TS - the resolved per-layer
+    /// `AnimationFrame`'s id, or `0` if none has been resolved yet (matches the base class's
+    /// always-0 default, reached here via `?? 0` instead of a `super` call).
+    /// `FurnitureCounterClockVisualization` and other digit-wheel-style variants override this to
+    /// compute a frame number from `currentState`/`model` instead of the animation-frame sequence.
+    public func getFrameNumber(scale: Int, layerId: Int) -> Double {
+        animationData.getFrame(layerId)?.id ?? 0
+    }
+
+    /// `FurnitureAnimatedVisualization.getLayerAlpha` in TS - `defaultAlpha` is whatever
+    /// `FurnitureVisualization.computeLayers` already computed from the asset data/alpha
+    /// multiplier/look-through factor; overriding this only ever *replaces* that value (e.g. to
+    /// hide a digit layer), it never needs to recompute it from scratch.
+    public func getLayerAlpha(scale: Int, direction: Int, layerId: Int, defaultAlpha: Double) -> Double {
+        defaultAlpha
+    }
+
     public func computeLayers(
         scale: Int,
         direction: Int,
@@ -307,7 +337,18 @@ public final class FurnitureAnimatedVisualization: FurnitureVisualizing {
         visualization.computeLayers(
             scale: scale, direction: direction, selectedColorId: selectedColorId,
             alphaMultiplier: alphaMultiplier, furnitureLift: furnitureLift, lookThrough: lookThrough,
-            frameProvider: { [animationData] layerId in animationData.getFrame(layerId) }
+            layerOverride: { [self] layerId in
+                let frame = animationData.getFrame(layerId)
+
+                return FurnitureLayerOverride(
+                    frameNumber: getFrameNumber(scale: scale, layerId: layerId),
+                    extraOffsetX: frame?.x ?? 0,
+                    extraOffsetY: frame?.y ?? 0
+                )
+            },
+            alphaOverride: { [self] direction, layerId, defaultAlpha in
+                getLayerAlpha(scale: scale, direction: direction, layerId: layerId, defaultAlpha: defaultAlpha)
+            }
         )
     }
 }
