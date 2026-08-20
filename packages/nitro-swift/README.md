@@ -78,6 +78,12 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   state/message-driven against a `RoomObject`/`RoomObjectModel` this port has no equivalent of (no
   networking layer). `FurnitureAnimatedVisualization` exposes the pieces that matter as explicit
   methods instead (`setState`/`setAutomaticStateIndex`/`tick`) - see its doc comment.
+- `RoomFurnitureData` - the placement/ownership record (tile, direction, state, expiry, owner) a
+  networking layer would normally hand to `RoomScene.placeFurniture`; ported as a plain constructible
+  value (minus the original's `data: IObjectData` field, a full server-message parser out of scope
+  for the same reason as the rest of the networking layer). `RoomScene.placeFurniture(from:selectedColorId:)`
+  consumes one directly, applying its `state` before the first render so an animated item starts on
+  the right animation instead of flashing the default one for a frame.
 - Static-pose avatar compositing: figure-string parsing, the figuredata.json catalog
   (palettes/colors/part sets/hidden layers), config-driven body-part depth-sorting, `AvatarStructure.getParts`'
   figure->visible-layers resolution (including the mirrored-direction/flip-in-place asset-naming
