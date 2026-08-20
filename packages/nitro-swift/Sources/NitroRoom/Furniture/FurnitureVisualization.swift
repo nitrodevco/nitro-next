@@ -3,6 +3,24 @@ import SpriteKit
 
 import NitroAssets
 
+/// Common surface `NitroRendererKit.FurnitureNode` renders through, implemented by both
+/// `FurnitureVisualization` (static furniture) and `FurnitureAnimatedVisualization` (animated
+/// furniture) - the Swift-composition equivalent of both being `RoomObjectSpriteVisualization`
+/// subclasses in TS. Default parameter values aren't part of a protocol requirement, so callers
+/// going through this existential must pass every argument explicitly.
+public protocol FurnitureVisualizing: AnyObject {
+    func resolveDirection(scale: Int, cameraDirectionX: Double, objectDirectionX: Double) -> Int
+
+    func computeLayers(
+        scale: Int,
+        direction: Int,
+        selectedColorId: Int,
+        alphaMultiplier: Double,
+        furnitureLift: Double,
+        lookThrough: Bool
+    ) -> [FurnitureLayerDraw]
+}
+
 /// One resolved, ready-to-draw furniture layer - the Swift equivalent of what `FurnitureVisualization.updateSprite`
 /// (packages/nitro-renderer/src/room/object/visualization/furniture/FurnitureVisualization.ts) would have written
 /// onto a pooled `IRoomObjectSprite`. Kept as a plain value type instead of a stateful sprite object since this
@@ -34,7 +52,14 @@ public struct FurnitureLayerDraw {
 /// its subclass `FurnitureAnimatedVisualization`; since this port has no persistent sprite pool,
 /// `computeLayers` simply recomputes the full layer list each call (see `GraphicAsset`'s doc comment
 /// for the same "drop the JS-GC-motivated caching, keep the math" rationale).
-public final class FurnitureVisualization {
+///
+/// Animated furniture reuses this same layer-resolution/asset-naming/offset math rather than
+/// duplicating it: `FurnitureAnimatedVisualization` (which owns the actual animation-id/frame state
+/// machine - see its doc comment for why that's a standalone class, not a TS-style subclass of this
+/// one) supplies a `frameProvider` closure here instead. This is the Swift-composition equivalent
+/// of the TS class's `getFrameNumber`/`getLayerXOffset`/`getLayerYOffset` being overridden by the
+/// `FurnitureAnimatedVisualization` subclass.
+public final class FurnitureVisualization: FurnitureVisualizing {
     public static let depthMultiplier = (0.5).squareRoot()
     private static let additionalLayerCount = 1 // the synthetic shadow layer
 
@@ -63,6 +88,23 @@ public final class FurnitureVisualization {
         furnitureLift: Double = 0,
         lookThrough: Bool = false
     ) -> [FurnitureLayerDraw] {
+        computeLayers(
+            scale: scale, direction: direction, selectedColorId: selectedColorId, alphaMultiplier: alphaMultiplier,
+            furnitureLift: furnitureLift, lookThrough: lookThrough, frameProvider: nil
+        )
+    }
+
+    /// The `frameProvider`-accepting overload `FurnitureAnimatedVisualization` calls - not part of
+    /// the public/`FurnitureVisualizing` surface, see that class's doc comment.
+    func computeLayers(
+        scale: Int,
+        direction: Int,
+        selectedColorId: Int,
+        alphaMultiplier: Double,
+        furnitureLift: Double,
+        lookThrough: Bool,
+        frameProvider: ((Int) -> AnimationFrame?)?
+    ) -> [FurnitureLayerDraw] {
         let size = data.getValidSize(scale)
 
         guard size >= 1 else { return [] }
@@ -80,7 +122,8 @@ public final class FurnitureVisualization {
             if let draw = computeLayer(
                 scale: scale, size: size, isRegularSize: isRegularSize, direction: direction, layerId: layerId,
                 shadowLayerIndex: shadowLayerIndex, selectedColorId: selectedColorId,
-                alphaMultiplier: alphaMultiplier, furnitureLift: furnitureLift, lookThrough: lookThrough
+                alphaMultiplier: alphaMultiplier, furnitureLift: furnitureLift, lookThrough: lookThrough,
+                frame: frameProvider?(layerId)
             ) {
                 results.append(draw)
             }
@@ -91,9 +134,23 @@ public final class FurnitureVisualization {
         return results
     }
 
+    /// JS's `assetName += frameNumber` string-concatenates a bare `number`, so a whole-valued frame
+    /// id like `3.0` becomes `"3"` (no decimal point) while a fractional one (only possible via
+    /// `AnimationFrame`'s negative-id pseudo-random case, see its doc comment) keeps its digits.
+    /// This reproduces that for the common integral case exactly; for the fractional case it uses
+    /// Swift's default `Double` description rather than JS's exact shortest-round-trip algorithm,
+    /// which can differ in the trailing digits - a documented approximation, not a verified match,
+    /// since that path's resulting asset name essentially never resolves to a real asset either way.
+    static func jsFrameNumberString(_ value: Double) -> String {
+        if value == value.rounded(), abs(value) < 1e15 { return String(Int64(value)) }
+
+        return String(value)
+    }
+
     private func computeLayer(
         scale: Int, size: Int, isRegularSize: Bool, direction: Int, layerId: Int, shadowLayerIndex: Int,
-        selectedColorId: Int, alphaMultiplier: Double, furnitureLift: Double, lookThrough: Bool
+        selectedColorId: Int, alphaMultiplier: Double, furnitureLift: Double, lookThrough: Bool,
+        frame: AnimationFrame?
     ) -> FurnitureLayerDraw? {
         guard layerId < FurnitureVisualizationData.layerLetters.count else { return nil }
 
@@ -102,9 +159,9 @@ public final class FurnitureVisualization {
 
         guard !letter.isEmpty else { return nil }
 
-        // Static furniture is always frame 0 (`getFrameNumber` is 0 for non-animated visualizations).
+        let frameNumberString = frame.map { FurnitureVisualization.jsFrameNumberString($0.id) } ?? "0"
         let assetName = isRegularSize
-            ? "\(data.type)_\(size)_\(letter)_\(direction)_0"
+            ? "\(data.type)_\(size)_\(letter)_\(direction)_\(frameNumberString)"
             : "\(data.type)_icon_\(letter)"
 
         guard let asset = collection.getAsset(assetName) else { return nil }
@@ -114,10 +171,14 @@ public final class FurnitureVisualization {
         if isShadow {
             let liftOffset = (furnitureLift * (Double(scale) / 2)).rounded(.up)
 
+            // Matches `FurnitureAnimatedVisualization.getLayerYOffset`: the animation frame's `.y`
+            // is added on top of the shadow's lift-derived offset. Its `.x` is never applied here -
+            // the original's `updateSprite` shadow branch sets `offsetX` straight from the asset,
+            // without ever calling the (overridable) `getLayerXOffset`.
             return FurnitureLayerDraw(
                 layerId: layerId, assetName: assetName, texture: asset.texture,
                 flipH: asset.flipH, flipV: asset.flipV,
-                offsetX: asset.offsetX, offsetY: asset.offsetY + liftOffset,
+                offsetX: asset.offsetX, offsetY: asset.offsetY + liftOffset + (frame?.y ?? 0),
                 alpha: 48 * alphaMultiplier * lookThroughFactor,
                 color: ColorData.defaultColor, blendMode: LayerData.defaultBlendMode,
                 relativeDepth: 1 * FurnitureVisualization.depthMultiplier,
@@ -131,8 +192,8 @@ public final class FurnitureVisualization {
         return FurnitureLayerDraw(
             layerId: layerId, assetName: assetName, texture: asset.texture,
             flipH: asset.flipH, flipV: asset.flipV,
-            offsetX: asset.offsetX + data.getLayerXOffset(scale, direction, layerId),
-            offsetY: asset.offsetY + data.getLayerYOffset(scale, direction, layerId),
+            offsetX: asset.offsetX + data.getLayerXOffset(scale, direction, layerId) + (frame?.x ?? 0),
+            offsetY: asset.offsetY + data.getLayerYOffset(scale, direction, layerId) + (frame?.y ?? 0),
             alpha: alpha, color: data.getLayerColor(scale, layerId, selectedColorId),
             blendMode: data.getLayerBlendMode(scale, direction, layerId),
             relativeDepth: relativeDepth,

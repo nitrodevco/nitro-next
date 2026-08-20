@@ -2,13 +2,21 @@ import SpriteKit
 
 import NitroRoom
 
-/// Turns one `FurnitureVisualization.computeLayers()` result into an `SKNode` tree - the
+/// Turns one `FurnitureVisualizing.computeLayers()` result into an `SKNode` tree - the
 /// SpriteKit-side counterpart of what `RoomObjectSpriteVisualization`'s pooled `IRoomObjectSprite`s
-/// would have been rendered as in the TS client.
+/// would have been rendered as in the TS client. Wraps either a `FurnitureVisualization` (static
+/// furniture) or a `FurnitureAnimatedVisualization` (animated furniture) - see `FurnitureVisualizing`.
 public final class FurnitureNode: SKNode {
-    public private(set) var visualization: FurnitureVisualization
+    public private(set) var visualization: FurnitureVisualizing
 
-    public init(visualization: FurnitureVisualization) {
+    private var scale: Int = 0
+    private var direction: Int = 0
+    private var selectedColorId: Int = 0
+    private var alphaMultiplier: Double = 1
+    private var furnitureLift: Double = 0
+    private var lookThrough: Bool = false
+
+    public init(visualization: FurnitureVisualizing) {
         self.visualization = visualization
 
         super.init()
@@ -28,9 +36,38 @@ public final class FurnitureNode: SKNode {
         furnitureLift: Double = 0,
         lookThrough: Bool = false
     ) {
-        removeAllChildren()
+        self.scale = scale
+        self.selectedColorId = selectedColorId
+        self.alphaMultiplier = alphaMultiplier
+        self.furnitureLift = furnitureLift
+        self.lookThrough = lookThrough
 
-        let direction = visualization.resolveDirection(scale: scale, cameraDirectionX: cameraDirectionX, objectDirectionX: objectDirectionX)
+        direction = visualization.resolveDirection(scale: scale, cameraDirectionX: cameraDirectionX, objectDirectionX: objectDirectionX)
+
+        // Mirrors `FurnitureVisualization.updateObject` calling `setDirection` before the
+        // animation update runs each frame, so `FurnitureAnimatedVisualization` can tell a
+        // direction change happened and force every layer to re-resolve its frame on the next tick.
+        if let animated = visualization as? FurnitureAnimatedVisualization { animated.setDirection(direction) }
+
+        rebuild()
+    }
+
+    /// Advances the animation state machine by one tick and rebuilds - a no-op for static
+    /// furniture (`visualization` isn't a `FurnitureAnimatedVisualization`). Call this at the
+    /// classic Habbo animation rate (`RoomScene` does, at ~41ms/tick - see its doc comment), not
+    /// once per rendered frame.
+    @discardableResult
+    public func tickAnimation() -> Bool {
+        guard let animated = visualization as? FurnitureAnimatedVisualization else { return false }
+
+        animated.tick(scale: scale)
+        rebuild()
+
+        return true
+    }
+
+    private func rebuild() {
+        removeAllChildren()
 
         let layers = visualization.computeLayers(
             scale: scale, direction: direction, selectedColorId: selectedColorId,

@@ -29,6 +29,11 @@ open class RoomScene: SKScene {
     /// at tile (11,11,5), scale 64 (zoomed in).
     public let geometry: RoomGeometry
 
+    /// Matches `RoomObjectSpriteVisualization.UPDATE_TIME_INCREASER` (41ms, ~24.4fps) - the classic
+    /// Habbo furniture-animation tick rate, deliberately decoupled from the render frame rate.
+    private static let animationUpdateInterval: TimeInterval = 0.041
+    private var lastAnimationUpdateTime: TimeInterval = -1
+
     public override init(size: CGSize) {
         let manager = AssetManager()
         let aliasCollection = AssetAliasCollection(assetManager: manager)
@@ -52,6 +57,27 @@ open class RoomScene: SKScene {
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    /// Advances every placed animated furniture item's animation state machine, clamped to the
+    /// classic ~24.4fps tick rate regardless of the actual render frame rate - mirrors
+    /// `FurnitureVisualization.update`'s own `_lastUpdateTime` accumulator/catch-up-clamp logic
+    /// (see `UPDATE_TIME_INCREASER` above), just hoisted up to the scene since this port has no
+    /// per-object `update(geometry:time:...)` call chain to hang it off of.
+    open override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+
+        if lastAnimationUpdateTime < 0 { lastAnimationUpdateTime = currentTime }
+
+        guard currentTime >= lastAnimationUpdateTime + RoomScene.animationUpdateInterval else { return }
+
+        lastAnimationUpdateTime += RoomScene.animationUpdateInterval
+
+        if lastAnimationUpdateTime + RoomScene.animationUpdateInterval < currentTime {
+            lastAnimationUpdateTime = currentTime - RoomScene.animationUpdateInterval
+        }
+
+        for case let node as FurnitureNode in objectLayer.children { node.tickAnimation() }
+    }
 
     @discardableResult
     public func loadFurnitureBundle(data: Data) throws -> GraphicAssetCollection {

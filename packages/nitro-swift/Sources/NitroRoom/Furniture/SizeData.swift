@@ -2,7 +2,8 @@ import Foundation
 
 /// Swift port of `SizeData` (packages/nitro-renderer/src/room/object/visualization/data/SizeData.ts).
 /// One instance per declared `size` (32/64/1) within a furniture's `IAssetVisualizationData[]`.
-public final class SizeData {
+/// Not `final` - `AnimationSizeData` subclasses it, matching the original's `AnimationSizeData extends SizeData`.
+public class SizeData {
     public static let maxLayers = 26
 
     private let _layerCount: Int

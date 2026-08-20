@@ -21,10 +21,13 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   (collection registry + `.nitro`/`.png`/`.gif` download). Ports:
   `packages/nitro-renderer/src/assets/*`, `packages/nitro-renderer/src/utils/NitroBundle.ts`.
 - **NitroRoom** - `RoomGeometry` (the full 3D isometric camera projection - not simplified 2D tile
-  math, see its doc comment); the static-furniture visualization pipeline
+  math, see its doc comment); the furniture visualization pipeline
   (`SizeData`/`DirectionData`/`LayerData`/`ColorData` -> `FurnitureVisualizationData` ->
   `FurnitureVisualization`: resolves which asset/offset/tint/blend-mode/depth each furniture layer
-  should render for a given room scale/direction/color); and the room floor/wall/landscape plane
+  should render for a given room scale/direction/color), plus animated furniture on top of it
+  (`AnimationFrame`/`AnimationFrameData`/`AnimationFrameSequenceData`/`AnimationLayerData`/
+  `AnimationData`/`AnimationSizeData`/`AnimationStateData` -> `FurnitureAnimatedVisualization`: the
+  animation-id/frame state machine, including transition animations); and the room floor/wall/landscape plane
   pipeline (`Plane/`): `RoomPlaneData`, `RoomPlane` (visibility/corner projection, tiling-offset
   math, and - since SpriteKit has no render-to-texture-with-arbitrary-affine-transform pass -
   a from-scratch CoreGraphics baking pipeline that reproduces Pixi's skewed `TilingSprite` +
@@ -58,8 +61,23 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   frames and green-channel palette recoloring - this is the foundation everything else sits on.
 - The room camera's 3D projection math (`RoomGeometry`), ported field-for-field including its
   specific (non-textbook) Euler rotation composition.
-- Static furniture layer resolution: asset naming, direction fallback, size fallback
-  (nearest-by-ratio), per-layer offset/alpha/color/blend-mode/depth, the shadow layer.
+- Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
+  per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
+  (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on
+  top of the same layer-resolution code rather than duplicating it - see `FurnitureVisualization`'s
+  doc comment). The animation state machine handles transition animations
+  (`AnimationData.getTransitionTo/FromAnimationId`), per-layer frame-repeat stepping, and the
+  run-length-collapsed keyframe sequences (`AnimationFrameSequenceData`), including a faithfully
+  replicated bug in the original's `AnimationFrameData.y` getter (it returns `_x`, not `_y` - see
+  `AnimationFrameData.swift`). `FurnitureVisualizationFactory` auto-detects which to build from
+  whether the furniture's asset data declares an `animations` table, since this port has no
+  server-driven furniture-metadata factory to make that choice from (see its doc comment). Not
+  ported: the ~20 concrete `Furniture*Visualization` subclasses (`PetVisualization`,
+  `FurnitureCounterClockVisualization`, `FurnitureFireworksVisualization`, ...) and the ~55
+  `Furniture*Logic` classes that customize animation-id selection per furniture type - both are
+  state/message-driven against a `RoomObject`/`RoomObjectModel` this port has no equivalent of (no
+  networking layer). `FurnitureAnimatedVisualization` exposes the pieces that matter as explicit
+  methods instead (`setState`/`setAutomaticStateIndex`/`tick`) - see its doc comment.
 - Static-pose avatar compositing: figure-string parsing, the figuredata.json catalog
   (palettes/colors/part sets/hidden layers), config-driven body-part depth-sorting, `AvatarStructure.getParts`'
   figure->visible-layers resolution (including the mirrored-direction/flip-in-place asset-naming
@@ -89,10 +107,6 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   a verified-correct one.
 
 **Explicitly not yet ported** (scoped out rather than faked):
-- **Animated furniture** (`FurnitureAnimatedVisualization`): the animation-id/frame state machine,
-  transition animations, and the ~55 concrete `Furniture*Logic` classes (movers, blinking lights,
-  dice, etc.). Not started - `FurnitureVisualization` currently only renders the static (frame 0)
-  case.
 - **Avatar animation & actions**: keyframe animation playback (`Animation`/`AnimationAction`,
   `AvatarAnimationFrame`), the action precedence/combination system (`AvatarActionManager.filterActions`/
   `sortActions` - only a single caller-supplied `ActionDefinition` is supported, not simultaneous
