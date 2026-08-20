@@ -7,12 +7,15 @@ import NitroCore
 import NitroRoom
 
 /// Minimal SpriteKit room scene: owns the asset pipeline and room camera (`RoomGeometry`) and
-/// places `FurnitureNode`s/`AvatarNode`s at their projected screen position. This is intentionally
-/// small - the floor/wall plane baking (`RoomPlane`) isn't wired in yet, see the package README
-/// for current coverage.
+/// places `RoomPlaneNode`/`FurnitureNode`/`AvatarNode`s at their projected screen position. See
+/// the package README for current coverage.
 open class RoomScene: SKScene {
     public let assetManager: AssetManager
+    public let roomLayer = SKNode()
     public let objectLayer = SKNode()
+
+    public private(set) var roomPlaneNode: RoomPlaneNode?
+    private var roomPlaneRenderer: RoomPlaneRenderer?
 
     public let avatarAssets: AssetAliasCollection
     /// `nil` only if the bundled default avatar geometry/part-set resources failed to decode -
@@ -44,6 +47,7 @@ open class RoomScene: SKScene {
 
         super.init(size: size)
 
+        addChild(roomLayer)
         addChild(objectLayer)
     }
 
@@ -52,6 +56,39 @@ open class RoomScene: SKScene {
     @discardableResult
     public func loadFurnitureBundle(data: Data) throws -> GraphicAssetCollection {
         try assetManager.loadNitroBundle(data: data)
+    }
+
+    /// Loads a room's `.nitro` bundle (its floor/wall/landscape material tables + bitmap masks)
+    /// and a heightmap, and bakes the floor/wall planes. `heightmapRows` uses the classic Habbo
+    /// heightmap string format - see `RoomHeightGrid`. Only a reduced-fidelity plane generator is
+    /// available (`SimpleRoomPlaneParser`) - see its doc comment for what it doesn't handle.
+    @discardableResult
+    public func loadRoom(bundleData: Data, heightmapRows: [String], randomSeed: Int = Randomizer.defaultSeed) throws -> RoomPlaneNode {
+        let collection = try assetManager.loadNitroBundle(data: bundleData)
+        let context = RoomPlaneRenderContext.make(from: collection, assetManager: assetManager)
+        let renderer = RoomPlaneRenderer(context: context)
+        let parser = SimpleRoomPlaneParser()
+        let grid = RoomHeightGrid(rows: heightmapRows)
+
+        renderer.setPlanes(parser.parse(grid), initialRandomSeed: randomSeed)
+
+        roomPlaneNode?.removeFromParent()
+
+        let node = RoomPlaneNode(renderer: renderer)
+
+        roomPlaneRenderer = renderer
+        roomPlaneNode = node
+        roomLayer.addChild(node)
+
+        refreshRoomPlanes()
+
+        return node
+    }
+
+    /// Re-bakes every plane for the current camera state - call after changing `geometry`
+    /// (zoom/rotate) or after `loadRoom`.
+    public func refreshRoomPlanes() {
+        roomPlaneNode?.refresh(geometry: geometry)
     }
 
     /// Places one instance of an already-loaded furniture type at `tile` (room tile coordinates,

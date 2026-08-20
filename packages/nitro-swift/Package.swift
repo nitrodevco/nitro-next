@@ -51,5 +51,9 @@ let package = Package(
             name: "NitroAvatarTests",
             dependencies: ["NitroAvatar"]
         ),
+        .testTarget(
+            name: "NitroRoomTests",
+            dependencies: ["NitroRoom"]
+        ),
     ]
 )
