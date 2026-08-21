@@ -3,10 +3,9 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
 import { SpriteLayer } from './utils/Layer';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface FramePointerDownVariant {
     textureKey: string;
@@ -29,8 +28,7 @@ export interface FramePointerDownProps {
 
 export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, FramePointerDownProps>(
     ({ variant, defaultVariant, layout }, ref) => {
-        const cascadedVariant = useCascadedVariant('framePointerDown');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '7';
+        const { resolvedVariant } = useResolvedVariant('framePointerDown', variant, defaultVariant, '7');
         const config = FRAME_POINTER_DOWN_VARIANTS[resolvedVariant] ?? FRAME_POINTER_DOWN_VARIANTS['7'];
 
         return (

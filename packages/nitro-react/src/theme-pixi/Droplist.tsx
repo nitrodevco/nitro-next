@@ -3,11 +3,12 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CompositeLayer, NineSliceLayer } from './utils/Layer';
 import { getPixiTextStyle } from './utils/textStyles';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 interface DroplistVariant {
@@ -41,9 +42,7 @@ export interface DroplistProps {
 
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
     ({ variant, defaultVariant, tintColor, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('droplist');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['droplist']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('droplist', variant, defaultVariant);
         const config = DROPLIST_VARIANTS[resolvedVariant] ?? DROPLIST_VARIANTS['0'];
 
         return (

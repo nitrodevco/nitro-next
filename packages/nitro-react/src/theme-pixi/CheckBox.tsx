@@ -3,11 +3,12 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 interface CheckBoxVariant {
@@ -97,9 +98,7 @@ export interface CheckBoxProps {
 
 export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CheckBoxProps>(
     ({ variant, defaultVariant, layout, selected, disabled, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('checkBox');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['checkBox']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('checkBox', variant, defaultVariant);
         const config = CHECK_BOX_VARIANTS[resolvedVariant] ?? CHECK_BOX_VARIANTS['0']!;
         const { state, handlers } = useInteractionState(disabled);
         const showSelected = !!selected && state !== 'pressed';

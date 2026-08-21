@@ -3,9 +3,8 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
@@ -79,8 +78,7 @@ export interface BubblePointerProps {
 export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubblePointerProps>(
     ({ direction, variant, defaultVariant, tintColor, layout }, ref) => {
         const config = DIRECTION_CONFIG[direction];
-        const cascadedVariant = useCascadedVariant(config.cascadeKey);
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant(config.cascadeKey, variant, defaultVariant);
         // theme/BubblePointer.tsx defines no default tintColors for any direction/variant -
         // resolvedTint only ever comes from the caller-supplied tintColor prop, so it is used
         // (via the tintColor param above) with no per-variant fallback table needed here.

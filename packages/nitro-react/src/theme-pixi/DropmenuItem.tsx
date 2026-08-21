@@ -3,12 +3,13 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { SpriteLayer } from './utils/Layer';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 interface DropmenuItemVariant {
@@ -46,9 +47,7 @@ export interface DropmenuItemProps {
 
 export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuItemProps>(
     ({ variant, defaultVariant, selected, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('dropmenuItem');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['dropmenuItem']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenuItem', variant, defaultVariant);
         const config = DROPMENU_ITEM_VARIANTS[resolvedVariant] ?? DROPMENU_ITEM_VARIANTS['0'];
         const { state, handlers } = useInteractionState();
         const textureKey = (selected || state === 'pressed')

@@ -3,11 +3,10 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
 import { SpriteLayer } from './utils/Layer';
 import { usePixiTexture } from './utils/usePixiTexture';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface ScalerVariant {
     textureKey: string;
@@ -49,8 +48,7 @@ const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
 
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
     ({ variant, defaultVariant, layout, direction = 'all', onPointerDown }, ref) => {
-        const cascadedVariant = useCascadedVariant('scaler');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant('scaler', variant, defaultVariant);
         const config = SCALER_VARIANTS[resolvedVariant];
         const texture = usePixiTexture(config?.textureKey);
 

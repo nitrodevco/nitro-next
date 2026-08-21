@@ -3,11 +3,12 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer } from './utils/Layer';
 import { getPixiTextStyle } from './utils/textStyles';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 /**
@@ -28,9 +29,7 @@ export interface TooltipProps {
 
 export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TooltipProps>(
     ({ variant, defaultVariant, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('tooltip');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['tooltip']?.[resolvedVariant];
+        const { ownCascade } = useResolvedVariant('tooltip', variant, defaultVariant);
 
         return (
             <Box ref={ref} layout={{ minWidth: 20, minHeight: 22, paddingLeft: 6, paddingRight: 6, ...layout }}>

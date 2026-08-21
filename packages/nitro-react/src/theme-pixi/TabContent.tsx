@@ -3,10 +3,11 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer } from './utils/Layer';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 interface TabContentLayer {
@@ -74,9 +75,7 @@ export interface TabContentProps {
  */
 export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabContentProps>(
     ({ variant, defaultVariant, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('tabContent');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['tabContent']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('tabContent', variant, defaultVariant);
         const config = TAB_CONTENT_VARIANTS[resolvedVariant] ?? TAB_CONTENT_VARIANTS['0'];
 
         return (

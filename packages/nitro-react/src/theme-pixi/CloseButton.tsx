@@ -3,10 +3,9 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
-import { useInteractionState } from './utils/useInteractionState';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 interface CloseButtonVariant {
@@ -77,13 +76,10 @@ export interface CloseButtonProps {
 
 export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CloseButtonProps>(
     ({ variant, defaultVariant, layout, onClose }, ref) => {
-        const cascadedVariant = useCascadedVariant('closeButton');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
         const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
         const { state, handlers } = useInteractionState();
-        const frame = config
-            ? (state === 'hovering' ? config.frames.hovering : state === 'pressed' ? config.frames.pressed : config.frames.default)
-            : undefined;
+        const frame = config ? resolveByState(config.frames, state) : undefined;
         const texture = useSpriteFrameTexture(config?.textureKey, frame);
 
         const handlePointerDown = (event: FederatedPointerEvent) => {

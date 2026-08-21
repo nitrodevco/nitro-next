@@ -3,12 +3,13 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CompositeLayer, NineSliceLayer, SpriteLayer } from './utils/Layer';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 type DropmenuLayer =
@@ -47,9 +48,7 @@ export interface DropmenuProps {
 
 export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuProps>(
     ({ variant, defaultVariant, tintColor, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('dropmenu');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['dropmenu']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenu', variant, defaultVariant);
         const config = DROPMENU_VARIANTS[resolvedVariant] ?? DROPMENU_VARIANTS['0'];
         // Only variant '3' has hover art in DOM (0/1/100 are static nine-slice boxes).
         const { state, handlers } = useInteractionState();

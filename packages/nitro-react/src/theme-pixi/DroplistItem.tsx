@@ -3,11 +3,12 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { SpriteLayer } from './utils/Layer';
-import { useInteractionState } from './utils/useInteractionState';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 /**
@@ -28,13 +29,9 @@ export interface DroplistItemProps {
 
 export const DroplistItem: ForwardRefExoticComponent<DroplistItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistItemProps>(
     ({ variant, defaultVariant, selected, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('droplistItem');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['droplistItem']?.[resolvedVariant];
+        const { ownCascade } = useResolvedVariant('droplistItem', variant, defaultVariant);
         const { state, handlers } = useInteractionState();
-        const textureKey = (selected || state === 'pressed')
-            ? DROPLIST_ITEM_TEXTURE_KEYS.selected
-            : (state === 'hovering' ? DROPLIST_ITEM_TEXTURE_KEYS.hovering : DROPLIST_ITEM_TEXTURE_KEYS.default);
+        const textureKey = resolveByState(DROPLIST_ITEM_TEXTURE_KEYS, state, selected);
 
         return (
             <Box ref={ref} layout={{ minWidth: 5, minHeight: 19, ...layout }} {...handlers}>

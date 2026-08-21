@@ -3,11 +3,12 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { BubblePointer } from './BubblePointer';
 import { NineSliceLayer, SpriteLayer } from './utils/Layer';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 type PointerDirection = 'up' | 'down' | 'left' | 'right';
@@ -65,9 +66,7 @@ export interface BubbleProps {
 
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
     ({ variant, defaultVariant, tintColor, usePointer = true, pointer = 'down', layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('bubble');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['bubble']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('bubble', variant, defaultVariant);
         // theme/Bubble.tsx's bubbleTintColors table is empty - no variant has a default tint,
         // but the tintColor prop still passes straight through, including down into the
         // pointer child so its color always matches the bubble's.

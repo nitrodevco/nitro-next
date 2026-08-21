@@ -3,12 +3,13 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer, SpriteLayer } from './utils/Layer';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
-import { type InteractionState, useInteractionState } from './utils/useInteractionState';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface ButtonThickStates {
     default: string;
@@ -52,8 +53,6 @@ const BUTTON_THICK_TINT_COLORS: Partial<Record<string, string>> = {
     '6': '#00aa00',
 };
 
-const resolveTextureKey = (variantStates: ButtonThickStates, state: InteractionState): string => variantStates[state] ?? variantStates.default;
-
 export interface ButtonThickProps {
     variant?: string;
     defaultVariant?: string;
@@ -67,12 +66,10 @@ export interface ButtonThickProps {
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({ variant, defaultVariant, tintColor, textColor, disabled, layout, onPress, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('buttonThick');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['buttonThick']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('buttonThick', variant, defaultVariant);
         const config = BUTTON_THICK_VARIANTS[resolvedVariant] ?? BUTTON_THICK_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
-        const textureKey = resolveTextureKey(config.states, state);
+        const textureKey = resolveByState(config.states, state);
         const resolvedTint = tintColor || BUTTON_THICK_TINT_COLORS[resolvedVariant];
         const resolvedTextColor = textColor ?? config.color;
 
