@@ -16,7 +16,20 @@ import { usePixiTexture } from './usePixiTexture';
  * each re-implementing its own texture-to-sprite plumbing.
  */
 
-const FILL_LAYOUT: BoxLayout = { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 };
+/**
+ * `width`/`height: '100%'` look redundant next to four `0` insets - CSS would stretch from
+ * the insets alone. @pixi/layout doesn't: any `ViewContainer` leaf (Sprite, Graphics,
+ * TilingSprite - confirmed via reading its `Layout.defaultStyle.leaf` default and
+ * `formatStyles.mjs`) defaults its yoga `width`/`height` to `'intrinsic'` (the object's own
+ * pre-layout local bounds, e.g. a texture's native pixel size) whenever the `layout` style
+ * doesn't itself carry a `width`/`height` key - and an explicit yoga width silently wins over
+ * inset-driven stretch, the same as it would in CSS. Confirmed empirically: the four insets
+ * alone leave a plain Sprite/Graphics at ~1px; adding explicit `width`/`height` here fixes it.
+ * NineSliceSprite/TilingSprite (used by NineSliceLayer/TileLayer) aren't affected either way -
+ * they're separately special-cased to always apply their computed size directly - so this is
+ * safe to share across all three layers rather than only patching SpriteLayer.
+ */
+const FILL_LAYOUT: BoxLayout = { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' };
 
 export interface NineSliceLayerProps {
     textureKey: string | undefined;

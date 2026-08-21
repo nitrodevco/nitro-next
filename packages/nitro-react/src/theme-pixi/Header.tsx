@@ -64,7 +64,7 @@ export interface HeaderProps {
 const TintChip = ({ color }: { color: string | undefined }) => {
     if (!color) return null;
 
-    return <pixiGraphics eventMode="none" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }} />;
+    return <pixiGraphics eventMode="none" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }} />;
 };
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
