@@ -3,12 +3,13 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer } from './utils/Layer';
-import { resolveTabChromeLayer, TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
-import { useInteractionState } from './utils/useInteractionState';
+import { TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 export interface TabContainerButtonProps {
@@ -30,12 +31,10 @@ export interface TabContainerButtonProps {
  */
 export const TabContainerButton: ForwardRefExoticComponent<TabContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabContainerButtonProps>(
     ({ variant, defaultVariant, selected, layout, onPress, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('tabContainerButton');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['tabContainerButton']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('tabContainerButton', variant, defaultVariant);
         const chrome = TAB_BUTTON_CHROME_VARIANTS[resolvedVariant] ?? TAB_BUTTON_CHROME_VARIANTS['0'];
         const { state, handlers } = useInteractionState();
-        const resolvedLayer = resolveTabChromeLayer(chrome, state, selected);
+        const resolvedLayer = resolveByState(chrome, state, selected);
 
         return (
             <Box

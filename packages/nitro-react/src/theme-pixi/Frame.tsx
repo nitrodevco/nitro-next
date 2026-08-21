@@ -3,30 +3,27 @@ import './utils/pixiElements';
 import { DropShadowFilter } from 'pixi-filters';
 import { type ReactNode,useMemo } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 import { GetPixelRatio } from '#base/utils';
 
 import { Box, type BoxLayout } from './Box';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { Scaler, type ScalerDirection } from './Scaler';
-import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
+import { BackgroundLayer, type BackgroundLayerConfig, type CompositePiece } from './utils/Layer';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
-
-type FrameLayer =
-    | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number }
-    | { kind: 'composite', pieces: CompositePiece[] };
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface FrameVariant {
-    layer?: FrameLayer;
-    overlay?: FrameLayer;
+    layer?: BackgroundLayerConfig;
+    overlay?: BackgroundLayerConfig;
     minWidth: number;
     minHeight: number;
     tint?: string;
 }
 
-const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): FrameLayer => (
+const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): BackgroundLayerConfig => (
     { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
 );
 
@@ -78,14 +75,6 @@ const FRAME_VARIANTS: Record<string, FrameVariant> = {
     '200': { layer: nineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
 };
 
-const renderLayer = (layer: FrameLayer | undefined, tint: string | undefined) => {
-    if (!layer) return null;
-
-    if (layer.kind === 'composite') return <CompositeLayer pieces={layer.pieces} tint={tint} />;
-
-    return <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tint} />;
-};
-
 export interface FrameProps {
     /** Identifies this window for z-order stacking (SystemStore) and drag/resize persistence (localStorage). Frames without an id still stack/drag/resize, they just don't persist position/size across reloads. */
     id?: string;
@@ -110,9 +99,7 @@ export interface FrameProps {
  * of hooks/ui/useFrameDrag.ts/useFrameResize.ts.
  */
 export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
-    const cascadedVariant = useCascadedVariant('frame');
-    const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-    const ownCascade = VARIANT_CASCADE_CONFIG['frame']?.[resolvedVariant];
+    const { resolvedVariant, ownCascade } = useResolvedVariant('frame', variant, defaultVariant);
     const config = FRAME_VARIANTS[resolvedVariant] ?? FRAME_VARIANTS['0'];
     const resolvedTint = tintColor || config.tint;
 
@@ -145,8 +132,8 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            {renderLayer(config.layer, resolvedTint)}
-            {renderLayer(config.overlay, undefined)}
+            <BackgroundLayer layer={config.layer} tint={resolvedTint} />
+            <BackgroundLayer layer={config.overlay} />
             <VariantCascadeProvider map={ownCascade}>
                 <Header caption={caption} tintColor={resolvedTint} onClose={onClose} onPointerDown={onHeaderPointerDown} />
                 <ContentArea>

@@ -3,13 +3,14 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer } from './utils/Layer';
-import { resolveTabChromeLayer, TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
+import { TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
-import { useInteractionState } from './utils/useInteractionState';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface TabButtonVariant {
     paddingLeft: number;
@@ -77,13 +78,11 @@ export interface TabButtonProps {
  */
 export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabButtonProps>(
     ({ variant, defaultVariant, selected, layout, onPress, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('tabButton');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['tabButton']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('tabButton', variant, defaultVariant);
         const chrome = TAB_BUTTON_CHROME_VARIANTS[resolvedVariant] ?? TAB_BUTTON_CHROME_VARIANTS['0'];
         const config = TAB_BUTTON_VARIANTS[resolvedVariant] ?? TAB_BUTTON_VARIANTS['0'];
         const { state, handlers } = useInteractionState();
-        const resolvedLayer = resolveTabChromeLayer(chrome, state, selected);
+        const resolvedLayer = resolveByState(chrome, state, selected);
 
         return (
             <Box

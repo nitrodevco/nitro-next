@@ -3,12 +3,13 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CloseButton } from './CloseButton';
-import { NineSliceLayer, SpriteLayer, TileLayer } from './utils/Layer';
+import { BackgroundLayer, type BackgroundLayerConfig, TileLayer } from './utils/Layer';
 import { FONT_AA_DROP_SHADOW, getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface HeaderPadding {
     left: number;
@@ -21,7 +22,11 @@ interface HeaderVariant {
     /** Blue/black/yellow (0/1/2) tile a 6x15 strip via `bg-repeat-x`; light (4) stretches
      *  one texture to fill (`bg-size-[100%_100%]`); default/bubble/il (3/7/100) have no
      *  background image at all; default (200) is a nine-slice border. */
-    background?: { kind: 'tile' | 'stretch', textureKey: string } | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number };
+    background?: BackgroundLayerConfig;
+    /** DOM's `headerTintableVars` has no entry for '200' - its nine-slice border is the one
+     *  background that never tints, even with a caller-supplied `tintColor` (matching
+     *  Button.tsx's own `tintable: false` pattern for the same kind of DOM omission). */
+    tintable?: boolean;
     /** '0'/'1'/'2' share one shine tile overlay; everything else has none. */
     overlayTextureKey?: string;
     minHeight: number;
@@ -45,7 +50,7 @@ const HEADER_VARIANTS: Record<string, HeaderVariant> = {
     '4': { background: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
     '7': { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyleKey: 'text-style-u-frame-title', textColor: '#000000' },
     '100': { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-il-frame-title', textColor: '#000000' },
-    '200': { background: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '200': { background: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
 };
 
 export interface HeaderProps {
@@ -69,11 +74,14 @@ const TintChip = ({ color }: { color: string | undefined }) => {
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
-        const cascadedVariant = useCascadedVariant('header');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['header']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('header', variant, defaultVariant);
         const config = HEADER_VARIANTS[resolvedVariant] ?? HEADER_VARIANTS['0'];
+        // DOM's `resolvedTint` (the caption/close-button chip's inline backgroundColor) and its
+        // separate CSS-var-driven background tinting (gated by `headerTintableVars`, absent for
+        // '200') are two independent mechanisms - the chip always uses the raw tint, only the
+        // background art respects `tintable`.
         const resolvedTint = tintColor || config.tint;
+        const resolvedBackgroundTint = config.tintable === false ? undefined : resolvedTint;
 
         return (
             <Box
@@ -90,9 +98,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     ...layout,
                 }}
             >
-                {config.background?.kind === 'tile' && <TileLayer textureKey={config.background.textureKey} tint={resolvedTint} />}
-                {config.background?.kind === 'stretch' && <SpriteLayer textureKey={config.background.textureKey} tint={resolvedTint} />}
-                {config.background?.kind === 'nineSlice' && <NineSliceLayer textureKey={config.background.textureKey} leftWidth={config.background.leftWidth} topHeight={config.background.topHeight} rightWidth={config.background.rightWidth} bottomHeight={config.background.bottomHeight} />}
+                <BackgroundLayer layer={config.background} tint={resolvedBackgroundTint} />
                 {config.overlayTextureKey && <TileLayer textureKey={config.overlayTextureKey} />}
                 <Box
                     layout={{

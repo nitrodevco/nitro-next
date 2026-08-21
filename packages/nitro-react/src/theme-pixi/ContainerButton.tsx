@@ -3,42 +3,21 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY } from './utils/buttonOverlayPieces';
 import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
-import { type InteractionState, useInteractionState } from './utils/useInteractionState';
+import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState, resolveByState, useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
-interface ContainerButtonLayerState {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
-}
-
-interface ContainerButtonStates {
-    default: ContainerButtonLayerState;
-    hovering?: ContainerButtonLayerState;
-    pressed?: ContainerButtonLayerState;
-    disabled?: ContainerButtonLayerState;
-}
-
-interface ContainerButtonOverlayStates {
-    default: CompositePiece[];
-    pressed?: CompositePiece[];
-}
-
 interface ContainerButtonVariant {
-    states: ContainerButtonStates;
-    overlay?: ContainerButtonOverlayStates;
+    states: InteractionStates<NineSliceLayerState>;
+    overlay?: InteractionStates<CompositePiece[]>;
 }
 
-const layerState = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): ContainerButtonLayerState => (
-    { textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
-);
+const layerState = nineSliceLayerState;
 
 /**
  * Full port of theme/ContainerButton.tsx's 14-variant table. Unlike Border/Button/
@@ -150,19 +129,6 @@ const CONTAINER_BUTTON_TINT_COLORS: Partial<Record<string, string>> = {
     '101': '#bbbbbb',
 };
 
-const resolveLayerState = (states: ContainerButtonStates, state: InteractionState): ContainerButtonLayerState => (
-    (state === 'hovering' && states.hovering)
-    || (state === 'pressed' && states.pressed)
-    || (state === 'disabled' && states.disabled)
-    || states.default
-);
-
-const resolveOverlayPieces = (overlay: ContainerButtonOverlayStates | undefined, state: InteractionState): CompositePiece[] | undefined => {
-    if (!overlay) return undefined;
-
-    return (state === 'pressed' && overlay.pressed) || overlay.default;
-};
-
 export interface ContainerButtonProps {
     variant?: string;
     defaultVariant?: string;
@@ -182,13 +148,11 @@ export interface ContainerButtonProps {
  */
 export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContainerButtonProps>(
     ({ variant, defaultVariant, tintColor, disabled, layout, onPress, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('containerButton');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['containerButton']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('containerButton', variant, defaultVariant);
         const config = CONTAINER_BUTTON_VARIANTS[resolvedVariant] ?? CONTAINER_BUTTON_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
-        const resolvedLayer = resolveLayerState(config.states, state);
-        const resolvedOverlay = resolveOverlayPieces(config.overlay, state);
+        const resolvedLayer = resolveByState(config.states, state);
+        const resolvedOverlay = config.overlay && resolveByState(config.overlay, state);
         const resolvedTint = tintColor || CONTAINER_BUTTON_TINT_COLORS[resolvedVariant];
 
         return (

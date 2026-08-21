@@ -3,26 +3,23 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
-import { BlendOverlay, CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
+import { BackgroundLayer, type BackgroundLayerConfig, BlendOverlay, type CompositePiece } from './utils/Layer';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
-type BorderLayerConfig =
-    | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number }
-    | { kind: 'composite', pieces: CompositePiece[] };
-
 interface BorderVariant {
-    layer: BorderLayerConfig;
-    overlay?: BorderLayerConfig;
+    layer: BackgroundLayerConfig;
+    overlay?: BackgroundLayerConfig;
 }
 
-const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): BorderLayerConfig => (
+const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): BackgroundLayerConfig => (
     { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
 );
 
-const composite = (pieces: CompositePiece[]): BorderLayerConfig => ({ kind: 'composite', pieces });
+const composite = (pieces: CompositePiece[]): BackgroundLayerConfig => ({ kind: 'composite', pieces });
 
 /**
  * Full port of theme/Border.tsx's 19-variant table. Variant '100' is the one DOM variant
@@ -130,14 +127,6 @@ const BORDER_TINT_COLORS: Partial<Record<string, string>> = {
     '108': '#676767',
 };
 
-const renderLayer = (layer: BorderLayerConfig | undefined, tint: string | undefined) => {
-    if (!layer) return null;
-
-    if (layer.kind === 'composite') return <CompositeLayer pieces={layer.pieces} tint={tint} />;
-
-    return <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tint} />;
-};
-
 export interface BorderProps {
     variant?: string;
     defaultVariant?: string;
@@ -151,16 +140,14 @@ export interface BorderProps {
 
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
     ({ variant, defaultVariant, tintColor, blend, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('border');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['border']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('border', variant, defaultVariant);
         const resolvedTint = tintColor || BORDER_TINT_COLORS[resolvedVariant];
         const config = BORDER_VARIANTS[resolvedVariant] ?? BORDER_VARIANTS['0'];
 
         return (
             <Box ref={ref} layout={layout}>
-                {renderLayer(config.layer, resolvedTint)}
-                {renderLayer(config.overlay, undefined)}
+                <BackgroundLayer layer={config.layer} tint={resolvedTint} />
+                <BackgroundLayer layer={config.overlay} />
                 {config.layer.kind === 'nineSlice' && (
                     <BlendOverlay
                         textureKey={config.layer.textureKey}

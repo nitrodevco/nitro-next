@@ -3,12 +3,13 @@ import './pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from '../Box';
 import { NineSliceLayer } from './Layer';
 import { getPixiTextStyle, type TextStyleKey } from './textStyles';
-import { type InteractionState, useInteractionState } from './useInteractionState';
+import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState, resolveByState, useInteractionState } from './useInteractionState';
+import { useResolvedVariant } from './useResolvedVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
 /**
@@ -21,25 +22,13 @@ import { wrapTextChildren } from './wrapTextChildren';
  * has no tint handling at all (not an omission - there is nothing to port).
  */
 
-export interface ButtonGroupLayerState {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
-}
-
 /** `aria-selected:` and `active:` swap to the exact same art/slice in every DOM variant of
- *  these three components, so both collapse to this one `selected` state here. */
-export interface ButtonGroupStates {
-    default: ButtonGroupLayerState;
-    hovering: ButtonGroupLayerState;
-    selected: ButtonGroupLayerState;
-    disabled: ButtonGroupLayerState;
-}
-
+ *  these three components, so both collapse to this one `selected` state here. Every variant
+ *  populates all four states (unlike Button/ContainerButton's optional hover/disabled), but
+ *  `InteractionStates`' fields being optional doesn't require that - a fully-populated table
+ *  still satisfies it. */
 export interface ButtonGroupVariant {
-    states: ButtonGroupStates;
+    states: InteractionStates<NineSliceLayerState>;
     paddingLeft: number;
     paddingTop: number;
     paddingRight: number;
@@ -50,17 +39,7 @@ export interface ButtonGroupVariant {
     color: string;
 }
 
-export const layerState = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): ButtonGroupLayerState => (
-    { textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
-);
-
-const resolveLayerState = (states: ButtonGroupStates, interactionState: InteractionState, selected: boolean | undefined): ButtonGroupLayerState => {
-    if (interactionState === 'disabled') return states.disabled;
-    if (selected || interactionState === 'pressed') return states.selected;
-    if (interactionState === 'hovering') return states.hovering;
-
-    return states.default;
-};
+export const layerState = nineSliceLayerState;
 
 export interface ButtonGroupComponentProps {
     variant?: string;
@@ -91,12 +70,10 @@ export const createButtonGroupComponent = (
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({ variant, defaultVariant, selected, disabled, layout, onPress, children }, ref) => {
-            const cascadedVariant = useCascadedVariant(cascadeKey);
-            const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-            const ownCascade = VARIANT_CASCADE_CONFIG[cascadeKey]?.[resolvedVariant];
+            const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
             const config = variants[resolvedVariant] ?? variants['0'];
             const { state, handlers } = useInteractionState(disabled);
-            const resolvedLayer = resolveLayerState(config.states, state, selected);
+            const resolvedLayer = resolveByState(config.states, state, selected);
 
             return (
                 <Box

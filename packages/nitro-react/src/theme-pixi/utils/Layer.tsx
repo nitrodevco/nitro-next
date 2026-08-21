@@ -133,6 +133,39 @@ export const CompositeLayer = ({ pieces, tint }: CompositeLayerProps) => (
     <>{pieces.map((piece, index) => <CompositePieceSprite key={index} piece={piece} tint={tint} />)}</>
 );
 
+/**
+ * A variant's background/overlay art, tagged by shape. Covers every kind found across
+ * Border/Frame/Header/Button/ContainerButton's variant tables: a single nine-slice border, a
+ * single stretched sprite (`bg-size-[100%_100%]`), a repeating tile (`bg-repeat`/`bg-repeat-x`),
+ * or a composite of several discrete positioned pieces. `BackgroundLayer` below is the one
+ * place that switches on `kind` - Border.tsx and Frame.tsx used to each define their own
+ * `renderLayer` function that did this same switch (nineSlice/composite only, verbatim
+ * duplicates of each other), and Header.tsx did it as three separate JSX conditionals
+ * (tile/stretch/nineSlice) - all three now render through this instead.
+ */
+export type BackgroundLayerConfig =
+    | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number }
+    | { kind: 'stretch', textureKey: string }
+    | { kind: 'tile', textureKey: string }
+    | { kind: 'composite', pieces: CompositePiece[] };
+
+export interface BackgroundLayerProps {
+    layer: BackgroundLayerConfig | undefined;
+    tint?: string;
+    layout?: BoxLayout;
+}
+
+export const BackgroundLayer = ({ layer, tint, layout }: BackgroundLayerProps) => {
+    if (!layer) return null;
+
+    switch (layer.kind) {
+        case 'composite': return <CompositeLayer pieces={layer.pieces} tint={tint} />;
+        case 'stretch': return <SpriteLayer textureKey={layer.textureKey} tint={tint} layout={layout} />;
+        case 'tile': return <TileLayer textureKey={layer.textureKey} tint={tint} layout={layout} />;
+        case 'nineSlice': return <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tint} layout={layout} />;
+    }
+};
+
 export interface BlendOverlayProps {
     /** The same texture/geometry as the layer being blended, used only as a mask shape. */
     textureKey: string | undefined;

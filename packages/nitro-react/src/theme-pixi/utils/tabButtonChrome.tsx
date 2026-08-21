@@ -1,4 +1,4 @@
-import { type InteractionState } from './useInteractionState';
+import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState } from './useInteractionState';
 
 /**
  * Border-image data shared by TabButton and TabContainerButton - both DOM components
@@ -14,25 +14,11 @@ import { type InteractionState } from './useInteractionState';
  * no disabled art to port - only default/hovering/selected.
  */
 
-export interface TabChromeLayerState {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
-}
+/** DOM's `aria-selected:` and `active:` modifiers resolve to the exact same border-image in
+ *  every variant, so both collapse to `resolveByState`'s `selected` field here. */
+export type TabChromeStates = InteractionStates<NineSliceLayerState>;
 
-export interface TabChromeStates {
-    default: TabChromeLayerState;
-    hovering: TabChromeLayerState;
-    /** DOM's `aria-selected:` and `active:` modifiers resolve to the exact same border-image
-     *  in every variant, so both collapse to this one state here. */
-    selected: TabChromeLayerState;
-}
-
-const layer = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): TabChromeLayerState => (
-    { textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
-);
+const layer = nineSliceLayerState;
 
 /**
  * Full port of the border-image portion of theme/TabButton.tsx & theme/TabContainerButton.tsx's
@@ -69,11 +55,4 @@ export const TAB_BUTTON_CHROME_VARIANTS: Record<string, TabChromeStates> = {
         hovering: layer('tabbutton-3-hovering-src', 9, 0, 9, 0),
         selected: layer('tabbutton-3-selected-src', 9, 0, 9, 0),
     },
-};
-
-export const resolveTabChromeLayer = (states: TabChromeStates, interactionState: InteractionState, selected: boolean | undefined): TabChromeLayerState => {
-    if (selected || interactionState === 'pressed') return states.selected;
-    if (interactionState === 'hovering') return states.hovering;
-
-    return states.default;
 };
