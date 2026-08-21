@@ -6,7 +6,6 @@ import { forwardRef, useEffect } from 'react';
 import { useConfigValue, useRoomMouseActions, useRoomSelector } from '#base/context';
 import { useRoomModifications } from '#base/handlers';
 import { useRoomCamera, useRoomMouse } from '#base/hooks';
-import { GetPixelRatio } from '#base/utils';
 
 export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
     const room = useRoomSelector();
@@ -24,7 +23,11 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
         const stage = GetStage();
         const ticker = GetTicker();
 
-        const handleSize = (width: number, height: number, resolution: number) => {
+        // The canvas itself is owned/mounted by the shared <Application> (theme-pixi/
+        // PixiApplicationRoot), which also resizes the renderer via resizeTo={window}. This
+        // effect only measures the room's own viewport (this component's own ref div, sized
+        // via CSS to fill the same area) to reinit the room's internal geometry/camera.
+        const handleSize = (width: number, height: number) => {
             let canvas = room.canvas;
 
             if (!canvas) canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
@@ -35,13 +38,6 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
             updateRoomCamera(-1);
 
             if (canvas.master && canvas.master.parent !== stage) stage.addChild(canvas.master);
-
-            renderer.canvas.style.width = `${width}px`;
-            renderer.canvas.style.height = `${height}px`;
-
-            renderer.resize(width, height, resolution);
-
-            renderer.render(stage);
         }
 
         let timer: ReturnType<typeof setTimeout>;
@@ -49,16 +45,13 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
         const observer = new ResizeObserver(x => {
             const width = x[0]?.contentRect.width;
             const height = x[0]?.contentRect.height;
-            const resolution = GetPixelRatio();
 
             clearTimeout(timer);
 
-            timer = setTimeout(() => handleSize(width, height, resolution), 5);
+            timer = setTimeout(() => handleSize(width, height), 5);
         });
 
         if (ref && ('current' in ref) && ref.current) {
-            ref.current.appendChild(renderer.canvas);
-
             observer.observe(ref.current);
         }
 
@@ -84,8 +77,9 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
 
             if (hasAndResetCursorUpdate()) renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
 
-            renderer.render(stage);
-
+            // The shared <Application>'s own render loop (driven by the same shared ticker)
+            // renders app.stage - which contains this stage as a child - every frame, so no
+            // manual renderer.render() call is needed here.
             room.dispatchEvent(new RoomRenderedEvent(room.roomId, time));
         }
 

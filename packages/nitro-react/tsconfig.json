@@ -21,6 +21,9 @@
             "#base/theme": [
                 "./src/theme/index.ts"
             ],
+            "#base/theme-pixi": [
+                "./src/theme-pixi/index.ts"
+            ],
             "#base/utils": [
                 "./src/utils/index.ts"
             ],

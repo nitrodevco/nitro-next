@@ -9,7 +9,6 @@ import { useWebSocketContext } from "./context";
 import { useMessengerHandler, useNavigatorHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
 import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
 import { ActivityPointsView } from "./views/purse/ActivityPointsView";
-import { PurseView } from "./views/purse/PurseView";
 import { ToolbarView } from "./views/toolbar/ToolbarView";
 
 export const MainView = () => {
@@ -46,8 +45,10 @@ export const MainView = () => {
             <div
                 id="ui-container"
                 className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
-                <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
-                    <PurseView />
+                {/* PurseView now renders through Pixi (see views/purse/PurseViewPixi.tsx, mounted
+                    in Nitro.tsx's PixiApplicationRoot) - pt-19.25 reserves the space it used to
+                    occupy here so ActivityPointsView/NotificationCenterView keep their position. */}
+                <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75 pt-19.25">
                     <div className="flex flex-col items-end w-48">
                         <ActivityPointsView />
                         <NotificationCenterView />

@@ -2,7 +2,6 @@ import { NitroLogger } from '@nitrodevco/nitro-api';
 import {
     GetRoomContentLoader,
     GetRoomEngine,
-    PrepareRenderer,
     RoomContentLoader,
     TexturePool
 } from '@nitrodevco/nitro-renderer';
@@ -10,14 +9,16 @@ import { AnimatePresence, motion } from 'motion/react';
 import { type FC, useEffect, useState } from 'react';
 
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
-import { GetPixelRatio } from '#base/utils';
+import { PixiApplicationRoot } from '#base/theme-pixi';
 
 import { useWebSocketContext } from './context';
 import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
+import { PurseViewPixi } from './views/purse/PurseViewPixi';
 
 export const Nitro: FC = () => {
+    const [isRendererReady, setIsRendererReady] = useState(false);
     const [isEngineReady, setIsEngineReady] = useState(false);
 
     const { isConfigReady } = useConfigLoader();
@@ -35,46 +36,39 @@ export const Nitro: FC = () => {
     }, [isEngineReady, connect]);
 
     useEffect(() => {
-        const setup = async (width: number, height: number) => {
-            try {
-                await PrepareRenderer({
-                    width,
-                    height,
-                    autoDensity: false,
-                    resolution: GetPixelRatio(),
-                    backgroundAlpha: 0,
-                    roundPixels: false,
-                    preference: 'webgpu',
-                    preserveDrawingBuffer: false,
-                });
+        if (!isRendererReady) return;
 
+        const setup = async () => {
+            try {
                 TexturePool.startAutoCleanup();
 
-                try {
-                    await GetRoomEngine().init();
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
+                await GetRoomEngine().init();
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
+                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
 
-                    setIsEngineReady(true);
-                } catch (err) {
-                    NitroLogger.error(err);
-                }
+                setIsEngineReady(true);
             } catch (err) {
                 NitroLogger.error(err);
             }
         };
 
-        void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
-    }, []);
+        void setup();
+    }, [isRendererReady]);
 
     const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isProductDataReady();
 
     return (
         <>
+            {/* The single Pixi Application/renderer for both the room and the Pixi-rendered UI
+                (see theme-pixi/PixiApplicationRoot.tsx) - mounts unconditionally, since the room
+                engine's own init below waits on its onReady callback. */}
+            <PixiApplicationRoot onReady={() => setIsRendererReady(true)}>
+                {isReady && <PurseViewPixi />}
+            </PixiApplicationRoot>
             <AnimatePresence mode="wait">
                 {!isReady && (
                     <motion.div

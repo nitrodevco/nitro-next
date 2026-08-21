@@ -11,6 +11,8 @@
         "@nitrodevco/nitro-api": "workspace:*",
         "@nitrodevco/nitro-packets": "workspace:*",
         "@nitrodevco/nitro-renderer": "workspace:*",
+        "@pixi/layout": "^3.2.1",
+        "@pixi/react": "^8.0.5",
         "@tanstack/react-virtual": "^3.13.25",
         "dompurify": "^3.4.5",
         "motion": "12.40.0",
@@ -18,6 +20,7 @@
         "react": "^19.2.6",
         "react-dom": "^19.2.6",
         "react-icons": "^5.6.0",
+        "yoga-layout": "^3.2.1",
         "zustand": "^5.0.13"
     },
     "devDependencies": {
