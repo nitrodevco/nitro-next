@@ -85,7 +85,12 @@ public final class FurnitureNode: SKNode {
         sprite.xScale = layer.flipH ? -1 : 1
         sprite.yScale = layer.flipV ? -1 : 1
         sprite.alpha = CGFloat(max(0, min(255, layer.alpha)) / 255)
-        sprite.zPosition = CGFloat(layer.relativeDepth)
+        // TS sorts its global sprite list `(a, b) => b.z - a.z` - descending, with index 0 drawn
+        // *first* (furthest back) - so a *larger* relativeDepth there means further back. SpriteKit's
+        // zPosition is the opposite sense (larger = drawn on top/closer), so this needs negating, not
+        // a direct copy - the un-negated version is why the shadow layer (relativeDepth ~0.707, the
+        // largest of any layer in a typical item) rendered in *front* of everything instead of behind.
+        sprite.zPosition = -CGFloat(layer.relativeDepth)
         sprite.blendMode = FurnitureNode.blendMode(for: layer.blendMode)
         sprite.name = layer.assetName
 

@@ -138,14 +138,17 @@ open class RoomScene: SKScene {
     }
 
     /// Re-bakes every plane for the current camera state - call after changing `geometry`
-    /// (zoom/rotate) or after `loadRoom`. The room's plane geometry is itself one "room object"
-    /// placed at `roomPlaneRenderer.roomObjectLocation` (world origin by default) - `RoomPlaneNode`'s
-    /// own position needs the same canvas-centering every other placed object gets (see
-    /// `screenPosition(for:)`), while its individual plane sprites keep their existing offsets
-    /// (registration points *relative to* that shared root, already handled correctly).
+    /// (zoom/rotate) or after `loadRoom`.
+    ///
+    /// `RoomPlaneNode`'s own position is *only* the bare canvas-centering term (`size/2`), **not**
+    /// `screenPosition(for:)` - unlike furniture/avatars, each individual plane's `offset` (baked in
+    /// by `RoomPlane.updateCorners`) already includes `geometry.getScreenPoint(roomObjectLocation)`
+    /// as its own registration baseline (mirrors `RoomPlane._offset = geometry.getScreenPoint(this._origin)`
+    /// in the TS source). Routing this through `screenPosition(for:)` too would add that same
+    /// camera-relative term a second time, on top of what's already folded into every plane's
+    /// offset - the room rendered wildly displaced instead of centered until this was caught.
     public func refreshRoomPlanes() {
-        if let roomPlaneRenderer { roomPlaneNode?.position = screenPosition(for: roomPlaneRenderer.roomObjectLocation) }
-
+        roomPlaneNode?.position = CGPoint(x: size.width / 2, y: size.height / 2)
         roomPlaneNode?.refresh(geometry: geometry)
     }
 

@@ -75,18 +75,32 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   frames and green-channel palette recoloring - this is the foundation everything else sits on.
 - The room camera's 3D projection math (`RoomGeometry`), ported field-for-field including its
   specific (non-textbook) Euler rotation composition.
-- **`RoomScene.screenPosition(for:)`** - `RoomGeometry.getScreenPoint` returns a point *relative to
-  the camera's projected origin*, not a canvas/view pixel coordinate; the TS client only ever
-  consumes it after adding half the canvas size (`RoomSpriteCanvas.renderObject`: every placed room
-  object - furniture, avatars, and the room's own plane geometry alike - goes through `x = x +
-  (width>>1); y = y + (height>>1)`). Missing this step was a real bug caught via live testing (not
-  found by static reading alone): every placed node clustered near the SpriteKit scene's
-  bottom-left corner instead of appearing centered, and room planes - being much larger than a
-  furniture/avatar sprite - ended up positioned almost entirely outside the viewport, making the
-  room look like it wasn't rendering at all. `screenPosition(for:)` centralizes the fix (with a Y
-  negation instead of TS's addition, since SpriteKit's default anchorPoint is y-up-from-bottom-left
-  vs. Pixi's y-down-from-top-left) - `placeFurniture`/`placeAvatar` and `RoomPlaneNode`'s own root
-  position (anchored to `RoomPlaneRenderer.roomObjectLocation`) all go through it.
+- **Canvas-centering and depth-sort direction** - two real bugs caught only via live testing (not
+  found by static reading alone), both now fixed:
+  - `RoomGeometry.getScreenPoint` returns a point *relative to the camera's projected origin*, not
+    a canvas/view pixel coordinate; the TS client only ever consumes it after adding half the
+    canvas size (`RoomSpriteCanvas.renderObject`: every placed room object goes through `x = x +
+    (width>>1); y = y + (height>>1)`). `RoomScene.screenPosition(for:)` centralizes that (with a Y
+    negation instead of TS's addition, since SpriteKit's default anchorPoint is
+    y-up-from-bottom-left vs. Pixi's y-down-from-top-left) and is what `placeFurniture`/`placeAvatar`
+    use. Room planes are the one exception: each plane's own `offset` (`RoomPlane.updateCorners`)
+    already bakes in `geometry.getScreenPoint(roomObjectLocation)` as its registration baseline
+    (mirroring `RoomPlane._offset` in the TS source), so `RoomPlaneNode`'s root position only needs
+    the bare `size/2` centering term - routing it through `screenPosition(for:)` too double-counted
+    that camera-relative term and displaced the whole room wildly instead of centering it.
+  - Depth sort direction: TS's global sprite list sorts `(a, b) => b.z - a.z` (descending, index 0
+    drawn *first*), so a *larger* `relativeDepth`/`z` there means *further back*, not closer -
+    opposite of SpriteKit's `zPosition` (larger = closer to the camera, drawn on top). Copying
+    `relativeDepth` straight into `zPosition` inverted every depth relationship it's used for:
+    `RoomPlaneRenderer.roomDepthOffset` (1000, meant to push the whole room behind every other
+    object) instead put the room in front of everything, and a furniture item's shadow layer
+    (`relativeDepth` ≈0.707, deliberately the largest of any layer so it sorts behind the rest)
+    rendered in front of its own item instead of underneath. `FurnitureNode`/`RoomPlaneNode` now
+    negate `relativeDepth` when assigning `zPosition`. `AvatarNode`'s `zIndex` is unaffected - it's
+    a local, purely-ascending append-order counter for one avatar's own internal part layering
+    (head over body, etc.), not a value that ever went through TS's descending room-object sort, so
+    negating it would need to happen only if this port later gives per-avatar world depth its own
+    representation (it currently has none - see "Explicitly not yet ported").
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on

@@ -39,7 +39,13 @@ public final class RoomPlaneNode: SKNode {
         // TS: `sprite.offsetX = -offset.x; sprite.offsetY = -offset.y` (y-down); Y is flipped again
         // here for SpriteKit's y-up convention, netting out to (-offset.x, +offset.y).
         sprite.position = CGPoint(x: -draw.offset.x, y: draw.offset.y)
-        sprite.zPosition = CGFloat(draw.relativeDepth)
+        // See `FurnitureNode.makeSprite`'s comment: TS's global sprite sort is descending-z-drawn-first,
+        // so a *larger* z there means further back - `RoomPlaneRenderer.roomDepthOffset` (1000) pushes
+        // planes far into that "drawn first" range deliberately, to guarantee floor/walls sort behind
+        // every other room object. A direct (un-negated) copy into SpriteKit's zPosition - where larger
+        // means closer to the camera - inverted that intent completely, putting the room in front of
+        // the furniture and avatars it's supposed to sit behind.
+        sprite.zPosition = -CGFloat(draw.relativeDepth)
         sprite.name = "plane.\(draw.uniqueId)"
 
         if draw.color != 0xFFFFFF {
