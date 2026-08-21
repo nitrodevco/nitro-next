@@ -1,19 +1,32 @@
-import { useTranslation, useWallet } from '#base/context';
-import { Border, Box, Button, FONT_AA_DROP_SHADOW, getPixiTextStyle, NitroCurrencyIcon, NitroIcon } from '#base/theme-pixi';
+import { useTranslation, useWallet } from "#base/context";
+import { Border, Box, Button, FONT_AA_DROP_SHADOW, getPixiTextStyle, NitroCurrencyIcon, NitroIcon } from "#base/theme-pixi";
 
-/**
- * Pixi proof-of-concept for views/purse/PurseView.tsx - same data/layout, rendered through
- * theme-pixi instead of the DOM theme package. See views/purse/PurseView.tsx for the DOM
- * version this mirrors 1:1 (layout in px, converted from its Tailwind spacing classes).
- */
 export const PurseViewPixi = () => {
     const currency = useWallet();
     const t = useTranslation();
 
     const kinds = [
-        { type: '5', amount: currency.activityPoints[5] ?? 0, color: '#38caeb', name: 'Diamonds' },
-        { type: '-1', amount: currency.credits ?? 0, color: '#d5af22', name: 'Credits' },
-        { type: '0', amount: currency.activityPoints[0] ?? 0, color: '#d787d7', name: 'Duckets' },
+        {
+            type: "5",
+            amount: currency.activityPoints[5] ?? 0,
+            color: '#38caeb',
+            name: 'Diamonds',
+            icon: 'diamonds'
+        },
+        {
+            type: "-1",
+            amount: currency.credits ?? 0,
+            color: '#d5af22',
+            name: 'Credits',
+            icon: 'credits'
+        },
+        {
+            type: "0",
+            amount: currency.activityPoints[0] ?? 0,
+            color: '#d787d7',
+            name: 'Duckets',
+            icon: 'duckets'
+        },
     ];
 
     return (
@@ -60,4 +73,4 @@ export const PurseViewPixi = () => {
             </Box>
         </Border>
     );
-};
+}

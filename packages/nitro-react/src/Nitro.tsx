@@ -1,4 +1,4 @@
-import { NitroLogger } from '@nitrodevco/nitro-api';
+import { CatalogTypeEnum, NitroLogger } from '@nitrodevco/nitro-api';
 import {
     GetRoomContentLoader,
     GetRoomEngine,
@@ -11,11 +11,12 @@ import { type FC, useEffect, useState } from 'react';
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 import { PixiApplicationRoot } from '#base/theme-pixi';
 
+import { CatalogWrapper } from './components';
 import { useWebSocketContext } from './context';
 import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
-import { PurseViewPixi } from './views/purse/PurseViewPixi';
+import { PurseViewPixi } from './views-pixi/purse/PurseViewPixi';
 
 export const Nitro: FC = () => {
     const [isRendererReady, setIsRendererReady] = useState(false);
@@ -67,7 +68,10 @@ export const Nitro: FC = () => {
                 (see theme-pixi/PixiApplicationRoot.tsx) - mounts unconditionally, since the room
                 engine's own init below waits on its onReady callback. */}
             <PixiApplicationRoot onReady={() => setIsRendererReady(true)}>
-                {isReady && <PurseViewPixi />}
+                {isReady && <>
+                    <PurseViewPixi />
+                    <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+                </>}
             </PixiApplicationRoot>
             <AnimatePresence mode="wait">
                 {!isReady && (
