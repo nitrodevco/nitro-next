@@ -25,10 +25,11 @@ interface DropmenuItemVariant {
 }
 
 /**
- * Static-skinning port of theme/DropmenuItem.tsx - a dropdown option row meant to live
- * inside an open Dropmenu panel that doesn't exist in DOM today (no call sites render this
- * component at all - confirmed via full-codebase research). `aria-selected:`/`active:` both
- * map to the same "selected" art in every variant, collapsed to one Pixi `selected` prop.
+ * Static-skinning port of theme/DropmenuItem.tsx, plus `onPress` - views/navigator/
+ * NavigatorSearchView.tsx renders a real list of these (found once views/ migration reached
+ * Navigator), each with a working onClick, inside a Dropmenu it opens/closes itself (see
+ * Dropmenu.tsx's own updated docblock). `aria-selected:`/`active:` both map to the same
+ * "selected" art in every variant, collapsed to one Pixi `selected` prop.
  */
 const DROPMENU_ITEM_VARIANTS: Record<string, DropmenuItemVariant> = {
     '0': { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-regular', color: '#000000' },
@@ -41,12 +42,13 @@ export interface DropmenuItemProps {
     variant?: string;
     defaultVariant?: string;
     selected?: boolean;
+    onPress?: () => void;
     layout?: BoxLayout;
     children?: ReactNode;
 }
 
 export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuItemProps>(
-    ({ variant, defaultVariant, selected, layout, children }, ref) => {
+    ({ variant, defaultVariant, selected, onPress, layout, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenuItem', variant, defaultVariant);
         const config = DROPMENU_ITEM_VARIANTS[resolvedVariant] ?? DROPMENU_ITEM_VARIANTS['0'];
         const { state, handlers } = useInteractionState();
@@ -59,6 +61,8 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
                 ref={ref}
                 layout={{ minWidth: 5, minHeight: 19, paddingLeft: config.paddingLeft, paddingTop: config.paddingTop, paddingRight: config.paddingRight, paddingBottom: config.paddingBottom, ...layout }}
                 {...handlers}
+                cursor={onPress ? 'pointer' : undefined}
+                onPointerTap={onPress}
             >
                 <SpriteLayer textureKey={textureKey} />
                 <VariantCascadeProvider map={ownCascade}>

@@ -1,6 +1,6 @@
 import { useNavigatorHandler } from '#base/handlers';
 import { useNavigatorVisibility } from '#base/hooks';
-import { NavigatorView } from '#base/views/navigator';
+import { NavigatorViewPixi } from '#base/views-pixi/navigator/NavigatorViewPixi';
 
 export const NavigatorComponent = () => {
     const { isNavigatorVisible } = useNavigatorVisibility();
@@ -10,5 +10,5 @@ export const NavigatorComponent = () => {
 
     if (!isNavigatorVisible) return null;
 
-    return <NavigatorView />;
+    return <NavigatorViewPixi />;
 }

@@ -26,10 +26,12 @@ interface DropmenuVariant {
 }
 
 /**
- * Static-skinning port of theme/Dropmenu.tsx - confirmed (via full-codebase research) that
- * DOM's Dropmenu has zero open/close/positioning logic: every real call site renders it as a
- * bare, childless closed box with no click handler and no dropdown ever shown. This port
- * matches that reality - variant/tint/overlay-arrow art only, no new floating-menu behavior.
+ * Static-skinning port of theme/Dropmenu.tsx, with one addition: views/navigator/
+ * NavigatorSearchView.tsx (found once views/ migration reached Navigator) DOES use Dropmenu
+ * interactively - a real onClick toggling a locally-rendered DropmenuItem list, not the
+ * "always a bare closed box" pattern every other confirmed call site follows. `onPress` below
+ * exists for that one real call site; still no built-in floating positioning/open state of its
+ * own - the caller (as DOM's own does) owns showing/hiding whatever it renders below this.
  */
 const DROPMENU_VARIANTS: Record<string, DropmenuVariant> = {
     '0': { layer: { kind: 'nineSlice', textureKey: 'dropmenu-0-default-src' }, arrowTextureKey: 'dropmenu-0-default-arrow-src', minWidth: 40, minHeight: 22, textStyleKey: 'text-style-regular', color: '#000000' },
@@ -42,12 +44,13 @@ export interface DropmenuProps {
     variant?: string;
     defaultVariant?: string;
     tintColor?: string;
+    onPress?: () => void;
     layout?: BoxLayout;
     children?: ReactNode;
 }
 
 export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuProps>(
-    ({ variant, defaultVariant, tintColor, layout, children }, ref) => {
+    ({ variant, defaultVariant, tintColor, onPress, layout, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenu', variant, defaultVariant);
         const config = DROPMENU_VARIANTS[resolvedVariant] ?? DROPMENU_VARIANTS['0'];
         // Only variant '3' has hover art in DOM (0/1/100 are static nine-slice boxes).
@@ -61,6 +64,9 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                 ref={ref}
                 layout={{ minWidth: config.minWidth, minHeight: config.minHeight, paddingLeft: 2, paddingRight: 2, ...layout }}
                 {...(config.layer.kind === 'sprite' ? handlers : undefined)}
+                eventMode={onPress ? 'static' : undefined}
+                cursor={onPress ? 'pointer' : undefined}
+                onPointerTap={onPress}
             >
                 {config.layer.kind === 'nineSlice'
                     ? <NineSliceLayer textureKey={config.layer.textureKey} leftWidth={3} topHeight={3} rightWidth={3} bottomHeight={3} tint={tintColor} />
