@@ -546,6 +546,18 @@ public final class RoomPlane {
 
         ctx.clip(to: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
 
+        // Every tile is drawn edge-to-edge with the next (`x += tileWidth`, no gap or overlap in the
+        // loop's own math), but `ctx` has a skew/scale transform concatenated on it
+        // (`matrixForDimensions`) whenever a plane isn't drawn axis-aligned-at-1:1 - under that
+        // transform, CoreGraphics' default (smooth) interpolation samples slightly past each tile
+        // image's own edge, bleeding a faint seam of background color between adjacent copies.
+        // Nearest-neighbor sampling has no such bleed (each destination pixel reads exactly one
+        // source pixel), and matches this content's actual pixel-art style anyway. Antialiasing is
+        // a second, independent source of the same kind of edge bleed (soft-edge rasterization of
+        // each draw call's own boundary), so both are disabled together for this loop.
+        ctx.interpolationQuality = .none
+        ctx.setShouldAntialias(false)
+
         // Pixi's `TilingSprite.tilePosition` translates the *pattern's own origin* in the same
         // direction as ordinary sprite positioning - increasing `tilePosition.x` shifts the visible
         // tiled content to the right (verified against the actual pixi.js 8.x source,
