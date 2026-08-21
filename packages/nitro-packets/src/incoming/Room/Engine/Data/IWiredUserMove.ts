@@ -12,4 +12,5 @@ export interface IWiredUserMove {
     animationTime: number;
     bodyRotation: number;
     headRotation: number;
+    jumpPower: number;
 }

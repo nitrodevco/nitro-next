@@ -84,6 +84,7 @@ export * from './user/selectors/useOwnSecurityLevel';
 export * from './user/selectors/useOwnUserFigure';
 export * from './user/selectors/useOwnUserGender';
 export * from './user/selectors/useOwnUserId';
+export * from './user/selectors/useOwnUserInfo';
 export * from './user/selectors/useOwnUserLook';
 export * from './user/selectors/useWallet';
 export * from './user/store/UserFriendsSlice';

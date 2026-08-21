@@ -32,6 +32,7 @@ import {
     ObjectAvatarTypingUpdateMessage,
     ObjectAvatarUpdateMessage,
     ObjectAvatarUseObjectUpdateMessage,
+    ObjectMoveUpdateMessage,
 } from '../../messages';
 import { MovingObjectLogic } from './MovingObjectLogic';
 
@@ -147,6 +148,8 @@ export class AvatarLogic extends MovingObjectLogic {
             this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirection);
             this.object.model.setValue(RoomObjectVariableEnum.FigureCanStandUp, message.canStandUp);
             this.object.model.setValue(RoomObjectVariableEnum.FigureVerticalOffset, message.baseY);
+
+            if (!isNaN(message.jumpingPower)) this.object.model.setValue(RoomObjectVariableEnum.FigureJumpingPower, message.jumpingPower);
 
             return;
         }
@@ -446,5 +449,17 @@ export class AvatarLogic extends MovingObjectLogic {
 
     private randomBlinkEndTimestamp(): number {
         return 50 + Math.random() * 200;
+    }
+
+    protected override getCurveStrength(message: ObjectMoveUpdateMessage): number {
+        if (message instanceof ObjectAvatarUpdateMessage) {
+            return message.jumpingPower;
+        }
+
+        const jumpingPower = this.object.model.getValue<number>(RoomObjectVariableEnum.FigureJumpingPower);
+
+        if (jumpingPower !== undefined) return jumpingPower;
+
+        return super.getCurveStrength(message);
     }
 }

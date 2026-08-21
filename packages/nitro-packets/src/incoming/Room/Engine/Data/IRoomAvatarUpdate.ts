@@ -7,11 +7,13 @@ export interface IRoomAvatarUpdate {
     sourceZ: number;
     headRotation: number;
     bodyRotation: number;
+    jumpingPower: number;
     targetX: number;
     targetY: number;
     targetZ: number;
     height: number;
     didMove: boolean;
     canStandUp: boolean;
+    skipPositionUpdate: boolean;
     actions: IRoomAvatarAction[];
 }

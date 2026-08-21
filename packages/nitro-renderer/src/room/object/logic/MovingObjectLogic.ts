@@ -1,6 +1,8 @@
 import type { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
 import { RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
+import { GetTickerTime } from '#renderer/utils';
+
 import { ObjectMoveUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
 
@@ -14,6 +16,8 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
     private _lastUpdateTime: number = 0;
     private _changeTime: number = 0;
     private _updateInterval: number = MovingObjectLogic.DEFAULT_UPDATE_INTERVAL;
+    private _overshootTime: number = 0;
+    private _curveStrength: number = 0;
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [
@@ -63,6 +67,10 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
 
             if (locationOffset) vector.add(locationOffset);
 
+            if (!isNaN(this._curveStrength) && this._curveStrength !== 0) {
+                vector.z += this.calculateCurveOffset(difference, this._updateInterval);
+            }
+
             this.object.setLocation(vector);
 
             if (difference === this._updateInterval) {
@@ -82,8 +90,6 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
 
         super.processUpdateMessage(message);
 
-        if (message.location) this._location.assign(message.location);
-
         if (message instanceof ObjectMoveUpdateMessage) {
             if (message.skipPositionUpdate) return;
 
@@ -96,9 +102,21 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
 
                 if (message.targetLocation) {
                     this._updateInterval = Math.max(1, isNaN(message.animationTime) ? MovingObjectLogic.DEFAULT_UPDATE_INTERVAL : message.animationTime);
-                    this._changeTime = this._lastUpdateTime;
+
+                    const overshootTime = message.overshootAnimationTime;
+                    const curveStrength = this.getCurveStrength(message);
+
+                    if (!isNaN(overshootTime) && overshootTime === 0) this._overshootTime = NaN;
+                    else this._overshootTime = overshootTime;
+
+                    if (!isNaN(curveStrength) && curveStrength === 0) this._curveStrength = NaN;
+                    else this._curveStrength = curveStrength;
+
+                    this._changeTime = this._lastUpdateTime > 0 ? this._lastUpdateTime : GetTickerTime();
                     this._locationDelta.assign(message.targetLocation);
                     this._locationDelta.subtract(this._location);
+
+                    this.fixDeltaAndIntervalForOvershooting();
                 }
             }
 
@@ -124,5 +142,38 @@ export class MovingObjectLogic extends RoomObjectLogicBase {
         if (interval <= 0) interval = 1;
 
         this._updateInterval = interval;
+    }
+
+    protected getCurveStrength(message: ObjectMoveUpdateMessage): number {
+        return message.curveStrength;
+    }
+
+    protected setMoveUpdateInterval(animationTime: number, overshootTime: number = 0, curveStrength: number = 0): void {
+        if (animationTime <= 0) animationTime = 1;
+
+        this._updateInterval = animationTime;
+
+        if (!isNaN(overshootTime) && overshootTime === 0) this._overshootTime = NaN;
+        else this._overshootTime = overshootTime;
+
+        if (!isNaN(curveStrength) && curveStrength === 0) this._curveStrength = NaN;
+        else this._curveStrength = curveStrength;
+    }
+
+    protected fixDeltaAndIntervalForOvershooting(): void {
+        if (!isNaN(this._overshootTime) && this._overshootTime !== 0 && this._updateInterval !== 0) {
+            const prevZ = this._location.z;
+
+            this._location.multiply((this._updateInterval + this._overshootTime) / this._updateInterval);
+            this._location.z = prevZ;
+
+            this._updateInterval += this._overshootTime;
+        }
+    }
+
+    protected calculateCurveOffset(diff: number, time: number): number {
+        if (isNaN(this._curveStrength) || this._curveStrength == 0) return 0;
+
+        return 4 * (this._curveStrength / 100 * (this._location.length / 4) / (time * time)) * diff * (time - diff);
     }
 }

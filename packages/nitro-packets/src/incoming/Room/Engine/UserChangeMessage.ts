@@ -6,6 +6,9 @@ export type UserChangeMessageType = {
     gender: string;
     customInfo: string;
     achievementScore: number;
+    unknownString: string;
+    unknownTotal: number;
+    badgesRank: number;
 };
 
 export class UserChangeMessage implements IIncomingPacket<UserChangeMessageType> {
@@ -16,6 +19,9 @@ export class UserChangeMessage implements IIncomingPacket<UserChangeMessageType>
             gender: wrapper.readString().toUpperCase(),
             customInfo: wrapper.readString(),
             achievementScore: wrapper.readInt(),
+            unknownString: wrapper.readString(),
+            unknownTotal: wrapper.readInt(),
+            badgesRank: wrapper.readInt()
         };
 
         return packet;

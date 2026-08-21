@@ -16,6 +16,7 @@ export * from './selectors/useOwnSecurityLevel';
 export * from './selectors/useOwnUserFigure';
 export * from './selectors/useOwnUserGender';
 export * from './selectors/useOwnUserId';
+export * from './selectors/useOwnUserInfo';
 export * from './selectors/useOwnUserLook';
 export * from './selectors/useWallet';
 export * from './store/UserFriendsSlice';

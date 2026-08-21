@@ -33,6 +33,7 @@ export enum RoomObjectVariableEnum {
     FigureIsPlayingGame = 'figure_is_playing_game',
     FigureGuideStatus = 'figure_guide_status',
     FigureExpression = 'figure_expression',
+    FigureJumpingPower = 'figure_jumping_power',
     HeadDirection = 'head_direction',
     FurnitureCustomVariables = 'furniture_custom_variables',
     FurnitureAutomaticStateIndex = 'furniture_automatic_state_index',

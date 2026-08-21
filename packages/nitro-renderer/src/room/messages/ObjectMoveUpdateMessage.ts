@@ -7,6 +7,8 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
     private _isSlide: boolean;
     private _animationTime: number;
     private _skipPositionUpdate: boolean;
+    private _overshootAnimationTime: number;
+    private _curveStrength: number;
 
     constructor(
         location: IVector3D | undefined,
@@ -14,7 +16,9 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
         direction: IVector3D | undefined,
         isSlide: boolean = false,
         animationTime: number = NaN,
-        skipPositionUpdate: boolean = false
+        skipPositionUpdate: boolean = false,
+        overshootAnimationTime: number = NaN,
+        curveStrength: number = NaN
     ) {
         super(location, direction);
 
@@ -22,6 +26,8 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
         this._isSlide = isSlide;
         this._animationTime = animationTime;
         this._skipPositionUpdate = skipPositionUpdate;
+        this._overshootAnimationTime = overshootAnimationTime;
+        this._curveStrength = curveStrength;
     }
 
     public get targetLocation(): IVector3D | undefined {
@@ -40,5 +46,13 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
 
     public get skipPositionUpdate(): boolean {
         return this._skipPositionUpdate;
+    }
+
+    public get overshootAnimationTime(): number {
+        return this._overshootAnimationTime;
+    }
+
+    public get curveStrength(): number {
+        return this._curveStrength;
     }
 }

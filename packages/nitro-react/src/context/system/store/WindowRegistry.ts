@@ -3,6 +3,7 @@ import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendLi
 import type { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
 
 export type WindowRegistry = {
+    avatar_editor: NoWindowParams;
     catalog: CatalogViewWindowParams;
 
     friendlist: FriendListViewWindowParams;

@@ -12,5 +12,6 @@ export * from './useOwnSecurityLevel';
 export * from './useOwnUserFigure';
 export * from './useOwnUserGender';
 export * from './useOwnUserId';
+export * from './useOwnUserInfo';
 export * from './useOwnUserLook';
 export * from './useWallet';

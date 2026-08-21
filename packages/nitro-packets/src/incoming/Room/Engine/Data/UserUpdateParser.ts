@@ -10,12 +10,14 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
         sourceZ: parseFloat(wrapper.readString()),
         headRotation: ((wrapper.readInt() % 8) * 45),
         bodyRotation: ((wrapper.readInt() % 8) * 45),
+        jumpingPower: wrapper.readInt(),
         targetX: 0,
         targetY: 0,
         targetZ: 0,
         height: 0,
         didMove: false,
         canStandUp: false,
+        skipPositionUpdate: false,
         actions: []
     } as IRoomAvatarUpdate;
 
@@ -25,11 +27,14 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
 
     for (const part of parts) {
         const pieces = part.split(' ');
+        const piece = pieces[0];
+
+        if (piece === 'wf') item.skipPositionUpdate = true;
 
         if (pieces[0] === '') continue;
 
         if (pieces.length >= 2) {
-            switch (pieces[0]) {
+            switch (piece) {
                 case AvatarActionStateType.Walk: {
                     const values = pieces[1].split(',');
 

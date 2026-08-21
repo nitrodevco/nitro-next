@@ -6,6 +6,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
     private _headDirection: number;
     private _canStandUp: boolean;
     private _baseY: number;
+    private _jumpingPower: number;
 
     constructor(
         location: IVector3D | undefined,
@@ -14,6 +15,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
         headDirection: number,
         canStandUp: boolean,
         baseY: number,
+        jumpingPower: number = NaN,
         isSlide: boolean = false,
         animationTime: number = NaN,
         skipPositionUpdate: boolean = false
@@ -23,6 +25,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
         this._headDirection = headDirection;
         this._canStandUp = canStandUp;
         this._baseY = baseY;
+        this._jumpingPower = jumpingPower;
     }
 
     public get headDirection(): number {
@@ -35,5 +38,9 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
 
     public get baseY(): number {
         return this._baseY;
+    }
+
+    public get jumpingPower(): number {
+        return this._jumpingPower;
     }
 }

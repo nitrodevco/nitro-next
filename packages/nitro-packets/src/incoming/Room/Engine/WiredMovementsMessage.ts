@@ -25,7 +25,8 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 moveType: wrapper.readInt(),
                 animationTime: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
-                headRotation: wrapper.readInt()
+                headRotation: wrapper.readInt(),
+                jumpPower: wrapper.readInt()
             } as IWiredUserMove;
         }
 

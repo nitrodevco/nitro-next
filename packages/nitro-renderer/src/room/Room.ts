@@ -1102,7 +1102,7 @@ export class Room implements IRoom {
         return true;
     }
 
-    public updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D | undefined = undefined, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D | undefined = undefined, headDirection: number = NaN, animationTime: number = NaN): boolean {
+    public updateRoomObjectUser(objectId: number, location: IVector3D, target: IVector3D | undefined = undefined, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D | undefined = undefined, headDirection: number = NaN, animationTime: number = NaN, skipPositionUpdate: boolean = false, jumpingPower: number = NaN): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (!object) return false;
@@ -1114,7 +1114,7 @@ export class Room implements IRoom {
 
         // TODO fixedUserLocation
 
-        object.processUpdateMessage(new ObjectAvatarUpdateMessage(location, target, direction, headDirection, canStandUp, baseY, false, animationTime));
+        object.processUpdateMessage(new ObjectAvatarUpdateMessage(location, target, direction, headDirection, canStandUp, baseY, jumpingPower, false, animationTime, skipPositionUpdate));
 
         const ownRoomIndex = false;
 

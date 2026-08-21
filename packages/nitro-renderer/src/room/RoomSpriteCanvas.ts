@@ -72,8 +72,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _usesMask: boolean = true;
     private _zDirty: boolean = false;
 
-    private _canvasElement: HTMLCanvasElement | undefined = undefined;
-
     private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
 
     private _objectCache: RoomObjectCache;
@@ -99,6 +97,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     private setupCanvas(): void {
         if (!this._master) this._master = new Container();
+
+        this._master.interactive = true;
 
         this._master.cullableChildren = false;
 
@@ -1137,13 +1137,5 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     public get height(): number {
         return this._height;
-    }
-
-    public get canvasElement(): HTMLCanvasElement | undefined {
-        return this._canvasElement;
-    }
-
-    public set canvasElement(element: HTMLCanvasElement | undefined) {
-        this._canvasElement = element;
     }
 }
