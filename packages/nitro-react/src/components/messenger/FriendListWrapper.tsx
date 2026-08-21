@@ -3,11 +3,9 @@ import { FriendsContextProvider } from "#base/context"
 import { FriendListComponent } from "./FriendListComponent"
 
 /**
- * MessengerComponent moved out to Nitro.tsx's Pixi tree (see MainView.tsx) once its view was
- * ported to theme-pixi - FriendListComponent still renders theme/ (DOM) views, so it can't
- * follow until FriendList itself is migrated. Both still share FriendsContextProvider, which
- * Messenger doesn't itself consume - only FriendListComponent needs it, so this wrapper still
- * exists purely for that.
+ * Now mounted in Nitro.tsx's Pixi tree (see MainView.tsx) alongside MessengerComponent, since
+ * FriendListComponent renders theme-pixi/ views now too - a plain React Context provider like
+ * FriendsContextProvider works the same wrapping Pixi JSX as it did wrapping DOM JSX.
  */
 export const FriendListWrapper = () => {
     return (

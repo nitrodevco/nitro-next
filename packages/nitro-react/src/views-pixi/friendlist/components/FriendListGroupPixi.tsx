@@ -1,0 +1,27 @@
+import type { ReactNode } from 'react';
+
+import { AccordionContent, AccordionItem, AccordionTrigger, getPixiTextStyle, NitroIcon } from '#base/theme-pixi';
+
+export interface FriendListGroupPixiProps {
+    value: string;
+    caption: string;
+    children?: ReactNode;
+    showArrows?: boolean;
+}
+
+/** Pixi port of views/friendlist/components/FriendListGroup.tsx. */
+export const FriendListGroupPixi = ({ value, caption, children, showArrows = true }: FriendListGroupPixiProps) => (
+    <AccordionItem value={value}>
+        <AccordionTrigger layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, height: 20 }}>
+            {({ isOpen }) => (
+                <>
+                    <pixiText layout={{}} text={caption} style={getPixiTextStyle('text-style-regular', { fontSize: 10.88, fill: '#000000', fontWeight: 'bold' })} />
+                    {showArrows && <NitroIcon icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'} layout={{}} />}
+                </>
+            )}
+        </AccordionTrigger>
+        <AccordionContent layout={{ flexDirection: 'column' }}>
+            {children}
+        </AccordionContent>
+    </AccordionItem>
+);

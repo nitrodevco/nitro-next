@@ -8,6 +8,12 @@ import { Box, type BoxLayout } from './Box';
 
 interface AccordionTriggerProps {
     layout?: BoxLayout;
+    /** Optional passthrough for a caller's own hover tracking (e.g. FriendListTab.tsx's
+     *  footer-tooltip text) - DOM spreads these alongside its own onClick as plain extra div
+     *  props; Pixi's Box only takes one `onPointerOver`/`onPointerOut` pair, so they're
+     *  threaded through explicitly rather than silently dropped. */
+    onPointerOver?: () => void;
+    onPointerOut?: () => void;
     children?: ReactNode | ((state: { isOpen: boolean }) => ReactNode);
 }
 
@@ -34,7 +40,7 @@ interface AccordionTriggerProps {
  * and Header.tsx don't call it themselves for their own directly-passed children either.
  */
 export const AccordionTrigger: ForwardRefExoticComponent<AccordionTriggerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, AccordionTriggerProps>(
-    ({ layout, children }, ref) => {
+    ({ layout, onPointerOver, onPointerOut, children }, ref) => {
         const { alwaysOpen } = useAccordion();
         const { isOpen, toggle } = useAccordionItem();
 
@@ -47,6 +53,8 @@ export const AccordionTrigger: ForwardRefExoticComponent<AccordionTriggerProps &
                 eventMode={alwaysOpen ? 'none' : 'static'}
                 cursor={alwaysOpen ? undefined : 'pointer'}
                 onPointerTap={alwaysOpen ? undefined : toggle}
+                onPointerOver={alwaysOpen ? undefined : onPointerOver}
+                onPointerOut={alwaysOpen ? undefined : onPointerOut}
             >
                 {content}
             </Box>
