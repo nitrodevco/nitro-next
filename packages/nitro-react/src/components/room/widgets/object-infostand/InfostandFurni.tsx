@@ -2,7 +2,7 @@ import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, R
 
 import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useSystemActions } from "#base/context";
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from "#base/hooks";
-import { InfostandFurniView } from "#base/views/room-widgets/object-infostand/InfostandFurniView";
+import { InfostandFurniViewPixi } from "#base/views-pixi/room-widgets/object-infostand/InfostandFurniViewPixi";
 
 type InfostandFurniViewProps = {
     objectData: ISimpleRoomObjectData;
@@ -74,5 +74,5 @@ export const InfostandFurni = (props: InfostandFurniViewProps) => {
         }
     }
 
-    return <InfostandFurniView furniData={furniData} canMove={canMove} canRotate={canRotate} canUse={canUse} pickupMode={pickupMode} hasButtons={hasButtons} canSeeFurniId={canSeeFurniId} godMode={godMode} processAction={processAction} onClose={onClose} />;
+    return <InfostandFurniViewPixi furniData={furniData} canMove={canMove} canRotate={canRotate} canUse={canUse} pickupMode={pickupMode} hasButtons={hasButtons} canSeeFurniId={canSeeFurniId} godMode={godMode} processAction={processAction} onClose={onClose} />;
 }

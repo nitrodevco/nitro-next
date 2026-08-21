@@ -6,6 +6,8 @@ export * from './RoomWrapper';
 export * from './widgets/object-infostand/InfostandFurni';
 export * from './widgets/object-infostand/RoomObjectInfostandWidget';
 export * from './widgets/object-menu/RoomObjectMenuBubble';
+export * from './widgets/object-menu/RoomObjectMenuBubblePixi';
 export * from './widgets/object-menu/RoomObjectMenuNameBubble';
 export * from './widgets/object-menu/RoomObjectMenuWidget';
 export * from './widgets/RoomWidgets';
+export * from './widgets/RoomWidgetsPixi';

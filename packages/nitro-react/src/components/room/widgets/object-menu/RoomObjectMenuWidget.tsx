@@ -3,10 +3,10 @@ import { useState } from "react";
 
 import { useOwnRoomObjectId, useRoomSelector } from "#base/context";
 import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from "#base/hooks";
-import { InfoBubbleAvatarView } from "#base/views/room-widgets/object-menu/InfoBubbleAvatarView";
-import { InfoBubbleOwnAvatarView } from "#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView";
+import { InfoBubbleAvatarViewPixi } from "#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarViewPixi";
+import { InfoBubbleOwnAvatarViewPixi } from "#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarViewPixi";
 
-import { RoomObjectMenuBubble } from "./RoomObjectMenuBubble";
+import { RoomObjectMenuBubblePixi } from "./RoomObjectMenuBubblePixi";
 import { RoomObjectMenuNameBubble } from "./RoomObjectMenuNameBubble";
 
 export const RoomObjectMenuWidget = () => {
@@ -74,10 +74,10 @@ export const RoomObjectMenuWidget = () => {
                 }
                 case RoomObjectUserType.User: {
                     return (
-                        <RoomObjectMenuBubble objectData={selectedData} userType={userType}>
-                            {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarView objectData={selectedData} onClose={onClose} />}
-                            {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarView objectData={selectedData} onClose={onClose} />}
-                        </RoomObjectMenuBubble>
+                        <RoomObjectMenuBubblePixi objectData={selectedData} userType={userType}>
+                            {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarViewPixi objectData={selectedData} onClose={onClose} />}
+                            {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarViewPixi objectData={selectedData} onClose={onClose} />}
+                        </RoomObjectMenuBubblePixi>
                     );
                 }
             }

@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import { useRoomSelector } from "#base/context";
 import { useRoomObjectDeselected, useRoomObjectSelected } from "#base/hooks";
-import { InfostandPetView } from "#base/views/room-widgets/object-infostand/InfostandPetView";
-import { InfostandUserView } from "#base/views/room-widgets/object-infostand/InfostandUserView";
+import { InfostandPetViewPixi } from "#base/views-pixi/room-widgets/object-infostand/InfostandPetViewPixi";
+import { InfostandUserViewPixi } from "#base/views-pixi/room-widgets/object-infostand/InfostandUserViewPixi";
 
 import { InfostandFurni } from "./InfostandFurni";
 
@@ -45,16 +45,16 @@ export const RoomObjectInfostandWidget = () => {
 
             switch (userType) {
                 case RoomObjectUserType.Pet: {
-                    return <InfostandPetView objectData={selectedData} onClose={onClose} />;
+                    return <InfostandPetViewPixi objectData={selectedData} onClose={onClose} />;
                 }
                 case RoomObjectUserType.User: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                    return <InfostandUserViewPixi objectData={selectedData} onClose={onClose} />;
                 }
                 case RoomObjectUserType.Bot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                    return <InfostandUserViewPixi objectData={selectedData} onClose={onClose} />;
                 }
                 case RoomObjectUserType.RentableBot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                    return <InfostandUserViewPixi objectData={selectedData} onClose={onClose} />;
                 }
             }
         }

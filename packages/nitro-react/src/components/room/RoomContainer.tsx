@@ -8,7 +8,6 @@ import { HotelView } from "#base/views/hotel-view/HotelView";
 
 import { RoomCanvas } from "./RoomCanvas";
 import { RoomEventHandler } from "./RoomEventHandler";
-import { RoomWidgets } from "./widgets/RoomWidgets";
 
 export const RoomContainer = () => {
     const [isReady, setIsReady] = useState<boolean>(false);
@@ -40,7 +39,6 @@ export const RoomContainer = () => {
                 {isReady && (
                     <>
                         <RoomEventHandler />
-                        <RoomWidgets />
                         <motion.div
                             ref={elementRef}
                             key="room-canvas"
