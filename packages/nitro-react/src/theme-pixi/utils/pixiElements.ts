@@ -1,7 +1,7 @@
 import '@pixi/layout';
 
 import { extend } from '@pixi/react';
-import { Container, Graphics, NineSliceSprite, Sprite, Text } from 'pixi.js';
+import { Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
 
 /**
  * Registers the Pixi classes theme-pixi components render as JSX tags (pixiContainer,
@@ -15,4 +15,5 @@ extend({
     NineSliceSprite,
     Sprite,
     Text,
+    TilingSprite,
 });
