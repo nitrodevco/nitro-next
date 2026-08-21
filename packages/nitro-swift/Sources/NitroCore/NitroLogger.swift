@@ -6,15 +6,18 @@ public enum NitroLogger {
     private static let log = Logger(subsystem: "com.nitrodevco.nitro-swift", category: "Nitro")
 
     public static func debug(_ message: @autoclosure () -> String) {
-        log.debug("\(message(), privacy: .public)")
+        let text = message()
+        log.debug("\(text, privacy: .public)")
     }
 
     public static func log(_ message: @autoclosure () -> String) {
-        log.info("\(message(), privacy: .public)")
+        let text = message()
+        log.info("\(text, privacy: .public)")
     }
 
     public static func warn(_ message: @autoclosure () -> String) {
-        log.warning("\(message(), privacy: .public)")
+        let text = message()
+        log.warning("\(text, privacy: .public)")
     }
 
     public static func error(_ error: Error) {
@@ -22,6 +25,7 @@ public enum NitroLogger {
     }
 
     public static func error(_ message: @autoclosure () -> String) {
-        log.error("\(message(), privacy: .public)")
+        let text = message()
+        log.error("\(text, privacy: .public)")
     }
 }
