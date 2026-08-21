@@ -61,12 +61,30 @@ export class SetType implements ISetType {
         return this._partSets.get(id);
     }
 
+    /*
+     * SetType.isMandatory in the SWF guards a null/empty gender, uppercases it and
+     * returns false when the key is absent — without that an unexpected gender
+     * (lowercase, or one figuredata does not define) throws and kills the render loop.
+     */
     public isMandatory(gender: AvatarGenderType, count: number): boolean {
-        return this._isMandatory[gender][Math.min(count, 1)];
+        if (!gender || !gender.length) return false;
+
+        const values = this._isMandatory[gender.toUpperCase() as AvatarGenderType];
+
+        if (!values) return false;
+
+        return values[Math.min(count, 1)];
     }
 
+    /* SetType.optionalFromClubLevel: same guards, returning -1 instead of false */
     public optionalFromClubLevel(gender: AvatarGenderType): number {
-        return this._isMandatory[gender]?.indexOf(false);
+        if (!gender || !gender.length) return -1;
+
+        const values = this._isMandatory[gender.toUpperCase() as AvatarGenderType];
+
+        if (!values) return -1;
+
+        return values.indexOf(false);
     }
 
     public get type(): AvatarFigurePartType {

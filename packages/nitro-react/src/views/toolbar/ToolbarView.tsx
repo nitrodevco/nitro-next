@@ -31,7 +31,7 @@ export const ToolbarView = () => {
                 <div className={cn('toolbar-left', leftSideCollapsed && 'collapsed')}>
                     <div className={cn('toolbar-collapse', leftSideCollapsed && 'active')} onClick={_ => setLeftSideCollapsed(prev => !prev)} />
                     <NitroIcon icon="icon-habbo" />
-                    <NitroIcon icon="icon-rooms" />
+                    <NitroIcon icon="icon-rooms" onClick={() => toggleWindow('navigator')} />
                     <NitroIcon icon="icon-progression" onClick={_ => toggleMenu('progression')} />
                     <NitroIcon icon="icon-catalog" onClick={() => toggleWindow('catalog')} />
                     <NitroIcon icon="icon-builders-club" />

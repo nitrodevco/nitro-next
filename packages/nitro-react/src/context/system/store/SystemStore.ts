@@ -20,6 +20,7 @@ type Actions = {
     setConfig: (config: Record<string, unknown>) => void;
     setConfigValue: <T = unknown>(key: string, value: T) => void;
     getLocalizationValue: (key: string, defaultValue?: string, replacements?: Record<string, string>) => string;
+    interpolate: (text: string) => string;
     setLocalization: (localization: Record<string, string>) => void;
     setLocalizationForFurniture: (furniture: IFurnitureData[]) => void;
     parseFloorItems: (data: IFurnitureType[]) => void;
@@ -73,7 +74,44 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
             if (keys.length) for (const key of keys) value = value.replace(`%${key}%`, replacements[key]);
         }
 
-        return value;
+        // HabboLocalizationManager.getLocalization runs interpolate() over the result
+        return get().interpolate(value);
+    },
+    /*
+     * CoreLocalizationManager.interpolate — replace every ${key} it can resolve, then
+     * repeat (max 3 passes) so a value may itself contain placeholders. Stops early when
+     * a pass resolves nothing; unresolved placeholders are left untouched.
+     */
+    interpolate: (text: string) => {
+        if (!text) return text;
+
+        const localizations = get().localizations;
+        const pattern = /\$\{([^}]*)\}/g;
+
+        let result = text;
+
+        for (let pass = 0; pass < 3; pass++) {
+            pattern.lastIndex = 0;
+
+            const match = pattern.exec(result);
+
+            if (!match) return result;
+
+            let replaced = 0;
+
+            for (let index = 1; index < match.length; index++) {
+                const value = localizations[match[index]];
+
+                if (value == null) continue;
+
+                replaced++;
+                result = result.replace(`\${${match[index]}}`, value);
+            }
+
+            if (replaced === 0) break;
+        }
+
+        return result;
     },
     setLocalization: (localizations: Record<string, string>) =>
         set(state => {

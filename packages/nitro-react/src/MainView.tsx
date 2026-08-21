@@ -2,11 +2,11 @@ import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
 
-import { AvatarEditorComponent, InventoryComponent, RoomWrapper, WalletComponent } from "./components";
+import { AvatarEditorComponent, InventoryComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from "./components";
 import { CatalogWrapper } from "./components/catalog/CatalogWrapper";
 import { FriendListWrapper } from "./components/messenger";
 import { useWebSocketContext } from "./context";
-import { useMessengerHandler, useNavigatorHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
+import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
 import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
 import { ActivityPointsView } from "./views/purse/ActivityPointsView";
 import { ToolbarView } from "./views/toolbar/ToolbarView";
@@ -16,7 +16,6 @@ export const MainView = () => {
     const { setReady, send } = useWebSocketContext();
 
     useUserInfoHandler();
-    useNavigatorHandler();
     useMessengerHandler();
     useWalletHandler();
 
@@ -33,6 +32,7 @@ export const MainView = () => {
     }, [isReady]);
 
     useEffect(() => {
+
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsReady(true);
     }, []);
@@ -58,6 +58,7 @@ export const MainView = () => {
                 <FriendListWrapper />
                 <ToolbarView />
                 <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+                <NavigatorWrapper />
                 <InventoryComponent />
                 <WalletComponent />
             </div>

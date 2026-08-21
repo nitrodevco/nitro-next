@@ -1,19 +1,25 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(SavedSearches: List<NavigatorQuickLinkSnapshot>): List<T> requires custom read loop (length + items).
+import type { ISavedSearch } from './Data/SavedSearchParser';
+import { SavedSearchParser } from './Data/SavedSearchParser';
 
 export type NavigatorSavedSearchesMessageType = {
-  savedSearches: any[];
+  savedSearches: ISavedSearch[];
 };
 
 export class NavigatorSavedSearchesMessage implements IIncomingPacket<NavigatorSavedSearchesMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): NavigatorSavedSearchesMessageType
   {
-
     const packet: NavigatorSavedSearchesMessageType = {
-      savedSearches: undefined as any, // List<T> requires custom read loop (length + items).
+      savedSearches: [],
     };
+
+    let v1 = wrapper.readInt();
+    while (v1 > 0) {
+        packet.savedSearches.push(SavedSearchParser(wrapper));
+        v1--;
+    }
 
     return packet;
   }

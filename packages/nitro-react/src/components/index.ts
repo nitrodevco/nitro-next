@@ -7,6 +7,8 @@ export * from './inventory/InventoryComponent';
 export * from './messenger/FriendListComponent';
 export * from './messenger/FriendListWrapper';
 export * from './messenger/MessengerComponent';
+export * from './navigator/NavigatorComponent';
+export * from './navigator/NavigatorWrapper';
 export * from './room/RoomCanvas';
 export * from './room/RoomContainer';
 export * from './room/RoomEventHandler';

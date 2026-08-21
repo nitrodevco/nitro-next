@@ -1,22 +1,29 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(FigureSetIds: ImmutableArray<int>): Unknown type 'ImmutableArray<int>'. Add override mapping.
-// TODO(BoundFurnitureNames: ImmutableArray<string>): Unknown type 'ImmutableArray<string>'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FigureSetIdsEventMessageType = {
-  figureSetIds: any;
-  boundFurnitureNames: any;
+  figureSetIds: number[];
+  boundFurnitureNames: string[];
 };
 
 export class FigureSetIdsEventMessage implements IIncomingPacket<FigureSetIdsEventMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): FigureSetIdsEventMessageType
   {
-
     const packet: FigureSetIdsEventMessageType = {
-      figureSetIds: undefined as any, // Unknown type 'ImmutableArray<int>'. Add override mapping.
-      boundFurnitureNames: undefined as any, // Unknown type 'ImmutableArray<string>'. Add override mapping.
+      figureSetIds: [],
+      boundFurnitureNames: [],
     };
+
+    let v1 = wrapper.readInt();
+    while (v1 > 0) {
+        packet.figureSetIds.push(wrapper.readInt());
+        v1--;
+    }
+    let v2 = wrapper.readInt();
+    while (v2 > 0) {
+        packet.boundFurnitureNames.push(wrapper.readString());
+        v2--;
+    }
 
     return packet;
   }

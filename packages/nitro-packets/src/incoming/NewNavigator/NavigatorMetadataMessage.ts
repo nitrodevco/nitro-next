@@ -1,19 +1,27 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(TopLevelContexts: ImmutableArray<NavigatorTopLevelContextSnapshot>): Unknown type 'ImmutableArray<NavigatorTopLevelContextSnapshot>'. Add override mapping.
+import type { ITopLevelContext } from './Data/TopLevelContextParser';
+import { TopLevelContextParser } from './Data/TopLevelContextParser';
 
 export type NavigatorMetadataMessageType = {
-  topLevelContexts: any;
+  topLevelContexts: ITopLevelContext[];
 };
 
 export class NavigatorMetadataMessage implements IIncomingPacket<NavigatorMetadataMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): NavigatorMetadataMessageType
   {
-
     const packet: NavigatorMetadataMessageType = {
-      topLevelContexts: undefined as any, // Unknown type 'ImmutableArray<NavigatorTopLevelContextSnapshot>'. Add override mapping.
+      topLevelContexts: []
     };
+
+    let count = wrapper.readInt();
+
+    while (count > 0) {
+      packet.topLevelContexts.push(TopLevelContextParser(wrapper));
+
+      count--;
+    }
 
     return packet;
   }

@@ -1,9 +1,7 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(RewardCategory: VaultRewardCategoryType): Unknown type 'VaultRewardCategoryType'. Add override mapping.
-
 export type IncomeRewardClaimResponseMessageType = {
-  rewardCategory: any;
+  rewardCategory: number;
   result: boolean;
 };
 
@@ -11,9 +9,8 @@ export class IncomeRewardClaimResponseMessage implements IIncomingPacket<IncomeR
 {
   public parse(wrapper: IMessageDataWrapper): IncomeRewardClaimResponseMessageType
   {
-
     const packet: IncomeRewardClaimResponseMessageType = {
-      rewardCategory: undefined as any, // Unknown type 'VaultRewardCategoryType'. Add override mapping.
+      rewardCategory: wrapper.readByte(),
       result: wrapper.readBoolean(),
     };
 

@@ -1,19 +1,18 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-
-// TODO(Code: CustomUserNotificationType): Unknown type 'CustomUserNotificationType'. Add override mapping.
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CustomUserNotificationMessageType = {
-  code: any;
+  code: number;
 };
 
 export class CustomUserNotificationMessage implements IIncomingPacket<CustomUserNotificationMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): CustomUserNotificationMessageType
   {
-
     const packet: CustomUserNotificationMessageType = {
-      code: undefined as any, // Unknown type 'CustomUserNotificationType'. Add override mapping.
+      code: 0,
     };
+
+    packet.code = wrapper.readInt();
 
     return packet;
   }

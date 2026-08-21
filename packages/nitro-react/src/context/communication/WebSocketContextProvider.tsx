@@ -1,7 +1,7 @@
 
 import type { IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
 import { BinaryReader, BinaryWriter, Byte, EvaWireDataWrapper, NitroLogger, Short } from '@nitrodevco/nitro-api';
-import { AuthenticationOKMessage, ClientHelloComposer, GetIncomingPackets, GetOutgoingPackets, SSOTicketComposer } from '@nitrodevco/nitro-packets';
+import { AuthenticationOKMessage, ClientHelloComposer, GetIncomingPackets, GetOutgoingPackets, PingMessage, PongComposer, SSOTicketComposer } from '@nitrodevco/nitro-packets';
 import { GetTickerTime } from '@nitrodevco/nitro-renderer';
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const [renderedPhase, setRenderedPhase] = useState<ConnectionPhase>('idle');
     const { incomingByHeader, incomingCtors, incomingHeaderByCtor, registerManyIncoming } = useCommunicationIncoming();
     const { outgoingHeaderByComposerName, registerManyOutgoing } = useCommunicationOutgoing();
-    const socketUrl = useConfigValue<string>('socketUrl') ?? '';
+    const socketUrl = useConfigValue<string>('socket.url') ?? '';
     const production = useConfigValue<string>('production.version') ?? '';
     const ws = useRef<WebSocket | undefined>(undefined);
     const wsBuffer = useRef<ArrayBuffer>(new ArrayBuffer(0));
@@ -196,24 +196,41 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         try {
             const ctor = incomingByHeader.current.get(wrapper.header);
 
-            if (!ctor) return;
+            if (!ctor) {
+                NitroLogger.packets('UnknownIncoming', wrapper.header);
+
+                return;
+            }
 
             const handlers = listeners.current.get(ctor);
 
-            if (!handlers?.length) return;
+            if (!handlers?.length) {
+                // still parse when packet logging is on, so the payload is visible
+                const preview = NitroLogger.LOG_PACKETS ? new ctor().parse(wrapper) : undefined;
+
+                NitroLogger.packets('UnhandledIncoming', wrapper.header, ctor.name, preview);
+
+                return;
+            }
 
             const parsed = new ctor().parse(wrapper);
 
+            NitroLogger.packets('IncomingEvent', wrapper.header, ctor.name, parsed);
+
             for (const handle of handlers) handle(parsed);
         } catch (err) {
-            NitroLogger.error(err);
+            NitroLogger.error('IncomingFailed', wrapper?.header, err);
         }
     }
 
     const dispatchWrappers = (wrappers: IMessageDataWrapper[]) => {
         for (let index = 0; index < wrappers.length; index++) {
             if (phase.current === 'awaitingHandlers') {
-                pendingServerMessages.current.push(...wrappers.slice(index));
+                const queued = wrappers.slice(index);
+
+                for (const item of queued) NitroLogger.packets('IncomingQueued', item.header);
+
+                pendingServerMessages.current.push(...queued);
 
                 return;
             }
@@ -226,6 +243,8 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         if (!packets?.length) return;
 
         if (phase.current === 'awaitingHandlers') {
+            for (const item of packets) NitroLogger.packets('OutgoingQueued', item.constructor.name);
+
             pendingClientMessages.current.push(...packets);
 
             return;
@@ -237,7 +256,18 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const sendRaw = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
         if (!packets?.length) return;
 
-        if (!ws.current || ws.current.readyState !== WebSocket.OPEN) return;
+        if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
+            for (const item of packets) {
+                NitroLogger.packets(
+'OutgoingDropped', 
+item.constructor.name, 
+'socket not open',
+                    ws.current?.readyState ?? 'no socket'
+);
+            }
+
+            return;
+        }
 
         for (const outgoing of packets) {
             try {
@@ -320,7 +350,17 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         registerManyIncoming(GetIncomingPackets());
         registerManyOutgoing(GetOutgoingPackets());
 
-        return subscribe(AuthenticationOKMessage, () => setPhase('awaitingHandlers'));
+        const unsubscribeAuth = subscribe(AuthenticationOKMessage, () => setPhase('awaitingHandlers'));
+
+        // IncomingMessages.onPing in the SWF replies with an empty PongMessageComposer.
+        // sendRaw bypasses the pending queue so the reply is never deferred — the
+        // server closes the connection (1000 "Bye") if it goes unanswered.
+        const unsubscribePing = subscribe(PingMessage, () => sendRaw(new PongComposer({})));
+
+        return () => {
+            unsubscribeAuth();
+            unsubscribePing();
+        };
     }, []);
 
     useEffect(() => () => {

@@ -1,18 +1,66 @@
-import { CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, NavigatorMetadataMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, PerkAllowancesMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
 
-import { useWebSocketContext } from "#base/context";
+import { useNavigatorActions, useWebSocketContext } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useNavigatorHandler = () => {
     const { send } = useWebSocketContext();
+    const {
+        setTopLevelContexts, setTopLevelContext, setFlatCategories, setEventCategories,
+        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden
+    } = useNavigatorActions();
 
-    useMessageListener(UserObjectMessage, data => {
+    useMessageListener(UserObjectMessage, () => {
         send(new GetUserFlatCatsComposer({}));
         send(new GetUserEventCatsComposer({}));
+        send(new NewNavigatorInitComposer({}));
     });
 
-    useMessageListener(UserRightsMessage, data => {
-        // set navi data
+    useMessageListener(NavigatorMetadataMessage, data => {
+        setTopLevelContexts(data.topLevelContexts);
+
+        // the SWF opens on the first context in the list
+        setTopLevelContext(data.topLevelContexts[0]);
+    });
+
+    // quick links come from NavigatorSavedSearchesMessage — the topLevelContexts
+    // in NavigatorMetadataMessage arrive with an empty quickLinks array
+    useMessageListener(NavigatorSavedSearchesMessage, data => setSavedSearches(data.savedSearches));
+
+    // CategoryElementFactory removes both toggle buttons unless
+    // sessionData.isPerkAllowed("NAVIGATOR_ROOM_THUMBNAIL_CAMERA")
+    useMessageListener(PerkAllowancesMessage, data => setPerks(data.perks));
+
+    /*
+     * HabboNewNavigator.onPreferences -> NavigatorView.setInitialWindowDimensions(
+     *   windowX, windowY, windowHeight, leftPaneHidden, resultsMode):
+     *     setLeftPaneVisibility(!leftPaneHidden)
+     *     window.x = windowX; window.y = windowY; window.height = windowHeight
+     * resultsMode is passed but unused there.
+     */
+    useMessageListener(NewNavigatorPreferencesMessage, data => {
+        setLeftPaneHidden(data.leftPaneHidden);
+
+        setPreferences({
+            windowX: data.windowX,
+            windowY: data.windowY,
+            windowWidth: data.windowWidth,
+            windowHeight: data.windowHeight,
+            resultsMode: data.resultsMode
+        });
+    });
+
+    useMessageListener(UserFlatCatsMessage, data => setFlatCategories(data.nodes));
+
+    useMessageListener(UserEventCatsMessage, data => setEventCategories(data.eventCategories));
+
+    useMessageListener(NavigatorSearchResultBlocksMessage, data => setSearchResult(data.searchResult));
+
+    useMessageListener(NavigatorCollapsedCategoriesMessage, data => {
+        setCollapsedCategories((data as { collapsedCategories?: string[] }).collapsedCategories ?? []);
+    });
+
+    useMessageListener(UserRightsMessage, () => {
         // eventMod > securityLevel >= SecurityLevel.MODERATOR
         // roomPicker > securityLevel >= SecurityLevel.COMMUNITY
     });
@@ -26,11 +74,6 @@ export const useNavigatorHandler = () => {
     });
 
     useMessageListener(RoomEntryInfoMessage, data => {
-        // set navi data
-        // enteredGuestRoom null
-        // currenetRoomOwner data.isOwner
-        // currentRoomId data.roomId
-
         send(new GetGuestRoomComposer({
             roomId: data.roomId,
             enterRoom: true,
@@ -39,65 +82,39 @@ export const useNavigatorHandler = () => {
     });
 
     useMessageListener(GetGuestRoomResultMessage, data => {
-        if (data.enterRoom) {
-            // clear door data
-            // enteredGuestRoom data.data
-            // isStaffPick data.staffPick
-        }
-
-        else if (data.roomForward) {
-            //
-        }
-
-        else {
-            // currenetRoomOwner data.isOwner
-            // currentRoomId data.roomId
-        }
+        if (data.enterRoom || !data.roomForward) setCurrentRoom(data.roomInfo, data.roomInfo?.ownerName?.length > 0);
     });
 
-    useMessageListener(RoomRatingMessage, data => {
-        // currentRoomRating data.rating
-        // canRate data.canRate
+    useMessageListener(RoomRatingMessage, () => {
+        // currentRoomRating data.rating / canRate data.canRate
     });
 
     useMessageListener(DoorbellMessage, data => {
         if (!data.username || !data.username.length) {
-            //set door data
-            // waiting
+            // door state: waiting
         }
     });
 
     useMessageListener(FlatAccessibleMessage, data => {
         if (!data.username || !data.username.length) {
-            //set door data
-            // accepted
+            // door state: accepted
         }
     });
 
     useMessageListener(FlatAccessDeniedMessage, data => {
         if (!data.username || !data.username.length) {
-            //set door data
-            // no answer
+            // door state: no answer
         }
     });
 
-    useMessageListener(NavigatorMetadataMessage, data => {
-
-    });
-
-    useMessageListener(UserFlatCatsMessage, data => {
-    });
-
-    useMessageListener(UserEventCatsMessage, data => {
-    });
-
-    useMessageListener(FlatCreatedMessage, data => {
+    useMessageListener(FlatCreatedMessage, () => {
         //
     });
 
-    useMessageListener(FavouriteChangedMessage, data => {
+    useMessageListener(FavouriteChangedMessage, () => {
     });
 
-    useMessageListener(CantConnectMessage, data => {
+    useMessageListener(CantConnectMessage, () => {
+        setIsSearching(false);
     });
 }

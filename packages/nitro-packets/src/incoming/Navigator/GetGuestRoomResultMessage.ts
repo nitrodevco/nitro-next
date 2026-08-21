@@ -15,6 +15,7 @@ export type GetGuestRoomResultMessageType = {
     moderation: IRoomModerationSettings;
     canMute: boolean;
     chat: IRoomChatSettings;
+    openingConnection: boolean;
 };
 
 export class GetGuestRoomResultMessage implements IIncomingPacket<GetGuestRoomResultMessageType> {
@@ -28,7 +29,8 @@ export class GetGuestRoomResultMessage implements IIncomingPacket<GetGuestRoomRe
             allInRoomMuted: wrapper.readBoolean(),
             moderation: RoomModerationParser(wrapper),
             canMute: wrapper.readBoolean(),
-            chat: RoomChatSettingsParser(wrapper)
+            chat: RoomChatSettingsParser(wrapper),
+            openingConnection: wrapper.readBoolean()
         };
 
         return packet;

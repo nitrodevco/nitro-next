@@ -1,19 +1,25 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(LiftedRooms: List<NavigatorLiftedRoomSnapshot>): List<T> requires custom read loop (length + items).
+import type { ILiftedRoomData } from '../Data/LiftedRoomDataParser';
+import { LiftedRoomDataParser } from '../Data/LiftedRoomDataParser';
 
 export type NavigatorLiftedRoomsMessageType = {
-  liftedRooms: any[];
+  liftedRooms: ILiftedRoomData[];
 };
 
 export class NavigatorLiftedRoomsMessage implements IIncomingPacket<NavigatorLiftedRoomsMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): NavigatorLiftedRoomsMessageType
   {
-
     const packet: NavigatorLiftedRoomsMessageType = {
-      liftedRooms: undefined as any, // List<T> requires custom read loop (length + items).
+      liftedRooms: [],
     };
+
+    let v1 = wrapper.readInt();
+    while (v1 > 0) {
+        packet.liftedRooms.push(LiftedRoomDataParser(wrapper));
+        v1--;
+    }
 
     return packet;
   }

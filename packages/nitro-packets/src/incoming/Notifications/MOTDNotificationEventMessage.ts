@@ -1,17 +1,22 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type MOTDNotificationEventMessageType = {
-  // no fields
-
+  messages: string[];
 };
 
 export class MOTDNotificationEventMessage implements IIncomingPacket<MOTDNotificationEventMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): MOTDNotificationEventMessageType
   {
-
     const packet: MOTDNotificationEventMessageType = {
+      messages: [],
     };
+
+    let v1 = wrapper.readInt();
+    while (v1 > 0) {
+        packet.messages.push(wrapper.readString());
+        v1--;
+    }
 
     return packet;
   }

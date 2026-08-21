@@ -1,22 +1,18 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(Blocks: ImmutableArray<NavigatorSearchResultBlockSnapshot>): Unknown type 'ImmutableArray<NavigatorSearchResultBlockSnapshot>'. Add override mapping.
+import type { ISearchResultSet } from './Data/SearchResultSetParser';
+import { SearchResultSetParser } from './Data/SearchResultSetParser';
 
 export type NavigatorSearchResultBlocksMessageType = {
-  searchCodeOriginal: string;
-  filteringData: string;
-  blocks: any;
+  searchResult: ISearchResultSet;
 };
 
 export class NavigatorSearchResultBlocksMessage implements IIncomingPacket<NavigatorSearchResultBlocksMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): NavigatorSearchResultBlocksMessageType
   {
-
     const packet: NavigatorSearchResultBlocksMessageType = {
-      searchCodeOriginal: wrapper.readString(),
-      filteringData: wrapper.readString(),
-      blocks: undefined as any, // Unknown type 'ImmutableArray<NavigatorSearchResultBlockSnapshot>'. Add override mapping.
+      searchResult: SearchResultSetParser(wrapper)
     };
 
     return packet;

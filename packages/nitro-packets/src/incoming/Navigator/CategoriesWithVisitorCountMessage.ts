@@ -1,19 +1,21 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(Categories: CategoriesWithVisitorCountSnapshot): Unknown type 'CategoriesWithVisitorCountSnapshot'. Add override mapping.
+import type { ICategoriesWithVisitorCountData } from '../Data/CategoriesWithVisitorCountDataParser';
+import { CategoriesWithVisitorCountDataParser } from '../Data/CategoriesWithVisitorCountDataParser';
 
 export type CategoriesWithVisitorCountMessageType = {
-  categories: any;
+  data: ICategoriesWithVisitorCountData;
 };
 
 export class CategoriesWithVisitorCountMessage implements IIncomingPacket<CategoriesWithVisitorCountMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): CategoriesWithVisitorCountMessageType
   {
-
     const packet: CategoriesWithVisitorCountMessageType = {
-      categories: undefined as any, // Unknown type 'CategoriesWithVisitorCountSnapshot'. Add override mapping.
+      data: {} as any,
     };
+
+    packet.data = CategoriesWithVisitorCountDataParser(wrapper);
 
     return packet;
   }

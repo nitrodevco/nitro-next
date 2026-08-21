@@ -48,6 +48,21 @@ export class RoomEngine implements IRoomEngine {
         return room;
     }
 
+    /*
+     * RoomEngine.disposeRoom in the SWF removes the instance from its map before
+     * disposing it (`roomInstanceData.remove(identifier)`), so a later createRoom for
+     * the same id builds a fresh room rather than handing back a disposed one.
+     */
+    public disposeRoom(roomId: number): void {
+        const room = this._rooms.get(roomId);
+
+        if (!room) return;
+
+        this._rooms.delete(roomId);
+
+        room.dispose();
+    }
+
     public getFurnitureFloorIconUrl(typeId: number): string | undefined {
         const type = GetRoomContentLoader().getFurnitureFloorNameForTypeId(typeId);
         const color = GetRoomContentLoader().getFurnitureFloorColorIndex(typeId).toString();

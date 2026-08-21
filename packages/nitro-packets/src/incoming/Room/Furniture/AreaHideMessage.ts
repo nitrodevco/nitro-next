@@ -1,19 +1,21 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(AreaHideData: AreaHideDataSnapshot): Unknown type 'AreaHideDataSnapshot'. Add override mapping.
+import type { IAreaHideMessageData } from '../../Data/AreaHideMessageDataParser';
+import { AreaHideMessageDataParser } from '../../Data/AreaHideMessageDataParser';
 
 export type AreaHideMessageType = {
-  areaHideData: any;
+  areaHideMessageData: IAreaHideMessageData;
 };
 
 export class AreaHideMessage implements IIncomingPacket<AreaHideMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): AreaHideMessageType
   {
-
     const packet: AreaHideMessageType = {
-      areaHideData: undefined as any, // Unknown type 'AreaHideDataSnapshot'. Add override mapping.
+      areaHideMessageData: {} as any,
     };
+
+    packet.areaHideMessageData = AreaHideMessageDataParser(wrapper);
 
     return packet;
   }

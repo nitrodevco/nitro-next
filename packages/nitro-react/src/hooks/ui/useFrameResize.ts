@@ -153,9 +153,12 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         lastTapRef.current = null;
     }
 
+    // only pin the axis the frame can actually resize — a 'y' frame that emits a width
+    // freezes it at whatever it was when the user first dragged, so the className (and
+    // anything driving it, e.g. the navigator's left pane collapsing) can never change it
     const style: CSSProperties = size ? {
-        width: size.width,
-        height: size.height
+        ...(direction === 'y' ? {} : { width: size.width }),
+        ...(direction === 'x' ? {} : { height: size.height })
     } : {};
 
     return {

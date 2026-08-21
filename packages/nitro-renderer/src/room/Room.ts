@@ -135,6 +135,8 @@ export class Room implements IRoom {
     }
 
     public dispose(): void {
+        if (this._disposed) return;
+
         this.removeAllRoomObjectManagers();
 
         if (this._canvas) {

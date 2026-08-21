@@ -540,27 +540,35 @@
 }
 
 .icon-nav-plus {
-    background: url('/assets/flash/navigator/plus.png');
-    width: 9px;
-    height: 9px;
+    background-image: url('/assets/flash/navigator/plus.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 19px;
 }
 
 .icon-nav-minus {
-    background: url('/assets/flash/navigator/minus.png');
-    width: 9px;
-    height: 9px;
+    background-image: url('/assets/flash/navigator/minus.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 19px;
 }
 
 .icon-nav-inline {
-    background: url('/assets/flash/navigator/inline_view.png');
+    background-image: url('/assets/flash/navigator/inline_view.png');
+    background-repeat: no-repeat;
+    background-position: center;
     width: 11px;
-    height: 11px;
+    height: 19px;
 }
 
 .icon-nav-thumbnail {
-    background: url('/assets/flash/navigator/thumbnail_view.png');
+    background-image: url('/assets/flash/navigator/thumbnail_view.png');
+    background-repeat: no-repeat;
+    background-position: center;
     width: 11px;
-    height: 11px;
+    height: 19px;
 }
 
 .icon-pf-online {
@@ -1136,4 +1144,161 @@
     background: url('/assets/catalog/small_ducket.png');
     height: 11px;
     width: 11px;
+}
+
+/* navigator_frame_2 assets, extracted from WIN63-202607011411-782849652 */
+.icon-nav-view-mini {
+    background-image: url('/assets/flash/navigator/mini_view.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 19px;
+}
+
+.icon-nav-usercount {
+    background-image: url('/assets/flash/navigator/usercount.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 18px;
+}
+
+.icon-nav-quicklink-add {
+    background-image: url('/assets/flash/navigator/quicklink_add.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 19px;
+}
+
+.icon-nav-quicklink-remove {
+    background-image: url('/assets/flash/navigator/quicklink_remove.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 10px;
+    height: 10px;
+}
+
+.icon-nav-room-info {
+    background-image: url('/assets/flash/navigator/show_room_info.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 18px;
+}
+
+.icon-nav-category-show-more {
+    background-image: url('/assets/flash/navigator/category_show_more.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 19px;
+}
+
+.icon-nav-refresh-search {
+    background-image: url('/assets/flash/navigator/refresh_search.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 17px;
+    height: 12px;
+}
+
+.icon-nav-default-room {
+    background-image: url('/assets/flash/navigator/default_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 110px;
+    height: 110px;
+}
+
+.icon-nav-create-room {
+    background-image: url('/assets/flash/navigator/create_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 187px;
+    height: 59px;
+}
+
+.icon-nav-random-room {
+    background-image: url('/assets/flash/navigator/random_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 187px;
+    height: 59px;
+}
+
+.icon-nav-promote-room {
+    background-image: url('/assets/flash/navigator/promote_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 187px;
+    height: 59px;
+}
+
+.icon-nav-small-pen {
+    background-image: url('/assets/flash/navigator/small_pen.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 17px;
+    height: 18px;
+}
+
+/* RoomEntryUtils.getDoorModeIconAsset / getFavoriteIcon */
+.icon-nav-doormode-doorbell {
+    background-image: url('/assets/flash/navigator/doormode_doorbell_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 16px;
+}
+
+.icon-nav-doormode-password {
+    background-image: url('/assets/flash/navigator/doormode_password_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 16px;
+}
+
+.icon-nav-doormode-invisible {
+    background-image: url('/assets/flash/navigator/doormode_invisible_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 16px;
+}
+
+.icon-nav-fav-yes {
+    background-image: url('/assets/flash/navigator/icon_fav_yes.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-fav-no {
+    background-image: url('/assets/flash/navigator/icon_fav_no.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+/* grouphome_icon — asset_uri newnavigator_icon_group */
+.icon-nav-room-group {
+    background-image: url('/assets/flash/navigator/icon_group.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 11px;
+}
+
+/* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text */
+.icon-nav-close {
+    background-image: url('/assets/flash/icons/close.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
 }

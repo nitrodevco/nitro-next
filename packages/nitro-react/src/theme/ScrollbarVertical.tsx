@@ -47,13 +47,19 @@ export const ScrollbarVertical = forwardRef<HTMLDivElement, ScrollbarVerticalPro
         }
 
         return (
-            <div ref={ref} className={cn('flex w-fit flex-col items-stretch', !controller.scrollable && 'invisible w-0! pointer-events-none', className)} {...props}>
+            /*
+             * ScrollBarController: when visibleRegion / scrollableRegion >= 1 the lift is
+             * sized to the full track and disable() is called, cascading to every
+             * _INTERNAL child. The scrollbar stays visible in its disabled skin — it is
+             * never hidden or collapsed.
+             */
+            <div ref={ref} aria-disabled={!controller.scrollable} className={cn('flex w-fit flex-col items-stretch', className)} {...props}>
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonUp
                         defaultVariant={resolvedVariant}
                         role="button"
                         aria-label="Scroll up"
-                        //aria-disabled={!controller.scrollable || controller.atStart}
+                        aria-disabled={!controller.scrollable}
                         className="shrink-0 cursor-pointer touch-none select-none"
                         {...holdUp}
                     />
@@ -64,7 +70,12 @@ export const ScrollbarVertical = forwardRef<HTMLDivElement, ScrollbarVerticalPro
                         className="relative w-full flex-1 cursor-pointer touch-none select-none"
                         onPointerDown={controller.onTrackPointerDown}
                     >
-                        <ScrollbarSliderBarVertical
+                        {/*
+                          * The skin library defines a disabled sprite for the track
+                          * (3-disabled.png) but none for the lift, so a disabled scrollbar
+                          * draws the track alone — the lift is not rendered.
+                          */}
+                        {controller.scrollable && <ScrollbarSliderBarVertical
                             defaultVariant={resolvedVariant}
                             tintColor={tintColor}
                             role="slider"
@@ -77,13 +88,13 @@ export const ScrollbarVertical = forwardRef<HTMLDivElement, ScrollbarVerticalPro
                             onPointerMove={controller.onThumbPointerMove}
                             onPointerUp={controller.onThumbPointerUp}
                             onKeyDown={onThumbKeyDown}
-                        />
+                        />}
                     </ScrollbarSliderTrackVertical>
                     <ScrollbarSliderButtonDown
                         defaultVariant={resolvedVariant}
                         role="button"
                         aria-label="Scroll down"
-                        //aria-disabled={!controller.scrollable || controller.atEnd}
+                        aria-disabled={!controller.scrollable}
                         className="shrink-0 cursor-pointer touch-none select-none"
                         {...holdDown}
                     />

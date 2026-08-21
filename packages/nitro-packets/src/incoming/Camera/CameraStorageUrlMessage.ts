@@ -1,16 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CameraStorageUrlMessageType = {
-  // no fields
-
+  url: string;
 };
 
 export class CameraStorageUrlMessage implements IIncomingPacket<CameraStorageUrlMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): CameraStorageUrlMessageType
   {
-
     const packet: CameraStorageUrlMessageType = {
+      url: wrapper.readString(),
     };
 
     return packet;
