@@ -92,8 +92,8 @@ public final class AvatarCompositor {
         // is 0 for every currently-reachable pose; `canvasOffsets` (from `getCanvasOffsets`, matching
         // `_local_20`) is the one part of that triple this port already has real data for.
         let canvasOffsets = structure.getCanvasOffsets(pose.sortedActions, scale: scale, direction: direction) ?? (0, 0, 0)
-        let groundOffsetX = canvasOffsets.0 - Double(canvas.width) / 2
-        let groundOffsetY = -Double(canvas.height) + roomScale / 4 + canvasOffsets.1
+        let groundOffsetX = canvasOffsets.0 - canvas.width / 2
+        let groundOffsetY = -canvas.height + roomScale / 4 + canvasOffsets.1
 
         var draws: [AvatarLayerDraw] = []
         var zIndex = 0
