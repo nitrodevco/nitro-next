@@ -546,8 +546,16 @@ public final class RoomPlane {
 
         ctx.clip(to: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
 
-        let startX = -positiveModulo(offsetX, tileWidth)
-        let startY = -positiveModulo(offsetY, tileHeight)
+        // Pixi's `TilingSprite.tilePosition` translates the *pattern's own origin* in the same
+        // direction as ordinary sprite positioning - increasing `tilePosition.x` shifts the visible
+        // tiled content to the right (verified against the actual pixi.js 8.x source,
+        // `CanvasTilingSpritePipe`: `tilePosition` feeds `_tileTransform`, prepended into the same
+        // `worldMatrix` used for the sprite's own group transform, no extra negation). So the first
+        // tile drawn here must start at the representative of `offsetX` in `(-tileWidth, 0]`, i.e.
+        // `positiveModulo(offsetX, tileWidth) - tileWidth` - not `-positiveModulo(offsetX, tileWidth)`,
+        // which draws the pattern shifted the wrong way (mirrored phase relative to Pixi).
+        let startX = positiveModulo(offsetX, tileWidth) - tileWidth
+        let startY = positiveModulo(offsetY, tileHeight) - tileHeight
 
         var y = startY
 

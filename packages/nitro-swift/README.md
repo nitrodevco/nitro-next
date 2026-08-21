@@ -107,6 +107,13 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
     (head over body, etc.), not a value that ever went through TS's descending room-object sort, so
     negating it would need to happen only if this port later gives per-avatar world depth its own
     representation (it currently has none - see "Explicitly not yet ported").
+  - `RoomPlane.drawTiledPattern`'s tile-pattern phase was mirrored relative to Pixi: fetched the
+    actual pixi.js 8.x `CanvasTilingSpritePipe` source to confirm `TilingSprite.tilePosition`
+    translates the pattern's own origin in the same direction as ordinary sprite positioning
+    (increasing `tilePosition.x` shifts the visible tiled content right), then found this port's
+    first tile started at `-positiveModulo(offsetX, tileWidth)` - congruent to `-offsetX`, not
+    `+offsetX`, mod `tileWidth` - the opposite phase. Fixed to
+    `positiveModulo(offsetX, tileWidth) - tileWidth`.
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on
