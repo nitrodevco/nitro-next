@@ -58,7 +58,7 @@ public final class AvatarActionManager {
     /// triple, so it's never "empty" the way an unset value would be) - matches
     /// `AvatarActionManager.getCanvasOffsets`'s overwrite-in-a-loop exactly. `nil` only when none of
     /// `actions` resolve to a known action definition at all.
-    public func getCanvasOffsets(_ actions activeActions: [ActiveActionData], size: AvatarScaleType, direction: Int) -> (Double, Double, Double)? {
+    public func getCanvasOffsets(_ activeActions: [ActiveActionData], size: AvatarScaleType, direction: Int) -> (Double, Double, Double)? {
         var result: (Double, Double, Double)?
 
         for activeAction in activeActions {

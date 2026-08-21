@@ -1,6 +1,6 @@
 /// Mirrors `AvatarFigurePartType` (packages/nitro-api/src/avatar/enum/AvatarFigurePartType.ts) -
 /// the two-letter codes used both as figure-string segment keys and as `IFigurePart.type` values.
-public enum AvatarFigurePartType: String, CaseIterable, Hashable, Sendable {
+public enum AvatarFigurePartType: String, CaseIterable, Hashable, Sendable, Decodable {
     case none = ""
     case body = "bd"
     case bodySwim = "bds"

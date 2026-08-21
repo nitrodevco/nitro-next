@@ -1,5 +1,5 @@
 /// Mirrors `AvatarBodyPartType` (packages/nitro-api/src/avatar/enum/AvatarBodyPartType.ts).
-public enum AvatarBodyPartType: String, Sendable, CaseIterable {
+public enum AvatarBodyPartType: String, Sendable, CaseIterable, Decodable {
     case top = "top"
     case bottom = "bottom"
     case behind = "behind"
