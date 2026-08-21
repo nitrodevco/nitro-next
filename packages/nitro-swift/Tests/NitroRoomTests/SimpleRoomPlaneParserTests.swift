@@ -13,10 +13,16 @@ final class SimpleRoomPlaneParserTests: XCTestCase {
         let walls = planes.filter { $0.type == RoomPlaneData.planeWall }
         let landscapes = planes.filter { $0.type == RoomPlaneData.planeLandscape }
 
-        // One merged 3x3 floor rectangle.
+        // One merged 3x3 floor rectangle. `loc` sits at the far corner with leftSide/rightSide
+        // pointing back toward the near corner (negative) - matches `RoomPlaneParser.addFloor`'s
+        // exact corner/sign convention, which `RoomPlane.matrixForDimensions`'s skew matrix is
+        // sensitive to even though the normal/footprint are identical either way (see
+        // `floorPlanes`'s doc comment on this call site).
         XCTAssertEqual(floors.count, 1)
-        XCTAssertEqual(floors.first?.leftSide.x, 3)
-        XCTAssertEqual(floors.first?.rightSide.y, 3)
+        XCTAssertEqual(floors.first?.leftSide.x, -3)
+        XCTAssertEqual(floors.first?.rightSide.y, -3)
+        XCTAssertEqual(floors.first?.loc.x, 3)
+        XCTAssertEqual(floors.first?.loc.y, 3)
 
         // 4 perimeter edges, each contributing a front wall + a thickness side wall = 8 wall planes.
         XCTAssertEqual(walls.count, 8)

@@ -101,9 +101,21 @@ public final class SimpleRoomPlaneParser {
 
                 for dy in 0..<runHeight { for dx in 0..<runWidth { visited[y + dy][x + dx] = true } }
 
-                let loc = Vector3d(Double(x), Double(y), Double(tileHeight))
-                let leftSide = Vector3d(Double(runWidth), 0, 0)
-                let rightSide = Vector3d(0, Double(runHeight), 0)
+                // Matches `RoomPlaneParser.addFloor`'s exact corner: `loc` at the *far* corner
+                // (x+runWidth, y+runHeight), `leftSide`/`rightSide` *negative* (pointing back toward
+                // the near corner) - not `loc` at the near corner with positive sides, which this
+                // file used until this was caught. Both parameterizations give the identical normal
+                // (`crossProduct(-a,-b) == crossProduct(a,b)`) and the identical 4 physical corners,
+                // so the earlier version wasn't a visibility or position bug - but `RoomPlane`'s
+                // `matrixForDimensions` skew matrix is built from `cornerB-cornerC`/`cornerD-cornerC`,
+                // which *do* depend on which physical corner plays `loc` vs `loc+leftSide+rightSide`.
+                // The near-corner/positive-sides version fed `matrixForDimensions` a sign combination
+                // TS never produces (its snap-to-exact-width step matched the wrong axis, `xScale`
+                // came out -1 instead of +1) - a mirrored, wrongly-scaled bake of the tile material,
+                // which is what read as "zoomed in 2x".
+                let loc = Vector3d(Double(x + runWidth), Double(y + runHeight), Double(tileHeight))
+                let leftSide = Vector3d(-Double(runWidth), 0, 0)
+                let rightSide = Vector3d(0, -Double(runHeight), 0)
 
                 result.append(RoomPlaneData(type: RoomPlaneData.planeFloor, loc: loc, leftSide: leftSide, rightSide: rightSide, secondaryNormals: []))
             }

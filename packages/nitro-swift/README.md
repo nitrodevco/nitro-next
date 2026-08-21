@@ -138,6 +138,30 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
     first tile started at `-positiveModulo(offsetX, tileWidth)` - congruent to `-offsetX`, not
     `+offsetX`, mod `tileWidth` - the opposite phase. Fixed to
     `positiveModulo(offsetX, tileWidth) - tileWidth`.
+  - `drawTiledPattern`'s repeated tile draws place each copy exactly edge-to-edge with no gap in the
+    loop's own math, but the context always has a skew/scale transform concatenated on it
+    (`matrixForDimensions`) - under that, CoreGraphics' default smooth interpolation/antialiasing
+    sample slightly past each tile image's own edge, bleeding a faint seam of background color
+    between adjacent copies. Disabled both (`interpolationQuality = .none`,
+    `setShouldAntialias(false)`) for this draw loop - nearest-neighbor sampling has no such bleed,
+    and matches the pixel-art material style anyway.
+  - **`SimpleRoomPlaneParser.floorPlanes`'s corner convention didn't match `RoomPlaneParser.addFloor`'s** -
+    the actual root cause behind a floor material that looked "zoomed in 2x" with everything else
+    (position, walls) already correct. This port placed `loc` at the *near* corner with positive
+    `leftSide`/`rightSide`; TS places `loc` at the *far* corner with `leftSide`/`rightSide`
+    *negative* (pointing back toward the near corner). Both give the identical normal
+    (`crossProduct(-a,-b) == crossProduct(a,b)`) and the identical 4 physical corners, so this never
+    showed up as a visibility or position bug - but `RoomPlane.matrixForDimensions`'s skew matrix is
+    built from `cornerB-cornerC`/`cornerD-cornerC`, which *do* depend on which physical corner plays
+    `loc` vs. `loc+leftSide+rightSide`. The near-corner/positive-sides version fed it a sign
+    combination TS never produces: its snap-to-exact-width step matched the wrong axis, so `xScale`
+    came out `-1` instead of `+1` - a mirrored, wrongly-scaled bake of the tile material for every
+    floor plane. Fixed by matching TS's exact corner/sign convention (verified by reimplementing
+    `RoomGeometry`'s projection standalone and confirming the corrected version's `matrixForDimensions`
+    output snaps cleanly instead of mismatching by exactly 2x). This incidentally also fixed
+    `RoomPlaneRenderer.setPlanes`'s texture-offset computation
+    (`data.loc.x + data.leftSide.x + 0.5`), which reads different physical corners under the two
+    conventions and was silently computing the wrong one before.
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on
