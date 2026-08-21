@@ -76,6 +76,9 @@ public final class AvatarNode: SKNode {
     private static func makeSprite(for layer: AvatarLayerDraw) -> SKSpriteNode {
         let sprite = SKSpriteNode(texture: layer.texture)
 
+        // See `RoomPlaneNode.makeSprite`'s comment - matches Pixi's `SCALE_MODE.NEAREST` instead
+        // of SpriteKit's blurrier default `.linear`.
+        sprite.texture?.filteringMode = .nearest
         sprite.position = CGPoint(x: CGFloat(layer.centerX), y: CGFloat(-layer.centerY)) // avatar-canvas is y-down; SpriteKit is y-up
         sprite.xScale = layer.flipH ? -1 : 1
         sprite.zPosition = CGFloat(layer.zIndex) * 0.001

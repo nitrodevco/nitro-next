@@ -80,6 +80,11 @@ public final class FurnitureNode: SKNode {
     private static func makeSprite(for layer: FurnitureLayerDraw) -> SKSpriteNode {
         let sprite = SKSpriteNode(texture: layer.texture)
 
+        // See `RoomPlaneNode.makeSprite`'s comment - Pixi runs pixel-art content at
+        // `SCALE_MODE.NEAREST`; SpriteKit's default `.linear` softens/blurs sprite edges whenever
+        // the sprite isn't shown at an exact 1:1 device-pixel scale (e.g. any Retina backing
+        // scale), unlike the crisp original.
+        sprite.texture?.filteringMode = .nearest
         sprite.anchorPoint = CGPoint(x: 0, y: 1) // TS offsets are top-left registered
         sprite.position = CGPoint(x: CGFloat(layer.offsetX), y: CGFloat(-layer.offsetY)) // screen Y grows downward
         sprite.xScale = layer.flipH ? -1 : 1

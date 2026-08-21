@@ -162,6 +162,21 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
     `RoomPlaneRenderer.setPlanes`'s texture-offset computation
     (`data.loc.x + data.leftSide.x + 0.5`), which reads different physical corners under the two
     conventions and was silently computing the wrong one before.
+  - **Missing nearest-neighbor texture filtering** - after the corner-convention fix above, the
+    floor's baked grid pattern (a fine, 1px-line 64x64 tile, repeated ~10x across a merged floor
+    plane) still looked like an uneven, asymmetric lattice instead of a crisp, mirror-symmetric
+    diamond grid, even though a standalone re-simulation of the exact same bake (`matrixForDimensions`
+    + the real `floor_texture_64_0_floor_basic` asset) produced a clean, correctly-skewed result -
+    ruling out the geometry math. The actual cause: `SKTexture.filteringMode` was never set anywhere
+    in this port, so every texture - this plane bake included - used SpriteKit's default `.linear`.
+    Real Habbo clients run Pixi with a global `SCALE_MODE.NEAREST` for crisp pixel art; `.linear`
+    bilinear-blurs a texture whenever it's composited at a non-exact-1:1 device-pixel scale (any
+    Retina backing scale, in particular), which for a *fine, high-frequency* pattern like this grid
+    produces exactly the kind of blurry, uneven-looking lattice that reads as a shape/skew bug even
+    though the underlying geometry is correct. Fixed by setting `sprite.texture?.filteringMode =
+    .nearest` in `RoomPlaneNode`/`FurnitureNode`/`AvatarNode`'s `makeSprite` - the three places a
+    texture actually becomes a displayed `SKSpriteNode` - rather than chasing every texture-creation
+    call site individually.
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on

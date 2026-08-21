@@ -35,6 +35,15 @@ public final class RoomPlaneNode: SKNode {
     private static func makeSprite(for draw: RoomPlaneDraw) -> SKSpriteNode {
         let sprite = SKSpriteNode(texture: draw.texture)
 
+        // Pixi's Habbo clients run with a global `SCALE_MODE.NEAREST` for crisp pixel-art
+        // rendering; SpriteKit's default `SKTexture.filteringMode` is `.linear`. Left at the
+        // default, this plane's baked texture - a fine, high-frequency 1px-line tile pattern -
+        // gets bilinear-blurred whenever SpriteKit composites it at a non-exact-1:1 device pixel
+        // scale (e.g. any Retina backing scale), which reads as a blurry, uneven, non-uniform
+        // grid rather than a crisp diamond lattice - easy to mistake for a skew/shape bug in the
+        // geometry math (which a standalone re-simulation of this exact bake independently
+        // confirmed is correct - see the package README).
+        sprite.texture?.filteringMode = .nearest
         sprite.anchorPoint = CGPoint(x: 0, y: 1) // plane offsets are top-left registered
         // TS: `sprite.offsetX = -offset.x; sprite.offsetY = -offset.y` (y-down); Y is flipped again
         // here for SpriteKit's y-up convention, netting out to (-offset.x, +offset.y).
