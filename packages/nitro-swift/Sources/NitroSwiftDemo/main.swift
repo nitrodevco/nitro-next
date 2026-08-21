@@ -24,6 +24,11 @@ final class DemoAppDelegate: NSObject, NSApplicationDelegate {
         skView.ignoresSiblingOrder = true
         skView.showsFPS = true
         skView.showsNodeCount = true
+        // Let the window's own black background show through wherever the scene draws nothing,
+        // instead of SpriteKit's default (light blue-gray) scene background.
+        skView.allowsTransparency = true
+
+        scene.backgroundColor = .clear
 
         let window = NSWindow(
             contentRect: skView.frame,
@@ -33,6 +38,7 @@ final class DemoAppDelegate: NSObject, NSApplicationDelegate {
         )
 
         window.title = "Nitro Swift Demo"
+        window.backgroundColor = .black
         window.contentView = skView
         window.center()
         window.makeKeyAndOrderFront(nil)
