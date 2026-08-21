@@ -47,10 +47,21 @@ public struct RoomHeightGrid {
 /// with straight perimeter walls - by greedily merging same-height tile rectangles for the floor and
 /// merging contiguous boundary edges into wall segments. It does **not** handle multi-height floors
 /// (step walls between different heights), floor holes, or the wall-corner end-cap/hiding heuristics
-/// the real parser has. Coordinate/edge-normal conventions were derived from `RoomPlane`'s formulas
-/// and `RoomPlaneParser.addWall`'s wall-thickness math (both read directly from source), but - unlike
-/// every other file in this port - this file's *output correctness* has not been cross-checked
-/// against a captured real room, since doing so needs a running renderer this sandbox doesn't have.
+/// the real parser has.
+///
+/// Each wall segment's `leftSide`/`rightSide` are built so `crossProduct(leftSide, rightSide)` is the
+/// wall's **interior**-facing normal (the surface the camera actually sees looking into the room from
+/// outside) - not the exterior/outward one. This was gotten backwards in an earlier version and only
+/// caught via live testing: with the outward-normal version, `RoomPlane.updateVisibilityAndCorners`'s
+/// `cosAngle` check culled exactly the wrong pair of opposite walls (e.g. north/west, the two that
+/// should be visible from the default room camera, were culled, while south/east - always culled in a
+/// real room, since that's the open/camera side - rendered instead). Re-verified afterward by
+/// reimplementing `RoomGeometry`'s projection math standalone and confirming, for the default camera
+/// (`RoomScene`'s `-135,30,0` direction at `11,11,5`) against a flat rectangular room: north/west
+/// plane normals now satisfy the visibility test and south/east don't, and each wall's corners meet
+/// the floor's corners at exactly the same projected screen point at the shared room-origin corner.
+/// That's a standalone re-simulation of the math, not an actual SpriteKit render, so some residual
+/// risk remains - see the package README's "Verifying" section.
 public final class SimpleRoomPlaneParser {
     public var wallHeight: Double = 3.6
     public var wallThicknessMultiplier: Double = 1
@@ -138,14 +149,22 @@ public final class SimpleRoomPlaneParser {
                 let loc: Vector3d
                 let leftSide: Vector3d
 
+                // `RoomPlane`'s visibility test wants each wall's *interior*-facing normal (the
+                // face the camera actually sees looking into the room from outside), not the
+                // outward/exterior one - swapped `loc`/`leftSide` between these two branches used to
+                // produce the outward normal instead, which culls exactly the wrong pair of opposite
+                // walls (confirmed against the live room camera: with the outward-normal version,
+                // north/west - the two walls that should be visible - were the ones getting culled,
+                // and south/east - which should always be culled, they're the open/camera side -
+                // were the ones rendering).
                 if neighborDeltaY < 0 {
-                    // North edge: outward normal -Y.
-                    loc = Vector3d(Double(x), Double(y), Double(tileHeight))
-                    leftSide = Vector3d(Double(runWidth), 0, 0)
-                } else {
-                    // South edge: outward normal +Y.
-                    loc = Vector3d(Double(x + runWidth), Double(y + 1), Double(tileHeight))
+                    // North edge (void at smaller Y): interior-facing normal +Y.
+                    loc = Vector3d(Double(x + runWidth), Double(y), Double(tileHeight))
                     leftSide = Vector3d(-Double(runWidth), 0, 0)
+                } else {
+                    // South edge (void at larger Y): interior-facing normal -Y.
+                    loc = Vector3d(Double(x), Double(y + 1), Double(tileHeight))
+                    leftSide = Vector3d(Double(runWidth), 0, 0)
                 }
 
                 result.append(contentsOf: wallPlaneSet(loc: loc, leftSide: leftSide, rightSide: rightSide))
@@ -181,14 +200,16 @@ public final class SimpleRoomPlaneParser {
                 let loc: Vector3d
                 let leftSide: Vector3d
 
+                // See `horizontalEdgeWalls`'s comment on the same swap - interior-facing normal,
+                // not outward, is what `RoomPlane`'s visibility test needs.
                 if neighborDeltaX < 0 {
-                    // West edge: outward normal -X.
-                    loc = Vector3d(Double(x), Double(y + runHeight), Double(tileHeight))
-                    leftSide = Vector3d(0, -Double(runHeight), 0)
-                } else {
-                    // East edge: outward normal +X.
-                    loc = Vector3d(Double(x + 1), Double(y), Double(tileHeight))
+                    // West edge (void at smaller X): interior-facing normal +X.
+                    loc = Vector3d(Double(x), Double(y), Double(tileHeight))
                     leftSide = Vector3d(0, Double(runHeight), 0)
+                } else {
+                    // East edge (void at larger X): interior-facing normal -X.
+                    loc = Vector3d(Double(x + 1), Double(y + runHeight), Double(tileHeight))
+                    leftSide = Vector3d(0, -Double(runHeight), 0)
                 }
 
                 result.append(contentsOf: wallPlaneSet(loc: loc, leftSide: leftSide, rightSide: rightSide))

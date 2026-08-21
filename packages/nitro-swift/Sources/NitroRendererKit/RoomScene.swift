@@ -140,15 +140,23 @@ open class RoomScene: SKScene {
     /// Re-bakes every plane for the current camera state - call after changing `geometry`
     /// (zoom/rotate) or after `loadRoom`.
     ///
-    /// `RoomPlaneNode`'s own position is *only* the bare canvas-centering term (`size/2`), **not**
-    /// `screenPosition(for:)` - unlike furniture/avatars, each individual plane's `offset` (baked in
-    /// by `RoomPlane.updateCorners`) already includes `geometry.getScreenPoint(roomObjectLocation)`
-    /// as its own registration baseline (mirrors `RoomPlane._offset = geometry.getScreenPoint(this._origin)`
-    /// in the TS source). Routing this through `screenPosition(for:)` too would add that same
-    /// camera-relative term a second time, on top of what's already folded into every plane's
-    /// offset - the room rendered wildly displaced instead of centered until this was caught.
+    /// `RoomPlaneNode`'s own position **is** `screenPosition(for: roomObjectLocation)`, same as any
+    /// other placed room object - a previous version of this comment argued that was
+    /// double-counting `geometry.getScreenPoint(roomObjectLocation)` against the same term already
+    /// folded into each plane's own `offset` (`RoomPlane.updateCorners`), and dropped it down to a
+    /// bare `size/2`. That reasoning doesn't hold up: in the TS source, `RoomVisualization.updateSprite`
+    /// sets `sprite.offsetX/Y = -plane.offset.x/y`, and `plane.offset` itself is
+    /// `geometry.getScreenPoint(origin) - minCorner`, so the object's own `vector` term (`+screenOrigin`,
+    /// from `RoomSpriteCanvas.renderObject`) and the sprite's offset term (`-screenOrigin`, folded
+    /// into `-plane.offset`) are *designed* to cancel algebraically, leaving just `size/2 + minCorner`
+    /// - the same shape `screenPosition(for:)` produces for furniture/avatars. Dropping the container's
+    /// own `screenOrigin` term broke that cancellation instead of avoiding a double-count, displacing
+    /// every plane by a constant offset (verified by reproducing both versions numerically against
+    /// the default room camera: the `size/2`-only version was off by the camera-to-room-origin
+    /// screen-space vector on every plane, ~156px vertically for this camera).
     public func refreshRoomPlanes() {
-        roomPlaneNode?.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        if let roomPlaneRenderer { roomPlaneNode?.position = screenPosition(for: roomPlaneRenderer.roomObjectLocation) }
+
         roomPlaneNode?.refresh(geometry: geometry)
     }
 

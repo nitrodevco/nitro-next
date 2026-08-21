@@ -82,12 +82,18 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
     canvas size (`RoomSpriteCanvas.renderObject`: every placed room object goes through `x = x +
     (width>>1); y = y + (height>>1)`). `RoomScene.screenPosition(for:)` centralizes that (with a Y
     negation instead of TS's addition, since SpriteKit's default anchorPoint is
-    y-up-from-bottom-left vs. Pixi's y-down-from-top-left) and is what `placeFurniture`/`placeAvatar`
-    use. Room planes are the one exception: each plane's own `offset` (`RoomPlane.updateCorners`)
-    already bakes in `geometry.getScreenPoint(roomObjectLocation)` as its registration baseline
-    (mirroring `RoomPlane._offset` in the TS source), so `RoomPlaneNode`'s root position only needs
-    the bare `size/2` centering term - routing it through `screenPosition(for:)` too double-counted
-    that camera-relative term and displaced the whole room wildly instead of centering it.
+    y-up-from-bottom-left vs. Pixi's y-down-from-top-left), and `placeFurniture`/`placeAvatar`/
+    `RoomPlaneNode`'s own root position (`screenPosition(for: roomPlaneRenderer.roomObjectLocation)`)
+    all use it, matching TS's `renderObject` uniformly. An earlier version of this fix dropped the
+    `screenOrigin` term from the room-plane case specifically, reasoning it was already folded into
+    each plane's own `offset` (`RoomPlane.updateCorners`) and would double-count - that reasoning
+    was wrong: in TS, `RoomVisualization.updateSprite` sets `sprite.offsetX/Y = -plane.offset.x/y`,
+    and since `plane.offset` itself contains `+geometry.getScreenPoint(origin)`, the object's own
+    `vector` term and the sprite's offset term are designed to *cancel* algebraically, leaving just
+    `size/2 + <plane's own corner>` - the same shape `screenPosition(for:)` produces for furniture.
+    Dropping the container's `screenOrigin` term broke that cancellation instead of avoiding a
+    double-count, displacing every plane by a constant amount (the camera-to-room-origin screen-space
+    vector, verified numerically against the default room camera).
   - Depth sort direction: TS's global sprite list sorts `(a, b) => b.z - a.z` (descending, index 0
     drawn *first*), so a *larger* `relativeDepth`/`z` there means *further back*, not closer -
     opposite of SpriteKit's `zPosition` (larger = closer to the camera, drawn on top). Copying
@@ -191,11 +197,16 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   handling). It greedily merges same-height tile rectangles for the floor and contiguous boundary
   runs for perimeter walls, which is correct for the common case (a flat floor, straight walls) but
   does **not** handle multi-height floors (step walls), floor holes, or wall-corner end caps. Its
-  wall coordinate/normal-direction conventions were derived by reading `RoomPlane`'s and
-  `RoomPlaneParser.addWall`'s formulas directly, but - unlike everything else in this port - its
-  *output* hasn't been cross-checked against a captured real room (that needs a running renderer
-  this sandbox doesn't have), so treat it as a reasonable starting point to validate visually, not
-  a verified-correct one.
+  wall `leftSide`/`rightSide` vectors are built so `crossProduct(leftSide, rightSide)` gives each
+  wall's *interior*-facing normal (what `RoomPlane`'s visibility test needs) - an earlier version had
+  this backwards (outward-facing instead), which culled exactly the wrong pair of opposite walls;
+  caught via live testing and fixed, then re-verified by reimplementing `RoomGeometry`'s projection
+  math standalone and confirming, for the default room camera against a flat rectangular room, that
+  the two walls expected to be visible (given that camera's position/direction) pass the visibility
+  test and the other two don't, with every wall's corners meeting the floor's at the correct shared
+  screen point - see `SimpleRoomPlaneParser.swift`'s doc comment. That's a standalone re-simulation
+  of the math, not an actual SpriteKit render, so treat this as strongly-checked-by-simulation rather
+  than verified-correct-by-observation - a real visual smoke test is still worth doing early.
 
 **Explicitly not yet ported** (scoped out rather than faked):
 - **Avatar downloaded-effects/dance animation system** (`Animation`/`AnimationManager`/
