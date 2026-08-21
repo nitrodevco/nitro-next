@@ -43,6 +43,10 @@ let package = Package(
             name: "NitroRendererKit",
             dependencies: ["NitroCore", "NitroAssets", "NitroAvatar", "NitroRoom"]
         ),
+        .executableTarget(
+            name: "NitroSwiftDemo",
+            dependencies: ["NitroCore", "NitroAssets", "NitroAvatar", "NitroRoom", "NitroRendererKit"]
+        ),
         .testTarget(
             name: "NitroAssetsTests",
             dependencies: ["NitroAssets"]

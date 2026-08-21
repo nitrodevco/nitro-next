@@ -62,6 +62,11 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   (turn a `FurnitureVisualization`/`AvatarCompositor`/`RoomPlaneRenderer` layer list into
   `SKSpriteNode`s) and `RoomScene` (owns the `AssetManager` + room camera + avatar structure,
   places floor/walls/furniture/avatars at their projected screen position).
+- **NitroSwiftDemo** (executable, macOS only) - a runnable windowed demo: downloads a room bundle,
+  a furniture item, and an avatar's figure parts from the live asset CDN using the same
+  `asset.urls.*`/`figuredata.url`/`figuremap.url` config keys as
+  `packages/nitro-react/public/config/nitro-config.json`, then presents them in an `SKView`. See
+  "Demo" below.
 
 ## Status
 
@@ -193,10 +198,41 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
 - `LegacyWallGeometry` (legacy wall-item position string format) - only needed for
   import/export of the old placement-string format, not live rendering.
 
+## Demo
+
+`swift run NitroSwiftDemo` (macOS only - it's a windowed `NSApplication`/`SKView` app, and this
+package otherwise has no headless/offscreen rendering path, see "Verifying" below) opens a window,
+then asynchronously downloads and renders a static room with a piece of furniture (a "throne") and
+a standing avatar in it, entirely from the live `assets.nitrodev.co` CDN - no bundled/mocked asset
+data. `Sources/NitroSwiftDemo/DemoConfig.swift` holds the asset-location values, copied verbatim
+from `packages/nitro-react/public/config/nitro-config.json` (the same config scheme the real client
+reads at runtime): `asset.urls.generic`/`asset.urls.furni`/`asset.urls.avatar` templates plus
+`figuredata.url`/`figuremap.url`.
+
+Two things worth flagging for a future contributor extending this demo:
+- **The room's own bundle is not named `"room"`.** `RoomContentLoader.ROOM_CONTENT = 'room'` (TS)
+  is only an internal bookkeeping key; the actual downloaded library is `"HabboRoomContent"`
+  (`RoomContentLoader.getAssetUrls`'s `case ROOM_CONTENT: return [this.getAssetUrlWithGenericBase('HabboRoomContent')]`).
+  Confirmed against the live CDN: `bundled/generic/room.nitro` 404s, `bundled/generic/HabboRoomContent.nitro`
+  exists (its manifest's own `type` field is `"room"`, which is what `RoomScene`/`AssetManager`
+  actually key it by internally - `DemoConfig.roomContentLibrary`'s doc comment has the details).
+- **Avatar figure parts aren't resolvable by naming convention** - which library a figure part (e.g.
+  `hd-3536`) lives in is data-driven via `figuremap.json` (`{ libraries: [{ id, revision, parts: [{
+  id, type }] }] }`), resolved the same way `AvatarAssetDownloadManager.getAvatarFigurePendingLibraries`
+  does in the TS client: for each figure-string segment, look up its `FigurePartSet`'s parts (from
+  `figuredata.json`) by `"${type}:${id}"` in the figuremap. `AvatarLibraryResolver.swift` is a lean,
+  demo-local port of just that resolution step (not the full queueing/listener machinery of the TS
+  class, which this demo has no use for since it downloads everything up front and blocks on it).
+  `DemoConfig.demoFigure`'s specific figure string was picked by resolving it against the *live*
+  `FigureData.json`/`FigureMap.json` rather than guessed - the "default" figure string quoted in
+  `AvatarImage.ts`'s TS constructor no longer resolves against the live figuremap (hotel content
+  drifts over time), so reusing it here would silently render nothing.
+
 ## Requirements
 
 - Swift 5.9+, iOS 15 / macOS 12 / tvOS 15.
 - [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) (SPM dependency, `.nitro` is a zip).
+- The demo target additionally needs macOS (AppKit) and network access to `assets.nitrodev.co`.
 
 ## Verifying
 
