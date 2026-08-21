@@ -3,11 +3,10 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer, TileLayer } from './utils/Layer';
 import { useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface BarBorder {
     textureKey: string;
@@ -100,8 +99,7 @@ export interface ScrollbarSliderBarVerticalProps {
 /** Pixi port of theme/ScrollbarSliderBarVertical.tsx - the draggable scroll thumb. */
 export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSliderBarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarVerticalProps>(
     ({ variant, defaultVariant, tintColor, layout, onPointerDown }, ref) => {
-        const cascadedVariant = useCascadedVariant('scrollbarSliderBarVertical');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant('scrollbarSliderBarVertical', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS['0'];
         const overlay = SCROLLBAR_SLIDER_BAR_VERTICAL_OVERLAY[resolvedVariant];
         const { state, handlers } = useInteractionState();

@@ -3,9 +3,10 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 /**
@@ -32,9 +33,7 @@ export interface ScrollableItemListVerticalProps {
 
 export const ScrollableItemListVertical: ForwardRefExoticComponent<ScrollableItemListVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollableItemListVerticalProps>(
     ({ variant, defaultVariant, layout, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('scrollableItemListVertical');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['scrollableItemListVertical']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('scrollableItemListVertical', variant, defaultVariant);
         const config = SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS[resolvedVariant] ?? SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS['0'];
 
         return (

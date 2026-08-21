@@ -3,7 +3,7 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { ScrollbarSliderBarVertical } from './ScrollbarSliderBarVertical';
@@ -11,6 +11,7 @@ import { ScrollbarSliderButtonDown } from './ScrollbarSliderButtonDown';
 import { ScrollbarSliderButtonUp } from './ScrollbarSliderButtonUp';
 import { ScrollbarSliderTrackVertical } from './ScrollbarSliderTrackVertical';
 import { useHoldToRepeat } from './utils/useHoldToRepeat';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 /**
  * Props-driven skin, deliberately NOT calling `useScrollController` itself. DOM's
@@ -49,9 +50,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
         { trackRef, thumbSize, thumbOffset, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, layout },
         ref
     ) => {
-        const cascadedVariant = useCascadedVariant('scrollbarVertical');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const ownCascade = VARIANT_CASCADE_CONFIG['scrollbarVertical']?.[resolvedVariant];
+        const { resolvedVariant, ownCascade } = useResolvedVariant('scrollbarVertical', variant, defaultVariant);
 
         const holdUp = useHoldToRepeat(stepBackward);
         const holdDown = useHoldToRepeat(stepForward);

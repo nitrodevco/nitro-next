@@ -3,10 +3,9 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
 import { useInteractionState } from './utils/useInteractionState';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 interface ScrollbarSliderButtonUpVariant {
@@ -70,8 +69,7 @@ export interface ScrollbarSliderButtonUpProps {
  */
 export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderButtonUpProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonUpProps>(
     ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
-        const cascadedVariant = useCascadedVariant('scrollbarSliderButtonUp');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonUp', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
         const frame = config && (

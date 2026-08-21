@@ -3,10 +3,9 @@ import './utils/pixiElements';
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { useCascadedVariant } from '#base/theme';
-
 import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer, SpriteLayer } from './utils/Layer';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 type TrackLayer =
     | { kind: 'sprite', textureKey: string, disabledTextureKey?: string }
@@ -54,8 +53,7 @@ export interface ScrollbarSliderTrackVerticalProps {
 /** Pixi port of theme/ScrollbarSliderTrackVertical.tsx - the clickable track behind the thumb. */
 export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSliderTrackVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackVerticalProps>(
     ({ variant, defaultVariant, disabled, layout, onPointerDown, children }, ref) => {
-        const cascadedVariant = useCascadedVariant('scrollbarSliderTrackVertical');
-        const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
+        const { resolvedVariant } = useResolvedVariant('scrollbarSliderTrackVertical', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS['0'];
         const { layer } = config;
 
