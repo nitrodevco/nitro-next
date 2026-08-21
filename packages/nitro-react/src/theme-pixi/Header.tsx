@@ -7,7 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CloseButton } from './CloseButton';
-import { BackgroundLayer, type BackgroundLayerConfig, TileLayer } from './utils/Layer';
+import { BackgroundLayer, type BackgroundLayerConfig, ColorLayer, TileLayer } from './utils/Layer';
 import { FONT_AA_DROP_SHADOW, getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -63,15 +63,6 @@ export interface HeaderProps {
     onPointerDown?: (event: FederatedPointerEvent) => void;
 }
 
-/** A solid-color chip behind the caption/close-button, matching resolvedTint - theme/
- *  Header.tsx paints the same `backgroundColor: resolvedTint` behind both, masking the
- *  tiled/shine background immediately behind them. */
-const TintChip = ({ color }: { color: string | undefined }) => {
-    if (!color) return null;
-
-    return <pixiGraphics eventMode="none" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }} />;
-};
-
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('header', variant, defaultVariant);
@@ -118,7 +109,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                         <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             {caption && (
                                 <Box layout={{ position: 'relative', paddingLeft: 8, paddingRight: 8 }}>
-                                    <TintChip color={resolvedTint} />
+                                    <ColorLayer color={resolvedTint} />
                                     <pixiText
                                         layout={{}}
                                         text={caption}
@@ -128,7 +119,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                             )}
                         </Box>
                         <Box layout={{ position: 'absolute', right: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <TintChip color={resolvedTint} />
+                            <ColorLayer color={resolvedTint} />
                             <CloseButton onClose={onClose} />
                         </Box>
                     </VariantCascadeProvider>

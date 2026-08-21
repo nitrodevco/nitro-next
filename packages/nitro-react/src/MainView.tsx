@@ -1,12 +1,10 @@
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
 
-import { AvatarEditorComponent, InventoryComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from "./components";
+import { InventoryComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from "./components";
 import { FriendListWrapper } from "./components/messenger";
 import { useWebSocketContext } from "./context";
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
-import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
-import { ActivityPointsView } from "./views/purse/ActivityPointsView";
 import { ToolbarView } from "./views/toolbar/ToolbarView";
 
 export const MainView = () => {
@@ -43,16 +41,10 @@ export const MainView = () => {
             <div
                 id="ui-container"
                 className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
-                {/* PurseView now renders through Pixi (see views/purse/PurseViewPixi.tsx, mounted
-                    in Nitro.tsx's PixiApplicationRoot) - pt-19.25 reserves the space it used to
-                    occupy here so ActivityPointsView/NotificationCenterView keep their position. */}
-                <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75 pt-19.25">
-                    <div className="flex flex-col items-end w-48">
-                        <ActivityPointsView />
-                        <NotificationCenterView />
-                    </div>
-                </div>
-                <AvatarEditorComponent />
+                {/* PurseView, ActivityPointsView, AvatarEditorView and MessengerView now render
+                    through Pixi (see views-pixi/, mounted in Nitro.tsx's PixiApplicationRoot).
+                    NotificationCenterView (theme/'s own source always returns null) had nothing
+                    to migrate, so it's simply dropped rather than ported as a no-op. */}
                 <FriendListWrapper />
                 <ToolbarView />
                 <NavigatorWrapper />

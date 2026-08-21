@@ -11,11 +11,12 @@ import { type FC, useEffect, useState } from 'react';
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 import { PixiApplicationRoot } from '#base/theme-pixi';
 
-import { CatalogWrapper } from './components';
+import { AvatarEditorComponent, CatalogWrapper, MessengerComponent } from './components';
 import { useWebSocketContext } from './context';
 import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
+import { ActivityPointsViewPixi } from './views-pixi/purse/ActivityPointsViewPixi';
 import { PurseViewPixi } from './views-pixi/purse/PurseViewPixi';
 
 export const Nitro: FC = () => {
@@ -70,6 +71,9 @@ export const Nitro: FC = () => {
             <PixiApplicationRoot onReady={() => setIsRendererReady(true)}>
                 {isReady && <>
                     <PurseViewPixi />
+                    <ActivityPointsViewPixi layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
+                    <AvatarEditorComponent />
+                    <MessengerComponent />
                     <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
                 </>}
             </PixiApplicationRoot>

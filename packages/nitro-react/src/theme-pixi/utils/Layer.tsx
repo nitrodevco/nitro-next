@@ -75,6 +75,20 @@ export const SpriteLayer = ({ textureKey, tint, layout }: SpriteLayerProps) => {
     return <pixiSprite texture={texture} tint={tint} eventMode="none" layout={layout ?? FILL_LAYOUT} />;
 };
 
+export interface ColorLayerProps {
+    color: string | undefined;
+    layout?: BoxLayout;
+}
+
+/** A flat solid-color fill, matching a DOM `bg-[#hex]` div - views reach for this constantly
+ *  (panel backgrounds, header strips, tint chips like Header.tsx's own local `TintChip`) so
+ *  it's a shared primitive rather than each view hand-rolling its own `pixiGraphics` fill. */
+export const ColorLayer = ({ color, layout }: ColorLayerProps) => {
+    if (!color) return null;
+
+    return <pixiGraphics eventMode="none" layout={layout ?? FILL_LAYOUT} draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }} />;
+};
+
 export interface TileLayerProps {
     textureKey: string | undefined;
     tint?: string;

@@ -47,6 +47,7 @@ export * from './TabContainerButton';
 export * from './TabContent';
 export * from './TabContext';
 export * from './Tooltip';
+export * from './utils/Layer';
 export * from './utils/textStyles';
 export * from './utils/useIconTexture';
 export * from './utils/useInteractionState';
