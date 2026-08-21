@@ -98,8 +98,14 @@ open class RoomScene: SKScene {
         let renderer = RoomPlaneRenderer(context: context)
         let parser = SimpleRoomPlaneParser()
         let grid = RoomHeightGrid(rows: heightmapRows)
+        let planeData = parser.parse(grid)
 
-        renderer.setPlanes(parser.parse(grid), initialRandomSeed: randomSeed)
+        NitroLogger.warn(
+            "RoomScene: parsed \(planeData.count) room planes from a \(grid.width)x\(grid.height) heightmap; "
+                + "room bundle roomVisualization decoded: \(context.visualizationData != nil)"
+        )
+
+        renderer.setPlanes(planeData, initialRandomSeed: randomSeed)
 
         roomPlaneNode?.removeFromParent()
 

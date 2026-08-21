@@ -186,13 +186,19 @@ public final class RoomPlaneRenderer {
     @discardableResult
     public func update(_ geometry: RoomGeometry) -> [RoomPlaneDraw] {
         var draws: [RoomPlaneDraw] = []
+        var typeVisibleCount = 0
+        var planeVisibleCount = 0
 
         for (index, plane) in planes.enumerated() {
             guard typeVisible(plane.type) else { continue }
 
+            typeVisibleCount += 1
+
             plane.update(geometry)
 
             guard plane.visible, let texture = plane.planeTexture else { continue }
+
+            planeVisibleCount += 1
 
             var depth = plane.relativeDepth + Double(index) / 1000
             depth += plane.type == RoomPlane.typeFloor ? (RoomPlaneRenderer.roomDepthOffset + 0.1) : (RoomPlaneRenderer.roomDepthOffset + 0.5)
@@ -203,6 +209,15 @@ public final class RoomPlaneRenderer {
 
             draws.append(RoomPlaneDraw(uniqueId: plane.uniqueId, type: plane.type, texture: texture, offset: plane.offset, color: finalColor(for: plane), relativeDepth: depth))
         }
+
+        // Temporary funnel diagnostic (floor/wall/landscape geometry is the least-verified part of
+        // this port - see the package README's "Verifying" section) - narrows "nothing renders" down
+        // to one of: no planes at all, planes facing away from the camera (`isVisible`/`canBeVisible`
+        // false), or planes visible but with a `nil` `planeTexture` (bake failure/degenerate bounds).
+        NitroLogger.warn(
+            "RoomPlaneRenderer.update: \(planes.count) total planes, \(typeVisibleCount) type-visible, "
+                + "\(planeVisibleCount) camera-visible-with-texture, \(draws.count) draws"
+        )
 
         return draws
     }

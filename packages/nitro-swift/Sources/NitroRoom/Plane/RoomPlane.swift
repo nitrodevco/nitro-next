@@ -158,8 +158,17 @@ public final class RoomPlane {
 
         guard geometryChanged || (canBeVisible && maskChanged) else { return false }
 
-        guard let planeGeometry = RoomPlane.planeGeometry[Int(geometry.scale.rounded())] else { return false }
-        guard boundsWidth > 0, boundsHeight > 0 else { return false }
+        guard let planeGeometry = RoomPlane.planeGeometry[Int(geometry.scale.rounded())] else {
+            NitroLogger.warn("RoomPlane \(uniqueId) (type \(type)): no PLANE_GEOMETRY entry for scale \(geometry.scale) - skipping bake")
+
+            return false
+        }
+
+        guard boundsWidth > 0, boundsHeight > 0 else {
+            NitroLogger.warn("RoomPlane \(uniqueId) (type \(type)): degenerate bounds \(boundsWidth)x\(boundsHeight) - skipping bake")
+
+            return false
+        }
 
         var tileWidth = floor(leftSide.length)
         var tileHeight = floor(rightSide.length)
@@ -224,7 +233,11 @@ public final class RoomPlane {
 
         Randomizer.setSeed(randomSeed)
 
-        guard let baked = bakeTexture(geometry: geometry, texture: texture, tint: materialColor, tileWidth: tileWidth, tileHeight: tileHeight) else { return false }
+        guard let baked = bakeTexture(geometry: geometry, texture: texture, tint: materialColor, tileWidth: tileWidth, tileHeight: tileHeight) else {
+            NitroLogger.warn("RoomPlane \(uniqueId) (type \(type)): bakeTexture returned nil (bounds \(boundsWidth)x\(boundsHeight))")
+
+            return false
+        }
 
         planeTexture = baked
 

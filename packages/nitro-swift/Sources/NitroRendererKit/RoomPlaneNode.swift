@@ -1,5 +1,6 @@
 import SpriteKit
 
+import NitroCore
 import NitroRoom
 
 /// Turns a `RoomPlaneRenderer.update()` result into `SKSpriteNode`s - the SpriteKit-side
@@ -24,7 +25,11 @@ public final class RoomPlaneNode: SKNode {
     public func refresh(geometry: RoomGeometry) {
         removeAllChildren()
 
-        for draw in renderer.update(geometry) { addChild(RoomPlaneNode.makeSprite(for: draw)) }
+        let draws = renderer.update(geometry)
+
+        NitroLogger.warn("RoomPlaneNode: adding \(draws.count) plane sprite(s) to the scene")
+
+        for draw in draws { addChild(RoomPlaneNode.makeSprite(for: draw)) }
     }
 
     private static func makeSprite(for draw: RoomPlaneDraw) -> SKSpriteNode {

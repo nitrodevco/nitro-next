@@ -108,9 +108,21 @@ enum DemoLoader {
         }
     }
 
+    /// A decode failure here used to be indistinguishable from a download failure (both funneled
+    /// through `try?` into the same "failed to download" log at the call site) - which is exactly
+    /// what happened with `figuremap.json`: the download succeeded, but a `null` id on one live
+    /// entry made the whole array fail to decode (see `FigureMapLibraryPart.id`'s doc comment).
+    /// Logging the decode error explicitly here makes that class of bug visible instead of looking
+    /// identical to a network problem.
     private static func fetchJSON<T: Decodable>(_ urlString: String, as type: T.Type) async -> T? {
         guard let data = await fetchData(urlString) else { return nil }
 
-        return try? JSONDecoder().decode(T.self, from: data)
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            NitroLogger.error("DemoLoader: failed to decode JSON from \(urlString): \(error)")
+
+            return nil
+        }
     }
 }
