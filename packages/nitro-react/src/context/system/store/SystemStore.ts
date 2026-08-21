@@ -91,22 +91,17 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         let result = text;
 
         for (let pass = 0; pass < 3; pass++) {
-            pattern.lastIndex = 0;
-
-            const match = pattern.exec(result);
-
-            if (!match) return result;
-
             let replaced = 0;
 
-            for (let index = 1; index < match.length; index++) {
-                const value = localizations[match[index]];
+            result = result.replace(pattern, (placeholder, key) => {
+                const value = localizations[key];
 
-                if (value == null) continue;
+                if (value == null) return placeholder;
 
                 replaced++;
-                result = result.replace(`\${${match[index]}}`, value);
-            }
+
+                return value;
+            });
 
             if (replaced === 0) break;
         }

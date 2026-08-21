@@ -49,8 +49,9 @@
     text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
 }
 
+/* styles.css "regular" — Volter, font-size 9 */
 @utility text-style-regular {
-    @apply font-goldfish text-[0.68rem];
+    @apply font-goldfish text-[9px];
 }
 
 @utility text-style-headline-big {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import type { NavigatorFilterType } from '#base/context';
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Dropmenu, DropmenuItem, NitroIcon } from '#base/theme';
+import { Border, DropmenuSelect, NitroIcon, useTooltip } from '#base/theme';
 
 /**
  * SearchView.FILTER_SELECTOR_INDEX_TO_MODE = [5,2,1,3,4] indexing
@@ -23,11 +23,12 @@ const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
  * and refreshButtonContainer which the layout marks visible="false".
  */
 export const NavigatorSearchView = () => {
-    const [isFilterOpen, setFilterOpen] = useState(false);
-    const { topLevelContext, searchFilter, filterType } = useNavigatorSelectors();
-    const { setSearchFilter, setFilterType, setIsSearching } = useNavigatorActions();
+    const [searchFilter, setSearchFilter] = useState('');
+    const { topLevelContext, filterType } = useNavigatorSelectors();
+    const { setFilterType, setIsSearching } = useNavigatorActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();
+    const tooltip = useTooltip();
 
     const search = (filter: string, type: NavigatorFilterType = filterType) => {
         if (!topLevelContext) return;
@@ -45,34 +46,23 @@ export const NavigatorSearchView = () => {
 
     return (
         <div className="flex items-center shrink-0 gap-1 h-9 px-1">
-            {/* filter_type_drop_menu — 116x24 at x=4 */}
-            <div className="relative shrink-0">
-                <Dropmenu
-                    className="flex items-center px-1 w-29 h-6 cursor-pointer"
-                    title={t('navigator.tooltip.filter.type')}
-                    variant="100"
-                    onClick={() => setFilterOpen(prev => !prev)}>
-                    <span className="truncate text-style-u-regular">{t(`navigator.filter.${filterType}`)}</span>
-                </Dropmenu>
-                {isFilterOpen && (
-                    <div className="absolute top-6 left-0 z-10 w-29">
-                        {FILTER_TYPES.map(({ type }) => (
-                            <DropmenuItem
-                                key={type}
-                                className="px-1 cursor-pointer text-style-u-regular"
-                                onClick={() => { setFilterType(type); setFilterOpen(false); search(searchFilter, type); }}>
-                                {t(`navigator.filter.${type}`)}
-                            </DropmenuItem>
-                        ))}
-                    </div>
-                )}
-            </div>
+            {/* filter_type_drop_menu — 116x24 at x=4, style="4" (unregistered, falls back to 0) */}
+            <DropmenuSelect
+                className="shrink-0 w-29 h-6"
+                rowClassName="h-6 px-1.75"
+                options={FILTER_TYPES.map(({ type }) => t(`navigator.filter.${type}`))}
+                selectedIndex={FILTER_TYPES.findIndex(x => x.type === filterType)}
+                variant="4"
+                {...tooltip(t('navigator.tooltip.filter.type'))}
+                onSelect={index => { setFilterType(FILTER_TYPES[index].type); search(searchFilter, FILTER_TYPES[index].type); }} />
             {/* search_input inside its own border — 235x24 at x=133 */}
             <Border className="flex items-center gap-1 px-1.5 w-58.75 h-6" variant="4">
+                {/* text fields without an explicit text_style fall back to "regular"
+                    (Volter 9); the XML gives the input tool_tip_delay 2000 */}
                 <input
-                    className="flex-1 min-w-0 text-style-u-regular text-[#666666]"
+                    className="flex-1 min-w-0 text-style-regular text-[#666666]"
                     placeholder={t('navigator.filter.input.placeholder')}
-                    title={t('navigator.tooltip.filter.input')}
+                    {...tooltip(t('navigator.tooltip.filter.input'), 2000)}
                     type="text"
                     value={searchFilter}
                     onChange={event => setSearchFilter(event.target.value)}

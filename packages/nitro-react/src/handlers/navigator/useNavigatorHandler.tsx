@@ -1,14 +1,21 @@
-import { CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, PerkAllowancesMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { ClubLevelEnum } from "@nitrodevco/nitro-api";
+import { CanCreateRoomMessage, CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, HabboGroupDetailsMessage, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, OpenFlatConnectionComposer, PerkAllowancesMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
 
-import { useNavigatorActions, useWebSocketContext } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useNavigatorActions, useOwnClubLevel, useTranslation, useUserContext, useWebSocketContext } from "#base/context";
+import { useMessageListener,useNavigatorVisibility  } from "#base/hooks";
 
 export const useNavigatorHandler = () => {
     const { send } = useWebSocketContext();
     const {
         setTopLevelContexts, setTopLevelContext, setFlatCategories, setEventCategories,
-        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden
+        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden, pushSearchContext,
+        setFavoriteRoomIds, setRoomFavorite, setHomeRoomId, setGroupDetails,
+        showCreateRoom, hideCreateRoom, showAlert
     } = useNavigatorActions();
+    const { hideNavigator } = useNavigatorVisibility();
+    const clubLevel = useOwnClubLevel();
+    const t = useTranslation();
+    const userId = useUserContext(x => x.userId);
 
     useMessageListener(UserObjectMessage, () => {
         send(new GetUserFlatCatsComposer({}));
@@ -54,11 +61,17 @@ export const useNavigatorHandler = () => {
 
     useMessageListener(UserEventCatsMessage, data => setEventCategories(data.eventCategories));
 
-    useMessageListener(NavigatorSearchResultBlocksMessage, data => setSearchResult(data.searchResult));
+    useMessageListener(NavigatorSearchResultBlocksMessage, data => {
+        setSearchResult(data.searchResult);
 
-    useMessageListener(NavigatorCollapsedCategoriesMessage, data => {
-        setCollapsedCategories((data as { collapsedCategories?: string[] }).collapsedCategories ?? []);
+        // HabboNewNavigator.onSearchResults records the search in the context history
+        pushSearchContext({
+            searchCode: data.searchResult.searchCodeOriginal,
+            filter: data.searchResult.filteringData
+        });
     });
+
+    useMessageListener(NavigatorCollapsedCategoriesMessage, data => setCollapsedCategories(data.collapsedCategories));
 
     useMessageListener(UserRightsMessage, () => {
         // eventMod > securityLevel >= SecurityLevel.MODERATOR
@@ -82,7 +95,8 @@ export const useNavigatorHandler = () => {
     });
 
     useMessageListener(GetGuestRoomResultMessage, data => {
-        if (data.enterRoom || !data.roomForward) setCurrentRoom(data.roomInfo, data.roomInfo?.ownerName?.length > 0);
+        // ownership per RoomPopupCtrl: sessionData.userId == roomData.ownerId
+        if (data.enterRoom || !data.roomForward) setCurrentRoom(data.roomInfo, data.roomInfo?.ownerId === userId);
     });
 
     useMessageListener(RoomRatingMessage, () => {
@@ -107,12 +121,51 @@ export const useNavigatorHandler = () => {
         }
     });
 
-    useMessageListener(FlatCreatedMessage, () => {
-        //
+    /*
+     * FlatCreatedMessage — the created room is entered straight away and the navigator
+     * closes, matching the enterRoom path (OpenFlatConnectionMessageComposer).
+     */
+    useMessageListener(FlatCreatedMessage, data => {
+        send(new OpenFlatConnectionComposer({ roomId: data.roomId, password: '', unknown1: -1 }));
+
+        hideCreateRoom();
+        hideNavigator();
     });
 
-    useMessageListener(FavouriteChangedMessage, () => {
+    /*
+     * IncomingMessages.onCanCreateRoom:
+     *   resultCode == 0 -> roomCreateViewCtrl.show()
+     *   else            -> registerParameter("navigator.createroom.limitreached",
+     *                        "limit", roomLimit) and alert
+     *                        "${navigator.createroom.error}" / limitreached,
+     *                        via ClubPromoAlertView instead of SimpleAlertView
+     *                        when the user has no VIP.
+     */
+    useMessageListener(CanCreateRoomMessage, data => {
+        if (data.resultCode === 0) {
+            showCreateRoom();
+
+            return;
+        }
+
+        const message = t('navigator.createroom.limitreached', undefined, { limit: String(data.roomLimit) });
+
+        // TODO: ClubPromoAlertView has its own layout (roc_vip_promo link -> catalog club
+        // page); until the catalog opener exists both variants use nav_simple_alert and
+        // the promo line is appended for non-VIP users.
+        showAlert(
+            t('navigator.createroom.error'),
+            clubLevel >= ClubLevelEnum.Vip ? message : `${message}\n${t('navigator.createroom.vippromo')}`
+        );
     });
+
+    useMessageListener(FavouritesMessage, data => setFavoriteRoomIds(data.favoriteRoomIds));
+
+    useMessageListener(FavouriteChangedMessage, data => setRoomFavorite(data.roomId, data.added));
+
+    useMessageListener(NavigatorSettingsMessage, data => setHomeRoomId(data.homeRoomId));
+
+    useMessageListener(HabboGroupDetailsMessage, data => setGroupDetails(data.data));
 
     useMessageListener(CantConnectMessage, () => {
         setIsSearching(false);

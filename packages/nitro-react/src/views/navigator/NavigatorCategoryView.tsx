@@ -1,7 +1,7 @@
 import type { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate, useNavigatorSelectors, useTranslation } from '#base/context';
-import { NitroIcon } from '#base/theme';
+import { NitroIcon, useTooltip } from '#base/theme';
 
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomEntryView } from './NavigatorRoomEntryView';
@@ -13,8 +13,8 @@ export const RESULTS_MODE_TILES = 1;
 type NavigatorCategoryViewProps = {
     block: ISearchResultList;
     onEnter: (room: IRoomInfo) => void;
-    onShowInfo?: (room: IRoomInfo) => void;
-    onCollapse: (searchCode: string) => void;
+    onShowInfo?: (room: IRoomInfo, target: HTMLElement) => void;
+    onCollapse: (searchCode: string, isCollapsed: boolean) => void;
     onShowMore: (searchCode: string) => void;
     onBack: () => void;
     onAddQuickLink: (searchCode: string) => void;
@@ -31,18 +31,23 @@ type NavigatorCategoryViewProps = {
  * category_add_quick_link is hidden while the search code is official_view.
  */
 export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, onShowMore, onBack, onAddQuickLink, onToggleMode }: NavigatorCategoryViewProps) => {
-    const { collapsedCategories, searchResult, viewModes, perks } = useNavigatorSelectors();
+    const { collapsedCategories, expandOverrides, searchResult, viewModes, perks } = useNavigatorSelectors();
     const t = useTranslation();
+    const tooltip = useTooltip();
     const interpolate = useInterpolate();
 
     /*
      * BlockResultsView renders a block expanded when
      *   (!isMinimized(searchCode) || isSingleBlock(resultSet)) && !forceClosed
      * isMinimized  = collapsedCategories.indexOf(searchCode) != -1
-     * isSingleBlock = resultSet.blocks.length == 1  — a lone block is never collapsed
+     * isSingleBlock = resultSet.blocks.length == 1  — a lone block starts open
+     * BUT that condition only seeds the initial render of a result set: clicking
+     * collapse/expand calls replaceBlock(id, open) which renders the block
+     * open/closed unconditionally, so a user click overrides forceClosed.
      */
     const isSingleBlock = (searchResult?.blocks.length ?? 0) === 1;
-    const isCollapsed = (collapsedCategories.includes(block.searchCode) && !isSingleBlock) || block.forceClosed;
+    const defaultExpanded = (!collapsedCategories.includes(block.searchCode) || isSingleBlock) && !block.forceClosed;
+    const isCollapsed = !(expandOverrides[block.searchCode] ?? defaultExpanded);
     // _searchCodeViewMode[searchCode], seeded from the block and updated on toggle
     const storedMode = viewModes[block.searchCode] ?? block.viewMode;
     const isOfficialView = (searchResult?.searchCodeOriginal ?? '').indexOf('official_view') !== -1;
@@ -71,11 +76,17 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
             <div className={`relative ${isCollapsed ? 'h-6.5' : 'h-7.5'}`}>
                 <div
                     className="absolute inset-0 cursor-pointer"
-                    title={t(isCollapsed ? 'navigator.tooltip.category.expand' : 'navigator.tooltip.category.collapse')}
-                    onClick={() => onCollapse(block.searchCode)}>
+                    {...tooltip(t(isCollapsed ? 'navigator.tooltip.category.expand' : 'navigator.tooltip.category.collapse'))}
+                    onClick={() => onCollapse(block.searchCode, isCollapsed)}>
+                    {/*
+                      * both bitmaps have pivot_point="center": the 18x18 minus centres in
+                      * its 11x19 region at (5,7) and the 11x11 plus in its 11x18 region at
+                      * (5,4), so they share a horizontal centre of x=10.5 and land at
+                      * y=7 — position each by its own size so swapping doesn't jump
+                      */}
                     {block.actionAllowed !== 2 && (
                         <NitroIcon
-                            className={`absolute left-1.25 ${isCollapsed ? 'top-1' : 'top-1.75'}`}
+                            className={`absolute top-1.75 ${isCollapsed ? 'left-1.25' : 'left-0.5'}`}
                             icon={isCollapsed ? 'icon-nav-plus' : 'icon-nav-minus'} />
                     )}
                     {/* category_name — x=20 y=5 h=19, font_size 14, text_color 0xf557b */}
@@ -95,28 +106,28 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                         <NitroIcon
                             className="cursor-pointer"
                             icon={mode === RESULTS_MODE_ROWS ? 'icon-nav-thumbnail' : 'icon-nav-inline'}
-                            title={t(mode === RESULTS_MODE_ROWS ? 'navigator.tooltip.tiles' : 'navigator.tooltip.rows')}
+                            {...tooltip(t(mode === RESULTS_MODE_ROWS ? 'navigator.tooltip.tiles' : 'navigator.tooltip.rows'))}
                             onClick={() => onToggleMode(block.searchCode, mode === RESULTS_MODE_ROWS ? RESULTS_MODE_TILES : RESULTS_MODE_ROWS)} />
                     )}
                     {block.actionAllowed === 1 && (
                         <NitroIcon
                             className="cursor-pointer"
                             icon="icon-nav-category-show-more"
-                            title={t('navigator.tooltip.category.show.more')}
+                            {...tooltip(t('navigator.tooltip.category.show.more'))}
                             onClick={() => onShowMore(block.searchCode)} />
                     )}
                     {!isCollapsed && block.actionAllowed === 2 && (
                         <NitroIcon
                             className="cursor-pointer"
                             icon="icon-nav-view-mini"
-                            title={t('navigator.back')}
+                            {...tooltip(t('navigator.back'))}
                             onClick={onBack} />
                     )}
                     {!isOfficialView && (
                         <NitroIcon
                             className="cursor-pointer"
                             icon="icon-nav-quicklink-add"
-                            title={t('navigator.tooltip.add.saved.search')}
+                            {...tooltip(t('navigator.tooltip.add.saved.search'))}
                             onClick={() => onAddQuickLink(block.searchCode)} />
                     )}
                 </div>
@@ -127,16 +138,20 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     ? 'flex flex-wrap gap-1.75 px-1 pb-1'
                     : 'flex flex-col px-1 pb-1'}>
                     {block.guestRooms.map((room, index) => {
-                        // CategoryElementFactory: accumulator starts at 1 and steps per row,
-                        // or once per completed group of 3 tiles
-                        const accumulator = 1 + (mode === RESULTS_MODE_TILES ? Math.floor(index / 3) : index);
-                        const modulation = (accumulator % 2 === 0) ? ALTERNATING_COLOR_NONE : ALTERNATING_COLOR_MOD;
-                        const base = mode === RESULTS_MODE_TILES ? TILE_BASE_COLOR : ROW_BASE_COLOR;
+                        /*
+                         * CategoryElementFactory: accumulator starts at 1 and steps per row.
+                         * Only getNewRowElement applies the modulated color — getNewTileElement
+                         * takes the param and discards it, so tiles always keep the XML tint.
+                         */
+                        const modulation = ((1 + index) % 2 === 0) ? ALTERNATING_COLOR_NONE : ALTERNATING_COLOR_MOD;
+                        const backgroundColor = mode === RESULTS_MODE_TILES
+                            ? getModulatedBackgroundColor(ALTERNATING_COLOR_NONE, TILE_BASE_COLOR)
+                            : getModulatedBackgroundColor(modulation, ROW_BASE_COLOR);
 
                         return (
                             <NavigatorRoomEntryView
                                 key={room.roomId}
-                                backgroundColor={getModulatedBackgroundColor(modulation, base)}
+                                backgroundColor={backgroundColor}
                                 mode={mode}
                                 room={room}
                                 onEnter={onEnter}

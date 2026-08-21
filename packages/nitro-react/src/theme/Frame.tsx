@@ -121,14 +121,16 @@ export const Frame = forwardRef<HTMLDivElement, FrameProps>(
                     <div className={cn('flex px-0.75 pt-px pb-1 size-full overflow-hidden', contentClassName)}>
                         <ContentArea>
                             {children}
-                            <Scaler
+                            {/* the scaler only exists on windows with WINDOW_PARAM_MOUSE_SCALING_TARGET
+                                (65536) in their params — non-resizable windows draw no grip */}
+                            {resizeDirection !== 'none' && <Scaler
                                 tintColor={resolvedTint}
                                 direction={resizeDirection}
                                 onPointerDown={onScalerPointerDown}
                                 onPointerMove={onScalerPointerMove}
                                 onPointerUp={onScalerPointerUp}
                                 onPointerCancel={onScalerPointerCancel}
-                            />
+                            />}
                         </ContentArea>
                     </div>
                 </VariantCascadeProvider>

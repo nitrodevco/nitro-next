@@ -12,12 +12,17 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     eventCategories: x.eventCategories,
     searchResult: x.searchResult,
     collapsedCategories: x.collapsedCategories,
-    expandedCategories: x.expandedCategories,
+    expandOverrides: x.expandOverrides,
     viewModes: x.viewModes,
-    searchFilter: x.searchFilter,
     filterType: x.filterType,
     leftPaneHidden: x.leftPaneHidden,
     isSearching: x.isSearching,
     currentRoom: x.currentRoom,
-    currentRoomIsOwner: x.currentRoomIsOwner
+    currentRoomIsOwner: x.currentRoomIsOwner,
+    favoriteRoomIds: x.favoriteRoomIds,
+    homeRoomId: x.homeRoomId,
+    groupDetails: x.groupDetails,
+    roomInfoPopup: x.roomInfoPopup,
+    createRoomOpen: x.createRoomOpen,
+    alert: x.alert
 })));

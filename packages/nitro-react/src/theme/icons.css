@@ -544,15 +544,15 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 11px;
-    height: 19px;
+    height: 11px;
 }
 
 .icon-nav-minus {
     background-image: url('/assets/flash/navigator/minus.png');
     background-repeat: no-repeat;
     background-position: center;
-    width: 11px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
 }
 
 .icon-nav-inline {
@@ -1187,6 +1187,70 @@
     height: 18px;
 }
 
+.icon-nav-fav-yes {
+    background-image: url('/assets/flash/navigator/icon_fav_yes.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-fav-no {
+    background-image: url('/assets/flash/navigator/icon_fav_no.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-home-yes {
+    background-image: url('/assets/flash/navigator/icon_home_yes.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-home-no {
+    background-image: url('/assets/flash/navigator/icon_home_no.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-room-settings {
+    background-image: url('/assets/flash/navigator/room_settings.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 14px;
+}
+
+.icon-nav-report-room {
+    background-image: url('/assets/flash/navigator/report_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 17px;
+    height: 16px;
+}
+
+.icon-nav-event {
+    background-image: url('/assets/flash/navigator/event_icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 38px;
+    height: 38px;
+}
+
+.icon-nav-owner-eye {
+    background-image: url('/assets/flash/navigator/owner_eye.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 21px;
+    height: 21px;
+}
+
 .icon-nav-category-show-more {
     background-image: url('/assets/flash/navigator/category_show_more.png');
     background-repeat: no-repeat;
@@ -1301,4 +1365,67 @@
     background-size: 20px 20px;
     width: 20px;
     height: 20px;
+}
+
+/* nav_error_popup popup_arrow_down, and roc_room_thumbnail tile icons / select arrow */
+.icon-nav-popup-arrow-down {
+    background-image: url('/assets/flash/navigator/popup_arrow_down.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 11px;
+}
+
+.icon-nav-tile-black {
+    background-image: url('/assets/flash/navigator/tile_icon_black.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 10px;
+}
+
+.icon-nav-tile-white {
+    background-image: url('/assets/flash/navigator/tile_icon_white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 10px;
+}
+
+.icon-nav-select-arrow {
+    background-image: url('/assets/flash/navigator/select_arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 20px;
+}
+
+/* habbo_element_description: icon style 11 "Club icon small", style 12 "VIP icon small" */
+.icon-club-small {
+    background-image: url('/assets/flash/icons/icon_club_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 16px;
+    height: 10px;
+}
+
+.icon-vip-small {
+    background-image: url('/assets/flash/icons/icon_vip_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 19px;
+    height: 10px;
+}
+
+/*
+ * RoomCreateViewCtrl.updateArrowPos: a 100ms timer walks select_arrow's y between
+ * 0 and 15 and reverses at each end — 1-2px per tick, so ~1.5s for a full cycle.
+ */
+@keyframes nav-select-arrow-bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(15px); }
+}
+
+.nav-select-arrow-bounce {
+    animation: nav-select-arrow-bounce 1.5s ease-in-out infinite alternate;
 }

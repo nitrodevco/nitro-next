@@ -54,7 +54,12 @@ interface DropmenuProps extends HTMLAttributes<HTMLDivElement>, DropmenuVariantP
 export const Dropmenu = forwardRef<HTMLDivElement, DropmenuProps>(
     ({ className, variant, defaultVariant, tintColor, style, children, ...props }, ref) => {
         const cascadedVariant = useCascadedVariant('dropmenu');
-        const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
+        const requestedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0');
+        /*
+         * SkinContainer.getSkinRendererByTypeAndStyle falls back to style 0 for styles
+         * with no registered skin (layout XMLs freely reference e.g. dropmenu style 2/4)
+         */
+        const resolvedVariant = (requestedVariant in dropmenuVariantsConfig.variant ? requestedVariant : '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['dropmenu']?.[resolvedVariant as string];
         const resolvedTint = tintColor || dropmenuTintColors[resolvedVariant as string];
         const overlayClassName = dropmenuOverlayVariants({ variant: resolvedVariant });

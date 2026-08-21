@@ -2,7 +2,7 @@ import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api
 
 export type NotificationDialogMessageType = {
   type: string;
-  parameters: Record<number, number>;
+  parameters: Record<string, string>;
 };
 
 export class NotificationDialogMessage implements IIncomingPacket<NotificationDialogMessageType>
@@ -11,7 +11,7 @@ export class NotificationDialogMessage implements IIncomingPacket<NotificationDi
   {
     const packet: NotificationDialogMessageType = {
       type: '',
-      parameters: {} as any,
+      parameters: {},
     };
 
     packet.type = wrapper.readString();
