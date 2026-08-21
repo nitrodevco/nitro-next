@@ -75,6 +75,18 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   frames and green-channel palette recoloring - this is the foundation everything else sits on.
 - The room camera's 3D projection math (`RoomGeometry`), ported field-for-field including its
   specific (non-textbook) Euler rotation composition.
+- **`RoomScene.screenPosition(for:)`** - `RoomGeometry.getScreenPoint` returns a point *relative to
+  the camera's projected origin*, not a canvas/view pixel coordinate; the TS client only ever
+  consumes it after adding half the canvas size (`RoomSpriteCanvas.renderObject`: every placed room
+  object - furniture, avatars, and the room's own plane geometry alike - goes through `x = x +
+  (width>>1); y = y + (height>>1)`). Missing this step was a real bug caught via live testing (not
+  found by static reading alone): every placed node clustered near the SpriteKit scene's
+  bottom-left corner instead of appearing centered, and room planes - being much larger than a
+  furniture/avatar sprite - ended up positioned almost entirely outside the viewport, making the
+  room look like it wasn't rendering at all. `screenPosition(for:)` centralizes the fix (with a Y
+  negation instead of TS's addition, since SpriteKit's default anchorPoint is y-up-from-bottom-left
+  vs. Pixi's y-down-from-top-left) - `placeFurniture`/`placeAvatar` and `RoomPlaneNode`'s own root
+  position (anchored to `RoomPlaneRenderer.roomObjectLocation`) all go through it.
 - Furniture layer resolution: asset naming, direction fallback, size fallback (nearest-by-ratio),
   per-layer offset/alpha/color/blend-mode/depth, the shadow layer - for both static furniture
   (`FurnitureVisualization`) and animated furniture (`FurnitureAnimatedVisualization`, composed on

@@ -58,6 +58,23 @@ open class RoomScene: SKScene {
 
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
+    /// `RoomGeometry.getScreenPoint` returns a point *relative to the camera's projected origin*,
+    /// not a canvas/view pixel coordinate - the TS client only ever consumes it after the caller
+    /// adds half the canvas size (`RoomSpriteCanvas.renderObject`: `x = x + (this._width >> 1); y =
+    /// y + (this._height >> 1)`, every placed room object - furniture, avatars, and the room's own
+    /// plane geometry alike - goes through this). Skipping that step is why every placed node used
+    /// to cluster near the SpriteKit scene's bottom-left corner (anchorPoint (0,0) = origin) instead
+    /// of appearing centered in the view: `getScreenPoint`'s raw output is small/near-zero for
+    /// anything near the camera's look-at point, so it landed just off past the bottom-left edge
+    /// more often than not. The Y term is negated (not added, unlike TS's `+`) because Pixi's canvas
+    /// is y-down from the top-left while SpriteKit's default anchorPoint is y-up from the bottom-left
+    /// - `height/2 - rawY` is the y-up equivalent of TS's `height/2 + rawY` in a y-down space.
+    public func screenPosition(for worldPos: Vector3d) -> CGPoint {
+        let raw = geometry.getScreenPoint(worldPos)
+
+        return CGPoint(x: size.width / 2 + raw.x, y: size.height / 2 - raw.y)
+    }
+
     /// Advances every placed animated furniture item's and avatar's animation state, clamped to the
     /// classic ~24.4fps tick rate regardless of the actual render frame rate - mirrors both
     /// `FurnitureVisualization.update`'s and `AvatarVisualization`'s shared `_lastUpdateTime`
@@ -121,8 +138,14 @@ open class RoomScene: SKScene {
     }
 
     /// Re-bakes every plane for the current camera state - call after changing `geometry`
-    /// (zoom/rotate) or after `loadRoom`.
+    /// (zoom/rotate) or after `loadRoom`. The room's plane geometry is itself one "room object"
+    /// placed at `roomPlaneRenderer.roomObjectLocation` (world origin by default) - `RoomPlaneNode`'s
+    /// own position needs the same canvas-centering every other placed object gets (see
+    /// `screenPosition(for:)`), while its individual plane sprites keep their existing offsets
+    /// (registration points *relative to* that shared root, already handled correctly).
     public func refreshRoomPlanes() {
+        if let roomPlaneRenderer { roomPlaneNode?.position = screenPosition(for: roomPlaneRenderer.roomObjectLocation) }
+
         roomPlaneNode?.refresh(geometry: geometry)
     }
 
@@ -160,7 +183,7 @@ open class RoomScene: SKScene {
 
         let node = FurnitureNode(visualization: visualization)
 
-        node.position = geometry.getScreenPoint(tile)
+        node.position = screenPosition(for: tile)
         node.refresh(
             scale: Int(geometry.scale), cameraDirectionX: geometry.direction.x,
             objectDirectionX: objectDirectionX, selectedColorId: selectedColorId
@@ -202,7 +225,7 @@ open class RoomScene: SKScene {
         let pose = AvatarPose.standing(structure: avatarStructure)
         let node = AvatarNode(compositor: compositor, pose: pose)
 
-        node.position = geometry.getScreenPoint(tile)
+        node.position = screenPosition(for: tile)
 
         guard node.refresh(figure: figure, direction: direction) else { return nil }
 
