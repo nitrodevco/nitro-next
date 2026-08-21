@@ -1,9 +1,7 @@
-import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
 
 import { AvatarEditorComponent, InventoryComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from "./components";
-import { CatalogWrapper } from "./components/catalog/CatalogWrapper";
 import { FriendListWrapper } from "./components/messenger";
 import { useWebSocketContext } from "./context";
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
@@ -57,7 +55,6 @@ export const MainView = () => {
                 <AvatarEditorComponent />
                 <FriendListWrapper />
                 <ToolbarView />
-                <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
                 <NavigatorWrapper />
                 <InventoryComponent />
                 <WalletComponent />
