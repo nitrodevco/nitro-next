@@ -58,11 +58,11 @@ open class RoomScene: SKScene {
 
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    /// Advances every placed animated furniture item's animation state machine, clamped to the
-    /// classic ~24.4fps tick rate regardless of the actual render frame rate - mirrors
-    /// `FurnitureVisualization.update`'s own `_lastUpdateTime` accumulator/catch-up-clamp logic
-    /// (see `UPDATE_TIME_INCREASER` above), just hoisted up to the scene since this port has no
-    /// per-object `update(geometry:time:...)` call chain to hang it off of.
+    /// Advances every placed animated furniture item's and avatar's animation state, clamped to the
+    /// classic ~24.4fps tick rate regardless of the actual render frame rate - mirrors both
+    /// `FurnitureVisualization.update`'s and `AvatarVisualization`'s shared `_lastUpdateTime`
+    /// accumulator/catch-up-clamp logic (see `UPDATE_TIME_INCREASER` above), just hoisted up to the
+    /// scene since this port has no per-object `update(geometry:time:...)` call chain to hang it off of.
     open override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
 
@@ -76,7 +76,10 @@ open class RoomScene: SKScene {
             lastAnimationUpdateTime = currentTime - RoomScene.animationUpdateInterval
         }
 
-        for case let node as FurnitureNode in objectLayer.children { node.tickAnimation() }
+        for child in objectLayer.children {
+            if let furniture = child as? FurnitureNode { furniture.tickAnimation() }
+            else if let avatar = child as? AvatarNode { avatar.tickAnimation() }
+        }
     }
 
     @discardableResult
@@ -176,28 +179,26 @@ open class RoomScene: SKScene {
 
     /// Places a standing avatar at `tile`, facing `direction` (0-7). Requires `avatarStructure` to
     /// have real figure data injected first (see `avatarStructure`'s doc comment) and the relevant
-    /// avatar part `.nitro` bundles already loaded into `assetManager`/`avatarAssets`.
+    /// avatar part `.nitro` bundles already loaded into `assetManager`/`avatarAssets`. The returned
+    /// node's `pose` starts with just the default ("Stand") posture active - call
+    /// `node.pose.appendAction(...)`/`endActionAppends()` to layer on a walk cycle, a gesture, etc.,
+    /// then `node.refresh(...)` again to rebuild (see `AvatarPose`'s doc comment for how actions combine).
     @discardableResult
     public func placeAvatar(figure: AvatarFigureContainer, at tile: Vector3d, direction: Int) -> AvatarNode? {
-        guard let compositor = avatarCompositor else {
+        guard let compositor = avatarCompositor, let avatarStructure else {
             NitroLogger.warn("RoomScene: avatar structure failed to load from bundled defaults")
-
-            return nil
-        }
-
-        guard let standAction = AvatarDefaults.standAction() else {
-            NitroLogger.warn("RoomScene: no default Stand action available")
 
             return nil
         }
 
         avatarAssets.reset()
 
-        let node = AvatarNode(compositor: compositor)
+        let pose = AvatarPose.standing(structure: avatarStructure)
+        let node = AvatarNode(compositor: compositor, pose: pose)
 
         node.position = geometry.getScreenPoint(tile)
 
-        guard node.refresh(figure: figure, direction: direction, action: standAction) else { return nil }
+        guard node.refresh(figure: figure, direction: direction) else { return nil }
 
         objectLayer.addChild(node)
 

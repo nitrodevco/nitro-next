@@ -5,15 +5,21 @@ import NitroAvatar
 /// Turns an `AvatarCompositor.compose()` result into an `SKNode` tree - the SpriteKit-side
 /// counterpart of the composited `Container` the TS client would hand to its Pixi stage.
 ///
-/// Only static (non-animated) poses are supported right now - see the avatar section of the
-/// package README. `refresh` rebuilds every layer each call; there is no persistent per-body-part
-/// sprite cache the way `AvatarImageCache` has, since that cache exists to avoid re-deriving frame
-/// data across animation ticks, which this port doesn't drive yet.
+/// `refresh` rebuilds every layer each call; there is no persistent per-body-part sprite cache the
+/// way `AvatarImageCache` has, since that cache exists to avoid re-deriving frame data across
+/// animation ticks, which this port doesn't need the way Pixi's render-texture baking does (see
+/// `AvatarCompositor`'s doc comment).
 public final class AvatarNode: SKNode {
     public let compositor: AvatarCompositor
+    public let pose: AvatarPose
 
-    public init(compositor: AvatarCompositor) {
+    private var figure: AvatarFigureContainer?
+    private var direction: Int = 0
+    private var scale: AvatarScaleType = .large
+
+    public init(compositor: AvatarCompositor, pose: AvatarPose) {
         self.compositor = compositor
+        self.pose = pose
 
         super.init()
     }
@@ -21,15 +27,36 @@ public final class AvatarNode: SKNode {
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     /// - Parameter direction: facing direction, 0-7 (see `AvatarDirectionAngle`).
+    ///
+    /// Call `pose.appendAction(...)`/`pose.endActionAppends()` before this if you want anything
+    /// beyond the pose's already-resolved actions to take effect - this only rebuilds the sprite
+    /// tree from the pose's *current* resolved state, it doesn't touch the pose itself.
     @discardableResult
-    public func refresh(
-        figure: AvatarFigureContainer,
-        direction: Int,
-        action: ActionDefinition,
-        scale: AvatarScaleType = .large,
-        geometryType: AvatarGeometryType = .vertical
-    ) -> Bool {
-        let layers = compositor.compose(figure: figure, direction: direction, action: action, scale: scale, geometryType: geometryType)
+    public func refresh(figure: AvatarFigureContainer, direction: Int, scale: AvatarScaleType = .large) -> Bool {
+        self.figure = figure
+        self.direction = direction
+        self.scale = scale
+
+        return rebuild()
+    }
+
+    /// Advances the pose's animation frame counter by one tick and rebuilds - call at the classic
+    /// ~24.4fps rate (`RoomScene` does, matching furniture - see its doc comment), not once per
+    /// rendered frame. A no-op (returns `false`) until `refresh` has been called at least once.
+    @discardableResult
+    public func tickAnimation() -> Bool {
+        guard figure != nil else { return false }
+
+        pose.updateAnimationByFrames()
+
+        return rebuild()
+    }
+
+    @discardableResult
+    private func rebuild() -> Bool {
+        guard let figure else { return false }
+
+        let layers = compositor.compose(figure: figure, direction: direction, pose: pose, scale: scale)
 
         guard !layers.isEmpty else { return false }
 

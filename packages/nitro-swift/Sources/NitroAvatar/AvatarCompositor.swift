@@ -34,9 +34,12 @@ public struct AvatarLayerDraw {
 /// `NitroRendererKit.AvatarNode` to build as plain `SKSpriteNode`s. Same visual result, no need for
 /// SpriteKit to support arbitrary 2D affine sprite transforms the way Pixi's `Matrix` does.
 ///
-/// Not ported (see the package README): keyframe animation frame overrides (`AvatarAnimationFrame`),
-/// per-frame animation dx/dy (`structure.getFrameBodyPartOffset` is always (0,0) here since no
-/// animation layer data exists), and FX/gesture-injected layer items.
+/// Driven by an `AvatarPose` (see its doc comment for the action-combination model) rather than a
+/// single `ActionDefinition` - each body part renders under its own resolved winning action and
+/// its own keyframe-resolved sprite frame, matching `AvatarImageCache.getImageContainer`/`renderBodyPart`.
+///
+/// Not ported (see the package README): FX/gesture-injected layer items and the downloaded-effects
+/// animation system (`AnimationManager`) - both need machinery `AvatarStructure` doesn't have yet.
 public final class AvatarCompositor {
     private let structure: AvatarStructure
     private let assets: AssetAliasCollection
@@ -47,15 +50,22 @@ public final class AvatarCompositor {
         self.assets = assets
     }
 
-    /// Composites a full avatar for one facing direction (0-7) into final, positioned, ordered layers.
+    /// Composites a full avatar for one facing direction (0-7) into final, positioned, ordered
+    /// layers. `pose` supplies both the per-body-part winning action (see `AvatarPose`) and the
+    /// current animation frame counter; call `pose.endActionAppends()` at least once before this
+    /// (an `AvatarPose` fresh out of `init` has no resolved actions and composes to `[]`, matching
+    /// the original's `if (!this._mainAction?.definition) return undefined;` guard).
     public func compose(
         figure: AvatarFigureContainer,
         direction: Int,
-        action: ActionDefinition,
+        pose: AvatarPose,
         scale: AvatarScaleType = .large,
-        geometryType: AvatarGeometryType = .vertical,
         setType: AvatarSetType = .full
     ) -> [AvatarLayerDraw] {
+        guard let mainDefinition = pose.mainAction.definition else { return [] }
+
+        let geometryType = mainDefinition.geometryType
+
         guard let canvas = structure.getCanvas(scale: scale, geometryType: geometryType) else { return [] }
 
         let bodyPartsNearestFirst = structure.getBodyParts(setType: setType, geometryType: geometryType, direction: direction)
@@ -66,23 +76,31 @@ public final class AvatarCompositor {
 
         // Farthest-camera body part first, so nearer body parts paint on top of it.
         for bodyPart in bodyPartsNearestFirst.reversed() {
-            let containers = structure.getParts(setType: bodyPart, container: figure, activeAction: action, geometryType: geometryType, direction: direction)
+            guard
+                let activeAction = pose.resolvedBodyPartActions[bodyPart],
+                let definition = activeAction.definition
+            else { continue }
+
+            let containers = structure.getParts(setType: bodyPart, container: figure, activeAction: activeAction, geometryType: geometryType, direction: direction)
 
             guard !containers.isEmpty else { continue }
 
-            let layers = renderBodyPart(direction: direction, containers: containers, action: action, scale: scale)
+            let frame = definition.startFromFrameZero ? (pose.frameCounter - activeAction.startFrame) : pose.frameCounter
+            let bodyPartOffset2D = structure.getFrameBodyPartOffset(activeAction, direction: direction, frame: frame, bodyPartId: bodyPart)
+
+            let layers = renderBodyPart(direction: direction, containers: containers, action: definition, scale: scale, frame: frame)
 
             guard !layers.rows.isEmpty else { continue }
 
-            let bodyPartOffset = placeBodyPart(layers: layers, direction: direction, action: action, scale: scale, canvasOffsetConst: canvasOffsetConst)
+            let bodyPartOffset = placeBodyPart(layers: layers, direction: direction, scale: scale, canvasOffsetConst: canvasOffsetConst)
             let canvasOffsetX = Double(canvas.offset.x) + Double(canvas.regPoint.x)
             let canvasOffsetY = Double(canvas.offset.y) + Double(canvas.regPoint.y)
 
             for layer in layers.rows {
                 draws.append(AvatarLayerDraw(
                     bodyPartId: bodyPart.rawValue, partType: layer.partType, texture: layer.texture,
-                    centerX: bodyPartOffset.x + layer.centerX + canvasOffsetX,
-                    centerY: bodyPartOffset.y + layer.centerY + canvasOffsetY,
+                    centerX: bodyPartOffset.x + layer.centerX + canvasOffsetX + bodyPartOffset2D.dx,
+                    centerY: bodyPartOffset.y + layer.centerY + canvasOffsetY + bodyPartOffset2D.dy,
                     width: layer.width, height: layer.height, flipH: layer.flipH, color: layer.color, zIndex: zIndex
                 ))
 
@@ -114,11 +132,21 @@ public final class AvatarCompositor {
         let rows: [PositionedLayer]
         /// Union bounding box of every layer's offset rect, in the same space `rows` positions are in.
         let bounds: CGRect
+        /// The (possibly keyframe-overridden) pose code active by the end of this body part's layer
+        /// loop - see `renderBodyPart`'s doc comment for why `placeBodyPart` needs this exact value
+        /// rather than the action's own `assetPartDefinition`.
+        let finalAssetPartDefinition: String
     }
 
-    private func renderBodyPart(direction: Int, containers: [AvatarImagePartContainer], action: ActionDefinition, scale: AvatarScaleType) -> BodyPartLayers {
+    /// `assetPartDefinition` starts as `action.assetPartDefinition` but a layer's own keyframe
+    /// (`AvatarAnimationFrame.assetPartDefinition`) can override it mid-loop - and that override
+    /// *persists* for every layer processed afterward in the same body part, exactly matching the
+    /// original's single mutable `assetPartDefinition` local shared across the whole `for` loop
+    /// (see `AvatarImageCache.renderBodyPart`). It also feeds the final "is this a lay pose"
+    /// placement check, so its end-of-loop value is threaded out via `BodyPartLayers`.
+    private func renderBodyPart(direction: Int, containers: [AvatarImagePartContainer], action: ActionDefinition, scale: AvatarScaleType, frame: Int) -> BodyPartLayers {
         let isFlipped = AvatarDirectionAngle.directionIsFlipped[((direction % 8) + 8) % 8]
-        let assetPartDefinition = action.assetPartDefinition
+        var assetPartDefinition = action.assetPartDefinition
 
         struct RawLayer {
             let partType: AvatarFigurePartType
@@ -141,9 +169,18 @@ public final class AvatarCompositor {
             let partId = container.partId
             var partType = container.partType
             var assetDirection = direction
-            // Static pose only (see the type doc comment) - every container's frame list is [0].
-            let frameNumber = container.getFrameIndex(0)
             var dataFlipH = false
+
+            let animationFrame = container.getFrameDefinition(frame)
+            let frameNumber: Int
+
+            if let animationFrame {
+                frameNumber = animationFrame.number
+
+                if !animationFrame.assetPartDefinition.isEmpty { assetPartDefinition = animationFrame.assetPartDefinition }
+            } else {
+                frameNumber = container.getFrameIndex(frame)
+            }
 
             if isFlipped {
                 let mirrorContentInPlace =
@@ -206,7 +243,9 @@ public final class AvatarCompositor {
             ))
         }
 
-        guard !rawLayers.isEmpty else { return BodyPartLayers(rows: [], bounds: .zero) }
+        guard !rawLayers.isEmpty else {
+            return BodyPartLayers(rows: [], bounds: .zero, finalAssetPartDefinition: assetPartDefinition)
+        }
 
         var bounds = AvatarCompositor.rect(x: -rawLayers[0].regPointX, y: -rawLayers[0].regPointY, width: rawLayers[0].width, height: rawLayers[0].height)
 
@@ -230,12 +269,12 @@ public final class AvatarCompositor {
             ))
         }
 
-        return BodyPartLayers(rows: rows, bounds: bounds)
+        return BodyPartLayers(rows: rows, bounds: bounds, finalAssetPartDefinition: assetPartDefinition)
     }
 
     /// Where this body part's union image (in its own top-left-origin local space) lands within
     /// the whole avatar canvas.
-    private func placeBodyPart(layers: BodyPartLayers, direction: Int, action: ActionDefinition, scale: AvatarScaleType, canvasOffsetConst: Double) -> (x: Double, y: Double) {
+    private func placeBodyPart(layers: BodyPartLayers, direction: Int, scale: AvatarScaleType, canvasOffsetConst: Double) -> (x: Double, y: Double) {
         let isFlipped = AvatarDirectionAngle.directionIsFlipped[((direction % 8) + 8) % 8]
         let boundsWidth = Double(layers.bounds.width)
 
@@ -247,7 +286,7 @@ public final class AvatarCompositor {
         var offsetX = -unionRegPointX
         let offsetY = canvasOffsetConst - unionRegPointY
 
-        if isFlipped, action.assetPartDefinition != "lay" { offsetX += (scale == .large ? 67 : 31) }
+        if isFlipped, layers.finalAssetPartDefinition != "lay" { offsetX += (scale == .large ? 67 : 31) }
 
         return (offsetX, offsetY)
     }

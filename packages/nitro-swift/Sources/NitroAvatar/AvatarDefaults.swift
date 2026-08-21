@@ -18,6 +18,16 @@ public enum AvatarDefaults {
         decode(FigureData.self, resource: "HabboAvatarFigureDataDefault")
     }
 
+    /// The client's 10 built-in keyframe animations (Default/Sit/Lay/Move/Wave/Talk/Sign/Respect/Blow/Laugh),
+    /// extracted verbatim from `HabboAvatarAnimations.ts` the same way as the other bundled defaults.
+    /// Note these are only *reachable* for actions whose `ActionDefinition` is actually registered -
+    /// `HabboAvatarActionsDefault.json` only registers "Stand", so a host app wanting Walk/Sit/Wave/...
+    /// needs to inject a real per-hotel actions catalog via `AvatarStructure.registerActionData` (see
+    /// its doc comment), the same way real figuredata gets layered in via `injectFigureData`.
+    public static func loadDefaultAnimations() -> [AvatarAnimationConfig]? {
+        decode([AvatarAnimationConfig].self, resource: "HabboAvatarAnimations")
+    }
+
     /// Assembles a ready-to-use `AvatarStructure` from the bundled defaults above. Real per-hotel
     /// figure data (`figuredata.json`, fetched over the network in the TS client) should be merged
     /// in afterward via `structure.injectFigureData(...)` once loaded - the bundled default alone
@@ -34,6 +44,8 @@ public enum AvatarDefaults {
         structure.initPartSets(partSetsConfig)
 
         if let defaultFigureData = loadDefaultFigureData() { structure.initFigureData(defaultFigureData) }
+        if let animations = loadDefaultAnimations() { structure.initAnimation(animations) }
+        if let actionData = HabboAvatarActionsDefault.load() { structure.registerActionData(actionData) }
 
         return structure
     }

@@ -51,14 +51,21 @@ private final class AvatarSetNode {
 /// Parses the embedded `HabboAvatarGeometry` config once and answers depth-sorted "which figure
 /// part types / body parts are visible, in what order" queries.
 ///
-/// Not ported: dynamic (animation-added) items (`addPart`/`getDynamicParts`/`removeDynamicItems`),
-/// since animation playback itself isn't ported yet - `getParts` below only sorts each body part's
-/// *static* declared items.
+/// Not ported: dynamic (animation-added) items (`addPart`/`getDynamicParts`/`removeDynamicItems`) -
+/// these back the FX/`addData` layer-injection system (`AvatarStructure.getActiveBodyPartIds`'s
+/// `isAnimation` branch), which needs the separate effects/`AnimationManager` system this port
+/// hasn't ported yet (see the README) - `getParts` below only sorts each body part's *statically*
+/// declared items, matching every non-effects action.
 public final class AvatarModelGeometry {
     public let camera: Vector3d
     private let avatarSet: AvatarSetNode
     /// geometryType -> bodyPartId -> (own node, static items)
     private var bodyParts: [String: [String: (node: AvatarGeometryNode, items: [AvatarGeometryNode])]] = [:]
+    /// geometryType -> figure part type -> owning body part id. Avatar-instance-independent (unlike
+    /// the TS original's `getBodyPartOfItem`, which also falls back to per-avatar *dynamic* items -
+    /// out of scope here, see above), since it's built once from each body part's statically
+    /// declared `items`, mirroring `GeometryBodyPart.getPartIds(undefined)`.
+    private var itemIdToBodyPart: [String: [String: String]] = [:]
     /// scale -> geometryType -> canvas
     private var canvases: [String: [String: AvatarCanvasInfo]] = [:]
 
@@ -85,6 +92,7 @@ public final class AvatarModelGeometry {
 
         for type in config.types {
             var parts: [String: (node: AvatarGeometryNode, items: [AvatarGeometryNode])] = [:]
+            var itemOwners: [String: String] = [:]
 
             for bodyPart in type.bodyParts {
                 let location = Vector3d(bodyPart.x ?? 0, bodyPart.y ?? 0, bodyPart.z ?? 0)
@@ -94,10 +102,20 @@ public final class AvatarModelGeometry {
                 }
 
                 parts[bodyPart.id] = (node, items)
+
+                for item in items { itemOwners[item.id] = bodyPart.id }
             }
 
             bodyParts[type.id] = parts
+            itemIdToBodyPart[type.id] = itemOwners
         }
+    }
+
+    /// The body part a given figure part type (e.g. `"lh"`) belongs to, for the given geometry
+    /// type - `nil` if that figure part type has no statically-declared owner (see the class doc
+    /// comment for the dynamic-items caveat).
+    public func getBodyPartOfItem(geometryType: AvatarGeometryType, itemId: AvatarFigurePartType) -> AvatarBodyPartType? {
+        itemIdToBodyPart[geometryType.rawValue]?[itemId.rawValue].flatMap { AvatarBodyPartType(rawValue: $0) }
     }
 
     public func getBodyPartIds(inAvatarSet setType: AvatarSetType) -> [AvatarBodyPartType] {

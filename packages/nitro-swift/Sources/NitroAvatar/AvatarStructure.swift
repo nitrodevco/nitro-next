@@ -2,19 +2,86 @@ import Foundation
 
 /// Swift port of `AvatarStructure` (packages/nitro-renderer/src/avatar/AvatarStructure.ts) -
 /// the figure+action -> visible-layers resolver, and the top-level owner of the figure-data
-/// catalog, part-sets table and geometry config.
+/// catalog, part-sets table, geometry config, action catalog and keyframe animation data.
 ///
-/// Reduced scope vs. the TS source (see the avatar section of the package README): no keyframe
-/// animation (`AnimationManager`/`AvatarAnimationData`), no action precedence/combination system
-/// beyond a single caller-supplied `ActionDefinition`, and no FX/animation-injected layer items
-/// (`layerItems` in the TS signature). What's here is the part of `getParts` that resolves a
-/// figure string into drawable layers for a *static* pose, which is the load-bearing piece.
+/// Reduced scope vs. the TS source (see the avatar section of the package README): no FX/gesture
+/// "add data" layer injection and no downloaded-effects animation system (`AnimationManager`/
+/// `Animation`, the "Dance"/"Effect" states) - `getActiveBodyPartIds`/`getParts` below only take the
+/// non-effects path, which is everything the 10 bundled `HabboAvatarAnimations.json` entries
+/// (Default/Sit/Lay/Move/Wave/Talk/Sign/Respect/Blow/Laugh) actually need, since none of their
+/// `ActionDefinition`s set `isAnimation` (that flag is reserved for effects-bundle-backed states).
 public final class AvatarStructure {
     private var geometry: AvatarModelGeometry?
     public let figureData = FigureSetData()
     public let partData = PartSetsData()
+    public let animationData = AvatarAnimationData()
+    public let actionManager = AvatarActionManager()
 
     public init() {}
+
+    @discardableResult
+    public func initAnimation(_ data: [AvatarAnimationConfig]) -> Bool { animationData.parse(data) }
+
+    /// Additive, like `injectFigureData` - see `AvatarActionManager.updateActions`'s doc comment for
+    /// why a host app needs this to unlock anything beyond the bundled "Stand" action.
+    public func registerActionData(_ data: AvatarActionDataConfig) { actionManager.updateActions(data) }
+
+    public func getActionDefinition(_ id: String) -> ActionDefinition? { actionManager.getActionDefinition(id) }
+
+    public func getActionDefinitionWithState(_ state: String) -> ActionDefinition? {
+        actionManager.getActionDefinitionWithState(state)
+    }
+
+    public func getDefaultAction() -> ActionDefinition? { actionManager.getDefaultAction() }
+
+    /// See `AvatarActionManager.sortActions`'s doc comment - despite the name, this does not sort by
+    /// precedence (a faithfully-replicated bug in the original).
+    public func sortActions(_ actions: [ActiveActionData]) -> [ActiveActionData] { actionManager.sortActions(actions) }
+
+    public func maxFrames(_ actions: [ActiveActionData]) -> Int {
+        var count = 0
+
+        for action in actions {
+            guard let definition = action.definition else { continue }
+
+            count = max(count, animationData.getFrameCount(definition))
+        }
+
+        return count
+    }
+
+    public func getCanvasOffsets(_ actions: [ActiveActionData], scale: AvatarScaleType, direction: Int) -> (Double, Double, Double)? {
+        actionManager.getCanvasOffsets(actions, size: scale, direction: direction)
+    }
+
+    /// Which body parts a given active action claims - the non-effects path of `getActiveBodyPartIds`
+    /// (see the class doc comment). Effects/dance actions (`definition.isAnimation`) claim nothing
+    /// here, matching an avatar with no effects bundle registered for them.
+    public func getActiveBodyPartIds(_ action: ActiveActionData) -> [AvatarBodyPartType] {
+        guard let definition = action.definition, let geometry, !definition.isAnimation else { return [] }
+
+        var partIds: [AvatarBodyPartType] = []
+
+        for partId in partData.getActiveParts(definition.activePartSet) {
+            guard let bodyPart = geometry.getBodyPartOfItem(geometryType: definition.geometryType, itemId: partId) else { continue }
+
+            if !partIds.contains(bodyPart) { partIds.append(bodyPart) }
+        }
+
+        return partIds
+    }
+
+    /// The per-frame pixel nudge for one body part under one active action - `AnimationAction`'s
+    /// own keyframe-offset table (see its doc comment), or `(0, 0)` for actions with no such table.
+    /// Of the 10 bundled `HabboAvatarAnimations.json` entries, only "Laugh" declares an `offsets`
+    /// block (an 8-direction head bob) - every other bundled animation relies solely on per-part
+    /// keyframe *frame numbers* (`AnimationActionPart`), not pixel offsets.
+    public func getFrameBodyPartOffset(_ action: ActiveActionData, direction: Int, frame: Int, bodyPartId: AvatarBodyPartType) -> (dx: Double, dy: Double) {
+        guard let definition = action.definition else { return AnimationAction.defaultOffset }
+
+        return animationData.getAction(definition)?.getFrameBodyPartOffset(direction: direction, frameCount: frame, bodyPartId: bodyPartId)
+            ?? AnimationAction.defaultOffset
+    }
 
     public func initGeometry(_ config: AvatarGeometryConfig) {
         geometry = AvatarModelGeometry(config: config)
@@ -69,20 +136,23 @@ public final class AvatarStructure {
         geometry?.getBodyPartIds(inAvatarSet: setType) ?? []
     }
 
-    /// Swift port of `AvatarStructure.getParts` - see the type doc comment for what's out of scope.
+    /// Swift port of `AvatarStructure.getParts` - see the type doc comment for what's out of scope
+    /// (the `layerItems`/effects-animation parameters from the original signature are dropped
+    /// entirely, not just defaulted, since nothing in this port ever populates them).
     public func getParts(
         setType: AvatarBodyPartType,
         container: AvatarFigureContainer,
-        activeAction: ActionDefinition,
+        activeAction: ActiveActionData,
         geometryType: AvatarGeometryType,
         direction: Int,
         removes initialRemoves: [String] = []
     ) -> [AvatarImagePartContainer] {
-        guard let geometry else { return [] }
+        guard let geometry, let definition = activeAction.definition else { return [] }
 
-        let activeParts = partData.getActiveParts(activeAction.activePartSet)
-        let emptyFrames = [0]
+        let activeParts = partData.getActiveParts(definition.activePartSet)
+        let emptyFrames: [AvatarFrameEntry] = [.index(0)]
         let requiredPartTypes = geometry.getParts(geometryType: geometryType, bodyPartId: setType, direction: direction)
+        let animationAction = animationData.getAction(definition)
 
         var removes = initialRemoves
         var baseContainers: [AvatarImagePartContainer] = []
@@ -114,9 +184,11 @@ public final class AvatarStructure {
 
                 if colorSlot >= 0, partColorIds.count > colorSlot { partColor = palette.getColor(partColorIds[colorSlot]) }
 
+                let animationFrames = animationAction?.getPart(part.type).map { $0.frames.map(AvatarFrameEntry.keyframe) } ?? emptyFrames
+
                 baseContainers.append(AvatarImagePartContainer(
                     bodyPartId: setType.rawValue, partType: part.type, partId: part.id, color: partColor,
-                    frames: emptyFrames, action: activeAction, isColorable: part.colorLayerIndex > 0,
+                    frames: animationFrames, action: definition, isColorable: part.colorLayerIndex > 0,
                     paletteMapId: 0, flippedPartType: flippedPartType
                 ))
             }
@@ -137,11 +209,14 @@ public final class AvatarStructure {
 
             guard let partDefinition = partData.getPartDefinition(partType), partDefinition.appendToFigure else { continue }
 
-            let partId = partDefinition.hasStaticId() ? partDefinition.staticId : 1
+            // `activeAction.actionParameter` (default 1) picks e.g. which carried-item variant to
+            // show; a static id declared on the part definition itself always wins.
+            let partId = partDefinition.hasStaticId() ? partDefinition.staticId : activeAction.actionParameter
+            let animationFrames = animationAction?.getPart(partType).map { $0.frames.map(AvatarFrameEntry.keyframe) } ?? emptyFrames
 
             partContainers.append(AvatarImagePartContainer(
                 bodyPartId: setType.rawValue, partType: partType, partId: partId, color: nil,
-                frames: emptyFrames, action: activeAction, isColorable: false, paletteMapId: -1,
+                frames: animationFrames, action: definition, isColorable: false, paletteMapId: -1,
                 flippedPartType: partType, isBlendable: false
             ))
         }
