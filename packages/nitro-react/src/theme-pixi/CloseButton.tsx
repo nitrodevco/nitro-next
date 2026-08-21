@@ -14,7 +14,6 @@ interface CloseButtonVariant {
     frames: { default: SpriteFrame, hovering: SpriteFrame, pressed: SpriteFrame };
 }
 
-/** Only the variants used by a migrated view are ported here - see theme/CloseButton.tsx. */
 const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
     '0': {
         textureKey: 'closebutton-src',
@@ -24,12 +23,47 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
             pressed: { x: 144, y: 0, width: 15, height: 15 },
         },
     },
+    // DOM has no hover: rule and sets active: to the same background-position as the base -
+    // model as static, repeating the default frame for hovering/pressed.
+    '1': {
+        textureKey: 'closebutton-src',
+        frames: {
+            default: { x: 159, y: 0, width: 15, height: 15 },
+            hovering: { x: 159, y: 0, width: 15, height: 15 },
+            pressed: { x: 159, y: 0, width: 15, height: 15 },
+        },
+    },
+    '2': {
+        textureKey: 'closebutton-src',
+        frames: {
+            default: { x: 174, y: 0, width: 15, height: 15 },
+            hovering: { x: 174, y: 0, width: 15, height: 15 },
+            pressed: { x: 174, y: 0, width: 15, height: 15 },
+        },
+    },
     '3': {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 0, y: 0, width: 19, height: 20 },
             hovering: { x: 19, y: 0, width: 19, height: 20 },
             pressed: { x: 38, y: 0, width: 19, height: 20 },
+        },
+    },
+    '4': {
+        textureKey: 'closebutton-src',
+        frames: {
+            default: { x: 57, y: 0, width: 19, height: 20 },
+            hovering: { x: 76, y: 0, width: 19, height: 20 },
+            pressed: { x: 95, y: 0, width: 19, height: 20 },
+        },
+    },
+    // Separate, smaller texture - the whole texture is the frame, no hover/press states.
+    '100': {
+        textureKey: 'closebutton-100-src',
+        frames: {
+            default: { x: 0, y: 0, width: 20, height: 20 },
+            hovering: { x: 0, y: 0, width: 20, height: 20 },
+            pressed: { x: 0, y: 0, width: 20, height: 20 },
         },
     },
 };

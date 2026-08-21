@@ -6,12 +6,28 @@ import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from '
 import { useCascadedVariant } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { SpriteLayer } from './utils/Layer';
 import { usePixiTexture } from './utils/usePixiTexture';
 
-/** Only the variants used by a migrated view are ported here - see theme/Scaler.tsx. */
-const SCALER_TEXTURE_KEYS: Partial<Record<string, string>> = {
-    '0': 'scaler-0-default-src',
-    '3': 'scaler-src',
+interface ScalerVariant {
+    textureKey: string;
+    /** '0'/'1'/'2' share one shine overlay texture; '3'/'4'/'100' have none. */
+    overlayTextureKey?: string;
+    /** theme/Scaler.tsx's `scalerOffsetVariantsConfig`: only '0' and '3' position the
+     *  scaler at the bottom-right corner (with `z-20`) - '1'/'2'/'4'/'100' define no
+     *  offset class at all in DOM, leaving them unpositioned (top-left of whatever
+     *  ancestor establishes the positioning context). Preserved as-is rather than
+     *  "fixed", since it's real (if likely unintentional) DOM behavior. */
+    offset: boolean;
+}
+
+/** Only '100' (DOM's fully-empty, no-visual, no-offset variant) has no texture. */
+const SCALER_VARIANTS: Partial<Record<string, ScalerVariant>> = {
+    '0': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: true },
+    '1': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
+    '2': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
+    '3': { textureKey: 'scaler-src', offset: true },
+    '4': { textureKey: 'scaler-src', offset: false },
 };
 
 export type ScalerDirection = 'x' | 'y' | 'all' | 'none';
@@ -35,14 +51,26 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
     ({ variant, defaultVariant, layout, direction = 'all', onPointerDown }, ref) => {
         const cascadedVariant = useCascadedVariant('scaler');
         const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
-        const texture = usePixiTexture(SCALER_TEXTURE_KEYS[resolvedVariant] ?? SCALER_TEXTURE_KEYS['0']);
+        const config = SCALER_VARIANTS[resolvedVariant];
+        const texture = usePixiTexture(config?.textureKey);
 
-        if (!texture || direction === 'none') return null;
+        // theme/Scaler.tsx still renders variant '100' (fully empty/inert) and
+        // direction 'none' (just without cursor/touch-action classes) - this port hides
+        // both instead, since an invisible, non-interactive resize handle has no
+        // observable difference from not rendering it at all.
+        if (!config || !texture || direction === 'none') return null;
 
         return (
             <Box
                 ref={ref}
-                layout={{ position: 'absolute', right: 0, bottom: 0, width: texture.width, height: texture.height, ...layout }}
+                zIndex={config.offset ? 20 : undefined}
+                layout={{
+                    position: 'absolute',
+                    ...(config.offset && { right: 0, bottom: 0 }),
+                    width: texture.width,
+                    height: texture.height,
+                    ...layout,
+                }}
             >
                 <pixiSprite
                     texture={texture}
@@ -53,6 +81,7 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                     layout={{}}
                     onPointerDown={onPointerDown}
                 />
+                {config.overlayTextureKey && <SpriteLayer textureKey={config.overlayTextureKey} />}
             </Box>
         );
     }

@@ -8,6 +8,18 @@ import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } fr
 import { Box, type BoxLayout } from './Box';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
+/**
+ * Per-variant layout on top of the always-on base (flex column, full size, overflow
+ * hidden, z-index 20 - theme/ContentArea.tsx's `flex flex-col size-full overflow-hidden
+ * z-20`). '0' adds a 3px bottom padding (`pb-0.75`); '3' makes the box a positioning
+ * context for absolutely-positioned children (`relative`) - previously both variants
+ * resolved identically here since the render ignored `variant` entirely.
+ */
+const CONTENT_AREA_VARIANTS: Record<string, BoxLayout> = {
+    '0': { paddingBottom: 3 },
+    '3': { position: 'relative' },
+};
+
 export interface ContentAreaProps {
     variant?: string;
     defaultVariant?: string;
@@ -22,7 +34,18 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
         const ownCascade = VARIANT_CASCADE_CONFIG['contentArea']?.[resolvedVariant];
 
         return (
-            <Box ref={ref} layout={{ flexDirection: 'column', width: '100%', flex: 1, overflow: 'hidden', ...layout }}>
+            <Box
+                ref={ref}
+                zIndex={20}
+                layout={{
+                    flexDirection: 'column',
+                    width: '100%',
+                    flex: 1,
+                    overflow: 'hidden',
+                    ...CONTENT_AREA_VARIANTS[resolvedVariant],
+                    ...layout,
+                }}
+            >
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );

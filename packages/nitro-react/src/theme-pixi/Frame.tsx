@@ -1,39 +1,89 @@
 import './utils/pixiElements';
 
-import type { ReactNode } from 'react';
+import { DropShadowFilter } from 'pixi-filters';
+import { type ReactNode,useMemo } from 'react';
 
 import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
+import { GetPixelRatio } from '#base/utils';
 
 import { Box, type BoxLayout } from './Box';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { Scaler, type ScalerDirection } from './Scaler';
+import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
-import { usePixiTexture } from './utils/usePixiTexture';
+
+type FrameLayer =
+    | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number }
+    | { kind: 'composite', pieces: CompositePiece[] };
 
 interface FrameVariant {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
+    layer?: FrameLayer;
+    overlay?: FrameLayer;
     minWidth: number;
     minHeight: number;
+    tint?: string;
 }
 
+const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): FrameLayer => (
+    { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
+);
+
+/** theme/Frame.tsx's `0`/`1`/`2` shine overlay: an 8-piece composite that reuses the same
+ *  `-shine-top-center-src` texture for 4 of its 8 slots (top-center, both center-left/right
+ *  edges, and bottom-center) - a real DOM asset-reuse quirk, preserved as-is. */
+const BLUE_FRAME_SHINE: CompositePiece[] = [
+    { textureKey: 'frame-0-default-shine-top-left-src', left: 1, top: 1, width: 7, height: 7 },
+    { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 8, top: 2, height: 1 },
+    { textureKey: 'frame-0-default-shine-top-right-src', right: 1, top: 1, width: 7, height: 7 },
+    { textureKey: 'frame-0-default-shine-top-center-src', left: 2, top: 8, bottom: 8, width: 1 },
+    { textureKey: 'frame-0-default-shine-top-center-src', right: 2, top: 8, bottom: 7, width: 1 },
+    { textureKey: 'frame-0-default-shine-bottom-left-src', left: 1, bottom: 1, width: 7, height: 7 },
+    { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 7, bottom: 2, height: 1 },
+    { textureKey: 'frame-0-default-shine-bottom-right-src', right: 1, bottom: 1, width: 6, height: 6 },
+];
+
+/** theme/Frame.tsx variant '100' reuses Border's `--border-101-default-*` "frame" asset
+ *  set wholesale (not its own `frame-100-*` set) - same 9-piece geometry/reuse quirk as
+ *  Border variant '101', see Border.tsx. */
+const FRAME_100_COMPOSITE: CompositePiece[] = [
+    { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
+    { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
+    { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
+    { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
+    { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
+    { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
+    { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
+    { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
+    { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
+];
+
+const FRAME_3_SHINE = nineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
+
 /**
- * Only the variants used by a migrated view are ported here - see theme/Frame.tsx for the
- * full CSS variant table this mirrors. Add entries as more views migrate.
+ * Full port of theme/Frame.tsx's 9-variant table. Variant '101' (modal) has no
+ * background layer at all in DOM (no border-image, no bg-image) - it's meant to render
+ * on top of/inside another surface - so its `layer` is left undefined here too.
  */
-const FRAME_VARIANTS: Partial<Record<string, FrameVariant>> = {
-    '0': { textureKey: 'frame-0-default-src', leftWidth: 13, topHeight: 13, rightWidth: 13, bottomHeight: 13, minWidth: 40, minHeight: 40 },
-    '3': { textureKey: 'frame-3-default-src', leftWidth: 10, topHeight: 33, rightWidth: 10, bottomHeight: 10, minWidth: 64, minHeight: 64 },
+const FRAME_VARIANTS: Record<string, FrameVariant> = {
+    '0': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#418db0' },
+    '1': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#4c4c4c' },
+    '2': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#fac200' },
+    '3': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#418db0' },
+    '4': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#67a3bf' },
+    '7': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
+    '100': { layer: { kind: 'composite', pieces: FRAME_100_COMPOSITE }, minWidth: 50, minHeight: 50 },
+    '101': { minWidth: 50, minHeight: 80 },
+    '200': { layer: nineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
 };
 
-const FRAME_TINT_COLORS: Partial<Record<string, string>> = {
-    '0': '#418db0',
-    '3': '#418db0',
+const renderLayer = (layer: FrameLayer | undefined, tint: string | undefined) => {
+    if (!layer) return null;
+
+    if (layer.kind === 'composite') return <CompositeLayer pieces={layer.pieces} tint={tint} />;
+
+    return <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tint} />;
 };
 
 export interface FrameProps {
@@ -50,22 +100,26 @@ export interface FrameProps {
 }
 
 /**
- * Pixi port of theme/Frame.tsx - a draggable, resizable window: nine-slice border/background,
- * Header (caption + close button, drag handle), ContentArea (children), Scaler (resize
- * handle). Reuses the DOM package's variant-cascade system and SystemStore z-order/window
- * registry verbatim (both are pure React context/zustand, no DOM dependency) via
- * useFrameDrag.ts/useFrameResize.ts's Pixi ports of hooks/ui/useFrameDrag.ts/useFrameResize.ts.
+ * Pixi port of theme/Frame.tsx - a draggable, resizable window: nine-slice/composite
+ * border/background (+ optional shine overlay), Header (caption + close button, drag
+ * handle), ContentArea (children), Scaler (resize handle), and the universal drop-shadow
+ * (`drop-shadow-[2.83px_2.83px_4px_rgba(0,0,0,0.349)]`, applied to every DOM variant
+ * unconditionally) via a Pixi DropShadowFilter. Reuses the DOM package's variant-cascade
+ * system and SystemStore z-order/window registry verbatim (both are pure React
+ * context/zustand, no DOM dependency) via useFrameDrag.ts/useFrameResize.ts's Pixi ports
+ * of hooks/ui/useFrameDrag.ts/useFrameResize.ts.
  */
 export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
     const cascadedVariant = useCascadedVariant('frame');
     const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
     const ownCascade = VARIANT_CASCADE_CONFIG['frame']?.[resolvedVariant];
     const config = FRAME_VARIANTS[resolvedVariant] ?? FRAME_VARIANTS['0'];
-    const resolvedTint = tintColor || FRAME_TINT_COLORS[resolvedVariant];
-    const texture = usePixiTexture(config?.textureKey);
+    const resolvedTint = tintColor || config.tint;
 
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
-    const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: config?.minWidth ?? 50, height: config?.minHeight ?? 50 });
+    const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: config.minWidth, height: config.minHeight });
+
+    const dropShadowFilter = useMemo(() => new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() }), []);
 
     return (
         <Box
@@ -74,13 +128,14 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
             y={offset.dy}
             zIndex={zIndex}
             eventMode="static"
+            filters={[dropShadowFilter]}
             onPointerDown={onPointerDown}
             layout={{
                 flexDirection: 'column',
-                minWidth: config?.minWidth,
-                minHeight: config?.minHeight,
-                width: config?.minWidth,
-                height: config?.minHeight,
+                minWidth: config.minWidth,
+                minHeight: config.minHeight,
+                width: config.minWidth,
+                height: config.minHeight,
                 // The caller's own layout (e.g. an explicit width/height, analogous to the DOM
                 // Frame's className w-*/h-* defaults) comes next, then - if the user has
                 // actively resized this frame (a stored/dragged size) - that wins for
@@ -90,18 +145,8 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            {(texture && config) && (
-                <pixiNineSliceSprite
-                    texture={texture}
-                    leftWidth={config.leftWidth}
-                    topHeight={config.topHeight}
-                    rightWidth={config.rightWidth}
-                    bottomHeight={config.bottomHeight}
-                    tint={resolvedTint}
-                    eventMode="none"
-                    layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-                />
-            )}
+            {renderLayer(config.layer, resolvedTint)}
+            {renderLayer(config.overlay, undefined)}
             <VariantCascadeProvider map={ownCascade}>
                 <Header caption={caption} tintColor={resolvedTint} onClose={onClose} onPointerDown={onHeaderPointerDown} />
                 <ContentArea>
