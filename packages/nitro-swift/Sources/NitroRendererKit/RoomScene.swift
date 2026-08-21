@@ -75,6 +75,22 @@ open class RoomScene: SKScene {
         return CGPoint(x: size.width / 2 + raw.x, y: size.height / 2 - raw.y)
     }
 
+    /// `RoomGeometry.getScreenPosition(_:).z` for `worldPos` - the world-camera-depth term
+    /// `RoomSpriteCanvas.renderObject` adds to every placed room object's own `relativeDepth`
+    /// (`const newZ = z + sprite.relativeDepth + ...`, `z` there being `vector.z` from
+    /// `locationCache.updateLocation`) before the global sprite z-sort. `screenPosition(for:)` only
+    /// surfaces the X/Y of that same projection (`getScreenPoint` drops Z), so placing two objects
+    /// at different tiles without this term means they never correctly occlude each other by
+    /// distance from the camera - only by their own small internal layer/animation depth offsets.
+    /// `placeFurniture`/`placeAvatar` set their node's own `zPosition` to `-screenDepth(for: tile)`
+    /// (negated for the same TS-descending-z-drawn-first vs SpriteKit-larger-zPosition-drawn-on-top
+    /// reason as `FurnitureNode`/`RoomPlaneNode`'s per-layer negation - see their doc comments);
+    /// SpriteKit accumulates a node's `zPosition` with its ancestors' when `ignoresSiblingOrder` is
+    /// set, so this composes correctly with each layer's own already-negated local `relativeDepth`.
+    public func screenDepth(for worldPos: Vector3d) -> Double {
+        geometry.getScreenPosition(worldPos).z
+    }
+
     /// Advances every placed animated furniture item's and avatar's animation state, clamped to the
     /// classic ~24.4fps tick rate regardless of the actual render frame rate - mirrors both
     /// `FurnitureVisualization.update`'s and `AvatarVisualization`'s shared `_lastUpdateTime`
@@ -195,6 +211,7 @@ open class RoomScene: SKScene {
         let node = FurnitureNode(visualization: visualization)
 
         node.position = screenPosition(for: tile)
+        node.zPosition = CGFloat(-screenDepth(for: tile))
         node.refresh(
             scale: Int(geometry.scale), cameraDirectionX: geometry.direction.x,
             objectDirectionX: objectDirectionX, selectedColorId: selectedColorId
@@ -237,8 +254,9 @@ open class RoomScene: SKScene {
         let node = AvatarNode(compositor: compositor, pose: pose)
 
         node.position = screenPosition(for: tile)
+        node.zPosition = CGFloat(-screenDepth(for: tile))
 
-        guard node.refresh(figure: figure, direction: direction) else { return nil }
+        guard node.refresh(figure: figure, direction: direction, roomScale: geometry.scale) else { return nil }
 
         objectLayer.addChild(node)
 

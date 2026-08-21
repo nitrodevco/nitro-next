@@ -2,9 +2,12 @@ import CoreGraphics
 import Foundation
 import SpriteKit
 
-/// One resolved, positioned avatar sprite layer, in final avatar-canvas pixel space (origin at
-/// the canvas's top-left, y grows downward - matches every other coordinate in this port until
-/// the SpriteKit adapter layer flips it to SpriteKit's y-up convention).
+/// One resolved, positioned avatar sprite layer, in room-object-relative pixel space: origin at
+/// the object's own ground/placement point (the same reference `FurnitureLayerDraw.offsetX/offsetY`
+/// use), y grows downward - matches every other coordinate in this port until the SpriteKit adapter
+/// layer flips it to SpriteKit's y-up convention. **Not** avatar-canvas-relative (the canvas's own
+/// top-left) - see `AvatarCompositor.compose`'s doc comment for the external offset that converts
+/// between the two and why it's needed.
 public struct AvatarLayerDraw {
     public let bodyPartId: String
     public let partType: AvatarFigurePartType
@@ -55,10 +58,23 @@ public final class AvatarCompositor {
     /// current animation frame counter; call `pose.endActionAppends()` at least once before this
     /// (an `AvatarPose` fresh out of `init` has no resolved actions and composes to `[]`, matching
     /// the original's `if (!this._mainAction?.definition) return undefined;` guard).
+    ///
+    /// `roomScale` is the *room camera's* zoom scale (`RoomGeometry.scale`, e.g. 64 zoomed-in) - not
+    /// the avatar quality `scale` parameter below. It's needed for the canvas-to-ground offset: the
+    /// TS source builds one flattened, fixed-size avatar-canvas bitmap (`AvatarImage.getImage`) and
+    /// only *then* positions that whole bitmap relative to the room object's ground point
+    /// (`AvatarVisualization.updateSprite`: `sprite.offsetX = canvasOffsets[0] - texture.width / 2;
+    /// sprite.offsetY = -texture.height + scale / 4 + canvasOffsets[1] + postureOffset`, where
+    /// `scale` there is `geometry.scale`). This port skips the flattening (see the class doc
+    /// comment) but still needs that same external offset - without it, every layer's position is
+    /// relative to the avatar canvas's own top-left corner instead of the object's ground point,
+    /// which happens to still "look like an avatar" (the internal layer-to-layer geometry is
+    /// unaffected) but renders nowhere near where a furniture item placed at the same tile does.
     public func compose(
         figure: AvatarFigureContainer,
         direction: Int,
         pose: AvatarPose,
+        roomScale: Double,
         scale: AvatarScaleType = .large,
         setType: AvatarSetType = .full
     ) -> [AvatarLayerDraw] {
@@ -70,6 +86,14 @@ public final class AvatarCompositor {
 
         let bodyPartsNearestFirst = structure.getBodyParts(setType: setType, geometryType: geometryType, direction: direction)
         let canvasOffsetConst = scale == .large ? (canvas.height - 16) : (canvas.height - 8)
+
+        // `_postureOffset`/the Snowwar-death extra nudge in the TS source aren't ported (posture
+        // handling generally isn't - see `AvatarPose`'s doc comment on the Posture:Lay gap), so this
+        // is 0 for every currently-reachable pose; `canvasOffsets` (from `getCanvasOffsets`, matching
+        // `_local_20`) is the one part of that triple this port already has real data for.
+        let canvasOffsets = structure.getCanvasOffsets(pose.sortedActions, scale: scale, direction: direction) ?? (0, 0, 0)
+        let groundOffsetX = canvasOffsets.0 - Double(canvas.width) / 2
+        let groundOffsetY = -Double(canvas.height) + roomScale / 4 + canvasOffsets.1
 
         var draws: [AvatarLayerDraw] = []
         var zIndex = 0
@@ -99,8 +123,8 @@ public final class AvatarCompositor {
             for layer in layers.rows {
                 draws.append(AvatarLayerDraw(
                     bodyPartId: bodyPart.rawValue, partType: layer.partType, texture: layer.texture,
-                    centerX: bodyPartOffset.x + layer.centerX + canvasOffsetX + bodyPartOffset2D.dx,
-                    centerY: bodyPartOffset.y + layer.centerY + canvasOffsetY + bodyPartOffset2D.dy,
+                    centerX: bodyPartOffset.x + layer.centerX + canvasOffsetX + bodyPartOffset2D.dx + groundOffsetX,
+                    centerY: bodyPartOffset.y + layer.centerY + canvasOffsetY + bodyPartOffset2D.dy + groundOffsetY,
                     width: layer.width, height: layer.height, flipH: layer.flipH, color: layer.color, zIndex: zIndex
                 ))
 

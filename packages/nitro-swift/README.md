@@ -104,9 +104,33 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
     rendered in front of its own item instead of underneath. `FurnitureNode`/`RoomPlaneNode` now
     negate `relativeDepth` when assigning `zPosition`. `AvatarNode`'s `zIndex` is unaffected - it's
     a local, purely-ascending append-order counter for one avatar's own internal part layering
-    (head over body, etc.), not a value that ever went through TS's descending room-object sort, so
-    negating it would need to happen only if this port later gives per-avatar world depth its own
-    representation (it currently has none - see "Explicitly not yet ported").
+    (head over body, etc.), not a value that ever went through TS's descending room-object sort.
+  - Cross-object depth (a later fix, once two objects at different tiles needed to occlude each
+    other correctly): `RoomGeometry.getScreenPosition(_:).z` is the world-camera-depth term TS's
+    `RoomSpriteCanvas.renderObject` adds to every placed object's own `relativeDepth`
+    (`newZ = z + sprite.relativeDepth`) before the global z-sort - `screenPosition(for:)` only ever
+    surfaced the X/Y half of that projection, so `placeFurniture`/`placeAvatar` had no basis for
+    ordering objects by distance from the camera, only by their own small internal layer offsets.
+    `RoomScene.screenDepth(for:)` surfaces the missing Z; both placement methods now set their
+    node's own `zPosition` to `-screenDepth(for: tile)` (SpriteKit accumulates a node's `zPosition`
+    with its ancestors' when `ignoresSiblingOrder` is set, so this composes correctly with each
+    layer's own already-negated local `relativeDepth`/`zIndex`).
+  - **Avatar canvas ground offset**: the single biggest position bug, caught when the same
+    `Vector3d` given to `placeFurniture` and `placeAvatar` rendered nowhere near each other.
+    `AvatarCompositor` positions every layer relative to the avatar canvas's own top-left corner
+    (`AvatarImage.getImage` builds one fixed-size canvas bitmap this way) - but the TS client never
+    stops there: `AvatarVisualization.updateSprite` positions that *whole bitmap* relative to the
+    room object's ground point afterward (`sprite.offsetX = canvasOffsets[0] - texture.width / 2;
+    sprite.offsetY = -texture.height + geometry.scale / 4 + canvasOffsets[1] + postureOffset`) so
+    the avatar's *feet*, not its canvas's top-left corner, land at the tile. This port never applied
+    that external offset - every avatar layer was positioned as if the canvas's top-left were the
+    tile's own ground point, which still "looks like an avatar" (the layers' positions *relative to
+    each other* are unaffected) but the whole figure renders offset from where it should be by
+    roughly one canvas-height, unrelated to wherever a furniture item at the same tile lands.
+    `AvatarCompositor.compose` now takes the room camera's own `roomScale` (`RoomGeometry.scale`)
+    and adds this same ground offset to every layer (`AvatarPose.sortedActions` was made public so
+    `compose` can call `AvatarStructure.getCanvasOffsets` the same way `AvatarImage` does);
+    `AvatarNode.refresh`/`RoomScene.placeAvatar` thread `geometry.scale` through.
   - `RoomPlane.drawTiledPattern`'s tile-pattern phase was mirrored relative to Pixi: fetched the
     actual pixi.js 8.x `CanvasTilingSpritePipe` source to confirm `TilingSprite.tilePosition`
     translates the pattern's own origin in the same direction as ordinary sprite positioning
@@ -232,9 +256,12 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   `.Full`, `isHeadTurnPreventedByAction`) - `AvatarCompositor`/`AvatarPose` take one direction for
   the whole avatar. `CarryObject`/`UseObject` action parameter lookup (needs an item catalog this
   port doesn't model) and the "Posture: Lay" auto-face-2-or-4 direction nudge - see `AvatarPose`'s
-  doc comment for both. `AvatarActionManager.getCanvasOffsets`'s result (used for placement nudges
-  like a laid-down avatar) is exposed on `AvatarStructure` but not wired into `AvatarCompositor`'s
-  own placement math - apply it at the host-app/node-position level if needed.
+  doc comment for both. `AvatarActionManager.getCanvasOffsets`'s X/Y components are wired into
+  `AvatarCompositor.compose`'s ground-offset math now (see "Status" above) - only its Z component
+  (`AvatarVisualization`'s `AVATAR_SPRITE_LAYING_DEPTH` posture-specific relativeDepth nudge, plus
+  the `_postureOffset`/Snowwar-death extra Y nudge) still isn't wired anywhere, since both are
+  posture-specific and this port doesn't model postures generally yet - apply at the
+  host-app/node-position level if needed.
 - `AvatarImageCache`'s multi-level caching (body-part/action/direction/frame-container) isn't
   ported - `AvatarCompositor` recomputes every call instead, matching this port's "drop the
   JS-GC-motivated caching, keep the math" pattern used throughout (see `FurnitureVisualization`'s

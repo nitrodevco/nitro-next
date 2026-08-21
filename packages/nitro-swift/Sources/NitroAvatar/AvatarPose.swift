@@ -27,7 +27,10 @@ import Foundation
 public final class AvatarPose {
     private let structure: AvatarStructure
     private var rawActions: [ActiveActionData] = []
-    private var sortedActions: [ActiveActionData] = []
+    /// Exposed read-only so `AvatarCompositor.compose` can pass it straight to
+    /// `AvatarStructure.getCanvasOffsets` (mirrors `AvatarImage.getCanvasOffsets` calling
+    /// `this._structure.getCanvasOffsets(this._sortedActions, ...)` with its own equivalent field).
+    public private(set) var sortedActions: [ActiveActionData] = []
     private let defaultAction: ActiveActionData
 
     public private(set) var mainAction: ActiveActionData

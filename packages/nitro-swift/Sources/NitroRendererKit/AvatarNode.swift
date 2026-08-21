@@ -16,6 +16,7 @@ public final class AvatarNode: SKNode {
     private var figure: AvatarFigureContainer?
     private var direction: Int = 0
     private var scale: AvatarScaleType = .large
+    private var roomScale: Double = 64
 
     public init(compositor: AvatarCompositor, pose: AvatarPose) {
         self.compositor = compositor
@@ -27,15 +28,20 @@ public final class AvatarNode: SKNode {
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     /// - Parameter direction: facing direction, 0-7 (see `AvatarDirectionAngle`).
+    /// - Parameter roomScale: the room camera's own zoom scale (`RoomGeometry.scale`, e.g. 64
+    ///   zoomed-in) - needed to align the avatar's ground point with the room object it's placed at;
+    ///   see `AvatarCompositor.compose`'s doc comment. `RoomScene.placeAvatar` passes its own
+    ///   `geometry.scale` here automatically.
     ///
     /// Call `pose.appendAction(...)`/`pose.endActionAppends()` before this if you want anything
     /// beyond the pose's already-resolved actions to take effect - this only rebuilds the sprite
     /// tree from the pose's *current* resolved state, it doesn't touch the pose itself.
     @discardableResult
-    public func refresh(figure: AvatarFigureContainer, direction: Int, scale: AvatarScaleType = .large) -> Bool {
+    public func refresh(figure: AvatarFigureContainer, direction: Int, roomScale: Double, scale: AvatarScaleType = .large) -> Bool {
         self.figure = figure
         self.direction = direction
         self.scale = scale
+        self.roomScale = roomScale
 
         return rebuild()
     }
@@ -56,7 +62,7 @@ public final class AvatarNode: SKNode {
     private func rebuild() -> Bool {
         guard let figure else { return false }
 
-        let layers = compositor.compose(figure: figure, direction: direction, pose: pose, scale: scale)
+        let layers = compositor.compose(figure: figure, direction: direction, pose: pose, roomScale: roomScale, scale: scale)
 
         guard !layers.isEmpty else { return false }
 
