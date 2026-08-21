@@ -6,6 +6,7 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY } from './utils/buttonOverlayPieces';
 import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
 import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
 import { type InteractionState,useInteractionState } from './utils/useInteractionState';
@@ -53,42 +54,6 @@ interface ButtonVariant {
 const layerState = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): ButtonLayerState => (
     { textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
 );
-
-// Full 11-piece button-piece composite shared by variants 100/101, default+hovering state.
-const buttonPieces = (prefix: string): CompositePiece[] => [
-    { textureKey: `${prefix}-top-left-src`, top: 11, left: 11, width: 6, height: 8 },
-    { textureKey: `${prefix}-top-center-src`, top: 11, left: 17, right: 15, height: 8 },
-    { textureKey: `${prefix}-top-right-src`, top: 11, right: 11, width: 4, height: 8 },
-    { textureKey: `${prefix}-center-left-src`, top: 19, left: 11, bottom: 19, width: 6 },
-    { textureKey: `${prefix}-center-center-src`, top: 19, left: 17, right: 15, bottom: 19 },
-    { textureKey: `${prefix}-center-right-src`, top: 19, right: 11, bottom: 19, width: 4 },
-    { textureKey: `${prefix}-bottom-left-src`, bottom: 11, left: 11, width: 6, height: 8 },
-    { textureKey: `${prefix}-bottom-center-src`, bottom: 11, left: 17, right: 15, height: 8 },
-    { textureKey: `${prefix}-bottom-right-src`, bottom: 11, right: 11, width: 4, height: 8 },
-    // Curve pieces are DOM `background-position: ... center` - left/right unset on the cross
-    // axis so Button's own Box `alignItems: 'center'` (flexDirection 'row') centers them
-    // vertically, the same "unset edge = not anchored" convention CompositePiece already uses
-    // for stretch, extended here to centering via the parent's own cross-axis alignment.
-    { textureKey: 'button-100-default-button-center-left-curve-src', left: 12, width: 3, height: 5 },
-    { textureKey: 'button-100-default-button-center-right-curve-src', right: 12, width: 3, height: 5 },
-];
-
-const buttonDefaultOverlay = buttonPieces('button-100-default-button');
-const buttonPressedOverlay: CompositePiece[] = [
-    ...buttonPieces('button-100-pressed-button').slice(0, 9),
-    { textureKey: 'bubble-0-default-spacer-src', left: 12, width: 1, height: 1 },
-    { textureKey: 'bubble-0-default-spacer-src', right: 12, width: 1, height: 1 },
-];
-
-// 2-piece curve composite shared by variants 102/103.
-const curveOverlay: CompositePiece[] = [
-    { textureKey: 'button-100-default-button-center-left-curve-src', left: 1, width: 3, height: 5 },
-    { textureKey: 'button-100-default-button-center-right-curve-src', right: 1, width: 3, height: 5 },
-];
-const curvePressedOverlay: CompositePiece[] = [
-    { textureKey: 'bubble-0-default-spacer-src', left: 1, width: 1, height: 1 },
-    { textureKey: 'bubble-0-default-spacer-src', right: 1, width: 1, height: 1 },
-];
 
 /**
  * Full port of theme/Button.tsx's 13-variant table (buttonVariantsConfig +
@@ -187,7 +152,7 @@ const BUTTON_VARIANTS: Record<string, ButtonVariant> = {
             hovering: layerState('button-100-hovering-src', 19, 19, 19, 19),
             pressed: layerState('button-100-hovering-src', 19, 19, 19, 19),
         },
-        overlay: { default: buttonDefaultOverlay, pressed: buttonPressedOverlay },
+        overlay: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
         paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
         minWidth: 48, minHeight: 48,
         textStyleKey: 'text-style-il-button', color: '#000000',
@@ -199,7 +164,7 @@ const BUTTON_VARIANTS: Record<string, ButtonVariant> = {
             hovering: layerState('button-100-hovering-src', 19, 19, 19, 19),
             pressed: layerState('button-100-hovering-src', 19, 19, 19, 19),
         },
-        overlay: { default: buttonDefaultOverlay, pressed: buttonPressedOverlay },
+        overlay: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
         paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
         minWidth: 48, minHeight: 48,
         textStyleKey: 'text-style-il-button', color: '#000000',
@@ -210,7 +175,7 @@ const BUTTON_VARIANTS: Record<string, ButtonVariant> = {
             default: layerState('button-102-default-src', 6, 8, 4, 8),
             pressed: layerState('button-102-pressed-src', 6, 8, 4, 8),
         },
-        overlay: { default: curveOverlay, pressed: curvePressedOverlay },
+        overlay: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
         paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
         minWidth: 28, minHeight: 28,
         tintable: false,
@@ -222,7 +187,7 @@ const BUTTON_VARIANTS: Record<string, ButtonVariant> = {
             default: layerState('button-103-default-src', 6, 8, 4, 8),
             pressed: layerState('button-103-pressed-src', 6, 8, 4, 8),
         },
-        overlay: { default: curveOverlay, pressed: curvePressedOverlay },
+        overlay: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
         paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
         minWidth: 28, minHeight: 28,
         textStyleKey: 'text-style-il-button', color: '#000000',
