@@ -13,9 +13,10 @@ public final class AvatarActionManager {
 
     /// Additive - safe to call more than once with different catalogs, the same way
     /// `AvatarStructure.injectFigureData` layers real figuredata on top of the bundled default.
-    /// `HabboAvatarActionsDefault.json` only bundles "Stand"; a host app with a real per-hotel
-    /// actions catalog (Walk/Sit/Wave/...) should call this again with that data to unlock the
-    /// other 9 keyframe animations bundled in `HabboAvatarAnimations.json`.
+    /// `AvatarDefaults.makeStructure()` already registers both of the client's built-in action
+    /// tables (`HabboAvatarActionsDefault`/`HabboAvatarActions` - see its doc comment), enough to
+    /// drive every bundled keyframe animation; call this again with a real per-hotel actions
+    /// catalog only if you need actions beyond those (custom effects, seasonal states, ...).
     public func updateActions(_ data: AvatarActionDataConfig) {
         for action in data.actions {
             let definition = ActionDefinition(action)

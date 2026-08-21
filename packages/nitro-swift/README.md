@@ -136,10 +136,15 @@ are scoped out explicitly rather than stubbed silently. See "Status" for the hon
   bug in the original: `AvatarActionManager.sortActions` calls `Array.sort(void this.sortByPrecedence)`,
   and `void` always evaluates to `undefined`, so actions are *not* actually sorted by their declared
   `precedence` - whichever action a caller appends last wins any body part it shares with an
-  earlier one (see `AvatarActionManager.sortActions`'s doc comment). `HabboAvatarActionsDefault.json`
-  only bundles the "Stand" action (matching the original, which fetches the rest per-hotel like
-  figuredata); call `AvatarStructure.registerActionData(_:)` with a real actions catalog to unlock
-  Walk/Sit/Wave/etc., the same way `injectFigureData` layers in real figuredata.
+  earlier one (see `AvatarActionManager.sortActions`'s doc comment). The real client bundles *two*
+  built-in action tables at compile time - `HabboAvatarActionsDefault.ts` (just "Stand") and
+  `HabboAvatarActions.ts` (the other 28: Walk/Sit/Wave/Talk/Sign/Respect/Blow/Laugh/Lay/Float/Swim/
+  Snowboard*/Gesture*/etc.) - both loaded unconditionally in `AvatarRenderManager.init()`, no network
+  fetch involved for either. `AvatarDefaults.makeStructure()` now registers both
+  (`HabboAvatarActionsDefault.json` + `HabboAvatarActions.json`), so Walk/Sit/Wave/etc. work out of
+  the box; call `AvatarStructure.registerActionData(_:)` again only for actions beyond those (a real
+  per-hotel actions catalog with custom effects/seasonal states), the same way `injectFigureData`
+  layers in real figuredata.
 - Room floor/wall/landscape plane rendering (`RoomPlane`/`RoomPlaneRenderer`): material/color
   resolution, tiling-offset math per plane type, the corner-projection and skew-matrix math, and a
   CoreGraphics baking pipeline reproducing Pixi's `TilingSprite` + tint + inverse-alpha mask by

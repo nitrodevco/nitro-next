@@ -23,7 +23,8 @@ public final class AvatarStructure {
     public func initAnimation(_ data: [AvatarAnimationConfig]) -> Bool { animationData.parse(data) }
 
     /// Additive, like `injectFigureData` - see `AvatarActionManager.updateActions`'s doc comment for
-    /// why a host app needs this to unlock anything beyond the bundled "Stand" action.
+    /// why the bundled defaults (`AvatarDefaults.makeStructure()`) already cover Stand/Walk/Sit/Wave/
+    /// etc. without calling this again.
     public func registerActionData(_ data: AvatarActionDataConfig) { actionManager.updateActions(data) }
 
     public func getActionDefinition(_ id: String) -> ActionDefinition? { actionManager.getActionDefinition(id) }

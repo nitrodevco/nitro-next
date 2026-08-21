@@ -3,9 +3,10 @@ import XCTest
 @testable import NitroAvatar
 
 final class AvatarPoseTests: XCTestCase {
-    /// Registers a synthetic "Move"/walk action on top of the bundled defaults (which only ship
-    /// "Stand" - see `AvatarActionManager.updateActions`'s doc comment) so multi-action combination
-    /// can be exercised end-to-end against the real bundled geometry/part-set data.
+    /// Registers a synthetic "Move"/walk action on top of the bundled defaults (which already ship
+    /// a real "mv" action via `HabboAvatarActions.json` - this synthetic one just keeps the test
+    /// independent of that data file's exact fields) so multi-action combination can be exercised
+    /// end-to-end against the real bundled geometry/part-set data.
     private func makeStructureWithWalkAction() throws -> AvatarStructure {
         guard let structure = AvatarDefaults.makeStructure() else {
             throw XCTSkip("bundled avatar defaults failed to load")
