@@ -45,6 +45,7 @@ const ICON_ASSETS = {
     'icon-help': { url: '/assets/flash/icons/help.png', width: 13, height: 23 },
     'icon-habbo': { url: '/assets/flash/toolbar/icons/habbo.png', width: 28, height: 28 },
     'icon-camera': { url: '/assets/flash/toolbar/icons/camera.png', width: 38, height: 45 },
+    'icon-me-circle': { url: '/assets/flash/toolbar/icons/me_circle.png', width: 45, height: 45 },
     'icon-message': { url: '/assets/flash/toolbar/icons/message.png', width: 36, height: 32 },
     'icon-wired-trigger': { url: '/assets/flash/wired/icon_trigger.png', width: 13, height: 14 },
     'icon-wired-condition': { url: '/assets/flash/wired/icon_condition.png', width: 13, height: 14 },

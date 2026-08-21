@@ -18,6 +18,7 @@ import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 import { ActivityPointsViewPixi } from './views-pixi/purse/ActivityPointsViewPixi';
 import { PurseViewPixi } from './views-pixi/purse/PurseViewPixi';
+import { ToolbarViewPixi } from './views-pixi/toolbar/ToolbarViewPixi';
 
 export const Nitro: FC = () => {
     const [isRendererReady, setIsRendererReady] = useState(false);
@@ -74,6 +75,7 @@ export const Nitro: FC = () => {
                     <ActivityPointsViewPixi layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
                     <AvatarEditorComponent />
                     <MessengerComponent />
+                    <ToolbarViewPixi />
                     <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
                 </>}
             </PixiApplicationRoot>

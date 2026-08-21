@@ -49,6 +49,7 @@ export * from './TabContext';
 export * from './Tooltip';
 export * from './utils/Layer';
 export * from './utils/textStyles';
+export * from './utils/useAvatarImageTexture';
 export * from './utils/useIconTexture';
 export * from './utils/useInteractionState';
 export * from './utils/usePixiTexture';
