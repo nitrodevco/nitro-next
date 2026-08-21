@@ -31,7 +31,7 @@ public final class GraphicAssetPalette {
     /// fully transparent (true of every known palettable asset), so drawing into a premultiplied
     /// bitmap context introduces no rounding error in the surviving RGB channels.
     public func applyPalette(_ texture: SKTexture) -> SKTexture {
-        guard let cgImage = texture.cgImage() else { return texture }
+        let cgImage = texture.cgImage()
 
         let width = cgImage.width
         let height = cgImage.height

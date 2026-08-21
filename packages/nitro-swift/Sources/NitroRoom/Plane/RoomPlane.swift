@@ -446,7 +446,7 @@ public final class RoomPlane {
             ctx.scaleBy(x: 1, y: -1)
 
             for entry in entries {
-                guard let image = entry.texture.cgImage() else { continue }
+                let image = entry.texture.cgImage()
 
                 let w = entry.size.map { Double($0.width) } ?? Double(image.width)
                 let h = entry.size.map { Double($0.height) } ?? Double(image.height)
@@ -472,7 +472,7 @@ public final class RoomPlane {
 
     private func bakeTexture(geometry: RoomGeometry, texture: SKTexture, tint: UInt32, tileWidth: Double, tileHeight: Double) -> SKTexture? {
         guard boundsWidth > 0, boundsHeight > 0 else { return nil }
-        guard let tileImage = texture.cgImage() else { return nil }
+        let tileImage = texture.cgImage()
 
         let transform = matrixForDimensions(width: tileWidth, height: tileHeight)
         let maskImage = mergedMaskImage(geometry: geometry, tileWidth: tileWidth, tileHeight: tileHeight)

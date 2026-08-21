@@ -19,9 +19,11 @@ public struct RoomHeightGrid {
             }
         }
 
+        let maxWidth = parsed.map(\.count).max() ?? 0
+
         height = parsed.count
-        width = parsed.map(\.count).max() ?? 0
-        heights = parsed.map { row in row + Array(repeating: nil, count: max(0, width - row.count)) }
+        width = maxWidth
+        heights = parsed.map { row in row + Array(repeating: nil, count: max(0, maxWidth - row.count)) }
     }
 
     public init(heights: [[Int?]]) {

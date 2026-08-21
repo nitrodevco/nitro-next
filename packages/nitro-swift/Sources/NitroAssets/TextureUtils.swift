@@ -8,7 +8,7 @@ public enum TextureUtils {
     /// so white pixels become fully transparent and black pixels stay fully opaque. Bitmap masks
     /// (door/window cutout shapes) are authored this way.
     public static func makeWhiteTransparent(_ texture: SKTexture) -> SKTexture? {
-        guard let cgImage = texture.cgImage() else { return nil }
+        let cgImage = texture.cgImage()
 
         let width = cgImage.width
         let height = cgImage.height
