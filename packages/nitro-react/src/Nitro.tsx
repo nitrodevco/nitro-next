@@ -11,7 +11,7 @@ import { type FC, useEffect, useState } from 'react';
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 import { PixiApplicationRoot } from '#base/theme-pixi';
 
-import { AvatarEditorComponent, CatalogWrapper, MessengerComponent } from './components';
+import { AvatarEditorComponent, CatalogWrapper, InventoryComponent, MessengerComponent } from './components';
 import { useWebSocketContext } from './context';
 import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
@@ -76,6 +76,7 @@ export const Nitro: FC = () => {
                     <AvatarEditorComponent />
                     <MessengerComponent />
                     <ToolbarViewPixi />
+                    <InventoryComponent />
                     <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
                 </>}
             </PixiApplicationRoot>
