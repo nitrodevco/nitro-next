@@ -24,7 +24,7 @@ export const PurseViewPixi = () => {
             <Box layout={{ flexDirection: 'column', justifyContent: 'center', width: 52 }}>
                 {kinds.map(({ type, amount, color, name }) => (
                     <Box key={name} layout={{ height: 19, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 2 }}>
-                        <pixiText text={String(amount)} style={getPixiTextStyle('text-style-u-bold', { fill: color })} />
+                        <pixiText layout={{}} text={String(amount)} style={getPixiTextStyle('text-style-u-bold', { fill: color })} />
                         <NitroCurrencyIcon type={type} small />
                     </Box>
                 ))}
@@ -33,6 +33,7 @@ export const PurseViewPixi = () => {
                 <Border variant="1" tintColor="#FFE1CC" layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4 }}>
                     <NitroIcon icon="icon-hc-small" />
                     <pixiText
+                        layout={{}}
                         text={t('purse.clubdays.zero.amount.text')}
                         style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4', dropShadow: FONT_AA_DROP_SHADOW })}
                     />
@@ -40,6 +41,7 @@ export const PurseViewPixi = () => {
                 <Border variant="1" tintColor="#FFE1CC" layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4 }}>
                     <NitroIcon icon="icon-earnings-small" />
                     <pixiText
+                        layout={{}}
                         text={t('earnings.title')}
                         style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4', dropShadow: FONT_AA_DROP_SHADOW })}
                     />

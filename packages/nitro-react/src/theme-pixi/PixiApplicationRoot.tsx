@@ -40,6 +40,23 @@ export const PixiApplicationRoot = ({ onReady, children }: PixiApplicationRootPr
         // For future window z-order (SystemStore's zIndexById) once Frame is ported.
         app.stage.sortableChildren = true;
 
+        // app.stage is the root of the yoga layout tree for every Pixi-rendered UI element -
+        // without a `.layout` of its own (matching the screen size, `position: 'relative'` so
+        // it's a valid containing block), a top-level child's `position: 'absolute'` has no
+        // sized ancestor to be positioned against and silently lands at (0, 0) instead of
+        // wherever `top`/`right`/etc asked for. Kept in sync with resizeTo={window}'s own
+        // resize handling via the renderer's 'resize' event.
+        const applyScreenLayout = () => {
+            app.stage.layout = {
+                width: app.renderer.screen.width,
+                height: app.renderer.screen.height,
+                position: 'relative',
+            };
+        };
+
+        applyScreenLayout();
+        app.renderer.on('resize', applyScreenLayout);
+
         onReady();
     }, [onReady]);
 

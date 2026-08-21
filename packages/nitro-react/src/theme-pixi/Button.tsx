@@ -98,7 +98,7 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                 )}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText text={children} style={getPixiTextStyle('text-style-button-regular', { fill: textColor })} />
+                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle('text-style-button-regular', { fill: textColor })} />
                         : children}
                 </VariantCascadeProvider>
             </Box>
