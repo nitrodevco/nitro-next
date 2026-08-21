@@ -7,6 +7,7 @@ import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } fr
 
 import { Box, type BoxLayout } from './Box';
 import { usePixiTexture } from './utils/usePixiTexture';
+import { wrapTextChildren } from './utils/wrapTextChildren';
 
 interface NineSliceVariant {
     textureKey: string;
@@ -61,7 +62,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                         layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
                     />
                 )}
-                <VariantCascadeProvider map={ownCascade}>{children}</VariantCascadeProvider>
+                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
     }

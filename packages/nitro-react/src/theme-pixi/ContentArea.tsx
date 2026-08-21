@@ -6,6 +6,7 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { useCascadedVariant, VARIANT_CASCADE_CONFIG, VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { wrapTextChildren } from './utils/wrapTextChildren';
 
 export interface ContentAreaProps {
     variant?: string;
@@ -22,7 +23,7 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
 
         return (
             <Box ref={ref} layout={{ flexDirection: 'column', width: '100%', flex: 1, overflow: 'hidden', ...layout }}>
-                <VariantCascadeProvider map={ownCascade}>{children}</VariantCascadeProvider>
+                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
     }
