@@ -1,20 +1,21 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(ErrorType: RoomConnectionErrorType): Unknown type 'RoomConnectionErrorType'. Add override mapping.
-
+/*
+ * CantConnectMessageParser — reason int, then a parameter string only when the
+ * packet carries more bytes (the reason 3 queue errors put the error key in it).
+ */
 export type CantConnectMessageType = {
-  errorType: any;
-  additionalInfo: string;
+  reason: number;
+  parameter: string;
 };
 
 export class CantConnectMessage implements IIncomingPacket<CantConnectMessageType>
 {
   public parse(wrapper: IMessageDataWrapper): CantConnectMessageType
   {
-
     const packet: CantConnectMessageType = {
-      errorType: undefined as any, // Unknown type 'RoomConnectionErrorType'. Add override mapping.
-      additionalInfo: wrapper.readString(),
+      reason: wrapper.readInt(),
+      parameter: wrapper.bytesAvailable ? wrapper.readString() : '',
     };
 
     return packet;

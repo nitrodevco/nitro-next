@@ -45,6 +45,14 @@ type State = {
     createRoomOpen: boolean;
     /* AlertView/SimpleAlertView — nav_simple_alert, caption + body text */
     alert: { title: string; message: string } | undefined;
+    /*
+     * GuestRoomDoorbell — the window survives hide() (ring keeps the room data for the
+     * waiting/no-answer states) and only close() disposes it. waiting mirrors §_-xu§:
+     * once set, closing the window sends the cancel-entering composer.
+     */
+    doorbell: { room: IRoomInfo; waiting: boolean; noAnswer: boolean; visible: boolean } | undefined;
+    /* GuestRoomPasswordInput — try hides the window; showRetry re-shows it with retryinfo */
+    passwordPrompt: { room: IRoomInfo; retry: boolean; visible: boolean } | undefined;
 }
 
 type Actions = {
@@ -76,6 +84,15 @@ type Actions = {
     hideCreateRoom: () => void;
     showAlert: (title: string, message: string) => void;
     hideAlert: () => void;
+    showDoorbell: (room: IRoomInfo) => void;
+    showDoorbellWaiting: () => void;
+    showDoorbellNoAnswer: () => void;
+    hideDoorbellWindow: () => void;
+    closeDoorbell: () => void;
+    showPasswordPrompt: (room: IRoomInfo) => void;
+    showPasswordRetry: () => void;
+    hidePasswordWindow: () => void;
+    closePasswordPrompt: () => void;
     resetNavigator: () => void;
 }
 
@@ -104,7 +121,9 @@ const initialState: State = {
     groupDetails: {},
     roomInfoPopup: undefined,
     createRoomOpen: false,
-    alert: undefined
+    alert: undefined,
+    doorbell: undefined,
+    passwordPrompt: undefined
 };
 
 export type NavigatorContextStore = State & Actions;
@@ -174,5 +193,15 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     hideCreateRoom: () => set({ createRoomOpen: false }),
     showAlert: (title, message) => set({ alert: { title, message } }),
     hideAlert: () => set({ alert: undefined }),
+    showDoorbell: room => set({ doorbell: { room, waiting: false, noAnswer: false, visible: true } }),
+    /* showWaiting() re-shows the kept window: show(room, null, true) */
+    showDoorbellWaiting: () => set(x => (x.doorbell ? { doorbell: { ...x.doorbell, waiting: true, noAnswer: false, visible: true } } : {})),
+    showDoorbellNoAnswer: () => set(x => (x.doorbell ? { doorbell: { ...x.doorbell, noAnswer: true, visible: true } } : {})),
+    hideDoorbellWindow: () => set(x => (x.doorbell ? { doorbell: { ...x.doorbell, visible: false } } : {})),
+    closeDoorbell: () => set({ doorbell: undefined }),
+    showPasswordPrompt: room => set({ passwordPrompt: { room, retry: false, visible: true } }),
+    showPasswordRetry: () => set(x => (x.passwordPrompt ? { passwordPrompt: { ...x.passwordPrompt, retry: true, visible: true } } : {})),
+    hidePasswordWindow: () => set(x => (x.passwordPrompt ? { passwordPrompt: { ...x.passwordPrompt, visible: false } } : {})),
+    closePasswordPrompt: () => set({ passwordPrompt: undefined }),
     resetNavigator: () => set({ ...initialState })
 }));

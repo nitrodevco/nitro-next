@@ -1,4 +1,4 @@
-import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
+import { CantConnectMessage, CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import { useRef } from "react";
 
@@ -34,7 +34,7 @@ export const useRoomDirectoryHandler = () => {
 
     useMessageListener(OpenConnectionMessage, data => enterRoom(data.roomId));
 
-    useMessageListener(CloseConnectionMessage, () => {
+    const leaveRoom = () => {
         // RSE_ENDED: resetCurrentRoom(); disposeRoom(session.roomId)
         if (currentRoomIdRef.current !== 0) {
             GetRoomEngine().disposeRoom(currentRoomIdRef.current);
@@ -44,7 +44,16 @@ export const useRoomDirectoryHandler = () => {
 
         setRoom(undefined);
         setLandingViewVisible(true);
-    });
+    };
+
+    useMessageListener(CloseConnectionMessage, leaveRoom);
+
+    /*
+     * IncomingMessages.onCantConnect dispatches HTIE_ICON_RECEPTION — a failed entry
+     * always lands on hotel view, and the server has already removed us from the
+     * previous room without sending CloseConnection.
+     */
+    useMessageListener(CantConnectMessage, leaveRoom);
 
     useMessageListener(RoomReadyMessage, data => enterRoom(data.roomId));
 }

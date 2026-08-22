@@ -31,5 +31,14 @@ export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     hideCreateRoom: x.hideCreateRoom,
     showAlert: x.showAlert,
     hideAlert: x.hideAlert,
+    showDoorbell: x.showDoorbell,
+    showDoorbellWaiting: x.showDoorbellWaiting,
+    showDoorbellNoAnswer: x.showDoorbellNoAnswer,
+    hideDoorbellWindow: x.hideDoorbellWindow,
+    closeDoorbell: x.closeDoorbell,
+    showPasswordPrompt: x.showPasswordPrompt,
+    showPasswordRetry: x.showPasswordRetry,
+    hidePasswordWindow: x.hidePasswordWindow,
+    closePasswordPrompt: x.closePasswordPrompt,
     resetNavigator: x.resetNavigator
 })));

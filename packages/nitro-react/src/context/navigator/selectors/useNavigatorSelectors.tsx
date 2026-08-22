@@ -24,5 +24,7 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     groupDetails: x.groupDetails,
     roomInfoPopup: x.roomInfoPopup,
     createRoomOpen: x.createRoomOpen,
-    alert: x.alert
+    alert: x.alert,
+    doorbell: x.doorbell,
+    passwordPrompt: x.passwordPrompt
 })));

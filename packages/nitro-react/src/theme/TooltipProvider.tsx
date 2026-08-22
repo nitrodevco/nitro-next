@@ -19,6 +19,7 @@ export const TooltipProvider = ({ children }: { children: ReactNode }) => {
     const nodeRef = useRef<HTMLDivElement>(null);
     const timerRef = useRef<number | undefined>(undefined);
     const positionRef = useRef({ x: 0, y: 0 });
+    const triggerRef = useRef<Element | null>(null);
 
     const place = () => {
         const node = nodeRef.current;
@@ -34,11 +35,27 @@ export const TooltipProvider = ({ children }: { children: ReactNode }) => {
         if (caption !== null) place();
     }, [caption]);
 
+    /*
+     * WindowToolTipAgent guards on _window.disposed — a tooltip dies with its window.
+     * If the hovered element unmounts (e.g. entering a room closes the navigator) no
+     * pointerleave ever fires, so poll the trigger and hide once it leaves the DOM.
+     */
+    useEffect(() => {
+        if (caption === null) return;
+
+        const watcher = window.setInterval(() => {
+            if (!triggerRef.current?.isConnected) setCaption(null);
+        }, 200);
+
+        return () => window.clearInterval(watcher);
+    }, [caption]);
+
     useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
     const tooltip = useCallback<TooltipFactory>((tipCaption, delay = TOOLTIP_DEFAULT_DELAY) => ({
         onPointerEnter: event => {
             positionRef.current = { x: event.clientX, y: event.clientY };
+            triggerRef.current = event.currentTarget;
 
             window.clearTimeout(timerRef.current);
             timerRef.current = window.setTimeout(() => setCaption(tipCaption.length > 0 ? tipCaption : null), delay);

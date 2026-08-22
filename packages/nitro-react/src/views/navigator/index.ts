@@ -2,6 +2,8 @@ export * from './NavigatorCategoryView';
 export * from './NavigatorCreateRoomLayouts';
 export * from './NavigatorCreateRoomThumbnailView';
 export * from './NavigatorCreateRoomView';
+export * from './NavigatorDoorbellView';
+export * from './NavigatorPasswordView';
 export * from './NavigatorQuickLinksView';
 export * from './NavigatorRoomEntryView';
 export * from './NavigatorSearchView';

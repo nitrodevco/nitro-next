@@ -1,5 +1,5 @@
 import type { IRoomInfo } from '@nitrodevco/nitro-packets';
-import { ForwardToARandomPromotedRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, OpenFlatConnectionComposer,SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
+import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
@@ -116,9 +116,12 @@ export const NavigatorView = () => {
     };
 
     const enterRoom = (room: IRoomInfo) => {
-        // the SWF enters a room with OpenFlatConnectionMessageComposer(roomId, password)
-        // — see RoomSession.sendVisitFlatMessage
-        send(new OpenFlatConnectionComposer({ roomId: room.roomId, password: '', unknown1: -1 }));
+        /*
+         * goToRoom(flatId) — entry always starts with GetGuestRoom(roomForward); the
+         * GetGuestRoomResult handler decides between opening the connection and the
+         * doorbell/password dialogs
+         */
+        send(new GetGuestRoomComposer({ roomId: room.roomId, enterRoom: false, roomForward: true }));
 
         hideNavigator();
     };

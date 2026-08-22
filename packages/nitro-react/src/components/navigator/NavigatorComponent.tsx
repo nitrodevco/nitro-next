@@ -1,7 +1,7 @@
 import { useNavigatorSelectors } from '#base/context';
 import { useNavigatorHandler } from '#base/handlers';
 import { useNavigatorVisibility } from '#base/hooks';
-import { NavigatorCreateRoomView, NavigatorSimpleAlertView, NavigatorView } from '#base/views/navigator';
+import { NavigatorCreateRoomView, NavigatorDoorbellView, NavigatorPasswordView, NavigatorSimpleAlertView, NavigatorView } from '#base/views/navigator';
 
 export const NavigatorComponent = () => {
     const { isNavigatorVisible } = useNavigatorVisibility();
@@ -19,6 +19,8 @@ export const NavigatorComponent = () => {
               * frame: nesting it inside would position and clip it within the frame
               */}
             {createRoomOpen && <NavigatorCreateRoomView />}
+            <NavigatorDoorbellView />
+            <NavigatorPasswordView />
             <NavigatorSimpleAlertView />
         </>
     );
