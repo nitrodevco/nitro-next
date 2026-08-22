@@ -8,7 +8,9 @@ const TEXT_DROP_SHADOW: TextDropShadow = {
     distance: 1
 }
 
-const TEXT_STYLES = {
+/** Exported (not module-private) so `theme-pixi/dom/textStyleDom.ts` can translate the same
+ *  font/size/color/drop-shadow data to CSS instead of duplicating this table. */
+export const TEXT_STYLES = {
     'text-style-regular': { fontFamily: 'Goldfish', fontSize: 10.88, dropShadow: TEXT_DROP_SHADOW },
     'text-style-headline-big': { fontFamily: 'UbuntuBold', fontSize: 18 },
     'text-style-headline-small': { fontFamily: 'UbuntuBold', fontSize: 14 },
