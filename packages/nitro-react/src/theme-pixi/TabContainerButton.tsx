@@ -6,7 +6,7 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
-import { NineSliceLayer } from './utils/Layer';
+import { BackgroundLayer } from './layer';
 import { TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
@@ -44,13 +44,7 @@ export const TabContainerButton: ForwardRefExoticComponent<TabContainerButtonPro
                 cursor="pointer"
                 onPointerTap={onPress}
             >
-                <NineSliceLayer
-                    textureKey={resolvedLayer.textureKey}
-                    leftWidth={resolvedLayer.leftWidth}
-                    topHeight={resolvedLayer.topHeight}
-                    rightWidth={resolvedLayer.rightWidth}
-                    bottomHeight={resolvedLayer.bottomHeight}
-                />
+                <BackgroundLayer layer={resolvedLayer} />
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );

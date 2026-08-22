@@ -7,8 +7,8 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CloseButton } from './CloseButton';
+import { BackgroundLayer, type BackgroundLayerConfig, ColorLayer, TileLayer } from './layer';
 import { Text } from './Text';
-import { BackgroundLayer, type BackgroundLayerConfig, ColorLayer, TileLayer } from './utils/Layer';
 import { type TextStyleKey } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -74,7 +74,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     ...layout,
                 }}
             >
-                <BackgroundLayer layer={config.background} tint={resolvedBackgroundTint} />
+                <BackgroundLayer layer={config.background} tintColor={resolvedBackgroundTint} />
                 {config.overlayTextureKey && <TileLayer textureKey={config.overlayTextureKey} />}
                 <Box
                     layout={{

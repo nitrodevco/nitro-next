@@ -4,7 +4,7 @@ import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js'
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
 import { Box, type BoxLayout } from './Box';
-import { NineSliceLayer, SpriteLayer } from './utils/Layer';
+import { NineSliceLayer, SpriteLayer } from './layer';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
 type TrackLayer =

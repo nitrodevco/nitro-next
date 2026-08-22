@@ -4,7 +4,7 @@ import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js'
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { Box, type BoxLayout } from './Box';
-import { NineSliceLayer, TileLayer } from './utils/Layer';
+import { NineSliceLayer, TileLayer } from './layer';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -123,11 +123,11 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
                 onPointerUp={handlers.onPointerUp}
                 onPointerUpOutside={handlers.onPointerUpOutside}
             >
-                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tintColor} />
+                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tintColor={tintColor} />
                 {overlay && (
                     <TileLayer
                         textureKey={isPressed ? overlay.pressedTextureKey : overlay.defaultTextureKey}
-                        tint={tintColor}
+                        tintColor={tintColor}
                         layout={{ position: 'absolute', left: 5, top: overlay.insetTop, bottom: overlay.insetBottom, width: 7 }}
                     />
                 )}

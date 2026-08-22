@@ -1,7 +1,6 @@
 export * from './buttonGroupFactory';
 export * from './buttonOverlayPieces';
 export * from './FillLayout';
-export * from './Layer';
 export * from './pixiElements';
 export * from './ScrollViewport';
 export * from './tabButtonChrome';

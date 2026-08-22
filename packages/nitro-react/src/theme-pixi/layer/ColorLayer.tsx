@@ -1,5 +1,5 @@
 import { BoxLayout } from "../Box";
-import { FillLayout } from "../utils";
+import { FillLayout } from "../utils/FillLayout";
 
 export interface ColorLayerProps {
     color: string | undefined;

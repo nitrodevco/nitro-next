@@ -2,7 +2,8 @@ import { NineSliceSprite } from "pixi.js";
 import { useState } from "react";
 
 import { BoxLayout } from "../Box";
-import { FillLayout, usePixiTexture } from "../utils";
+import { FillLayout } from "../utils/FillLayout";
+import { usePixiTexture } from "../utils/usePixiTexture";
 
 export interface BlendOverlayProps {
     textureKey: string | undefined;

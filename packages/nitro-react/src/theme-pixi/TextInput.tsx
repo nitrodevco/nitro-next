@@ -4,8 +4,8 @@ import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes, useEffect, useRef, useState } from 'react';
 
 import { Box, type BoxLayout } from './Box';
+import { ColorLayer } from './layer';
 import { Text } from './Text';
-import { ColorLayer } from './utils/Layer';
 import { useOutsideClick } from './utils/useOutsideClick';
 
 export interface TextInputProps {

@@ -4,7 +4,7 @@ import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js'
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { Box, type BoxLayout } from './Box';
-import { NineSliceLayer, SpriteLayer, TileLayer } from './utils/Layer';
+import { NineSliceLayer, SpriteLayer, TileLayer } from './layer';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -120,11 +120,11 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
                 onPointerUp={handlers.onPointerUp}
                 onPointerUpOutside={handlers.onPointerUpOutside}
             >
-                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tint={tintColor} />
+                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tintColor={tintColor} />
                 {overlay && (
                     isPressed
-                        ? <TileLayer textureKey={overlay.pressedTextureKey} tint={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }} />
-                        : <SpriteLayer textureKey={overlay.defaultTextureKey} tint={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }} />
+                        ? <TileLayer textureKey={overlay.pressedTextureKey} tintColor={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }} />
+                        : <SpriteLayer textureKey={overlay.defaultTextureKey} tintColor={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }} />
                 )}
             </Box>
         );

@@ -4,7 +4,7 @@ import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js'
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { Box, type BoxLayout } from './Box';
-import { SpriteLayer } from './utils/Layer';
+import { SpriteLayer } from './layer';
 import { usePixiTexture } from './utils/usePixiTexture';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 

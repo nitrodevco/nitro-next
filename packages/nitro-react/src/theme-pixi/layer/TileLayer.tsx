@@ -1,5 +1,6 @@
 import { BoxLayout } from "../Box";
-import { FillLayout, usePixiTexture } from "../utils";
+import { FillLayout } from "../utils/FillLayout";
+import { usePixiTexture } from "../utils/usePixiTexture";
 
 export interface TileLayerProps {
     textureKey: string | undefined;

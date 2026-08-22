@@ -6,8 +6,8 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { CompositeLayer, NineSliceLayer, SpriteLayer } from './layer';
 import { Text } from './Text';
-import { CompositeLayer, NineSliceLayer, SpriteLayer } from './utils/Layer';
 import { type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
@@ -70,8 +70,8 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                 onPointerTap={onPress}
             >
                 {config.layer.kind === 'nineSlice'
-                    ? <NineSliceLayer textureKey={config.layer.textureKey} leftWidth={3} topHeight={3} rightWidth={3} bottomHeight={3} tint={tintColor} />
-                    : <SpriteLayer textureKey={spriteTextureKey} tint={tintColor} />}
+                    ? <NineSliceLayer textureKey={config.layer.textureKey} leftWidth={3} topHeight={3} rightWidth={3} bottomHeight={3} tintColor={tintColor} />
+                    : <SpriteLayer textureKey={spriteTextureKey} tintColor={tintColor} />}
                 {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: 5, top: 2, width: 16, height: 16 }]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'

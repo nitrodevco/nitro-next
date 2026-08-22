@@ -1,4 +1,4 @@
-import { usePixiTexture } from "../utils";
+import { usePixiTexture } from "../utils/usePixiTexture";
 import { CompositePiece } from "./CompositePiece";
 
 export const CompositePieceSprite = ({ piece, tintColor }: { piece: CompositePiece, tintColor?: string }) => {
