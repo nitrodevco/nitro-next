@@ -1,10 +1,11 @@
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomEngineEvent } from '@nitrodevco/nitro-api';
 import { GetGuestRoomComposer, RateFlatComposer, SetUIFlagsComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { useConfigValue, useRoomContext, useTranslation, useWebSocketContext } from '#base/context';
-import { createLinkEvent } from '#base/hooks';
+import { createLinkEvent, useRoomEventDispatcher } from '#base/hooks';
 import { NitroIcon, useTooltip } from '#base/theme';
+import { canZoomRoomCanvas, getCurrentRoomZoomText, zoomRoomCanvas } from '#base/utils';
 
 
 /*
@@ -31,7 +32,12 @@ export const RoomToolsWidget = () => {
     const [likeDisabledFor, setLikeDisabledFor] = useState(-1);
     const [historyOpen, setHistoryOpen] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
-    const [zoomedIn, setZoomedIn] = useState(true);
+    /* updateZoomControls — refresh the zoom row on every scale change (memoized poll in the SWF) */
+    const [zoomState, setZoomState] = useState<{ forRoom: unknown; text: string; canIn: boolean; canOut: boolean }>({ forRoom: undefined, text: '1', canIn: false, canOut: false });
+
+    useRoomEventDispatcher<RoomEngineEvent>(RoomEngineEvent.ROOM_ZOOMED, () => setZoomState({ forRoom: room, text: getCurrentRoomZoomText(room), canIn: canZoomRoomCanvas(room, 1), canOut: canZoomRoomCanvas(room, -1) }));
+
+    if (zoomState.forRoom !== room) setZoomState({ forRoom: room, text: getCurrentRoomZoomText(room), canIn: canZoomRoomCanvas(room, 1), canOut: canZoomRoomCanvas(room, -1) });
     /*
      * the entry packets (GetGuestRoomResult enterRoom, RoomRating) arrive while the
      * room engine is still loading, before this widget mounts — useRoomToolsHandler
@@ -64,18 +70,7 @@ export const RoomToolsWidget = () => {
 
     const goToPrivateRoom = (flatId: number) => send(new GetGuestRoomComposer({ roomId: flatId, enterRoom: false, roomForward: true }));
 
-    /*
-     * RoomDesktop.zoomRoomCanvas — the SWF steps through 6 canvas scales; our
-     * geometry supports the two RoomGeometryScaleType steps, so in/out toggle those
-     */
-    const zoom = (direction: number) => {
-        const canvas = room.canvas;
-
-        if (!canvas) return;
-
-        room.resizeRoomCanvas(canvas.width, canvas.height, direction > 0 ? RoomGeometryScaleType.ZoomedIn : RoomGeometryScaleType.ZoomedOut);
-        setZoomedIn(direction > 0);
-    };
+    const { text: zoomText, canIn: canZoomIn, canOut: canZoomOut } = zoomState;
 
     /* button_like disables after rating until the next room entry */
     const likeDisabled = likeDisabledFor === currentRoomId;
@@ -136,20 +131,20 @@ export const RoomToolsWidget = () => {
                     {/* zoom row — 130x30: 11px #cccccc text (6,4), 50% #707070 separator (3,26), buttons at 87/107 */}
                     <div className="relative" style={{ width: 130, height: 30 }}>
                         <span className="absolute font-ubuntu text-[11px] text-[#CCCCCC] whitespace-nowrap" style={{ left: 6, top: 2 }}>
-                            {t('room.zoom.text', undefined, { zoom_level: zoomedIn ? '1' : '0' })}
+                            {t('room.zoom.text', undefined, { zoom_level: zoomText })}
                         </span>
                         <div
-                            className={`absolute cursor-pointer hover:brightness-125 ${ETCH} ${zoomedIn ? 'opacity-40' : ''}`}
+                            className={`absolute ${ETCH} ${canZoomIn ? 'cursor-pointer hover:brightness-125' : 'opacity-40'}`}
                             style={{ left: 87, top: 3 }}
                             {...tooltip(t('room.zoom.zoom_in.tooltip'))}
-                            onClick={() => zoom(1)}>
+                            onClick={() => zoomRoomCanvas(room, 1)}>
                             <NitroIcon icon="icon-roomtools-zoom-in" />
                         </div>
                         <div
-                            className={`absolute cursor-pointer hover:brightness-125 ${ETCH} ${!zoomedIn ? 'opacity-40' : ''}`}
+                            className={`absolute ${ETCH} ${canZoomOut ? 'cursor-pointer hover:brightness-125' : 'opacity-40'}`}
                             style={{ left: 107, top: 3 }}
                             {...tooltip(t('room.zoom.zoom_out.tooltip'))}
-                            onClick={() => zoom(-1)}>
+                            onClick={() => zoomRoomCanvas(room, -1)}>
                             <NitroIcon icon="icon-roomtools-zoom-out" />
                         </div>
                         <div className="absolute bg-[#707070] opacity-50" style={{ left: 3, top: 26, width: 125, height: 1 }} />

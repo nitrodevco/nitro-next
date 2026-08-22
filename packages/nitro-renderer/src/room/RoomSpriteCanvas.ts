@@ -245,12 +245,13 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (!offsetPoint) offsetPoint = point;
 
-        const local = this._display.toLocal(point);
+        const localX = (point.x - this._screenOffsetX) / this._scale;
+        const localY = (point.y - this._screenOffsetY) / this._scale;
 
         this._scale = scale;
 
-        this.screenOffsetX = offsetPoint.x - local.x * this._scale;
-        this.screenOffsetY = offsetPoint.y - local.y * this._scale;
+        this.screenOffsetX = offsetPoint.x - localX * this._scale;
+        this.screenOffsetY = offsetPoint.y - localY * this._scale;
     }
 
     public render(time: number, update: boolean = false): void {
@@ -263,8 +264,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) update = true;
 
         if (this._display && (this._display.x !== this._screenOffsetX || this._display.y !== this._screenOffsetY || this._display.scale.x !== this._scale)) {
-            this._display.x = Math.floor(this._screenOffsetX);
-            this._display.y = Math.floor(this._screenOffsetY);
+            this._display.x = this._screenOffsetX;
+            this._display.y = this._screenOffsetY;
             this._display.scale.set(this._scale);
 
             update = true;
@@ -393,18 +394,20 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!texture || !baseTexture) continue;
 
-            const spriteX = x + sprite.offsetX + screenOffsetX;
-            const spriteY = y + sprite.offsetY + screenOffsetY;
+            const spriteX = this.snapSpriteCoordinate(x + sprite.offsetX, screenOffsetX);
+            const spriteY = this.snapSpriteCoordinate(y + sprite.offsetY, screenOffsetY);
+            const screenX = spriteX + screenOffsetX;
+            const screenY = spriteY + screenOffsetY;
 
             if (sprite.flipH) {
                 const checkX = x + -(texture.width + -sprite.offsetX) + screenOffsetX;
 
-                if (!this.isSpriteVisible(checkX, spriteY, texture.width, texture.height)) continue;
+                if (!this.isSpriteVisible(checkX, screenY, texture.width, texture.height)) continue;
             } else if (sprite.flipV) {
                 const checkY = y + -(texture.height + -sprite.offsetY) + screenOffsetY;
 
-                if (!this.isSpriteVisible(spriteX, checkY, texture.width, texture.height)) continue;
-            } else if (!this.isSpriteVisible(spriteX, spriteY, texture.width, texture.height)) continue;
+                if (!this.isSpriteVisible(screenX, checkY, texture.width, texture.height)) continue;
+            } else if (!this.isSpriteVisible(screenX, screenY, texture.width, texture.height)) continue;
 
             let sortableSprite = sortableCache.getSprite(spriteCount);
 
@@ -427,8 +430,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                 sortableSprite.sprite.libraryAssetName = 'avatar_' + object.id;
             }
 
-            sortableSprite.x = spriteX - screenOffsetX;
-            sortableSprite.y = spriteY - screenOffsetY;
+            sortableSprite.x = spriteX;
+            sortableSprite.y = spriteY;
 
             const newZ = z + sprite.relativeDepth + 3.7e-11 * count;
 
@@ -644,6 +647,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     private getCacheItem(id: number): RoomObjectCacheItem {
         return this._objectCache.getObjectCache(id);
+    }
+
+    private snapSpriteCoordinate(coordinate: number, screenOffset: number): number {
+        if (this._scale === 0.5) return coordinate;
+
+        return (Math.round(screenOffset + coordinate * this._scale) - screenOffset) / this._scale;
     }
 
     private isSpriteVisible(x: number, y: number, width: number, height: number): boolean {
@@ -1110,9 +1119,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public set screenOffsetX(x: number) {
-        x = Math.trunc(x);
-
-        this._mouseLocation.x = this._mouseLocation.x - (x - this._screenOffsetX);
         this._screenOffsetX = x;
     }
 
@@ -1121,9 +1127,6 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     }
 
     public set screenOffsetY(y: number) {
-        y = Math.trunc(y);
-
-        this._mouseLocation.y = this._mouseLocation.y - (y - this._screenOffsetY);
         this._screenOffsetY = y;
     }
 

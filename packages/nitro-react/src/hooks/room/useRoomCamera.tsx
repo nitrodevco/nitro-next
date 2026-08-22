@@ -1,10 +1,11 @@
 import type { IVector3D } from "@nitrodevco/nitro-api";
-import { RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import { RoomDraggedEvent, RoomEngineEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
 import { Room } from "@nitrodevco/nitro-renderer";
 import { Matrix, Point, Rectangle } from "pixi.js";
 import { useRef } from "react";
 
 import { useConfigValue, useRoomCameraSelector, useRoomSelector } from "#base/context";
+import { normalizeScreenOffsetForScale } from "#base/utils";
 
 import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
 
@@ -111,7 +112,8 @@ export const useRoomCamera = () => {
     const updateRoomCamera = (time: number) => {
         const canvas = room?.canvas;
 
-        if (!canvas) return;
+        /* the room camera only runs at scale 1 — while zoomed, the canvas offsets belong to the zoom */
+        if (!canvas || canvas.scale !== 1) return;
 
         const cameraData = cameraDataRef.current;
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
@@ -320,6 +322,21 @@ export const useRoomCamera = () => {
             room.setRoomInstanceRenderingCanvasOffset(new Point(offsetX, offsetY));
         }
     }
+
+    /*
+     * RoomEngine.syncRoomCameraLocationToCanvasOffset — a zoom moves the screen
+     * offsets, so the camera location must follow or the next camera update fights
+     * the zoomed view.
+     */
+    useRoomEventDispatcher<RoomEngineEvent>(RoomEngineEvent.ROOM_ZOOMED, () => {
+        const canvas = room?.canvas;
+
+        if (!canvas || canvas.scale <= 0) return;
+
+        cameraDataRef.current.currentLocation = new Vector3d(
+            -normalizeScreenOffsetForScale(canvas.screenOffsetX, canvas.width, canvas.scale),
+            -normalizeScreenOffsetForScale(canvas.screenOffsetY, canvas.height, canvas.scale));
+    });
 
     useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, event => {
         const cameraData = cameraDataRef.current;

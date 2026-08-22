@@ -6,7 +6,7 @@ import { forwardRef, useEffect } from 'react';
 import { useConfigValue, useRoomMouseActions, useRoomSelector } from '#base/context';
 import { useRoomModifications } from '#base/handlers';
 import { useRoomCamera, useRoomMouse } from '#base/hooks';
-import { GetPixelRatio } from '#base/utils';
+import { GetPixelRatio, resetRoomZoom, updateZoomAnimation } from '#base/utils';
 
 export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
     const room = useRoomSelector();
@@ -19,6 +19,8 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
 
     useEffect(() => {
         if (!room) return;
+
+        resetRoomZoom();
 
         const renderer = GetRenderer();
         const stage = GetStage();
@@ -69,13 +71,15 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
             const time = ticker.lastTime;
             const update = false;
 
+            updateZoomAnimation(room, ticker.deltaMS);
+
             room.update(time, update);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 
             if (mouseData.wasDragged) {
-                const offsetX = ~~(room.canvas?.screenOffsetX || 0);
-                const offsetY = ~~(room.canvas?.screenOffsetY || 0);
+                const offsetX = (room.canvas?.screenOffsetX || 0);
+                const offsetY = (room.canvas?.screenOffsetY || 0);
 
                 room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 

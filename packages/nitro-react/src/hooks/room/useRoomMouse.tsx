@@ -1,15 +1,21 @@
 import type { IRoomObject } from "@nitrodevco/nitro-api";
-import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
+import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectOperationType } from "@nitrodevco/nitro-api";
 import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
+import { Point } from "pixi.js";
 import { useEffect, useRef } from "react";
 
-import { useRoomInteractionSelector, useRoomSelector } from "#base/context";
+import { useRoomInteractionSelector, useRoomSelectedObject, useRoomSelector } from "#base/context";
+import { normalizeScreenOffsetForScale, zoomRoomCanvasFromScroll } from "#base/utils";
+
+import { useRoomObjectModify } from "./useRoomObjectModify";
 
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
     const room = useRoomSelector();
     const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
+    const selectedObject = useRoomSelectedObject();
+    const { rotateActiveObjectPreview } = useRoomObjectModify();
     const mouseDataRef = useRef<{
         mouseXY: { x: number, y: number },
         dragStartXY: { x: number, y: number },
@@ -56,7 +62,11 @@ export const useRoomMouse = () => {
             if (mouseData.isDragged) {
                 mouseData.isDragged = false;
 
-                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(room.roomId, -room.canvas.screenOffsetX, -room.canvas.screenOffsetY));
+                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(
+                    room.roomId,
+                    -normalizeScreenOffsetForScale(room.canvas.screenOffsetX, room.canvas.width, room.canvas.scale),
+                    -normalizeScreenOffsetForScale(room.canvas.screenOffsetY, room.canvas.height, room.canvas.scale)
+));
             }
         } else if (type === MouseEventType.MOUSE_MOVE) {
             if (mouseData.isDragged) {
@@ -118,6 +128,23 @@ export const useRoomMouse = () => {
             sprite.y = y - rectangle.height / 2;
         }
 
+        /*
+         * RoomEngine.handleRoomCanvasMouseEvent — ctrl+alt+click doubles the canvas
+         * scale at the click point, ctrl+alt+shift+click halves it (legacy quantized
+         * path, no ladder)
+         */
+        if (type === MouseEventType.MOUSE_CLICK && ctrlKey && altKey) {
+            if (!handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey)) {
+                const scale = room.getRoomCanvasScale();
+
+                room.setRoomCanvasScale(shiftKey ? Math.trunc(scale) >> 1 : (scale < 1 ? 1 : Math.trunc(scale) << 1), new Point(x, y));
+            }
+
+            mouseDataRef.current.mouseXY = { x, y };
+
+            return;
+        }
+
         if (
             !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
             !room.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
@@ -142,6 +169,33 @@ export const useRoomMouse = () => {
 
         mouseDataRef.current.mouseXY = { x, y };
     }
+
+    /*
+     * RoomDesktop.mouseWheelHandler — a plain scroll rotates the floor furniture being
+     * moved or placed; ctrl+scroll steps the room zoom with the pivot under the cursor.
+     */
+    const wheelHandler = (event: WheelEvent) => {
+        if (!room || event.deltaY === 0) return;
+
+        const ctrlKey = event.ctrlKey || event.metaKey;
+
+        if (!ctrlKey && !event.altKey && !event.shiftKey) {
+            if (selectedObject?.category === RoomObjectCategoryEnum.Floor &&
+                (selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE || selectedObject.operation === RoomObjectOperationType.OBJECT_PLACE)) {
+                rotateActiveObjectPreview(event.deltaY < 0);
+                event.preventDefault();
+            }
+
+            return;
+        }
+
+        if (ctrlKey && !event.altKey && !event.shiftKey) {
+            const deltaLines = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? event.deltaY : event.deltaY / 33.333;
+
+            zoomRoomCanvasFromScroll(room, event.deltaY < 0 ? 1 : -1, deltaLines, new Point(event.clientX, event.clientY));
+            event.preventDefault();
+        }
+    };
 
     useEffect(() => {
         if (!room) return;
@@ -261,6 +315,8 @@ export const useRoomMouse = () => {
         canvas.onmousedown = mouseHandler;
         canvas.onmouseup = mouseHandler;
 
+        canvas.onwheel = wheelHandler;
+
         canvas.ontouchstart = touchHandler;
         canvas.ontouchmove = touchHandler;
         canvas.ontouchend = touchHandler;
@@ -271,11 +327,13 @@ export const useRoomMouse = () => {
             canvas.onmousedown = null;
             canvas.onmouseup = null;
 
+            canvas.onwheel = null;
+
             canvas.ontouchstart = null;
             canvas.ontouchmove = null;
             canvas.ontouchend = null;
         };
-    }, [room, dispatchMouseEvent]);
+    }, [room, dispatchMouseEvent, wheelHandler]);
 
     return { mouseDataRef };
 }

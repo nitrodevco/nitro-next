@@ -1487,10 +1487,11 @@
 }
 
 /* iro_room_details_framed — the roominfo window's own icon set */
-.icon-roominfo-make-home { background: url('/assets/flash/navigator/roominfo_make_home.png') no-repeat center; width: 18px; height: 16px; }
-.icon-roominfo-home { background: url('/assets/flash/navigator/roominfo_home.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roominfo-make-home { background: url('/assets/flash/navigator/roominfo_make_home.png') no-repeat center; width: 19px; height: 14px; }
+.icon-roominfo-home { background: url('/assets/flash/navigator/roominfo_home.png') no-repeat center; width: 19px; height: 14px; }
 .icon-roominfo-favourite { background: url('/assets/flash/navigator/roominfo_favourite.png') no-repeat center; width: 18px; height: 16px; }
 .icon-roominfo-make-favourite { background: url('/assets/flash/navigator/roominfo_make_favourite.png') no-repeat center; width: 18px; height: 16px; }
-.icon-roominfo-remove-rights { background: url('/assets/flash/navigator/roominfo_remove_rights.png') no-repeat center; width: 18px; height: 22px; }
-.icon-roominfo-thumb-up { background: url('/assets/flash/navigator/roominfo_thumb_up.png') no-repeat center; width: 18px; height: 16px; }
-.icon-roominfo-panic { background: url('/assets/flash/navigator/roominfo_panic.png') no-repeat center; width: 39px; height: 25px; }
+.icon-roominfo-remove-rights { background: url('/assets/flash/navigator/roominfo_remove_rights.png') no-repeat center; width: 17px; height: 22px; }
+.icon-roominfo-thumb-up { background: url('/assets/flash/navigator/roominfo_thumb_up.png') no-repeat center; width: 12px; height: 15px; }
+.icon-roominfo-panic { background: url('/assets/flash/navigator/roominfo_panic.png') no-repeat center; width: 23px; height: 22px; }
+.icon-roominfo-camera { background: url('/assets/flash/navigator/roominfo_camera.png') no-repeat center; width: 28px; height: 22px; }

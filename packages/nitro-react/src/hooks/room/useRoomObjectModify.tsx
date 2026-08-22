@@ -21,6 +21,47 @@ export const useRoomObjectModify = () => {
 
     const isFurnitureOwner = (object: IRoomObject | undefined) => object && (ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId));
 
+    /*
+     * RoomObjectEventHandler.rotateActiveObjectPreview — rotates the floor furniture
+     * currently being moved or placed without committing it; the next mouse move
+     * recalibrates its position under the cursor.
+     */
+    const rotateActiveObjectPreview = (forward: boolean) => {
+        if (!room || !selectedObject) return false;
+
+        if (selectedObject.category !== RoomObjectCategoryEnum.Floor) return false;
+
+        if (selectedObject.operation !== RoomObjectOperationType.OBJECT_MOVE && selectedObject.operation !== RoomObjectOperationType.OBJECT_PLACE) return false;
+
+        const roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);
+
+        if (!roomObject) return false;
+
+        const direction = getValidRoomObjectDirection(roomObject, forward);
+
+        if (direction === roomObject.getDirection().x) return false;
+
+        if (!isValidLocation(roomObject, new Vector3d(direction))) return false;
+
+        roomObject.setDirection(new Vector3d(direction));
+
+        setSelectedObject(new SelectedRoomObjectData(
+            selectedObject.objectId,
+            selectedObject.category,
+            selectedObject.operation,
+            roomObject.getLocation(),
+            new Vector3d(direction),
+            selectedObject.typeId,
+            selectedObject.instanceData,
+            selectedObject.stuffData,
+            selectedObject.state,
+            selectedObject.animFrame,
+            selectedObject.posture,
+        ));
+
+        return true;
+    };
+
     const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || isModerator || (controllerLevel >= RoomControllerLevelEnum.Guest) || isFurnitureOwner(room.getRoomObject(objectId, category)));
 
     const modifyRoomObject = (objectId: number, category: RoomObjectCategoryEnum, operation: RoomObjectOperationType) => {
@@ -144,5 +185,5 @@ export const useRoomObjectModify = () => {
         return true;
     };
 
-    return { canManipulateFurniture, modifyRoomObject };
+    return { canManipulateFurniture, modifyRoomObject, rotateActiveObjectPreview };
 }

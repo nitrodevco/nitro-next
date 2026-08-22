@@ -114,6 +114,12 @@
     @apply font-ubuntu-bold text-[10px];
 }
 
+/* il_heading_1 — Ubuntu bold 14, thickness -15 (renders near-regular), white bottom etching */
+@utility text-style-il-heading-1 {
+    @apply font-ubuntu text-[14px];
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
 @utility text-style-id-button {
     @apply font-ubuntu-bold text-[10px] text-white;
 }
