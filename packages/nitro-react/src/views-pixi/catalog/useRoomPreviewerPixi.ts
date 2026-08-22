@@ -1,5 +1,6 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { GetRoomEngine, GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { useApplication } from '@pixi/react';
 import type { Container as PixiContainer, PointData, Ticker } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
@@ -11,20 +12,8 @@ const PREVIEW_OBJECT_LOCATION_Y: number = 2;
 const ALLOWED_IMAGE_CUT: number = 0.5;
 const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
 
-/**
- * Pixi port of hooks/room/useRoomPreviewer.tsx. DOM extracts the temp room's own offscreen
- * `room.canvas.master` (a plain Pixi `Container` - confirmed via RoomSpriteCanvas.ts's `get
- * master()`) into a 2D `<canvas>` every tick via `GetRenderer().extract.canvas()`, purely
- * because DOM needs an HTML element to show it in. Since this whole app already shares one Pixi
- * renderer/stage, that round-trip is unnecessary here: this mounts `room.canvas.master` as a
- * real child of the caller's own Pixi container directly (the same "add an external engine
- * container into the UI's own tree" technique PixiApplicationRoot.tsx already uses for the main
- * room's `GetStage()`), so it renders natively without ever touching a 2D context. Sizing swaps
- * DOM's `ResizeObserver` (no DOM element here to observe) for the same `requestAnimationFrame`
- * + `.layout.computedLayout` polling this package already uses everywhere else for a Pixi
- * container's yoga-computed size (see InfiniteGrid.tsx).
- */
 export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObject<PixiContainer | null>) => {
+    const { app } = useApplication();
     const [room, setRoom] = useState<IRoom | undefined>(undefined);
     const { createMapForSize } = useRoomMapping();
     const previewData = useRef<IRoomPreviewerData>({
@@ -39,6 +28,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         autoStateChange: false,
         autoStateChangeTime: -1,
     });
+    const mountedMasterRef = useRef<PixiContainer | undefined>(undefined);
 
     const getValidRoomObjectDirection = (roomObject: IRoomObjectController, forward: boolean) => {
         if (!roomObject?.model) return 0;
@@ -331,56 +321,40 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         return PREVIEW_OBJECT_ID;
     };
 
-    const mountedMasterRef = useRef<PixiContainer | undefined>(undefined);
-
-    const render = (time: number = -1) => {
-        if (!room || !room.canvas?.master || !containerRef.current) return;
-
-        room.update(time);
-
-        updateRoomPreview();
-
-        if (mountedMasterRef.current !== room.canvas.master) {
-            if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);
-
-            containerRef.current.addChild(room.canvas.master);
-            mountedMasterRef.current = room.canvas.master;
-        }
-    };
-
     useEffect(() => {
-        if (!room) return;
+        if (!room || !app) return;
 
-        const ticker = GetTicker();
-
-        const tick = (ticker: Ticker) => render(ticker.lastTime);
-
-        ticker.add(tick);
-
-        let raf = 0;
         let lastWidth = -1;
         let lastHeight = -1;
-        let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
 
-        const poll = () => {
+        const tick = (ticker: Ticker) => {
             const node = containerRef.current;
 
-            if (node) {
-                const width = Math.floor(node.layout?.computedLayout?.width ?? node.width ?? 0);
-                const height = Math.floor(node.layout?.computedLayout?.height ?? node.height ?? 0);
+            if (!room?.canvas?.master || !node) return;
 
-                if ((width !== lastWidth || height !== lastHeight) && width > 0 && height > 0) {
-                    lastWidth = width;
-                    lastHeight = height;
+            room.update(ticker.lastTime);
 
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => resizeRoomPreview(width, height), 5);
-                }
+            updateRoomPreview();
+
+            if (mountedMasterRef.current !== room.canvas.master) {
+                node.parent?.removeChild(node);
+
+                node.addChild(room.canvas.master);
+                mountedMasterRef.current = room.canvas.master;
             }
 
-            raf = requestAnimationFrame(poll);
-        };
-        raf = requestAnimationFrame(poll);
+            const width = Math.floor(node.layout?.computedLayout?.width ?? node.width ?? 0);
+            const height = Math.floor(node.layout?.computedLayout?.height ?? node.height ?? 0);
+
+            if ((width !== lastWidth || height !== lastHeight) && width > 0 && height > 0) {
+                lastWidth = width;
+                lastHeight = height;
+
+                resizeRoomPreview(width, height);
+            }
+        }
+
+        app.ticker.add(tick);
 
         const onObjectEvent = (event: RoomEngineObjectEvent) => {
             if (!room || !event) return;
@@ -406,12 +380,11 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         ];
 
         return () => {
-            cancelAnimationFrame(raf);
-            clearTimeout(resizeTimeout);
-            ticker.remove(tick);
+            app.ticker.remove(tick);
             listeners.map(x => x?.());
 
             if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);
+
             mountedMasterRef.current = undefined;
         };
     }, [room]);
@@ -428,6 +401,8 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
             inst.updateRoomPlaneType('110', '99999', undefined);
         }
+
+
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setRoom(inst);
     }, [roomId]);

@@ -6,17 +6,20 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
-import { Composite, NineSlice } from './utils';
-import { BackgroundLayer, type BackgroundLayerConfig, BlendOverlay } from './utils/Layer';
+import { BackgroundLayer, BackgroundLayerConfig, BlendOverlay, Composite, NineSlice } from './layer';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 interface BorderVariant {
-    layer: BackgroundLayerConfig;
+    layer?: BackgroundLayerConfig;
     overlay?: BackgroundLayerConfig;
+    tintColor?: string;
+    layout?: BoxLayout;
 }
 
-const BORDER_VARIANTS: Record<string, BorderVariant> = {
+type BorderVariants = Record<string, BorderVariant>;
+
+const BORDER_VARIANTS: BorderVariants = {
     '0': { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
     '1': { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
     '2': { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
@@ -26,7 +29,7 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
     '6': { layer: NineSlice('border-6-default-src', 8, 8, 8, 8) },
     '7': { layer: NineSlice('border-7-default-src', 6, 6, 6, 7) },
     '8': { layer: NineSlice('border-8-default-src', 10, 10, 10, 10) },
-    '9': { layer: NineSlice('border-9-default-src', 7, 7, 7, 8) },
+    '9': { layer: NineSlice('border-9-default-src', 7, 7, 7, 8), tintColor: '#686661' },
     '10': { layer: NineSlice('border-10-default-src', 6, 6, 6, 8) },
     '100': { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
     '101': {
@@ -105,21 +108,14 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
             { textureKey: 'border-107-default-background-bottom-right-src', right: 0, bottom: 0, width: 5, height: 5 },
         ]),
     },
-    '108': { layer: NineSlice('border-108-default-src', 3, 3, 3, 3) },
+    '108': { layer: NineSlice('border-108-default-src', 3, 3, 3, 3), tintColor: '#676767' },
     '200': { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
 };
 
-const BORDER_TINT_COLORS: Partial<Record<string, string>> = {
-    '9': '#686661',
-    '108': '#676767',
-};
-
 export interface BorderProps {
-    variant?: string;
-    defaultVariant?: string;
+    variant?: keyof BorderVariants;
+    defaultVariant?: keyof BorderVariants;
     tintColor?: string;
-    /** White-wash overlay strength (0-1), applied only when the resolved variant's base
-     *  layer is a single nine-slice texture - see theme/Border.tsx's `blend` prop. */
     blend?: number;
     layout?: BoxLayout;
     children?: ReactNode;
@@ -128,14 +124,14 @@ export interface BorderProps {
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
     ({ variant, defaultVariant, tintColor, blend, layout, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('border', variant, defaultVariant);
-        const resolvedTint = tintColor || BORDER_TINT_COLORS[resolvedVariant];
         const config = BORDER_VARIANTS[resolvedVariant] ?? BORDER_VARIANTS['0'];
+        const resolvedTint = tintColor || config.tintColor;
 
         return (
-            <Box ref={ref} layout={layout}>
-                <BackgroundLayer layer={config.layer} tint={resolvedTint} />
+            <Box ref={ref} layout={{ ...config.layout, ...layout }}>
+                <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
                 <BackgroundLayer layer={config.overlay} />
-                {config.layer.kind === 'nineSlice' && (
+                {config.layer && config.layer.kind === 'nineSlice' && (
                     <BlendOverlay
                         textureKey={config.layer.textureKey}
                         leftWidth={config.layer.leftWidth}

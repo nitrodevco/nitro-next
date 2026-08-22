@@ -1,7 +1,7 @@
 import './utils/pixiElements';
 
 import { DropShadowFilter } from 'pixi-filters';
-import { type ReactNode, useMemo } from 'react';
+import { type ReactNode } from 'react';
 
 import { VariantCascadeProvider } from '#base/theme';
 import { GetPixelRatio } from '#base/utils';
@@ -9,10 +9,9 @@ import { GetPixelRatio } from '#base/utils';
 import { Box, type BoxLayout } from './Box';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
+import { BackgroundLayer, BackgroundLayerConfig, Composite } from './layer';
+import { NineSlice } from './layer/NineSlice';
 import { Scaler, type ScalerDirection } from './Scaler';
-import { Composite } from './utils';
-import { BackgroundLayer, type BackgroundLayerConfig } from './utils/Layer';
-import { NineSlice } from './utils/NineSlice';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
 import { useResolvedVariant } from './utils/useResolvedVariant';
@@ -22,7 +21,8 @@ interface FrameVariant {
     overlay?: BackgroundLayerConfig;
     minWidth: number;
     minHeight: number;
-    tint?: string;
+    tintColor?: string;
+    layout?: BoxLayout;
 }
 
 type FrameVariants = Record<string, FrameVariant>;
@@ -41,11 +41,11 @@ const BLUE_FRAME_SHINE = Composite([
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
 const FRAME_VARIANTS: FrameVariants = {
-    '0': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#418db0' },
-    '1': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#4c4c4c' },
-    '2': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#fac200' },
-    '3': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#418db0' },
-    '4': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#67a3bf' },
+    '0': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
+    '1': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
+    '2': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
+    '3': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0' },
+    '4': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf' },
     '7': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
     '100': {
         layer: Composite([
@@ -67,7 +67,7 @@ const FRAME_VARIANTS: FrameVariants = {
 export interface FrameProps {
     id?: string;
     variant?: keyof FrameVariants;
-    defaultVariant?: string;
+    defaultVariant?: keyof FrameVariants;
     caption?: string;
     tintColor?: string;
     layout?: BoxLayout;
@@ -76,25 +76,14 @@ export interface FrameProps {
     children?: ReactNode;
 }
 
-/**
- * Pixi port of theme/Frame.tsx - a draggable, resizable window: nine-slice/composite
- * border/background (+ optional shine overlay), Header (caption + close button, drag
- * handle), ContentArea (children), Scaler (resize handle), and the universal drop-shadow
- * (`drop-shadow-[2.83px_2.83px_4px_rgba(0,0,0,0.349)]`, applied to every DOM variant
- * unconditionally) via a Pixi DropShadowFilter. Reuses the DOM package's variant-cascade
- * system and SystemStore z-order/window registry verbatim (both are pure React
- * context/zustand, no DOM dependency) via useFrameDrag.ts/useFrameResize.ts's Pixi ports
- * of hooks/ui/useFrameDrag.ts/useFrameResize.ts.
- */
+const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
+
 export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
     const { resolvedVariant, ownCascade } = useResolvedVariant('frame', variant, defaultVariant);
     const config = FRAME_VARIANTS[resolvedVariant] ?? FRAME_VARIANTS['0'];
-    const resolvedTint = tintColor || config.tint;
-
+    const resolvedTint = tintColor || config.tintColor;
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
     const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: config.minWidth, height: config.minHeight });
-
-    const dropShadowFilter = useMemo(() => new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() }), []);
 
     return (
         <Box
@@ -103,7 +92,7 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
             y={offset.dy}
             zIndex={zIndex}
             eventMode="static"
-            filters={[dropShadowFilter]}
+            filters={[dropShadow]}
             onPointerDown={onPointerDown}
             layout={{
                 flexDirection: 'column',
@@ -111,16 +100,12 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 minHeight: config.minHeight,
                 width: config.minWidth,
                 height: config.minHeight,
-                // The caller's own layout (e.g. an explicit width/height, analogous to the DOM
-                // Frame's className w-*/h-* defaults) comes next, then - if the user has
-                // actively resized this frame (a stored/dragged size) - that wins for
-                // width/height specifically, the same way the DOM version's resize-driven
-                // inline style out-specifies its own className defaults.
+                ...config.layout,
                 ...layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            <BackgroundLayer layer={config.layer} tint={resolvedTint} />
+            <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
             <BackgroundLayer layer={config.overlay} />
             <VariantCascadeProvider map={ownCascade}>
                 <Header caption={caption} tintColor={resolvedTint} onClose={onClose} onPointerDown={onHeaderPointerDown} />

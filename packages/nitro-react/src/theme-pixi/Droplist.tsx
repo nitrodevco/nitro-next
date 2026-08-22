@@ -6,52 +6,52 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { BackgroundLayer, BackgroundLayerConfig, CompositeLayer, NineSlice } from './layer';
 import { Text } from './Text';
-import { CompositeLayer, NineSliceLayer } from './utils/Layer';
-import { useResolvedVariant } from './utils/useResolvedVariant';
-import { wrapTextChildren } from './utils/wrapTextChildren';
+import { TextStyleKey, useResolvedVariant, wrapTextChildren } from './utils';
 
 interface DroplistVariant {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
+    layer: BackgroundLayerConfig;
+    overlay?: BackgroundLayerConfig;
+    tintColor?: string;
+    textStyleKey?: TextStyleKey;
+    textColor?: string;
     arrowTextureKey: string;
     arrowTop: number;
     arrowRight: number;
 }
 
-/**
- * Static-skinning port of theme/Droplist.tsx - like Dropmenu/Tooltip, confirmed to have no
- * call sites and no open/close/positioning logic anywhere in DOM. Variant/tint/overlay-arrow
- * art only.
- */
-const DROPLIST_VARIANTS: Record<string, DroplistVariant> = {
-    '0': { textureKey: 'dropmenu-0-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3, arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
-    '1': { textureKey: 'droplist-1-default-src', leftWidth: 6, topHeight: 6, rightWidth: 6, bottomHeight: 6, arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
+type DroplistVariants = Record<string, DroplistVariant>;
+
+const DROPLIST_VARIANTS: DroplistVariants = {
+    '0': { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
+    '1': { layer: NineSlice('droplist-1-default-src', 6, 6, 6, 6), arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
 };
 
 export interface DroplistProps {
-    variant?: string;
-    defaultVariant?: string;
+    variant?: keyof DroplistVariants;
+    defaultVariant?: keyof DroplistVariants;
     tintColor?: string;
+    textColor?: string;
     layout?: BoxLayout;
     children?: ReactNode;
 }
 
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
-    ({ variant, defaultVariant, tintColor, layout, children }, ref) => {
+    ({ variant, defaultVariant, tintColor, textColor, layout, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('droplist', variant, defaultVariant);
         const config = DROPLIST_VARIANTS[resolvedVariant] ?? DROPLIST_VARIANTS['0'];
+        const resolvedTint = tintColor || config.tintColor;
+        const resolvedTextColor = textColor ?? config.textColor;
 
         return (
-            <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...layout }}>
-                <NineSliceLayer textureKey={config.textureKey} leftWidth={config.leftWidth} topHeight={config.topHeight} rightWidth={config.rightWidth} bottomHeight={config.bottomHeight} tint={tintColor} />
-                <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />
+            <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layer, ...layout }}>
+                <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
+                {config.overlay && <BackgroundLayer layer={config.overlay} />}
+                {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <Text text={children} textStyle="text-style-regular" textOptions={{ fill: '#000000' }} />
+                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>

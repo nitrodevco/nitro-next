@@ -6,20 +6,10 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { NineSliceLayer } from './layer';
 import { Text } from './Text';
-import { NineSliceLayer } from './utils/Layer';
-import { useResolvedVariant } from './utils/useResolvedVariant';
-import { wrapTextChildren } from './utils/wrapTextChildren';
+import { useResolvedVariant, wrapTextChildren } from './utils';
 
-/**
- * Static-skinning port of theme/Tooltip.tsx - single variant, no tint/overlay/interactivity
- * anywhere in DOM (the simplest component in the whole package). Note DOM's class string is
- * `text-[#000000] text-style-u-tool-tip` - since `text-style-u-tool-tip` itself bakes in
- * `text-white` (see theme/utilities.css) and is the LATER class in cascade order, the tooltip
- * actually renders WHITE text in the browser despite the explicit black hex earlier in the
- * string. Reproduced here by using the text style's own baked-in color (already `#ffffff` in
- * utils/textStyles.ts's registry) rather than the literal `#000000`, matching real DOM output.
- */
 export interface TooltipProps {
     variant?: string;
     defaultVariant?: string;

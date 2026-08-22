@@ -6,98 +6,59 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from '../Box';
+import { BackgroundLayer, BackgroundLayerConfig } from '../layer';
 import { Text } from '../Text';
-import { NineSliceLayer } from './Layer';
 import { type TextStyleKey } from './textStyles';
-import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState, resolveByState, useInteractionState } from './useInteractionState';
+import { type InteractionStates, resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
-/**
- * Shared implementation behind ButtonGroupLeft/Center/Right. theme/ButtonGroupLeft.tsx,
- * theme/ButtonGroupCenter.tsx and theme/ButtonGroupRight.tsx are otherwise-identical DOM
- * components that differ only in their asset-key prefix and border-image-slice geometry, so
- * their Pixi ports share this one render implementation - each component file supplies just
- * its own `cascadeKey` and variant table. Unlike Border/Button/ContainerButton, none of these
- * three DOM components carry a `tintColor` prop or any tintable-vars table, so this factory
- * has no tint handling at all (not an omission - there is nothing to port).
- */
-
-/** `aria-selected:` and `active:` swap to the exact same art/slice in every DOM variant of
- *  these three components, so both collapse to this one `selected` state here. Every variant
- *  populates all four states (unlike Button/ContainerButton's optional hover/disabled), but
- *  `InteractionStates`' fields being optional doesn't require that - a fully-populated table
- *  still satisfies it. */
 export interface ButtonGroupVariant {
-    states: InteractionStates<NineSliceLayerState>;
-    paddingLeft: number;
-    paddingTop: number;
-    paddingRight: number;
-    paddingBottom: number;
-    minWidth: number;
-    minHeight: number;
-    textStyleKey: TextStyleKey;
-    color: string;
+    states: InteractionStates<BackgroundLayerConfig>;
+    overlay?: InteractionStates<BackgroundLayerConfig>;
+    tintColor?: string;
+    layout?: BoxLayout;
+    textStyleKey?: TextStyleKey;
+    color?: string;
 }
-
-export const layerState = nineSliceLayerState;
 
 export interface ButtonGroupComponentProps {
     variant?: string;
     defaultVariant?: string;
-    /** Pixi equivalent of the DOM `aria-selected` state - renders the same art as an
-     *  in-progress pointer press (see `resolveLayerState` above). */
     selected?: boolean;
-    /** Not present as a named prop on the DOM components (they just forward arbitrary
-     *  `aria-disabled`/HTML props), but needed here to ever reach their `aria-disabled:`
-     *  art swap, which would otherwise be unreachable dead configuration. */
     disabled?: boolean;
     layout?: BoxLayout;
+    tintColor?: string;
     onPress?: () => void;
     children?: ReactNode;
 }
 
-/**
- * theme/ButtonGroupLeft.tsx & co. build their `cva` base class from an empty string - unlike
- * Button/ButtonThick/ContainerButton they carry no `flex items-center justify-center` classes
- * at all, so (matching Border.tsx, not Button.tsx) this deliberately does NOT add flex
- * centering to the Box layout: a plain DOM block div lays out text top-left inset by padding,
- * and this reproduces that rather than the centered layout the other button-family ports use.
- */
 export const createButtonGroupComponent = (
     displayName: string,
     cascadeKey: string,
     variants: Record<string, ButtonGroupVariant>
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
-        ({ variant, defaultVariant, selected, disabled, layout, onPress, children }, ref) => {
+        ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
             const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
             const config = variants[resolvedVariant] ?? variants['0'];
             const { state, handlers } = useInteractionState(disabled);
             const resolvedLayer = resolveByState(config.states, state, selected);
+            const resolvedOverlay = config.overlay && resolveByState(config.overlay, state);
+            const resolvedTint = tintColor || config.tintColor;
 
             return (
                 <Box
                     ref={ref}
                     layout={{
-                        paddingLeft: config.paddingLeft,
-                        paddingTop: config.paddingTop,
-                        paddingRight: config.paddingRight,
-                        paddingBottom: config.paddingBottom,
-                        minWidth: config.minWidth,
-                        minHeight: config.minHeight,
+                        ...config.layout,
                         ...layout,
                     }}
                     {...handlers}
                     onPointerTap={disabled ? undefined : onPress}
                 >
-                    <NineSliceLayer
-                        textureKey={resolvedLayer.textureKey}
-                        leftWidth={resolvedLayer.leftWidth}
-                        topHeight={resolvedLayer.topHeight}
-                        rightWidth={resolvedLayer.rightWidth}
-                        bottomHeight={resolvedLayer.bottomHeight}
-                    />
+                    <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                    {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                     <VariantCascadeProvider map={ownCascade}>
                         {typeof children === 'string'
                             ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
