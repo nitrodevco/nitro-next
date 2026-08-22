@@ -3,7 +3,7 @@ import './utils/pixiElements';
 import { DropShadowFilter } from 'pixi-filters';
 import { type ReactNode } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme-core';
 import { GetPixelRatio } from '#base/utils';
 
 import { Box } from './Box';

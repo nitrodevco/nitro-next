@@ -3,7 +3,7 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme';
+import { VariantCascadeProvider } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
 import { Text } from './Text';

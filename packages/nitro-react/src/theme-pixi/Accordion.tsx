@@ -2,7 +2,7 @@ import './utils/pixiElements';
 
 import { type ReactNode, useState } from 'react';
 
-import { AccordionContext, type AccordionType } from '#base/theme';
+import { AccordionContext, type AccordionType } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
 

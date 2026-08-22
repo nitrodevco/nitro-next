@@ -2,8 +2,8 @@ import type { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate, useNavigatorSelectors } from '#base/context';
 import { Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';
-import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from '#base/views/navigator/NavigatorRoomEntryUtils';
 
+import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomEntryViewPixi } from './NavigatorRoomEntryViewPixi';
 
 export const RESULTS_MODE_ROWS = 0;

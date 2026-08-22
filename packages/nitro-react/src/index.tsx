@@ -1,7 +1,5 @@
 import './index.css';
 
-import.meta.glob('./views/**/*.css', { eager: true });
-
 import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';

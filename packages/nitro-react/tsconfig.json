@@ -18,8 +18,8 @@
             "#base/hooks": [
                 "./src/hooks/index.ts"
             ],
-            "#base/theme": [
-                "./src/theme/index.ts"
+            "#base/theme-core": [
+                "./src/theme-core/index.ts"
             ],
             "#base/theme-pixi": [
                 "./src/theme-pixi/index.ts"

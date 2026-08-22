@@ -1,7 +1,7 @@
-import type { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
-import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
-import type { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
-import type { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
+import type { CatalogViewWindowParams } from '#base/views-pixi/catalog/CatalogViewPixi';
+import type { FriendListViewWindowParams } from '#base/views-pixi/friendlist/FriendListViewPixi';
+import type { InventoryViewWindowParams } from '#base/views-pixi/inventory/InventoryViewPixi';
+import type { NavigatorViewWindowParams } from '#base/views-pixi/navigator/NavigatorViewPixi';
 
 export type WindowRegistry = {
     avatar_editor: NoWindowParams;

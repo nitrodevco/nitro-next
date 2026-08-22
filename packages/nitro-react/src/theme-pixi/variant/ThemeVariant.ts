@@ -1,4 +1,4 @@
-import { VariantCascadeMap } from "#base/theme/utils";
+import { VariantCascadeMap } from "#base/theme-core";
 
 import { BoxLayout } from "../Box";
 import { BackgroundLayerConfig } from "../layer";

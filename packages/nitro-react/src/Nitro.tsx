@@ -13,7 +13,7 @@ import { PixiApplicationRoot } from '#base/theme-pixi';
 import { useWebSocketContext } from './context';
 import { useAvatarLoader } from './hooks/logic';
 import { MainView } from './MainView';
-import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
+import { LoadingScreenView } from './views-pixi/loading-screen/LoadingScreenView';
 
 export const Nitro: FC = () => {
     const [isRendererReady, setIsRendererReady] = useState(false);

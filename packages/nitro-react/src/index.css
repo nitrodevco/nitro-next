@@ -2,11 +2,8 @@
 @source "**/*.{ts,tsx,css}";
 @source inline("grid-cols-{1..12}");
 
-@import './theme/theme.css';
-@import './theme/fonts.css';
-@import './theme/utilities.css';
-@import './theme/icons.css';
-@import './theme/habbo-icons.css';
+@import './theme-core/fonts.css';
+@import './base.css';
 
 @theme static {
     /* Typography */

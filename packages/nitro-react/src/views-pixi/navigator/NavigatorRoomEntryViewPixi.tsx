@@ -2,8 +2,9 @@ import type { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
 import { Border, Box, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
-import { RESULTS_MODE_TILES } from '#base/views/navigator/NavigatorCategoryView';
-import { getUserCountColor } from '#base/views/navigator/NavigatorRoomEntryUtils';
+
+import { RESULTS_MODE_TILES } from './NavigatorCategoryViewPixi';
+import { getUserCountColor } from './NavigatorRoomEntryUtils';
 
 /** RoomEntryUtils.getDoorModeIconAsset - switch(doorMode - 1) */
 const DOOR_MODE_ICONS: Record<number, 'icon-nav-doormode-doorbell' | 'icon-nav-doormode-password' | 'icon-nav-doormode-invisible'> = {

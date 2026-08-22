@@ -1,4 +1,4 @@
-import { useCascadedVariant, VARIANT_CASCADE_CONFIG, type VariantCascadeMap } from '#base/theme';
+import { useCascadedVariant, VARIANT_CASCADE_CONFIG, type VariantCascadeMap } from '#base/theme-core';
 
 export interface ResolvedVariant {
     resolvedVariant: string;

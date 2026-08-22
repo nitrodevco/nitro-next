@@ -2,7 +2,7 @@
  * theme/AccordionContext.tsx is pure React Context + hooks - `createContext`/`useContext`
  * only, zero JSX, zero DOM dependency (no className, no host element, no styling of any
  * kind). It behaves identically whether the tree underneath is rendered by react-dom or
- * react-pixi, so it is reused verbatim from '#base/theme' here instead of being forked, the
+ * react-pixi, so it is reused verbatim from '#base/theme-core' here instead of being forked, the
  * same way VariantCascadeContext/useCascadedVariant/VARIANT_CASCADE_CONFIG are reused
  * verbatim elsewhere in this package (see e.g. Border.tsx, ContentArea.tsx). This file exists
  * so theme-pixi call sites can `import { useAccordion } from '#base/theme-pixi'` alongside
@@ -30,4 +30,4 @@ export {
     type AccordionType,
     useAccordion,
     useAccordionItem,
-} from '#base/theme';
+} from '#base/theme-core';

@@ -2,7 +2,7 @@ import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import type { Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
-import { THEME_URLS } from '../../theme/utils/themeUrls';
+import { THEME_URLS } from '../../theme-core/themeUrls';
 
 const textureCache = new Map<string, Promise<Texture | undefined>>();
 
@@ -61,6 +61,6 @@ export const useTextureFromUrl = (url: string | undefined): Texture | undefined 
 
 /**
  * Resolves a theme asset key (e.g. 'border-9-default-src'), looked up via THEME_URLS -
- * the same asset registry the DOM theme package uses - to a Pixi Texture.
+ * the shared asset registry theme-core exposes (used by both render targets) - to a Pixi Texture.
  */
 export const usePixiTexture = (themeKey: string | undefined): Texture | undefined => useTextureFromUrl(themeKey ? THEME_URLS[themeKey] : undefined);

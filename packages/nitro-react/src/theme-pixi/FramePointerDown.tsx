@@ -28,7 +28,7 @@ export interface FramePointerDownProps {
 
 export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, FramePointerDownProps>(
     ({ variant, defaultVariant, layout }, ref) => {
-        const { resolvedVariant } = useResolvedVariant('framePointerDown', variant, defaultVariant, '7');
+        const { resolvedVariant } = useResolvedVariant('framePointerDown', variant, defaultVariant ?? '7');
         const config = FRAME_POINTER_DOWN_VARIANTS[resolvedVariant] ?? FRAME_POINTER_DOWN_VARIANTS['7'];
 
         return (
