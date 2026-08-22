@@ -6,9 +6,10 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY } from './utils/buttonOverlayPieces';
 import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
-import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { type TextStyleKey } from './utils/textStyles';
 import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState, resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -251,7 +252,7 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                 {resolvedOverlay && <CompositeLayer pieces={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle(config.textStyleKey, { fill: resolvedTextColor })} />
+                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
                         : children}
                 </VariantCascadeProvider>
             </Box>

@@ -6,11 +6,11 @@ import { getPixiTextStyle, TextStyleKey } from "./utils/textStyles";
 type TextProps = {
     text: string;
     textStyle: TextStyleKey;
-    options?: TextStyleOptions;
+    textOptions?: TextStyleOptions;
 } & PixiReactElementProps<typeof PixiText>;
 
-export const Text = ({ text, textStyle, options = {}, layout, ...props }: TextProps) => {
-    const style = getPixiTextStyle(textStyle, options);
+export const Text = ({ text, textStyle, textOptions, layout, ...props }: TextProps) => {
+    const style = getPixiTextStyle(textStyle, textOptions);
 
     return <pixiText
         text={text}
