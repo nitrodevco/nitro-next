@@ -10,4 +10,5 @@ export const useSystemActions = () => useSystemContext(useShallow(x => ({
     getLocalizationValue: x.getLocalizationValue,
     setLocalization: x.setLocalization,
     setLocalizationForFurniture: x.setLocalizationForFurniture,
+    setLandingViewVisible: x.setLandingViewVisible
 })));

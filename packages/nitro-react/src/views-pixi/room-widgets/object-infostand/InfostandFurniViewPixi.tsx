@@ -1,4 +1,4 @@
-import type { IRoomFurnitureData } from '@nitrodevco/nitro-api';
+import type { IFurniData } from '@nitrodevco/nitro-api';
 import { FurniturePickupMode, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { useTranslation } from '#base/context';
@@ -7,7 +7,7 @@ import { Border, Box, Button, CloseButton, getPixiTextStyle } from '#base/theme-
 import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
 
 export interface InfostandFurniViewPixiProps {
-    furniData: IRoomFurnitureData;
+    furniData: IFurniData;
     canMove: boolean;
     canRotate: boolean;
     canUse: boolean;

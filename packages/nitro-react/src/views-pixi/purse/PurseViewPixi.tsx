@@ -1,5 +1,5 @@
 import { useTranslation, useWallet } from "#base/context";
-import { Border, Box, Button, FONT_AA_DROP_SHADOW, getPixiTextStyle, NitroCurrencyIcon, NitroIcon } from "#base/theme-pixi";
+import { Border, Box, Button, getPixiTextStyle, NitroCurrencyIcon, NitroIcon } from "#base/theme-pixi";
 
 export const PurseViewPixi = () => {
     const currency = useWallet();
@@ -48,7 +48,7 @@ export const PurseViewPixi = () => {
                     <pixiText
                         layout={{}}
                         text={t('purse.clubdays.zero.amount.text')}
-                        style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4', dropShadow: FONT_AA_DROP_SHADOW })}
+                        style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4' })}
                     />
                 </Border>
                 <Border variant="1" tintColor="#FFE1CC" layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4 }}>
@@ -56,7 +56,7 @@ export const PurseViewPixi = () => {
                     <pixiText
                         layout={{}}
                         text={t('earnings.title')}
-                        style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4', dropShadow: FONT_AA_DROP_SHADOW })}
+                        style={getPixiTextStyle('text-style-u-bold', { fill: '#00C1C4' })}
                     />
                 </Border>
             </Box>

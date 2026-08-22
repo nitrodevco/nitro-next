@@ -1,6 +1,7 @@
 
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
-import { GetRenderer, GetRoomEngine, GetTicker, GetTickerTime } from "@nitrodevco/nitro-renderer";
+import { GetRoomEngine, GetTicker, GetTickerTime } from "@nitrodevco/nitro-renderer";
+import { useApplication } from "@pixi/react";
 import { PointData, Ticker } from "pixi.js";
 import { RefObject, useEffect, useEffectEvent, useRef, useState } from "react";
 
@@ -14,6 +15,7 @@ const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
 
 export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvasElement | null>) => {
     const [room, setRoom] = useState<IRoom | undefined>(undefined);
+    const { app } = useApplication();
     const { createMapForSize } = useRoomMapping();
     const previewData = useRef<IRoomPreviewerData>({
         objectType: 0,
@@ -354,7 +356,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
         updateRoomPreview();
 
-        const extracted = GetRenderer().extract.canvas({ target: room.canvas.master });
+        const extracted = app.renderer.extract.canvas({ target: room.canvas.master });
         const ctx = canvasRef.current.getContext('2d');
 
         if (!ctx) return;

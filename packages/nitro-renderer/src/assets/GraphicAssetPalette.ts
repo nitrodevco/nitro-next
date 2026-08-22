@@ -1,7 +1,7 @@
 import type { IGraphicAssetPalette } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
-import { GetRenderer } from '../utils';
+import { TextureUtils } from '../utils';
 
 export class GraphicAssetPalette implements IGraphicAssetPalette {
     private _palette: [number, number, number][];
@@ -18,7 +18,7 @@ export class GraphicAssetPalette implements IGraphicAssetPalette {
     }
 
     public applyPalette(texture: Texture): Texture {
-        const canvas = GetRenderer().texture.generateCanvas(texture);
+        const canvas = TextureUtils.getRenderer().texture.generateCanvas(texture);
         const ctx = canvas.getContext('2d');
 
         if (!ctx) return texture;

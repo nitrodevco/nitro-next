@@ -1,80 +1,295 @@
-import { RoomGeometryScaleType, RoomRenderedEvent } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetStage, GetTicker } from '@nitrodevco/nitro-renderer';
-import type { Ticker } from 'pixi.js';
-import { forwardRef, useEffect } from 'react';
+import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
+import { GetRoomStage, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
+import { useApplication } from "@pixi/react";
+import { FederatedPointerEvent, Ticker } from "pixi.js";
+import { useEffect, useRef } from "react";
 
-import { useConfigValue, useRoomMouseActions, useRoomSelector } from '#base/context';
-import { useRoomModifications } from '#base/handlers';
-import { useRoomCamera, useRoomMouse } from '#base/hooks';
+import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from "#base/context";
+import { useRoomCamera } from "#base/hooks";
 
-export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
+type MouseData = {
+    mouseXY: { x: number, y: number };
+    dragStartXY: { x: number, y: number };
+    dragXY: { x: number, y: number };
+    isDragged: boolean;
+    wasDragged: boolean;
+}
+
+const DRAG_THRESHOLD: number = 15;
+
+export const RoomCanvas = () => {
+    const { app } = useApplication();
     const room = useRoomSelector();
-    const { mouseDataRef } = useRoomMouse();
-    const maxFPS = useConfigValue<number>('fps.limit') ?? 60;
+    const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
     const { updateRoomCamera } = useRoomCamera();
     const { hasAndResetCursorUpdate, hasCursorOwners } = useRoomMouseActions();
+    const mouseDataRef = useRef<MouseData>({
+        mouseXY: { x: 0, y: 0 },
+        dragStartXY: { x: 0, y: 0 },
+        dragXY: { x: 0, y: 0 },
+        isDragged: false,
+        wasDragged: false
+    });
 
-    useRoomModifications();
+    const handleRoomDragging = (
+        x: number,
+        y: number,
+        type: string,
+        altKey: boolean,
+        ctrlKey: boolean,
+        shiftKey: boolean
+    ) => {
+        if (!room || !room.canvas || isPlayingGame) return false;
 
-    useEffect(() => {
-        if (!room) return;
+        const mouseData = mouseDataRef.current;
 
-        const renderer = GetRenderer();
-        const stage = GetStage();
-        const ticker = GetTicker();
+        if (room.areaSelection.areaSelectionState === RoomAreaSelectionManager.SELECTING) {
+            mouseData.isDragged = false;
+            mouseData.wasDragged = false;
 
-        const handleSize = (width: number, height: number) => {
-            let canvas = room.canvas;
-
-            if (!canvas) canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
-            else {
-                canvas.initialize(width, height);
-            }
-
-            updateRoomCamera(-1);
-
-            if (canvas.master && canvas.master.parent !== stage) stage.addChild(canvas.master);
+            return false;
         }
 
-        handleSize(window.innerWidth, window.innerHeight);
+        let offsetX = x - mouseData.mouseXY.x;
+        let offsetY = y - mouseData.mouseXY.y;
+
+        if (type === MouseEventType.MOUSE_DOWN) {
+            if (!altKey && !ctrlKey && !shiftKey && !isDecorating) {
+                mouseData.isDragged = true;
+                mouseData.wasDragged = false;
+                mouseData.dragStartXY = { ...mouseData.mouseXY };
+            }
+        } else if (type === MouseEventType.MOUSE_UP) {
+            if (mouseData.isDragged) {
+                mouseData.isDragged = false;
+
+                if (mouseData.wasDragged) room.dispatchEvent(new RoomDraggedEvent(room.roomId, -room.canvas.screenOffsetX, -room.canvas.screenOffsetY));
+            }
+        } else if (type === MouseEventType.MOUSE_MOVE) {
+            if (mouseData.isDragged) {
+                if (!mouseData.wasDragged) {
+                    offsetX = x - mouseData.dragStartXY.x;
+                    offsetY = y - mouseData.dragStartXY.y;
+
+                    if (
+                        offsetX <= -DRAG_THRESHOLD ||
+                        offsetX >= DRAG_THRESHOLD ||
+                        offsetY <= -DRAG_THRESHOLD ||
+                        offsetY >= DRAG_THRESHOLD
+                    ) {
+                        mouseData.wasDragged = true;
+                    }
+
+                    offsetX = 0;
+                    offsetY = 0;
+                }
+
+                if (!(offsetX == 0) || !(offsetY == 0)) {
+                    mouseData.dragXY.x += offsetX;
+                    mouseData.dragXY.y += offsetY;
+                    mouseData.wasDragged = true;
+
+                    room.dispatchEvent(new RoomDragEvent(room.roomId, -(room.canvas.screenOffsetX - offsetX), -(room.canvas.screenOffsetY - offsetY)));
+                }
+            }
+        } else if (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK) {
+            mouseData.isDragged = false;
+
+            if (mouseData.wasDragged) {
+                mouseData.wasDragged = false;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    const dispatchMouseEvent = (
+        x: number,
+        y: number,
+        type: string,
+        altKey: boolean,
+        ctrlKey: boolean,
+        shiftKey: boolean,
+        buttonDown: boolean
+    ) => {
+        if (!room?.canvas) return;
+
+        const sprite = room.getRoomOverlayIconSprite();
+
+        if (sprite) {
+            const rectangle = sprite.getLocalBounds();
+
+            sprite.x = x - rectangle.width / 2;
+            sprite.y = y - rectangle.height / 2;
+        }
+
+        if (
+            !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
+            !room.canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+        ) {
+            let eventType: string = '';
+
+            if (type === MouseEventType.MOUSE_CLICK) eventType = RoomObjectMouseEvent.CLICK;
+            else if (type === MouseEventType.MOUSE_MOVE) eventType = RoomObjectMouseEvent.MOUSE_MOVE;
+            else if (type === MouseEventType.MOUSE_DOWN) eventType = RoomObjectMouseEvent.MOUSE_DOWN;
+            else if (type === MouseEventType.MOUSE_UP) eventType = RoomObjectMouseEvent.MOUSE_UP;
+
+            room.eventHandler.handleRoomObjectEvent(new RoomObjectMouseEvent(
+                eventType,
+                room.getRoomObjectRoom() as IRoomObject,
+                -1,
+                altKey,
+                ctrlKey,
+                shiftKey,
+                buttonDown,
+            ));
+        }
+
+        mouseDataRef.current.mouseXY = { x, y };
+    }
+
+    useEffect(() => {
+        if (!app || !room) return;
+
+        let canvas = room.canvas;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        if (!canvas) {
+            canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
+
+            if (canvas.master) GetRoomStage().addChild(canvas.master);
+        } else {
+            canvas.initialize(width, height);
+        }
+
+        const container = canvas.master;
+
+        if (!container) return;
+
+        updateRoomCamera(-1);
+
+        const resizeCanvas = () => {
+            if (!room.canvas) return;
+
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            room.canvas.initialize(width, height);
+
+            updateRoomCamera(-1);
+        }
+
+        app.renderer.on('resize', resizeCanvas);
 
         const tick = (ticker: Ticker) => {
-            if (!room) return;
+            if (!room || !canvas || !container) return;
 
             const mouseData = mouseDataRef.current;
             const time = ticker.lastTime;
-            const update = false;
 
-            room.update(time, update);
+            room.update(time, false);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 
             if (mouseData.wasDragged) {
-                const offsetX = ~~(room.canvas?.screenOffsetX || 0);
-                const offsetY = ~~(room.canvas?.screenOffsetY || 0);
+                const offsetX = ~~(canvas.screenOffsetX || 0);
+                const offsetY = ~~(canvas.screenOffsetY || 0);
 
                 room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 
                 mouseData.dragXY = { x: 0, y: 0 }
             }
 
-            if (hasAndResetCursorUpdate()) renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
-
-            room.dispatchEvent(new RoomRenderedEvent(room.roomId, time));
+            if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
         }
 
-        ticker.add(tick);
+        app.ticker.add(tick);
+
+        let didMouseMove = false;
+        let isMouseDown = false;
+        let lastClick = 0;
+        let clickCount = 0;
+
+        const handlePointerEvent = (event: FederatedPointerEvent) => {
+            if (!room) return;
+
+            let eventType = event.type;
+
+            if (eventType === 'click') {
+                if (lastClick) {
+                    clickCount = 1;
+
+                    if (lastClick >= Date.now() - 300) clickCount++;
+                }
+
+                lastClick = Date.now();
+
+                if (clickCount === 2) {
+                    if (!didMouseMove) eventType = MouseEventType.DOUBLE_CLICK;
+
+                    clickCount = 0;
+                    lastClick = 0;
+                }
+            }
+
+            switch (eventType) {
+                case 'click':
+                    eventType = MouseEventType.MOUSE_CLICK;
+                    break;
+                case MouseEventType.DOUBLE_CLICK:
+                    break;
+                case 'pointermove':
+                    eventType = MouseEventType.MOUSE_MOVE;
+                    didMouseMove = true;
+                    break;
+                case 'pointerdown':
+                    eventType = MouseEventType.MOUSE_DOWN;
+                    didMouseMove = false;
+                    isMouseDown = true;
+                    break;
+                case 'pointerup':
+                    eventType = MouseEventType.MOUSE_UP;
+                    isMouseDown = false;
+                    break;
+                case 'rightclick':
+                    eventType = MouseEventType.RIGHT_CLICK;
+                    break;
+                default:
+                    return;
+            }
+
+            dispatchMouseEvent(
+                event.clientX,
+                event.clientY,
+                eventType,
+                event.altKey,
+                event.ctrlKey || event.metaKey,
+                event.shiftKey,
+                isMouseDown
+            );
+        }
+
+        container.on('click', handlePointerEvent);
+        container.on('pointermove', handlePointerEvent);
+        container.on('pointerdown', handlePointerEvent);
+        container.on('pointerup', handlePointerEvent);
+        container.on('rightclick', handlePointerEvent);
 
         return () => {
-            ticker.remove(tick);
+            app.renderer.off('resize', resizeCanvas);
+            app.ticker.remove(tick);
+
+            container.off('click', handlePointerEvent);
+            container.off('pointermove', handlePointerEvent);
+            container.off('pointerdown', handlePointerEvent);
+            container.off('pointerup', handlePointerEvent);
+            container.off('rightclick', handlePointerEvent);
         }
-    }, [room, mouseDataRef, hasAndResetCursorUpdate, hasCursorOwners, updateRoomCamera]);
-
-    useEffect(() => {
-        const ticker = GetTicker();
-
-        ticker.maxFPS = maxFPS;
-    }, [maxFPS]);
+    }, [app, room]);
 
     return null;
-});
+}

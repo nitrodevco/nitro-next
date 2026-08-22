@@ -11,7 +11,7 @@ import type { RenderTexture } from 'pixi.js';
 import { Container, Matrix, Point, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
-import { GetRenderer, TexturePool } from '#renderer/utils';
+import { TexturePool, TextureUtils } from '#renderer/utils';
 
 import { RoomGeometry } from '../../../utils';
 import type { PlaneMaskManager } from './mask';
@@ -297,7 +297,7 @@ export class RoomPlane implements IRoomPlane {
                 container.addChild(maskSprite);
             }
 
-            GetRenderer().render({
+            TextureUtils.getRenderer().render({
                 target: this._planeTexture,
                 container,
                 transform: this.getMatrixForDimensions(width, height),
@@ -586,7 +586,7 @@ export class RoomPlane implements IRoomPlane {
             container.addChild(sprite);
         }
 
-        GetRenderer().render({
+        TextureUtils.getRenderer().render({
             target: this._maskTexture,
             container,
             clear: true

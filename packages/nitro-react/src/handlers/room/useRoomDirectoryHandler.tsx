@@ -2,11 +2,12 @@ import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserOb
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import { useRef } from "react";
 
-import { useRoomActions } from "#base/context";
+import { useRoomActions, useSystemActions } from "#base/context";
 import { useMessageListener } from "#base/hooks";
 
 export const useRoomDirectoryHandler = () => {
-    const { setRoom, setOwnUserId, setLandingViewVisible } = useRoomActions();
+    const { setRoom, setOwnUserId } = useRoomActions();
+    const { setLandingViewVisible } = useSystemActions();
     // RoomMessageHandler keeps the current room id so it can dispose it on the next enter
     const currentRoomIdRef = useRef(0);
 

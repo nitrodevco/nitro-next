@@ -2,7 +2,7 @@ import { FurnitureUsagePolicyEnum, IObjectData, RoomObjectCategoryEnum } from ".
 import { IFurnitureData } from "./IFurnitureData";
 import { IRoomObjectData } from "./IRoomObjectData";
 
-export interface IRoomFurnitureData extends IRoomObjectData {
+export interface IFurniData extends IRoomObjectData {
     category: RoomObjectCategoryEnum;
     name: string;
     description: string;

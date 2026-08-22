@@ -1,6 +1,7 @@
 
 import {
     EventDispatcher,
+    FurniId,
     FurnitureUsagePolicyEnum,
     GetConfigValue,
     GetObjectDataForFlags,
@@ -43,7 +44,7 @@ import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
 
 import { PetFigureData } from '../session';
-import { FurniId, GetTickerTime } from '../utils';
+import { GetTickerTime } from '../utils';
 import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';

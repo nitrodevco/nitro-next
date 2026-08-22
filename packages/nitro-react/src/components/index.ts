@@ -12,7 +12,6 @@ export * from './navigator/NavigatorWrapper';
 export * from './room/RoomCanvas';
 export * from './room/RoomContainer';
 export * from './room/RoomEventHandler';
-export * from './room/RoomHandlers';
 export * from './room/RoomWrapper';
 export * from './room/widgets/object-infostand/InfostandFurni';
 export * from './room/widgets/object-infostand/RoomObjectInfostandWidget';

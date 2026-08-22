@@ -14,6 +14,7 @@ type State = {
     topZIndex: number;
     topId: string | undefined;
     zIndexById: Record<string, number>;
+    landingViewVisible: boolean;
 }
 
 type Actions = {
@@ -31,6 +32,7 @@ type Actions = {
     hideWindow: (name: WindowName) => void;
     updateWindowParams: <T extends WindowName>(name: T, params: Partial<WindowRegistry[T]>) => void;
     bringWindowToFront: (id: string) => void;
+    setLandingViewVisible: (landingViewVisible: boolean) => void;
 };
 
 const BASE_FRAME_Z_INDEX = 100;
@@ -54,6 +56,7 @@ const initialState: State = {
     topZIndex: BASE_FRAME_Z_INDEX,
     topId: undefined,
     zIndexById: {},
+    landingViewVisible: true
 };
 
 export type SystemStore = State & Actions;
@@ -304,5 +307,6 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 zIndexById: { ...state.zIndexById, [id]: nextZIndex },
             };
         });
-    }
+    },
+    setLandingViewVisible: (landingViewVisible: boolean) => set({ landingViewVisible }),
 }));

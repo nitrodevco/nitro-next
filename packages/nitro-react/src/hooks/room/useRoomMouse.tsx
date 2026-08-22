@@ -1,7 +1,8 @@
 import type { IRoomObject } from "@nitrodevco/nitro-api";
 import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { GetRenderer, Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { useEffect, useRef } from "react";
+import { Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
+import { FederatedPointerEvent } from "pixi.js";
+import { useRef } from "react";
 
 import { useRoomInteractionSelector, useRoomSelector } from "#base/context";
 
@@ -143,21 +144,25 @@ export const useRoomMouse = () => {
         mouseDataRef.current.mouseXY = { x, y };
     }
 
-    useEffect(() => {
-        if (!room) return;
+    const registerPointerEvents = () => {
+        if (!room?.canvas?.master) return;
 
-        const canvas = GetRenderer().canvas;
+        const container = room.canvas.master;
+
+        // eslint-disable-next-line react-hooks/immutability
+        container.eventMode = 'static';
+
         let didMouseMove = false;
         let isMouseDown = false;
         let lastClick = 0;
         let clickCount = 0;
 
-        const mouseHandler = (event: MouseEvent) => {
-            event.preventDefault();
+        const handlePointerEvent = (event: FederatedPointerEvent) => {
+            if (!room) return;
 
             let eventType = event.type;
 
-            if (eventType === MouseEventType.MOUSE_CLICK) {
+            if (eventType === 'click') {
                 if (lastClick) {
                     clickCount = 1;
 
@@ -175,21 +180,26 @@ export const useRoomMouse = () => {
             }
 
             switch (eventType) {
-                case MouseEventType.MOUSE_CLICK:
+                case 'click':
+                    eventType = MouseEventType.MOUSE_CLICK;
                     break;
                 case MouseEventType.DOUBLE_CLICK:
                     break;
-                case MouseEventType.MOUSE_MOVE:
+                case 'mousemove':
+                    eventType = MouseEventType.MOUSE_MOVE;
                     didMouseMove = true;
                     break;
-                case MouseEventType.MOUSE_DOWN:
+                case 'pointerdown':
+                    eventType = MouseEventType.MOUSE_DOWN;
                     didMouseMove = false;
                     isMouseDown = true;
                     break;
-                case MouseEventType.MOUSE_UP:
+                case 'mouseup':
+                    eventType = MouseEventType.MOUSE_UP;
                     isMouseDown = false;
                     break;
-                case MouseEventType.RIGHT_CLICK:
+                case 'rightclick':
+                    eventType = MouseEventType.RIGHT_CLICK;
                     break;
                 default:
                     return;
@@ -204,78 +214,17 @@ export const useRoomMouse = () => {
                 event.shiftKey,
                 isMouseDown
             );
-        };
+        }
 
-        const touchHandler = (event: TouchEvent) => {
-            event.preventDefault();
+        container.on('click', handlePointerEvent);
+        container.on('pointerdown', handlePointerEvent);
+        container.on('pointerup', handlePointerEvent);
+        container.on('pointerupoutside', handlePointerEvent);
+        container.on('pointerover', handlePointerEvent);
+        container.on('pointerout', handlePointerEvent);
+        container.on('pointermove', handlePointerEvent);
+        container.on('rightclick', handlePointerEvent);
+    }
 
-            const touch = event.changedTouches[0];
-
-            if (!touch) return;
-
-            switch (event.type) {
-                case 'touchstart':
-                    didMouseMove = false;
-                    isMouseDown = true;
-
-                    dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_DOWN, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-                    break;
-                case 'touchmove':
-                    didMouseMove = true;
-
-                    dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_MOVE, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-                    break;
-                case 'touchend': {
-                    isMouseDown = false;
-
-                    dispatchMouseEvent(touch.clientX, touch.clientY, MouseEventType.MOUSE_UP, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-
-                    let eventType: string | undefined = undefined;
-
-                    if (!didMouseMove) {
-                        eventType = MouseEventType.MOUSE_CLICK;
-
-                        if (lastClick) {
-                            clickCount = 1;
-
-                            if (lastClick >= Date.now() - 300) clickCount++;
-                        }
-                    }
-
-                    if (clickCount === 2) {
-                        if (!didMouseMove) eventType = MouseEventType.DOUBLE_CLICK;
-
-                        clickCount = 0;
-                        lastClick = 0;
-                    }
-
-                    if (eventType) dispatchMouseEvent(touch.clientX, touch.clientY, eventType, event.altKey, event.ctrlKey, event.shiftKey, isMouseDown);
-
-                    break;
-                }
-            }
-        };
-
-        canvas.onclick = mouseHandler;
-        canvas.onmousemove = mouseHandler;
-        canvas.onmousedown = mouseHandler;
-        canvas.onmouseup = mouseHandler;
-
-        canvas.ontouchstart = touchHandler;
-        canvas.ontouchmove = touchHandler;
-        canvas.ontouchend = touchHandler;
-
-        return () => {
-            canvas.onclick = null;
-            canvas.onmousemove = null;
-            canvas.onmousedown = null;
-            canvas.onmouseup = null;
-
-            canvas.ontouchstart = null;
-            canvas.ontouchmove = null;
-            canvas.ontouchend = null;
-        };
-    }, [room, dispatchMouseEvent]);
-
-    return { mouseDataRef };
+    return { mouseDataRef, registerPointerEvents };
 }

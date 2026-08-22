@@ -24,7 +24,9 @@ window.NitroConfig = window.NitroConfig || {};
 
 const element = document.getElementById('root');
 
-if (element)
+void document.fonts.ready.then(() => {
+    if (!element) return;
+
     createRoot(element).render(
         <SystemContextProvider>
             <WebSocketContextProvider>
@@ -34,3 +36,4 @@ if (element)
             </WebSocketContextProvider>
         </SystemContextProvider>,
     );
+});

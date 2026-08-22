@@ -1,11 +1,11 @@
-import { FurniturePickupMode, IRoomFurnitureData } from "@nitrodevco/nitro-api";
+import { FurniturePickupMode, IFurniData } from "@nitrodevco/nitro-api";
 
 import { FurnitureImage } from "#base/components";
 import { useTranslation } from "#base/context";
 import { Border, Button, CloseButton } from "#base/theme";
 
 type InfostandFurniViewProps = {
-    furniData: IRoomFurnitureData;
+    furniData: IFurniData;
     canMove: boolean;
     canRotate: boolean;
     canUse: boolean;

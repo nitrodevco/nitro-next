@@ -23,7 +23,6 @@ export * from './selectors/session/useRoomIsPlayingGame';
 export * from './selectors/session/useRoomPermissionsSelector';
 export * from './selectors/session/useRoomSettingsSelector';
 export * from './selectors/useRoomCameraSelector';
-export * from './selectors/useRoomIsLandingViewVisible';
 export * from './selectors/useRoomSelector';
 export * from './selectors/useRoomStackingHeightMapSelector';
 export * from './store/RoomCameraSlice';

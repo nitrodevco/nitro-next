@@ -3,7 +3,7 @@ import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api
 import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
 import { ColorMatrixFilter, Container, Sprite } from 'pixi.js';
 
-import { GetRenderer, GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
+import { GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
 import type { AssetAliasCollection } from './alias';
@@ -216,7 +216,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             container.filters = filters;
         }
 
-        GetRenderer().render({
+        TextureUtils.getRenderer().render({
             target: this._image,
             container,
             clear: true
@@ -226,7 +226,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             const imageClone = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
 
             if (imageClone) {
-                GetRenderer().render({
+                TextureUtils.getRenderer().render({
                     target: imageClone,
                     container,
                     clear: true
@@ -293,7 +293,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!texture) return undefined;
 
-        GetRenderer().render({
+        TextureUtils.getRenderer().render({
             target: texture,
             container,
             clear: true
@@ -360,13 +360,13 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!texture) return undefined;
 
-        GetRenderer().render({
+        TextureUtils.getRenderer().render({
             target: texture,
             container,
             clear: true
         });
 
-        const base64 = await GetRenderer().extract.base64(new Sprite(texture));
+        const base64 = await TextureUtils.getRenderer().extract.base64(new Sprite(texture));
 
         TexturePool.releaseTexture(texture);
 

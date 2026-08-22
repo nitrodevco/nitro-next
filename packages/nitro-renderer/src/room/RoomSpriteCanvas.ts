@@ -98,8 +98,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private setupCanvas(): void {
         if (!this._master) this._master = new Container();
 
-        this._master.interactive = true;
-
+        this._master.eventMode = 'static';
+        this._master.interactiveChildren = false;
         this._master.cullableChildren = false;
 
         if (!this._display) {
@@ -206,6 +206,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             } else {
                 this._master.filterArea = new Rectangle(0, 0, width, height);
             }
+
+            this._master.hitArea = new Rectangle(0, 0, width, height);
         }
 
         this._width = width;

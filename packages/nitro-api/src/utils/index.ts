@@ -4,6 +4,7 @@ export * from './BinaryReader';
 export * from './BinaryWriter';
 export * from './Byte';
 export * from './ColorConverter';
+export * from './FurniId';
 export * from './GetConfigValue';
 export * from './IAdvancedMap';
 export * from './IBinaryReader';

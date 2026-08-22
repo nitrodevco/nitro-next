@@ -1,7 +1,6 @@
 export * from './RoomCanvas';
 export * from './RoomContainer';
 export * from './RoomEventHandler';
-export * from './RoomHandlers';
 export * from './RoomWrapper';
 export * from './widgets/object-infostand/InfostandFurni';
 export * from './widgets/object-infostand/RoomObjectInfostandWidget';

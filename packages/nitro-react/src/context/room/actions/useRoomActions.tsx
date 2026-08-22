@@ -4,6 +4,5 @@ import { useRoomContext } from "#base/context";
 
 export const useRoomActions = () => useRoomContext(useShallow(x => ({
     setRoom: x.setRoom,
-    setOwnUserId: x.setOwnUserId,
-    setLandingViewVisible: x.setLandingViewVisible
+    setOwnUserId: x.setOwnUserId
 })));

@@ -1,15 +1,27 @@
 import { RoomEngineEvent } from "@nitrodevco/nitro-api";
 import { useState } from "react";
 
-import { useRoomIsLandingViewVisible } from "#base/context";
+import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomModifications, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler } from "#base/handlers";
 import { useRoomEventDispatcher } from "#base/hooks";
 
 import { RoomCanvas } from "./RoomCanvas";
+import { RoomEventHandler } from "./RoomEventHandler";
 import { RoomWidgetsPixi } from "./widgets";
 
 export const RoomContainer = () => {
     const [isReady, setIsReady] = useState<boolean>(false);
-    const landingViewVisible = useRoomIsLandingViewVisible();
+
+    useRoomChatHandler();
+    useRoomDataHandler();
+    useRoomDirectoryHandler();
+    useRoomFurnitureHandler();
+    useRoomMappingHandler();
+    useRoomPermissionsHandler();
+    useRoomPetPackageHandler();
+    useRoomPollHandler();
+    useRoomUserHandler();
+
+    useRoomModifications();
 
     useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, event => {
         setIsReady(true);
@@ -23,8 +35,9 @@ export const RoomContainer = () => {
 
     return (
         <>
-            <RoomCanvas />
+            <RoomEventHandler />
             <RoomWidgetsPixi />
+            <RoomCanvas />
         </>
     );
 }

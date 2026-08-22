@@ -17,13 +17,11 @@ import { createRoomUsersSlice, RoomUsersSliceInitialState } from "./RoomUsersSli
 type State = {
     room: IRoom | undefined;
     ownUserId: number;
-    landingViewVisible: boolean;
 }
 
 type Actions = {
     setRoom: (room: IRoom | undefined) => void;
     setOwnUserId: (ownUserId: number) => void;
-    setLandingViewVisible: (landingViewVisible: boolean) => void;
 }
 
 export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice;
@@ -31,7 +29,6 @@ export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & Ro
 export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
     room: undefined,
     ownUserId: -1,
-    landingViewVisible: true,
     setRoom: (room: IRoom | undefined) => set(x => {
         if (x.room && x.room !== room) {
             x.room.dispose();
@@ -48,7 +45,6 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
         };
     }),
     setOwnUserId: (ownUserId: number) => set({ ownUserId }),
-    setLandingViewVisible: (landingViewVisible: boolean) => set({ landingViewVisible }),
     ...createRoomMouseSlice(set, get, store),
     ...createRoomSessionSlice(set, get, store),
     ...createRoomCameraSlice(set, get, store),

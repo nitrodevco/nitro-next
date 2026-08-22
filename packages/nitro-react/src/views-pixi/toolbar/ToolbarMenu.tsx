@@ -1,7 +1,7 @@
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { Box, FONT_AA_DROP_SHADOW, getPixiTextStyle, type IconKey, NitroIcon, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, getPixiTextStyle, type IconKey, NitroIcon, useTextureFromUrl } from '#base/theme-pixi';
 
 export interface ToolbarMenuItem {
     icon: IconKey;
@@ -48,7 +48,7 @@ export const ToolbarMenu: ForwardRefExoticComponent<ToolbarMenuProps & RefAttrib
                         <pixiText
                             layout={{}}
                             text={label}
-                            style={getPixiTextStyle('text-style-regular', { fontSize: 9.6, fill: '#ffffff', dropShadow: FONT_AA_DROP_SHADOW })}
+                            style={getPixiTextStyle('text-style-regular', { fontSize: 9.6, fill: '#ffffff' })}
                         />
                     </Box>
                 ))}
