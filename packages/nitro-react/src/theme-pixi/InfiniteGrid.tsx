@@ -1,7 +1,7 @@
 import './utils/pixiElements';
 
 import type { Container as PixiContainer } from 'pixi.js';
-import { Fragment, type Key, type ReactElement, useEffect, useState } from 'react';
+import { type Key, type ReactElement, useEffect, useState } from 'react';
 
 import { Box } from './Box';
 import { ScrollbarVertical } from './ScrollbarVertical';
@@ -84,13 +84,22 @@ export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 
                         layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 4 }}
                     >
                         {Array.from({ length: columnCount }).map((_, i) => {
-                            const item = items[i + (row.index * columnCount)];
-                            if (!item) return null;
+                            const index = i + (row.index * columnCount);
+                            const item = index < items.length ? items[index] : undefined;
 
+                            // A fixed-width flex row has no equivalent of DOM's `grid-cols-N`
+                            // column tracks, which stay equally sized regardless of how many
+                            // cells actually have content. `flexBasis: 0, flexGrow: 1` divides
+                            // the row's available width evenly among however many item slots
+                            // are rendered (matching react's default `flexShrink: 0` this
+                            // library ports from Yoga, not CSS's `1`, so items must grow into
+                            // place rather than shrink) - an empty slot must still be rendered
+                            // for a missing trailing item so the real items keep the same width
+                            // as every other row instead of stretching to fill the gap.
                             return (
-                                <Fragment key={getKey(item)}>
-                                    {itemRender(item, i) ?? null}
-                                </Fragment>
+                                <Box key={item !== undefined ? getKey(item) : i} layout={{ flexBasis: 0, flexGrow: 1 }}>
+                                    {item !== undefined && (itemRender(item, i) ?? null)}
+                                </Box>
                             );
                         })}
                     </Box>

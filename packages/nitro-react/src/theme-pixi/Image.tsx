@@ -1,11 +1,11 @@
 import './utils/pixiElements';
 
-import type { Sprite as PixiSprite } from 'pixi.js';
+import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { useConfigValue } from '#base/context';
 
-import type { BoxLayout } from './Box';
+import { Box, type BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
 
 export interface ImageProps {
@@ -21,8 +21,19 @@ export interface ImageProps {
  * Pixi textures have no distinct "errored" state, so "the real texture is still undefined"
  * stands in for both loading and errored, converging on the same end visual DOM does (the
  * loading icon shown indefinitely) whenever `src` never resolves.
+ *
+ * `layout` sizes/positions an outer `Box` (matching DOM's `wrapperClassName`, e.g. catalog grid
+ * items' `min-w-[32px] min-h-[32px] max-w-[32px] max-h-[32px]`) rather than the sprite itself -
+ * DOM's actual `<img>` never has its own width/height set, so it always renders at its natural
+ * resolution and is simply centered inside that wrapper by `flex items-center justify-center`.
+ * Applying `layout`'s min/max constraints straight to the sprite instead (as this used to do)
+ * makes @pixi/layout stretch the sprite's texture to exactly fill them, distorting any icon
+ * whose native size doesn't already match - the "icon is zoomed in" bug this fixes. The sprite
+ * itself gets an explicit `width`/`height` equal to the texture's own size (the same
+ * intrinsic-sizing pattern NitroIcon.tsx already uses), so it renders at native resolution and
+ * @pixi/layout has no smaller layout box to stretch it into.
  */
-export const Image = forwardRef<PixiSprite, ImageProps>(({ src, layout }, ref) => {
+export const Image = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => {
     const texture = useTextureFromUrl(src);
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
@@ -32,7 +43,11 @@ export const Image = forwardRef<PixiSprite, ImageProps>(({ src, layout }, ref) =
 
     if (!resolvedTexture) return null;
 
-    return <pixiSprite ref={ref} texture={resolvedTexture} layout={layout ?? {}} />;
+    return (
+        <Box ref={ref} layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}>
+            <pixiSprite texture={resolvedTexture} width={resolvedTexture.width} height={resolvedTexture.height} layout={{}} />
+        </Box>
+    );
 });
 
 Image.displayName = 'Image';
