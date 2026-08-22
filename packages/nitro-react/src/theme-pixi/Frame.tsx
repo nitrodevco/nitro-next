@@ -6,26 +6,21 @@ import { type ReactNode } from 'react';
 import { VariantCascadeProvider } from '#base/theme';
 import { GetPixelRatio } from '#base/utils';
 
-import { Box, type BoxLayout } from './Box';
+import { Box } from './Box';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
-import { BackgroundLayer, BackgroundLayerConfig, Composite } from './layer';
+import { BackgroundLayer, Composite } from './layer';
 import { NineSlice } from './layer/NineSlice';
 import { Scaler, type ScalerDirection } from './Scaler';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
 import { useResolvedVariant } from './utils/useResolvedVariant';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-interface FrameVariant {
-    layer?: BackgroundLayerConfig;
-    overlay?: BackgroundLayerConfig;
+type FrameVariant = ThemeVariant & {
     minWidth: number;
     minHeight: number;
-    tintColor?: string;
-    layout?: BoxLayout;
-}
-
-type FrameVariants = Record<string, FrameVariant>;
+};
 
 const BLUE_FRAME_SHINE = Composite([
     { textureKey: 'frame-0-default-shine-top-left-src', left: 1, top: 1, width: 7, height: 7 },
@@ -40,7 +35,7 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
-const FRAME_VARIANTS: FrameVariants = {
+const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
     '0': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
     '1': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
     '2': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
@@ -64,13 +59,9 @@ const FRAME_VARIANTS: FrameVariants = {
     '200': { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
 };
 
-export interface FrameProps {
+export interface FrameProps extends ThemeProps<FrameVariant> {
     id?: string;
-    variant?: keyof FrameVariants;
-    defaultVariant?: keyof FrameVariants;
     caption?: string;
-    tintColor?: string;
-    layout?: BoxLayout;
     resizeDirection?: ScalerDirection;
     onClose?: () => void;
     children?: ReactNode;

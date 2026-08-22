@@ -5,12 +5,12 @@ import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from '
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
+import { Box } from './Box';
 import { CloseButton } from './CloseButton';
-import { BackgroundLayer, type BackgroundLayerConfig, ColorLayer, TileLayer } from './layer';
+import { BackgroundLayer, ColorLayer } from './layer';
 import { Text } from './Text';
-import { type TextStyleKey } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 interface HeaderPadding {
     left: number;
@@ -19,35 +19,26 @@ interface HeaderPadding {
     bottom: number;
 }
 
-interface HeaderVariant {
-    background?: BackgroundLayerConfig;
+type HeaderVariant = ThemeVariant & {
     tintable?: boolean;
-    overlayTextureKey?: string;
     minHeight: number;
     margin?: number;
     padding: HeaderPadding;
-    textStyleKey: TextStyleKey;
-    textColor: string;
-    tint?: string;
-}
-
-const HEADER_VARIANTS: Record<string, HeaderVariant> = {
-    '0': { background: { kind: 'tile', textureKey: 'header-0-default-src' }, overlayTextureKey: 'header-0-default-shine-src', minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tint: '#418db0' },
-    '1': { background: { kind: 'tile', textureKey: 'header-0-default-src' }, overlayTextureKey: 'header-0-default-shine-src', minHeight: 15, padding: { left: 6, top: 6, right: 6, bottom: 6 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tint: '#4c4c4c' },
-    '2': { background: { kind: 'tile', textureKey: 'header-0-default-src' }, overlayTextureKey: 'header-0-default-shine-src', minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#000000', tint: '#fac200' },
-    '3': { minHeight: 33, padding: { left: 6, top: 0, right: 6, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
-    '4': { background: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
-    '7': { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyleKey: 'text-style-u-frame-title', textColor: '#000000' },
-    '100': { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-il-frame-title', textColor: '#000000' },
-    '200': { background: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
 };
 
-export interface HeaderProps {
-    variant?: string;
-    defaultVariant?: string;
+const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
+    '0': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#418db0' },
+    '1': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, padding: { left: 6, top: 6, right: 6, bottom: 6 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#4c4c4c' },
+    '2': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#000000', tintColor: '#fac200' },
+    '3': { minHeight: 33, padding: { left: 6, top: 0, right: 6, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '4': { layer: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '7': { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyleKey: 'text-style-u-frame-title', textColor: '#000000' },
+    '100': { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-il-frame-title', textColor: '#000000' },
+    '200': { layer: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
+};
+
+export interface HeaderProps extends ThemeProps<HeaderVariant> {
     caption?: string;
-    tintColor?: string;
-    layout?: BoxLayout;
     onClose?: () => void;
     onPointerDown?: (event: FederatedPointerEvent) => void;
 }
@@ -56,7 +47,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
     ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('header', variant, defaultVariant);
         const config = HEADER_VARIANTS[resolvedVariant] ?? HEADER_VARIANTS['0'];
-        const resolvedTint = tintColor || config.tint;
+        const resolvedTint = tintColor || config.tintColor;
         const resolvedBackgroundTint = config.tintable === false ? undefined : resolvedTint;
 
         return (
@@ -71,11 +62,12 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     justifyContent: 'center',
                     minHeight: config.minHeight,
                     margin: config.margin,
+                    ...config.layout,
                     ...layout,
                 }}
             >
-                <BackgroundLayer layer={config.background} tintColor={resolvedBackgroundTint} />
-                {config.overlayTextureKey && <TileLayer textureKey={config.overlayTextureKey} />}
+                <BackgroundLayer layer={config.layer} tintColor={resolvedBackgroundTint} />
+                <BackgroundLayer layer={config.overlay} />
                 <Box
                     layout={{
                         position: 'relative',

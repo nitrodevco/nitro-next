@@ -1,7 +1,8 @@
 import { NineSlice } from './layer';
 import { type ButtonGroupComponentProps, type ButtonGroupVariant, createButtonGroupComponent } from './utils/buttonGroupFactory';
+import { ThemeVariants } from './variant';
 
-const BUTTON_GROUP_RIGHT_VARIANTS: Record<string, ButtonGroupVariant> = {
+const BUTTON_GROUP_RIGHT_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
     // default
     '0': {
         states: {
@@ -14,7 +15,7 @@ const BUTTON_GROUP_RIGHT_VARIANTS: Record<string, ButtonGroupVariant> = {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-regular', color: '#000000',
+        textStyleKey: 'text-style-button-regular', textColor: '#000000',
     },
     // black
     '1': {
@@ -28,7 +29,7 @@ const BUTTON_GROUP_RIGHT_VARIANTS: Record<string, ButtonGroupVariant> = {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-regular', color: '#ffffff',
+        textStyleKey: 'text-style-button-regular', textColor: '#ffffff',
     },
     // white (reuses '0' art in every state, including hover - effectively identical to '0')
     '2': {
@@ -42,7 +43,7 @@ const BUTTON_GROUP_RIGHT_VARIANTS: Record<string, ButtonGroupVariant> = {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-regular', color: '#000000',
+        textStyleKey: 'text-style-button-regular', textColor: '#000000',
     },
     // landing view / IL button size (reuses '0' art)
     '100': {
@@ -56,7 +57,7 @@ const BUTTON_GROUP_RIGHT_VARIANTS: Record<string, ButtonGroupVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28
         },
-        textStyleKey: 'text-style-il-button', color: '#000000',
+        textStyleKey: 'text-style-il-button', textColor: '#000000',
     },
 };
 

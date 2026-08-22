@@ -5,22 +5,14 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig, NineSlice } from './layer';
-import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, InteractionStates, resolveByState, TextStyleKey, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { Box } from './Box';
+import { BackgroundLayer, NineSlice } from './layer';
+import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, resolveByState, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
-interface ContainerButtonVariant {
-    states: InteractionStates<BackgroundLayerConfig>;
-    overlay?: InteractionStates<BackgroundLayerConfig>;
-    tintColor?: string;
-    textStyleKey?: TextStyleKey;
-    color?: string;
-    layout?: BoxLayout;
-}
+type ContainerButtonVariant = ThemeWithStatesVariant;
 
-type ContainerButtonVariants = Record<string, ContainerButtonVariant>;
-
-const CONTAINER_BUTTON_VARIANTS: ContainerButtonVariants = {
+const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = {
     '0': {
         states: {
             default: NineSlice('button-0-default-src', 3, 3, 3, 3),
@@ -84,7 +76,7 @@ const CONTAINER_BUTTON_VARIANTS: ContainerButtonVariants = {
             hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
             pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
         },
-        overlay: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
+        overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
     },
     '101': {
         states: {
@@ -92,7 +84,7 @@ const CONTAINER_BUTTON_VARIANTS: ContainerButtonVariants = {
             hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
             pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
         },
-        overlay: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
+        overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
         tintColor: '#bbbbbb'
     },
     '102': {
@@ -100,14 +92,14 @@ const CONTAINER_BUTTON_VARIANTS: ContainerButtonVariants = {
             default: NineSlice('button-102-default-src', 6, 8, 4, 8),
             pressed: NineSlice('button-102-pressed-src', 6, 8, 4, 8),
         },
-        overlay: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
+        overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
     },
     '103': {
         states: {
             default: NineSlice('button-103-default-src', 6, 8, 4, 8),
             pressed: NineSlice('button-103-pressed-src', 6, 8, 4, 8),
         },
-        overlay: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
+        overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
     },
     '200': {
         states: {
@@ -116,12 +108,8 @@ const CONTAINER_BUTTON_VARIANTS: ContainerButtonVariants = {
     },
 };
 
-export interface ContainerButtonProps {
-    variant?: keyof ContainerButtonVariants;
-    defaultVariant?: keyof ContainerButtonVariants;
-    tintColor?: string;
+export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant> {
     disabled?: boolean;
-    layout?: BoxLayout;
     onPress?: () => void;
     children?: ReactNode;
 }
@@ -131,14 +119,14 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
         const { resolvedVariant, ownCascade } = useResolvedVariant('containerButton', variant, defaultVariant);
         const config = CONTAINER_BUTTON_VARIANTS[resolvedVariant] ?? CONTAINER_BUTTON_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
-        const resolvedLayer = resolveByState(config.states, state);
-        const resolvedOverlay = config.overlay && resolveByState(config.overlay, state);
+        const resolvedLayer = config.states && resolveByState(config.states, state);
+        const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
         const resolvedTint = tintColor || config.tintColor;
 
         return (
             <Box
                 ref={ref}
-                layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', ...layout }}
+                layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', ...config.layout, ...layout }}
                 {...handlers}
                 cursor="pointer"
                 onPointerTap={disabled ? undefined : onPress}

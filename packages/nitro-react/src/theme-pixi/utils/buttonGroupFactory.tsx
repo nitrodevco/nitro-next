@@ -5,30 +5,19 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from '../Box';
-import { BackgroundLayer, BackgroundLayerConfig } from '../layer';
+import { Box } from '../Box';
+import { BackgroundLayer } from '../layer';
 import { Text } from '../Text';
-import { type TextStyleKey } from './textStyles';
-import { type InteractionStates, resolveByState, useInteractionState } from './useInteractionState';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from '../variant';
+import { resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
-export interface ButtonGroupVariant {
-    states: InteractionStates<BackgroundLayerConfig>;
-    overlay?: InteractionStates<BackgroundLayerConfig>;
-    tintColor?: string;
-    layout?: BoxLayout;
-    textStyleKey?: TextStyleKey;
-    color?: string;
-}
+export type ButtonGroupVariant = ThemeWithStatesVariant;
 
-export interface ButtonGroupComponentProps {
-    variant?: string;
-    defaultVariant?: string;
+export interface ButtonGroupComponentProps extends ThemeProps<ButtonGroupVariant> {
     selected?: boolean;
     disabled?: boolean;
-    layout?: BoxLayout;
-    tintColor?: string;
     onPress?: () => void;
     children?: ReactNode;
 }
@@ -36,15 +25,15 @@ export interface ButtonGroupComponentProps {
 export const createButtonGroupComponent = (
     displayName: string,
     cascadeKey: string,
-    variants: Record<string, ButtonGroupVariant>
+    variants: ThemeVariants<ButtonGroupVariant>
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
             const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
             const config = variants[resolvedVariant] ?? variants['0'];
             const { state, handlers } = useInteractionState(disabled);
-            const resolvedLayer = resolveByState(config.states, state, selected);
-            const resolvedOverlay = config.overlay && resolveByState(config.overlay, state);
+            const resolvedLayer = config.states && resolveByState(config.states, state, selected);
+            const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
             const resolvedTint = tintColor || config.tintColor;
 
             return (
@@ -61,7 +50,7 @@ export const createButtonGroupComponent = (
                     {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                     <VariantCascadeProvider map={ownCascade}>
                         {typeof children === 'string'
-                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.textColor }} />
                             : wrapTextChildren(children)}
                     </VariantCascadeProvider>
                 </Box>

@@ -5,35 +5,24 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig, CompositeLayer, NineSlice } from './layer';
+import { Box } from './Box';
+import { BackgroundLayer, CompositeLayer, NineSlice } from './layer';
 import { Text } from './Text';
-import { TextStyleKey, useResolvedVariant, wrapTextChildren } from './utils';
+import { useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-interface DroplistVariant {
-    layer: BackgroundLayerConfig;
-    overlay?: BackgroundLayerConfig;
-    tintColor?: string;
-    textStyleKey?: TextStyleKey;
-    textColor?: string;
+type DroplistVariant = ThemeVariant & {
     arrowTextureKey: string;
     arrowTop: number;
     arrowRight: number;
-}
+};
 
-type DroplistVariants = Record<string, DroplistVariant>;
-
-const DROPLIST_VARIANTS: DroplistVariants = {
+const DROPLIST_VARIANTS: ThemeVariants<DroplistVariant> = {
     '0': { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
     '1': { layer: NineSlice('droplist-1-default-src', 6, 6, 6, 6), arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
 };
 
-export interface DroplistProps {
-    variant?: keyof DroplistVariants;
-    defaultVariant?: keyof DroplistVariants;
-    tintColor?: string;
-    textColor?: string;
-    layout?: BoxLayout;
+export interface DroplistProps extends ThemeProps<DroplistVariant> {
     children?: ReactNode;
 }
 
@@ -45,7 +34,7 @@ export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<P
         const resolvedTextColor = textColor ?? config.textColor;
 
         return (
-            <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layer, ...layout }}>
+            <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}>
                 <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
                 {config.overlay && <BackgroundLayer layer={config.overlay} />}
                 {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />}

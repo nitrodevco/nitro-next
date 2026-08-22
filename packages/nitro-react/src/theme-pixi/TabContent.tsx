@@ -5,20 +5,14 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig, NineSlice } from './layer';
+import { Box } from './Box';
+import { BackgroundLayer, NineSlice } from './layer';
 import { useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-interface TabContentVariant {
-    layer?: BackgroundLayerConfig;
-    overlay?: BackgroundLayerConfig;
-    tintColor?: string;
-    layout?: BoxLayout;
-}
+type TabContentVariant = ThemeVariant;
 
-type TabContextVariants = Record<string, TabContentVariant>;
-
-const TAB_CONTENT_VARIANTS: TabContextVariants = {
+const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = {
     // default
     '0': {
         layer: NineSlice('border-0-default-src', 6, 6, 6, 6),
@@ -41,11 +35,7 @@ const TAB_CONTENT_VARIANTS: TabContextVariants = {
     },
 };
 
-export interface TabContentProps {
-    variant?: keyof TabContextVariants;
-    defaultVariant?: keyof TabContextVariants;
-    layout?: BoxLayout;
-    tintColor?: string;
+export interface TabContentProps extends ThemeProps<TabContentVariant> {
     children?: ReactNode;
 }
 

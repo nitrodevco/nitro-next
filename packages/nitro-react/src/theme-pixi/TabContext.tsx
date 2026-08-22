@@ -5,29 +5,19 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig } from './layer';
+import { Box } from './Box';
+import { BackgroundLayer } from './layer';
 import { useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-type TabContextVariant = {
-    layer?: BackgroundLayerConfig;
-    overlay?: BackgroundLayerConfig;
-    layout?: BoxLayout;
-    tintColor?: string;
-}
+type TabContextVariant = ThemeVariant;
 
-type TabContextVariants = Record<string, TabContextVariant>;
-
-const TAB_CONTEXT_VARIANTS: TabContextVariants = {
+const TAB_CONTEXT_VARIANTS: ThemeVariants<TabContextVariant> = {
     '0': { layout: { minHeight: 22, maxHeight: 22 } },
     '3': {},
 };
 
-export interface TabContextProps {
-    variant?: keyof TabContextVariants;
-    defaultVariant?: keyof TabContextVariants;
-    layout?: BoxLayout;
-    tintColor?: string;
+export interface TabContextProps extends ThemeProps<TabContextVariant> {
     children?: ReactNode;
 }
 
