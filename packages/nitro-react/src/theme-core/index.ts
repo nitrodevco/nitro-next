@@ -1,5 +1,6 @@
 export * from './AccordionContext';
 export * from './AccordionItem';
+export * from './renderMode';
 export * from './themeUrls';
 export * from './useCascadedVariant';
 export * from './VariantCascadeContext';
