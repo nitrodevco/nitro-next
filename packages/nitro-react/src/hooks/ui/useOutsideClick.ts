@@ -1,7 +1,11 @@
-import { type RefObject, useEffect, useEffectEvent } from 'react';
+import { type RefObject, useEffect, useRef } from 'react';
 
-export const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>, callback: () => void, enabled: boolean = true) => {
-    const onOutsideClick = useEffectEvent(callback);
+export const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>, handler: () => void, enabled: boolean = true) => {
+    const handlerRef = useRef(handler);
+
+    useEffect(() => {
+        handlerRef.current = handler;
+    });
 
     useEffect(() => {
         if (!enabled) return;
@@ -11,7 +15,7 @@ export const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>,
 
             if (!element || element.contains(event.target as Node)) return;
 
-            onOutsideClick();
+            handlerRef.current();
         }
 
         document.addEventListener('pointerdown', onPointerDown);

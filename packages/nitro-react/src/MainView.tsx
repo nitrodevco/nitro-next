@@ -1,9 +1,13 @@
+import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
 
-import { RoomWrapper, WalletComponent } from "./components";
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from "./components";
 import { useWebSocketContext } from "./context";
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
+import { ActivityPointsViewPixi } from "./views-pixi/purse/ActivityPointsViewPixi";
+import { PurseViewPixi } from "./views-pixi/purse/PurseViewPixi";
+import { ToolbarViewPixi } from "./views-pixi/toolbar/ToolbarViewPixi";
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
@@ -26,7 +30,6 @@ export const MainView = () => {
     }, [isReady]);
 
     useEffect(() => {
-
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsReady(true);
     }, []);
@@ -36,17 +39,16 @@ export const MainView = () => {
     return (
         <>
             <RoomWrapper />
-            <div
-                id="ui-container"
-                className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full">
-                {/* PurseView, ActivityPointsView, AvatarEditorView, MessengerView,
-                    ToolbarView, InventoryView, FriendListView and NavigatorView now render
-                    through Pixi (see views-pixi/, mounted in Nitro.tsx's
-                    PixiApplicationRoot). NotificationCenterView (theme/'s own source always
-                    returns null) had nothing to migrate, so it's simply dropped rather than
-                    ported as a no-op. */}
-                <WalletComponent />
-            </div>
+            <AvatarEditorComponent />
+            <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+            <InventoryComponent />
+            <FriendListWrapper />
+            <MessengerComponent />
+            <NavigatorWrapper />
+            <WalletComponent />
+            <PurseViewPixi />
+            <ActivityPointsViewPixi layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
+            <ToolbarViewPixi />
         </>
     );
 }

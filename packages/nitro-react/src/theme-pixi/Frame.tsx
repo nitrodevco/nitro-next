@@ -1,7 +1,7 @@
 import './utils/pixiElements';
 
 import { DropShadowFilter } from 'pixi-filters';
-import { type ReactNode,useMemo } from 'react';
+import { type ReactNode, useMemo } from 'react';
 
 import { VariantCascadeProvider } from '#base/theme';
 import { GetPixelRatio } from '#base/utils';

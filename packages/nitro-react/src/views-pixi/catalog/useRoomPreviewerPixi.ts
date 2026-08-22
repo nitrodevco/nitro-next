@@ -1,7 +1,7 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
-import type { Container as PixiContainer , PointData, Ticker } from 'pixi.js';
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import type { Container as PixiContainer, PointData, Ticker } from 'pixi.js';
+import { useEffect, useRef, useState } from 'react';
 
 import { useRoomMapping } from '#base/hooks/room/useRoomMapping';
 
@@ -100,25 +100,6 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
         updateRoomPreview();
     };
-
-    const onObjectEvent = useEffectEvent((event: RoomEngineObjectEvent) => {
-        if (!room || !event) return;
-
-        switch (event.type) {
-            case RoomEngineObjectEvent.ADDED: {
-                previewData.current.previewRectangle = undefined;
-
-                const roomObject = room.getRoomObject(event.objectId, event.category);
-
-                if (roomObject && event.category === RoomObjectCategoryEnum.Wall) {
-                    const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
-                    const centerZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureCenterZ);
-
-                    room.updateRoomObjectWallLocation(event.objectId, new Vector3d(0.5, 2.3, (((3.6 - sizeZ) / 2) + centerZ)));
-                }
-            }
-        }
-    });
 
     const checkAutomaticObjectStateChange = () => {
         const { autoStateChange, autoStateChangeTime, objectCategory } = previewData.current;
@@ -401,10 +382,34 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         };
         raf = requestAnimationFrame(poll);
 
+        const onObjectEvent = (event: RoomEngineObjectEvent) => {
+            if (!room || !event) return;
+
+            switch (event.type) {
+                case RoomEngineObjectEvent.ADDED: {
+                    previewData.current.previewRectangle = undefined;
+
+                    const roomObject = room.getRoomObject(event.objectId, event.category);
+
+                    if (roomObject && event.category === RoomObjectCategoryEnum.Wall) {
+                        const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
+                        const centerZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureCenterZ);
+
+                        room.updateRoomObjectWallLocation(event.objectId, new Vector3d(0.5, 2.3, (((3.6 - sizeZ) / 2) + centerZ)));
+                    }
+                }
+            }
+        }
+
+        const listeners = [
+            room.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
+        ];
+
         return () => {
             cancelAnimationFrame(raf);
             clearTimeout(resizeTimeout);
             ticker.remove(tick);
+            listeners.map(x => x?.());
 
             if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);
             mountedMasterRef.current = undefined;
@@ -423,17 +428,8 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
             inst.updateRoomPlaneType('110', '99999', undefined);
         }
-
-        const listeners = [
-            inst.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
-        ];
-
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setRoom(inst);
-
-        return () => {
-            listeners.map(x => x?.());
-        };
     }, [roomId]);
 
     return { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState };

@@ -23,10 +23,6 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
         const stage = GetStage();
         const ticker = GetTicker();
 
-        // The canvas itself is owned/mounted by the shared <Application> (theme-pixi/
-        // PixiApplicationRoot), which also resizes the renderer via resizeTo={window}. This
-        // effect only measures the room's own viewport (this component's own ref div, sized
-        // via CSS to fill the same area) to reinit the room's internal geometry/camera.
         const handleSize = (width: number, height: number) => {
             let canvas = room.canvas;
 
@@ -40,20 +36,7 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
             if (canvas.master && canvas.master.parent !== stage) stage.addChild(canvas.master);
         }
 
-        let timer: ReturnType<typeof setTimeout>;
-
-        const observer = new ResizeObserver(x => {
-            const width = x[0]?.contentRect.width;
-            const height = x[0]?.contentRect.height;
-
-            clearTimeout(timer);
-
-            timer = setTimeout(() => handleSize(width, height), 5);
-        });
-
-        if (ref && ('current' in ref) && ref.current) {
-            observer.observe(ref.current);
-        }
+        handleSize(window.innerWidth, window.innerHeight);
 
         const tick = (ticker: Ticker) => {
             if (!room) return;
@@ -77,17 +60,12 @@ export const RoomCanvas = forwardRef<HTMLDivElement>((props, ref) => {
 
             if (hasAndResetCursorUpdate()) renderer.canvas.style.cursor = hasCursorOwners() ? 'pointer' : 'auto';
 
-            // The shared <Application>'s own render loop (driven by the same shared ticker)
-            // renders app.stage - which contains this stage as a child - every frame, so no
-            // manual renderer.render() call is needed here.
             room.dispatchEvent(new RoomRenderedEvent(room.roomId, time));
         }
 
         ticker.add(tick);
 
         return () => {
-            observer.disconnect();
-            clearTimeout(timer);
             ticker.remove(tick);
         }
     }, [room, mouseDataRef, hasAndResetCursorUpdate, hasCursorOwners, updateRoomCamera]);
