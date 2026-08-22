@@ -81,6 +81,10 @@ type State = {
     doorbell: { room: IRoomInfo; waiting: boolean; noAnswer: boolean; visible: boolean } | undefined;
     /* GuestRoomPasswordInput — try hides the window; showRetry re-shows it with retryinfo */
     passwordPrompt: { room: IRoomInfo; retry: boolean; visible: boolean } | undefined;
+    /* §_-Yr§ — the ask_forward room id awaiting its GetGuestRoomResult, -1 when idle */
+    pendingForwardRoomId: number;
+    /* windowManager.confirm(${navigator.forward_confirmation.title}, desc(room_name)) */
+    forwardConfirm: { roomId: number; roomName: string } | undefined;
 }
 
 type Actions = {
@@ -129,6 +133,9 @@ type Actions = {
     showPasswordRetry: () => void;
     hidePasswordWindow: () => void;
     closePasswordPrompt: () => void;
+    setPendingForwardRoomId: (roomId: number) => void;
+    showForwardConfirm: (roomId: number, roomName: string) => void;
+    hideForwardConfirm: () => void;
     resetNavigator: () => void;
 }
 
@@ -164,7 +171,9 @@ const initialState: State = {
     createRoomOpen: false,
     alert: undefined,
     doorbell: undefined,
-    passwordPrompt: undefined
+    passwordPrompt: undefined,
+    pendingForwardRoomId: -1,
+    forwardConfirm: undefined
 };
 
 export type NavigatorContextStore = State & Actions;
@@ -309,5 +318,8 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     showPasswordRetry: () => set(x => (x.passwordPrompt ? { passwordPrompt: { ...x.passwordPrompt, retry: true, visible: true } } : {})),
     hidePasswordWindow: () => set(x => (x.passwordPrompt ? { passwordPrompt: { ...x.passwordPrompt, visible: false } } : {})),
     closePasswordPrompt: () => set({ passwordPrompt: undefined }),
+    setPendingForwardRoomId: pendingForwardRoomId => set({ pendingForwardRoomId }),
+    showForwardConfirm: (roomId, roomName) => set({ forwardConfirm: { roomId, roomName } }),
+    hideForwardConfirm: () => set({ forwardConfirm: undefined }),
     resetNavigator: () => set({ ...initialState })
 }));

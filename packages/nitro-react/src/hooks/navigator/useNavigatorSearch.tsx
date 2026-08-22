@@ -2,6 +2,8 @@ import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 
 import { useNavigatorActions, useWebSocketContext } from '#base/context';
 
+import { useNavigatorVisibility } from './useNavigatorVisibility';
+
 /**
  * HabboNewNavigator.performSearch / performLastSearch — every search goes through
  * the 4000ms NavigatorCache: a hit replays the stored container without a packet,
@@ -12,6 +14,7 @@ import { useNavigatorActions, useWebSocketContext } from '#base/context';
  */
 export const useNavigatorSearch = () => {
     const { setIsSearching, setPendingSearchText, applySearchResult, getCachedSearch, evictCachedSearch, getLastSearch, setLastSearch } = useNavigatorActions();
+    const { showNavigator } = useNavigatorVisibility();
     const { send } = useWebSocketContext();
 
     const performSearch = (searchCode: string, filter: string = '', searchText: string = '') => {
@@ -22,13 +25,14 @@ export const useNavigatorSearch = () => {
 
         if (cached) {
             applySearchResult(cached);
+        } else {
+            setLastSearch(searchCode, filter);
 
-            return;
+            send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: filter }));
         }
 
-        setLastSearch(searchCode, filter);
-
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: filter }));
+        // performSearch always ends with open() — link searches raise the window
+        showNavigator();
     };
 
     const performLastSearch = () => {

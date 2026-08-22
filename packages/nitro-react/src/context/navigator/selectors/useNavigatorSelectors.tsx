@@ -28,5 +28,6 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     createRoomOpen: x.createRoomOpen,
     alert: x.alert,
     doorbell: x.doorbell,
-    passwordPrompt: x.passwordPrompt
+    passwordPrompt: x.passwordPrompt,
+    forwardConfirm: x.forwardConfirm
 })));

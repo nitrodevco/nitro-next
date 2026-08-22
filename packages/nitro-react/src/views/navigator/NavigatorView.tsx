@@ -1,9 +1,9 @@
 import type { IRoomInfo } from '@nitrodevco/nitro-packets';
-import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
+import { GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
+import { createLinkEvent, useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
 import { Border, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, useTooltip } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
@@ -302,8 +302,9 @@ export const NavigatorView = () => {
                       * the Frame content div (pb-1) already contribute 6px, so 10px more.
                       */}
                     <div className="flex shrink-0 gap-4 pt-5 pb-2.5">
-                        {/* createRoomProcedure -> HabboNewNavigator.createRoom() -> roomCreateViewCtrl.show() */}
-                        <Border className="relative w-47.25 h-15 cursor-pointer" {...tooltip(t('navigator.tooltip.create.room'))} variant="4" onClick={showCreateRoom}>
+                        {/* createRoomProcedure -> HabboNewNavigator.createRoom() -> roomCreateViewCtrl.show();
+                            every button procedure also closes an open room-info popup */}
+                        <Border className="relative w-47.25 h-15 cursor-pointer" {...tooltip(t('navigator.tooltip.create.room'))} variant="4" onClick={() => { showCreateRoom(); hideRoomInfoPopup(); }}>
                             <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-create-room" /></div>
                             <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.create.room')}</span>
                         </Border>
@@ -318,17 +319,24 @@ export const NavigatorView = () => {
                           */}
                         {PROMOTE_SEARCH_CODES.includes(searchResult?.searchCodeOriginal ?? '')
                             ? (
-                                <Border className="relative w-47.25 h-15 cursor-pointer" {...tooltip(t('navigator.tooltip.promote.room'))} variant="5">
+                                /* promoteRoomProcedure — createLinkEvent("catalog/open/room_ad") */
+                                <Border
+                                    className="relative w-47.25 h-15 cursor-pointer"
+                                    {...tooltip(t('navigator.tooltip.promote.room'))}
+                                    variant="5"
+                                    onClick={() => { createLinkEvent('catalog/open/room_ad'); hideRoomInfoPopup(); }}>
                                     <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-promote-room" /></div>
                                     <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.promote.room')}</span>
                                 </Border>
                             )
                             : (
+                                /* randomRoomProcedure — createLinkEvent("navigator/goto/random_friending_room")
+                                   then hides the navigator */
                                 <Border
                                     className="relative w-47.25 h-15 cursor-pointer"
                                     {...tooltip(t('navigator.tooltip.random.room'))}
                                     variant="5"
-                                    onClick={() => { send(new ForwardToARandomPromotedRoomComposer({ category: '' })); hideNavigator(); }}>
+                                    onClick={() => { createLinkEvent('navigator/goto/random_friending_room'); hideRoomInfoPopup(); hideNavigator(); }}>
                                     <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-random-room" /></div>
                                     <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.random.room')}</span>
                                 </Border>

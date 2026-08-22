@@ -48,5 +48,8 @@ export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     showPasswordRetry: x.showPasswordRetry,
     hidePasswordWindow: x.hidePasswordWindow,
     closePasswordPrompt: x.closePasswordPrompt,
+    setPendingForwardRoomId: x.setPendingForwardRoomId,
+    showForwardConfirm: x.showForwardConfirm,
+    hideForwardConfirm: x.hideForwardConfirm,
     resetNavigator: x.resetNavigator
 })));

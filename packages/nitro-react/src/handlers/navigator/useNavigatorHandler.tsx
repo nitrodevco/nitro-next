@@ -1,7 +1,8 @@
 import { ClubLevelEnum } from "@nitrodevco/nitro-api";
-import { CanCreateRoomMessage, CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GenericErrorMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, HabboGroupDetailsMessage, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, OpenFlatConnectionComposer, PerkAllowancesMessage, QuitComposer, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { CanCreateRoomMessage, CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, FollowFriendComposer, GenericErrorMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, HabboGroupDetailsMessage, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, NoOwnedRoomsAlertMessage, OpenFlatConnectionComposer, PerkAllowancesMessage, QuitComposer, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { useRef } from "react";
 
-import { useNavigatorActions, useOwnClubLevel, useTranslation, useUserContext, useWebSocketContext } from "#base/context";
+import { useConfigValue, useNavigatorActions, useNavigatorContext, useOwnClubLevel, useTranslation, useUserContext, useWebSocketContext } from "#base/context";
 import { useMessageListener,useNavigatorVisibility  } from "#base/hooks";
 
 export const useNavigatorHandler = () => {
@@ -12,13 +13,20 @@ export const useNavigatorHandler = () => {
         setFavoriteRoomIds, setRoomFavorite, setHomeRoomId, setGroupDetails,
         showCreateRoom, hideCreateRoom, showAlert,
         showDoorbell, showDoorbellWaiting, showDoorbellNoAnswer, hideDoorbellWindow,
-        showPasswordPrompt, showPasswordRetry
+        showPasswordPrompt, showPasswordRetry,
+        setPendingForwardRoomId, showForwardConfirm
     } = useNavigatorActions();
-    const { hideNavigator } = useNavigatorVisibility();
+    const { hideNavigator, showNavigator } = useNavigatorVisibility();
     const clubLevel = useOwnClubLevel();
     const t = useTranslation();
     const userId = useUserContext(x => x.userId);
     const userName = useUserContext(x => x.name);
+    const pendingForwardRoomId = useNavigatorContext(x => x.pendingForwardRoomId);
+    /* NavigatorData.settingsReceived — the login forwarding only runs on the first packet */
+    const settingsReceivedRef = useRef(false);
+    const followFriendId = useConfigValue<string>('friend.id') ?? '';
+    const forwardTypeConfig = useConfigValue<string>('forward.type') ?? '';
+    const forwardIdConfig = useConfigValue<string>('forward.id') ?? '';
 
     useMessageListener(UserObjectMessage, () => {
         send(new GetUserFlatCatsComposer({}));
@@ -105,6 +113,15 @@ export const useNavigatorHandler = () => {
         if (data.enterRoom || !data.roomForward) {
             // ownership per RoomPopupCtrl: sessionData.userId == roomData.ownerId
             setCurrentRoom(data.roomInfo, data.roomInfo?.ownerId === userId);
+
+            /*
+             * HabboNewNavigator.onRoomInfo — an ask_forward link stored the room id and
+             * requested this data; matching id raises the forward-confirmation dialog
+             */
+            if (!data.enterRoom && pendingForwardRoomId !== -1 && data.roomInfo?.roomId === pendingForwardRoomId) {
+                setPendingForwardRoomId(-1);
+                showForwardConfirm(data.roomInfo.roomId, data.roomInfo.name);
+            }
 
             return;
         }
@@ -213,7 +230,45 @@ export const useNavigatorHandler = () => {
 
     useMessageListener(FavouriteChangedMessage, data => setRoomFavorite(data.roomId, data.added));
 
-    useMessageListener(NavigatorSettingsMessage, data => setHomeRoomId(data.homeRoomId));
+    /*
+     * IncomingMessages.onNavigatorSettings — home room id always; the first packet also
+     * runs the login forwarding: a friend.id property follows that friend (and blocks
+     * auto-entry), forward.type 2 forwards to forward.id via the GetGuestRoom flow, and
+     * with no forward properties roomIdToEnter is entered directly (goToRoom sends
+     * OpenFlatConnection). A home room of 0 with nothing to enter opens the navigator.
+     */
+    useMessageListener(NavigatorSettingsMessage, data => {
+        setHomeRoomId(data.homeRoomId);
+
+        if (settingsReceivedRef.current) return;
+
+        settingsReceivedRef.current = true;
+
+        let forwardType = -1;
+
+        if (followFriendId !== '') {
+            forwardType = 0;
+
+            send(new FollowFriendComposer({ playerId: parseInt(followFriendId) }));
+        }
+
+        if (forwardTypeConfig !== '' && forwardIdConfig !== '') forwardType = parseInt(forwardTypeConfig);
+
+        if (forwardType === 2) {
+            send(new GetGuestRoomComposer({ roomId: parseInt(forwardIdConfig), enterRoom: false, roomForward: true }));
+        } else if (forwardType === -1 && data.roomIdToEnter > 0) {
+            if (data.roomIdToEnter !== data.homeRoomId) {
+                send(new OpenFlatConnectionComposer({ roomId: data.roomIdToEnter, password: '', unknown1: -1 }));
+            } else if (data.homeRoomId >= 1) {
+                send(new OpenFlatConnectionComposer({ roomId: data.homeRoomId, password: '', unknown1: -1 }));
+            } else {
+                showNavigator();
+            }
+        }
+    });
+
+    /* onNoOwnedRoomsAlert — startRoomCreation() opens the create-room dialog */
+    useMessageListener(NoOwnedRoomsAlertMessage, () => showCreateRoom());
 
     useMessageListener(HabboGroupDetailsMessage, data => setGroupDetails(data.data));
 

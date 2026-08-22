@@ -301,8 +301,7 @@ import {
     YouAreSpectatorMessage,
     YoutubeControlVideoMessage,
     YoutubeDisplayPlaylistsMessage,
-    YoutubeDisplayVideoMessage
-} from './incoming';
+    YoutubeDisplayVideoMessage, NoOwnedRoomsAlertMessage } from './incoming';
 import { IncomingHeader } from './IncomingHeader';
 
 export const GetIncomingPackets = () => {
@@ -468,6 +467,7 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.GetGuestRoomResultMessage]: GetGuestRoomResultMessage,
         [IncomingHeader.GuestRoomSearchResultMessage]: GuestRoomSearchResultMessage,
         [IncomingHeader.NavigatorSettingsMessage]: NavigatorSettingsMessage,
+        [IncomingHeader.NoOwnedRoomsAlertMessage]: NoOwnedRoomsAlertMessage,
         [IncomingHeader.OfficialRoomsMessage]: OfficialRoomsMessage,
         [IncomingHeader.PopularRoomTagsResultMessage]: PopularRoomTagsResultMessage,
         [IncomingHeader.RoomEventCancelMessage]: RoomEventCancelMessage,
