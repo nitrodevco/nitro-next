@@ -10,7 +10,9 @@ import { Box, type BoxLayout } from './Box';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { Scaler, type ScalerDirection } from './Scaler';
-import { BackgroundLayer, type BackgroundLayerConfig, type CompositePiece } from './utils/Layer';
+import { Composite } from './utils';
+import { BackgroundLayer, type BackgroundLayerConfig } from './utils/Layer';
+import { NineSlice } from './utils/NineSlice';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
 import { useResolvedVariant } from './utils/useResolvedVariant';
@@ -23,14 +25,9 @@ interface FrameVariant {
     tint?: string;
 }
 
-const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): BackgroundLayerConfig => (
-    { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
-);
+type FrameVariants = Record<string, FrameVariant>;
 
-/** theme/Frame.tsx's `0`/`1`/`2` shine overlay: an 8-piece composite that reuses the same
- *  `-shine-top-center-src` texture for 4 of its 8 slots (top-center, both center-left/right
- *  edges, and bottom-center) - a real DOM asset-reuse quirk, preserved as-is. */
-const BLUE_FRAME_SHINE: CompositePiece[] = [
+const BLUE_FRAME_SHINE = Composite([
     { textureKey: 'frame-0-default-shine-top-left-src', left: 1, top: 1, width: 7, height: 7 },
     { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 8, top: 2, height: 1 },
     { textureKey: 'frame-0-default-shine-top-right-src', right: 1, top: 1, width: 7, height: 7 },
@@ -39,46 +36,37 @@ const BLUE_FRAME_SHINE: CompositePiece[] = [
     { textureKey: 'frame-0-default-shine-bottom-left-src', left: 1, bottom: 1, width: 7, height: 7 },
     { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 7, bottom: 2, height: 1 },
     { textureKey: 'frame-0-default-shine-bottom-right-src', right: 1, bottom: 1, width: 6, height: 6 },
-];
+]);
 
-/** theme/Frame.tsx variant '100' reuses Border's `--border-101-default-*` "frame" asset
- *  set wholesale (not its own `frame-100-*` set) - same 9-piece geometry/reuse quirk as
- *  Border variant '101', see Border.tsx. */
-const FRAME_100_COMPOSITE: CompositePiece[] = [
-    { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
-    { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
-    { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
-    { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
-    { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
-    { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
-    { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
-    { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
-    { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
-];
+const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
-const FRAME_3_SHINE = nineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
-
-/**
- * Full port of theme/Frame.tsx's 9-variant table. Variant '101' (modal) has no
- * background layer at all in DOM (no border-image, no bg-image) - it's meant to render
- * on top of/inside another surface - so its `layer` is left undefined here too.
- */
-const FRAME_VARIANTS: Record<string, FrameVariant> = {
-    '0': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#418db0' },
-    '1': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#4c4c4c' },
-    '2': { layer: nineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: { kind: 'composite', pieces: BLUE_FRAME_SHINE }, minWidth: 40, minHeight: 40, tint: '#fac200' },
-    '3': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#418db0' },
-    '4': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#67a3bf' },
-    '7': { layer: nineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
-    '100': { layer: { kind: 'composite', pieces: FRAME_100_COMPOSITE }, minWidth: 50, minHeight: 50 },
+const FRAME_VARIANTS: FrameVariants = {
+    '0': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#418db0' },
+    '1': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#4c4c4c' },
+    '2': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tint: '#fac200' },
+    '3': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#418db0' },
+    '4': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tint: '#67a3bf' },
+    '7': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
+    '100': {
+        layer: Composite([
+            { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
+            { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
+            { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
+            { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
+            { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
+            { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
+            { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
+            { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
+            { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
+        ]), minWidth: 50, minHeight: 50
+    },
     '101': { minWidth: 50, minHeight: 80 },
-    '200': { layer: nineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
+    '200': { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
 };
 
 export interface FrameProps {
-    /** Identifies this window for z-order stacking (SystemStore) and drag/resize persistence (localStorage). Frames without an id still stack/drag/resize, they just don't persist position/size across reloads. */
     id?: string;
-    variant?: string;
+    variant?: keyof FrameVariants;
     defaultVariant?: string;
     caption?: string;
     tintColor?: string;

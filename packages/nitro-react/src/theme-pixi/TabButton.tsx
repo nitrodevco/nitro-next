@@ -7,6 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { Text } from './Text';
+import { wrapTextChildren } from './utils';
 import { NineSliceLayer } from './utils/Layer';
 import { TAB_BUTTON_CHROME_VARIANTS } from './utils/tabButtonChrome';
 import { type TextStyleKey } from './utils/textStyles';
@@ -115,7 +116,7 @@ export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
-                        : children}
+                        : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );

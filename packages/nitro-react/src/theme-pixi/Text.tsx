@@ -5,12 +5,12 @@ import { getPixiTextStyle, TextStyleKey } from "./utils/textStyles";
 
 type TextProps = {
     text: string;
-    textStyle: TextStyleKey;
+    textStyle?: TextStyleKey;
     textOptions?: TextStyleOptions;
 } & PixiReactElementProps<typeof PixiText>;
 
 export const Text = ({ text, textStyle, textOptions, layout, ...props }: TextProps) => {
-    const style = getPixiTextStyle(textStyle, textOptions);
+    const style = getPixiTextStyle(textStyle ?? "text-style-regular", textOptions);
 
     return <pixiText
         text={text}

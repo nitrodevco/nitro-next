@@ -6,7 +6,8 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, type BackgroundLayerConfig, BlendOverlay, type CompositePiece } from './utils/Layer';
+import { Composite, NineSlice } from './utils';
+import { BackgroundLayer, type BackgroundLayerConfig, BlendOverlay } from './utils/Layer';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
@@ -15,35 +16,21 @@ interface BorderVariant {
     overlay?: BackgroundLayerConfig;
 }
 
-const nineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number): BackgroundLayerConfig => (
-    { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight }
-);
-
-const composite = (pieces: CompositePiece[]): BackgroundLayerConfig => ({ kind: 'composite', pieces });
-
-/**
- * Full port of theme/Border.tsx's 19-variant table. Variant '100' is the one DOM variant
- * whose `border-image-slice` omits the `fill` keyword, meaning CSS leaves its center
- * transparent instead of rendering a stretched center tile - Pixi's NineSliceSprite has no
- * equivalent "don't fill the center" mode, so this port always fills it. Low-impact in
- * practice (border content is opaque in every real usage found), flagged rather than
- * silently diverging without a note.
- */
 const BORDER_VARIANTS: Record<string, BorderVariant> = {
-    '0': { layer: nineSlice('border-0-default-src', 6, 6, 6, 6) },
-    '1': { layer: nineSlice('border-1-default-src', 6, 6, 6, 6) },
-    '2': { layer: nineSlice('border-2-default-src', 6, 6, 6, 6) },
-    '3': { layer: nineSlice('border-3-default-src', 3, 3, 3, 3) },
-    '4': { layer: nineSlice('border-4-default-src', 6, 6, 6, 6) },
-    '5': { layer: nineSlice('border-5-default-src', 5, 5, 5, 5) },
-    '6': { layer: nineSlice('border-6-default-src', 8, 8, 8, 8) },
-    '7': { layer: nineSlice('border-7-default-src', 6, 6, 6, 7) },
-    '8': { layer: nineSlice('border-8-default-src', 10, 10, 10, 10) },
-    '9': { layer: nineSlice('border-9-default-src', 7, 7, 7, 8) },
-    '10': { layer: nineSlice('border-10-default-src', 6, 6, 6, 8) },
-    '100': { layer: nineSlice('border-100-default-src', 3, 3, 3, 3) },
+    '0': { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
+    '1': { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
+    '2': { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
+    '3': { layer: NineSlice('border-3-default-src', 3, 3, 3, 3) },
+    '4': { layer: NineSlice('border-4-default-src', 6, 6, 6, 6) },
+    '5': { layer: NineSlice('border-5-default-src', 5, 5, 5, 5) },
+    '6': { layer: NineSlice('border-6-default-src', 8, 8, 8, 8) },
+    '7': { layer: NineSlice('border-7-default-src', 6, 6, 6, 7) },
+    '8': { layer: NineSlice('border-8-default-src', 10, 10, 10, 10) },
+    '9': { layer: NineSlice('border-9-default-src', 7, 7, 7, 8) },
+    '10': { layer: NineSlice('border-10-default-src', 6, 6, 6, 8) },
+    '100': { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
     '101': {
-        layer: composite([
+        layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
             { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
             { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
@@ -56,7 +43,7 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
         ]),
     },
     '102': {
-        layer: composite([
+        layer: Composite([
             { textureKey: 'border-102-default-top-left-src', top: 0, left: 0, width: 12, height: 14 },
             { textureKey: 'border-102-default-top-center-src', top: 0, left: 12, right: 6, height: 14 },
             { textureKey: 'border-102-default-top-right-src', top: 0, right: 0, width: 6, height: 14 },
@@ -69,7 +56,7 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
         ]),
     },
     '103': {
-        layer: composite([
+        layer: Composite([
             { textureKey: 'border-103-default-top-src', top: 0, left: 0, right: 0, height: 4 },
             { textureKey: 'border-103-default-center-src', top: 4, bottom: 12, left: 0, right: 0 },
             { textureKey: 'border-103-default-bottom-left-src', bottom: 0, left: 0, width: 4, height: 12 },
@@ -78,8 +65,8 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
         ]),
     },
     '104': {
-        layer: nineSlice('border-104-default-src', 7, 7, 7, 7),
-        overlay: composite([
+        layer: NineSlice('border-104-default-src', 7, 7, 7, 7),
+        overlay: Composite([
             { textureKey: 'border-104-default-border-top-left-src', top: 0, left: 0, width: 4, height: 4 },
             { textureKey: 'border-104-default-border-top-center-src', top: 0, left: 4, right: 4, height: 4 },
             { textureKey: 'border-104-default-border-top-right-src', top: 0, right: 0, width: 4, height: 4 },
@@ -91,11 +78,11 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
         ]),
     },
     '105': {
-        layer: nineSlice('border-105-default-src', 5, 5, 5, 5),
-        overlay: nineSlice('border-105-default-shine-src', 5, 5, 5, 5),
+        layer: NineSlice('border-105-default-src', 5, 5, 5, 5),
+        overlay: NineSlice('border-105-default-shine-src', 5, 5, 5, 5),
     },
     '106': {
-        layer: composite([
+        layer: Composite([
             { textureKey: 'border-106-default-top-left-src', top: 0, left: 0, width: 4, height: 5 },
             { textureKey: 'border-106-default-top-center-src', top: 0, left: 4, right: 4, height: 5 },
             { textureKey: 'border-106-default-top-right-src', top: 0, right: 0, width: 4, height: 5 },
@@ -106,7 +93,7 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
         ]),
     },
     '107': {
-        layer: composite([
+        layer: Composite([
             { textureKey: 'border-107-default-background-top-left-src', top: 0, left: 0, width: 5, height: 10 },
             { textureKey: 'border-107-default-background-top-center-src', top: 0, left: 5, right: 5, height: 10 },
             { textureKey: 'border-107-default-background-top-right-src', top: 0, right: 0, width: 5, height: 10 },
@@ -118,8 +105,8 @@ const BORDER_VARIANTS: Record<string, BorderVariant> = {
             { textureKey: 'border-107-default-background-bottom-right-src', right: 0, bottom: 0, width: 5, height: 5 },
         ]),
     },
-    '108': { layer: nineSlice('border-108-default-src', 3, 3, 3, 3) },
-    '200': { layer: nineSlice('border-200-default-src', 3, 3, 3, 3) },
+    '108': { layer: NineSlice('border-108-default-src', 3, 3, 3, 3) },
+    '200': { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
 };
 
 const BORDER_TINT_COLORS: Partial<Record<string, string>> = {

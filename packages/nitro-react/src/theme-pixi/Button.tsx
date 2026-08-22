@@ -7,6 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { Text } from './Text';
+import { wrapTextChildren } from './utils';
 import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY } from './utils/buttonOverlayPieces';
 import { CompositeLayer, type CompositePiece, NineSliceLayer } from './utils/Layer';
 import { type TextStyleKey } from './utils/textStyles';
@@ -253,7 +254,7 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
-                        : children}
+                        : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );

@@ -7,6 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { Text } from './Text';
+import { wrapTextChildren } from './utils';
 import { NineSliceLayer, SpriteLayer } from './utils/Layer';
 import { type TextStyleKey } from './utils/textStyles';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
@@ -98,7 +99,7 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
-                        : children}
+                        : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );

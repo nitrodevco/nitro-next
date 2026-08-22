@@ -7,6 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { Text } from './Text';
+import { wrapTextChildren } from './utils';
 import { type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
@@ -134,10 +135,8 @@ export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<P
                 />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? (config.textStyleKey
-                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
-                            : <pixiText layout={{}} text={children} />)
-                        : children}
+                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                        : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );
