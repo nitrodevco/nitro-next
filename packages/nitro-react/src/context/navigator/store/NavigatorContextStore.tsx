@@ -7,6 +7,21 @@ export type NavigatorFilterType = 'anything' | 'room.name' | 'owner' | 'tag' | '
 /** SearchContext(searchCodeOriginal, filteringData) */
 export type NavigatorSearchContext = { searchCode: string; filter: string };
 
+/**
+ * SearchView.FILTER_SELECTOR_INDEX_TO_MODE = [5,2,1,3,4] indexing
+ * FILTER_PREFIX = ["", "owner:", "roomname:", "tag:", "group:", ""]
+ */
+export const NAVIGATOR_FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
+    { type: 'anything', prefix: '' },
+    { type: 'room.name', prefix: 'roomname:' },
+    { type: 'owner', prefix: 'owner:' },
+    { type: 'tag', prefix: 'tag:' },
+    { type: 'group', prefix: 'group:' }
+];
+
+/** NavigatorCache.EXPIRATION_TIME */
+const SEARCH_CACHE_TTL_MS = 4000;
+
 type State = {
     topLevelContexts: ITopLevelContext[];
     topLevelContext: ITopLevelContext | undefined;
@@ -31,6 +46,19 @@ type State = {
     /* HabboNewNavigator._noPushToHistoryDueToNavigation */
     noPushToHistory: boolean;
     filterType: NavigatorFilterType;
+    /*
+     * SearchView input state — searchText mirrors the field caption; searchTextCarry
+     * mirrors the placeholder formatting flag setTextAndSearchModeFromFilter sets when
+     * it re-displays text carried across a tab switch (grey + italic until focused)
+     */
+    searchText: string;
+    searchTextCarry: boolean;
+    /* §_-F1r§ — the searchInputText passed to performSearch, applied when results arrive */
+    pendingSearchText: string;
+    /* _lastSearchCode / §_-g1G§ — filter stays null until the first real send */
+    lastSearch: { searchCode: string; filter: string | null };
+    /* NavigatorCache — SearchResultContainer by "searchCode/filter", 4000ms TTL */
+    searchCache: Record<string, { result: ISearchResultSet; expiresAt: number }>;
     leftPaneHidden: boolean;
     isSearching: boolean;
     currentRoom: IRoomInfo | undefined;
@@ -69,6 +97,14 @@ type Actions = {
     setBlockExpanded: (code: string, expanded: boolean) => void;
     pushSearchContext: (context: NavigatorSearchContext) => void;
     popPreviousSearchContext: () => NavigatorSearchContext | null;
+    applySearchResult: (result: ISearchResultSet) => void;
+    getCachedSearch: (key: string) => ISearchResultSet | null;
+    evictCachedSearch: (key: string) => void;
+    getLastSearch: () => { searchCode: string; filter: string | null };
+    setLastSearch: (searchCode: string, filter: string) => void;
+    setPendingSearchText: (pendingSearchText: string) => void;
+    setSearchText: (searchText: string) => void;
+    clearSearchTextCarry: () => void;
     setFilterType: (filterType: NavigatorFilterType) => void;
     setLeftPaneHidden: (leftPaneHidden: boolean) => void;
     setViewMode: (code: string, mode: number) => void;
@@ -112,6 +148,11 @@ const initialState: State = {
     searchHistoryOffset: -1,
     noPushToHistory: false,
     filterType: 'anything',
+    searchText: '',
+    searchTextCarry: false,
+    pendingSearchText: '',
+    lastSearch: { searchCode: 'official_view', filter: null },
+    searchCache: {},
     leftPaneHidden: false,
     isSearching: false,
     currentRoom: undefined,
@@ -174,6 +215,71 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
 
         return searchHistory[searchHistoryOffset - 1];
     },
+    /*
+     * HabboNewNavigator.onSearchResult + NavigatorView.onSearchResults — cache the
+     * container, record the history entry, auto-select the matching top tab and let
+     * SearchView.setTextAndSearchModeFromFilter re-derive the filter dropdown and
+     * input text (the carried searchInputText wins and renders placeholder-styled).
+     */
+    applySearchResult: result => set(x => {
+        const now = Date.now();
+        const searchCache = Object.fromEntries(Object.entries(x.searchCache).filter(([, entry]) => entry.expiresAt > now));
+
+        searchCache[`${result.searchCodeOriginal}/${result.filteringData}`] = { result, expiresAt: now + SEARCH_CACHE_TTL_MS };
+
+        let { searchHistory, searchHistoryOffset } = x;
+
+        if (!x.noPushToHistory) {
+            searchHistory = [...searchHistory.slice(0, searchHistoryOffset + 1), { searchCode: result.searchCodeOriginal, filter: result.filteringData }];
+            searchHistoryOffset = searchHistory.length - 1;
+        }
+
+        const match = NAVIGATOR_FILTER_TYPES.find(f => f.prefix !== '' && result.filteringData.startsWith(f.prefix));
+        const filterType = match ? match.type : 'anything';
+        let searchText = match ? result.filteringData.slice(match.prefix.length) : result.filteringData;
+        let searchTextCarry = false;
+
+        if (x.pendingSearchText !== '') {
+            searchText = x.pendingSearchText;
+            searchTextCarry = true;
+        }
+
+        return {
+            searchResult: result,
+            isSearching: false,
+            expandOverrides: {},
+            viewModes: Object.fromEntries(result.blocks.map(y => [y.searchCode, y.viewMode])),
+            searchCache,
+            searchHistory,
+            searchHistoryOffset,
+            noPushToHistory: false,
+            filterType,
+            searchText,
+            searchTextCarry,
+            pendingSearchText: '',
+            topLevelContext: x.topLevelContexts.find(y => y.searchCode === result.searchCodeOriginal) ?? x.topLevelContext
+        };
+    }),
+    getCachedSearch: key => {
+        const entry = get().searchCache[key];
+
+        if (!entry) return null;
+
+        if (entry.expiresAt <= Date.now()) {
+            set(x => ({ searchCache: Object.fromEntries(Object.entries(x.searchCache).filter(([k]) => k !== key)) }));
+
+            return null;
+        }
+
+        return entry.result;
+    },
+    evictCachedSearch: key => set(x => ({ searchCache: Object.fromEntries(Object.entries(x.searchCache).filter(([k]) => k !== key)) })),
+    getLastSearch: () => get().lastSearch,
+    setLastSearch: (searchCode, filter) => set({ lastSearch: { searchCode, filter } }),
+    setPendingSearchText: pendingSearchText => set({ pendingSearchText }),
+    setSearchText: searchText => set({ searchText, searchTextCarry: false }),
+    /* onInputFocused — the formatting turns black but the carried text stays */
+    clearSearchTextCarry: () => set({ searchTextCarry: false }),
     setFilterType: filterType => set({ filterType }),
     setLeftPaneHidden: leftPaneHidden => set({ leftPaneHidden }),
     setViewMode: (code, mode) => set(x => ({ viewModes: { ...x.viewModes, [code]: mode } })),

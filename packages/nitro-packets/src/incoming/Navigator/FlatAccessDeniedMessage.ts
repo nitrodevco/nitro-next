@@ -12,11 +12,9 @@ export type FlatAccessDeniedMessageType = {
 
 export class FlatAccessDeniedMessage implements IIncomingPacket<FlatAccessDeniedMessageType> {
     public parse(wrapper: IMessageDataWrapper): FlatAccessDeniedMessageType {
-        const packet: FlatAccessDeniedMessageType = {
+        return {
             roomId: wrapper.readInt(),
             username: wrapper.bytesAvailable ? wrapper.readString() : '',
         };
-
-        return packet;
     }
 }

@@ -1,7 +1,8 @@
 import type { ISavedSearch } from '@nitrodevco/nitro-packets';
-import { NavigatorDeleteSavedSearchComposer, NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
+import { NavigatorDeleteSavedSearchComposer } from '@nitrodevco/nitro-packets';
 
-import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useNavigatorSearch } from '#base/hooks';
 import { Border, Button, NitroIcon, ScrollArea, useTooltip } from '#base/theme';
 
 /**
@@ -14,7 +15,7 @@ const CATEGORY_PREFIX = 'category__';
 
 export const NavigatorQuickLinksView = () => {
     const { savedSearches, leftPaneHidden } = useNavigatorSelectors();
-    const { setIsSearching } = useNavigatorActions();
+    const { performSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const t = useTranslation();
     const tooltip = useTooltip();
@@ -34,11 +35,8 @@ export const NavigatorQuickLinksView = () => {
         return t(`navigator.searchcode.title.${link.searchCode}`, link.searchCode) + suffix;
     };
 
-    const runSearch = (searchCode: string, filter: string) => {
-        setIsSearching(true);
-
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: filter }));
-    };
+    /* performSearchByContext — routed through the cache like every search */
+    const runSearch = (searchCode: string, filter: string) => performSearch(searchCode, filter);
 
     // the pane is toggled by temp_back in NavigatorView; hidden means not rendered
     if (leftPaneHidden) return null;

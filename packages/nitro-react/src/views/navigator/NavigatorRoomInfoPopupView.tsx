@@ -1,8 +1,9 @@
-import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, GetExtendedProfileComposer, GetHabboGroupDetailsComposer, NewNavigatorSearchComposer, UpdateHomeRoomComposer } from '@nitrodevco/nitro-packets';
+import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, GetExtendedProfileComposer, GetHabboGroupDetailsComposer, UpdateHomeRoomComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useConfigValue, useNavigatorActions, useNavigatorSelectors, useTranslation, useUserContext, useWebSocketContext } from '#base/context';
+import { useNavigatorSearch } from '#base/hooks';
 import { Border, Bubble, NitroIcon, useTooltip } from '#base/theme';
 
 /** RoomTradingLevelEnum.getLocalizationKey */
@@ -21,7 +22,8 @@ const POPUP_GRACE_MS = 4000;
  */
 export const NavigatorRoomInfoPopupView = () => {
     const { roomInfoPopup, favoriteRoomIds, homeRoomId, groupDetails } = useNavigatorSelectors();
-    const { hideRoomInfoPopup, setRoomFavorite, setHomeRoomId, setIsSearching } = useNavigatorActions();
+    const { hideRoomInfoPopup, setRoomFavorite, setHomeRoomId } = useNavigatorActions();
+    const { performSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const t = useTranslation();
     const tooltip = useTooltip();
@@ -99,8 +101,7 @@ export const NavigatorRoomInfoPopupView = () => {
 
     /* performTagSearch — performSearch("hotel_view", "tag:" + tag) */
     const searchTag = (tag: string) => {
-        setIsSearching(true);
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: 'hotel_view', filteringData: `tag:${tag}` }));
+        performSearch('hotel_view', `tag:${tag}`);
         hideRoomInfoPopup();
     };
 

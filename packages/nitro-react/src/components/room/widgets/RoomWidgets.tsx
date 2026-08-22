@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom"
 
 import { RoomDoorbellWidget } from "./doorbell";
-import { RoomObjectInfostandWidget } from "./object-infostand";
+import { RoomObjectInfostandWidget } from '#base/components';
 import { RoomObjectMenuWidget } from "./object-menu";
 
 

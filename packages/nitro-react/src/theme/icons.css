@@ -1357,14 +1357,14 @@
     height: 11px;
 }
 
-/* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text */
-.icon-nav-close {
-    background-image: url('/assets/flash/icons/close.png');
+/* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text —
+   the small grey X glyph, not the red frame close button */
+.icon-nav-clear-search {
+    background-image: url('/assets/flash/navigator/clear_search_x.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20px 20px;
-    width: 20px;
-    height: 20px;
+    width: 11px;
+    height: 12px;
 }
 
 /* nav_error_popup popup_arrow_down, and roc_room_thumbnail tile icons / select arrow */

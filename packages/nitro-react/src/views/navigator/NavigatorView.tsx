@@ -1,9 +1,9 @@
 import type { IRoomInfo } from '@nitrodevco/nitro-packets';
-import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
+import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { useNavigatorVisibility } from '#base/hooks';
+import { useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
 import { Border, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, useTooltip } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
@@ -42,14 +42,27 @@ const PROMOTE_SEARCH_CODES = ['roomads_view', 'myworld_view'];
  * height_min 500. Holds top_view_select_tab_context, left_pane and right_pane.
  */
 export const NavigatorView = () => {
-    const { topLevelContexts, topLevelContext, searchResult, isSearching, leftPaneHidden, preferences, roomInfoPopup } = useNavigatorSelectors();
-    const { setTopLevelContext, setIsSearching, setLeftPaneHidden, setCategoryCollapsed, setBlockExpanded, setViewMode, popPreviousSearchContext, showRoomInfoPopup, hideRoomInfoPopup, showCreateRoom } = useNavigatorActions();
+    const { topLevelContexts, topLevelContext, searchResult, searchText, isSearching, leftPaneHidden, preferences, roomInfoPopup } = useNavigatorSelectors();
+    const { setTopLevelContext, setLeftPaneHidden, setCategoryCollapsed, setBlockExpanded, setViewMode, popPreviousSearchContext, showRoomInfoPopup, hideRoomInfoPopup, showCreateRoom } = useNavigatorActions();
     const { hideNavigator } = useNavigatorVisibility();
+    const { performSearch, performLastSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const t = useTranslation();
     const tooltip = useTooltip();
     const frameRef = useRef<HTMLDivElement>(null);
     const lastSentRef = useRef<{ x: number; y: number; height: number; paneVisible: boolean; at: number } | null>(null);
+
+    /*
+     * HabboNewNavigator.toggle() on opening: the visible setter falls back to
+     * performSearch("official_view") when no results exist, then performLastSearch()
+     * refetches the last search past the cache (a no-op before the first search).
+     */
+    useEffect(() => {
+        if (!searchResult && !isSearching) performSearch('official_view');
+
+        performLastSearch();
+        // mount only — this is the window-open path
+    }, []);
 
     /*
      * NavigatorView.update(): when windowPreferencesChanged and more than 5000ms have
@@ -104,15 +117,18 @@ export const NavigatorView = () => {
         // send is intentionally omitted (unstable identity), matching the other handlers
     }, [leftPaneHidden]);
 
+    /*
+     * TopViewSelector click — performSearch(searchCode, "", currentFilterText()):
+     * the search itself is unfiltered but the input text is carried across the tab
+     */
     const selectContext = (searchCode: string) => {
         const next = topLevelContexts.find(x => x.searchCode === searchCode);
 
         if (!next) return;
 
         setTopLevelContext(next);
-        setIsSearching(true);
 
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: '' }));
+        performSearch(searchCode, '', searchText);
     };
 
     const enterRoom = (room: IRoomInfo) => {
@@ -142,9 +158,14 @@ export const NavigatorView = () => {
         showRoomInfoPopup(room, rect.right, rect.top + rect.height / 2);
     };
 
-    /* BlockResultsView.onCategoryAddQuickLinkClicked -> addSavedSearch(searchCode, currentResults.filteringData) */
+    /*
+     * addSavedSearch — only sends while results exist, and always force-shows the
+     * left pane (setLeftPaneVisibility(true))
+     */
     const addQuickLink = (searchCode: string) => {
-        send(new NavigatorAddSavedSearchComposer({ searchCode, filter: searchResult?.filteringData ?? '' }));
+        if (searchResult) send(new NavigatorAddSavedSearchComposer({ searchCode, filter: searchResult.filteringData }));
+
+        setLeftPaneHidden(false);
     };
 
     /*
@@ -164,11 +185,7 @@ export const NavigatorView = () => {
     };
 
     /* onCategoryShowMoreClicked -> performSearch(searchCode, currentResults.filteringData) */
-    const showMore = (searchCode: string) => {
-        setIsSearching(true);
-
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: searchResult?.filteringData ?? '' }));
-    };
+    const showMore = (searchCode: string) => performSearch(searchCode, searchResult?.filteringData ?? '');
 
     /* HabboNewNavigator.goBack — re-run the previous search from the context history */
     const goBack = () => {
@@ -176,9 +193,7 @@ export const NavigatorView = () => {
 
         if (!previous) return;
 
-        setIsSearching(true);
-
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: previous.searchCode, filteringData: previous.filter }));
+        performSearch(previous.searchCode, previous.filter);
     };
 
     /*
@@ -191,10 +206,18 @@ export const NavigatorView = () => {
         setViewMode(searchCode, viewMode);
     };
 
+    /*
+     * ViewMode.getViewMode: roomads_view -> 3, new_ads / eventcategory__* -> 4;
+     * isEventViewMode(3|4) makes the entries show roomAdName instead of roomName
+     */
+    const searchCodeOriginal = searchResult?.searchCodeOriginal ?? '';
+    const eventViewMode = searchCodeOriginal === 'roomads_view' || searchCodeOriginal === 'new_ads' || searchCodeOriginal.startsWith('eventcategory__');
+
     return (
         <Frame
             ref={frameRef}
-            caption={t('navigator.title')}
+            /* NavigatorView.set isBusy — the caption swaps while a search is running */
+            caption={isSearching ? t('navigator.title.is.busy') : t('navigator.title')}
             /* height_min="500" — useFrameResize clamps the drag to the computed min-height */
             className={`${leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED} h-157 min-h-125`}
             id="navigator"
@@ -245,6 +268,7 @@ export const NavigatorView = () => {
                                 <NavigatorCategoryView
                                     key={block.searchCode}
                                     block={block}
+                                    eventViewMode={eventViewMode}
                                     onAddQuickLink={addQuickLink}
                                     onBack={goBack}
                                     onCollapse={collapseCategory}

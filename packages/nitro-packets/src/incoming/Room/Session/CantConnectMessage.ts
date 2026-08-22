@@ -13,11 +13,9 @@ export class CantConnectMessage implements IIncomingPacket<CantConnectMessageTyp
 {
   public parse(wrapper: IMessageDataWrapper): CantConnectMessageType
   {
-    const packet: CantConnectMessageType = {
-      reason: wrapper.readInt(),
-      parameter: wrapper.bytesAvailable ? wrapper.readString() : '',
+    return {
+        reason: wrapper.readInt(),
+        parameter: wrapper.bytesAvailable ? wrapper.readString() : '',
     };
-
-    return packet;
   }
 }

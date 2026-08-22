@@ -8,7 +8,7 @@ export const useNavigatorHandler = () => {
     const { send } = useWebSocketContext();
     const {
         setTopLevelContexts, setTopLevelContext, setFlatCategories, setEventCategories,
-        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden, pushSearchContext,
+        applySearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden,
         setFavoriteRoomIds, setRoomFavorite, setHomeRoomId, setGroupDetails,
         showCreateRoom, hideCreateRoom, showAlert,
         showDoorbell, showDoorbellWaiting, showDoorbellNoAnswer, hideDoorbellWindow,
@@ -64,15 +64,11 @@ export const useNavigatorHandler = () => {
 
     useMessageListener(UserEventCatsMessage, data => setEventCategories(data.eventCategories));
 
-    useMessageListener(NavigatorSearchResultBlocksMessage, data => {
-        setSearchResult(data.searchResult);
-
-        // HabboNewNavigator.onSearchResults records the search in the context history
-        pushSearchContext({
-            searchCode: data.searchResult.searchCodeOriginal,
-            filter: data.searchResult.filteringData
-        });
-    });
+    /*
+     * HabboNewNavigator.onSearchResult — caches the container, records the context
+     * history entry, auto-selects the matching top tab and re-derives the filter input
+     */
+    useMessageListener(NavigatorSearchResultBlocksMessage, data => applySearchResult(data.searchResult));
 
     useMessageListener(NavigatorCollapsedCategoriesMessage, data => setCollapsedCategories(data.collapsedCategories));
 

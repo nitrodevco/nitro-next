@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useNavigatorContext } from "../useNavigatorContext";
+import { useNavigatorContext } from '#base/context';
 
 export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     setTopLevelContexts: x.setTopLevelContexts,
@@ -29,6 +29,14 @@ export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     hideRoomInfoPopup: x.hideRoomInfoPopup,
     showCreateRoom: x.showCreateRoom,
     hideCreateRoom: x.hideCreateRoom,
+    applySearchResult: x.applySearchResult,
+    getCachedSearch: x.getCachedSearch,
+    evictCachedSearch: x.evictCachedSearch,
+    getLastSearch: x.getLastSearch,
+    setLastSearch: x.setLastSearch,
+    setPendingSearchText: x.setPendingSearchText,
+    setSearchText: x.setSearchText,
+    clearSearchTextCarry: x.clearSearchTextCarry,
     showAlert: x.showAlert,
     hideAlert: x.hideAlert,
     showDoorbell: x.showDoorbell,

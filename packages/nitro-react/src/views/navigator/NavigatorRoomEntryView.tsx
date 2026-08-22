@@ -18,16 +18,20 @@ type NavigatorRoomEntryViewProps = {
     mode: number;
     /** modulated background from CategoryElementFactory's alternating accumulator */
     backgroundColor: string;
+    /** ViewMode.isEventViewMode — event listings show roomAdName instead of roomName */
+    eventViewMode?: boolean;
     onEnter: (room: IRoomInfo) => void;
     onShowInfo?: (room: IRoomInfo, target: HTMLElement) => void;
 }
 
-export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, onShowInfo }: NavigatorRoomEntryViewProps) => {
+export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewMode = false, onEnter, onShowInfo }: NavigatorRoomEntryViewProps) => {
     const interpolate = useInterpolate();
     const t = useTranslation();
     const tooltip = useTooltip();
     /* onRoomRoomInfoMouseOver — hovering another info icon while the popup is open re-targets it */
     const popupVisible = useNavigatorContext(x => !!x.roomInfoPopup);
+    /* RoomEntryElementFactory — event view modes label the entry with the ad name */
+    const displayName = eventViewMode && room.adName !== '' ? room.adName : room.name;
     const showRoomInfoPopup = useNavigatorContext(x => x.showRoomInfoPopup);
 
     const retargetOnHover = (event: { currentTarget: EventTarget }) => {
@@ -101,28 +105,28 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                     u_bold thickness -15, which at 10px renders like a regular weight —
                     the regular face matches the client, a true webfont bold is too heavy */}
                 <div className="absolute top-29 left-0 w-25 h-7.5 px-1.5 pt-0.5 font-ubuntu text-[10px] leading-tight break-words line-clamp-2">
-                    {interpolate(room.name)}
+                    {interpolate(displayName)}
                 </div>
             </Border>
         );
     }
 
-    /* navigator_entry_row_container — border style="3", 383x20 */
+    /* navigator_entry_row_container — border style="3", 383x20; unlike the tile's
+       go_to_room_region the row template declares NO tooltip */
     return (
         <Border
             className="flex items-center shrink-0 w-full h-5 cursor-pointer"
             tintColor={backgroundColor}
-            {...tooltip(t('navigator.tooltip.go.to.room'))}
             variant="3"
             onClick={() => onEnter(room)}>
             {userCount}
             {/* room_name at 44,1 — 282 wide */}
-            <span className="flex-1 min-w-0 pl-1 truncate text-style-u-regular">{interpolate(room.name)}</span>
+            <span className="flex-1 min-w-0 pl-1 truncate text-style-u-regular">{interpolate(displayName)}</span>
             {/* doormode_icon 324,2 · grouphome_icon 341,2 · info_popup_click_region 359,0 */}
             <div className="flex items-center gap-0.25 shrink-0 pr-0.5">
                 {doorModeIcon && <NitroIcon icon={doorModeIcon} />}
-                {/* grouphome_icon.visible = groupBadgeCode != "" (RoomEntryElementFactory) */}
-                {room.groupBadge !== '' && <NitroIcon icon="icon-nav-room-group" {...tooltip(room.groupName)} />}
+                {/* grouphome_icon.visible = groupBadgeCode != "" (RoomEntryElementFactory) — no tooltip */}
+                {room.groupBadge !== '' && <NitroIcon icon="icon-nav-room-group" />}
                 {onShowInfo && (
                     <NitroIcon
                         className="cursor-pointer"

@@ -12,6 +12,8 @@ export const RESULTS_MODE_TILES = 1;
 
 type NavigatorCategoryViewProps = {
     block: ISearchResultList;
+    /** ViewMode.isEventViewMode of the result's searchCodeOriginal */
+    eventViewMode?: boolean;
     onEnter: (room: IRoomInfo) => void;
     onShowInfo?: (room: IRoomInfo, target: HTMLElement) => void;
     onCollapse: (searchCode: string, isCollapsed: boolean) => void;
@@ -30,7 +32,7 @@ type NavigatorCategoryViewProps = {
  * category_toggle_tiles/rows are mutually exclusive on the current resultMode, and
  * category_add_quick_link is hidden while the search code is official_view.
  */
-export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, onShowMore, onBack, onAddQuickLink, onToggleMode }: NavigatorCategoryViewProps) => {
+export const NavigatorCategoryView = ({ block, eventViewMode = false, onEnter, onShowInfo, onCollapse, onShowMore, onBack, onAddQuickLink, onToggleMode }: NavigatorCategoryViewProps) => {
     const { collapsedCategories, expandOverrides, searchResult, viewModes, perks } = useNavigatorSelectors();
     const t = useTranslation();
     const tooltip = useTooltip();
@@ -152,6 +154,7 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             <NavigatorRoomEntryView
                                 key={room.roomId}
                                 backgroundColor={backgroundColor}
+                                eventViewMode={eventViewMode}
                                 mode={mode}
                                 room={room}
                                 onEnter={onEnter}

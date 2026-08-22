@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useNavigatorContext } from "../useNavigatorContext";
+import { useNavigatorContext } from '#base/context';
 
 export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => ({
     topLevelContexts: x.topLevelContexts,
@@ -15,6 +15,8 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     expandOverrides: x.expandOverrides,
     viewModes: x.viewModes,
     filterType: x.filterType,
+    searchText: x.searchText,
+    searchTextCarry: x.searchTextCarry,
     leftPaneHidden: x.leftPaneHidden,
     isSearching: x.isSearching,
     currentRoom: x.currentRoom,
