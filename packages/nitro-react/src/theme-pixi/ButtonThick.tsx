@@ -8,7 +8,7 @@ import { VariantCascadeProvider } from '#base/theme';
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
 import { Text } from './Text';
-import { resolveByState, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
 type ButtonThickVariant = ThemeWithStatesVariant;
@@ -109,13 +109,9 @@ export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({ variant, defaultVariant, tintColor, textColor, disabled, layout, onPress, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('buttonThick', variant, defaultVariant);
-        const config = BUTTON_THICK_VARIANTS[resolvedVariant] ?? BUTTON_THICK_VARIANTS['0'];
-        const { state, handlers } = useInteractionState(disabled);
-        const resolvedLayer = config.states && resolveByState(config.states, state);
-        const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
-        const resolvedTint = tintColor || config.tintColor;
-        const resolvedTextColor = textColor ?? config.textColor;
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textColor, disabled,
+        });
 
         return (
             <Box

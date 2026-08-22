@@ -9,8 +9,7 @@ import { Box } from '../Box';
 import { BackgroundLayer } from '../layer';
 import { Text } from '../Text';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from '../variant';
-import { resolveByState, useInteractionState } from './useInteractionState';
-import { useResolvedVariant } from './useResolvedVariant';
+import { useThemeVariant } from './useThemeVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
 export type ButtonGroupVariant = ThemeWithStatesVariant;
@@ -29,12 +28,9 @@ export const createButtonGroupComponent = (
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
-            const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
-            const config = variants[resolvedVariant] ?? variants['0'];
-            const { state, handlers } = useInteractionState(disabled);
-            const resolvedLayer = config.states && resolveByState(config.states, state, selected);
-            const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
-            const resolvedTint = tintColor || config.tintColor;
+            const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected,
+            });
 
             return (
                 <Box

@@ -17,4 +17,5 @@ export * from './useResolvedVariant';
 export * from './useRowVirtualizer';
 export * from './useScrollController';
 export * from './useSpriteFrameTexture';
+export * from './useThemeVariant';
 export * from './wrapTextChildren';

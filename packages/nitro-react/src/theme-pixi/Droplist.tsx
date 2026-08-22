@@ -8,7 +8,7 @@ import { VariantCascadeProvider } from '#base/theme';
 import { Box } from './Box';
 import { BackgroundLayer, CompositeLayer, NineSlice } from './layer';
 import { Text } from './Text';
-import { useResolvedVariant, wrapTextChildren } from './utils';
+import { useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type DroplistVariant = ThemeVariant & {
@@ -28,15 +28,14 @@ export interface DroplistProps extends ThemeProps<DroplistVariant> {
 
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
     ({ variant, defaultVariant, tintColor, textColor, layout, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('droplist', variant, defaultVariant);
-        const config = DROPLIST_VARIANTS[resolvedVariant] ?? DROPLIST_VARIANTS['0'];
-        const resolvedTint = tintColor || config.tintColor;
-        const resolvedTextColor = textColor ?? config.textColor;
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'droplist', variants: DROPLIST_VARIANTS, variant, defaultVariant, tintColor, textColor,
+        });
 
         return (
             <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}>
-                <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
-                {config.overlay && <BackgroundLayer layer={config.overlay} />}
+                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'

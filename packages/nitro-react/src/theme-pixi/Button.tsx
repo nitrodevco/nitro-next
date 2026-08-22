@@ -8,7 +8,7 @@ import { VariantCascadeProvider } from '#base/theme';
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
 import { Text } from './Text';
-import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, resolveByState, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
 type ButtonVariant = ThemeWithStatesVariant;
@@ -200,13 +200,9 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({ variant, defaultVariant, tintColor, textColor, disabled, layout, onPress, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('button', variant, defaultVariant);
-        const config = BUTTON_VARIANTS[resolvedVariant] ?? BUTTON_VARIANTS['0'];
-        const { state, handlers } = useInteractionState(disabled);
-        const resolvedLayer = config.states && resolveByState(config.states, state);
-        const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
-        const resolvedTint = tintColor || config.tintColor;
-        const resolvedTextColor = textColor ?? config.textColor;
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textColor, disabled,
+        });
 
         return (
             <Box

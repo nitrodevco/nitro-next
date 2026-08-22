@@ -14,7 +14,7 @@ import { NineSlice } from './layer/NineSlice';
 import { Scaler, type ScalerDirection } from './Scaler';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
-import { useResolvedVariant } from './utils/useResolvedVariant';
+import { useThemeVariant } from './utils/useThemeVariant';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type FrameVariant = ThemeVariant & {
@@ -70,9 +70,9 @@ export interface FrameProps extends ThemeProps<FrameVariant> {
 const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
 
 export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
-    const { resolvedVariant, ownCascade } = useResolvedVariant('frame', variant, defaultVariant);
-    const config = FRAME_VARIANTS[resolvedVariant] ?? FRAME_VARIANTS['0'];
-    const resolvedTint = tintColor || config.tintColor;
+    const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor,
+    });
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
     const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: config.minWidth, height: config.minHeight });
 
@@ -96,8 +96,8 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
-            <BackgroundLayer layer={config.overlay} />
+            <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+            <BackgroundLayer layer={resolvedOverlay} />
             <VariantCascadeProvider map={ownCascade}>
                 <Header caption={caption} tintColor={resolvedTint} onClose={onClose} onPointerDown={onHeaderPointerDown} />
                 <ContentArea>

@@ -7,7 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box } from './Box';
 import { BackgroundLayer, BlendOverlay, Composite, NineSlice } from './layer';
-import { useResolvedVariant, wrapTextChildren } from './utils';
+import { useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type BorderVariant = ThemeVariant;
@@ -112,21 +112,21 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
     ({ variant, defaultVariant, tintColor, blend, layout, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('border', variant, defaultVariant);
-        const config = BORDER_VARIANTS[resolvedVariant] ?? BORDER_VARIANTS['0'];
-        const resolvedTint = tintColor || config.tintColor;
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor,
+        });
 
         return (
             <Box ref={ref} layout={{ ...config.layout, ...layout }}>
-                <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
-                <BackgroundLayer layer={config.overlay} />
-                {config.layer && config.layer.kind === 'nineSlice' && (
+                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                <BackgroundLayer layer={resolvedOverlay} />
+                {resolvedLayer && resolvedLayer.kind === 'nineSlice' && (
                     <BlendOverlay
-                        textureKey={config.layer.textureKey}
-                        leftWidth={config.layer.leftWidth}
-                        topHeight={config.layer.topHeight}
-                        rightWidth={config.layer.rightWidth}
-                        bottomHeight={config.layer.bottomHeight}
+                        textureKey={resolvedLayer.textureKey}
+                        leftWidth={resolvedLayer.leftWidth}
+                        topHeight={resolvedLayer.topHeight}
+                        rightWidth={resolvedLayer.rightWidth}
+                        bottomHeight={resolvedLayer.bottomHeight}
                         blend={blend}
                     />
                 )}

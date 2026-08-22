@@ -7,7 +7,7 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
-import { useResolvedVariant, wrapTextChildren } from './utils';
+import { useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type TabContentVariant = ThemeVariant;
@@ -41,9 +41,9 @@ export interface TabContentProps extends ThemeProps<TabContentVariant> {
 
 export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabContentProps>(
     ({ variant, defaultVariant, layout, tintColor, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('tabContent', variant, defaultVariant);
-        const config = TAB_CONTENT_VARIANTS[resolvedVariant] ?? TAB_CONTENT_VARIANTS['0'];
-        const resolvedTint = tintColor || config.tintColor;
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'tabContent', variants: TAB_CONTENT_VARIANTS, variant, defaultVariant, tintColor,
+        });
 
         return (
             <Box
@@ -56,8 +56,8 @@ export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttribut
                     ...layout,
                 }}
             >
-                <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
-                <BackgroundLayer layer={config.overlay} />
+                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                <BackgroundLayer layer={resolvedOverlay} />
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );

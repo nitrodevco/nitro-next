@@ -9,7 +9,7 @@ import { Box } from './Box';
 import { CloseButton } from './CloseButton';
 import { BackgroundLayer, ColorLayer } from './layer';
 import { Text } from './Text';
-import { useResolvedVariant } from './utils/useResolvedVariant';
+import { useThemeVariant } from './utils/useThemeVariant';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 interface HeaderPadding {
@@ -45,9 +45,9 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('header', variant, defaultVariant);
-        const config = HEADER_VARIANTS[resolvedVariant] ?? HEADER_VARIANTS['0'];
-        const resolvedTint = tintColor || config.tintColor;
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor,
+        });
         const resolvedBackgroundTint = config.tintable === false ? undefined : resolvedTint;
 
         return (
@@ -66,8 +66,8 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     ...layout,
                 }}
             >
-                <BackgroundLayer layer={config.layer} tintColor={resolvedBackgroundTint} />
-                <BackgroundLayer layer={config.overlay} />
+                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedBackgroundTint} />
+                <BackgroundLayer layer={resolvedOverlay} />
                 <Box
                     layout={{
                         position: 'relative',
