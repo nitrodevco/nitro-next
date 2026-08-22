@@ -13,13 +13,19 @@ import type { BoxLayout } from '../Box';
  * `height` there, unlike CSS's default `content-box`).
  */
 export const boxLayoutToStyle = (layout: BoxLayout | undefined): CSSProperties => {
-    if (!layout) return { boxSizing: 'border-box', display: 'flex' };
+    if (!layout) return { boxSizing: 'border-box', display: 'flex', position: 'relative' };
 
     return {
         boxSizing: 'border-box',
         display: layout.display === 'none' ? 'none' : 'flex',
 
-        position: layout.position,
+        // Yoga's `position: 'absolute'` child is always positioned relative to its nearest
+        // yoga-participating parent, regardless of that parent's own `position` - unlike CSS,
+        // which only anchors absolutely-positioned descendants to the nearest *positioned*
+        // ancestor. Defaulting every non-absolute box to `relative` (a no-op for its own
+        // position, since no offsets are implied) closes that gap generically instead of
+        // requiring every caller with an absolutely-positioned child to opt in themselves.
+        position: layout.position === 'absolute' ? 'absolute' : 'relative',
         top: layout.top,
         left: layout.left,
         right: layout.right,

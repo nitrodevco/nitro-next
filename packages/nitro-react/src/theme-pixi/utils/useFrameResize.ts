@@ -3,6 +3,8 @@ import { type RefObject, useEffect, useRef, useState } from 'react';
 
 import { clearStoredFrameSize, type FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
 
+import { getGlobalRect } from './getGlobalRect';
+
 export type FrameResizeDirection = 'x' | 'y' | 'all' | 'none';
 
 type ResizeState = {
@@ -39,16 +41,19 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 const distance = (x: number, y: number, toX: number, toY: number) => Math.hypot(x - toX, y - toY);
 
 /**
- * Pixi port of hooks/ui/useFrameResize.ts. Pixi's FederatedPointerEvent has no
- * setPointerCapture (confirmed absent from pixi.js's FederatedEvent types), so unlike the DOM
- * hook this drives the whole gesture off window-level pointermove/pointerup listeners (the
- * same technique useFrameDrag.ts uses) instead of per-element pointer capture. There's also no
- * CSS `min-width`/`min-height` to read via getComputedStyle, so the minimum size is passed in
- * explicitly by the caller (Frame, per variant) instead.
+ * Pixi port of hooks/ui/useFrameResize.ts, extended to also drive Frame's DOM render target
+ * through the same hook (see getGlobalRect.ts for the one place that actually differs per
+ * target). Pixi's FederatedPointerEvent has no setPointerCapture (confirmed absent from
+ * pixi.js's FederatedEvent types), so unlike the original DOM hook this drives the whole
+ * gesture off window-level pointermove/pointerup listeners (the same technique
+ * useFrameDrag.ts uses) instead of per-element pointer capture, in both render targets - kept
+ * that way here for consistency even though DOM's `setPointerCapture` would work fine on its
+ * own. There's also no CSS `min-width`/`min-height` to read via getComputedStyle, so the
+ * minimum size is passed in explicitly by the caller (Frame, per variant) instead.
  */
 export const useFrameResize = (
     id: string | undefined,
-    frameRef: RefObject<PixiContainer | null>,
+    frameRef: RefObject<PixiContainer | HTMLElement | null>,
     direction: FrameResizeDirection = 'all',
     minSize: { width: number, height: number } = { width: MIN_SIZE, height: MIN_SIZE },
 ) => {
@@ -81,7 +86,7 @@ export const useFrameResize = (
         if (id) clearStoredFrameSize(id);
     };
 
-    const handlePointerDown = (event: FederatedPointerEvent) => {
+    const handlePointerDown = (event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0 || direction === 'none') return;
         if (resizeStateRef.current) return;
 
@@ -89,10 +94,9 @@ export const useFrameResize = (
 
         if (!node) return;
 
-        const global = node.getGlobalPosition();
-        const computed = node.layout?.computedLayout;
-        const startWidth = computed?.width ?? node.width;
-        const startHeight = computed?.height ?? node.height;
+        const rect = getGlobalRect(node);
+        const startWidth = rect.width;
+        const startHeight = rect.height;
 
         latestSizeRef.current = null;
 
@@ -104,8 +108,8 @@ export const useFrameResize = (
             startHeight,
             minWidth: Math.max(minSize.width, MIN_SIZE),
             minHeight: Math.max(minSize.height, MIN_SIZE),
-            maxWidth: Math.max(startWidth, window.innerWidth - global.x),
-            maxHeight: Math.max(startHeight, window.innerHeight - global.y),
+            maxWidth: Math.max(startWidth, window.innerWidth - rect.x),
+            maxHeight: Math.max(startHeight, window.innerHeight - rect.y),
             moved: false,
         };
 

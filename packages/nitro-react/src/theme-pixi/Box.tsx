@@ -1,8 +1,11 @@
 import './utils/pixiElements';
 
 import type { Container } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type JSX, type ReactNode, type RefAttributes, useCallback } from 'react';
+import { forwardRef, type ForwardRefExoticComponent, type JSX, type MouseEventHandler, type PointerEventHandler, type ReactNode, type Ref, type RefAttributes, useCallback } from 'react';
 
+import { getRenderMode } from '#base/theme-core';
+
+import { boxLayoutToStyle } from './dom/boxStyle';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
 /**
@@ -49,7 +52,7 @@ const attachDefaultHitArea = (node: Container) => {
     };
 };
 
-export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>> = forwardRef<Container, BoxProps>(
+const BoxPixi = forwardRef<Container, BoxProps>(
     ({ children, ...props }, ref) => {
         const setRef = useCallback((node: Container | null) => {
             if (node) attachDefaultHitArea(node);
@@ -60,6 +63,53 @@ export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>>
 
         return <pixiContainer ref={setRef} {...props}>{wrapTextChildren(children as ReactNode)}</pixiContainer>;
     }
+);
+
+BoxPixi.displayName = 'BoxPixi';
+
+/**
+ * `BoxProps` is `JSX.IntrinsicElements['pixiContainer']` - the full Pixi Container prop
+ * surface (filters, mask, hitArea, blendMode, ...). Only the subset actually exercised by the
+ * dual-target components (layout, eventMode, cursor, the plain zero-arg pointer handlers
+ * `useInteractionState` produces, x/y, zIndex, alpha) is translated to CSS/DOM event props
+ * here; anything else (Frame's drop-shadow `filters`, `mask`, a custom `hitArea`) is a
+ * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
+ */
+const BoxDom = forwardRef<Container, BoxProps>(
+    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap }, ref) => {
+        const style = boxLayoutToStyle(layout as BoxLayout | undefined);
+
+        if (eventMode === 'none') style.pointerEvents = 'none';
+        if (typeof cursor === 'string') style.cursor = cursor;
+        if (typeof zIndex === 'number') style.zIndex = zIndex;
+        if (typeof alpha === 'number') style.opacity = alpha;
+        if (x || y) style.transform = `translate(${(x as number) || 0}px, ${(y as number) || 0}px)`;
+
+        return (
+            <div
+                // DOM mode never runs the Pixi-specific ref consumers a caller might be holding
+                // this for (measurement via `.layout.computedLayout`, drag/resize, hitArea
+                // wiring) - none of that executes when getRenderMode() === 'dom', so redirecting
+                // the incoming `Ref<Container>` at a plain HTMLDivElement here is safe in
+                // practice even though the two element types don't structurally match.
+                ref={ref as unknown as Ref<HTMLDivElement>}
+                style={style}
+                onPointerEnter={onPointerOver as unknown as PointerEventHandler}
+                onPointerLeave={onPointerOut as unknown as PointerEventHandler}
+                onPointerDown={onPointerDown as unknown as PointerEventHandler}
+                onPointerUp={onPointerUp as unknown as PointerEventHandler}
+                onClick={onPointerTap as unknown as MouseEventHandler}
+            >
+                {wrapTextChildren(children as ReactNode)}
+            </div>
+        );
+    }
+);
+
+BoxDom.displayName = 'BoxDom';
+
+export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>> = forwardRef<Container, BoxProps>(
+    (props, ref) => getRenderMode() === 'dom' ? <BoxDom ref={ref} {...props} /> : <BoxPixi ref={ref} {...props} />
 );
 
 Box.displayName = 'Box';

@@ -1,10 +1,12 @@
 import './utils/pixiElements';
 
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { forwardRef, type ForwardRefExoticComponent, type PointerEventHandler, type RefAttributes } from 'react';
+
+import { getRenderMode, THEME_URLS } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
-import { SpriteLayer } from './layer';
+import { BackgroundLayer } from './layer';
 import { usePixiTexture } from './utils/usePixiTexture';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -50,13 +52,15 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
     ({ variant, defaultVariant, layout, direction = 'all', onPointerDown }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scaler', variant, defaultVariant);
         const config = SCALER_VARIANTS[resolvedVariant];
-        const texture = usePixiTexture(config?.textureKey);
+        const isDom = getRenderMode() === 'dom';
+        const texture = usePixiTexture(isDom ? undefined : config?.textureKey);
+        const domUrl = isDom && config?.textureKey ? THEME_URLS[config.textureKey] : undefined;
 
         // theme/Scaler.tsx still renders variant '100' (fully empty/inert) and
         // direction 'none' (just without cursor/touch-action classes) - this port hides
         // both instead, since an invisible, non-interactive resize handle has no
         // observable difference from not rendering it at all.
-        if (!config || !texture || direction === 'none') return null;
+        if (!config || (isDom ? !domUrl : !texture) || direction === 'none') return null;
 
         return (
             <Box
@@ -65,21 +69,28 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                 layout={{
                     position: 'absolute',
                     ...(config.offset && { right: 0, bottom: 0 }),
-                    width: texture.width,
-                    height: texture.height,
+                    ...(!isDom && { width: texture!.width, height: texture!.height }),
                     ...layout,
                 }}
             >
-                <pixiSprite
-                    texture={texture}
-                    width={texture.width}
-                    height={texture.height}
-                    eventMode="static"
-                    cursor={CURSOR_BY_DIRECTION[direction]}
-                    layout={{}}
-                    onPointerDown={onPointerDown}
-                />
-                {config.overlayTextureKey && <SpriteLayer textureKey={config.overlayTextureKey} />}
+                {isDom ? (
+                    <img
+                        src={domUrl}
+                        style={{ display: 'block', cursor: CURSOR_BY_DIRECTION[direction], imageRendering: 'pixelated' }}
+                        onPointerDown={onPointerDown as unknown as PointerEventHandler}
+                    />
+                ) : (
+                    <pixiSprite
+                        texture={texture}
+                        width={texture!.width}
+                        height={texture!.height}
+                        eventMode="static"
+                        cursor={CURSOR_BY_DIRECTION[direction]}
+                        layout={{}}
+                        onPointerDown={onPointerDown}
+                    />
+                )}
+                {config.overlayTextureKey && <BackgroundLayer layer={{ kind: 'sprite', textureKey: config.overlayTextureKey }} />}
             </Box>
         );
     }

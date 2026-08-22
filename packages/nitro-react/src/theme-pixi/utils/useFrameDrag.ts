@@ -4,6 +4,8 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { useWindowActions, useWindowZIndex } from '#base/context';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';
 
+import { getGlobalRect } from './getGlobalRect';
+
 type DragState = {
     pointerId: number;
     startX: number;
@@ -25,21 +27,22 @@ const MIN_VISIBLE = 40;
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 /**
- * Pixi port of hooks/ui/useFrameDrag.ts. Pixi has no getBoundingClientRect/CSS transform, so
- * this reads the frame's screen position via Container.getGlobalPosition() and its yoga box
- * size via `.layout.computedLayout`, and applies the drag offset as the container's own
- * `.x`/`.y` - @pixi/layout's ContainerMixin ADDS the yoga-computed position on top of the
- * container's existing `.position` (see updateLocalTransformWithLayout in
- * node_modules/@pixi/layout), the same layering CSS `transform: translate()` gives the DOM
- * version. Global window pointermove/pointerup listeners (not Pixi events) drive the drag,
- * identically to the DOM hook - browser pointer events work the same regardless of which
- * element started them.
+ * Pixi port of hooks/ui/useFrameDrag.ts, extended to also drive Frame's DOM render target
+ * through the same hook (see getGlobalRect.ts for the one place that actually differs per
+ * target). In Pixi mode the drag offset is applied as the container's own `.x`/`.y` -
+ * @pixi/layout's ContainerMixin ADDS the yoga-computed position on top of the container's
+ * existing `.position` (see updateLocalTransformWithLayout in node_modules/@pixi/layout), the
+ * same layering CSS `transform: translate()` gives the DOM version (see Box.tsx's own `x`/`y`
+ * handling). Global window pointermove/pointerup listeners (not element-scoped events) drive
+ * the drag either way - browser pointer events work the same regardless of which element
+ * started them, and Pixi's FederatedPointerEvent mirrors the native PointerEvent fields this
+ * hook actually reads (`button`/`pointerId`/`clientX`/`clientY`), so one handler covers both.
  */
 export const useFrameDrag = (id: string | undefined) => {
     const generatedId = useId();
     const stackId = id ?? generatedId;
 
-    const frameRef = useRef<PixiContainer | null>(null);
+    const frameRef = useRef<PixiContainer | HTMLElement | null>(null);
     const dragStateRef = useRef<DragState | null>(null);
     const activeListenersRef = useRef<ActiveListeners | null>(null);
 
@@ -66,23 +69,22 @@ export const useFrameDrag = (id: string | undefined) => {
 
     useEffect(() => stopDragging, [stopDragging]);
 
-    const handleHeaderPointerDown = (event: FederatedPointerEvent) => {
+    const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0) return;
 
         const node = frameRef.current;
 
         if (!node) return;
 
-        const global = node.getGlobalPosition();
-        const width = node.layout?.computedLayout.width ?? node.width;
+        const rect = getGlobalRect(node);
 
         dragStateRef.current = {
             pointerId: event.pointerId,
             startX: event.clientX,
             startY: event.clientY,
-            startGlobalX: global.x,
-            startGlobalY: global.y,
-            width,
+            startGlobalX: rect.x,
+            startGlobalY: rect.y,
+            width: rect.width,
             origDx: offset.dx,
             origDy: offset.dy,
         };

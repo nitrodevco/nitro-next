@@ -1,7 +1,8 @@
 import './utils/pixiElements';
 
+import type { Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
-import { type ReactNode } from 'react';
+import { type ReactNode, type Ref } from 'react';
 
 import { VariantCascadeProvider } from '#base/theme-core';
 import { GetPixelRatio } from '#base/utils';
@@ -78,7 +79,12 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
 
     return (
         <Box
-            ref={frameRef}
+            // frameRef is PixiContainer | HTMLElement (see useFrameDrag/getGlobalRect - it
+            // reads whichever Box actually attached at runtime, Container in Pixi mode or a
+            // plain div in DOM mode), wider than Box's own always-Container-typed ref contract
+            // (see Box.tsx's own docblock on that choice) - safe to redirect here since Box
+            // itself is what produces the HTMLElement value this ref receives in DOM mode.
+            ref={frameRef as Ref<PixiContainer>}
             x={offset.dx}
             y={offset.dy}
             zIndex={zIndex}

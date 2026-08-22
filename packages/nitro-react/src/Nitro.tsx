@@ -8,6 +8,7 @@ import {
 import { type FC, useEffect, useState } from 'react';
 
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
+import { getRenderMode } from '#base/theme-core';
 import { PixiApplicationRoot } from '#base/theme-pixi';
 
 import { useWebSocketContext } from './context';
@@ -58,6 +59,19 @@ export const Nitro: FC = () => {
     }, [isRendererReady]);
 
     const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isProductDataReady();
+
+    // MainView (the Room, and everything built on `useApplication()`) is inherently Pixi/WebGL -
+    // there is no DOM equivalent for it, so DOM mode never mounts `PixiApplicationRoot` at all.
+    // `@pixi/react`'s reconciler throws on any host tag it doesn't recognize (confirmed by
+    // reading createInstance in its own source), so a DOM-rendering theme-pixi component could
+    // never validly appear inside it anyway - the UI-chrome components this session made
+    // dual-target render through a separate DOM-only mount point instead, once one exists.
+    // (isRendererReady/isEngineReady/isReady all simply never flip in DOM mode today, since
+    // nothing calls PixiApplicationRoot's onReady - this is a placeholder boundary, not a
+    // finished DOM-mode app boot.)
+    if (getRenderMode() === 'dom') {
+        return <LoadingScreenView />;
+    }
 
     return (
         <>

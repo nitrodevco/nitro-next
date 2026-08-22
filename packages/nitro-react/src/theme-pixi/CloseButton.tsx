@@ -1,9 +1,12 @@
 import './utils/pixiElements';
 
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { forwardRef, type ForwardRefExoticComponent, type PointerEvent as ReactPointerEvent, type RefAttributes } from 'react';
+
+import { getRenderMode } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
+import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
@@ -79,15 +82,36 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
         const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
         const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
         const { state, handlers } = useInteractionState();
+        const isDom = getRenderMode() === 'dom';
         const frame = config ? resolveByState(config.frames, state) : undefined;
-        const texture = useSpriteFrameTexture(config?.textureKey, frame);
+        const texture = useSpriteFrameTexture(isDom ? undefined : config?.textureKey, isDom ? undefined : frame);
 
-        const handlePointerDown = (event: FederatedPointerEvent) => {
-            // Stops the click from also being seen by Header's onHeaderPointerDown (drag),
-            // same effect as the DOM version's data-no-drag attribute.
+        // Stops the click from also being seen by Header's onHeaderPointerDown (drag), same
+        // effect as the DOM version's data-no-drag attribute. `.stopPropagation()` exists on
+        // both Pixi's FederatedPointerEvent and DOM's PointerEvent, so one handler covers both.
+        const handlePointerDown = (event: FederatedPointerEvent | ReactPointerEvent) => {
             event.stopPropagation();
             handlers.onPointerDown?.();
         };
+
+        if (isDom) {
+            const style = frame ? spriteFrameToStyle(config?.textureKey, frame) : undefined;
+
+            if (!style) return null;
+
+            return (
+                <Box ref={ref} layout={{ width: frame!.width, height: frame!.height, ...layout }}>
+                    <div
+                        style={{ ...style, cursor: 'pointer' }}
+                        onPointerEnter={handlers.onPointerOver}
+                        onPointerLeave={handlers.onPointerOut}
+                        onPointerDown={handlePointerDown}
+                        onPointerUp={handlers.onPointerUp}
+                        onClick={onClose}
+                    />
+                </Box>
+            );
+        }
 
         if (!texture) return null;
 

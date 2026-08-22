@@ -4,6 +4,7 @@ import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { useConfigValue } from '#base/context';
+import { getRenderMode } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
@@ -33,7 +34,7 @@ export interface ImageProps {
  * intrinsic-sizing pattern NitroIcon.tsx already uses), so it renders at native resolution and
  * @pixi/layout has no smaller layout box to stretch it into.
  */
-export const Image = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => {
+const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => {
     const texture = useTextureFromUrl(src);
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
@@ -49,5 +50,25 @@ export const Image = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref
         </Box>
     );
 });
+
+ImagePixi.displayName = 'ImagePixi';
+
+/**
+ * A plain `<img>` at its natural resolution, centered in the same `Box` wrapper the Pixi
+ * branch uses (see the docblock above for why - the wrapper sizes/centers, the image itself
+ * never gets forced dimensions). No Pixi asset-manager preload/placeholder-swap dance needed
+ * here - the browser's own `<img>` loading already covers that, and `Box` alone is enough to
+ * reserve the layout space while it loads.
+ */
+const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => (
+    <Box ref={ref} layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}>
+        {src && <img src={src} style={{ display: 'block', imageRendering: 'pixelated' }} />}
+    </Box>
+));
+
+ImageDom.displayName = 'ImageDom';
+
+export const Image = forwardRef<PixiContainer, ImageProps>((props, ref) =>
+    getRenderMode() === 'dom' ? <ImageDom ref={ref} {...props} /> : <ImagePixi ref={ref} {...props} />);
 
 Image.displayName = 'Image';

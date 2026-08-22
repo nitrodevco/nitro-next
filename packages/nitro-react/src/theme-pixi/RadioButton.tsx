@@ -3,9 +3,10 @@ import './utils/pixiElements';
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { getRenderMode, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box, type BoxLayout } from './Box';
+import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { Text } from './Text';
 import { wrapTextChildren } from './utils';
 import { type TextStyleKey } from './utils/textStyles';
@@ -93,11 +94,12 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
         const { resolvedVariant, ownCascade } = useResolvedVariant('radioButton', variant, defaultVariant);
         const config = RADIO_BUTTON_VARIANTS[resolvedVariant] ?? RADIO_BUTTON_VARIANTS['0']!;
         const { handlers } = useInteractionState(disabled);
-        const texture = useSpriteFrameTexture(
-            selected ? config.selectedTextureKey : config.defaultTextureKey,
-            selected ? config.selectedFrame : config.defaultFrame
-        );
-        if (!texture) return null;
+        const isDom = getRenderMode() === 'dom';
+        const activeTextureKey = selected ? config.selectedTextureKey : config.defaultTextureKey;
+        const activeFrame = selected ? config.selectedFrame : config.defaultFrame;
+        const texture = useSpriteFrameTexture(isDom ? undefined : activeTextureKey, isDom ? undefined : activeFrame);
+
+        if (!isDom && !texture) return null;
 
         return (
             <Box
@@ -115,13 +117,17 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
                 }}
                 {...handlers}
             >
-                <pixiSprite
-                    texture={texture}
-                    width={config.width}
-                    height={config.height}
-                    eventMode="none"
-                    layout={{ position: 'absolute', top: 0, left: 0 }}
-                />
+                {isDom
+                    ? <div style={{ position: 'absolute', top: 0, left: 0, ...spriteFrameToStyle(activeTextureKey, activeFrame) }} />
+                    : (
+                        <pixiSprite
+                            texture={texture}
+                            width={config.width}
+                            height={config.height}
+                            eventMode="none"
+                            layout={{ position: 'absolute', top: 0, left: 0 }}
+                        />
+                    )}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />

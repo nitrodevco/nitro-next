@@ -1,4 +1,8 @@
+import { getRenderMode } from "#base/theme-core";
+
 import { BoxLayout } from "../Box";
+import { BackgroundLayerDom } from "../dom/BackgroundLayerDom";
+import { boxLayoutToStyle } from "../dom/boxStyle";
 import { BackgroundLayerConfig } from "./BackgroundLayerConfig";
 import { CompositeLayer } from "./CompositeLayer";
 import { NineSliceLayer } from "./NineSliceLayer";
@@ -11,8 +15,18 @@ export interface BackgroundLayerProps {
     layout?: BoxLayout;
 }
 
+/**
+ * Dual-target dispatcher: every caller (Border, Bubble, Header, Frame, TabContext,
+ * TabContent, Droplist, ...) renders through this one component regardless of target, so none
+ * of them need their own render-mode branch - `BackgroundLayerDom` (see theme-pixi/dom) mirrors
+ * this same `layer.kind` switch in CSS.
+ */
 export const BackgroundLayer = ({ layer, tintColor, layout }: BackgroundLayerProps) => {
     if (!layer) return null;
+
+    if (getRenderMode() === 'dom') {
+        return <BackgroundLayerDom layer={layer} tintColor={tintColor} style={layout ? boxLayoutToStyle(layout) : undefined} />;
+    }
 
     switch (layer.kind) {
         case 'composite': return <CompositeLayer pieces={layer.pieces} tintColor={tintColor} />;
