@@ -21,7 +21,7 @@ const POPUP_GRACE_MS = 4000;
  * 374x350, shown at the info region's right edge, vertically centred on it.
  */
 export const NavigatorRoomInfoPopupView = () => {
-    const { roomInfoPopup, favoriteRoomIds, homeRoomId, groupDetails } = useNavigatorSelectors();
+    const { roomInfoPopup, favoriteRoomIds, homeRoomId, groupDetails, perks } = useNavigatorSelectors();
     const { hideRoomInfoPopup, setRoomFavorite, setHomeRoomId } = useNavigatorActions();
     const { performSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
@@ -69,7 +69,13 @@ export const NavigatorRoomInfoPopupView = () => {
     const isHome = homeRoomId === room.roomId;
     const hasGroup = room.groupBadge !== '';
     const hasEvent = room.adExpiresIn > 0;
+    const details = hasGroup ? groupDetails[room.groupId] : undefined;
 
+    /*
+     * populate() sets newnavigator_default_room first and only fetches the real
+     * thumbnail when the NAVIGATOR_ROOM_THUMBNAIL_CAMERA perk is allowed
+     */
+    const thumbnailAllowed = perks.some(x => x.code === 'NAVIGATOR_ROOM_THUMBNAIL_CAMERA' && x.isAllowed);
     const thumbnailUrl = room.officialRoomPicRef?.length && !officialThumbnailsInAmazon
         ? imageLibraryUrl + room.officialRoomPicRef
         : `${thumbnailUrlBase}${room.roomId}.png`;
@@ -126,11 +132,13 @@ export const NavigatorRoomInfoPopupView = () => {
                         <div className="relative shrink-0 w-28 h-28 bg-black">
                             <div className="absolute inset-px flex items-center justify-center overflow-hidden">
                                 <NitroIcon className="absolute" icon="icon-nav-default-room" />
-                                <img
-                                    alt=""
-                                    className="relative max-w-full max-h-full pixel-art"
-                                    src={thumbnailUrl}
-                                    onError={event => { event.currentTarget.style.display = 'none'; }} />
+                                {thumbnailAllowed && (
+                                    <img
+                                        alt=""
+                                        className="relative max-w-full max-h-full pixel-art"
+                                        src={thumbnailUrl}
+                                        onError={event => { event.currentTarget.style.display = 'none'; }} />
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-col flex-1 min-w-0 pl-1.5">
@@ -194,8 +202,11 @@ export const NavigatorRoomInfoPopupView = () => {
                             )}
                         </div>
                     </div>
-                    {/* tag_and_group_info — orange #tag chips (tag_xml: 0xf1a700 bg, u_small white) */}
-                    {room.tags.length > 0 && (
+                    {/* tag_and_group_info — orange #tag chips (tag_xml: 0xf1a700 bg, u_small
+                        white); the row's right edge holds group_mode_admin (owner/admin crown,
+                        x=279), group_mode_size (grouptype icon, x=299) and group_mode_furnish
+                        (decorate icon, x=318) filled from the cached group details */}
+                    {(room.tags.length > 0 || details) && (
                         <div className="flex shrink-0 items-center h-5.75 gap-1">
                             {room.tags.map(tag => (
                                 <div
@@ -205,6 +216,24 @@ export const NavigatorRoomInfoPopupView = () => {
                                     <span className="text-style-u-small text-white">#{tag}</span>
                                 </div>
                             ))}
+                            {details && (
+                                <div className="flex items-center gap-0.5 ml-auto">
+                                    {details.isOwner && <NitroIcon icon="icon-nav-group-owner" />}
+                                    {!details.isOwner && details.isAdmin && <NitroIcon icon="icon-nav-group-admin" />}
+                                    <img
+                                        alt=""
+                                        className="pixel-art"
+                                        src={`${imageLibraryUrl}guilds/grouptype_icon_${details.type}.png`}
+                                        onError={event => { event.currentTarget.style.display = 'none'; }} />
+                                    {details.membersCanDecorate && (
+                                        <img
+                                            alt=""
+                                            className="pixel-art"
+                                            src={`${imageLibraryUrl}guilds/group_decorate_icon.png`}
+                                            onError={event => { event.currentTarget.style.display = 'none'; }} />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     )}
                     {/* event_info — border style 3 tinted 0x0f1a700, event icon + white bold text */}

@@ -1357,6 +1357,23 @@
     height: 11px;
 }
 
+/* RoomInfoPopup group_mode_admin — newnavigator_icon_group_owner / _admin crowns */
+.icon-nav-group-owner {
+    background-image: url('/assets/flash/navigator/icon_group_owner.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 13px;
+}
+
+.icon-nav-group-admin {
+    background-image: url('/assets/flash/navigator/icon_group_admin.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 13px;
+}
+
 /* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text —
    the small grey X glyph, not the red frame close button */
 .icon-nav-clear-search {

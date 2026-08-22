@@ -34,12 +34,17 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
     const displayName = eventViewMode && room.adName !== '' ? room.adName : room.name;
     const showRoomInfoPopup = useNavigatorContext(x => x.showRoomInfoPopup);
 
-    const retargetOnHover = (event: { currentTarget: EventTarget }) => {
+    /*
+     * RoomEntryElementFactory retargets the open popup on hover with per-region
+     * offsets: the info icon at (right, vcentre), the tile's go_to_room_region at
+     * (right - 6, vcentre + 56), the row's at (right + 20, vcentre)
+     */
+    const retargetOnHover = (offsetX: number = 0, offsetY: number = 0) => (event: { currentTarget: EventTarget }) => {
         if (!popupVisible) return;
 
         const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
 
-        showRoomInfoPopup(room, rect.right, rect.top + rect.height / 2);
+        showRoomInfoPopup(room, rect.right + offsetX, rect.top + rect.height / 2 + offsetY);
     };
     const thumbnailUrlBase = useConfigValue<string>('navigator.thumbnail.url_base') ?? '';
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
@@ -75,7 +80,8 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
                 tintColor={backgroundColor}
                 {...tooltip(t('navigator.tooltip.go.to.room'))}
                 variant="10"
-                onClick={() => onEnter(room)}>
+                onClick={() => onEnter(room)}
+                onPointerEnter={retargetOnHover(-6, 56)}>
                 {/* black thumbnail backdrop — container 108x109 at 7,6 */}
                 <div className="absolute top-1.5 left-1.75 w-27 h-27.25 bg-black" />
                 {/* room_pic_placeholder — 106x106 at 8,7, pivot centre, UNCLIPPED: the
@@ -99,7 +105,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
                         className="absolute top-30 left-24.5 cursor-pointer"
                         icon="icon-nav-room-info"
                         onClick={event => { event.stopPropagation(); onShowInfo(room, event.currentTarget); }}
-                        onPointerEnter={retargetOnHover} />
+                        onPointerEnter={retargetOnHover()} />
                 )}
                 {/* room_name — 100x30 at 0,116, u_bold font_size 10; styles.css gives
                     u_bold thickness -15, which at 10px renders like a regular weight —
@@ -118,7 +124,8 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
             className="flex items-center shrink-0 w-full h-5 cursor-pointer"
             tintColor={backgroundColor}
             variant="3"
-            onClick={() => onEnter(room)}>
+            onClick={() => onEnter(room)}
+            onPointerEnter={retargetOnHover(20, 0)}>
             {userCount}
             {/* room_name at 44,1 — 282 wide */}
             <span className="flex-1 min-w-0 pl-1 truncate text-style-u-regular">{interpolate(displayName)}</span>
@@ -132,7 +139,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
                         className="cursor-pointer"
                         icon="icon-nav-room-info"
                         onClick={event => { event.stopPropagation(); onShowInfo(room, event.currentTarget); }}
-                        onPointerEnter={retargetOnHover} />
+                        onPointerEnter={retargetOnHover()} />
                 )}
             </div>
         </Border>
