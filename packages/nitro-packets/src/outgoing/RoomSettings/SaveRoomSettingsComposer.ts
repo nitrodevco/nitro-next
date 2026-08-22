@@ -1,46 +1,54 @@
-import { IOutgoingPacket, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomModerationType, RoomThicknessType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
+/*
+ * SaveRoomSettingsMessageComposer (725) — WIN63-202607011411 wire: the pre-2014 chat
+ * mode/bubble/scroll fields are gone; flood sensitivity, door-tile and idle-timer
+ * fields plus muteAllPets replaced them.
+ */
 export type SaveRoomSettingsComposerType = {
     roomId: number;
-    roomName: string;
-    roomDescription: string;
+    name: string;
+    description: string;
     doorMode: number;
     password: string;
-    maxVisitors: number;
+    maximumVisitors: number;
     categoryId: number;
     tags: string[];
-    tradeMode: RoomTradeModeEnum;
+    tradeMode: number;
     allowPets: boolean;
     allowFoodConsume: boolean;
     allowWalkThrough: boolean;
     hideWalls: boolean;
-    wallThickness: RoomThicknessType;
-    floorThickness: RoomThicknessType;
-    whoCanMute: RoomModerationType;
-    whoCanKick: RoomModerationType;
-    whoCanBan: RoomModerationType;
-    chatMode: RoomChatModeType;
-    chatBubbleSize: RoomChatBubbleWidthType;
-    chatScrollUpFrequency: RoomChatScrollSpeedType;
-    chatFullHearRange: number;
-    chatFloodSensitivity: RoomChatFloodSensitivityType;
-    allowNavigatorDynCats: boolean;
+    wallThickness: number;
+    floorThickness: number;
+    whoCanMute: number;
+    whoCanKick: number;
+    whoCanBan: number;
+    chatFloodSensitivity: number;
+    leaveOnDoorTileEnabled: boolean;
+    idleSleepEnabled: boolean;
+    idleSleepTimeoutSeconds: number;
+    idleAutokickEnabled: boolean;
+    idleAutokickTimeoutSeconds: number;
+    muteAllPets: boolean;
 };
 
 export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSettingsComposerType> {
     public constructor(private params: SaveRoomSettingsComposerType) { }
 
     public compose(): (number | string | boolean)[] {
+        const tags = this.params.tags.filter(x => x !== '');
+
         return [
             this.params.roomId,
-            this.params.roomName,
-            this.params.roomDescription,
+            this.params.name,
+            this.params.description,
             this.params.doorMode,
             this.params.password,
-            this.params.maxVisitors,
+            this.params.maximumVisitors,
             this.params.categoryId,
-            this.params.tags.length,
-            ...this.params.tags,
+            tags.length,
+            ...tags,
             this.params.tradeMode,
             this.params.allowPets,
             this.params.allowFoodConsume,
@@ -51,12 +59,13 @@ export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSetting
             this.params.whoCanMute,
             this.params.whoCanKick,
             this.params.whoCanBan,
-            this.params.chatMode,
-            this.params.chatBubbleSize,
-            this.params.chatScrollUpFrequency,
-            this.params.chatFullHearRange,
             this.params.chatFloodSensitivity,
-            this.params.allowNavigatorDynCats,
+            this.params.leaveOnDoorTileEnabled,
+            this.params.idleSleepEnabled,
+            this.params.idleSleepTimeoutSeconds,
+            this.params.idleAutokickEnabled,
+            this.params.idleAutokickTimeoutSeconds,
+            this.params.muteAllPets,
         ];
     }
 }

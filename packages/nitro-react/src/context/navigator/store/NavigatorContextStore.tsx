@@ -1,4 +1,4 @@
-import type { IEventCategory, IFlatCategory, IHabboGroupDetailsData, IPerk, IRoomInfo, ISavedSearch, ISearchResultSet, ITopLevelContext } from '@nitrodevco/nitro-packets';
+import type { IBannedUserData, IEventCategory, IFlatCategory, IFlatControllerData, IHabboGroupDetailsData, IPerk, IRoomEventData, IRoomInfo, IRoomSettingsData, ISavedSearch, ISearchResultSet, ITopLevelContext } from '@nitrodevco/nitro-packets';
 import { createStore } from 'zustand';
 
 /** filter_type_drop_menu options from navigator_frame_2 */
@@ -63,6 +63,33 @@ type State = {
     isSearching: boolean;
     currentRoom: IRoomInfo | undefined;
     currentRoomIsOwner: boolean;
+    /* GetGuestRoomResult enterRoom extras — NavigatorData.currentRoomIsStaffPick / canMute / allInRoomMuted */
+    currentRoomStaffPick: boolean;
+    currentRoomCanMute: boolean;
+    currentRoomAllMuted: boolean;
+    /* RoomRatingEvent — NavigatorData.currentRoomRating / canRate */
+    currentRoomRating: number;
+    currentRoomCanRate: boolean;
+    /* FavouritesEvent limit — isFavouritesFull() */
+    favouritesLimit: number;
+    /* UserRightsMessage securityLevel — hasSecurity(5) edits any room, >= 7 is roomPicker */
+    securityLevel: number;
+    /* YouAreController/YouAreOwner mirror — hasRoomRightsButIsNotOwner and the floor-plan gate */
+    roomControllerLevel: number;
+    roomIsOwn: boolean;
+    /* RoomInfoViewCtrl toggle() */
+    roomInfoWindowOpen: boolean;
+    /* RoomFilterCtrl — the editor window plus the merged bad-word list */
+    roomFilterOpen: boolean;
+    roomFilterWords: string[];
+    /* NavigatorData.roomEventData — null while no event runs (ownerAvatarId <= 0) */
+    roomEventData: IRoomEventData | undefined;
+    /* RoomEventInfoCtrl._expanded — group rooms contract it on entry */
+    roomEventInfoExpanded: boolean;
+    /* RoomEventViewCtrl.show() toggle */
+    roomEventEditorOpen: boolean;
+    /* RoomAdErrorEvent — consumed by the editor for the field errors */
+    roomAdError: { errorCode: number; filteredText: string } | undefined;
     favoriteRoomIds: number[];
     homeRoomId: number;
     /* HabboNewNavigator.getCachedGroupDetails */
@@ -71,8 +98,12 @@ type State = {
     roomInfoPopup: { room: IRoomInfo; x: number; y: number } | undefined;
     /* RoomCreateViewCtrl.show()/close() toggle the roc_create_room window's visibility */
     createRoomOpen: boolean;
-    /* AlertView/SimpleAlertView — nav_simple_alert, caption + body text */
-    alert: { title: string; message: string } | undefined;
+    /* AlertView/SimpleAlertView — nav_simple_alert; a promo text swaps in nav_promo_alert */
+    alert: { title: string; message: string; promo?: string } | undefined;
+    /* EnforceCategoryCtrl.show(selectionType) — a modal without a close button */
+    enforceCategory: { selectionType: number } | undefined;
+    /* GroupRoomInfoCtrl._expanded — details arriving expand it, the title toggles */
+    groupRoomInfoExpanded: boolean;
     /*
      * GuestRoomDoorbell — the window survives hide() (ring keeps the room data for the
      * waiting/no-answer states) and only close() disposes it. waiting mirrors §_-xu§:
@@ -85,6 +116,23 @@ type State = {
     pendingForwardRoomId: number;
     /* windowManager.confirm(${navigator.forward_confirmation.title}, desc(room_name)) */
     forwardConfirm: { roomId: number; roomName: string } | undefined;
+    /* RoomSettingsCtrl._flatId/_groupId — set by startRoomSettingsEdit until the data packet lands */
+    requestedRoomSettings: { roomId: number; groupId: number } | undefined;
+    /*
+     * RoomSettingsCtrl state — fromNavigator mirrors _removeTabsForNavigatorView
+     * (tabs 2/3 and the delete link exist only while inside the edited room);
+     * controllers/bannedUsers stay null until their tab first requests them
+     */
+    roomSettings: {
+        data: IRoomSettingsData;
+        groupId: number;
+        fromNavigator: boolean;
+        currentTab: number;
+        controllers: IFlatControllerData[] | null;
+        bannedUsers: IBannedUserData[] | null;
+    } | undefined;
+    /* RoomSettingsSaveErrorEvent — consumed by the dialog to place the field error */
+    roomSettingsSaveError: { errorCode: number; info: string } | undefined;
 }
 
 type Actions = {
@@ -114,6 +162,25 @@ type Actions = {
     setViewMode: (code: string, mode: number) => void;
     setIsSearching: (isSearching: boolean) => void;
     setCurrentRoom: (currentRoom: IRoomInfo | undefined, currentRoomIsOwner: boolean) => void;
+    setCurrentRoomExtras: (staffPick: boolean, canMute: boolean, allMuted: boolean) => void;
+    setCurrentRoomAllMuted: (allMuted: boolean) => void;
+    setCurrentRoomRating: (rating: number, canRate: boolean) => void;
+    setCurrentRoomStaffPick: (staffPick: boolean) => void;
+    setFavouritesLimit: (favouritesLimit: number) => void;
+    setSecurityLevel: (securityLevel: number) => void;
+    setRoomControllerLevel: (roomControllerLevel: number) => void;
+    setRoomIsOwn: (roomIsOwn: boolean) => void;
+    toggleRoomInfoWindow: () => void;
+    closeRoomInfoWindow: () => void;
+    openRoomFilter: () => void;
+    closeRoomFilter: () => void;
+    setRoomEventData: (roomEventData: IRoomEventData | undefined) => void;
+    setRoomEventInfoExpanded: (roomEventInfoExpanded: boolean) => void;
+    toggleRoomEventEditor: () => void;
+    closeRoomEventEditor: () => void;
+    setRoomAdError: (roomAdError: { errorCode: number; filteredText: string } | undefined) => void;
+    mergeRoomFilterWords: (words: string[]) => void;
+    removeRoomFilterWord: (word: string) => void;
     setFavoriteRoomIds: (favoriteRoomIds: number[]) => void;
     setRoomFavorite: (roomId: number, favorite: boolean) => void;
     setHomeRoomId: (homeRoomId: number) => void;
@@ -122,7 +189,10 @@ type Actions = {
     hideRoomInfoPopup: () => void;
     showCreateRoom: () => void;
     hideCreateRoom: () => void;
-    showAlert: (title: string, message: string) => void;
+    showAlert: (title: string, message: string, promo?: string) => void;
+    showEnforceCategory: (selectionType: number) => void;
+    closeEnforceCategory: () => void;
+    setGroupRoomInfoExpanded: (groupRoomInfoExpanded: boolean) => void;
     hideAlert: () => void;
     showDoorbell: (room: IRoomInfo) => void;
     showDoorbellWaiting: () => void;
@@ -136,6 +206,17 @@ type Actions = {
     setPendingForwardRoomId: (roomId: number) => void;
     showForwardConfirm: (roomId: number, roomName: string) => void;
     hideForwardConfirm: () => void;
+    requestRoomSettings: (roomId: number, groupId: number) => void;
+    applyRoomSettings: (data: IRoomSettingsData) => void;
+    closeRoomSettings: () => void;
+    setRoomSettingsTab: (tab: number) => void;
+    setFlatControllers: (roomId: number, controllers: IFlatControllerData[]) => void;
+    addFlatController: (roomId: number, controller: IFlatControllerData) => void;
+    removeFlatController: (roomId: number, userId: number) => void;
+    setBannedUsers: (roomId: number, bannedUsers: IBannedUserData[]) => void;
+    removeBannedUser: (roomId: number, userId: number) => void;
+    setRoomSettingsSaveError: (roomId: number, errorCode: number, info: string) => void;
+    clearRoomSettingsSaveError: () => void;
     resetNavigator: () => void;
 }
 
@@ -164,16 +245,37 @@ const initialState: State = {
     isSearching: false,
     currentRoom: undefined,
     currentRoomIsOwner: false,
+    currentRoomStaffPick: false,
+    currentRoomCanMute: false,
+    currentRoomAllMuted: false,
+    currentRoomRating: 0,
+    currentRoomCanRate: false,
+    favouritesLimit: 30,
+    securityLevel: 0,
+    roomControllerLevel: 0,
+    roomIsOwn: false,
+    roomInfoWindowOpen: false,
+    roomFilterOpen: false,
+    roomFilterWords: [],
+    roomEventData: undefined,
+    roomEventInfoExpanded: false,
+    roomEventEditorOpen: false,
+    roomAdError: undefined,
     favoriteRoomIds: [],
     homeRoomId: -1,
     groupDetails: {},
     roomInfoPopup: undefined,
     createRoomOpen: false,
     alert: undefined,
+    enforceCategory: undefined,
+    groupRoomInfoExpanded: true,
     doorbell: undefined,
     passwordPrompt: undefined,
     pendingForwardRoomId: -1,
-    forwardConfirm: undefined
+    forwardConfirm: undefined,
+    requestedRoomSettings: undefined,
+    roomSettings: undefined,
+    roomSettingsSaveError: undefined
 };
 
 export type NavigatorContextStore = State & Actions;
@@ -294,6 +396,26 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     setViewMode: (code, mode) => set(x => ({ viewModes: { ...x.viewModes, [code]: mode } })),
     setIsSearching: isSearching => set({ isSearching }),
     setCurrentRoom: (currentRoom, currentRoomIsOwner) => set({ currentRoom, currentRoomIsOwner }),
+    setCurrentRoomExtras: (currentRoomStaffPick, currentRoomCanMute, currentRoomAllMuted) => set({ currentRoomStaffPick, currentRoomCanMute, currentRoomAllMuted }),
+    setCurrentRoomAllMuted: currentRoomAllMuted => set({ currentRoomAllMuted }),
+    setCurrentRoomRating: (currentRoomRating, currentRoomCanRate) => set({ currentRoomRating, currentRoomCanRate }),
+    setCurrentRoomStaffPick: currentRoomStaffPick => set({ currentRoomStaffPick }),
+    setFavouritesLimit: favouritesLimit => set({ favouritesLimit }),
+    setSecurityLevel: securityLevel => set({ securityLevel }),
+    setRoomControllerLevel: roomControllerLevel => set({ roomControllerLevel }),
+    setRoomIsOwn: roomIsOwn => set({ roomIsOwn }),
+    toggleRoomInfoWindow: () => set(x => ({ roomInfoWindowOpen: !x.roomInfoWindowOpen })),
+    closeRoomInfoWindow: () => set({ roomInfoWindowOpen: false }),
+    /* startRoomFilterEdit — the word list persists across opens and merges new words */
+    openRoomFilter: () => set({ roomFilterOpen: true }),
+    closeRoomFilter: () => set({ roomFilterOpen: false }),
+    setRoomEventData: roomEventData => set({ roomEventData }),
+    setRoomEventInfoExpanded: roomEventInfoExpanded => set({ roomEventInfoExpanded }),
+    toggleRoomEventEditor: () => set(x => ({ roomEventEditorOpen: !x.roomEventEditorOpen, roomAdError: undefined })),
+    closeRoomEventEditor: () => set({ roomEventEditorOpen: false, roomAdError: undefined }),
+    setRoomAdError: roomAdError => set({ roomAdError }),
+    mergeRoomFilterWords: words => set(x => ({ roomFilterWords: [...x.roomFilterWords, ...words.filter(y => !x.roomFilterWords.includes(y))] })),
+    removeRoomFilterWord: word => set(x => ({ roomFilterWords: x.roomFilterWords.filter(y => y !== word) })),
     setFavoriteRoomIds: favoriteRoomIds => set({ favoriteRoomIds }),
     setRoomFavorite: (roomId, favorite) => set(x => ({
         favoriteRoomIds: favorite
@@ -306,7 +428,10 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     hideRoomInfoPopup: () => set({ roomInfoPopup: undefined }),
     showCreateRoom: () => set({ createRoomOpen: true }),
     hideCreateRoom: () => set({ createRoomOpen: false }),
-    showAlert: (title, message) => set({ alert: { title, message } }),
+    showAlert: (title, message, promo) => set({ alert: { title, message, promo } }),
+    showEnforceCategory: selectionType => set({ enforceCategory: { selectionType } }),
+    closeEnforceCategory: () => set({ enforceCategory: undefined }),
+    setGroupRoomInfoExpanded: groupRoomInfoExpanded => set({ groupRoomInfoExpanded }),
     hideAlert: () => set({ alert: undefined }),
     showDoorbell: room => set({ doorbell: { room, waiting: false, noAnswer: false, visible: true } }),
     /* showWaiting() re-shows the kept window: show(room, null, true) */
@@ -321,5 +446,64 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     setPendingForwardRoomId: pendingForwardRoomId => set({ pendingForwardRoomId }),
     showForwardConfirm: (roomId, roomName) => set({ forwardConfirm: { roomId, roomName } }),
     hideForwardConfirm: () => set({ forwardConfirm: undefined }),
+    /* startRoomSettingsEdit closes any open editor before requesting fresh data */
+    requestRoomSettings: (roomId, groupId) => set({ requestedRoomSettings: { roomId, groupId }, roomSettings: undefined, roomSettingsSaveError: undefined }),
+    /* onRoomSettings — ignore packets for rooms we did not request */
+    applyRoomSettings: data => set(x => {
+        if (!x.requestedRoomSettings || x.requestedRoomSettings.roomId !== data.roomId) return {};
+
+        return {
+            roomSettings: {
+                data,
+                groupId: x.requestedRoomSettings.groupId,
+                fromNavigator: !x.currentRoom || x.currentRoom.roomId !== data.roomId,
+                currentTab: 1,
+                controllers: null,
+                bannedUsers: null
+            }
+        };
+    }),
+    closeRoomSettings: () => set({ requestedRoomSettings: undefined, roomSettings: undefined, roomSettingsSaveError: undefined }),
+    setRoomSettingsTab: tab => set(x => (x.roomSettings ? { roomSettings: { ...x.roomSettings, currentTab: tab } } : {})),
+    setFlatControllers: (roomId, controllers) => set(x => (
+        x.roomSettings && x.roomSettings.data.roomId === roomId
+            ? { roomSettings: { ...x.roomSettings, controllers } }
+            : {}
+    )),
+    addFlatController: (roomId, controller) => set(x => (
+        x.roomSettings && x.roomSettings.data.roomId === roomId
+            ? { roomSettings: { ...x.roomSettings, controllers: [...(x.roomSettings.controllers ?? []).filter(y => y.userId !== controller.userId), controller] } }
+            : {}
+    )),
+    removeFlatController: (roomId, userId) => set(x => (
+        x.roomSettings && x.roomSettings.data.roomId === roomId
+            ? { roomSettings: { ...x.roomSettings, controllers: (x.roomSettings.controllers ?? []).filter(y => y.userId !== userId) } }
+            : {}
+    )),
+    setBannedUsers: (roomId, bannedUsers) => set(x => (
+        x.roomSettings && x.roomSettings.data.roomId === roomId
+            ? { roomSettings: { ...x.roomSettings, bannedUsers } }
+            : {}
+    )),
+    removeBannedUser: (roomId, userId) => set(x => (
+        x.roomSettings && x.roomSettings.data.roomId === roomId
+            ? { roomSettings: { ...x.roomSettings, bannedUsers: (x.roomSettings.bannedUsers ?? []).filter(y => y.userId !== userId) } }
+            : {}
+    )),
+    /*
+     * onRoomSettingsSaveError also switches to the offending tab (5 -> access,
+     * idle codes -> vip tab, everything else -> basic)
+     */
+    setRoomSettingsSaveError: (roomId, errorCode, info) => set(x => {
+        if (!x.roomSettings || x.roomSettings.data.roomId !== roomId) return {};
+
+        const tab = errorCode === 5 ? 2 : (errorCode === 16 && (info === 'idleSleepTimeoutSeconds' || info === 'idleAutokickTimeoutSeconds') ? 4 : 1);
+
+        return {
+            roomSettingsSaveError: { errorCode, info },
+            roomSettings: { ...x.roomSettings, currentTab: tab }
+        };
+    }),
+    clearRoomSettingsSaveError: () => set({ roomSettingsSaveError: undefined }),
     resetNavigator: () => set({ ...initialState })
 }));

@@ -1,4 +1,4 @@
-import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, GetExtendedProfileComposer, GetHabboGroupDetailsComposer, UpdateHomeRoomComposer } from '@nitrodevco/nitro-packets';
+import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, GetExtendedProfileComposer, GetHabboGroupDetailsComposer, GetRoomSettingsComposer, UpdateHomeRoomComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -22,7 +22,7 @@ const POPUP_GRACE_MS = 4000;
  */
 export const NavigatorRoomInfoPopupView = () => {
     const { roomInfoPopup, favoriteRoomIds, homeRoomId, groupDetails, perks } = useNavigatorSelectors();
-    const { hideRoomInfoPopup, setRoomFavorite, setHomeRoomId } = useNavigatorActions();
+    const { hideRoomInfoPopup, setRoomFavorite, setHomeRoomId, requestRoomSettings } = useNavigatorActions();
     const { performSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const t = useTranslation();
@@ -154,7 +154,7 @@ export const NavigatorRoomInfoPopupView = () => {
                                 <div
                                     className="flex items-center gap-1 w-42.5 cursor-pointer"
                                     onClick={openOwnerProfile}>
-                                    <NitroIcon icon="icon-nav-owner-eye" />
+                                    <NitroIcon icon="icon-nav-friendlist-eye" />
                                     <span className="truncate text-style-u-bold">{room.ownerName}</span>
                                 </div>
                             )}
@@ -186,9 +186,15 @@ export const NavigatorRoomInfoPopupView = () => {
                                 <NitroIcon className="shrink-0" icon={isHome ? 'icon-nav-home-yes' : 'icon-nav-home-no'} />
                                 <span className="truncate text-style-regular">{t('navigator.room.popup.room.info.home')}</span>
                             </div>
-                            {/* TODO: opens RoomSettingsCtrl in the SWF — settings UI not built yet */}
+                            {/* RoomSettingsCtrl.startRoomSettingsEditFromNavigator(flatId, habboGroupId) */}
                             {room.ownerName === ownUserName && (
-                                <div className="flex items-center h-5 gap-1 cursor-pointer" onClick={hideRoomInfoPopup}>
+                                <div
+                                    className="flex items-center h-5 gap-1 cursor-pointer"
+                                    onClick={() => {
+                                        requestRoomSettings(room.roomId, room.groupId > 0 ? room.groupId : 0);
+                                        send(new GetRoomSettingsComposer({ roomId: room.roomId }));
+                                        hideRoomInfoPopup();
+                                    }}>
                                     <NitroIcon className="shrink-0" icon="icon-nav-room-settings" />
                                     <span className="truncate text-style-regular">{t('navigator.room.popup.info.room.settings')}</span>
                                 </div>

@@ -1357,6 +1357,16 @@
     height: 11px;
 }
 
+/* room_owner_region — friend_bar_friendlist_eye scaled into its 15x13 slot */
+.icon-nav-friendlist-eye {
+    background-image: url('/assets/flash/navigator/friendlist_eye.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 15px;
+    height: 13px;
+}
+
 /* RoomInfoPopup group_mode_admin — newnavigator_icon_group_owner / _admin crowns */
 .icon-nav-group-owner {
     background-image: url('/assets/flash/navigator/icon_group_owner.png');
@@ -1446,3 +1456,41 @@
 .nav-select-arrow-bounce {
     animation: nav-select-arrow-bounce 1.5s ease-in-out infinite alternate;
 }
+
+/* room_tools_toolbar — RoomToolsToolbarCtrl assets */
+.icon-roomtools-zoom-in { background: url('/assets/flash/roomtools/zoom_in.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-zoom-out { background: url('/assets/flash/roomtools/zoom_out.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-gear { background: url('/assets/flash/roomtools/gear.png') no-repeat center; width: 21px; height: 21px; }
+.icon-roomtools-chat-history { background: url('/assets/flash/roomtools/chat_history.png') no-repeat center; width: 17px; height: 21px; }
+.icon-roomtools-like { background: url('/assets/flash/roomtools/like.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-weblink { background: url('/assets/flash/roomtools/icon_weblink.png') no-repeat center; width: 17px; height: 15px; }
+.icon-roomtools-history-back { background: url('/assets/flash/roomtools/history_back_icon.png') no-repeat center; width: 6px; height: 11px; }
+.icon-roomtools-history-forward { background: url('/assets/flash/roomtools/history_forward_icon.png') no-repeat center; width: 6px; height: 11px; }
+.icon-roomtools-history-open { background: url('/assets/flash/roomtools/history_open_icon.png') no-repeat center; width: 17px; height: 16px; }
+.icon-roomtools-history-open-bg { background: url('/assets/flash/roomtools/history_open_bg.png') no-repeat center; width: 33px; height: 35px; }
+.icon-roomtools-history-nav-bg { background: url('/assets/flash/roomtools/history_forward_bg.png') no-repeat center; width: 34px; height: 31px; }
+
+/* history buttons — forward_bg / open_bg multiplied by color 0x44a88d, per the XML tint */
+.icon-roomtools-history-nav-bg-teal { background: url('/assets/flash/roomtools/history_nav_bg_teal.png') no-repeat center; width: 34px; height: 31px; }
+.icon-roomtools-history-open-bg-teal { background: url('/assets/flash/roomtools/history_open_bg_teal.png') no-repeat center; width: 33px; height: 35px; }
+
+/* room tools side strips — the same collapse arrows the toolbar uses */
+.icon-tools-collapse-left {
+    background: url('/assets/flash/toolbar/collapse_left.png') no-repeat center;
+    width: 14px;
+    height: 43px;
+}
+.icon-tools-collapse-right {
+    background: url('/assets/flash/toolbar/collapse_right.png') no-repeat center;
+    width: 14px;
+    height: 43px;
+}
+
+/* iro_room_details_framed — the roominfo window's own icon set */
+.icon-roominfo-make-home { background: url('/assets/flash/navigator/roominfo_make_home.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-home { background: url('/assets/flash/navigator/roominfo_home.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roominfo-favourite { background: url('/assets/flash/navigator/roominfo_favourite.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-make-favourite { background: url('/assets/flash/navigator/roominfo_make_favourite.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-remove-rights { background: url('/assets/flash/navigator/roominfo_remove_rights.png') no-repeat center; width: 18px; height: 22px; }
+.icon-roominfo-thumb-up { background: url('/assets/flash/navigator/roominfo_thumb_up.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-panic { background: url('/assets/flash/navigator/roominfo_panic.png') no-repeat center; width: 39px; height: 25px; }

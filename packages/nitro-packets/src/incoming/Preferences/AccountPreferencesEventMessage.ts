@@ -9,7 +9,7 @@ export type AccountPreferencesEventMessageType = {
   freeFlowChatDisabled: boolean;
   roomInvitesIgnored: boolean;
   roomCameraFollowDisabled: boolean;
-  uIFlags: any;
+  uIFlags: number;
   preferedChatStyle: number;
   wiredMenuButton: boolean;
   wiredInspectButton: boolean;
@@ -29,7 +29,7 @@ export class AccountPreferencesEventMessage implements IIncomingPacket<AccountPr
       freeFlowChatDisabled: wrapper.readBoolean(),
       roomInvitesIgnored: wrapper.readBoolean(),
       roomCameraFollowDisabled: wrapper.readBoolean(),
-      uIFlags: undefined as any, // Unknown type 'UIFlags'. Add override mapping.
+      uIFlags: wrapper.readInt(),
       preferedChatStyle: wrapper.readInt(),
       wiredMenuButton: wrapper.readBoolean(),
       wiredInspectButton: wrapper.readBoolean(),

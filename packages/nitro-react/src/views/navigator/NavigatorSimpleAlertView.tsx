@@ -1,4 +1,5 @@
 import { useNavigatorActions, useNavigatorSelectors, useTranslation } from '#base/context';
+import { createLinkEvent } from '#base/hooks';
 import { Button, Frame } from '#base/theme';
 
 /**
@@ -12,6 +13,34 @@ export const NavigatorSimpleAlertView = () => {
     const t = useTranslation();
 
     if (!alert) return null;
+
+    /*
+     * ClubPromoAlertView — nav_promo_alert (224x182): body_text (7,12) 186x57, the
+     * clickable promo_container (7,72) 199x43 opening the club center, ok (76,122)
+     */
+    if (alert.promo !== undefined) {
+        return (
+            <Frame
+                caption={alert.title}
+                className="inset-0 m-auto w-56 h-45.5"
+                id="navigator-alert"
+                resizeDirection="none"
+                variant="3"
+                onClose={hideAlert}>
+                <div className="relative size-full">
+                    <span className="absolute top-3 left-1.75 block w-46.5 h-14.25 text-style-regular break-words">{alert.message}</span>
+                    <div
+                        className="absolute top-18 left-1.75 w-49.75 h-10.75 flex items-center bg-[#EAECE8] border border-black cursor-pointer"
+                        onClick={() => { createLinkEvent('catalog/club_buy'); hideAlert(); }}>
+                        <span className="pl-11.5 pr-2 text-style-regular break-words">{alert.promo}</span>
+                    </div>
+                    <Button className="absolute top-30.5 left-19 w-15 h-6" variant="3" onClick={hideAlert}>
+                        {t('generic.ok')}
+                    </Button>
+                </div>
+            </Frame>
+        );
+    }
 
     return (
         <Frame

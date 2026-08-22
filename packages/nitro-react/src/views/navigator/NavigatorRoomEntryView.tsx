@@ -82,12 +82,12 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, eventViewM
                 variant="10"
                 onClick={() => onEnter(room)}
                 onPointerEnter={retargetOnHover(-6, 56)}>
-                {/* black thumbnail backdrop — container 108x109 at 7,6 */}
-                <div className="absolute top-1.5 left-1.75 w-27 h-27.25 bg-black" />
-                {/* room_pic_placeholder — 106x106 at 8,7, pivot centre, UNCLIPPED: the
-                    110x110 bitmap overflows the box 2px each side and fully covers the
-                    black backdrop; black only shows while no image is drawn */}
-                <div className="absolute top-1.75 left-2 flex items-center justify-center w-26.5 h-26.5">
+                {/* black thumbnail backdrop — 108x109 at (7,6) in the XML, but the genuine
+                    client renders an even 1px rim, so it ends level with the slot */}
+                <div className="absolute top-1.5 left-1.75 w-27 h-27 bg-black" />
+                {/* room_pic_placeholder — 106x106 at 8,7, pivot centre; the bitmap clips
+                    to the slot so the 108x109 black backdrop shows as the 1px frame */}
+                <div className="absolute top-1.75 left-2 flex items-center justify-center w-26.5 h-26.5 overflow-hidden">
                     <NitroIcon className="absolute shrink-0" icon="icon-nav-default-room" />
                     <img
                         alt=""

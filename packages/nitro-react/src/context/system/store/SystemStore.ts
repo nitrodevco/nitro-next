@@ -66,7 +66,8 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
             return { config: { ...state.config, [key]: value } };
         }),
     getLocalizationValue: (key: string, defaultValue?: string, replacements?: Record<string, string>) => {
-        let value = get().localizations[key] ?? defaultValue;
+        /* a missing key without a fallback renders as the raw key, like the SWF */
+        let value = get().localizations[key] ?? defaultValue ?? key;
 
         if (replacements) {
             const keys = Object.keys(replacements);

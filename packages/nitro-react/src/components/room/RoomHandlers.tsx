@@ -1,4 +1,4 @@
-import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler } from "#base/handlers";
+import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomToolsHandler, useRoomUserHandler } from "#base/handlers";
 
 export const RoomHandlers = () => {
     useRoomChatHandler();
@@ -9,6 +9,7 @@ export const RoomHandlers = () => {
     useRoomPermissionsHandler();
     useRoomPetPackageHandler();
     useRoomPollHandler();
+    useRoomToolsHandler();
     useRoomUserHandler();
 
     return null;

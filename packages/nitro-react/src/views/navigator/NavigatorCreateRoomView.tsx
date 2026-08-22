@@ -3,6 +3,7 @@ import { CreateFlatComposer, getFlatCategoryVisibleName } from '@nitrodevco/nitr
 import { useState } from 'react';
 
 import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useOwnClubLevel, useOwnSecurityLevel, useTranslation, useWebSocketContext } from '#base/context';
+import { createLinkEvent } from '#base/hooks';
 import { Button, ButtonThick, DropmenuSelect, FieldErrorPopup, Frame, ScrollArea } from '#base/theme';
 
 import type { RoomLayout } from './NavigatorCreateRoomLayouts';
@@ -70,7 +71,8 @@ export const NavigatorCreateRoomView = () => {
             return;
         }
 
-        // TODO: openCatalogClubPage — no catalog club-page opener exists yet
+        // openCatalogClubPage — the club promo chain: catalog/club_buy -> habboUI/open/hccenter
+        createLinkEvent('catalog/club_buy');
     };
 
     /* TextFieldManager.isInputValid(): !placeholder && trim(text).length > 2 */

@@ -52,6 +52,9 @@ export const MainView = () => {
                         <ActivityPointsView />
                         <NotificationCenterView />
                     </div>
+                    {/* ExtensionView — the toolbar's docked-panel strip (room event info,
+                        group info, quest tracker...) stacks top-right under the purse */}
+                    <div className="flex flex-col items-end gap-1 mt-1 pointer-events-none" id="toolbar-extensions" />
                 </div>
                 <FriendListWrapper />
                 <ToolbarView />

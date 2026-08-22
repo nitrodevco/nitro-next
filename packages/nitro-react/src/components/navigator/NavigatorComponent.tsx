@@ -3,12 +3,12 @@ import { ForwardToSomeRoomComposer, GetGuestRoomComposer, OpenFlatConnectionComp
 import { useNavigatorActions, useNavigatorContext, useNavigatorSelectors, useWebSocketContext } from '#base/context';
 import { useNavigatorHandler } from '#base/handlers';
 import { useLinkEventTracker, useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
-import { NavigatorCreateRoomView, NavigatorDoorbellView, NavigatorForwardConfirmView, NavigatorPasswordView, NavigatorSimpleAlertView, NavigatorView } from '#base/views/navigator';
+import { NavigatorCreateRoomView, NavigatorDoorbellView, NavigatorEnforceCategoryView, NavigatorForwardConfirmView, NavigatorGroupRoomInfoView, NavigatorPasswordView, NavigatorRoomEventEditorView, NavigatorRoomEventInfoView, NavigatorRoomFilterView, NavigatorRoomInfoWindowView, NavigatorRoomSettingsView, NavigatorSimpleAlertView, NavigatorView } from '#base/views/navigator';
 
 export const NavigatorComponent = () => {
     const { isNavigatorVisible } = useNavigatorVisibility();
     const { createRoomOpen } = useNavigatorSelectors();
-    const { setPendingForwardRoomId } = useNavigatorActions();
+    const { setPendingForwardRoomId, toggleRoomInfoWindow } = useNavigatorActions();
     const { performSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const homeRoomId = useNavigatorContext(x => x.homeRoomId);
@@ -51,6 +51,10 @@ export const NavigatorComponent = () => {
             case 'tab':
                 if (parts.length > 2) performSearch(parts[2] === 'me' ? 'myworld_view' : parts[2]);
                 break;
+            case 'roominfo':
+                /* HTIE_ICON_ROOMINFO — the toolbar room-info icon toggles RoomInfoViewCtrl */
+                toggleRoomInfoWindow();
+                break;
             case 'ask_forward':
                 if (parts.length > 2) {
                     setPendingForwardRoomId(parseInt(parts[2]));
@@ -72,6 +76,14 @@ export const NavigatorComponent = () => {
             <NavigatorDoorbellView />
             <NavigatorPasswordView />
             <NavigatorForwardConfirmView />
+            <NavigatorRoomSettingsView />
+            <NavigatorRoomInfoWindowView />
+            <NavigatorRoomFilterView />
+            {/* extension order: room_group_info attaches before event info */}
+            <NavigatorGroupRoomInfoView />
+            <NavigatorRoomEventInfoView />
+            <NavigatorRoomEventEditorView />
+            <NavigatorEnforceCategoryView />
             <NavigatorSimpleAlertView />
         </>
     );

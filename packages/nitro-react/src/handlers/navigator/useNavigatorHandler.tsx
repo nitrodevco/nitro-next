@@ -1,5 +1,5 @@
-import { ClubLevelEnum } from "@nitrodevco/nitro-api";
-import { CanCreateRoomMessage, CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, FollowFriendComposer, GenericErrorMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, HabboGroupDetailsMessage, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, NoOwnedRoomsAlertMessage, OpenFlatConnectionComposer, PerkAllowancesMessage, QuitComposer, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { ClubLevelEnum, RoomControllerLevelEnum } from "@nitrodevco/nitro-api";
+import { BannedUsersFromRoomEventMessage, CanCreateRoomEventMessage, CanCreateRoomMessage, CantConnectMessage, CloseConnectionMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatControllerAddedEventMessage, FlatControllerRemovedEventMessage, FlatControllersEventMessage, FlatCreatedMessage, FollowFriendComposer, GenericErrorMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetHabboGroupDetailsComposer, GetUserEventCatsComposer, GetUserFlatCatsComposer, HabboGroupDetailsMessage, MuteAllInRoomEventMessage, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, NoOwnedRoomsAlertMessage, OpenFlatConnectionComposer, PerkAllowancesMessage, QuitComposer, RoomAdErrorEventMessage, RoomEntryInfoMessage, RoomEventCancelMessage, RoomEventMessage, RoomFilterSettingsMessage, RoomForwardMessage, RoomRatingMessage, RoomSettingsDataEventMessage, RoomSettingsSaveErrorEventMessage, ShowEnforceRoomCategoryDialogEventMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage, UserUnbannedFromRoomEventMessage, YouAreControllerMessage, YouAreNotControllerMessage, YouAreOwnerMessage } from "@nitrodevco/nitro-packets";
 import { useRef } from "react";
 
 import { useConfigValue, useNavigatorActions, useNavigatorContext, useOwnClubLevel, useTranslation, useUserContext, useWebSocketContext } from "#base/context";
@@ -14,7 +14,14 @@ export const useNavigatorHandler = () => {
         showCreateRoom, hideCreateRoom, showAlert,
         showDoorbell, showDoorbellWaiting, showDoorbellNoAnswer, hideDoorbellWindow,
         showPasswordPrompt, showPasswordRetry,
-        setPendingForwardRoomId, showForwardConfirm
+        setPendingForwardRoomId, showForwardConfirm,
+        applyRoomSettings, setRoomSettingsSaveError, setFlatControllers, addFlatController,
+        removeFlatController, setBannedUsers, removeBannedUser,
+        setCurrentRoomExtras, setCurrentRoomAllMuted, setCurrentRoomRating, setFavouritesLimit,
+        setSecurityLevel, setRoomControllerLevel, setRoomIsOwn, closeRoomInfoWindow,
+        closeRoomFilter, closeRoomSettings, mergeRoomFilterWords,
+        setRoomEventData, setRoomEventInfoExpanded, toggleRoomEventEditor, closeRoomEventEditor, setRoomAdError,
+        showEnforceCategory, setGroupRoomInfoExpanded
     } = useNavigatorActions();
     const { hideNavigator, showNavigator } = useNavigatorVisibility();
     const clubLevel = useOwnClubLevel();
@@ -27,6 +34,7 @@ export const useNavigatorHandler = () => {
     const followFriendId = useConfigValue<string>('friend.id') ?? '';
     const forwardTypeConfig = useConfigValue<string>('forward.type') ?? '';
     const forwardIdConfig = useConfigValue<string>('forward.id') ?? '';
+    const groupRoomInfoEnabled = useConfigValue<boolean>('groupRoomInfo.enabled') ?? false;
 
     useMessageListener(UserObjectMessage, () => {
         send(new GetUserFlatCatsComposer({}));
@@ -80,10 +88,8 @@ export const useNavigatorHandler = () => {
 
     useMessageListener(NavigatorCollapsedCategoriesMessage, data => setCollapsedCategories(data.collapsedCategories));
 
-    useMessageListener(UserRightsMessage, () => {
-        // eventMod > securityLevel >= SecurityLevel.MODERATOR
-        // roomPicker > securityLevel >= SecurityLevel.COMMUNITY
-    });
+    /* eventMod = securityLevel >= 5, roomPicker = securityLevel >= 7 */
+    useMessageListener(UserRightsMessage, data => setSecurityLevel(data.securityLevel));
 
     useMessageListener(RoomForwardMessage, data => {
         send(new GetGuestRoomComposer({
@@ -114,6 +120,20 @@ export const useNavigatorHandler = () => {
             // ownership per RoomPopupCtrl: sessionData.userId == roomData.ownerId
             setCurrentRoom(data.roomInfo, data.roomInfo?.ownerId === userId);
 
+            /* onRoomInfo enterRoom — staffPick / canMute / allInRoomMuted for the roominfo view */
+            if (data.enterRoom) {
+                setCurrentRoomExtras(data.staffPick, data.canMute, data.allInRoomMuted);
+
+                /* group rooms contract the event info widget on entry */
+                if (data.roomInfo.groupId > 0) setRoomEventInfoExpanded(false);
+
+                /* GroupRoomInfoCtrl.onRoomInfo — fetch the details for the group box */
+                if (groupRoomInfoEnabled && data.roomInfo.groupId > 0) {
+                    setGroupRoomInfoExpanded(true);
+                    send(new GetHabboGroupDetailsComposer({ groupId: data.roomInfo.groupId, open: false }));
+                }
+            }
+
             /*
              * HabboNewNavigator.onRoomInfo — an ask_forward link stored the room id and
              * requested this data; matching id raises the forward-confirmation dialog
@@ -141,9 +161,50 @@ export const useNavigatorHandler = () => {
         }
     });
 
-    useMessageListener(RoomRatingMessage, () => {
-        // currentRoomRating data.rating / canRate data.canRate
+    /* onRoomRating — the roominfo view shows the score and the thumb when canRate */
+    useMessageListener(RoomRatingMessage, data => setCurrentRoomRating(data.rating, data.canRate));
+
+    /* onMuteAllEvent — flips the muteall button caption */
+    useMessageListener(MuteAllInRoomEventMessage, data => setCurrentRoomAllMuted(data.allMuted));
+
+    /* RoomFilterCtrl.onRoomFilterSettings — merge into the persistent word list */
+    useMessageListener(RoomFilterSettingsMessage, data => mergeRoomFilterWords(data.badWords));
+
+    /* sessionData mirror for hasRoomRightsButIsNotOwner / floor-plan gating */
+    useMessageListener(YouAreControllerMessage, data => setRoomControllerLevel(data.controllerLevel));
+
+    useMessageListener(YouAreNotControllerMessage, () => setRoomControllerLevel(RoomControllerLevelEnum.None));
+
+    useMessageListener(YouAreOwnerMessage, () => setRoomIsOwn(true));
+
+    /* onRoomExit — the in-room windows close with the room */
+    useMessageListener(CloseConnectionMessage, () => {
+        setRoomIsOwn(false);
+        setRoomControllerLevel(RoomControllerLevelEnum.None);
+        closeRoomInfoWindow();
+        closeRoomFilter();
+        closeRoomSettings();
+        closeRoomEventEditor();
     });
+
+    /* onRoomEventEvent — an ownerAvatarId of -1 clears the running event */
+    useMessageListener(RoomEventMessage, data => setRoomEventData(data.data.ownerAvatarId > 0 ? data.data : undefined));
+
+    useMessageListener(RoomEventCancelMessage, () => setRoomEventData(undefined));
+
+    /*
+     * onCanCreateRoomEventEvent — a positive answer opens the event editor, a
+     * negative one alerts navigator.cannotcreateevent.error.<code>
+     */
+    useMessageListener(CanCreateRoomEventMessage, data => {
+        if (data.canCreateEvent) toggleRoomEventEditor();
+        else showAlert(t('navigator.cannotcreateevent.title'), t(`navigator.cannotcreateevent.error.${data.errorCode}`));
+    });
+
+    useMessageListener(RoomAdErrorEventMessage, data => setRoomAdError({ errorCode: data.errorCode, filteredText: data.filteredText }));
+
+    /* onEnforceRoomCategorySelection — a modal the user cannot dismiss without choosing */
+    useMessageListener(ShowEnforceRoomCategoryDialogEventMessage, data => showEnforceCategory(data.selectionType));
 
     /* onDoorbell — an empty username is the ack for our own ring: waiting state */
     useMessageListener(DoorbellMessage, data => {
@@ -217,16 +278,15 @@ export const useNavigatorHandler = () => {
 
         const message = t('navigator.createroom.limitreached', undefined, { limit: String(data.roomLimit) });
 
-        // TODO: ClubPromoAlertView has its own layout (roc_vip_promo link -> catalog club
-        // page); until the catalog opener exists both variants use nav_simple_alert and
-        // the promo line is appended for non-VIP users.
-        showAlert(
-            t('navigator.createroom.error'),
-            clubLevel >= ClubLevelEnum.Vip ? message : `${message}\n${t('navigator.createroom.vippromo')}`
-        );
+        /* SimpleAlertView for VIPs, ClubPromoAlertView (nav_promo_alert) otherwise */
+        if (clubLevel >= ClubLevelEnum.Vip) showAlert(t('navigator.createroom.error'), message);
+        else showAlert(t('navigator.createroom.error'), message, t('navigator.createroom.vippromo'));
     });
 
-    useMessageListener(FavouritesMessage, data => setFavoriteRoomIds(data.favoriteRoomIds));
+    useMessageListener(FavouritesMessage, data => {
+        setFavoriteRoomIds(data.favoriteRoomIds);
+        setFavouritesLimit(data.limit);
+    });
 
     useMessageListener(FavouriteChangedMessage, data => setRoomFavorite(data.roomId, data.added));
 
@@ -269,6 +329,21 @@ export const useNavigatorHandler = () => {
 
     /* onNoOwnedRoomsAlert — startRoomCreation() opens the create-room dialog */
     useMessageListener(NoOwnedRoomsAlertMessage, () => showCreateRoom());
+
+    /* RoomSettingsCtrl.onRoomSettings — only the requested room opens the editor */
+    useMessageListener(RoomSettingsDataEventMessage, data => applyRoomSettings(data.data));
+
+    useMessageListener(RoomSettingsSaveErrorEventMessage, data => setRoomSettingsSaveError(data.roomId, data.errorCode, data.info));
+
+    useMessageListener(FlatControllersEventMessage, data => setFlatControllers(data.roomId, data.controllers));
+
+    useMessageListener(FlatControllerAddedEventMessage, data => addFlatController(data.roomId, { userId: data.userId, userName: data.userName }));
+
+    useMessageListener(FlatControllerRemovedEventMessage, data => removeFlatController(data.roomId, data.userId));
+
+    useMessageListener(BannedUsersFromRoomEventMessage, data => setBannedUsers(data.roomId, data.bannedUsers));
+
+    useMessageListener(UserUnbannedFromRoomEventMessage, data => removeBannedUser(data.roomId, data.userId));
 
     useMessageListener(HabboGroupDetailsMessage, data => setGroupDetails(data.data));
 

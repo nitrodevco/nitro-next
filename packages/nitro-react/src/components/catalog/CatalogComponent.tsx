@@ -2,7 +2,7 @@ import { BuildersClubQueryFurniCountComposer, GetCatalogIndexComposer, GetClubGi
 import { useEffect } from "react";
 
 import { useCatalogSelectors, useIsWindowVisible, useWebSocketContext } from "#base/context";
-import { useCatalogMessages, useCatalogNavigation, useCatalogPageRequest, useCatalogVisibility, useLinkEventTracker } from "#base/hooks";
+import { createLinkEvent, useCatalogMessages, useCatalogNavigation, useCatalogPageRequest, useCatalogVisibility, useLinkEventTracker } from "#base/hooks";
 import { CatalogView } from "#base/views/catalog/CatalogView";
 
 export const CatalogComponent = () => {
@@ -22,10 +22,15 @@ export const CatalogComponent = () => {
     useLinkEventTracker('catalog/', url => {
         const parts = url.split('/');
 
-        if (parts.length < 2 || parts[1] !== 'open') return;
+        if (parts.length < 2) return;
 
-        if (parts.length > 2) openPageByName(parts[2]);
-        else showCatalog();
+        if (parts[1] === 'open') {
+            if (parts.length > 2) openPageByName(parts[2]);
+            else showCatalog();
+        } else if (parts[1] === 'club_buy') {
+            /* openClubCenter — forwards to the HC center UI (not built yet) */
+            createLinkEvent('habboUI/open/hccenter');
+        }
     });
 
     useEffect(() => {
