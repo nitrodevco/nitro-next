@@ -7,7 +7,6 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { Text } from './Text';
 import { useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
@@ -24,7 +23,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', textColor: '#000000',
+        textStyle: 'text-style-button-bold', textColor: '#000000',
     },
     '1': {
         states: {
@@ -36,7 +35,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', textColor: '#FFFFFF',
+        textStyle: 'text-style-button-bold', textColor: '#FFFFFF',
     },
     '2': {
         states: {
@@ -48,7 +47,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', textColor: '#000000',
+        textStyle: 'text-style-button-bold', textColor: '#000000',
     },
     '3': {
         states: {
@@ -60,7 +59,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 10, paddingTop: 2, paddingRight: 10, paddingBottom: 3, minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-shiny-bold', textColor: '#000000',
+        textStyle: 'text-style-button-shiny-bold', textColor: '#000000',
     },
     '4': {
         states: {
@@ -72,7 +71,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
+        textStyle: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     '5': {
         states: {
@@ -84,7 +83,7 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
+        textStyle: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     '6': {
         states: {
@@ -97,20 +96,21 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
         tintColor: '#00aa00',
-        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
+        textStyle: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     }
 };
 
 export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
     disabled?: boolean;
+    selected?: boolean;
     onPress?: () => void;
     children?: ReactNode;
 }
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
-    ({ variant, defaultVariant, tintColor, textColor, disabled, layout, onPress, children }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textColor, disabled,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected
         });
 
         return (
@@ -126,12 +126,10 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                 {...handlers}
                 onPointerTap={disabled ? undefined : onPress}
             >
-                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
-                        : wrapTextChildren(children)}
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );

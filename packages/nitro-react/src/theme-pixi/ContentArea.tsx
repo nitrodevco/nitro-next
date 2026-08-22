@@ -5,32 +5,27 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { useResolvedVariant } from './utils/useResolvedVariant';
-import { wrapTextChildren } from './utils/wrapTextChildren';
+import { Box } from './Box';
+import { BackgroundLayer } from './layer';
+import { useThemeVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-/**
- * Per-variant layout on top of the always-on base (flex column, full size, overflow
- * hidden, z-index 20 - theme/ContentArea.tsx's `flex flex-col size-full overflow-hidden
- * z-20`). '0' adds a 3px bottom padding (`pb-0.75`); '3' makes the box a positioning
- * context for absolutely-positioned children (`relative`) - previously both variants
- * resolved identically here since the render ignored `variant` entirely.
- */
-const CONTENT_AREA_VARIANTS: Record<string, BoxLayout> = {
-    '0': { paddingBottom: 3 },
-    '3': { position: 'relative' },
+type ContentAreaVariant = ThemeVariant;
+
+const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
+    '0': { layout: { paddingBottom: 3 } },
+    '3': { layout: { position: 'relative' } },
 };
 
-export interface ContentAreaProps {
-    variant?: string;
-    defaultVariant?: string;
-    layout?: BoxLayout;
+export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
     children?: ReactNode;
 }
 
 export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContentAreaProps>(
-    ({ variant, defaultVariant, layout, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('contentArea', variant, defaultVariant);
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'contentArea', variants: CONTENT_AREA_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
+        });
 
         return (
             <Box
@@ -41,11 +36,16 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
                     width: '100%',
                     flex: 1,
                     overflow: 'hidden',
-                    ...CONTENT_AREA_VARIANTS[resolvedVariant],
+                    ...config.layout,
                     ...layout,
                 }}
+                {...handlers}
             >
-                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+                <VariantCascadeProvider map={ownCascade}>
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                </VariantCascadeProvider>
             </Box>
         );
     }

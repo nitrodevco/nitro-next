@@ -1,20 +1,20 @@
-import { PixiReactElementProps } from "@pixi/react";
-import { Text as PixiText, TextStyleOptions } from "pixi.js";
+import { TextStyleOptions } from "pixi.js";
 
+import { BoxLayout } from "./Box";
 import { getPixiTextStyle, TextStyleKey } from "./utils/textStyles";
 
-type TextProps = {
+export type TextConfig = {
     text: string;
     textStyle?: TextStyleKey;
     textOptions?: TextStyleOptions;
-} & PixiReactElementProps<typeof PixiText>;
+    layout?: BoxLayout;
+}
 
-export const Text = ({ text, textStyle, textOptions, layout, ...props }: TextProps) => {
+export const Text = ({ text, textStyle, textOptions, ...props }: TextConfig) => {
     const style = getPixiTextStyle(textStyle ?? "text-style-regular", textOptions);
 
     return <pixiText
         text={text}
         style={style}
-        layout={layout ?? {}}
         {...props} />;
 }

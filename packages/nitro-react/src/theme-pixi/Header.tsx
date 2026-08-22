@@ -27,14 +27,14 @@ type HeaderVariant = ThemeVariant & {
 };
 
 const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
-    '0': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#418db0' },
-    '1': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, padding: { left: 6, top: 6, right: 6, bottom: 6 }, textStyleKey: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#4c4c4c' },
-    '2': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-frame-title', textColor: '#000000', tintColor: '#fac200' },
-    '3': { minHeight: 33, padding: { left: 6, top: 0, right: 6, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
-    '4': { layer: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
-    '7': { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyleKey: 'text-style-u-frame-title', textColor: '#000000' },
-    '100': { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-il-frame-title', textColor: '#000000' },
-    '200': { layer: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyleKey: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '0': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#418db0' },
+    '1': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, padding: { left: 6, top: 6, right: 6, bottom: 6 }, textStyle: 'text-style-frame-title', textColor: '#ffffff', tintColor: '#4c4c4c' },
+    '2': { layer: { kind: 'tile', textureKey: 'header-0-default-src' }, overlay: { kind: 'tile', textureKey: 'header-0-default-shine-src' }, minHeight: 15, margin: 6, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-frame-title', textColor: '#000000', tintColor: '#fac200' },
+    '3': { minHeight: 33, padding: { left: 6, top: 0, right: 6, bottom: 0 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '4': { layer: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
+    '7': { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyle: 'text-style-u-frame-title', textColor: '#000000' },
+    '100': { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-il-frame-title', textColor: '#000000' },
+    '200': { layer: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
 };
 
 export interface HeaderProps extends ThemeProps<HeaderVariant> {
@@ -87,7 +87,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                             {caption && (
                                 <Box layout={{ position: 'relative', paddingLeft: 8, paddingRight: 8 }}>
                                     <ColorLayer color={resolvedTint} />
-                                    <Text text={caption} textStyle={config.textStyleKey} textOptions={{ fill: config.textColor }} />
+                                    <Text text={caption} textStyle={config.textStyle} textOptions={{ fill: config.textColor }} />
                                 </Box>
                             )}
                         </Box>

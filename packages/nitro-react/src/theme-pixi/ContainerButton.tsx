@@ -110,14 +110,15 @@ const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = {
 
 export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant> {
     disabled?: boolean;
+    selected?: boolean;
     onPress?: () => void;
     children?: ReactNode;
 }
 
 export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContainerButtonProps>(
-    ({ variant, defaultVariant, tintColor, disabled, layout, onPress, children }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tintColor, disabled,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected
         });
 
         return (
@@ -128,9 +129,9 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
                 cursor="pointer"
                 onPointerTap={disabled ? undefined : onPress}
             >
-                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}</VariantCascadeProvider>
             </Box>
         );
     }

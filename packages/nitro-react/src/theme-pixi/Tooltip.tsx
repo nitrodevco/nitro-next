@@ -5,25 +5,39 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { NineSliceLayer } from './layer';
+import { Box } from './Box';
+import { BackgroundLayer, NineSlice } from './layer';
 import { Text } from './Text';
 import { useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-export interface TooltipProps {
-    variant?: string;
-    defaultVariant?: string;
-    layout?: BoxLayout;
+type TooltipVariant = ThemeVariant;
+
+const TOOLTIP_VARIANTS: ThemeVariants<TooltipVariant> = {
+    //default
+    '0': {
+        layer: NineSlice('tooltip-0-default-src', 6, 6, 6, 6),
+        layout: { minWidth: 20, minHeight: 22, paddingLeft: 6, paddingRight: 6 }
+    }
+}
+
+export interface TooltipProps extends ThemeProps<TooltipVariant> {
     children?: ReactNode;
 }
 
 export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TooltipProps>(
-    ({ variant, defaultVariant, layout, children }, ref) => {
-        const { ownCascade } = useResolvedVariant('tooltip', variant, defaultVariant);
+    ({ variant, defaultVariant, tintColor, textColor, layout, children }, ref) => {
+        const { resolvedVariant, ownCascade } = useResolvedVariant('tooltip', variant, defaultVariant);
+        const config = TOOLTIP_VARIANTS[resolvedVariant] ?? TOOLTIP_VARIANTS['0'];
+        const resolvedLayer = config.layer;
+        const resolvedOverlay = config.overlay;
+        const resolvedTint = tintColor || config.tintColor;
+        const resolvedTextColor = textColor || config.textColor;
 
         return (
-            <Box ref={ref} layout={{ minWidth: 20, minHeight: 22, paddingLeft: 6, paddingRight: 6, ...layout }}>
-                <NineSliceLayer textureKey="tooltip-0-default-src" leftWidth={6} topHeight={6} rightWidth={6} bottomHeight={6} />
+            <Box ref={ref} layout={{ ...config.layout, ...layout }}>
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} />}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? <Text text={children} textStyle="text-style-u-tool-tip" />

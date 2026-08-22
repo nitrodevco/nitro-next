@@ -46,7 +46,7 @@ export const createButtonGroupComponent = (
                     {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                     <VariantCascadeProvider map={ownCascade}>
                         {typeof children === 'string'
-                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.textColor }} />
+                            ? <Text text={children} textStyle={config.textStyle} textOptions={{ fill: config.textColor }} />
                             : wrapTextChildren(children)}
                     </VariantCascadeProvider>
                 </Box>

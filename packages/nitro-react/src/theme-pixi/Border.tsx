@@ -111,15 +111,15 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 }
 
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, tintColor, blend, layout, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor,
+    ({ variant, defaultVariant, tintColor, textStyle, textColor, blend, layout, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
         });
 
         return (
-            <Box ref={ref} layout={{ ...config.layout, ...layout }}>
-                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
-                <BackgroundLayer layer={resolvedOverlay} />
+            <Box ref={ref} layout={{ ...config.layout, ...layout }} {...handlers}>
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 {resolvedLayer && resolvedLayer.kind === 'nineSlice' && (
                     <BlendOverlay
                         textureKey={resolvedLayer.textureKey}
@@ -130,7 +130,9 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                         blend={blend}
                     />
                 )}
-                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                <VariantCascadeProvider map={ownCascade}>
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                </VariantCascadeProvider>
             </Box>
         );
     }

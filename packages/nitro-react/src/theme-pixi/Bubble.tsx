@@ -36,16 +36,18 @@ export interface BubbleProps extends ThemeProps<BubbleVariant> {
 }
 
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
-    ({ variant, defaultVariant, tintColor, usePointer = true, pointer = 'down', layout, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedTint } = useThemeVariant({
-            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor,
+    ({ variant, defaultVariant, tintColor, textStyle, textColor, usePointer = true, pointer = 'down', layout, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
+            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
         });
 
         return (
-            <Box layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center', ...config.layout, ...layout }}>
-                <Box ref={ref}>
+            <Box layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center' }}>
+                <Box ref={ref} layout={{ ...config.layout, ...layout }} {...handlers}>
                     <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
-                    <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                    <VariantCascadeProvider map={ownCascade}>
+                        {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                    </VariantCascadeProvider>
                 </Box>
                 <VariantCascadeProvider map={ownCascade}>
                     {usePointer && <BubblePointer direction={pointer} tintColor={resolvedTint} />}

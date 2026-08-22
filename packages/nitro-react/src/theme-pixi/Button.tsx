@@ -7,7 +7,6 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
-import { Text } from './Text';
 import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, useThemeVariant, wrapTextChildren } from './utils';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
@@ -25,7 +24,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         layout: {
             padding: 8
         },
-        textStyleKey: 'text-style-button-regular', textColor: '#000000',
+        textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // black
     '1': {
@@ -39,7 +38,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyleKey: 'text-style-button-regular', textColor: '#ffffff',
+        textStyle: 'text-style-button-regular', textColor: '#ffffff',
     },
     // white
     '2': {
@@ -53,7 +52,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-regular', textColor: '#000000',
+        textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // default
     '3': {
@@ -67,7 +66,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-shiny-regular', textColor: '#000000',
+        textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
     },
     // black
     '4': {
@@ -81,7 +80,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
             minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-regular', textColor: '#ffffff',
+        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
     // white
     '5': {
@@ -95,7 +94,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
             minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-regular', textColor: '#ffffff',
+        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
     // green
     '6': {
@@ -109,7 +108,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
             minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-regular', textColor: '#ffffff', tintColor: '#00aa00'
+        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff', tintColor: '#00aa00'
     },
     // landing view
     '100': {
@@ -123,7 +122,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
             minWidth: 48, minHeight: 48
         },
-        textStyleKey: 'text-style-il-button', textColor: '#000000',
+        textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // window
     '101': {
@@ -137,7 +136,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
             minWidth: 48, minHeight: 48
         },
-        textStyleKey: 'text-style-il-button', textColor: '#000000', tintColor: '#bbbbbb'
+        textStyle: 'text-style-il-button', textColor: '#000000', tintColor: '#bbbbbb'
     },
     // plain
     '102': {
@@ -150,7 +149,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28
         },
-        textStyleKey: 'text-style-il-button', textColor: '#000000',
+        textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // unetched
     '103': {
@@ -163,7 +162,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28
         },
-        textStyleKey: 'text-style-il-button', textColor: '#000000',
+        textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // default
     '200': {
@@ -174,7 +173,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28
         },
-        textStyleKey: 'text-style-id-button', textColor: '#000000',
+        textStyle: 'text-style-id-button', textColor: '#000000',
     },
     // borderless
     '300': {
@@ -188,20 +187,21 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
             minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-shiny-regular', textColor: '#000000',
+        textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
     },
 };
 
 export interface ButtonProps extends ThemeProps<ButtonVariant> {
     disabled?: boolean;
+    selected?: boolean;
     onPress?: () => void;
     children?: ReactNode;
 }
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
-    ({ variant, defaultVariant, tintColor, textColor, disabled, layout, onPress, children }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textColor, disabled,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected
         });
 
         return (
@@ -217,12 +217,10 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                 {...handlers}
                 onPointerTap={disabled ? undefined : onPress}
             >
-                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
-                        : wrapTextChildren(children)}
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );

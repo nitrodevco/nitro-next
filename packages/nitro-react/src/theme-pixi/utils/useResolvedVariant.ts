@@ -14,9 +14,9 @@ export interface ResolvedVariant {
  * once here so every component shares the exact same resolution order instead of each
  * reimplementing it.
  */
-export const useResolvedVariant = (cascadeKey: string, variant: string | undefined, defaultVariant: string | undefined, fallback = '0'): ResolvedVariant => {
+export const useResolvedVariant = (cascadeKey: string, variant: string | undefined, defaultVariant: string | undefined): ResolvedVariant => {
     const cascadedVariant = useCascadedVariant(cascadeKey);
-    const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? fallback;
+    const resolvedVariant = variant ?? cascadedVariant ?? defaultVariant ?? '0';
     const ownCascade = VARIANT_CASCADE_CONFIG[cascadeKey]?.[resolvedVariant];
 
     return { resolvedVariant, ownCascade };
