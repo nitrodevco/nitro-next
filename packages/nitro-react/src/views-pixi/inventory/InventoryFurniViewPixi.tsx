@@ -2,7 +2,7 @@ import type { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, Dropmenu, getPixiTextStyle, ScrollableItemGridVertical, ScrollbarVertical } from '#base/theme-pixi';
+import { Border, Box, Button, Dropmenu, ScrollableItemGridVertical, ScrollbarVertical, Text } from '#base/theme-pixi';
 import { ScrollViewport } from '#base/theme-pixi/utils/ScrollViewport';
 import { useRowVirtualizer } from '#base/theme-pixi/utils/useRowVirtualizer';
 import { useScrollController } from '#base/theme-pixi/utils/useScrollController';
@@ -121,7 +121,7 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
                 </Box>
                 <Box layout={{ flexDirection: 'column', width: 180, flexShrink: 0 }}>
                     <Box layout={{ flex: 1 }}>
-                        <pixiText layout={{}} text="preview" style={getPixiTextStyle('text-style-regular', {})} />
+                        <Text text="preview" textStyle="text-style-regular" textOptions={{}} />
                     </Box>
                     <Box layout={{ flexDirection: 'row' }}>
                         <Button variant="102">{t('inventory.furni.placetoroom')}</Button>

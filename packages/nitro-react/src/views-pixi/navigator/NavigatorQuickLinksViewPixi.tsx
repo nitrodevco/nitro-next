@@ -2,7 +2,7 @@ import { NavigatorDeleteSavedSearchComposer, NewNavigatorSearchComposer } from '
 import { useState } from 'react';
 
 import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, ColorLayer, getPixiTextStyle, NitroIcon, ScrollArea } from '#base/theme-pixi';
+import { Border, Box, ColorLayer, NitroIcon, ScrollArea, Text } from '#base/theme-pixi';
 
 /** Pixi port of views/navigator/NavigatorQuickLinksView.tsx. */
 export const NavigatorQuickLinksViewPixi = () => {
@@ -25,7 +25,7 @@ export const NavigatorQuickLinksViewPixi = () => {
         <Border blend={0.5} variant="2" layout={{ flexDirection: 'column', flexShrink: 0, width: 141, height: '100%', padding: 4 }}>
             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 5, flexShrink: 0, height: 21, paddingLeft: 4 }}>
                 <NitroIcon icon="icon-nav-quicklink-add" layout={{}} />
-                <pixiText layout={{ flex: 1 }} text={t('navigator.quick.links.title')} style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff' })} />
+                <Text layout={{ flex: 1 }} text={t('navigator.quick.links.title')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff' }} />
             </Box>
             <ScrollArea layout={{ flex: 1 }}>
                 {savedSearches.map(link => (
@@ -39,7 +39,7 @@ export const NavigatorQuickLinksViewPixi = () => {
                         layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: 4, minHeight: 17, maxHeight: 17 }}
                     >
                         {hoveredId === link.id && <ColorLayer color="#82d1ed" />}
-                        <pixiText layout={{ flex: 1 }} text={interpolate(link.localization)} style={getPixiTextStyle('text-style-u-regular', { fill: '#000000' })} />
+                        <Text layout={{ flex: 1 }} text={interpolate(link.localization)} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
                         {hoveredId === link.id && (
                             <Box
                                 eventMode="static"

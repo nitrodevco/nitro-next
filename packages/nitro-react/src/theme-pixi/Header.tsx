@@ -7,8 +7,9 @@ import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
 import { CloseButton } from './CloseButton';
+import { Text } from './Text';
 import { BackgroundLayer, type BackgroundLayerConfig, ColorLayer, TileLayer } from './utils/Layer';
-import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { type TextStyleKey } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
 interface HeaderPadding {
@@ -94,11 +95,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                             {caption && (
                                 <Box layout={{ position: 'relative', paddingLeft: 8, paddingRight: 8 }}>
                                     <ColorLayer color={resolvedTint} />
-                                    <pixiText
-                                        layout={{}}
-                                        text={caption}
-                                        style={getPixiTextStyle(config.textStyleKey, { fill: config.textColor })}
-                                    />
+                                    <Text text={caption} textStyle={config.textStyleKey} textOptions={{ fill: config.textColor }} />
                                 </Box>
                             )}
                         </Box>

@@ -1,6 +1,6 @@
 import type { IRoomObjectNameData } from '@nitrodevco/nitro-api';
 
-import { Bubble, getPixiTextStyle } from '#base/theme-pixi';
+import { Bubble, Text } from '#base/theme-pixi';
 
 export interface InfoBubbleNameViewPixiProps {
     nameData: IRoomObjectNameData;
@@ -12,7 +12,7 @@ export const InfoBubbleNameViewPixi = ({ nameData }: InfoBubbleNameViewPixiProps
 
     return (
         <Bubble variant="0" tintColor="#3d3d3d" layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minWidth: 70, paddingTop: 6, paddingBottom: 6 }}>
-            <pixiText layout={{}} text={nameData.name} style={getPixiTextStyle('text-style-u-regular', { fontSize: 11, fill: '#ffffff' })} />
+            <Text text={nameData.name} textStyle="text-style-u-regular" textOptions={{ fontSize: 11, fill: '#ffffff' }} />
         </Bubble>
     );
 };

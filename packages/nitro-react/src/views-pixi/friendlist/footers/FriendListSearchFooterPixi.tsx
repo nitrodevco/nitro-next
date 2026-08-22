@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, getPixiTextStyle, NitroIcon, TextInput } from '#base/theme-pixi';
+import { Border, Box, Button, NitroIcon, Text, TextInput } from '#base/theme-pixi';
 
 /** Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. */
 export const FriendListSearchFooterPixi = () => {
@@ -14,7 +14,7 @@ export const FriendListSearchFooterPixi = () => {
                 <TextInput value={value} onChange={setValue} fontSize={9} layout={{ flex: 1, height: 21 }} />
                 <Button variant="0" layout={{ flexShrink: 0, height: 21, flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4 }}>
                     <NitroIcon icon="icon-search-outline" layout={{}} />
-                    <pixiText layout={{}} text={t('generic.search')} style={getPixiTextStyle('text-style-regular', { fill: '#000000' })} />
+                    <Text text={t('generic.search')} textStyle="text-style-regular" textOptions={{ fill: '#000000' }} />
                 </Button>
             </Border>
         </Box>

@@ -1,7 +1,7 @@
 import type { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate, useNavigatorSelectors } from '#base/context';
-import { Box, ColorLayer, getPixiTextStyle, NitroIcon } from '#base/theme-pixi';
+import { Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from '#base/views/navigator/NavigatorRoomEntryUtils';
 
 import { NavigatorRoomEntryViewPixi } from './NavigatorRoomEntryViewPixi';
@@ -51,10 +51,11 @@ export const NavigatorCategoryViewPixi = ({ block, onEnter, onShowInfo, onCollap
                     {block.actionAllowed !== 2 && (
                         <NitroIcon icon={isCollapsed ? 'icon-nav-plus' : 'icon-nav-minus'} layout={{ position: 'absolute', left: 5, top: isCollapsed ? 4 : 7 }} />
                     )}
-                    <pixiText
+                    <Text
                         layout={{ position: 'absolute', top: 5, left: 20, width: 320 }}
                         text={interpolate(title)}
-                        style={getPixiTextStyle('text-style-regular', { fontSize: 14, fill: '#0F557B' })}
+                        textStyle="text-style-regular"
+                        textOptions={{ fontSize: 14, fill: '#0F557B' }}
                     />
                 </Box>
                 <Box layout={{ position: 'absolute', top: 5, right: 14, flexDirection: 'row', alignItems: 'flex-start', gap: 5 }}>

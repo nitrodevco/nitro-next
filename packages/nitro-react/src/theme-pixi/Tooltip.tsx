@@ -6,8 +6,8 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { NineSliceLayer } from './utils/Layer';
-import { getPixiTextStyle } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
@@ -36,7 +36,7 @@ export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<Pix
                 <NineSliceLayer textureKey="tooltip-0-default-src" leftWidth={6} topHeight={6} rightWidth={6} bottomHeight={6} />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle('text-style-u-tool-tip')} />
+                        ? <Text text={children} textStyle="text-style-u-tool-tip" />
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { useCatalogSelectors, useOwnUserLook, useTranslation } from '#base/context';
 import { useCatalogOfferActions } from '#base/hooks';
-import { Box, ColorLayer, getPixiTextStyle } from '#base/theme-pixi';
+import { Box, ColorLayer, Text } from '#base/theme-pixi';
 
 import { useRoomPreviewerPixi } from '../../useRoomPreviewerPixi';
 
@@ -97,10 +97,10 @@ export const CatalogProductViewWidgetViewPixi = () => {
             )}
             {activeOffer && product && (
                 <Box layout={{ position: 'absolute', top: 22, left: 5, width: 175, flexDirection: 'column', gap: 4 }}>
-                    <pixiText
-                        layout={{}}
+                    <Text
                         text={product.productData?.name ?? t(activeOffer.localizationId)}
-                        style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff' })}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
                     />
                 </Box>
             )}

@@ -1,5 +1,5 @@
 import { useCatalogSelectors, useConfigValue } from '#base/context';
-import { Box, ColorLayer, getPixiTextStyle, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, ColorLayer, Text, useTextureFromUrl } from '#base/theme-pixi';
 
 /** Pixi port of views/catalog/CatalogHeaderView.tsx. */
 export const CatalogHeaderViewPixi = () => {
@@ -27,7 +27,7 @@ export const CatalogHeaderViewPixi = () => {
                 {iconTexture && (
                     <pixiSprite texture={iconTexture} width={iconTexture.width * 2} height={iconTexture.height * 2} layout={{}} />
                 )}
-                <pixiText layout={{}} text={activeNode?.localization ?? ''} style={getPixiTextStyle('text-style-headline-big', { fill: '#ffffff' })} />
+                <Text text={activeNode?.localization ?? ''} textStyle="text-style-headline-big" textOptions={{ fill: '#ffffff' }} />
             </Box>
         </Box>
     );

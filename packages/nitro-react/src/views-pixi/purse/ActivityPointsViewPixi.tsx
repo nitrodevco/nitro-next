@@ -1,5 +1,5 @@
 import { useTranslation, useWallet } from '#base/context';
-import { Border, Box, type BoxLayout, getPixiTextStyle } from '#base/theme-pixi';
+import { Border, Box, type BoxLayout, Text } from '#base/theme-pixi';
 
 export interface ActivityPointsViewPixiProps {
     layout?: BoxLayout;
@@ -35,11 +35,11 @@ export const ActivityPointsViewPixi = ({ layout }: ActivityPointsViewPixiProps) 
                     layout={{ height: 29, marginTop: 3, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}
                 >
                     <Box layout={{ flex: 1, flexDirection: 'row', paddingLeft: 7, paddingRight: 16, justifyContent: 'space-between', alignItems: 'center' }}>
-                        <pixiText layout={{}} text={name} style={getPixiTextStyle('text-style-button-bold', { fill: color, fontSize: 11 })} />
-                        <pixiText
-                            layout={{}}
+                        <Text text={name} textStyle="text-style-button-bold" textOptions={{ fill: color, fontSize: 11 }} />
+                        <Text
                             text={amount > 0 ? String(amount) : t('purse.shells.zero.amount.text')}
-                            style={getPixiTextStyle('text-style-button-bold', { fill: '#ffffff', fontSize: 11 })}
+                            textStyle="text-style-button-bold"
+                            textOptions={{ fill: '#ffffff', fontSize: 11 }}
                         />
                     </Box>
                     <Border tintColor={color} variant="9" layout={{ width: 29, height: 29, justifyContent: 'center', alignItems: 'center' }} />

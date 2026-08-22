@@ -1,5 +1,5 @@
 import { useCatalogActions, useCatalogSelectors, useTranslation } from '#base/context';
-import { Border, Box, Button, ButtonThick, getPixiTextStyle } from '#base/theme-pixi';
+import { Border, Box, Button, ButtonThick, Text } from '#base/theme-pixi';
 
 /** Pixi port of views/catalog/page/widgets/CatalogPurchaseWidgetView.tsx. */
 export const CatalogPurchaseWidgetViewPixi = () => {
@@ -15,7 +15,7 @@ export const CatalogPurchaseWidgetViewPixi = () => {
         <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', gap: 8 }}>
             {!activeOffer && (
                 <Border variant="6" blend={0.5} layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', height: 30 }}>
-                    <pixiText layout={{}} text={t('catalog.purchase.select.info')} style={getPixiTextStyle('text-style-headline-small', { fill: '#666666' })} />
+                    <Text text={t('catalog.purchase.select.info')} textStyle="text-style-headline-small" textOptions={{ fill: '#666666' }} />
                 </Border>
             )}
             {activeOffer && (

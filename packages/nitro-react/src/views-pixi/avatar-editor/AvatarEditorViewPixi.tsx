@@ -1,5 +1,5 @@
 import { useOwnUserInfo, useTranslation } from '#base/context';
-import { Box, ColorLayer, Frame, getPixiTextStyle, TabButton, TabContext } from '#base/theme-pixi';
+import { Box, ColorLayer, Frame, TabButton, TabContext, Text } from '#base/theme-pixi';
 
 /**
  * Pixi port of theme/AvatarEditorView.tsx. DOM's own source is itself a stub (a static
@@ -15,7 +15,7 @@ export const AvatarEditorViewPixi = () => {
         <Frame id="avatar-editor" resizeDirection="y" variant="3" layout={{ position: 'absolute', top: 20, left: 20, width: 490, height: 484 }} caption={t('avatareditor.title')}>
             <Box layout={{ position: 'relative', width: '100%', height: 110, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <ColorLayer color="#0e3f52" />
-                <pixiText layout={{}} text={name} style={getPixiTextStyle('text-style-headline-big', { fill: '#ffffff', fontSize: 28 })} />
+                <Text text={name} textStyle="text-style-headline-big" textOptions={{ fill: '#ffffff', fontSize: 28 }} />
             </Box>
             <TabContext>
                 <TabButton>test</TabButton>

@@ -6,8 +6,9 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { CompositeLayer, NineSliceLayer, SpriteLayer } from './utils/Layer';
-import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
@@ -74,7 +75,7 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                 {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: 5, top: 2, width: 16, height: 16 }]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle(config.textStyleKey, { fill: config.color })} />
+                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>

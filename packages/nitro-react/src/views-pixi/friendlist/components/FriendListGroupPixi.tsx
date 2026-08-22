@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { AccordionContent, AccordionItem, AccordionTrigger, getPixiTextStyle, NitroIcon } from '#base/theme-pixi';
+import { AccordionContent, AccordionItem, AccordionTrigger, NitroIcon, Text } from '#base/theme-pixi';
 
 export interface FriendListGroupPixiProps {
     value: string;
@@ -15,7 +15,7 @@ export const FriendListGroupPixi = ({ value, caption, children, showArrows = tru
         <AccordionTrigger layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, height: 20 }}>
             {({ isOpen }) => (
                 <>
-                    <pixiText layout={{}} text={caption} style={getPixiTextStyle('text-style-regular', { fontSize: 10.88, fill: '#000000', fontWeight: 'bold' })} />
+                    <Text text={caption} textStyle="text-style-regular" textOptions={{ fontSize: 10.88, fill: '#000000', fontWeight: 'bold' }} />
                     {showArrows && <NitroIcon icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'} layout={{}} />}
                 </>
             )}

@@ -3,7 +3,7 @@ import { ForwardToARandomPromotedRoomComposer, NavigatorAddCollapsedCategoryComp
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useNavigatorVisibility } from '#base/hooks';
-import { Border, Box, Frame, getPixiTextStyle, NitroIcon, ScrollArea, TabButton, TabContent, TabContext } from '#base/theme-pixi';
+import { Border, Box, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, Text } from '#base/theme-pixi';
 
 import { NavigatorCategoryViewPixi } from './NavigatorCategoryViewPixi';
 import { NavigatorQuickLinksViewPixi } from './NavigatorQuickLinksViewPixi';
@@ -114,12 +114,12 @@ export const NavigatorViewPixi = () => {
                         <ScrollArea variant="3" layout={{ flex: 1, minHeight: 0 }}>
                             {isSearching && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <pixiText layout={{}} text={t('navigator.searching')} style={getPixiTextStyle('text-style-u-regular', { fill: '#000000' })} />
+                                    <Text text={t('navigator.searching')} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
                                 </Box>
                             )}
                             {!isSearching && !searchResult?.blocks.length && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <pixiText layout={{}} text={t('navigator.search.returned.no.results')} style={getPixiTextStyle('text-style-headline-small', { fontSize: 16, fill: '#000000' })} />
+                                    <Text text={t('navigator.search.returned.no.results')} textStyle="text-style-headline-small" textOptions={{ fontSize: 16, fill: '#000000' }} />
                                 </Box>
                             )}
                             {!isSearching && searchResult?.blocks.map(block => (
@@ -142,7 +142,7 @@ export const NavigatorViewPixi = () => {
                             <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                                 <NitroIcon icon="icon-nav-create-room" layout={{}} />
                             </Box>
-                            <pixiText layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.create.room')} style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW })} />
+                            <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.create.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
                         </Box>
                         {PROMOTE_SEARCH_CODES.includes(searchResult?.searchCodeOriginal ?? '')
                             ? (
@@ -151,7 +151,7 @@ export const NavigatorViewPixi = () => {
                                     <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                                         <NitroIcon icon="icon-nav-promote-room" layout={{}} />
                                     </Box>
-                                    <pixiText layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.promote.room')} style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW })} />
+                                    <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.promote.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
                                 </Box>
                             )
                             : (
@@ -165,7 +165,7 @@ export const NavigatorViewPixi = () => {
                                     <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                                         <NitroIcon icon="icon-nav-random-room" layout={{}} />
                                     </Box>
-                                    <pixiText layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.random.room')} style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW })} />
+                                    <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.random.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
                                 </Box>
                             )}
                     </Box>

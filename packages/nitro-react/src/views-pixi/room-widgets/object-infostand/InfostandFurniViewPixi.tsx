@@ -2,7 +2,7 @@ import type { IFurniData } from '@nitrodevco/nitro-api';
 import { FurniturePickupMode, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, CloseButton, getPixiTextStyle } from '#base/theme-pixi';
+import { Border, Box, Button, CloseButton, Text } from '#base/theme-pixi';
 
 import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
 
@@ -39,7 +39,7 @@ export const InfostandFurniViewPixi = ({ furniData, canMove, canRotate, canUse, 
             <Border variant="1" layout={{ flexDirection: 'column', minWidth: 190, maxWidth: 190, gap: 5, padding: 10 }}>
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <Box layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}>
-                        <pixiText layout={{}} text={furniData.name} style={getPixiTextStyle('text-style-regular', { fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' })} />
+                        <Text text={furniData.name} textStyle="text-style-regular" textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }} />
                     </Box>
                     <CloseButton variant="1" onClose={onClose} layout={{ flexShrink: 0 }} />
                 </Box>
@@ -49,8 +49,8 @@ export const InfostandFurniViewPixi = ({ furniData, canMove, canRotate, canUse, 
                 </Box>
                 <Box layout={{ width: '100%', height: 1 }} />
                 <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
-                    <pixiText layout={{}} text={t('furni.owner', '', { name: furniData.ownerName })} style={getPixiTextStyle('text-style-regular', { fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' })} />
-                    {canSeeFurniId && <pixiText layout={{}} text={`ID: ${furniData.id}`} style={getPixiTextStyle('text-style-regular', { fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' })} />}
+                    <Text text={t('furni.owner', '', { name: furniData.ownerName })} textStyle="text-style-regular" textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }} />
+                    {canSeeFurniId && <Text text={`ID: ${furniData.id}`} textStyle="text-style-regular" textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }} />}
                 </Box>
                 <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
                     <Button onPress={() => processAction('buy')} layout={{}}>{t('infostand.button.buy')}</Button>

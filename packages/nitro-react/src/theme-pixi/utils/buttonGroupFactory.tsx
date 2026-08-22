@@ -6,8 +6,9 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from '../Box';
+import { Text } from '../Text';
 import { NineSliceLayer } from './Layer';
-import { getPixiTextStyle, type TextStyleKey } from './textStyles';
+import { type TextStyleKey } from './textStyles';
 import { type InteractionStates, type NineSliceLayerState, nineSliceLayerState, resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
 import { wrapTextChildren } from './wrapTextChildren';
@@ -99,7 +100,7 @@ export const createButtonGroupComponent = (
                     />
                     <VariantCascadeProvider map={ownCascade}>
                         {typeof children === 'string'
-                            ? <pixiText layout={{}} text={children} style={getPixiTextStyle(config.textStyleKey, { fill: config.color })} />
+                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
                             : wrapTextChildren(children)}
                     </VariantCascadeProvider>
                 </Box>

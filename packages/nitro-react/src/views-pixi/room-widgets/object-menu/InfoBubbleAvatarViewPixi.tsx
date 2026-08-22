@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { useOwnIsAmbassador, useOwnRespectData, useOwnRoomObjectId, useRoomPermissionsSelector, useRoomSelector, useRoomSettingsSelector, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, Button, getPixiTextStyle, NitroIcon } from '#base/theme-pixi';
+import { Box, Bubble, Button, NitroIcon, Text } from '#base/theme-pixi';
 
 export interface InfoBubbleAvatarViewPixiProps {
     objectData: ISimpleRoomObjectData;
@@ -206,7 +206,7 @@ export const InfoBubbleAvatarViewPixi = ({ objectData, onClose }: InfoBubbleAvat
             {!collapsed && (
                 <Box layout={{ minWidth: 120, maxWidth: 120, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
-                        <pixiText layout={{}} text={userData.name} style={getPixiTextStyle('text-style-u-bold', { fontSize: 11, fill: '#ffffff' })} />
+                        <Text text={userData.name} textStyle="text-style-u-bold" textOptions={{ fontSize: 11, fill: '#ffffff' }} />
                     </Box>
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                         {MODE_BUTTONS[mode].map(({ visible, caption, action }) => (

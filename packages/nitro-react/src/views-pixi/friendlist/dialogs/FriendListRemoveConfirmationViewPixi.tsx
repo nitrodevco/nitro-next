@@ -1,7 +1,7 @@
 import { RemoveFriendComposer } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions, useFriendsSelector, useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Button, Frame, getPixiTextStyle } from '#base/theme-pixi';
+import { Border, Box, Button, Frame, Text } from '#base/theme-pixi';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRemoveConfirmationView.tsx. */
 export const FriendListRemoveConfirmationViewPixi = () => {
@@ -34,7 +34,7 @@ export const FriendListRemoveConfirmationViewPixi = () => {
     return (
         <Frame variant="0" id="friendlist-room-invite" layout={{ position: 'absolute', top: 20, left: 260, width: 211, height: 175 }} caption={t('friendlist.removefriendconfirm.title')} onClose={() => toggleWindow('friendlist_remove_confirmation')}>
             <Border layout={{ height: 116, paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
-                <pixiText layout={{ flex: 1 }} text={t('friendlist.removefriendconfirm.userlist', '', { user_names: usernames })} style={getPixiTextStyle('text-style-regular', { fontSize: 9.8, fill: '#000000', wordWrap: true, wordWrapWidth: 190 })} />
+                <Text layout={{ flex: 1 }} text={t('friendlist.removefriendconfirm.userlist', '', { user_names: usernames })} textStyle="text-style-regular" textOptions={{ fontSize: 9.8, fill: '#000000', wordWrap: true, wordWrapWidth: 190 }} />
             </Border>
             <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                 <Button layout={{ height: 22 }} onPress={removeFriends}>{t('generic.ok')}</Button>

@@ -1,7 +1,7 @@
 import type { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
-import { Border, Box, getPixiTextStyle, NitroIcon, useTextureFromUrl } from '#base/theme-pixi';
+import { Border, Box, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
 import { RESULTS_MODE_TILES } from '#base/views/navigator/NavigatorCategoryView';
 import { getUserCountColor } from '#base/views/navigator/NavigatorRoomEntryUtils';
 
@@ -34,7 +34,7 @@ export const NavigatorRoomEntryViewPixi = ({ room, mode, backgroundColor, onEnte
     const userCount = (
         <Border tintColor={getUserCountColor(room.population, room.playersMax)} variant="3" layout={{ flexDirection: 'row', alignItems: 'center', gap: 1, paddingLeft: 3, paddingRight: 3, width: 40, height: 18 }}>
             <NitroIcon icon="icon-nav-usercount" layout={{}} />
-            <pixiText layout={{}} text={String(room.population)} style={getPixiTextStyle('text-style-u-bold', { fill: '#ffffff' })} />
+            <Text text={String(room.population)} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff' }} />
         </Border>
     );
 
@@ -50,10 +50,11 @@ export const NavigatorRoomEntryViewPixi = ({ room, mode, backgroundColor, onEnte
                 <Box eventMode="static" cursor="pointer" onPointerTap={event => { event.stopPropagation(); onShowInfo?.(room); }} layout={{ position: 'absolute', top: 120, left: 98 }}>
                     <NitroIcon icon="icon-nav-room-info" layout={{}} />
                 </Box>
-                <pixiText
+                <Text
                     layout={{ position: 'absolute', top: 116, left: 0, width: 100, height: 30 }}
                     text={interpolate(room.name)}
-                    style={getPixiTextStyle('text-style-u-bold', { fontSize: 10, fill: '#000000', wordWrap: true, wordWrapWidth: 94, breakWords: true })}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fontSize: 10, fill: '#000000', wordWrap: true, wordWrapWidth: 94, breakWords: true }}
                 />
             </Box>
         );
@@ -63,7 +64,7 @@ export const NavigatorRoomEntryViewPixi = ({ room, mode, backgroundColor, onEnte
         <Box eventMode="static" cursor="pointer" onPointerTap={() => onEnter(room)} layout={{ position: 'relative', flexShrink: 0, width: '100%', height: 20 }}>
             <Border tintColor={backgroundColor} variant="3" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center' }}>
                 {userCount}
-                <pixiText layout={{ flex: 1, paddingLeft: 4 }} text={interpolate(room.name)} style={getPixiTextStyle('text-style-u-regular', { fill: '#000000' })} />
+                <Text layout={{ flex: 1, paddingLeft: 4 }} text={interpolate(room.name)} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 1, flexShrink: 0, paddingRight: 2 }}>
                     {doorModeIcon && <NitroIcon icon={doorModeIcon} layout={{}} />}
                     {room.groupId > 0 && <NitroIcon icon="icon-nav-room-group" layout={{}} />}

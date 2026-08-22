@@ -6,8 +6,8 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { CompositeLayer, NineSliceLayer } from './utils/Layer';
-import { getPixiTextStyle } from './utils/textStyles';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
 
@@ -51,7 +51,7 @@ export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<P
                 <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle('text-style-regular', { fill: '#000000' })} />
+                        ? <Text text={children} textStyle="text-style-regular" textOptions={{ fill: '#000000' }} />
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>

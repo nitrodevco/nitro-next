@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { useFriendsActions, useTranslation } from '#base/context';
-import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, getPixiTextStyle, NitroIcon } from '#base/theme-pixi';
+import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';
 
 export interface FriendListTabPixiProps {
     value: string;
@@ -38,7 +38,7 @@ export const FriendListTabPixi = ({ value, caption, tooltip = '', gradientColors
                             </Box>
                         )}
                         <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 8, paddingRight: 8, gap: 6 }}>
-                            <pixiText layout={{}} text={t(caption)} style={getPixiTextStyle('text-style-regular', { fontSize: 10.88, fill: darkHeader ? '#ffffff' : '#000000' })} />
+                            <Text text={t(caption)} textStyle="text-style-regular" textOptions={{ fontSize: 10.88, fill: darkHeader ? '#ffffff' : '#000000' }} />
                             <NitroIcon icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'} layout={{}} />
                         </Box>
                     </>

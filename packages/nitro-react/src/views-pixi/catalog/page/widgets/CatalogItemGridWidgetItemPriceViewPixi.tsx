@@ -1,7 +1,7 @@
 import type { IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { CatalogPricingTypeEnum } from '@nitrodevco/nitro-api';
 
-import { Box, getPixiTextStyle, NitroCurrencyIcon } from '#base/theme-pixi';
+import { Box, NitroCurrencyIcon, Text } from '#base/theme-pixi';
 
 export interface CatalogItemGridWidgetItemPriceViewPixiProps {
     offer: IPurchasableOffer;
@@ -15,15 +15,15 @@ export const CatalogItemGridWidgetItemPriceViewPixi = ({ offer }: CatalogItemGri
         <Box layout={{ flexDirection: 'column', width: '100%', gap: 2, paddingLeft: 4, paddingRight: 4 }}>
             {(offer.pricingType === CatalogPricingTypeEnum.Credits || offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints) && (
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
-                    <pixiText layout={{}} text={String(offer.priceInCredits)} style={getPixiTextStyle('text-style-u-bold', { fill: '#000000' })} />
+                    <Text text={String(offer.priceInCredits)} textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
                     <NitroCurrencyIcon type="-1" mini layout={{}} />
                 </Box>
             )}
             {offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints && (
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
-                    <pixiText layout={{}} text="+" style={getPixiTextStyle('text-style-u-bold', { fill: '#000000' })} />
+                    <Text text="+" textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                        <pixiText layout={{}} text={String(offer.priceInActivityPoints)} style={getPixiTextStyle('text-style-u-bold', { fill: '#000000' })} />
+                        <Text text={String(offer.priceInActivityPoints)} textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
                         <NitroCurrencyIcon type={offer.activityPointType.toString()} mini layout={{}} />
                     </Box>
                 </Box>

@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { useOwnHasClub, useOwnIsDancing, useRoomCanDecorate, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, Button, getPixiTextStyle,NitroIcon } from '#base/theme-pixi';
+import { Box, Bubble, Button, NitroIcon, Text } from '#base/theme-pixi';
 
 export interface InfoBubbleOwnAvatarViewPixiProps {
     objectData: ISimpleRoomObjectData;
@@ -143,7 +143,7 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
             {!collapsed && (
                 <Box layout={{ minWidth: 100, maxWidth: 100, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
-                        <pixiText layout={{}} text={userData.name} style={getPixiTextStyle('text-style-u-bold', { fontSize: 11, fill: '#ffffff' })} />
+                        <Text text={userData.name} textStyle="text-style-u-bold" textOptions={{ fontSize: 11, fill: '#ffffff' }} />
                     </Box>
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                         {mode === MODE_SIGNS && (

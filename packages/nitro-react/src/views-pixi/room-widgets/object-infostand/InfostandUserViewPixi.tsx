@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useConfigValue, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
-import { Border, Box, CloseButton, ColorLayer, getPixiTextStyle, NitroIcon, TextInput, useAvatarImageTexture } from '#base/theme-pixi';
+import { Border, Box, CloseButton, ColorLayer, NitroIcon, Text, TextInput, useAvatarImageTexture } from '#base/theme-pixi';
 
 export interface InfostandUserViewPixiProps {
     objectData: ISimpleRoomObjectData;
@@ -44,7 +44,7 @@ export const InfostandUserViewPixi = ({ objectData, onClose }: InfostandUserView
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <Box layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}>
                         <NitroIcon icon="icon-profile-house" layout={{}} />
-                        <pixiText layout={{}} text={userData.name} style={getPixiTextStyle('text-style-regular', { fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' })} />
+                        <Text text={userData.name} textStyle="text-style-regular" textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }} />
                     </Box>
                     <CloseButton variant="1" onClose={onClose} layout={{ flexShrink: 0 }} />
                 </Box>
@@ -71,7 +71,7 @@ export const InfostandUserViewPixi = ({ objectData, onClose }: InfostandUserView
                 <Box layout={{ width: '100%', height: 1 }} />
                 <Border variant="0" tintColor="#666666" layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%', minHeight: 25, paddingLeft: 8, paddingRight: 8, paddingTop: 2, paddingBottom: 2 }}>
                     {!userData.isOwnUser && (
-                        <pixiText layout={{ flex: 1 }} text={motto.length === 0 ? t('infostand.motto.change') : motto} style={getPixiTextStyle('text-style-regular', { fontSize: 9, fill: '#ffffff' })} />
+                        <Text layout={{ flex: 1 }} text={motto.length === 0 ? t('infostand.motto.change') : motto} textStyle="text-style-regular" textOptions={{ fontSize: 9, fill: '#ffffff' }} />
                     )}
                     {userData.isOwnUser && (
                         <>
@@ -79,7 +79,7 @@ export const InfostandUserViewPixi = ({ objectData, onClose }: InfostandUserView
                                 <NitroIcon icon="pencil-icon" layout={{}} />
                             </Box>
                             {!isEditingMotto && (
-                                <pixiText layout={{ flex: 1 }} text={motto} style={getPixiTextStyle('text-style-regular', { fontSize: 9, fill: '#ffffff' })} />
+                                <Text layout={{ flex: 1 }} text={motto} textStyle="text-style-regular" textOptions={{ fontSize: 9, fill: '#ffffff' }} />
                             )}
                             {isEditingMotto && (
                                 <TextInput value={motto} onChange={setMotto} onEnter={submitMotto} maxLength={mottoMaxLength} fontSize={9} textColor="#ffffff" backgroundColor="#666666" layout={{ flex: 1, height: 20 }} />
@@ -89,10 +89,10 @@ export const InfostandUserViewPixi = ({ objectData, onClose }: InfostandUserView
                 </Border>
                 <Box layout={{ width: '100%', height: 1 }} />
                 <Box layout={{ flexDirection: 'row', width: '100%' }}>
-                    <pixiText
-                        layout={{}}
+                    <Text
                         text={`${t('infostand.text.achievement_score')}\n${userData.achievementScore}`}
-                        style={getPixiTextStyle('text-style-regular', { fontFamily: 'GoldfishBold', fontSize: 9, fill: '#ffffff' })}
+                        textStyle="text-style-regular"
+                        textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#ffffff' }}
                     />
                 </Box>
             </Border>

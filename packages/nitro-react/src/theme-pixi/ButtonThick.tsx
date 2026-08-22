@@ -6,8 +6,9 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { NineSliceLayer, SpriteLayer } from './utils/Layer';
-import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { type TextStyleKey } from './utils/textStyles';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -96,7 +97,7 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                     : <NineSliceLayer textureKey={textureKey} leftWidth={5} topHeight={5} rightWidth={5} bottomHeight={5} tint={resolvedTint} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <pixiText layout={{}} text={children} style={getPixiTextStyle(config.textStyleKey, { fill: resolvedTextColor })} />
+                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: resolvedTextColor }} />
                         : children}
                 </VariantCascadeProvider>
             </Box>

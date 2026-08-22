@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useCatalogActions, useCatalogSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useCatalogOfferActions, useMessageListener } from '#base/hooks';
-import { Border, Box, Button, ButtonThick, Frame, getPixiTextStyle, NitroCurrencyIcon } from '#base/theme-pixi';
+import { Border, Box, Button, ButtonThick, Frame, NitroCurrencyIcon, Text } from '#base/theme-pixi';
 
 import { CatalogOfferImageViewPixi } from './CatalogOfferImageViewPixi';
 
@@ -56,22 +56,22 @@ export const CatalogPurchaseConfirmationViewPixi = () => {
                         <CatalogOfferImageViewPixi offer={offer} />
                     </Border>
                     <Box layout={{ flexDirection: 'column', flexGrow: 1, height: '100%', justifyContent: 'center', gap: 4 }}>
-                        <pixiText layout={{}} text={product.productData?.name ?? t(offer.localizationId)} style={getPixiTextStyle('text-style-u-bold', { fontSize: 14, fill: '#000000' })} />
-                        {quantity > 1 && <pixiText layout={{}} text={`X ${quantity}`} style={getPixiTextStyle('text-style-u-bold', { fontSize: 14, fill: '#000000' })} />}
+                        <Text text={product.productData?.name ?? t(offer.localizationId)} textStyle="text-style-u-bold" textOptions={{ fontSize: 14, fill: '#000000' }} />
+                        {quantity > 1 && <Text text={`X ${quantity}`} textStyle="text-style-u-bold" textOptions={{ fontSize: 14, fill: '#000000' }} />}
                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}>
-                            <pixiText layout={{}} text={t('catalog.purchase.confirmation.dialog.cost')} style={getPixiTextStyle('text-style-u-regular', { fontSize: 14, fill: '#000000' })} />
+                            <Text text={t('catalog.purchase.confirmation.dialog.cost')} textStyle="text-style-u-regular" textOptions={{ fontSize: 14, fill: '#000000' }} />
                             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                                 {(offer.pricingType === CatalogPricingTypeEnum.Credits || offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints) && (
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
-                                        <pixiText layout={{}} text={String(offer.priceInCredits)} style={getPixiTextStyle('text-style-u-bold', { fontSize: 14, fill: '#000000' })} />
+                                        <Text text={String(offer.priceInCredits)} textStyle="text-style-u-bold" textOptions={{ fontSize: 14, fill: '#000000' }} />
                                         <NitroCurrencyIcon type="-1" layout={{}} />
                                     </Box>
                                 )}
                                 {offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints && (
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
-                                        <pixiText layout={{}} text="+" style={getPixiTextStyle('text-style-u-bold', { fontSize: 14, fill: '#000000' })} />
+                                        <Text text="+" textStyle="text-style-u-bold" textOptions={{ fontSize: 14, fill: '#000000' }} />
                                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                            <pixiText layout={{}} text={String(offer.priceInActivityPoints)} style={getPixiTextStyle('text-style-u-bold', { fontSize: 14, fill: '#000000' })} />
+                                            <Text text={String(offer.priceInActivityPoints)} textStyle="text-style-u-bold" textOptions={{ fontSize: 14, fill: '#000000' }} />
                                             <NitroCurrencyIcon type={offer.activityPointType.toString()} layout={{}} />
                                         </Box>
                                     </Box>

@@ -6,7 +6,8 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 import { VariantCascadeProvider } from '#base/theme';
 
 import { Box, type BoxLayout } from './Box';
-import { getPixiTextStyle, type TextStyleKey } from './utils/textStyles';
+import { Text } from './Text';
+import { type TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
@@ -95,8 +96,6 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
             selected ? config.selectedTextureKey : config.defaultTextureKey,
             selected ? config.selectedFrame : config.defaultFrame
         );
-        const textStyle = config.textStyleKey ? getPixiTextStyle(config.textStyleKey, { fill: config.color }) : undefined;
-
         if (!texture) return null;
 
         return (
@@ -123,7 +122,11 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
                     layout={{ position: 'absolute', top: 0, left: 0 }}
                 />
                 <VariantCascadeProvider map={ownCascade}>
-                    {typeof children === 'string' ? <pixiText layout={{}} text={children} style={textStyle} /> : children}
+                    {typeof children === 'string'
+                        ? (config.textStyleKey
+                            ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                            : <pixiText layout={{}} text={children} />)
+                        : children}
                 </VariantCascadeProvider>
             </Box>
         );

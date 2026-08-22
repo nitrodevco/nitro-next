@@ -4,8 +4,8 @@ import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes, useEffect, useRef, useState } from 'react';
 
 import { Box, type BoxLayout } from './Box';
+import { Text } from './Text';
 import { ColorLayer } from './utils/Layer';
-import { getPixiTextStyle } from './utils/textStyles';
 import { useOutsideClick } from './utils/useOutsideClick';
 
 export interface TextInputProps {
@@ -114,16 +114,16 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                 layout={{ justifyContent: multiline ? 'flex-start' : 'center', paddingLeft: 2, paddingRight: 2, ...layout }}
             >
                 <ColorLayer color={focused ? '#eef6ff' : backgroundColor} />
-                <pixiText
-                    layout={{}}
+                <Text
                     text={value}
-                    style={getPixiTextStyle('text-style-regular', {
+                    textStyle="text-style-regular"
+                    textOptions={{
                         fill: textColor,
                         fontSize,
                         wordWrap: multiline,
                         wordWrapWidth: multiline ? Math.max(1, wrapWidth) : undefined,
                         breakWords: multiline,
-                    })}
+                    }}
                 />
             </Box>
         );
