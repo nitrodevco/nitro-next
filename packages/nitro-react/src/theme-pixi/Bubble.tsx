@@ -5,25 +5,21 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
+import { Box } from './Box';
 import { BubblePointer } from './BubblePointer';
-import { BackgroundLayer, BackgroundLayerConfig, NineSlice, Stretch } from './layer';
+import { BackgroundLayer, NineSlice, Stretch } from './layer';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type PointerDirection = 'up' | 'down' | 'left' | 'right';
 
-interface BubbleVariant {
-    layer?: BackgroundLayerConfig;
-    minWidth: number;
-    minHeight: number;
-    tintColor?: string;
-}
+type BubbleVariant = ThemeVariant;
 
-const BUBBLE_VARIANTS: Record<string, BubbleVariant> = {
-    '0': { layer: NineSlice('bubble-0-default-src', 5, 5, 5, 6), minWidth: 21, minHeight: 21 },
+const BUBBLE_VARIANTS: ThemeVariants<BubbleVariant> = {
+    '0': { layer: NineSlice('bubble-0-default-src', 5, 5, 5, 6), layout: { minWidth: 21, minHeight: 21 } },
     // ubuntu/habbo-style: plain stretch sprite, no nine-slice, no overlay.
-    '7': { layer: Stretch('bubble-7-default-src'), minWidth: 27, minHeight: 38 },
+    '7': { layer: Stretch('bubble-7-default-src'), layout: { minWidth: 27, minHeight: 38 } },
 };
 
 const POINTER_FLEX_DIRECTION: Record<PointerDirection, 'row' | 'row-reverse' | 'column' | 'column-reverse'> = {
@@ -33,13 +29,9 @@ const POINTER_FLEX_DIRECTION: Record<PointerDirection, 'row' | 'row-reverse' | '
     right: 'row',
 };
 
-export interface BubbleProps {
-    variant?: string;
-    defaultVariant?: string;
-    tintColor?: string;
+export interface BubbleProps extends ThemeProps<BubbleVariant> {
     usePointer?: boolean;
     pointer?: PointerDirection;
-    layout?: BoxLayout;
     children?: ReactNode;
 }
 
@@ -50,8 +42,8 @@ export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiC
         const resolvedTint = tintColor || config.tintColor;
 
         return (
-            <Box layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center', ...layout }}>
-                <Box ref={ref} layout={{ minWidth: config.minWidth, minHeight: config.minHeight }}>
+            <Box layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center', ...config.layout, ...layout }}>
+                <Box ref={ref}>
                     <BackgroundLayer layer={config.layer} tintColor={resolvedTint} />
                     <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
                 </Box>

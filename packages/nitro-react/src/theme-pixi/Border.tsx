@@ -5,21 +5,14 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig, BlendOverlay, Composite, NineSlice } from './layer';
-import { useResolvedVariant } from './utils/useResolvedVariant';
-import { wrapTextChildren } from './utils/wrapTextChildren';
+import { Box } from './Box';
+import { BackgroundLayer, BlendOverlay, Composite, NineSlice } from './layer';
+import { useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
-interface BorderVariant {
-    layer?: BackgroundLayerConfig;
-    overlay?: BackgroundLayerConfig;
-    tintColor?: string;
-    layout?: BoxLayout;
-}
+type BorderVariant = ThemeVariant;
 
-type BorderVariants = Record<string, BorderVariant>;
-
-const BORDER_VARIANTS: BorderVariants = {
+const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     '0': { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
     '1': { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
     '2': { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
@@ -112,12 +105,8 @@ const BORDER_VARIANTS: BorderVariants = {
     '200': { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
 };
 
-export interface BorderProps {
-    variant?: keyof BorderVariants;
-    defaultVariant?: keyof BorderVariants;
-    tintColor?: string;
+export interface BorderProps extends ThemeProps<BorderVariant> {
     blend?: number;
-    layout?: BoxLayout;
     children?: ReactNode;
 }
 

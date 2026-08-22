@@ -5,23 +5,15 @@ import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAtt
 
 import { VariantCascadeProvider } from '#base/theme';
 
-import { Box, type BoxLayout } from './Box';
-import { BackgroundLayer, BackgroundLayerConfig, NineSlice, Stretch } from './layer';
+import { Box } from './Box';
+import { BackgroundLayer, NineSlice, Stretch } from './layer';
 import { Text } from './Text';
-import { InteractionStates, resolveByState, TextStyleKey, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { resolveByState, useInteractionState, useResolvedVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
-interface ButtonThickVariant {
-    states: InteractionStates<BackgroundLayerConfig>;
-    overlay?: InteractionStates<BackgroundLayerConfig>;
-    tintColor?: string;
-    textStyleKey?: TextStyleKey;
-    color?: string;
-    layout?: BoxLayout;
-}
+type ButtonThickVariant = ThemeWithStatesVariant;
 
-type ButtonThickVariants = Record<string, ButtonThickVariant>;
-
-const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
+const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
     '0': {
         states: {
             default: Stretch('buttonthick-0-default-src'),
@@ -32,7 +24,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', color: '#000000',
+        textStyleKey: 'text-style-button-bold', textColor: '#000000',
     },
     '1': {
         states: {
@@ -44,7 +36,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', color: '#FFFFFF',
+        textStyleKey: 'text-style-button-bold', textColor: '#FFFFFF',
     },
     '2': {
         states: {
@@ -56,7 +48,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23
         },
-        textStyleKey: 'text-style-button-bold', color: '#000000',
+        textStyleKey: 'text-style-button-bold', textColor: '#000000',
     },
     '3': {
         states: {
@@ -68,7 +60,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 10, paddingTop: 2, paddingRight: 10, paddingBottom: 3, minWidth: 20, minHeight: 22
         },
-        textStyleKey: 'text-style-button-shiny-bold', color: '#000000',
+        textStyleKey: 'text-style-button-shiny-bold', textColor: '#000000',
     },
     '4': {
         states: {
@@ -80,7 +72,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-bold', color: '#FFFFFF',
+        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     '5': {
         states: {
@@ -92,7 +84,7 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
-        textStyleKey: 'text-style-button-shiny-bold', color: '#FFFFFF',
+        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     '6': {
         states: {
@@ -105,17 +97,12 @@ const BUTTON_THICK_VARIANTS: ButtonThickVariants = {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28
         },
         tintColor: '#00aa00',
-        textStyleKey: 'text-style-button-shiny-bold', color: '#FFFFFF',
+        textStyleKey: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     }
 };
 
-export interface ButtonThickProps {
-    variant?: keyof ButtonThickVariants;
-    defaultVariant?: keyof ButtonThickVariants;
-    tintColor?: string;
-    textColor?: string;
+export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
     disabled?: boolean;
-    layout?: BoxLayout;
     onPress?: () => void;
     children?: ReactNode;
 }
@@ -125,10 +112,10 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
         const { resolvedVariant, ownCascade } = useResolvedVariant('buttonThick', variant, defaultVariant);
         const config = BUTTON_THICK_VARIANTS[resolvedVariant] ?? BUTTON_THICK_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
-        const resolvedLayer = resolveByState(config.states, state);
-        const resolvedOverlay = config.overlay && resolveByState(config.overlay, state);
+        const resolvedLayer = config.states && resolveByState(config.states, state);
+        const resolvedOverlay = config.overlays && resolveByState(config.overlays, state);
         const resolvedTint = tintColor || config.tintColor;
-        const resolvedTextColor = textColor ?? config.color;
+        const resolvedTextColor = textColor ?? config.textColor;
 
         return (
             <Box
