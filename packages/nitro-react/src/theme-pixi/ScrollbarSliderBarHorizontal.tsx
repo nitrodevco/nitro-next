@@ -3,6 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { NineSliceLayer, SpriteLayer, TileLayer } from './layer';
+import { NineSliceRepeatAxis } from './layer/BackgroundLayerConfig';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -12,6 +13,7 @@ interface BarBorder {
     topHeight: number;
     rightWidth: number;
     bottomHeight: number;
+    repeat?: NineSliceRepeatAxis;
 }
 
 interface ScrollbarSliderBarHorizontalVariant {
@@ -20,7 +22,7 @@ interface ScrollbarSliderBarHorizontalVariant {
     pressed: BarBorder;
 }
 
-const border = (textureKey: string, leftWidth: number, rightWidth: number): BarBorder => ({ textureKey, leftWidth, topHeight: 0, rightWidth, bottomHeight: 0 });
+const border = (textureKey: string, leftWidth: number, rightWidth: number, repeat?: NineSliceRepeatAxis): BarBorder => ({ textureKey, leftWidth, topHeight: 0, rightWidth, bottomHeight: 0, repeat });
 
 /**
  * Full port of theme/ScrollbarSliderBarHorizontal.tsx's 5-variant border half: a nine-slice
@@ -28,9 +30,8 @@ const border = (textureKey: string, leftWidth: number, rightWidth: number): BarB
  * slice, rotated). '0' has a distinct `-pressed-src` art; '1' ("black") reuses its
  * `-default-src` for the `active:` state too (no visual press feedback, same DOM quirk as the
  * vertical bar's '1'); '3' has a distinct hover art plus `pixel-art`/
- * `border-image-repeat: repeat_stretch` (edges tile rather than stretch) - same NineSliceSprite
- * stretch-only limitation flagged on ScrollbarSliderBarVertical.tsx/Border.tsx, not silently
- * dropped; '100'/'200' reuse one texture for all three states.
+ * `border-image-repeat: repeat_stretch` (fill tiles horizontally rather than stretching - see
+ * `NineSliceRepeatAxis`'s docblock); '100'/'200' reuse one texture for all three states.
  */
 const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: Record<string, ScrollbarSliderBarHorizontalVariant> = {
     0: {
@@ -44,9 +45,9 @@ const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: Record<string, ScrollbarSliderBa
         pressed: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
     },
     3: {
-        default: border('scrollbarsliderbarhorizontal-3-default-src', 5, 5),
-        hovering: border('scrollbarsliderbarhorizontal-3-hovering-src', 5, 5),
-        pressed: border('scrollbarsliderbarhorizontal-3-pressed-src', 5, 5),
+        default: border('scrollbarsliderbarhorizontal-3-default-src', 5, 5, 'x'),
+        hovering: border('scrollbarsliderbarhorizontal-3-hovering-src', 5, 5, 'x'),
+        pressed: border('scrollbarsliderbarhorizontal-3-pressed-src', 5, 5, 'x'),
     },
     100: {
         default: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
@@ -125,6 +126,7 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
                     rightWidth={layer.rightWidth}
                     bottomHeight={layer.bottomHeight}
                     tintColor={tintColor}
+                    repeat={layer.repeat}
                 />
                 {overlay && (
                     isPressed

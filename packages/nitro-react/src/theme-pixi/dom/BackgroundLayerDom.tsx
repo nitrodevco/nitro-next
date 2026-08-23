@@ -91,6 +91,8 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             const bottom = layer.borderWidth?.bottom ?? layer.bottomHeight;
             const left = layer.borderWidth?.left ?? layer.leftWidth;
             const width = `${top}px ${right}px ${bottom}px ${left}px`;
+            // Shorthand order is horizontal then vertical - see `NineSliceRepeatAxis`'s docblock.
+            const repeat = `${layer.repeat === 'x' ? 'repeat' : 'stretch'} ${layer.repeat === 'y' ? 'repeat' : 'stretch'}`;
 
             return (
                 <div style={{
@@ -101,7 +103,7 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                     borderImageSource: `url(${url})`,
                     borderImageSlice: slice,
                     borderImageWidth: width,
-                    borderImageRepeat: 'stretch',
+                    borderImageRepeat: repeat,
                     imageRendering: 'pixelated',
                 }}
                 />

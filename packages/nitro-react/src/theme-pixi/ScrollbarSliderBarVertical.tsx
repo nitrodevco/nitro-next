@@ -3,6 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { NineSliceLayer, TileLayer } from './layer';
+import { NineSliceRepeatAxis } from './layer/BackgroundLayerConfig';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
@@ -12,6 +13,7 @@ interface BarBorder {
     topHeight: number;
     rightWidth: number;
     bottomHeight: number;
+    repeat?: NineSliceRepeatAxis;
 }
 
 interface ScrollbarSliderBarVerticalVariant {
@@ -20,7 +22,7 @@ interface ScrollbarSliderBarVerticalVariant {
     pressed: BarBorder;
 }
 
-const border = (textureKey: string, topHeight: number, bottomHeight: number): BarBorder => ({ textureKey, leftWidth: 0, topHeight, rightWidth: 0, bottomHeight });
+const border = (textureKey: string, topHeight: number, bottomHeight: number, repeat?: NineSliceRepeatAxis): BarBorder => ({ textureKey, leftWidth: 0, topHeight, rightWidth: 0, bottomHeight, repeat });
 
 /**
  * Full port of theme/ScrollbarSliderBarVertical.tsx's 5-variant border half: a nine-slice
@@ -28,12 +30,9 @@ const border = (textureKey: string, topHeight: number, bottomHeight: number): Ba
  * `-pressed-src` art; '1' ("black") points its `active:` state at the same `-default-src`
  * texture as its default state (a real DOM no-visual-feedback-on-press quirk, preserved as-is,
  * not "fixed" into reusing '0's pressed art); '3' is the only variant with a distinct hover
- * art AND `pixel-art`/`border-image-repeat: stretch_repeat` (edges repeat-tile rather than
- * stretch) - PixiJS's NineSliceSprite has no tiling-edges mode (only stretch, same limitation
- * flagged for Border.tsx's variant '100'), so this degrades to a stretched border, and nearest-
- * neighbor sampling isn't wired up anywhere in theme-pixi yet - both flagged here rather than
- * silently dropped. '100'/'200' have no hover/press art of their own (all three states reuse
- * the same texture).
+ * art AND `pixel-art`/`border-image-repeat: stretch_repeat` (fill tiles vertically rather than
+ * stretching - see `NineSliceRepeatAxis`'s docblock for how both targets reproduce this).
+ * '100'/'200' have no hover/press art of their own (all three states reuse the same texture).
  */
 const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: Record<string, ScrollbarSliderBarVerticalVariant> = {
     0: {
@@ -47,9 +46,9 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: Record<string, ScrollbarSliderBarV
         pressed: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
     },
     3: {
-        default: border('scrollbarsliderbarvertical-3-default-src', 5, 5),
-        hovering: border('scrollbarsliderbarvertical-3-hovering-src', 5, 5),
-        pressed: border('scrollbarsliderbarvertical-3-pressed-src', 5, 5),
+        default: border('scrollbarsliderbarvertical-3-default-src', 5, 5, 'y'),
+        hovering: border('scrollbarsliderbarvertical-3-hovering-src', 5, 5, 'y'),
+        pressed: border('scrollbarsliderbarvertical-3-pressed-src', 5, 5, 'y'),
     },
     100: {
         default: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
@@ -128,6 +127,7 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
                     rightWidth={layer.rightWidth}
                     bottomHeight={layer.bottomHeight}
                     tintColor={tintColor}
+                    repeat={layer.repeat}
                 />
                 {overlay && (
                     <TileLayer
