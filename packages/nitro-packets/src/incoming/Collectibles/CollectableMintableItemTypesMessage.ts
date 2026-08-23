@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CollectableMintableItemTypesMessageType = {
-    // no fields
-
-};
+export type CollectableMintableItemTypesMessageType = object;
 
 export class CollectableMintableItemTypesMessage implements IIncomingPacket<CollectableMintableItemTypesMessageType> {
     public parse(wrapper: IMessageDataWrapper): CollectableMintableItemTypesMessageType {

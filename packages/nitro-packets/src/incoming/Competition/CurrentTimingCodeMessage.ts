@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CurrentTimingCodeMessageType = {
-    // no fields
-
-};
+export type CurrentTimingCodeMessageType = object;
 
 export class CurrentTimingCodeMessage implements IIncomingPacket<CurrentTimingCodeMessageType> {
     public parse(wrapper: IMessageDataWrapper): CurrentTimingCodeMessageType {

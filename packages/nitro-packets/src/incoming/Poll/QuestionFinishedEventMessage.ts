@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type QuestionFinishedEventMessageType = {
-    // no fields
-
-};
+export type QuestionFinishedEventMessageType = object;
 
 export class QuestionFinishedEventMessage implements IIncomingPacket<QuestionFinishedEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): QuestionFinishedEventMessageType {

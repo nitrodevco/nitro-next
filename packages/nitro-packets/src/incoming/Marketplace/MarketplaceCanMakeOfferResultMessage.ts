@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type MarketplaceCanMakeOfferResultMessageType = {
-    // no fields
-
-};
+export type MarketplaceCanMakeOfferResultMessageType = object;
 
 export class MarketplaceCanMakeOfferResultMessage implements IIncomingPacket<MarketplaceCanMakeOfferResultMessageType> {
     public parse(wrapper: IMessageDataWrapper): MarketplaceCanMakeOfferResultMessageType {

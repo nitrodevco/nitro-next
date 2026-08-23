@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type TargetedOfferNotFoundEventMessageType = {
-    // no fields
-
-};
+export type TargetedOfferNotFoundEventMessageType = object;
 
 export class TargetedOfferNotFoundEventMessage implements IIncomingPacket<TargetedOfferNotFoundEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): TargetedOfferNotFoundEventMessageType {

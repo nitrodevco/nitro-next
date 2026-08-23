@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type UserNftChatStylesMessageType = {
-    // no fields
-
-};
+export type UserNftChatStylesMessageType = object;
 
 export class UserNftChatStylesMessage implements IIncomingPacket<UserNftChatStylesMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserNftChatStylesMessageType {

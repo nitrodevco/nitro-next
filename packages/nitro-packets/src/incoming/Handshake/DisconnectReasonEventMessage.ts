@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type DisconnectReasonEventMessageType = {
-    // no fields
-
-};
+export type DisconnectReasonEventMessageType = object;
 
 export class DisconnectReasonEventMessage implements IIncomingPacket<DisconnectReasonEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): DisconnectReasonEventMessageType {

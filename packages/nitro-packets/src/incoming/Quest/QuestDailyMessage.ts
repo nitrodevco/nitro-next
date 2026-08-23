@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type QuestDailyMessageType = {
-    // no fields
-
-};
+export type QuestDailyMessageType = object;
 
 export class QuestDailyMessage implements IIncomingPacket<QuestDailyMessageType> {
     public parse(wrapper: IMessageDataWrapper): QuestDailyMessageType {

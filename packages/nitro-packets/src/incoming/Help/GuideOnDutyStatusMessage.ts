@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GuideOnDutyStatusMessageType = {
-    // no fields
-
-};
+export type GuideOnDutyStatusMessageType = object;
 
 export class GuideOnDutyStatusMessage implements IIncomingPacket<GuideOnDutyStatusMessageType> {
     public parse(wrapper: IMessageDataWrapper): GuideOnDutyStatusMessageType {

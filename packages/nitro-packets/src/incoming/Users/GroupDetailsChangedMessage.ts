@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GroupDetailsChangedMessageType = {
-    // no fields
-
-};
+export type GroupDetailsChangedMessageType = object;
 
 export class GroupDetailsChangedMessage implements IIncomingPacket<GroupDetailsChangedMessageType> {
     public parse(wrapper: IMessageDataWrapper): GroupDetailsChangedMessageType {

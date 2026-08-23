@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type RoomOccupiedTilesMessageType = {
-    // no fields
-
-};
+export type RoomOccupiedTilesMessageType = object;
 
 export class RoomOccupiedTilesMessage implements IIncomingPacket<RoomOccupiedTilesMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomOccupiedTilesMessageType {

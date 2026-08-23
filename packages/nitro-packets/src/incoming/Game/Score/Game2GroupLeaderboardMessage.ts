@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2GroupLeaderboardMessageType = {
-    // no fields
-
-};
+export type Game2GroupLeaderboardMessageType = object;
 
 export class Game2GroupLeaderboardMessage implements IIncomingPacket<Game2GroupLeaderboardMessageType> {
     public parse(wrapper: IMessageDataWrapper): Game2GroupLeaderboardMessageType {

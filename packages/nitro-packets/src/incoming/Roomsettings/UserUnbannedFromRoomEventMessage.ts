@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type UserUnbannedFromRoomEventMessageType = {
-    // no fields
-
-};
+export type UserUnbannedFromRoomEventMessageType = object;
 
 export class UserUnbannedFromRoomEventMessage implements IIncomingPacket<UserUnbannedFromRoomEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserUnbannedFromRoomEventMessageType {

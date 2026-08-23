@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type PetRespectNotificationEventMessageType = {
-    // no fields
-
-};
+export type PetRespectNotificationEventMessageType = object;
 
 export class PetRespectNotificationEventMessage implements IIncomingPacket<PetRespectNotificationEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetRespectNotificationEventMessageType {

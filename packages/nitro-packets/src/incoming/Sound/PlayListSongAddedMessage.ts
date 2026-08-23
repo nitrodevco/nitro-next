@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type PlayListSongAddedMessageType = {
-    // no fields
-
-};
+export type PlayListSongAddedMessageType = object;
 
 export class PlayListSongAddedMessage implements IIncomingPacket<PlayListSongAddedMessageType> {
     public parse(wrapper: IMessageDataWrapper): PlayListSongAddedMessageType {

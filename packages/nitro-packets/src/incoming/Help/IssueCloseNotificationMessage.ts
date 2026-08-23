@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type IssueCloseNotificationMessageType = {
-    // no fields
-
-};
+export type IssueCloseNotificationMessageType = object;
 
 export class IssueCloseNotificationMessage implements IIncomingPacket<IssueCloseNotificationMessageType> {
     public parse(wrapper: IMessageDataWrapper): IssueCloseNotificationMessageType {

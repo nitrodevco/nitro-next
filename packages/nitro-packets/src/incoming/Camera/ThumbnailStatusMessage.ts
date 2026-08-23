@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ThumbnailStatusMessageType = {
-    // no fields
-
-};
+export type ThumbnailStatusMessageType = object;
 
 export class ThumbnailStatusMessage implements IIncomingPacket<ThumbnailStatusMessageType> {
     public parse(wrapper: IMessageDataWrapper): ThumbnailStatusMessageType {

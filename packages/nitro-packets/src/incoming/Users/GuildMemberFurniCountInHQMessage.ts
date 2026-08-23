@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GuildMemberFurniCountInHQMessageType = {
-    // no fields
-
-};
+export type GuildMemberFurniCountInHQMessageType = object;
 
 export class GuildMemberFurniCountInHQMessage implements IIncomingPacket<GuildMemberFurniCountInHQMessageType> {
     public parse(wrapper: IMessageDataWrapper): GuildMemberFurniCountInHQMessageType {

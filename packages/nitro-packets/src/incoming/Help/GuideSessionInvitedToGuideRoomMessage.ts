@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GuideSessionInvitedToGuideRoomMessageType = {
-    // no fields
-
-};
+export type GuideSessionInvitedToGuideRoomMessageType = object;
 
 export class GuideSessionInvitedToGuideRoomMessage implements IIncomingPacket<GuideSessionInvitedToGuideRoomMessageType> {
     public parse(wrapper: IMessageDataWrapper): GuideSessionInvitedToGuideRoomMessageType {

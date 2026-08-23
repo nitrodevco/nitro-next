@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ShowEnforceRoomCategoryDialogEventMessageType = {
-    // no fields
-
-};
+export type ShowEnforceRoomCategoryDialogEventMessageType = object;
 
 export class ShowEnforceRoomCategoryDialogEventMessage implements IIncomingPacket<ShowEnforceRoomCategoryDialogEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): ShowEnforceRoomCategoryDialogEventMessageType {

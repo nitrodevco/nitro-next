@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type IsUserPartOfCompetitionMessageType = {
-    // no fields
-
-};
+export type IsUserPartOfCompetitionMessageType = object;
 
 export class IsUserPartOfCompetitionMessage implements IIncomingPacket<IsUserPartOfCompetitionMessageType> {
     public parse(wrapper: IMessageDataWrapper): IsUserPartOfCompetitionMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2StageStillLoadingMessageType = {
-    // no fields
-
-};
+export type Game2StageStillLoadingMessageType = object;
 
 export class Game2StageStillLoadingMessage implements IIncomingPacket<Game2StageStillLoadingMessageType> {
     public parse(wrapper: IMessageDataWrapper): Game2StageStillLoadingMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type PetBreedingResultEventMessageType = {
-    // no fields
-
-};
+export type PetBreedingResultEventMessageType = object;
 
 export class PetBreedingResultEventMessage implements IIncomingPacket<PetBreedingResultEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetBreedingResultEventMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type YoutubeDisplayPlaylistsMessageType = {
-    // no fields
-
-};
+export type YoutubeDisplayPlaylistsMessageType = object;
 
 export class YoutubeDisplayPlaylistsMessage implements IIncomingPacket<YoutubeDisplayPlaylistsMessageType> {
     public parse(wrapper: IMessageDataWrapper): YoutubeDisplayPlaylistsMessageType {

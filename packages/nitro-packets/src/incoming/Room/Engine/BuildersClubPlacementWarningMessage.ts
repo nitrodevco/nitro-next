@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type BuildersClubPlacementWarningMessageType = {
-    // no fields
-
-};
+export type BuildersClubPlacementWarningMessageType = object;
 
 export class BuildersClubPlacementWarningMessage implements IIncomingPacket<BuildersClubPlacementWarningMessageType> {
     public parse(wrapper: IMessageDataWrapper): BuildersClubPlacementWarningMessageType {

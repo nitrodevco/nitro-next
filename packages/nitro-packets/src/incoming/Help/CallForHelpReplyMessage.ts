@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CallForHelpReplyMessageType = {
-    // no fields
-
-};
+export type CallForHelpReplyMessageType = object;
 
 export class CallForHelpReplyMessage implements IIncomingPacket<CallForHelpReplyMessageType> {
     public parse(wrapper: IMessageDataWrapper): CallForHelpReplyMessageType {

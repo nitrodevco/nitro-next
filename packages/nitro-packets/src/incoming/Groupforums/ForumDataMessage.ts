@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ForumDataMessageType = {
-    // no fields
-
-};
+export type ForumDataMessageType = object;
 
 export class ForumDataMessage implements IIncomingPacket<ForumDataMessageType> {
     public parse(wrapper: IMessageDataWrapper): ForumDataMessageType {

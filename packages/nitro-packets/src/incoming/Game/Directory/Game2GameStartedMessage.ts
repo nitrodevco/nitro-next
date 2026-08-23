@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2GameStartedMessageType = {
-    // no fields
-
-};
+export type Game2GameStartedMessageType = object;
 
 export class Game2GameStartedMessage implements IIncomingPacket<Game2GameStartedMessageType> {
     public parse(wrapper: IMessageDataWrapper): Game2GameStartedMessageType {

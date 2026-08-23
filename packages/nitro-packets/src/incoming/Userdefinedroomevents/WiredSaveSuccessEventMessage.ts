@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type WiredSaveSuccessEventMessageType = {
-    // no fields
-
-};
+export type WiredSaveSuccessEventMessageType = object;
 
 export class WiredSaveSuccessEventMessage implements IIncomingPacket<WiredSaveSuccessEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): WiredSaveSuccessEventMessageType {

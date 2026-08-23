@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type TradingOtherNotAllowedEventMessageType = {
-    // no fields
-
-};
+export type TradingOtherNotAllowedEventMessageType = object;
 
 export class TradingOtherNotAllowedEventMessage implements IIncomingPacket<TradingOtherNotAllowedEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): TradingOtherNotAllowedEventMessageType {

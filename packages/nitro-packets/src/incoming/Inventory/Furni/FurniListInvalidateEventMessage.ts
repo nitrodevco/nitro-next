@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type FurniListInvalidateEventMessageType = {
-    // no fields
-
-};
+export type FurniListInvalidateEventMessageType = object;
 
 export class FurniListInvalidateEventMessage implements IIncomingPacket<FurniListInvalidateEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): FurniListInvalidateEventMessageType {

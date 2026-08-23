@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type UserClassificationMessageType = {
-    // no fields
-
-};
+export type UserClassificationMessageType = object;
 
 export class UserClassificationMessage implements IIncomingPacket<UserClassificationMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserClassificationMessageType {

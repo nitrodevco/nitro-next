@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type PetAddedToInventoryEventMessageType = {
-    // no fields
-
-};
+export type PetAddedToInventoryEventMessageType = object;
 
 export class PetAddedToInventoryEventMessage implements IIncomingPacket<PetAddedToInventoryEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetAddedToInventoryEventMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type UserBannedMessageType = {
-    // no fields
-
-};
+export type UserBannedMessageType = object;
 
 export class UserBannedMessage implements IIncomingPacket<UserBannedMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserBannedMessageType {

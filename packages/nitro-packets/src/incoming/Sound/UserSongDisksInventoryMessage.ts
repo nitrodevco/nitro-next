@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type UserSongDisksInventoryMessageType = {
-    // no fields
-
-};
+export type UserSongDisksInventoryMessageType = object;
 
 export class UserSongDisksInventoryMessage implements IIncomingPacket<UserSongDisksInventoryMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserSongDisksInventoryMessageType {

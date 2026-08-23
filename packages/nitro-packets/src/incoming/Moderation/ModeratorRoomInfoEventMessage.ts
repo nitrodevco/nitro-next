@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ModeratorRoomInfoEventMessageType = {
-    // no fields
-
-};
+export type ModeratorRoomInfoEventMessageType = object;
 
 export class ModeratorRoomInfoEventMessage implements IIncomingPacket<ModeratorRoomInfoEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): ModeratorRoomInfoEventMessageType {

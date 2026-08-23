@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GuildEditInfoMessageType = {
-    // no fields
-
-};
+export type GuildEditInfoMessageType = object;
 
 export class GuildEditInfoMessage implements IIncomingPacket<GuildEditInfoMessageType> {
     public parse(wrapper: IMessageDataWrapper): GuildEditInfoMessageType {

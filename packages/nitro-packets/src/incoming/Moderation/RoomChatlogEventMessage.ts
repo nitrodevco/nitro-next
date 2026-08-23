@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type RoomChatlogEventMessageType = {
-    // no fields
-
-};
+export type RoomChatlogEventMessageType = object;
 
 export class RoomChatlogEventMessage implements IIncomingPacket<RoomChatlogEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomChatlogEventMessageType {

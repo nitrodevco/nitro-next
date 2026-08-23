@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type TradingItemListEventMessageType = {
-    // no fields
-
-};
+export type TradingItemListEventMessageType = object;
 
 export class TradingItemListEventMessage implements IIncomingPacket<TradingItemListEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): TradingItemListEventMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type HabboClubOffersMessageType = {
-    // no fields
-
-};
+export type HabboClubOffersMessageType = object;
 
 export class HabboClubOffersMessage implements IIncomingPacket<HabboClubOffersMessageType> {
     public parse(wrapper: IMessageDataWrapper): HabboClubOffersMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type SecondsUntilMessageType = {
-    // no fields
-
-};
+export type SecondsUntilMessageType = object;
 
 export class SecondsUntilMessage implements IIncomingPacket<SecondsUntilMessageType> {
     public parse(wrapper: IMessageDataWrapper): SecondsUntilMessageType {

@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type EpicPopupMessageType = {
-    // no fields
-
-};
+export type EpicPopupMessageType = object;
 
 export class EpicPopupMessage implements IIncomingPacket<EpicPopupMessageType> {
     public parse(wrapper: IMessageDataWrapper): EpicPopupMessageType {

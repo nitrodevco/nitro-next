@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type RoomSettingsSavedEventMessageType = {
-    // no fields
-
-};
+export type RoomSettingsSavedEventMessageType = object;
 
 export class RoomSettingsSavedEventMessage implements IIncomingPacket<RoomSettingsSavedEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomSettingsSavedEventMessageType {

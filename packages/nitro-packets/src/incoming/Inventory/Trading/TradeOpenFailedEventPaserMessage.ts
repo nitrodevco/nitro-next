@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type TradeOpenFailedEventPaserMessageType = {
-    // no fields
-
-};
+export type TradeOpenFailedEventPaserMessageType = object;
 
 export class TradeOpenFailedEventPaserMessage implements IIncomingPacket<TradeOpenFailedEventPaserMessageType> {
     public parse(wrapper: IMessageDataWrapper): TradeOpenFailedEventPaserMessageType {

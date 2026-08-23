@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2GameDirectoryStatusMessageMessageType = {
-    // no fields
-
-};
+export type Game2GameDirectoryStatusMessageMessageType = object;
 
 export class Game2GameDirectoryStatusMessageMessage implements IIncomingPacket<Game2GameDirectoryStatusMessageMessageType> {
     public parse(wrapper: IMessageDataWrapper): Game2GameDirectoryStatusMessageMessageType {

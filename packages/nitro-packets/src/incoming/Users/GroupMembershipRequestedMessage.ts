@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type GroupMembershipRequestedMessageType = {
-    // no fields
-
-};
+export type GroupMembershipRequestedMessageType = object;
 
 export class GroupMembershipRequestedMessage implements IIncomingPacket<GroupMembershipRequestedMessageType> {
     public parse(wrapper: IMessageDataWrapper): GroupMembershipRequestedMessageType {

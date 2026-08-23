@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type AchievementEventMessageType = {
-    // no fields
-
-};
+export type AchievementEventMessageType = object;
 
 export class AchievementEventMessage implements IIncomingPacket<AchievementEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): AchievementEventMessageType {

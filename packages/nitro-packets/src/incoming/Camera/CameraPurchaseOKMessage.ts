@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CameraPurchaseOKMessageType = {
-    // no fields
-
-};
+export type CameraPurchaseOKMessageType = object;
 
 export class CameraPurchaseOKMessage implements IIncomingPacket<CameraPurchaseOKMessageType> {
     public parse(wrapper: IMessageDataWrapper): CameraPurchaseOKMessageType {

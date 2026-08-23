@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type NoSuchFlatEventMessageType = {
-    // no fields
-
-};
+export type NoSuchFlatEventMessageType = object;
 
 export class NoSuchFlatEventMessage implements IIncomingPacket<NoSuchFlatEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): NoSuchFlatEventMessageType {

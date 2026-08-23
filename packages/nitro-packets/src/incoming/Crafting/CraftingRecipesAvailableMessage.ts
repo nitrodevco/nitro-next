@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CraftingRecipesAvailableMessageType = {
-    // no fields
-
-};
+export type CraftingRecipesAvailableMessageType = object;
 
 export class CraftingRecipesAvailableMessage implements IIncomingPacket<CraftingRecipesAvailableMessageType> {
     public parse(wrapper: IMessageDataWrapper): CraftingRecipesAvailableMessageType {

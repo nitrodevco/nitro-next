@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type IssuePickFailedMessageType = {
-    // no fields
-
-};
+export type IssuePickFailedMessageType = object;
 
 export class IssuePickFailedMessage implements IIncomingPacket<IssuePickFailedMessageType> {
     public parse(wrapper: IMessageDataWrapper): IssuePickFailedMessageType {

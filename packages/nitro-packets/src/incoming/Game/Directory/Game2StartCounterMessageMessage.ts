@@ -1,9 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2StartCounterMessageMessageType = {
-    // no fields
-
-};
+export type Game2StartCounterMessageMessageType = object;
 
 export class Game2StartCounterMessageMessage implements IIncomingPacket<Game2StartCounterMessageMessageType> {
     public parse(wrapper: IMessageDataWrapper): Game2StartCounterMessageMessageType {
