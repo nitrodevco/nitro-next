@@ -37,10 +37,18 @@ export const boxLayoutToStyle = (layout: BoxLayout | undefined): CSSProperties =
         alignItems: layout.alignItems,
         alignSelf: layout.alignSelf,
         alignContent: layout.alignContent,
+        // Same class of bug as `gap`/`rowGap`/`columnGap` below: `flex` is a shorthand the
+        // browser immediately decomposes into `flex-grow`/`flex-shrink`/`flex-basis` (CSSOM has
+        // no separate storage for the shorthand itself) - setting `flex` and then clearing
+        // `flexGrow`/`flexShrink`/`flexBasis` to `undefined` in the same style patch wipes out
+        // the very longhands `flex` had just set, so `layout.flex` alone (no caller ever also
+        // sets the three longhands independently) silently rendered as no flex sizing at all -
+        // a scroll track's `flex: 1` never grew to fill its column, collapsing to its `minHeight`
+        // floor instead.
         flex: layout.flex,
-        flexGrow: layout.flexGrow,
-        flexShrink: layout.flexShrink,
-        flexBasis: layout.flexBasis,
+        ...(layout.flexGrow !== undefined && { flexGrow: layout.flexGrow }),
+        ...(layout.flexShrink !== undefined && { flexShrink: layout.flexShrink }),
+        ...(layout.flexBasis !== undefined && { flexBasis: layout.flexBasis }),
 
         // `rowGap`/`columnGap` are only spread in when actually set, never as an explicit
         // `undefined` key alongside `gap` - React's client-side style patching clears a CSS
@@ -57,23 +65,38 @@ export const boxLayoutToStyle = (layout: BoxLayout | undefined): CSSProperties =
 
         width: layout.width,
         height: layout.height,
-        minWidth: layout.minWidth,
-        minHeight: layout.minHeight,
+        // CSS flex items default `min-width`/`min-height` to `auto`, which resolves to the
+        // item's own min-content size - a flex item normally refuses to shrink below the size
+        // its content demands, however tight its container is. Yoga has no such floor (an
+        // unset min bound is simply 0, so a flex-shrunk item keeps shrinking with its
+        // siblings) - `theme-pixi` is built entirely against Yoga's model (every scrollable
+        // area, tab row, and text column assumes children shrink to fit rather than force
+        // their container to overflow), so without this override every one of those DOM
+        // counterparts silently disagreed with its Pixi original: content demanded more room
+        // than was available and pushed past the frame instead of being clipped/scrolled.
+        // A caller-supplied `minWidth`/`minHeight` still wins.
+        minWidth: layout.minWidth ?? 0,
+        minHeight: layout.minHeight ?? 0,
         maxWidth: layout.maxWidth,
         maxHeight: layout.maxHeight,
         aspectRatio: layout.aspectRatio,
 
+        // Same shorthand-vs-longhand class of bug as `gap`/`flex` above - `margin`/`padding`
+        // decompose into their four side longhands the same way, so the side props are only
+        // spread in when actually set rather than as an unconditional (frequently `undefined`)
+        // key that would wipe out whatever the shorthand alone had just set (e.g. Border's
+        // `layout={{ padding: 4 }}` callers, common throughout views-pixi/catalog).
         margin: layout.margin,
-        marginTop: layout.marginTop,
-        marginBottom: layout.marginBottom,
-        marginLeft: layout.marginLeft,
-        marginRight: layout.marginRight,
+        ...(layout.marginTop !== undefined && { marginTop: layout.marginTop }),
+        ...(layout.marginBottom !== undefined && { marginBottom: layout.marginBottom }),
+        ...(layout.marginLeft !== undefined && { marginLeft: layout.marginLeft }),
+        ...(layout.marginRight !== undefined && { marginRight: layout.marginRight }),
 
         padding: layout.padding,
-        paddingTop: layout.paddingTop,
-        paddingBottom: layout.paddingBottom,
-        paddingLeft: layout.paddingLeft,
-        paddingRight: layout.paddingRight,
+        ...(layout.paddingTop !== undefined && { paddingTop: layout.paddingTop }),
+        ...(layout.paddingBottom !== undefined && { paddingBottom: layout.paddingBottom }),
+        ...(layout.paddingLeft !== undefined && { paddingLeft: layout.paddingLeft }),
+        ...(layout.paddingRight !== undefined && { paddingRight: layout.paddingRight }),
 
         overflow: layout.overflow,
     };

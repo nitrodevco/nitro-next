@@ -1,7 +1,10 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { Key, ReactElement, useEffect, useState } from 'react';
+import { CSSProperties, Key, ReactElement, useEffect, useState } from 'react';
+
+import { getRenderMode } from '#base/theme-core';
 
 import { Box } from './Box';
+import { ScrollArea } from './ScrollArea';
 import { ScrollbarVertical } from './ScrollbarVertical';
 import { ScrollViewport } from './utils/ScrollViewport';
 import { useRowVirtualizer } from './utils/useRowVirtualizer';
@@ -21,6 +24,47 @@ export interface InfiniteGridProps<T> {
 }
 
 /**
+ * DOM counterpart: a real CSS grid (`grid-template-columns: repeat(auto-fill, minmax(...))`,
+ * the browser's own equivalent of measuring viewport width to pick a column count) inside a
+ * native-scroll `ScrollArea`. No virtualizer of any kind - real DOM elements are cheap enough
+ * at the item counts a catalog/inventory page actually renders (tens to low hundreds) that
+ * reimplementing react-virtual's row-measurement dance here would be complexity with no
+ * payoff; Pixi's own row virtualizer exists because *Pixi* render objects are the expensive
+ * part there; that cost doesn't exist on this target.
+ */
+// The trailing comma below disambiguates a generic arrow function's `<T,>` from a JSX opening
+// tag in a .tsx file.
+// eslint-disable-next-line @stylistic/comma-dangle
+const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
+    const gridStyle: CSSProperties = {
+        display: 'grid',
+        width: '100%',
+        gap: 4,
+        gridTemplateColumns: overrideColumnCount
+            ? `repeat(${overrideColumnCount}, 1fr)`
+            : `repeat(auto-fill, minmax(${itemWidth}px, 1fr))`,
+    };
+
+    return (
+        <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
+            <ScrollArea
+                variant="3"
+                layout={{ flex: 1 }}
+                viewportLayout={{ padding: 2 }}
+            >
+                <div style={gridStyle}>
+                    {items.map((item, i) => (
+                        <div key={getKey(item)}>
+                            {itemRender(item, i)}
+                        </div>
+                    ))}
+                </div>
+            </ScrollArea>
+        </Box>
+    );
+};
+
+/**
  * Pixi port of theme/InfiniteGrid.tsx. DOM measures the real scroll viewport's width via
  * `ResizeObserver` (debounced 10ms, forced on first measurement) to pick a column count, then
  * virtualizes ROWS (not individual items) with `@tanstack/react-virtual` in measured-height
@@ -30,7 +74,8 @@ export interface InfiniteGridProps<T> {
  * elsewhere (see useScrollController.ts, useRowVirtualizer.ts) - close enough to the DOM
  * version's ~10ms debounce that no separate debounce is needed on top of it.
  */
-export function InfiniteGrid<T>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) {
+// eslint-disable-next-line @stylistic/comma-dangle -- see InfiniteGridDom's comment above.
+const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
     const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
     const [ viewportWidth, setViewportWidth ] = useState(0);
     const [ viewportHeight, setViewportHeight ] = useState(0);
@@ -67,7 +112,10 @@ export function InfiniteGrid<T>({ items, itemWidth = 45, overrideColumnCount = 0
     return (
         <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
             <ScrollViewport
-                viewportRef={(node) => { scroll.viewportRef(node); setViewportNode(node); }}
+                viewportRef={(node) => {
+                    scroll.viewportRef(node);
+                    setViewportNode(node);
+                }}
                 contentRef={scroll.contentRef}
                 onWheel={scroll.onWheel}
                 scrollOffset={scroll.scrollOffset}
@@ -120,4 +168,9 @@ export function InfiniteGrid<T>({ items, itemWidth = 45, overrideColumnCount = 0
             />
         </Box>
     );
-}
+};
+
+// eslint-disable-next-line @stylistic/comma-dangle -- see InfiniteGridDom's comment above.
+export const InfiniteGrid = <T,>(props: InfiniteGridProps<T>) => getRenderMode() === 'dom'
+    ? <InfiniteGridDom {...props} />
+    : <InfiniteGridPixi {...props} />;

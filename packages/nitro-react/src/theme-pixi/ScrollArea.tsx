@@ -1,7 +1,11 @@
-import { Container as PixiContainer, Graphics as PixiGraphics } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent, Graphics as PixiGraphics } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useState } from 'react';
 
+import { getRenderMode } from '#base/theme-core';
+
 import { Box, BoxLayout } from './Box';
+import { boxLayoutToStyle } from './dom/boxStyle';
+import { useDomScrollController } from './dom/useDomScrollController';
 import { ScrollbarHorizontal } from './ScrollbarHorizontal';
 import { ScrollbarVertical } from './ScrollbarVertical';
 import { ScrollViewport } from './utils/ScrollViewport';
@@ -33,7 +37,7 @@ export interface ScrollAreaProps {
  * composition doesn't translate to Pixi and the controller has to be lifted here instead of
  * living inside the scrollbar components.
  */
-export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollAreaProps>(
+const ScrollAreaPixi = forwardRef<PixiContainer, ScrollAreaProps>(
     (
         { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, layout, viewportLayout, contentLayout, children },
         ref,
@@ -163,6 +167,130 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
             </Box>
         );
     },
+);
+
+ScrollAreaPixi.displayName = 'ScrollAreaPixi';
+
+/**
+ * DOM counterpart: a real `overflow: auto` viewport (native scroll, its own chrome hidden via
+ * `.nitro-scroll-hide` - see base.css) drives `useDomScrollController`, whose computed pieces
+ * feed the *same* `ScrollbarVertical`/`ScrollbarHorizontal` presentational components the Pixi
+ * target uses unmodified (they only take primitive props - thumb size/offset, plain callbacks -
+ * with no Pixi-specific behavior of their own). Their prop types are written against Pixi's
+ * `FederatedPointerEvent`/`PixiContainer`, but since `Box`'s own DOM branch already forwards a
+ * real DOM `PointerEvent`/`HTMLDivElement` through those exact same prop slots at runtime (see
+ * Box.tsx's docblock on that same cast), bridging this controller's real DOM handlers/refs
+ * through here is the identical, already-established pattern, not a new risk.
+ */
+const ScrollAreaDom = forwardRef<PixiContainer, ScrollAreaProps>(
+    (
+        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, layout, viewportLayout, contentLayout, children },
+        ref,
+    ) => {
+        const showVertical = orientation === 'vertical' || orientation === 'both';
+        const showHorizontal = orientation === 'horizontal' || orientation === 'both';
+        const isBoth = orientation === 'both';
+
+        const vertical = useDomScrollController({
+            orientation: 'vertical',
+            step,
+            minThumbSize,
+            reachThreshold: isBoth ? undefined : reachThreshold,
+            onReachStart: isBoth ? undefined : onReachStart,
+            onReachEnd: isBoth ? undefined : onReachEnd,
+        });
+        const horizontal = useDomScrollController({
+            orientation: 'horizontal',
+            step,
+            minThumbSize,
+            reachThreshold: isBoth ? undefined : reachThreshold,
+            onReachStart: isBoth ? undefined : onReachStart,
+            onReachEnd: isBoth ? undefined : onReachEnd,
+        });
+
+        const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', flexDirection: 'column' };
+
+        return (
+            <Box
+                ref={ref}
+                layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 1, ...layout }}
+            >
+                <div
+                    ref={(node) => {
+                        if (showVertical) vertical.viewportRef(node);
+                        if (showHorizontal) horizontal.viewportRef(node);
+                    }}
+                    className="nitro-scroll-hide"
+                    style={{
+                        ...boxLayoutToStyle({ flex: 1, minWidth: 0, minHeight: 0, ...viewportLayout }),
+                        // Load-bearing, not decorative - see ScrollViewport.tsx's (Pixi) own
+                        // docblock on the identical bug: flexbox's default `align-items:
+                        // stretch` cross-axis-stretches the lone content child to exactly the
+                        // viewport's own size, which zeroes `scrollHeight - clientHeight` and
+                        // makes the whole area report as never scrollable no matter how much
+                        // content it actually holds.
+                        alignItems: 'flex-start',
+                        overflowY: showVertical ? 'auto' : 'hidden',
+                        overflowX: showHorizontal ? 'auto' : 'hidden',
+                    }}
+                >
+                    <div style={boxLayoutToStyle(resolvedContentLayout)}>
+                        {children}
+                    </div>
+                </div>
+                {showVertical && (
+                    <ScrollbarVertical
+                        trackRef={node => vertical.trackRef(node as unknown as HTMLDivElement | null)}
+                        thumbSize={vertical.thumbSize}
+                        thumbOffset={vertical.thumbOffset}
+                        scrollable={vertical.scrollable}
+                        onTrackPointerDown={vertical.onTrackPointerDown as unknown as (event: FederatedPointerEvent) => void}
+                        onThumbPointerDown={vertical.onThumbPointerDown as unknown as (event: FederatedPointerEvent) => void}
+                        stepBackward={vertical.stepBackward}
+                        stepForward={vertical.stepForward}
+                        variant={variant}
+                        defaultVariant={defaultVariant}
+                        tintColor={tintColor}
+                    />
+                )}
+                {showHorizontal && (
+                    <ScrollbarHorizontal
+                        trackRef={node => horizontal.trackRef(node as unknown as HTMLDivElement | null)}
+                        thumbSize={horizontal.thumbSize}
+                        thumbOffset={horizontal.thumbOffset}
+                        atStart={horizontal.atStart}
+                        atEnd={horizontal.atEnd}
+                        scrollable={horizontal.scrollable}
+                        onTrackPointerDown={horizontal.onTrackPointerDown as unknown as (event: FederatedPointerEvent) => void}
+                        onThumbPointerDown={horizontal.onThumbPointerDown as unknown as (event: FederatedPointerEvent) => void}
+                        stepBackward={horizontal.stepBackward}
+                        stepForward={horizontal.stepForward}
+                        variant={variant}
+                        defaultVariant={defaultVariant}
+                        tintColor={tintColor}
+                    />
+                )}
+            </Box>
+        );
+    },
+);
+
+ScrollAreaDom.displayName = 'ScrollAreaDom';
+
+export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollAreaProps>(
+    (props, ref) => getRenderMode() === 'dom'
+        ? (
+                <ScrollAreaDom
+                    ref={ref}
+                    {...props}
+                />
+            )
+        : (
+                <ScrollAreaPixi
+                    ref={ref}
+                    {...props}
+                />
+            ),
 );
 
 ScrollArea.displayName = 'ScrollArea';
