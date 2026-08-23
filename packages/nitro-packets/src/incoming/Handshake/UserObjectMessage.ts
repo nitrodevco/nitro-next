@@ -1,4 +1,4 @@
-import type { AvatarGenderType, IIncomingPacket, IMessageDataWrapper, IUserInfo } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, IIncomingPacket, IMessageDataWrapper, IUserInfo } from '@nitrodevco/nitro-api';
 
 export type UserObjectMessageType = {
     userInfo: IUserInfo;

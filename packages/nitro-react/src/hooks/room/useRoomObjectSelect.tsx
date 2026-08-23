@@ -1,4 +1,4 @@
-import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
 import { NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 

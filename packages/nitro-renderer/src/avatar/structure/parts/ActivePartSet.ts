@@ -1,4 +1,4 @@
-import type { AvatarFigurePartType, IAssetAvatarActivePartSet } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, IAssetAvatarActivePartSet } from '@nitrodevco/nitro-api';
 
 export class ActivePartSet {
     private _parts: AvatarFigurePartType[];

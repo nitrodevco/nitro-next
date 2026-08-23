@@ -1,4 +1,4 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
 import { RoomObjectPlaySoundIdEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';

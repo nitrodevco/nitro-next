@@ -1,4 +1,4 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { IsometricImageFurniVisualization } from './IsometricImageFurniVisualization';

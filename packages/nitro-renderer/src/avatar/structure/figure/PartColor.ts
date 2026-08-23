@@ -1,4 +1,4 @@
-import type { IFigureDataColor, IPartColor } from '@nitrodevco/nitro-api';
+import { IFigureDataColor, IPartColor } from '@nitrodevco/nitro-api';
 
 export class PartColor implements IPartColor {
     private _id: number;

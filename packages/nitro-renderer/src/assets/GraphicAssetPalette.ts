@@ -1,4 +1,4 @@
-import type { IGraphicAssetPalette } from '@nitrodevco/nitro-api';
+import { IGraphicAssetPalette } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { TextureUtils } from '../utils';

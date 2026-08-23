@@ -1,4 +1,4 @@
-import { type IAssetData, type IAssetLogicPlanetSystem, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import {  IAssetData, type IAssetLogicPlanetSystem, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 

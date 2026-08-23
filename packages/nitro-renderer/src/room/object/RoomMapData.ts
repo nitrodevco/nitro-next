@@ -1,4 +1,4 @@
-import type { IRoomMapData } from '@nitrodevco/nitro-api';
+import { IRoomMapData } from '@nitrodevco/nitro-api';
 
 export class RoomMapData implements IRoomMapData {
     private _width: number;

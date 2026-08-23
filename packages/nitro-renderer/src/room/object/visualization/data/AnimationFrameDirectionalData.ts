@@ -1,5 +1,5 @@
 import { AnimationFrameData } from './AnimationFrameData';
-import type { DirectionalOffsetData } from './DirectionalOffsetData';
+import { DirectionalOffsetData } from './DirectionalOffsetData';
 
 export class AnimationFrameDirectionalData extends AnimationFrameData {
     private _directionalOffsets: DirectionalOffsetData | undefined = undefined;

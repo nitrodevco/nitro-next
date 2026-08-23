@@ -1,5 +1,5 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-import type { StateCreator } from 'zustand';
+import { StateCreator } from 'zustand';
 
 type State = {
     targetId: number;

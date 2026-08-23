@@ -1,4 +1,4 @@
-import type { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 
 export interface InfostandPetViewPixiProps {
     objectData: ISimpleRoomObjectData;

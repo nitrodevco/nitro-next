@@ -1,4 +1,4 @@
-﻿import type { IGraphicAsset } from '@nitrodevco/nitro-api';
+﻿import { IGraphicAsset } from '@nitrodevco/nitro-api';
 
 export class PlaneMaskBitmap {
     public static MIN_NORMAL_COORDINATE_VALUE: number = -1;

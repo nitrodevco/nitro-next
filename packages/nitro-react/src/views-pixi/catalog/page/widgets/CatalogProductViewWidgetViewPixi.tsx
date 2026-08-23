@@ -1,6 +1,6 @@
 import { FurnitureSpecialType, FurnitureTypeEnum, RoomId, Vector3d } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
-import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
 import { useCatalogSelectors, useOwnUserLook, useTranslation } from '#base/context';

@@ -1,4 +1,4 @@
-import type { IAssetData } from '@nitrodevco/nitro-api';
+import { IAssetData } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

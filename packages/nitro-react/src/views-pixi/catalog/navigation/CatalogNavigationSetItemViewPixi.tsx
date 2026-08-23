@@ -1,4 +1,4 @@
-import type { ICatalogNode } from '@nitrodevco/nitro-api';
+import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useConfigValue } from '#base/context';
 import { useCatalogNavigation } from '#base/hooks';

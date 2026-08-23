@@ -1,4 +1,4 @@
-import type { IRoomObjectModel, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomObjectModel, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 export class RoomObjectModel implements IRoomObjectModel {
     private _map: Map<RoomObjectVariableEnum, unknown> = new Map();

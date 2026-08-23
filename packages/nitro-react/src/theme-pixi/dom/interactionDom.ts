@@ -1,6 +1,6 @@
-import type { CSSProperties, PointerEventHandler } from 'react';
+import { CSSProperties, PointerEventHandler } from 'react';
 
-import type { InteractionHandlers } from '../utils/useInteractionState';
+import { InteractionHandlers } from '../utils/useInteractionState';
 
 export interface DomInteractionHandlers {
     style: Pick<CSSProperties, 'pointerEvents' | 'cursor'>;

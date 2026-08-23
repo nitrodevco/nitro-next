@@ -1,9 +1,9 @@
-import type { Sprite as PixiSprite } from 'pixi.js';
+import { Sprite as PixiSprite } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { useConfigValue } from '#base/context';
 
-import type { BoxLayout } from './Box';
+import { BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
 
 export interface NitroCurrencyIconProps {

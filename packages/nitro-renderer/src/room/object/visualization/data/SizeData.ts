@@ -1,5 +1,5 @@
-import type { IAssetColor, IAssetVisualizationDirection, IAssetVisualizationLayer } from '@nitrodevco/nitro-api';
-import type { BLEND_MODES } from 'pixi.js';
+import { IAssetColor, IAssetVisualizationDirection, IAssetVisualizationLayer } from '@nitrodevco/nitro-api';
+import { BLEND_MODES } from 'pixi.js';
 
 import { ColorData } from './ColorData';
 import { DirectionData } from './DirectionData';

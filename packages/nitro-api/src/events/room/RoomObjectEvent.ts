@@ -1,4 +1,4 @@
-import type { IRoomObject, IRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, IRoomObjectEvent } from '@nitrodevco/nitro-api';
 
 import { NitroEvent } from '../NitroEvent';
 

@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IPetFigureData } from '../Data/PetFigureDataParser';
+import { IPetFigureData } from '../Data/PetFigureDataParser';
 import { PetFigureDataParser } from '../Data/PetFigureDataParser';
 
 export type PetLevelNotificationEventMessageType = {

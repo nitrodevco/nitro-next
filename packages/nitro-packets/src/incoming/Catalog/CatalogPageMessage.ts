@@ -1,4 +1,4 @@
-import type { ICatalogPage, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { ICatalogPage, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { CatalogPageParser } from './Data/CatalogPageParser';
 

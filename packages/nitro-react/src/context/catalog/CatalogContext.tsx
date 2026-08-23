@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { StoreApi } from 'zustand';
+import { StoreApi } from 'zustand';
 
 import { CatalogContextStore } from './store';
 

@@ -1,4 +1,4 @@
-import type { IGraphicAsset, IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';

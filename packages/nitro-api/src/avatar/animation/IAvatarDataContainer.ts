@@ -1,4 +1,4 @@
-﻿import type { Filter } from 'pixi.js';
+﻿import { Filter } from 'pixi.js';
 
 export interface IAvatarDataContainer {
     readonly ink: number;

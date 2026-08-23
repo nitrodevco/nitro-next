@@ -1,5 +1,5 @@
 import { AlphaTolerance } from '@nitrodevco/nitro-api';
-import type { TextureSource } from 'pixi.js';
+import { TextureSource } from 'pixi.js';
 import { Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '.';

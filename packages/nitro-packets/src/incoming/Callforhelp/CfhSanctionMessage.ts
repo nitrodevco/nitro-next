@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ICfhSanctionTypeData } from '../Data/CfhSanctionTypeDataParser';
+import { ICfhSanctionTypeData } from '../Data/CfhSanctionTypeDataParser';
 import { CfhSanctionTypeDataParser } from '../Data/CfhSanctionTypeDataParser';
 
 export type CfhSanctionMessageType = {

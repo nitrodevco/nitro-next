@@ -1,6 +1,6 @@
 import { AvatarActionType, AvatarBodyPartType } from '#api/avatar';
 
-import type { IAssetAnimationFramePartItem } from './IAssetAnimationFramePartItem';
+import { IAssetAnimationFramePartItem } from './IAssetAnimationFramePartItem';
 
 export interface IAssetAnimationFramePart {
     id: AvatarBodyPartType | string;

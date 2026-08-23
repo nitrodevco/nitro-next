@@ -1,6 +1,6 @@
-import type { RoomGeometryScaleType } from '#api/room/enum';
+import { RoomGeometryScaleType } from '#api/room/enum';
 
-import type { IParticleSystemEmitter } from './IParticleSystemEmitter';
+import { IParticleSystemEmitter } from './IParticleSystemEmitter';
 
 export interface IParticleSystem {
     size: RoomGeometryScaleType;

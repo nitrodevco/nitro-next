@@ -1,6 +1,6 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
-import type { BoxLayout } from '../Box';
+import { BoxLayout } from '../Box';
 
 /**
  * Translates a `BoxLayout` (the Yoga/flexbox style object `Box`'s `layout` prop already

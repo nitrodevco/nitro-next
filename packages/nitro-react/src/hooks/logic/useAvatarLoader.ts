@@ -1,4 +1,4 @@
-import type { IEffectMapLibrary, IFigureMapLibrary } from '@nitrodevco/nitro-api';
+import { IEffectMapLibrary, IFigureMapLibrary } from '@nitrodevco/nitro-api';
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';

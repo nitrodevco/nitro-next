@@ -1,8 +1,8 @@
-import type { Container, Point, Texture } from 'pixi.js';
+import { Container, Point, Texture } from 'pixi.js';
 
-import type { IRoomGeometry } from './IRoomGeometry';
-import type { ISortableSprite } from './object';
-import type { RoomObjectSpriteData } from './utils';
+import { IRoomGeometry } from './IRoomGeometry';
+import { ISortableSprite } from './object';
+import { RoomObjectSpriteData } from './utils';
 
 export interface IRoomRenderingCanvas {
     dispose(): void;

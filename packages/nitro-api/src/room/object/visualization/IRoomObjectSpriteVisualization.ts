@@ -1,7 +1,7 @@
-import type { RoomObjectSpriteData } from '#api/room';
+import { RoomObjectSpriteData } from '#api/room';
 
-import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';
-import type { IRoomObjectSprite } from './IRoomObjectSprite';
+import { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';
+import { IRoomObjectSprite } from './IRoomObjectSprite';
 
 export interface IRoomObjectSpriteVisualization extends IRoomObjectGraphicVisualization {
     getSprite(index: number): IRoomObjectSprite | undefined;

@@ -1,7 +1,7 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine, GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { useApplication } from '@pixi/react';
-import type { Container as PixiContainer, PointData, Ticker } from 'pixi.js';
+import { Container as PixiContainer, PointData, Ticker } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRoomMapping } from '#base/hooks/room/useRoomMapping';

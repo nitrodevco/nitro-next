@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ISnowWarGameTokenOffer } from '../Data/SnowWarGameTokenOfferParser';
+import { ISnowWarGameTokenOffer } from '../Data/SnowWarGameTokenOfferParser';
 import { SnowWarGameTokenOfferParser } from '../Data/SnowWarGameTokenOfferParser';
 
 export type SnowWarGameTokensMessageMessageType = {

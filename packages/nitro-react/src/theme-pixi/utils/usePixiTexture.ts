@@ -1,5 +1,5 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { THEME_URLS } from '../../theme-core/themeUrls';

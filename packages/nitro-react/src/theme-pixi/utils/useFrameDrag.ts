@@ -1,4 +1,4 @@
-import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { useWindowActions, useWindowZIndex } from '#base/context';

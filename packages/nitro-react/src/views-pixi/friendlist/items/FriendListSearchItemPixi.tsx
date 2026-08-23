@@ -1,4 +1,4 @@
-import type { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
+import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context';
 import { Box, NitroIcon } from '#base/theme-pixi';

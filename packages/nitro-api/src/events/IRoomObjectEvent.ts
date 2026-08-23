@@ -1,5 +1,5 @@
-import type { IRoomObject } from '../room';
-import type { INitroEvent } from './INitroEvent';
+import { IRoomObject } from '../room';
+import { INitroEvent } from './INitroEvent';
 
 export interface IRoomObjectEvent extends INitroEvent {
     readonly object: IRoomObject;

@@ -1,8 +1,8 @@
-import type { Sprite as PixiSprite } from 'pixi.js';
+import { Sprite as PixiSprite } from 'pixi.js';
 import { forwardRef } from 'react';
 
-import type { BoxLayout } from './Box';
-import { type IconKey, useIconTexture } from './utils/useIconTexture';
+import { BoxLayout } from './Box';
+import {  IconKey, useIconTexture } from './utils/useIconTexture';
 
 export interface NitroIconProps {
     icon: IconKey;

@@ -1,4 +1,4 @@
-import type { FurnitureSpecialType, FurnitureTypeEnum } from './enum';
+import { FurnitureSpecialType, FurnitureTypeEnum } from './enum';
 
 export interface IFurnitureData {
     readonly type: FurnitureTypeEnum;

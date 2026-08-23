@@ -1,4 +1,4 @@
-import type { IAssetVisualAnimationSequence } from './IAssetVisualAnimationSequence';
+import { IAssetVisualAnimationSequence } from './IAssetVisualAnimationSequence';
 
 export interface IAssetVisualAnimationLayer {
     id: number;

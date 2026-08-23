@@ -1,7 +1,7 @@
-import type { Point } from 'pixi.js';
+import { Point } from 'pixi.js';
 
-import type { IVector3D } from '../utils';
-import type { RoomGeometryScaleType } from './enum';
+import { IVector3D } from '../utils';
+import { RoomGeometryScaleType } from './enum';
 
 export interface IRoomGeometry {
     dispose(): void;

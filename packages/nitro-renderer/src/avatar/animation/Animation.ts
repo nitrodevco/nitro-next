@@ -1,6 +1,6 @@
-﻿import type { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
+﻿import { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
-import type { AvatarStructure } from '../AvatarStructure';
+import { AvatarStructure } from '../AvatarStructure';
 import { AddDataContainer } from './AddDataContainer';
 import { AvatarAnimationLayerData } from './AvatarAnimationLayerData';
 import { AvatarDataContainer } from './AvatarDataContainer';

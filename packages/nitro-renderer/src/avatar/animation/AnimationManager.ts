@@ -1,6 +1,6 @@
-import type { IAnimation, IAnimationLayerData, IAnimationManager, IAssetAnimation } from '@nitrodevco/nitro-api';
+import { IAnimation, IAnimationLayerData, IAnimationManager, IAssetAnimation } from '@nitrodevco/nitro-api';
 
-import type { AvatarStructure } from '../AvatarStructure';
+import { AvatarStructure } from '../AvatarStructure';
 import { Animation } from './Animation';
 
 export class AnimationManager implements IAnimationManager {

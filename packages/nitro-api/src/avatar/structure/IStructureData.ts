@@ -1,6 +1,6 @@
-﻿import type { IFigurePartSet } from './IFigurePartSet';
-import type { IPalette } from './IPalette';
-import type { ISetType } from './ISetType';
+﻿import { IFigurePartSet } from './IFigurePartSet';
+import { IPalette } from './IPalette';
+import { ISetType } from './ISetType';
 
 export interface IStructureData {
     parse(data: object): boolean;

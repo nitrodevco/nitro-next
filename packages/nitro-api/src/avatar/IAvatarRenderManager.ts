@@ -1,10 +1,10 @@
-import type { IEffectMapLibrary, IFigureMapLibrary, IGraphicAsset } from '../asset';
+import { IEffectMapLibrary, IFigureMapLibrary, IGraphicAsset } from '../asset';
 import { AvatarGenderType, AvatarScaleType } from './enum';
-import type { IAvatarEffectListener } from './IAvatarEffectListener';
-import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
-import type { IAvatarImage } from './IAvatarImage';
-import type { IAvatarImageListener } from './IAvatarImageListener';
-import type { IAvatarStructure, IStructureData } from './structure';
+import { IAvatarEffectListener } from './IAvatarEffectListener';
+import { IAvatarFigureContainer } from './IAvatarFigureContainer';
+import { IAvatarImage } from './IAvatarImage';
+import { IAvatarImageListener } from './IAvatarImageListener';
+import { IAvatarStructure, IStructureData } from './structure';
 
 export interface IAvatarRenderManager {
     init(): void;

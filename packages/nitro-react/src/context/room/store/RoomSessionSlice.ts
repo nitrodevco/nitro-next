@@ -1,5 +1,5 @@
 import { IRoomChatSettings, IRoomModerationSettings, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomControllerLevelEnum, RoomDoorModeEnum, RoomModerationType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
-import type { StateCreator } from 'zustand';
+import { StateCreator } from 'zustand';
 
 type State = {
     doorMode: RoomDoorModeEnum;

@@ -1,4 +1,4 @@
-﻿import type { AvatarBodyPartType, AvatarSetType, IAssetAvatarSet } from '@nitrodevco/nitro-api';
+﻿import { AvatarBodyPartType, AvatarSetType, IAssetAvatarSet } from '@nitrodevco/nitro-api';
 
 export class AvatarSet {
     private readonly _id: AvatarSetType;

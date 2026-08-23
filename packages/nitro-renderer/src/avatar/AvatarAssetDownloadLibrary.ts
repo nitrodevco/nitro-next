@@ -1,4 +1,4 @@
-import type { IAvatarAssetDownloadLibrary } from '@nitrodevco/nitro-api';
+import { IAvatarAssetDownloadLibrary } from '@nitrodevco/nitro-api';
 import { AvatarAssetDownloadStatus, NitroLogger } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '#renderer/assets';

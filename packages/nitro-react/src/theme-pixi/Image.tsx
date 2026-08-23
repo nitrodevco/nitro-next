@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { useConfigValue } from '#base/context';

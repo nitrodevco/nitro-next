@@ -1,4 +1,4 @@
-import type {
+import {
     IObjectVisualizationData,
     IPlaneVisualization,
     IRoomGeometry,
@@ -10,11 +10,11 @@ import {
     AlphaTolerance, RoomGeometryScaleType,
     RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, ToInt32, Vector3d,
 } from '@nitrodevco/nitro-api';
-import type { Filter } from 'pixi.js';
+import { Filter } from 'pixi.js';
 import { Rectangle, Texture } from 'pixi.js';
 
-import type { RoomMapData } from '../../RoomMapData';
-import type { RoomMapMaskData } from '../../RoomMapMaskData';
+import { RoomMapData } from '../../RoomMapData';
+import { RoomMapMaskData } from '../../RoomMapMaskData';
 import { RoomPlaneBitmapMaskData } from '../../RoomPlaneBitmapMaskData';
 import { RoomPlaneData } from '../../RoomPlaneData';
 import { RoomPlaneParser } from '../../RoomPlaneParser';

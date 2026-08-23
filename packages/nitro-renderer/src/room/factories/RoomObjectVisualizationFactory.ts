@@ -1,4 +1,4 @@
-import type {
+import {
     IAssetData,
     IObjectVisualizationData,
     IRoomObjectGraphicVisualization,
@@ -6,7 +6,7 @@ import type {
 } from '@nitrodevco/nitro-api';
 import { RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectSpriteVisualization } from '../object';
+import { RoomObjectSpriteVisualization } from '../object';
 import {
     AvatarVisualization,
     AvatarVisualizationData,

@@ -44,7 +44,7 @@ import { GetTickerTime } from '../utils';
 import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
-import type {
+import {
     ObjectStateUpdateMessage,
 } from './messages';
 import {

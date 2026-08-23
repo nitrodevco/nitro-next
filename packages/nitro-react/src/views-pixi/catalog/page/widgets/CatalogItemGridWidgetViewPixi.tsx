@@ -1,4 +1,4 @@
-import type { IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { useCatalogSelectors } from '#base/context';
 import { Border, InfiniteGrid } from '#base/theme-pixi';

@@ -1,10 +1,10 @@
-import type {
+import {
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
 } from '@nitrodevco/nitro-api';
 import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectLogicBase } from '../object';
+import { RoomObjectLogicBase } from '../object';
 import {
     AvatarLogic,
     FurnitureAchievementResolutionLogic,

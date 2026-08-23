@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const FurnitureOwnersParser = (wrapper: IMessageDataWrapper) => {
     const owners: Map<number, string> = new Map();

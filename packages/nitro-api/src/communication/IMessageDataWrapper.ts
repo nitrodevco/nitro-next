@@ -1,4 +1,4 @@
-import type { IBinaryReader } from '../utils';
+import { IBinaryReader } from '../utils';
 
 export interface IMessageDataWrapper {
     readByte(): number;

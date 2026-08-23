@@ -1,8 +1,8 @@
-import type { ImageLike, Rectangle } from 'pixi.js';
+import { ImageLike, Rectangle } from 'pixi.js';
 
-import type { IRoomGeometry } from '../../IRoomGeometry';
-import type { IRoomObject } from '../IRoomObject';
-import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
+import { IRoomGeometry } from '../../IRoomGeometry';
+import { IRoomObject } from '../IRoomObject';
+import { IObjectVisualizationData } from './IRoomObjectVisualizationData';
 
 export interface IRoomObjectVisualization {
     initialize(data: IObjectVisualizationData): boolean;

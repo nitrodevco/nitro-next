@@ -1,5 +1,5 @@
 import { AvatarActionStateType } from '../enum';
-import type { IActionDefinition } from './IActionDefinition';
+import { IActionDefinition } from './IActionDefinition';
 
 export interface IActiveActionData {
     readonly id: string;

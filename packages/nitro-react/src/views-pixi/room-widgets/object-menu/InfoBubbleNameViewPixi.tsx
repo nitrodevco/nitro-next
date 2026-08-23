@@ -1,4 +1,4 @@
-import type { IRoomObjectNameData } from '@nitrodevco/nitro-api';
+import { IRoomObjectNameData } from '@nitrodevco/nitro-api';
 
 import { Bubble, Text } from '#base/theme-pixi';
 

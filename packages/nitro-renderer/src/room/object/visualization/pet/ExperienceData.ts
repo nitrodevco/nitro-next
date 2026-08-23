@@ -1,4 +1,4 @@
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 import { Container, Sprite, Text, TextStyle } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';

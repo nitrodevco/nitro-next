@@ -1,4 +1,4 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
 import { RoomObjectVariableEnum, VoteDataType } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '../../../../utils';

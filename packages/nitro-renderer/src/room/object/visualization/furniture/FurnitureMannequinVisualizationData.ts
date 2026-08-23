@@ -1,4 +1,4 @@
-import type { AvatarGenderType, IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '@nitrodevco/nitro-api';
 
 import { AvatarVisualizationData } from '../avatar';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';

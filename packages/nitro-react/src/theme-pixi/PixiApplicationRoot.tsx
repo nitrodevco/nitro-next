@@ -1,7 +1,7 @@
 import { GetRoomStage, SetRenderer } from '@nitrodevco/nitro-renderer';
 import { Application } from '@pixi/react';
-import { type Application as PixiApplication } from 'pixi.js';
-import { type ReactNode, useCallback, useRef } from 'react';
+import {  Application as PixiApplication } from 'pixi.js';
+import {  ReactNode, useCallback, useRef } from 'react';
 
 interface PixiApplicationRootProps {
     onReady: () => void;

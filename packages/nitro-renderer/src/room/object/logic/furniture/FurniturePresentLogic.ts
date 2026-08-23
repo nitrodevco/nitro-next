@@ -1,4 +1,4 @@
-import type {
+import {
     IAssetData,
     IParticleSystem,
     IRoomGeometry,

@@ -1,4 +1,4 @@
-import type {
+import {
     IRoom,
     IRoomGeometry,
     IRoomObject,
@@ -13,7 +13,7 @@ import { MouseEventType, RoomObjectSpriteTypeEnum, RoomSpriteMouseEvent, Vector3
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { ExtendedSprite, TextureUtils } from '../utils';
-import type { RoomObjectCacheItem } from './object';
+import { RoomObjectCacheItem } from './object';
 import { RoomObjectCache } from './object';
 import {
     ObjectMouseData,

@@ -1,16 +1,16 @@
 import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, AvatarSetType, type IActiveActionData, IAnimationLayerData, type IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
-import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
+import { Filter, ImageLike, RenderTexture } from 'pixi.js';
 import { ColorMatrixFilter, Container, Sprite } from 'pixi.js';
 
 import { GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
-import type { AssetAliasCollection } from './alias';
+import { AssetAliasCollection } from './alias';
 import { AvatarFigureContainer } from './AvatarFigureContainer';
-import type { AvatarStructure } from './AvatarStructure';
+import { AvatarStructure } from './AvatarStructure';
 import { AvatarImageCache } from './cache';
-import type { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
+import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
 
 export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private static CHANNELS_EQUAL: string = 'CHANNELS_EQUAL';

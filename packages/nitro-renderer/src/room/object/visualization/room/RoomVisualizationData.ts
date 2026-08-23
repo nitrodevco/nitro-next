@@ -1,4 +1,4 @@
-import type { IAssetData, IGraphicAssetCollection, IObjectVisualizationData } from '@nitrodevco/nitro-api';
+import { IAssetData, IGraphicAssetCollection, IObjectVisualizationData } from '@nitrodevco/nitro-api';
 
 import { PlaneMaskManager } from './mask';
 

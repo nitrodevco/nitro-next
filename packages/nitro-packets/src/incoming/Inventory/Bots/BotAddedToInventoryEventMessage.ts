@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IBotData } from '../../Data/BotDataParser';
+import { IBotData } from '../../Data/BotDataParser';
 import { BotDataParser } from '../../Data/BotDataParser';
 
 export type BotAddedToInventoryEventMessageType = {

@@ -1,4 +1,4 @@
-import type { IRoomInfo } from '@nitrodevco/nitro-packets';
+import { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
 import { Border, Box, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';

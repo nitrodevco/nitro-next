@@ -1,5 +1,5 @@
-import type { IMessengerFriend } from '@nitrodevco/nitro-packets';
-import type { Container as PixiContainer } from 'pixi.js';
+import { IMessengerFriend } from '@nitrodevco/nitro-packets';
+import { Container as PixiContainer } from 'pixi.js';
 import { memo, useRef } from 'react';
 
 import { useFriendsActions, useFriendsSelectors } from '#base/context';

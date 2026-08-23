@@ -1,4 +1,4 @@
-import type { RoomObjectCategoryEnum } from './object';
+import { RoomObjectCategoryEnum } from './object';
 
 export interface IRoomManagerListener {
     objectInitialized(roomId: number, objectId: number, category: RoomObjectCategoryEnum): void;

@@ -1,6 +1,6 @@
-import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { GetTickerTime } from '#renderer/utils';

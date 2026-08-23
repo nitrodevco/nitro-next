@@ -1,4 +1,4 @@
-import type { IVector3D } from '#api/utils';
+import { IVector3D } from '#api/utils';
 
 export interface IRoomObjectUpdateMessage {
     readonly location: IVector3D | undefined;

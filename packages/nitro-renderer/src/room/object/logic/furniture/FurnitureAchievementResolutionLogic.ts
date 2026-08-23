@@ -1,4 +1,4 @@
-import { type IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import {  IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectGroupBadgeUpdateMessage, ObjectSelectedMessage } from '../../../messages';

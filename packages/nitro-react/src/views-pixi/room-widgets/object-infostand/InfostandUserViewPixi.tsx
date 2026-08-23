@@ -1,4 +1,4 @@
-import type { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { ChangeMottoComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 

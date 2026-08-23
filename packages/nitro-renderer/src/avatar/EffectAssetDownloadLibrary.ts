@@ -1,4 +1,4 @@
-import type { IAssetAnimation, IEffectAssetDownloadLibrary } from '@nitrodevco/nitro-api';
+import { IAssetAnimation, IEffectAssetDownloadLibrary } from '@nitrodevco/nitro-api';
 import { AvatarAssetDownloadStatus, NitroLogger } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '#renderer/assets';

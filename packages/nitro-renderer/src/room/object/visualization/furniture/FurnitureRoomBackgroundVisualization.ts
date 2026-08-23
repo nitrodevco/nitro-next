@@ -1,5 +1,5 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { Texture } from 'pixi.js';
 
 import { DirectionalOffsetData } from '../data';
 import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';

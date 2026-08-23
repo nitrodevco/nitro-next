@@ -1,4 +1,4 @@
-import type { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarExpressionEnum, PostureTypeEnum } from '@nitrodevco/nitro-api';
 import { AvatarExpressionComposer, ChangePostureComposer, DanceComposer, DropCarryItemComposer, SignComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';

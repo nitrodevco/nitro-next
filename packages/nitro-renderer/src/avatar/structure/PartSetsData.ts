@@ -1,6 +1,6 @@
-import type { AvatarFigurePartType, AvatarPartSetType, IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarPartSetType, IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
 
-import type { ActionDefinition } from '../actions';
+import { ActionDefinition } from '../actions';
 import { ActivePartSet, PartDefinition } from './parts';
 
 export class PartSetsData implements IFigureSetData {

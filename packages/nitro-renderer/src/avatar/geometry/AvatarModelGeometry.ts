@@ -1,4 +1,4 @@
-import type { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { AvatarCanvas } from '../structure';
 import { AvatarSet } from './AvatarSet';

@@ -1,4 +1,4 @@
-import type { IAssetPlaneMaterialCellColumn } from './IAssetPlaneMaterialCellColumn';
+import { IAssetPlaneMaterialCellColumn } from './IAssetPlaneMaterialCellColumn';
 
 export interface IAssetPlaneMaterialCellMatrix {
     repeatMode?: string;

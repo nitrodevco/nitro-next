@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '#api/communication';
+import { IMessageDataWrapper } from '#api/communication';
 
 import { GetObjectDataForFlags } from './GetObjectDataForFlags';
 

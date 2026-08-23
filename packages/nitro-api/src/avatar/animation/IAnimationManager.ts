@@ -1,5 +1,5 @@
-﻿import type { IAnimation } from './IAnimation';
-import type { IAnimationLayerData } from './IAnimationLayerData';
+﻿import { IAnimation } from './IAnimation';
+import { IAnimationLayerData } from './IAnimationLayerData';
 
 export interface IAnimationManager {
     getAnimation(name: string): IAnimation | undefined;

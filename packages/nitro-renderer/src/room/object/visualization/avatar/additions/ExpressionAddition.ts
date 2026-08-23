@@ -1,7 +1,7 @@
-import type { IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import type { AvatarVisualization } from '../AvatarVisualization';
-import type { IExpressionAddition } from './IExpressionAddition';
+import { AvatarVisualization } from '../AvatarVisualization';
+import { IExpressionAddition } from './IExpressionAddition';
 
 export class ExpressionAddition implements IExpressionAddition {
     constructor(

@@ -1,8 +1,8 @@
-import type { IIncomingPacket, IMessageDataWrapper, IRoomChatSettings, IRoomModerationSettings } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, IRoomChatSettings, IRoomModerationSettings } from '@nitrodevco/nitro-api';
 
 import { RoomChatSettingsParser } from './Data/RoomChatSettingsParser';
 import { RoomModerationParser } from './Data/RoomModerationParser';
-import type { IRoomInfo } from './Data/RoomSettingsParser';
+import { IRoomInfo } from './Data/RoomSettingsParser';
 import { RoomSettingsParser } from './Data/RoomSettingsParser';
 
 export type GetGuestRoomResultMessageType = {

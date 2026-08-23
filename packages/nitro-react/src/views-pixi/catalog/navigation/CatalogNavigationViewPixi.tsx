@@ -1,4 +1,4 @@
-import type { ICatalogNode } from '@nitrodevco/nitro-api';
+import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useCatalogSelectors } from '#base/context';
 import { Border, ScrollArea } from '#base/theme-pixi';

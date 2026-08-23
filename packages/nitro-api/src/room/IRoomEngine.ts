@@ -1,4 +1,4 @@
-import type { IRoom } from './IRoom';
+import { IRoom } from './IRoom';
 
 export interface IRoomEngine {
     init(): Promise<void>;

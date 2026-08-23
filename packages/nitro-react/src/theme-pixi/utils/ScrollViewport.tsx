@@ -1,10 +1,10 @@
 import './pixiElements';
 
-import type { Container as PixiContainer, FederatedWheelEvent, Graphics as PixiGraphics } from 'pixi.js';
-import { type ReactNode, useState } from 'react';
+import { Container as PixiContainer, FederatedWheelEvent, Graphics as PixiGraphics } from 'pixi.js';
+import {  ReactNode, useState } from 'react';
 
-import type { BoxLayout } from '../Box';
-import type { ScrollOrientation } from './useScrollController';
+import { BoxLayout } from '../Box';
+import { ScrollOrientation } from './useScrollController';
 
 export interface ScrollViewportProps {
     viewportRef: (node: PixiContainer | null) => void;

@@ -1,4 +1,4 @@
-import type { Container as PixiContainer, Graphics as PixiGraphics } from 'pixi.js';
+import { Container as PixiContainer, Graphics as PixiGraphics } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes, useState } from 'react';
 
 import { Box, type BoxLayout } from './Box';

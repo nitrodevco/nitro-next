@@ -1,4 +1,4 @@
-import type { IPetCustomPart } from '@nitrodevco/nitro-api';
+import { IPetCustomPart } from '@nitrodevco/nitro-api';
 
 export class PetCustomPart implements IPetCustomPart {
     private _layerId: number;

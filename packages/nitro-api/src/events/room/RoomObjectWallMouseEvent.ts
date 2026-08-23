@@ -1,4 +1,4 @@
-﻿import type { IRoomObject, IVector3D } from '@nitrodevco/nitro-api';
+﻿import { IRoomObject, IVector3D } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
 import { RoomObjectMouseEvent } from './RoomObjectMouseEvent';

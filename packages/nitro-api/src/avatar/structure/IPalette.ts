@@ -1,6 +1,6 @@
 import { IFigureDataPalette } from '#api/asset/avatar';
 
-import type { IPartColor } from './IPartColor';
+import { IPartColor } from './IPartColor';
 
 export interface IPalette {
     append(data: IFigureDataPalette): void;

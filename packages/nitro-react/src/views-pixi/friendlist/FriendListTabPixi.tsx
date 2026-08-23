@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { useFriendsActions, useTranslation } from '#base/context';
 import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';

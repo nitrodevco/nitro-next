@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { Box, type IconKey, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';

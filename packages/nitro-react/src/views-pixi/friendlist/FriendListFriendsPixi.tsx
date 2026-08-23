@@ -1,4 +1,4 @@
-import type { IMessengerFriend } from '@nitrodevco/nitro-packets';
+import { IMessengerFriend } from '@nitrodevco/nitro-packets';
 
 import { useFriendsSelectors, useTranslation } from '#base/context';
 import { useOfflineFriendsSelector, useOnlineFriendsSelector } from '#base/context/user';

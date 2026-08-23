@@ -1,4 +1,4 @@
-import type { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
 
 import { PlaneMaskBitmap } from './PlaneMaskBitmap';
 

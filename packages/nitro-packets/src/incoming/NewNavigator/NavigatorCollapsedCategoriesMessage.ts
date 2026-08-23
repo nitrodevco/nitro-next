@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type NavigatorCollapsedCategoriesMessageType = {
     collapsedCategories: string[];

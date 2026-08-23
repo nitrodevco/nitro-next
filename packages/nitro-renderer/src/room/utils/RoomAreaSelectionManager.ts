@@ -1,8 +1,8 @@
-import type { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
 import { RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
 import { ColorMatrixFilter } from 'pixi.js';
 
-import type { FurnitureVisualization, RoomVisualization } from '../object';
+import { FurnitureVisualization, RoomVisualization } from '../object';
 
 export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
     public static NOT_ACTIVE: number = 0;

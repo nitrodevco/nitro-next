@@ -1,4 +1,4 @@
-﻿import type { IRoomObjectSprite, ISortableSprite } from '@nitrodevco/nitro-api';
+﻿import { IRoomObjectSprite, ISortableSprite } from '@nitrodevco/nitro-api';
 
 export class SortableSprite implements ISortableSprite {
     public static Z_INFINITY: number = 100000000;

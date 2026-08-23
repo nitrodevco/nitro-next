@@ -1,4 +1,4 @@
-import type { IAssetAnimation } from '../asset';
+import { IAssetAnimation } from '../asset';
 
 export interface IEffectAssetDownloadLibrary {
     downloadAsset(): void;

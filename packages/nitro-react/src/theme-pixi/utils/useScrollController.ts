@@ -1,4 +1,4 @@
-import type { Container as PixiContainer, FederatedPointerEvent, FederatedWheelEvent } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent, FederatedWheelEvent } from 'pixi.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type ScrollOrientation = 'vertical' | 'horizontal';

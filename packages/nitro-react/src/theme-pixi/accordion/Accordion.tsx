@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react';
+import {  ReactNode, useState } from 'react';
 
 import { Box, BoxLayout } from '../Box';
 import { AccordionContext, AccordionType } from './AccordionContext';

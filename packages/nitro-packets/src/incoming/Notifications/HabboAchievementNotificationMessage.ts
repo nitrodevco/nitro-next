@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IAchievementLevelUpData } from '../Data/AchievementLevelUpDataParser';
+import { IAchievementLevelUpData } from '../Data/AchievementLevelUpDataParser';
 import { AchievementLevelUpDataParser } from '../Data/AchievementLevelUpDataParser';
 
 export type HabboAchievementNotificationMessageType = {

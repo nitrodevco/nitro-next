@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 
 import { NavigatorContext } from './NavigatorContext';
-import type { NavigatorContextStore } from './store/NavigatorContextStore';
+import { NavigatorContextStore } from './store/NavigatorContextStore';
 
 export function useNavigatorContext<T>(selector: (state: NavigatorContextStore) => T) {
     const store = useContext(NavigatorContext);

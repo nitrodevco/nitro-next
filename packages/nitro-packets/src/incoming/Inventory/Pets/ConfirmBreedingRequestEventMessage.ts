@@ -1,8 +1,8 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IBreedingPetInfo } from '../../Data/BreedingPetInfoParser';
+import { IBreedingPetInfo } from '../../Data/BreedingPetInfoParser';
 import { BreedingPetInfoParser } from '../../Data/BreedingPetInfoParser';
-import type { IRarityCategoryData } from '../../Data/RarityCategoryDataParser';
+import { IRarityCategoryData } from '../../Data/RarityCategoryDataParser';
 import { RarityCategoryDataParser } from '../../Data/RarityCategoryDataParser';
 
 export type ConfirmBreedingRequestEventMessageType = {

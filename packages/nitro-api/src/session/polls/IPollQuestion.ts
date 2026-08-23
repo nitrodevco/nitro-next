@@ -1,4 +1,4 @@
-import type { IPollChoice } from './IPollChoice';
+import { IPollChoice } from './IPollChoice';
 
 export interface IPollQuestion {
     questionId: number;

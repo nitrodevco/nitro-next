@@ -1,4 +1,4 @@
-import type { IFriendRequest } from '@nitrodevco/nitro-packets';
+import { IFriendRequest } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context';
 import { Box, NitroIcon } from '#base/theme-pixi';

@@ -1,4 +1,4 @@
-﻿import type { IActiveActionData } from '../actions';
+﻿import { IActiveActionData } from '../actions';
 import { AvatarFigurePartType } from '../enum';
 
 export interface IAnimationLayerData {

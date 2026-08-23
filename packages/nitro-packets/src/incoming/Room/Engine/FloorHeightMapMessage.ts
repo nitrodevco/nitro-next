@@ -1,7 +1,7 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { AreaHideParser } from './Data/AreaHideParser';
-import type { IAreaHide } from './Data/IAreaHide';
+import { IAreaHide } from './Data/IAreaHide';
 
 export type FloorHeightMapMessageType = {
     scaleType: boolean;

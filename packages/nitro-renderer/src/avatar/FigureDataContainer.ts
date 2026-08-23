@@ -1,4 +1,4 @@
-﻿import type { AvatarGenderType } from '@nitrodevco/nitro-api';
+﻿import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
 
 export class FigureDataContainer {

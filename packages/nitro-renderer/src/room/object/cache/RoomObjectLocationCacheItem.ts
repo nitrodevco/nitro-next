@@ -1,4 +1,4 @@
-﻿import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import {  IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomObjectLocationCacheItem {
     private _location: Vector3d = new Vector3d();

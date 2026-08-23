@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IHallOfFameEntryData {
     userId: number;

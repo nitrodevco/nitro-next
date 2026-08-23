@@ -1,4 +1,4 @@
-import type { IAssetAnimationSpriteDirection } from './IAssetAnimationSpriteDirection';
+import { IAssetAnimationSpriteDirection } from './IAssetAnimationSpriteDirection';
 
 export interface IAssetAnimationSprite {
     id?: string;

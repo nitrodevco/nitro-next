@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
 
 export type YouAreControllerMessageType = {
     roomId: number;

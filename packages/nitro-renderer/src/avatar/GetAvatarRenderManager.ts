@@ -1,4 +1,4 @@
-import type { IAvatarRenderManager } from '@nitrodevco/nitro-api';
+import { IAvatarRenderManager } from '@nitrodevco/nitro-api';
 
 import { AvatarRenderManager } from './AvatarRenderManager';
 

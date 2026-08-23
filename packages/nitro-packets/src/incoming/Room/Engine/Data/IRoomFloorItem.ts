@@ -1,4 +1,4 @@
-import type { FurnitureUsagePolicyEnum, IObjectData } from '@nitrodevco/nitro-api';
+import { FurnitureUsagePolicyEnum, IObjectData } from '@nitrodevco/nitro-api';
 
 export interface IRoomFloorItem {
     objectId: number;

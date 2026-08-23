@@ -1,4 +1,4 @@
-import type { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
 import { AmbassadorAlertComposer, AssignRightsComposer, BanUserWithDurationComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, RemoveRightsComposer, SetRelationshipStatusComposer, UnignoreUserComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';

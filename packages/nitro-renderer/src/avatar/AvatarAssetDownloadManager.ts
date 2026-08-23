@@ -1,7 +1,7 @@
-import type { IAvatarAssetDownloadLibrary, IAvatarFigureContainer, IAvatarImageListener, IFigureMapLibrary } from '@nitrodevco/nitro-api';
+import { IAvatarAssetDownloadLibrary, IAvatarFigureContainer, IAvatarImageListener, IFigureMapLibrary } from '@nitrodevco/nitro-api';
 
 import { AvatarAssetDownloadLibrary } from './AvatarAssetDownloadLibrary';
-import type { AvatarStructure } from './AvatarStructure';
+import { AvatarStructure } from './AvatarStructure';
 
 export class AvatarAssetDownloadManager {
     private static MANDATORY_LIBRARIES: string[] = [ 'bd:1', 'li:0' ];

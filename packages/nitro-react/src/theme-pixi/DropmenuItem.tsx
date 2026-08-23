@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
 import { VariantCascadeProvider } from '#base/theme-core';
@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from '#base/theme-core';
 import { Box, type BoxLayout } from './Box';
 import { SpriteLayer } from './layer';
 import { Text } from './Text';
-import { type TextStyleKey } from './utils/textStyles';
+import {  TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';

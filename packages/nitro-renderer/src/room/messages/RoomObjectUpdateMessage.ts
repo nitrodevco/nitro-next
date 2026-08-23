@@ -1,4 +1,4 @@
-import type { IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
 
 export class RoomObjectUpdateMessage implements IRoomObjectUpdateMessage {
     private _location: IVector3D | undefined;

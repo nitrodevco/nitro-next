@@ -1,5 +1,5 @@
-﻿import type { IPlaneDrawingData } from '@nitrodevco/nitro-api';
-import type { Point } from 'pixi.js';
+﻿import { IPlaneDrawingData } from '@nitrodevco/nitro-api';
+import { Point } from 'pixi.js';
 
 export class PlaneDrawingData implements IPlaneDrawingData {
     private _z: number;

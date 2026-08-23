@@ -1,6 +1,6 @@
-import type { BLEND_MODES, Filter, Texture } from 'pixi.js';
+import { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
-import type { RoomObjectSpriteTypeEnum } from '../RoomObjectSpriteTypeEnum';
+import { RoomObjectSpriteTypeEnum } from '../RoomObjectSpriteTypeEnum';
 
 export interface IRoomObjectSprite {
     dispose(): void;

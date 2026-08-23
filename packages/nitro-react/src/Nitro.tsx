@@ -5,7 +5,7 @@ import {
     RoomContentLoader,
     TexturePool,
 } from '@nitrodevco/nitro-renderer';
-import { type FC, useEffect, useState } from 'react';
+import {  FC, useEffect, useState } from 'react';
 
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 import { getRenderMode } from '#base/theme-core';

@@ -1,4 +1,4 @@
-import type { BLEND_MODES } from 'pixi.js';
+import { BLEND_MODES } from 'pixi.js';
 
 export class LayerData {
     public static DEFAULT_COUNT: number = 0;

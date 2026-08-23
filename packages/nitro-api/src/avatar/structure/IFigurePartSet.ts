@@ -1,5 +1,5 @@
 import { AvatarFigurePartType, AvatarGenderType } from '../enum';
-import type { IFigurePart } from './IFigurePart';
+import { IFigurePart } from './IFigurePart';
 
 export interface IFigurePartSet {
     dispose(): void;

@@ -1,4 +1,4 @@
-import type { IRoomInstance } from './IRoomInstance';
+import { IRoomInstance } from './IRoomInstance';
 
 export interface IRoomManager {
     getRoomInstance(roomId: number): IRoomInstance | undefined;

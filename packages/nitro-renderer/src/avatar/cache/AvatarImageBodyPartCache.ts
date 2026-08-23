@@ -1,6 +1,6 @@
-﻿import type { IActiveActionData } from '@nitrodevco/nitro-api';
+﻿import { IActiveActionData } from '@nitrodevco/nitro-api';
 
-import type { AvatarImageActionCache } from './AvatarImageActionCache';
+import { AvatarImageActionCache } from './AvatarImageActionCache';
 
 export class AvatarImageBodyPartCache {
     private _cache: Map<string, AvatarImageActionCache> = new Map();

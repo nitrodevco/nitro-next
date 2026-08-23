@@ -1,4 +1,4 @@
-import type { IAssetGesture, IAssetPosture } from '@nitrodevco/nitro-api';
+import { IAssetGesture, IAssetPosture } from '@nitrodevco/nitro-api';
 
 import { AnimationSizeData } from './AnimationSizeData';
 

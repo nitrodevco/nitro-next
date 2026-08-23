@@ -1,5 +1,5 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { useFriendsActions } from '#base/context';
 import { Box, ColorLayer, NitroIcon, Text, useAvatarImageTexture } from '#base/theme-pixi';

@@ -1,7 +1,7 @@
 import { IFigureDataSetType } from '#api/asset/index';
 
 import { AvatarFigurePartType, AvatarGenderType } from '../enum';
-import type { IFigurePartSet } from './IFigurePartSet';
+import { IFigurePartSet } from './IFigurePartSet';
 
 export interface ISetType {
     dispose(): void;

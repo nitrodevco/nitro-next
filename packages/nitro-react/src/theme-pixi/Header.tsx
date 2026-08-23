@@ -1,4 +1,4 @@
-import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';

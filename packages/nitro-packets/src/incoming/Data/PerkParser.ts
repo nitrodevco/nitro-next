@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 /** PerkAllowancesMessageParser: code, errorMessage, isAllowed per entry */
 export interface IPerk {

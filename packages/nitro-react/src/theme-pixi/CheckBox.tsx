@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
 import { getRenderMode, VariantCascadeProvider } from '#base/theme-core';
@@ -7,10 +7,10 @@ import { Box, type BoxLayout } from './Box';
 import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { Text } from './Text';
 import { wrapTextChildren } from './utils';
-import { type TextStyleKey } from './utils/textStyles';
+import {  TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import {  SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 interface CheckBoxVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared

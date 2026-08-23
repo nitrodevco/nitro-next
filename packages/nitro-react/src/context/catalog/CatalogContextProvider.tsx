@@ -1,5 +1,5 @@
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useState } from 'react';
 
 import { CatalogContext } from './CatalogContext';

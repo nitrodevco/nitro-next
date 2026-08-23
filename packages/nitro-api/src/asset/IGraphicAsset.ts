@@ -1,4 +1,4 @@
-import type { Rectangle, Texture } from 'pixi.js';
+import { Rectangle, Texture } from 'pixi.js';
 
 export interface IGraphicAsset {
     recycle(): void;

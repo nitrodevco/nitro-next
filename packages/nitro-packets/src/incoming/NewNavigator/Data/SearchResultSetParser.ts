@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ISearchResultList } from './SearchResultListParser';
+import { ISearchResultList } from './SearchResultListParser';
 import { SearchResultListParser } from './SearchResultListParser';
 
 export interface ISearchResultSet {

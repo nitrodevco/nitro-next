@@ -1,5 +1,5 @@
-﻿import type { IAssetAnimationAvatar, IAvatarDataContainer } from '@nitrodevco/nitro-api';
-import type { Filter } from 'pixi.js';
+﻿import { IAssetAnimationAvatar, IAvatarDataContainer } from '@nitrodevco/nitro-api';
+import { Filter } from 'pixi.js';
 import { AdjustmentFilter } from 'pixi-filters';
 
 export class AvatarDataContainer implements IAvatarDataContainer {

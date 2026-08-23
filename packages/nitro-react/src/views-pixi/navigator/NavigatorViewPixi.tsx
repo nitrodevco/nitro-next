@@ -1,4 +1,4 @@
-import type { IRoomInfo } from '@nitrodevco/nitro-packets';
+import { IRoomInfo } from '@nitrodevco/nitro-packets';
 import { ForwardToARandomPromotedRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, OpenFlatConnectionComposer } from '@nitrodevco/nitro-packets';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';

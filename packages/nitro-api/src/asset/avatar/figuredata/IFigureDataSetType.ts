@@ -1,6 +1,6 @@
 import { AvatarFigurePartType } from '#api/avatar/enum';
 
-import type { IFigureDataSet } from './IFigureDataSet';
+import { IFigureDataSet } from './IFigureDataSet';
 
 export interface IFigureDataSetType {
     type: AvatarFigurePartType;

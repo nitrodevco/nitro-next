@@ -1,7 +1,7 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 import { GetObjectDataFromWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomFloorItem } from './IRoomFloorItem';
+import { IRoomFloorItem } from './IRoomFloorItem';
 
 export const FloorItemParser = (wrapper: IMessageDataWrapper): IRoomFloorItem => {
     const item = {

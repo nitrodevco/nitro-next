@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const NumbersParser = (wrapper: IMessageDataWrapper) => {
     const numbers: number[] = [];

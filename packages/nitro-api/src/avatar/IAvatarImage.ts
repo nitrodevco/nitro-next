@@ -1,11 +1,11 @@
-import type { ImageLike, RenderTexture } from 'pixi.js';
+import { ImageLike, RenderTexture } from 'pixi.js';
 
 import { IGraphicAsset } from '../asset';
 import { IActiveActionData } from './actions';
-import type { IAnimationLayerData, IAvatarDataContainer, ISpriteDataContainer } from './animation';
+import { IAnimationLayerData, IAvatarDataContainer, ISpriteDataContainer } from './animation';
 import { AvatarActionStateType, AvatarFigurePartType, AvatarScaleType, AvatarSetType } from './enum';
-import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
-import type { IPartColor } from './structure';
+import { IAvatarFigureContainer } from './IAvatarFigureContainer';
+import { IPartColor } from './structure';
 
 export interface IAvatarImage {
     dispose(): void;

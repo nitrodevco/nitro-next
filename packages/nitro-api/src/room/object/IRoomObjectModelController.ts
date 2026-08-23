@@ -1,6 +1,6 @@
-import type { IAdvancedMap } from '#api/utils';
+import { IAdvancedMap } from '#api/utils';
 
-import type { IRoomObjectModel } from './IRoomObjectModel';
+import { IRoomObjectModel } from './IRoomObjectModel';
 
 export interface IRoomObjectModelController extends IRoomObjectModel {
     setNumber(_arg_1: string, _arg_2: number, _arg_3: boolean): void;

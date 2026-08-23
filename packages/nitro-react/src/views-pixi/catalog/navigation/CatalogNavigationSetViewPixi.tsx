@@ -1,4 +1,4 @@
-import type { ICatalogNode } from '@nitrodevco/nitro-api';
+import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { Box } from '#base/theme-pixi';
 

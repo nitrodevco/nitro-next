@@ -1,8 +1,8 @@
-import type { Spritesheet, Texture } from 'pixi.js';
+import { Spritesheet, Texture } from 'pixi.js';
 
-import type { IAssetData } from './IAssetData';
-import type { IGraphicAsset } from './IGraphicAsset';
-import type { IGraphicAssetCollection } from './IGraphicAssetCollection';
+import { IAssetData } from './IAssetData';
+import { IGraphicAsset } from './IGraphicAsset';
+import { IGraphicAssetCollection } from './IGraphicAssetCollection';
 
 export interface IAssetManager {
     getTexture(name: string): Texture | undefined;

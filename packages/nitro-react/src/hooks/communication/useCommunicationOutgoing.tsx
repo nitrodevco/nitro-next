@@ -1,4 +1,4 @@
-import type { OutgoingPacketConstructor } from '@nitrodevco/nitro-api';
+import { OutgoingPacketConstructor } from '@nitrodevco/nitro-api';
 import { useRef } from 'react';
 
 export const useCommunicationOutgoing = () => {

@@ -1,4 +1,4 @@
-import type { IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { useCatalogOfferProduct, useProductIconUrl } from '#base/hooks';
 import { Border, Image } from '#base/theme-pixi';

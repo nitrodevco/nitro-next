@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ISavedSearch } from './SavedSearchParser';
+import { ISavedSearch } from './SavedSearchParser';
 import { SavedSearchParser } from './SavedSearchParser';
 
 export interface ITopLevelContext {

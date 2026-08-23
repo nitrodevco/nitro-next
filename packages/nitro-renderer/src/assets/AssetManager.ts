@@ -1,7 +1,7 @@
-import { type IAssetData, type IAssetManager, type IGraphicAsset, type IGraphicAssetCollection, NitroLogger } from '@nitrodevco/nitro-api';
+import {  IAssetData, type IAssetManager, type IGraphicAsset, type IGraphicAssetCollection, NitroLogger } from '@nitrodevco/nitro-api';
 import { AnimatedGIF } from '@pixi/gif';
 import JSZip from 'jszip';
-import type { SpritesheetData, Texture } from 'pixi.js';
+import { SpritesheetData, Texture } from 'pixi.js';
 import { Assets, Spritesheet } from 'pixi.js';
 
 import { NitroBundle } from '../utils';

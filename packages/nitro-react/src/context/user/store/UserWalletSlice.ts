@@ -1,4 +1,4 @@
-import type { StateCreator } from 'zustand';
+import { StateCreator } from 'zustand';
 
 type State = {
     credits: number;

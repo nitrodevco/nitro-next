@@ -1,4 +1,4 @@
-import type { IOutgoingPacket } from './IOutgoingPacket';
+import { IOutgoingPacket } from './IOutgoingPacket';
 
 export type OutgoingPacketConstructor<T extends object = object> = new (
     params: T

@@ -1,4 +1,4 @@
-import type { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
+import { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate, useNavigatorSelectors } from '#base/context';
 import { Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';

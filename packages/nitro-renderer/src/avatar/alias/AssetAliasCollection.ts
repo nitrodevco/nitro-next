@@ -1,4 +1,4 @@
-﻿import type { IGraphicAsset } from '@nitrodevco/nitro-api';
+﻿import { IGraphicAsset } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../assets';
 import { AssetAlias } from './AssetAlias';

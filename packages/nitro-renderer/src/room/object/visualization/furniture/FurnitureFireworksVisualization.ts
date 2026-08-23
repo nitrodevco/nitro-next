@@ -1,4 +1,4 @@
-import type { IAdvancedMap, IParticleSystem, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { IAdvancedMap, IParticleSystem, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { AdvancedMap, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';

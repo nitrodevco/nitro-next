@@ -1,4 +1,4 @@
-import type { RoomObjectVariableEnum } from './RoomObjectVariableEnum';
+import { RoomObjectVariableEnum } from './RoomObjectVariableEnum';
 
 export interface IRoomObjectModel {
     dispose(): void;

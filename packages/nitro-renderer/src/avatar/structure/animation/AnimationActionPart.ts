@@ -1,4 +1,4 @@
-import type { IAssetAvatarAnimationPart } from '@nitrodevco/nitro-api';
+import { IAssetAvatarAnimationPart } from '@nitrodevco/nitro-api';
 
 import { AvatarAnimationFrame } from './AvatarAnimationFrame';
 

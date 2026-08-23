@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export interface IRoomInfo {
     roomId: number;

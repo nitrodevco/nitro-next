@@ -1,4 +1,4 @@
-import type { IRoomMapMask } from '@nitrodevco/nitro-api';
+import { IRoomMapMask } from '@nitrodevco/nitro-api';
 
 export class RoomMapMaskData {
     private _masks: IRoomMapMask[];

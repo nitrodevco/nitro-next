@@ -1,14 +1,14 @@
-import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
+import { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 
-import type { IEventDispatcher, INitroEvent } from '../events';
-import type { IPetCustomPart } from '../session';
-import type { IVector3D } from '../utils';
-import type { FurnitureUsagePolicyEnum, RoomGeometryScaleType, RoomThicknessType } from './enum';
-import type { IRoomEventHandler } from './IRoomEventHandler';
-import type { IRoomGeometry } from './IRoomGeometry';
-import type { IRoomObjectManager } from './IRoomObjectManager';
-import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
-import type {
+import { IEventDispatcher, INitroEvent } from '../events';
+import { IPetCustomPart } from '../session';
+import { IVector3D } from '../utils';
+import { FurnitureUsagePolicyEnum, RoomGeometryScaleType, RoomThicknessType } from './enum';
+import { IRoomEventHandler } from './IRoomEventHandler';
+import { IRoomGeometry } from './IRoomGeometry';
+import { IRoomObjectManager } from './IRoomObjectManager';
+import { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
+import {
     IObjectData,
     IRoomMapData,
     IRoomObject,
@@ -17,7 +17,7 @@ import type {
     RoomObjectUserType,
     RoomObjectVariableEnum,
 } from './object';
-import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
+import { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
 
 export interface IRoom {
     dispose(): void;

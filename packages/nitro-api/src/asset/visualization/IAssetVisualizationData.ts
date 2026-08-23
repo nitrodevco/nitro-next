@@ -1,9 +1,9 @@
-import type { IAssetVisualAnimation } from './animation/IAssetVisualAnimation';
-import type { IAssetColor } from './color/IAssetColor';
-import type { IAssetGesture } from './gestures/IAssetGesture';
-import type { IAssetVisualizationDirection } from './IAssetVisualizationDirection';
-import type { IAssetVisualizationLayer } from './IAssetVisualizationLayer';
-import type { IAssetPosture } from './postures/IAssetPosture';
+import { IAssetVisualAnimation } from './animation/IAssetVisualAnimation';
+import { IAssetColor } from './color/IAssetColor';
+import { IAssetGesture } from './gestures/IAssetGesture';
+import { IAssetVisualizationDirection } from './IAssetVisualizationDirection';
+import { IAssetVisualizationLayer } from './IAssetVisualizationLayer';
+import { IAssetPosture } from './postures/IAssetPosture';
 
 export interface IAssetVisualizationData {
     size?: number;

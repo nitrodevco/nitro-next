@@ -1,4 +1,4 @@
-﻿import type { Texture } from 'pixi.js';
+﻿import { Texture } from 'pixi.js';
 
 export class PlaneBitmapData {
     private _texture: Texture | undefined;

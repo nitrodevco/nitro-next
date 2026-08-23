@@ -1,5 +1,5 @@
-import type { IAdvancedMap } from '../utils';
-import type { IRoomObjectController } from './object';
+import { IAdvancedMap } from '../utils';
+import { IRoomObjectController } from './object';
 
 export interface IRoomObjectManager {
     dispose(): void;

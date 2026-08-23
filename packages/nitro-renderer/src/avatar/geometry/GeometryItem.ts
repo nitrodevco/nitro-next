@@ -1,4 +1,4 @@
-﻿import type { AvatarFigurePartType, IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
+﻿import { AvatarFigurePartType, IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
 
 import { Node3D } from './Node3D';
 import { Vector3D } from './Vector3D';

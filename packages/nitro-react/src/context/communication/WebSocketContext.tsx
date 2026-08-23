@@ -1,4 +1,4 @@
-import type { IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
 import { createContext } from 'react';
 
 type WebSocketStore = {

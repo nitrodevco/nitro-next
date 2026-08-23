@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import { getRenderMode, THEME_URLS } from '#base/theme-core';
@@ -6,7 +6,7 @@ import { getRenderMode, THEME_URLS } from '#base/theme-core';
 import { Box, type BoxLayout } from './Box';
 import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import {  SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 

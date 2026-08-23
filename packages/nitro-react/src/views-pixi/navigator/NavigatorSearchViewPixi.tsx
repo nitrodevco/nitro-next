@@ -1,7 +1,7 @@
 import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import type { NavigatorFilterType } from '#base/context';
+import { NavigatorFilterType } from '#base/context';
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, Text, TextInput } from '#base/theme-pixi';
 

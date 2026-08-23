@@ -1,4 +1,4 @@
-import type { IAssetAnimationFramePart } from './IAssetAnimationFramePart';
+import { IAssetAnimationFramePart } from './IAssetAnimationFramePart';
 
 export interface IAssetAnimationFrame {
     repeats?: number;

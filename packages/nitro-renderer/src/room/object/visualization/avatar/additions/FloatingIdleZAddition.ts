@@ -1,11 +1,11 @@
 import { AvatarActionStateType, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { GetTickerTime } from '#renderer/utils';
 
-import type { AvatarVisualization } from '../AvatarVisualization';
-import type { IAvatarAddition } from './IAvatarAddition';
+import { AvatarVisualization } from '../AvatarVisualization';
+import { IAvatarAddition } from './IAvatarAddition';
 
 export class FloatingIdleZAddition implements IAvatarAddition {
     private static DELAY_BEFORE_ANIMATION: number = 2000;

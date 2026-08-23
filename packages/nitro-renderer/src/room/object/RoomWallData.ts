@@ -1,4 +1,4 @@
-﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import {  IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 export class RoomWallData {

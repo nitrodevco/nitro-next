@@ -1,8 +1,8 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FloorItemParser } from './Data/FloorItemParser';
 import { FurnitureOwnersParser } from './Data/FurnitureOwnersParser';
-import type { IRoomFloorItem } from './Data/IRoomFloorItem';
+import { IRoomFloorItem } from './Data/IRoomFloorItem';
 
 export type ObjectsMessageType = {
     owners: Map<number, string>;

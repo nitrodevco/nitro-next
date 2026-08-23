@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ISavedSearch } from './Data/SavedSearchParser';
+import { ISavedSearch } from './Data/SavedSearchParser';
 import { SavedSearchParser } from './Data/SavedSearchParser';
 
 export type NavigatorSavedSearchesMessageType = {

@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomWallItem } from './IRoomWallItem';
+import { IRoomWallItem } from './IRoomWallItem';
 
 export const WallItemParser = (wrapper: IMessageDataWrapper): IRoomWallItem => {
     const item = {

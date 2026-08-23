@@ -1,4 +1,4 @@
-import type {
+import {
     IAsset,
     IAssetData,
     IAssetPalette,
@@ -6,7 +6,7 @@ import type {
     IGraphicAssetCollection,
     IGraphicAssetPalette,
 } from '@nitrodevco/nitro-api';
-import type { Texture, TextureSource } from 'pixi.js';
+import { Texture, TextureSource } from 'pixi.js';
 
 import { GraphicAsset } from './GraphicAsset';
 import { GraphicAssetPalette } from './GraphicAssetPalette';

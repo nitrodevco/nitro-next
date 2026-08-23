@@ -1,11 +1,11 @@
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
-import type { IEventDispatcher } from '#api/events';
+import { IEventDispatcher } from '#api/events';
 
-import type { IGraphicAsset, IGraphicAssetCollection } from '../asset';
-import type { IFurnitureData } from '../session';
-import type { IPetColorResult } from './IPetColorResult';
-import type { IRoomContentListener } from './IRoomContentListener';
+import { IGraphicAsset, IGraphicAssetCollection } from '../asset';
+import { IFurnitureData } from '../session';
+import { IPetColorResult } from './IPetColorResult';
+import { IRoomContentListener } from './IRoomContentListener';
 
 export interface IRoomContentLoader {
     init(): Promise<void>;

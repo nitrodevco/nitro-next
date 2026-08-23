@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import { THEME_URLS } from '#base/theme-core';
 
-import type { BackgroundLayerConfig } from '../layer';
+import { BackgroundLayerConfig } from '../layer';
 
 export interface BackgroundLayerDomProps {
     layer: BackgroundLayerConfig | undefined;

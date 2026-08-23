@@ -1,4 +1,4 @@
-import type { ICatalogNode, IFurnitureData, IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { ICatalogNode, IFurnitureData, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 

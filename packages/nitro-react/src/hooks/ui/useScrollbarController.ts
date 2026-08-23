@@ -1,4 +1,4 @@
-import { type PointerEvent as ReactPointerEvent, type RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import {  PointerEvent as ReactPointerEvent, type RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 export type ScrollbarOrientation = 'vertical' | 'horizontal';
 

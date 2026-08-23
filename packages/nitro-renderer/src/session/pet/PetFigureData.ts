@@ -1,4 +1,4 @@
-import type { IPetCustomPart } from '@nitrodevco/nitro-api';
+import { IPetCustomPart } from '@nitrodevco/nitro-api';
 
 import { PetCustomPart } from './PetCustomPart';
 

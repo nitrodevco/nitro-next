@@ -1,4 +1,4 @@
-import type { IVector3D } from '@nitrodevco/nitro-api';
+import { IVector3D } from '@nitrodevco/nitro-api';
 
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 

@@ -1,4 +1,4 @@
-import type { IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 export interface IAvatarAddition {
     dispose(): void;

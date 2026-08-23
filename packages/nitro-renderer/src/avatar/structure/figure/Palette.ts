@@ -1,4 +1,4 @@
-import type { IFigureDataPalette, IPalette, IPartColor } from '@nitrodevco/nitro-api';
+import { IFigureDataPalette, IPalette, IPartColor } from '@nitrodevco/nitro-api';
 
 import { PartColor } from './PartColor';
 

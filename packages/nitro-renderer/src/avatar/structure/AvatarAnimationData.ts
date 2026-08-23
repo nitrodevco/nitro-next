@@ -1,4 +1,4 @@
-import type { IActionDefinition, IAssetAvatarAnimation, IFigureSetData } from '@nitrodevco/nitro-api';
+import { IActionDefinition, IAssetAvatarAnimation, IFigureSetData } from '@nitrodevco/nitro-api';
 
 import { AnimationAction } from './animation';
 

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import { TEXT_STYLES, type TextStyleKey } from '../utils/textStyles';
 

@@ -1,6 +1,6 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
-import { type ReactNode, type Ref } from 'react';
+import {  ReactNode, type Ref } from 'react';
 
 import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 import { GetPixelRatio } from '#base/utils';

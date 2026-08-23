@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper, IRoomChatSettings } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper, IRoomChatSettings } from '@nitrodevco/nitro-api';
 
 /**
  * Mirrors RoomChatSettings.fromFloodSensitivity() in the SWF: the wire only

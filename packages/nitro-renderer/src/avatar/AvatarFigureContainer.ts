@@ -1,4 +1,4 @@
-import type { AvatarFigurePartType, IAvatarFigureContainer } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, IAvatarFigureContainer } from '@nitrodevco/nitro-api';
 
 export class AvatarFigureContainer implements IAvatarFigureContainer {
     private _parts: Map<AvatarFigurePartType, { type: AvatarFigurePartType; setId: number; colorIds: number[] }> = new Map();

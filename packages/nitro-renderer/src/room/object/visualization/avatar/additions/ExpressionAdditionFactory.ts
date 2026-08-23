@@ -1,7 +1,7 @@
-import type { AvatarVisualization } from '../AvatarVisualization';
+import { AvatarVisualization } from '../AvatarVisualization';
 import { ExpressionAddition } from './ExpressionAddition';
 import { FloatingHeartAddition } from './FloatingHeartAddition';
-import type { IExpressionAddition } from './IExpressionAddition';
+import { IExpressionAddition } from './IExpressionAddition';
 
 export class ExpressionAdditionFactory {
     public static WAVE: number = 1;

@@ -1,6 +1,6 @@
 import { AnimationFrameData } from './AnimationFrameData';
 import { AnimationFrameDirectionalData } from './AnimationFrameDirectionalData';
-import type { DirectionalOffsetData } from './DirectionalOffsetData';
+import { DirectionalOffsetData } from './DirectionalOffsetData';
 
 export class AnimationFrameSequenceData {
     private _frames: AnimationFrameData[];

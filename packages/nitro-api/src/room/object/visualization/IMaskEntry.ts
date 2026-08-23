@@ -1,4 +1,4 @@
-import type { PointData, Texture } from 'pixi.js';
+import { PointData, Texture } from 'pixi.js';
 
 export interface IMaskEntry {
     texture: Texture;

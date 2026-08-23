@@ -1,4 +1,4 @@
-import { type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import {  IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FriendRequestStateType } from './FriendRequestStateType';
 import { IFriendRequest } from './IFriendRequest';

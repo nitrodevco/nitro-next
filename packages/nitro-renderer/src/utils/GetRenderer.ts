@@ -1,4 +1,4 @@
-import type { AutoDetectOptions, Renderer } from 'pixi.js';
+import { AutoDetectOptions, Renderer } from 'pixi.js';
 import { autoDetectRenderer, TextureSource } from 'pixi.js';
 
 let renderer: Renderer;

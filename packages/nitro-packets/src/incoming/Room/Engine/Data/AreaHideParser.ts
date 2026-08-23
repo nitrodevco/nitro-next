@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IAreaHide } from './IAreaHide';
+import { IAreaHide } from './IAreaHide';
 
 export const AreaHideParser = (wrapper: IMessageDataWrapper): IAreaHide[] => {
     const parseItem = (wrapper: IMessageDataWrapper) => {

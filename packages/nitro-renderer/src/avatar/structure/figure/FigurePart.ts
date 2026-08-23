@@ -1,4 +1,4 @@
-import type { AvatarFigurePartType, IFigureDataPart, IFigurePart } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, IFigureDataPart, IFigurePart } from '@nitrodevco/nitro-api';
 
 export class FigurePart implements IFigurePart {
     private _id: number;

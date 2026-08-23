@@ -1,5 +1,5 @@
 import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerUpdate } from '@nitrodevco/nitro-packets';
-import type { StateCreator } from 'zustand';
+import { StateCreator } from 'zustand';
 
 type State = {
     userFriendLimit: number;

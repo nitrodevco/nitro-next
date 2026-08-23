@@ -1,4 +1,4 @@
-import type { IRoomObject, RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { RoomObjectUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';

@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import { THEME_URLS } from '#base/theme-core';
 
-import type { SpriteFrame } from '../utils/useSpriteFrameTexture';
+import { SpriteFrame } from '../utils/useSpriteFrameTexture';
 
 /**
  * DOM counterpart to `useSpriteFrameTexture` - slices the same sub-region out of a shared

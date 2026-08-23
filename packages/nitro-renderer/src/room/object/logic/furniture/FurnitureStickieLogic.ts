@@ -1,4 +1,4 @@
-import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
 import { RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectItemDataUpdateMessage } from '../../../messages';

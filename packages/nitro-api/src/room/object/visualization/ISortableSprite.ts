@@ -1,4 +1,4 @@
-﻿import type { IRoomObjectSprite } from './IRoomObjectSprite';
+﻿import { IRoomObjectSprite } from './IRoomObjectSprite';
 
 export interface ISortableSprite {
     dispose(): void;

@@ -19,7 +19,7 @@ import { Texture } from 'pixi.js';
 import { GetAssetManager } from '#renderer/assets';
 
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
-import type { IAvatarAddition } from './additions';
+import { IAvatarAddition } from './additions';
 import {
     ExpressionAdditionFactory,
     FloatingIdleZAddition,

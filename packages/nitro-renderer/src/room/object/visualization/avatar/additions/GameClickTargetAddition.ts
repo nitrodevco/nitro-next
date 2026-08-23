@@ -1,7 +1,7 @@
 import { AlphaTolerance, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RenderTexture } from 'pixi.js';
 
-import type { IAvatarAddition } from './IAvatarAddition';
+import { IAvatarAddition } from './IAvatarAddition';
 
 export class GameClickTargetAddition implements IAvatarAddition {
     private static WIDTH: number = 46;

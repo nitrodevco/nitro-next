@@ -1,5 +1,5 @@
-import type { Container as PixiContainer } from 'pixi.js';
-import { type Key, type ReactElement, useEffect, useState } from 'react';
+import { Container as PixiContainer } from 'pixi.js';
+import {  Key, type ReactElement, useEffect, useState } from 'react';
 
 import { Box } from './Box';
 import { ScrollbarVertical } from './ScrollbarVertical';

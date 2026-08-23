@@ -1,4 +1,4 @@
-﻿import type { IObjectData, IVector3D } from '@nitrodevco/nitro-api';
+﻿import { IObjectData, IVector3D } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomFurnitureData {

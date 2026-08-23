@@ -1,4 +1,4 @@
-import type {
+import {
     IEventDispatcher,
     IFurnitureData,
     IGraphicAsset,
@@ -15,7 +15,7 @@ import {
     RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
 } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
 import { GetRoomEngine } from './GetRoomEngine';

@@ -1,5 +1,5 @@
-import type { IRoomUserData } from '@nitrodevco/nitro-api';
-import type { StateCreator } from 'zustand';
+import { IRoomUserData } from '@nitrodevco/nitro-api';
+import { StateCreator } from 'zustand';
 
 type State = {
     usersByRoomObjectId: Record<number, IRoomUserData>;

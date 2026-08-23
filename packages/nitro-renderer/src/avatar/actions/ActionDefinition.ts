@@ -1,4 +1,4 @@
-import type { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType, AvatarScaleType, IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType, AvatarScaleType, IActionDefinition, IAssetAvatarAction } from '@nitrodevco/nitro-api';
 
 import { ActionType } from './ActionType';
 

@@ -1,7 +1,7 @@
-import type { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
+import { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
 
 import { AnimationData } from './AnimationData';
-import type { AnimationFrame } from './AnimationFrame';
+import { AnimationFrame } from './AnimationFrame';
 import { SizeData } from './SizeData';
 
 export class AnimationSizeData extends SizeData {

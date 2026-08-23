@@ -1,4 +1,4 @@
-import type { IFurniData } from '@nitrodevco/nitro-api';
+import { IFurniData } from '@nitrodevco/nitro-api';
 import { FurniturePickupMode, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { useTranslation } from '#base/context';

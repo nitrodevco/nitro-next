@@ -1,7 +1,7 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FurnitureOwnersParser } from './Data/FurnitureOwnersParser';
-import type { IRoomWallItem } from './Data/IRoomWallItem';
+import { IRoomWallItem } from './Data/IRoomWallItem';
 import { WallItemParser } from './Data/WallItemParser';
 
 export type ItemsMessageType = {

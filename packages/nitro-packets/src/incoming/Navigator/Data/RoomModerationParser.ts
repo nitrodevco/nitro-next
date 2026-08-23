@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const RoomModerationParser = (wrapper: IMessageDataWrapper) => {
     return {

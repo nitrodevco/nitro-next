@@ -1,4 +1,4 @@
-import type {
+import {
     IAssetPlaneVisualizationLayer,
     IAssetRoomVisualizationData,
     IMaskEntry,
@@ -7,14 +7,14 @@ import type {
     IVector3D,
 } from '@nitrodevco/nitro-api';
 import { Vector3d } from '@nitrodevco/nitro-api';
-import type { RenderTexture } from 'pixi.js';
+import { RenderTexture } from 'pixi.js';
 import { Container, Matrix, Point, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { TexturePool, TextureUtils } from '#renderer/utils';
 
 import { RoomGeometry } from '../../../utils';
-import type { PlaneMaskManager } from './mask';
+import { PlaneMaskManager } from './mask';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
 import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';
 import { Randomizer } from './utils';

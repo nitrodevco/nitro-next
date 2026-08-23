@@ -1,14 +1,14 @@
-import type { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { GetTickerTime } from '#renderer/utils';
 
-import type { AssetAliasCollection } from '../alias';
+import { AssetAliasCollection } from '../alias';
 import { AvatarAnimationLayerData } from '../animation';
 import { AvatarImageBodyPartContainer } from '../AvatarImageBodyPartContainer';
-import type { AvatarImagePartContainer } from '../AvatarImagePartContainer';
-import type { AvatarStructure } from '../AvatarStructure';
+import { AvatarImagePartContainer } from '../AvatarImagePartContainer';
+import { AvatarStructure } from '../AvatarStructure';
 import { AvatarImageActionCache } from './AvatarImageActionCache';
 import { AvatarImageBodyPartCache } from './AvatarImageBodyPartCache';
 import { AvatarImageDirectionCache } from './AvatarImageDirectionCache';

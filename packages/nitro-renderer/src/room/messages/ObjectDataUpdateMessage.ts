@@ -1,4 +1,4 @@
-import type { IObjectData } from '@nitrodevco/nitro-api';
+import { IObjectData } from '@nitrodevco/nitro-api';
 
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 

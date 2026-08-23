@@ -1,9 +1,9 @@
-﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
+﻿import { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { GeometryItem } from './GeometryItem';
-import type { Matrix4x4 } from './Matrix4x4';
+import { Matrix4x4 } from './Matrix4x4';
 import { Node3D } from './Node3D';
-import type { Vector3D } from './Vector3D';
+import { Vector3D } from './Vector3D';
 
 export class GeometryBodyPart extends Node3D {
     private _id: AvatarBodyPartType;

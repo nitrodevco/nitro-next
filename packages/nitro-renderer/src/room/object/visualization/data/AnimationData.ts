@@ -1,10 +1,10 @@
-import type {
+import {
     IAssetVisualAnimation,
     IAssetVisualAnimationLayer,
     IAssetVisualAnimationSequenceFrame,
 } from '@nitrodevco/nitro-api';
 
-import type { AnimationFrame } from './AnimationFrame';
+import { AnimationFrame } from './AnimationFrame';
 import { AnimationLayerData } from './AnimationLayerData';
 import { DirectionalOffsetData } from './DirectionalOffsetData';
 

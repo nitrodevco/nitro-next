@@ -1,6 +1,6 @@
-import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
+import { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
 import { RoomObjectCategoryEnum, RoomObjectPlacementSource } from '@nitrodevco/nitro-api';
-import type { StateCreator } from 'zustand';
+import { StateCreator } from 'zustand';
 
 type State = {
     selectedAvatarId: number;

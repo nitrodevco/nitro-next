@@ -1,17 +1,17 @@
-import type { IRoom } from '@nitrodevco/nitro-api';
+import { IRoom } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
-import type { RoomCameraSlice } from './RoomCameraSlice';
+import { RoomCameraSlice } from './RoomCameraSlice';
 import { createRoomCameraSlice, RoomCameraSliceInitialState } from './RoomCameraSlice';
-import type { RoomMouseSlice } from './RoomMouseSlice';
+import { RoomMouseSlice } from './RoomMouseSlice';
 import { createRoomMouseSlice, RoomMouseSliceInitialState } from './RoomMouseSlice';
-import type { RoomSelectedObjectSlice } from './RoomSelectedObjectSlice';
+import { RoomSelectedObjectSlice } from './RoomSelectedObjectSlice';
 import { createRoomSelectedObjectSlice, RoomSelectedObjectSliceInitialState } from './RoomSelectedObjectSlice';
-import type { RoomSessionSlice } from './RoomSessionSlice';
+import { RoomSessionSlice } from './RoomSessionSlice';
 import { createRoomSessionSlice, RoomSessionSliceInitialState } from './RoomSessionSlice';
-import type { RoomStackingHeightMapSlice } from './RoomStackingHeightMapSlice';
+import { RoomStackingHeightMapSlice } from './RoomStackingHeightMapSlice';
 import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from './RoomStackingHeightMapSlice';
-import type { RoomUsersSlice } from './RoomUsersSlice';
+import { RoomUsersSlice } from './RoomUsersSlice';
 import { createRoomUsersSlice, RoomUsersSliceInitialState } from './RoomUsersSlice';
 
 type State = {

@@ -2,7 +2,7 @@ import { Rectangle, Texture } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { useTextureFromUrl } from './usePixiTexture';
-import type { SpriteFrame } from './useSpriteFrameTexture';
+import { SpriteFrame } from './useSpriteFrameTexture';
 
 /**
  * Discrete-PNG icon registry mirroring theme/icons.css (one image file per icon, as opposed

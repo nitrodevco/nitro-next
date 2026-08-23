@@ -1,4 +1,4 @@
-import type { IRoomObjectModel } from '@nitrodevco/nitro-api';
+import { IRoomObjectModel } from '@nitrodevco/nitro-api';
 
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
 

@@ -1,4 +1,4 @@
-import type { IAssetPlaneTextureBitmap } from './IAssetPlaneTextureBitmap';
+import { IAssetPlaneTextureBitmap } from './IAssetPlaneTextureBitmap';
 
 export interface IAssetPlaneMaskVisualization {
     size: number;

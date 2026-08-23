@@ -1,4 +1,4 @@
-import type { IncomingPacketConstructor } from '@nitrodevco/nitro-api';
+import { IncomingPacketConstructor } from '@nitrodevco/nitro-api';
 import { useEffect, useRef } from 'react';
 
 import { useWebSocketContext } from '#base/context';

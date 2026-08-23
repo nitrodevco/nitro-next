@@ -1,5 +1,5 @@
-import type { IAssetPlaneMaskData } from './IAssetPlaneMaskData';
-import type { IAssetPlaneVisualizationData } from './IAssetPlaneVisualizationData';
+import { IAssetPlaneMaskData } from './IAssetPlaneMaskData';
+import { IAssetPlaneVisualizationData } from './IAssetPlaneVisualizationData';
 
 export interface IAssetRoomVisualizationData {
     floorData?: IAssetPlaneVisualizationData;

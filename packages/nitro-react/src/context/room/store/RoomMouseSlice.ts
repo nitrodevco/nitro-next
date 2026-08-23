@@ -1,5 +1,5 @@
-import type { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-import type { StateCreator } from 'zustand';
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import { StateCreator } from 'zustand';
 
 type State = {
     eventIds: Map<RoomObjectCategoryEnum, Map<string, number>>;

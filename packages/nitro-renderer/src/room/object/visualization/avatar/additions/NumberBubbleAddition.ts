@@ -1,11 +1,11 @@
-import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 
-import type { AvatarVisualization } from '../AvatarVisualization';
-import type { IAvatarAddition } from './IAvatarAddition';
+import { AvatarVisualization } from '../AvatarVisualization';
+import { IAvatarAddition } from './IAvatarAddition';
 
 export class NumberBubbleAddition implements IAvatarAddition {
     private _asset: Texture | undefined = undefined;

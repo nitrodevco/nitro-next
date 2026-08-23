@@ -1,4 +1,4 @@
-import type { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { AnimationActionPart } from './AnimationActionPart';

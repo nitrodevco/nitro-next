@@ -1,4 +1,4 @@
-import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
 import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { useFurnitureDataSelector, useRoomSelector, useRoomStackingHeightMapActions } from '#base/context';

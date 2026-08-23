@@ -1,4 +1,4 @@
-import type { IAssetAvatarAnimationFrame } from '@nitrodevco/nitro-api';
+import { IAssetAvatarAnimationFrame } from '@nitrodevco/nitro-api';
 
 export class AvatarAnimationFrame {
     private _number: number;

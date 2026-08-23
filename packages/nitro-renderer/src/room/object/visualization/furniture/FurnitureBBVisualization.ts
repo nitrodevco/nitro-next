@@ -1,4 +1,4 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';
 

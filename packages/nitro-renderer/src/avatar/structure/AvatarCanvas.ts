@@ -1,4 +1,4 @@
-﻿import type { IAssetAvatarGeometry, IAvatarCanvas } from '@nitrodevco/nitro-api';
+﻿import { IAssetAvatarGeometry, IAvatarCanvas } from '@nitrodevco/nitro-api';
 import { AvatarScaleType } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 

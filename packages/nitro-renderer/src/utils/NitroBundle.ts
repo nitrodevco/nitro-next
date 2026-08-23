@@ -1,6 +1,6 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import type JSZip from 'jszip';
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 import { Assets } from 'pixi.js';
 
 export class NitroBundle {

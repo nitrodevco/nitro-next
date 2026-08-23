@@ -1,4 +1,4 @@
-import type { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@nitrodevco/nitro-api';
+import { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-api';
 
 import { RoomObject } from './RoomObject';

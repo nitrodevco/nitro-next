@@ -1,4 +1,4 @@
-import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetInterstitialComposerType = object;
 

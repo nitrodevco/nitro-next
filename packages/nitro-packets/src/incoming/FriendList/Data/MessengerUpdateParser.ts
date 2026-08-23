@@ -1,4 +1,4 @@
-import { type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FriendListUpdateActionType } from './FriendListUpdateActionType';
 import { IMessengerFriend } from './IMessengerFriend';

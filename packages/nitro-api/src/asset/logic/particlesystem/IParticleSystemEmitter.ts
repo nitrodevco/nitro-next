@@ -1,5 +1,5 @@
-import type { IParticleSystemParticle } from './IParticleSystemParticle';
-import type { IParticleSystemSimulation } from './IParticleSystemSimulation';
+import { IParticleSystemParticle } from './IParticleSystemParticle';
+import { IParticleSystemSimulation } from './IParticleSystemSimulation';
 
 export interface IParticleSystemEmitter {
     id?: number;

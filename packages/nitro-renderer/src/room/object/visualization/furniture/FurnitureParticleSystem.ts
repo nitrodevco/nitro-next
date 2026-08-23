@@ -7,11 +7,11 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-api';
-import type { Graphics } from 'pixi.js';
+import { Graphics } from 'pixi.js';
 import { AlphaFilter, Matrix, Point, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
-import type { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 import { FurnitureParticleSystemEmitter } from './FurnitureParticleSystemEmitter';
 
 export class FurnitureParticleSystem {

@@ -1,4 +1,4 @@
-import type { IPollQuestion } from '@nitrodevco/nitro-api';
+import { IPollQuestion } from '@nitrodevco/nitro-api';
 
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 

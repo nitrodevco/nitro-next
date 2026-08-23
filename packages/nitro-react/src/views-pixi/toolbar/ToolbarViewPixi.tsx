@@ -1,4 +1,4 @@
-import type { Graphics as PixiGraphics } from 'pixi.js';
+import { Graphics as PixiGraphics } from 'pixi.js';
 import { useState } from 'react';
 
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { AccordionContent, AccordionItem, AccordionTrigger, NitroIcon, Text } from '#base/theme-pixi';
 

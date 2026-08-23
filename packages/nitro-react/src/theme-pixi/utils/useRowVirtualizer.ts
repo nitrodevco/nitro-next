@@ -1,4 +1,4 @@
-import type { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
 export interface VirtualRow {

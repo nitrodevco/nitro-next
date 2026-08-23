@@ -1,6 +1,6 @@
-import type { IRoomUserData, IVector3D } from '@nitrodevco/nitro-api';
+import { IRoomUserData, IVector3D } from '@nitrodevco/nitro-api';
 import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import type { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from '@nitrodevco/nitro-packets';
+import { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from '@nitrodevco/nitro-packets';
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
 
 import { useOwnRoomObjectId, useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from '#base/context';

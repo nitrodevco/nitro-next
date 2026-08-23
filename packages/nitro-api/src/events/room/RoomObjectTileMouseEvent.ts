@@ -1,4 +1,4 @@
-﻿import type { IRoomObject } from '@nitrodevco/nitro-api';
+﻿import { IRoomObject } from '@nitrodevco/nitro-api';
 
 import { RoomObjectMouseEvent } from './RoomObjectMouseEvent';
 
