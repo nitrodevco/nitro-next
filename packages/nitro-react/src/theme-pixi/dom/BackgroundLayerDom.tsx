@@ -80,7 +80,17 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             if (!url) return null;
 
             const slice = `${layer.topHeight} ${layer.rightWidth} ${layer.bottomHeight} ${layer.leftWidth} fill`;
-            const width = `${layer.topHeight}px ${layer.rightWidth}px ${layer.bottomHeight}px ${layer.leftWidth}px`;
+            // `border-image-width` (and, since nothing else sets a `border-width` of its own,
+            // the actual layout `border-width` reserved for it) defaults to matching the slice
+            // per side - the same value used for both is correct for every nine-slice asset in
+            // this theme except the couple (TabButton, TabContent variant 3) whose `borderWidth`
+            // override trims a slice side to 0 without drawing it - see
+            // `BackgroundLayerConfig.ts`'s `NineSliceBorderWidth` docblock.
+            const top = layer.borderWidth?.top ?? layer.topHeight;
+            const right = layer.borderWidth?.right ?? layer.rightWidth;
+            const bottom = layer.borderWidth?.bottom ?? layer.bottomHeight;
+            const left = layer.borderWidth?.left ?? layer.leftWidth;
+            const width = `${top}px ${right}px ${bottom}px ${left}px`;
 
             return (
                 <div style={{

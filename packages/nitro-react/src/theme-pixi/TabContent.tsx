@@ -26,11 +26,16 @@ const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = {
         layout: { padding: 6 },
     },
     // shiny - the legacy DOM port (theme/TabContent.tsx, deleted) used
-    // `border-image-slice: 15 0 2 0 fill` for this variant; the bottomHeight here dropped to 0
-    // during the Pixi port, which pulls the nine-slice's stretched "fill" region 2px further
-    // down the source texture than the original slices it from (rows 15-19 instead of 15-17).
+    // `border-image-slice: 15 0 2 0 fill` / `border-image-width: 15px 0px 0px 0px` for this
+    // variant, matching the attached original Habbo skin XML's `top`(14x15)/`btm`(14x4) region
+    // split. bottomHeight here dropped to 0 during the Pixi port, pulling the nine-slice's
+    // stretched "fill" region 2px further into the source texture than intended (rows 15-19
+    // instead of 15-17); the zero `borderWidth.bottom` override (DOM-only, see
+    // BackgroundLayerConfig.ts's `NineSliceBorderWidth` docblock) means those trimmed 2px are
+    // never themselves drawn as a visible border band, matching the original slice-without-a-
+    // band technique - Pixi can't replicate that half, only the trimmed-fill half.
     3: {
-        layer: NineSlice('tabcontent-3-default-src', 0, 15, 0, 2),
+        layer: NineSlice('tabcontent-3-default-src', 0, 15, 0, 2, { bottom: 0 }),
         layout: { paddingTop: 6, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, marginTop: -2 },
     },
 };
