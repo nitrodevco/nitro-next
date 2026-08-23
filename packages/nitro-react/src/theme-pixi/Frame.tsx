@@ -33,13 +33,25 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
+// Frame's own decorative border (BackgroundLayer below) is a purely visual absolute-fill
+// overlay, not a real CSS/Yoga border reserving box-model space the way the legacy DOM port's
+// `border-image` on Frame's own root element did (see theme/Frame.tsx, deleted -
+// `border-image-width: 33px 10px 10px 10px` for variant 3, which is what pushed its children
+// into the remaining content-box automatically). Without an equivalent here, Header/ContentArea
+// rendered full-bleed to Frame's own outer edge, painting straight over the left/right/bottom
+// portions of the border art underneath instead of leaving it visible as a frame around the
+// content - each variant's own leftWidth/rightWidth/bottomHeight (the same numbers already
+// driving that variant's NineSlice border) is repeated here as Frame's own left/right/bottom
+// padding to reproduce that inset. topHeight is deliberately NOT repeated: Header's own
+// minHeight is already sized to occupy exactly that region (see Header.tsx's variant table),
+// so padding it again would double-reserve the same space.
 const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
-    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
-    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
-    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
-    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0' },
-    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf' },
-    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
+    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0', layout: { paddingLeft: 13, paddingRight: 13, paddingBottom: 13 } },
+    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c', layout: { paddingLeft: 13, paddingRight: 13, paddingBottom: 13 } },
+    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200', layout: { paddingLeft: 13, paddingRight: 13, paddingBottom: 13 } },
+    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0', layout: { paddingLeft: 10, paddingRight: 10, paddingBottom: 10 } },
+    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf', layout: { paddingLeft: 10, paddingRight: 10, paddingBottom: 10 } },
+    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73, layout: { paddingLeft: 10, paddingRight: 10, paddingBottom: 10 } },
     100: {
         layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
@@ -54,7 +66,7 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
         ]), minWidth: 50, minHeight: 50,
     },
     101: { minWidth: 50, minHeight: 80 },
-    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
+    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50, layout: { paddingLeft: 4, paddingRight: 4, paddingBottom: 5 } },
 };
 
 export interface FrameProps extends ThemeProps<FrameVariant> {
