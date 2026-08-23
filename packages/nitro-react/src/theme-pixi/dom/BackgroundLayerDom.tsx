@@ -2,7 +2,8 @@ import { CSSProperties } from 'react';
 
 import { THEME_URLS } from '#base/theme-core';
 
-import { BackgroundLayerConfig } from '../layer';
+import { BackgroundLayerConfig, CompositePiece } from '../layer';
+import { useTintedImageUrl } from './useTintedImageUrl';
 
 export interface BackgroundLayerDomProps {
     layer: BackgroundLayerConfig | undefined;
@@ -13,6 +14,38 @@ export interface BackgroundLayerDomProps {
 }
 
 const FILL_STYLE: CSSProperties = { position: 'absolute', inset: 0 };
+
+/**
+ * One `composite` piece, as its own component rather than inlined in the `.map()` below - a
+ * dual-target `BackgroundLayerConfig` piece can have any number of pieces, and `useTintedImageUrl`
+ * needs one unconditional hook call per piece, which only works if each piece is a real
+ * component instance (its own consistent per-render hook call), not a hook called from inside
+ * a loop within a single component.
+ */
+const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintColor?: string }) => {
+    const url = THEME_URLS[piece.textureKey];
+    const tintedUrl = useTintedImageUrl(tintColor ? url : undefined, tintColor);
+
+    if (!url) return null;
+
+    return (
+        <div style={{
+            position: 'absolute',
+            top: piece.top, left: piece.left, right: piece.right, bottom: piece.bottom,
+            width: piece.width, height: piece.height,
+        }}
+        >
+            <div style={{
+                position: 'absolute', inset: 0,
+                backgroundImage: `url(${tintedUrl ?? url})`,
+                backgroundSize: '100% 100%',
+                backgroundRepeat: 'no-repeat',
+                imageRendering: 'pixelated',
+            }}
+            />
+        </div>
+    );
+};
 
 /**
  * DOM counterpart to `theme-pixi/layer/BackgroundLayer.tsx`, switching on the exact same
@@ -26,20 +59,24 @@ const FILL_STYLE: CSSProperties = { position: 'absolute', inset: 0 };
  * - `composite` -> one absolutely-positioned child div per piece, sized exactly like
  *   `CompositePieceSprite.tsx`'s own `layout` (`top`/`left`/`right`/`bottom`/`width`/`height`).
  *
- * Tint is a CSS approximation, not pixel-perfect: a `mix-blend-mode: multiply` overlay masked
- * to the layer's own shape via `mask-image` (plain kinds) or `-webkit-mask-box-image-*`
- * (nine-slice, so the mask follows the stretched border shape rather than the raw source
- * image's rectangle). Degrades to untinted, not broken, wherever unsupported.
+ * Tint recolors the actual source image (via `useTintedImageUrl` - draw to canvas, multiply
+ * the tint color in, clip back to the source's own alpha shape) and uses the tinted result
+ * directly as the `background-image`/`border-image-source`, rather than the mask+
+ * `mix-blend-mode` overlay div this used to layer on top of the untinted art. `tintedUrl ?? url`
+ * falls back to the untinted art immediately, swapping to the tinted version once the canvas
+ * pass resolves (asynchronous - an `<img>`/canvas decode can't happen synchronously inline).
  */
 export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerDomProps) => {
-    if (!layer) return null;
-
     const box = style ?? FILL_STYLE;
+
+    const baseUrl = layer && layer.kind !== 'composite' ? THEME_URLS[layer.textureKey] : undefined;
+    const tintedUrl = useTintedImageUrl(tintColor ? baseUrl : undefined, tintColor);
+    const url = tintedUrl ?? baseUrl;
+
+    if (!layer) return null;
 
     switch (layer.kind) {
         case 'nineSlice': {
-            const url = THEME_URLS[layer.textureKey];
-
             if (!url) return null;
 
             const slice = `${layer.topHeight} ${layer.rightWidth} ${layer.bottomHeight} ${layer.leftWidth} fill`;
@@ -57,27 +94,12 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                     borderImageRepeat: 'stretch',
                     imageRendering: 'pixelated',
                 }}
-                >
-                    {tintColor && (
-                        <div style={{
-                            position: 'absolute', inset: 0,
-                            backgroundColor: tintColor,
-                            mixBlendMode: 'multiply',
-                            WebkitMaskBoxImageSource: `url(${url})`,
-                            WebkitMaskBoxImageSlice: slice,
-                            WebkitMaskBoxImageWidth: width,
-                            WebkitMaskBoxImageRepeat: 'stretch',
-                        }}
-                        />
-                    )}
-                </div>
+                />
             );
         }
 
         case 'stretch':
         case 'sprite': {
-            const url = THEME_URLS[layer.textureKey];
-
             if (!url) return null;
 
             return (
@@ -88,26 +110,11 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                     backgroundRepeat: 'no-repeat',
                     imageRendering: 'pixelated',
                 }}
-                >
-                    {tintColor && (
-                        <div style={{
-                            position: 'absolute', inset: 0,
-                            backgroundColor: tintColor,
-                            mixBlendMode: 'multiply',
-                            WebkitMaskImage: `url(${url})`,
-                            maskImage: `url(${url})`,
-                            WebkitMaskSize: '100% 100%',
-                            maskSize: '100% 100%',
-                        }}
-                        />
-                    )}
-                </div>
+                />
             );
         }
 
         case 'tile': {
-            const url = THEME_URLS[layer.textureKey];
-
             if (!url) return null;
 
             return (
@@ -117,65 +124,20 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                     backgroundRepeat: 'repeat',
                     imageRendering: 'pixelated',
                 }}
-                >
-                    {tintColor && (
-                        <div style={{
-                            position: 'absolute', inset: 0,
-                            backgroundColor: tintColor,
-                            mixBlendMode: 'multiply',
-                            WebkitMaskImage: `url(${url})`,
-                            maskImage: `url(${url})`,
-                            WebkitMaskRepeat: 'repeat',
-                            maskRepeat: 'repeat',
-                        }}
-                        />
-                    )}
-                </div>
+                />
             );
         }
 
         case 'composite':
             return (
                 <div style={box}>
-                    {layer.pieces.map((piece, i) => {
-                        const url = THEME_URLS[piece.textureKey];
-
-                        if (!url) return null;
-
-                        const pieceBox: CSSProperties = {
-                            position: 'absolute',
-                            top: piece.top, left: piece.left, right: piece.right, bottom: piece.bottom,
-                            width: piece.width, height: piece.height,
-                        };
-
-                        return (
-                            <div
-                                key={i}
-                                style={pieceBox}
-                            >
-                                <div style={{
-                                    position: 'absolute', inset: 0,
-                                    backgroundImage: `url(${url})`,
-                                    backgroundSize: '100% 100%',
-                                    backgroundRepeat: 'no-repeat',
-                                    imageRendering: 'pixelated',
-                                }}
-                                />
-                                {tintColor && (
-                                    <div style={{
-                                        position: 'absolute', inset: 0,
-                                        backgroundColor: tintColor,
-                                        mixBlendMode: 'multiply',
-                                        WebkitMaskImage: `url(${url})`,
-                                        maskImage: `url(${url})`,
-                                        WebkitMaskSize: '100% 100%',
-                                        maskSize: '100% 100%',
-                                    }}
-                                    />
-                                )}
-                            </div>
-                        );
-                    })}
+                    {layer.pieces.map((piece, i) => (
+                        <CompositePieceDom
+                            key={i}
+                            piece={piece}
+                            tintColor={tintColor}
+                        />
+                    ))}
                 </div>
             );
 
