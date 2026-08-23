@@ -100,6 +100,10 @@ const config = [
             '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
             '@stylistic/linebreak-style': ['error', 'unix'],
             '@stylistic/function-paren-newline': ['error', 'multiline-arguments'],
+            // Lets `case x: doThing(); break;` stay on one line - `break;` no longer counts
+            // toward the per-line statement limit, so the case body itself still must be a
+            // single statement, just followed by its break.
+            '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement'] }],
             // customize()'s own jsx-max-props-per-line/jsx-first-prop-new-line defaults only
             // force a break once a tag is *already* multiline - these three force it whenever a
             // tag has more than one prop, regardless of how short the line would otherwise be.
