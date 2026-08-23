@@ -36,7 +36,7 @@ const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = {
     // band technique - Pixi can't replicate that half, only the trimmed-fill half.
     3: {
         layer: NineSlice('tabcontent-3-default-src', 0, 15, 0, 2, { bottom: 0 }),
-        layout: { paddingTop: 6, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, marginTop: -2 },
+        layout: { paddingTop: 6, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, marginTop: 1 },
     },
 };
 

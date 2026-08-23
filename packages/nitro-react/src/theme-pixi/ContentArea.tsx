@@ -11,7 +11,7 @@ type ContentAreaVariant = ThemeVariant;
 
 const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
     0: { layout: { paddingBottom: 3 } },
-    3: { layout: { position: 'relative' } },
+    3: { layout: { position: 'relative', paddingLeft: 3, paddingRight: 3, paddingTop: 1, paddingBottom: 4 } },
 };
 
 export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
