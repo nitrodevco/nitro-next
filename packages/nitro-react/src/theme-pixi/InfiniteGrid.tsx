@@ -1,5 +1,3 @@
-
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { type Key, type ReactElement, useEffect, useState } from 'react';
 

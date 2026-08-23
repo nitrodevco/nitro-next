@@ -1,5 +1,3 @@
-
-
 import { GetRoomStage, SetRenderer } from '@nitrodevco/nitro-renderer';
 import { Application } from '@pixi/react';
 import { type Application as PixiApplication } from 'pixi.js';

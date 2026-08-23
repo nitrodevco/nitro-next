@@ -1,5 +1,3 @@
-
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes, useEffect, useRef, useState } from 'react';
 
