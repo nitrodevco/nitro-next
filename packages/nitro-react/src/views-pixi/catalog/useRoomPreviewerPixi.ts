@@ -1,6 +1,5 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRoomEngine, GetTickerTime } from '@nitrodevco/nitro-renderer';
-import { useApplication } from '@pixi/react';
+import { GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, PointData, Ticker } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
@@ -13,7 +12,6 @@ const ALLOWED_IMAGE_CUT: number = 0.5;
 const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
 
 export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObject<PixiContainer | null>) => {
-    const { app } = useApplication();
     const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
     const { createMapForSize } = useRoomMapping();
     const previewData = useRef<IRoomPreviewerData>({
@@ -322,7 +320,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
     };
 
     useEffect(() => {
-        if (!room || !app) return;
+        if (!room) return;
 
         let lastWidth = -1;
         let lastHeight = -1;
@@ -354,7 +352,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
             }
         };
 
-        app.ticker.add(tick);
+        GetTicker().add(tick);
 
         const onObjectEvent = (event: RoomEngineObjectEvent) => {
             if (!room || !event) return;
@@ -380,7 +378,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         ];
 
         return () => {
-            app.ticker.remove(tick);
+            GetTicker().remove(tick);
             listeners.map(x => x?.());
 
             if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);

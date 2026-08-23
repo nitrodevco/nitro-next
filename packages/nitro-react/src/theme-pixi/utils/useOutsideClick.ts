@@ -1,4 +1,4 @@
-import { useApplication } from '@pixi/react';
+import { GetRenderer } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer } from 'pixi.js';
 import { RefObject, useEffect } from 'react';
 
@@ -16,14 +16,12 @@ import { RefObject, useEffect } from 'react';
  * checked against the target container's own `getBounds()`.
  */
 export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null>, callback: () => void, enabled: boolean = true) => {
-    const { app } = useApplication();
-
     useEffect(() => {
-        if (!app || !enabled) return;
+        if (!enabled) return;
 
         const onPointerDown = (event: PointerEvent) => {
             const container = ref.current;
-            const canvas = app.canvas;
+            const canvas = GetRenderer().canvas;
 
             if (!container || !canvas) return;
 
@@ -39,5 +37,5 @@ export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null
         window.addEventListener('pointerdown', onPointerDown);
 
         return () => window.removeEventListener('pointerdown', onPointerDown);
-    }, [ app, ref, enabled, callback ]);
+    }, [ ref, enabled, callback ]);
 };

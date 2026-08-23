@@ -2,6 +2,8 @@ import { AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/ni
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
+import { Image } from '#base/theme-pixi';
+
 type AvatarImageProps = {
     figure: string;
     gender: AvatarGenderType;
@@ -28,20 +30,8 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
                 figure,
                 AvatarScaleType.Large,
                 gender,
-                {
-                    resetFigure: (figure: string) => {
-                        if (disposed.current) return;
-
-                        setRandomValue(Math.random());
-                    },
-                },
-                {
-                    resetEffect: (effect: number) => {
-                        if (disposed.current) return;
-
-                        setRandomValue(Math.random());
-                    },
-                },
+                { resetFigure: () => { if (!disposed.current) setRandomValue(Math.random()); } },
+                { resetEffect: () => { if (!disposed.current) setRandomValue(Math.random()); } },
             );
 
             if (!avatarImage) return;
@@ -73,18 +63,13 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
             };
         }, []);
 
+        // backgroundPosition: 'center -8px',
+
         return (
-            <div
-                className="avatar-image-container"
-                ref={ref}
-                style={{
-                    width: imageData.width,
-                    height: imageData.height,
-                    backgroundImage: `url(${imageData.url})`,
-                    backgroundPosition: 'center -8px',
-                    backgroundRepeat: 'no-repeat',
-                    pointerEvents: 'none',
-                }}
+            <Image
+                src={imageData.url}
+                width={imageData.width}
+                height={imageData.height}
             />
         );
     },

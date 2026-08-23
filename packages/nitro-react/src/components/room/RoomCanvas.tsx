@@ -1,6 +1,5 @@
 import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
-import { GetRoomStage, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
-import { useApplication } from '@pixi/react';
+import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
@@ -18,7 +17,6 @@ type MouseData = {
 const DRAG_THRESHOLD: number = 15;
 
 export const RoomCanvas = () => {
-    const { app } = useApplication();
     const room = useRoomSelector();
     const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
     const { updateRoomCamera } = useRoomCamera();
@@ -151,7 +149,7 @@ export const RoomCanvas = () => {
     };
 
     useEffect(() => {
-        if (!app || !room) return;
+        if (!room) return;
 
         let canvas = room.canvas;
 
@@ -183,7 +181,7 @@ export const RoomCanvas = () => {
             updateRoomCamera(-1);
         };
 
-        app.renderer.on('resize', resizeCanvas);
+        GetRenderer().on('resize', resizeCanvas);
 
         const tick = (ticker: Ticker) => {
             if (!room || !canvas || !container) return;
@@ -207,7 +205,7 @@ export const RoomCanvas = () => {
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
         };
 
-        app.ticker.add(tick);
+        GetTicker().add(tick);
 
         let didMouseMove = false;
         let isMouseDown = false;
@@ -280,8 +278,8 @@ export const RoomCanvas = () => {
         container.on('rightclick', handlePointerEvent);
 
         return () => {
-            app.renderer.off('resize', resizeCanvas);
-            app.ticker.remove(tick);
+            GetRenderer().off('resize', resizeCanvas);
+            GetTicker().remove(tick);
 
             container.off('click', handlePointerEvent);
             container.off('pointermove', handlePointerEvent);
@@ -289,7 +287,7 @@ export const RoomCanvas = () => {
             container.off('pointerup', handlePointerEvent);
             container.off('rightclick', handlePointerEvent);
         };
-    }, [ app, room ]);
+    }, [ room ]);
 
     return null;
 };
