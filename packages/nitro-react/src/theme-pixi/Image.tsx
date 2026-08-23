@@ -130,10 +130,12 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     const resolvedWidth = frame?.width ?? width;
     const resolvedHeight = frame?.height ?? height;
 
+    // See Box.tsx's BoxDom for why 'static'/'dynamic' need an explicit 'auto' here (CSS
+    // pointer-events is inherited, and #ui-container sets it to 'none' at its root).
     const sharedStyle: CSSProperties = {
         cursor,
         opacity: alpha,
-        pointerEvents: eventMode === 'none' ? 'none' : undefined,
+        pointerEvents: eventMode === 'none' ? 'none' : (eventMode === 'static' || eventMode === 'dynamic') ? 'auto' : undefined,
     };
     const sharedHandlers = {
         onPointerEnter: onPointerOver as unknown as PointerEventHandler,

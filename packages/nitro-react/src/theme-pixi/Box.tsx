@@ -84,7 +84,13 @@ const BoxDom = forwardRef<Container, BoxProps>(
     ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap }, ref) => {
         const style = boxLayoutToStyle(layout as BoxLayout | undefined);
 
+        // `#ui-container` (MainView.tsx) sets `pointer-events: none` at its root so clicks
+        // pass through to the room canvas beneath everywhere except an actual interactive
+        // element - every interactive Box needs to explicitly opt back in with `auto` (CSS
+        // `pointer-events` is inherited, so without this every button under that root would
+        // silently inherit `none` and never receive a click).
         if (eventMode === 'none') style.pointerEvents = 'none';
+        else if (eventMode === 'static' || eventMode === 'dynamic') style.pointerEvents = 'auto';
         if (typeof cursor === 'string') style.cursor = cursor;
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
