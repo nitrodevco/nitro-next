@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
 import { Nitro } from './Nitro';
-import { setRenderMode } from './theme-core';
+import { loadThemeFonts, setRenderMode } from './theme-core';
 
 // NitroLogger.LOG_ERROR = import.meta.env.DEV;
 // NitroLogger.LOG_WARN = import.meta.env.DEV;
@@ -41,7 +41,11 @@ window.NitroConfig = window.NitroConfig || {};
 
 const element = document.getElementById('root');
 
-void document.fonts.ready.then(() => {
+// `loadThemeFonts()` (see theme-core/fonts.ts) does the actual work here - `document.fonts.ready`
+// alone resolves without ever loading a font nothing has rendered text with yet, which is exactly
+// every custom font before first paint, so it's kept only as a belt-and-suspenders wait for
+// anything else that might load fonts outside that helper.
+void Promise.all([ document.fonts.ready, loadThemeFonts() ]).then(() => {
     if (!element) return;
 
     createRoot(element).render(
