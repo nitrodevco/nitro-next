@@ -1,12 +1,12 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { getRenderMode, THEME_URLS } from '#base/theme-core';
+import { THEME_URLS } from '#base/theme-core';
 
-import { Box, BoxLayout } from './Box';
-import { spriteFrameToStyle } from './dom/spriteFrameDom';
+import { BoxLayout } from './Box';
+import { Image } from './Image';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/useSpriteFrameTexture';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 
@@ -84,54 +84,16 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
         // resolvedTint only ever comes from the caller-supplied tintColor prop, so it is used
         // (via the tintColor param above) with no per-variant fallback table needed here.
         const frame = config.frames[resolvedVariant] ?? config.frames['0'];
-        const isDom = getRenderMode() === 'dom';
-        const texture = useSpriteFrameTexture(isDom ? undefined : config.textureKey, isDom ? undefined : frame);
-
-        const boxLayout: BoxLayout = { width: frame.width, height: frame.height, ...config.margin, ...layout };
-
-        if (isDom) {
-            const style = spriteFrameToStyle(config.textureKey, frame);
-
-            if (!style) return null;
-
-            return (
-                <Box
-                    ref={ref}
-                    layout={boxLayout}
-                >
-                    <div style={style} />
-                    {tintColor && (
-                        <div style={{
-                            position: 'absolute', inset: 0,
-                            backgroundColor: tintColor,
-                            mixBlendMode: 'multiply',
-                            WebkitMaskImage: `url(${THEME_URLS[config.textureKey]})`,
-                            maskImage: `url(${THEME_URLS[config.textureKey]})`,
-                            WebkitMaskPosition: style.backgroundPosition,
-                            maskPosition: style.backgroundPosition,
-                            WebkitMaskSize: 'none',
-                            maskSize: 'none',
-                        }}
-                        />
-                    )}
-                </Box>
-            );
-        }
-
-        if (!texture) return null;
 
         return (
-            <Box
+            <Image
                 ref={ref}
-                layout={boxLayout}
-            >
-                <pixiSprite
-                    texture={texture}
-                    tint={tintColor}
-                    eventMode="none"
-                    layout={{}}
-                />
-            </Box>
+                src={THEME_URLS[config.textureKey]}
+                frame={frame}
+                tint={tintColor}
+                eventMode="none"
+                layout={{ width: frame.width, height: frame.height, ...config.margin, ...layout }}
+            />
         );
     },
 );

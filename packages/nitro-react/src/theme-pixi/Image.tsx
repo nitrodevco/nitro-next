@@ -1,4 +1,4 @@
-import { Container as PixiContainer, EventMode, Rectangle, Texture } from 'pixi.js';
+import { Container as PixiContainer, EventMode, FederatedPointerEvent, Rectangle, Texture } from 'pixi.js';
 import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, useMemo } from 'react';
 
 import { useConfigValue } from '#base/context';
@@ -18,12 +18,18 @@ export interface ImageProps {
     tint?: string;
     eventMode?: EventMode;
     cursor?: string;
-    onPointerOver?: () => void;
-    onPointerOut?: () => void;
-    onPointerDown?: () => void;
-    onPointerUp?: () => void;
-    onPointerUpOutside?: () => void;
-    onPointerTap?: () => void;
+    /**
+     * Typed as taking Pixi's own event (accepting a caller who needs it, e.g. to
+     * `.stopPropagation()`) - a plain zero-arg callback is still assignable here, and the DOM
+     * branch passes through to the real PointerEvent/MouseEvent at runtime regardless of this
+     * declared type, same cross-target cast Box.tsx's own handler props already rely on.
+     */
+    onPointerOver?: (event: FederatedPointerEvent) => void;
+    onPointerOut?: (event: FederatedPointerEvent) => void;
+    onPointerDown?: (event: FederatedPointerEvent) => void;
+    onPointerUp?: (event: FederatedPointerEvent) => void;
+    onPointerUpOutside?: (event: FederatedPointerEvent) => void;
+    onPointerTap?: (event: FederatedPointerEvent) => void;
     /**
      * Falls back to `loading.icon.url` while `src` is resolving/erroring, instead of rendering
      * nothing. Only meaningful for whole-image (no `frame`) use - matches DOM's Image.tsx

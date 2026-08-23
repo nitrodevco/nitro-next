@@ -1,13 +1,13 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, PointerEvent as ReactPointerEvent, RefAttributes } from 'react';
 
-import { getRenderMode } from '#base/theme-core';
+import { THEME_URLS } from '#base/theme-core';
 
-import { Box, BoxLayout } from './Box';
-import { spriteFrameToStyle } from './dom/spriteFrameDom';
+import { BoxLayout } from './Box';
+import { Image } from './Image';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/useSpriteFrameTexture';
 
 interface CloseButtonVariant {
     textureKey: string;
@@ -80,9 +80,6 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
         const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
         const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
         const { state, handlers } = useInteractionState();
-        const isDom = getRenderMode() === 'dom';
-        const frame = config ? resolveByState(config.frames, state) : undefined;
-        const texture = useSpriteFrameTexture(isDom ? undefined : config?.textureKey, isDom ? undefined : frame);
 
         // Stops the click from also being seen by Header's onHeaderPointerDown (drag), same
         // effect as the DOM version's data-no-drag attribute. `.stopPropagation()` exists on
@@ -92,50 +89,25 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
             handlers.onPointerDown?.();
         };
 
-        if (isDom) {
-            const style = frame ? spriteFrameToStyle(config?.textureKey, frame) : undefined;
+        if (!config) return null;
 
-            if (!style) return null;
-
-            return (
-                <Box
-                    ref={ref}
-                    layout={{ width: frame!.width, height: frame!.height, ...layout }}
-                >
-                    <div
-                        style={{ ...style, cursor: 'pointer' }}
-                        onPointerEnter={handlers.onPointerOver}
-                        onPointerLeave={handlers.onPointerOut}
-                        onPointerDown={handlePointerDown}
-                        onPointerUp={handlers.onPointerUp}
-                        onClick={onClose}
-                    />
-                </Box>
-            );
-        }
-
-        if (!texture) return null;
+        const frame = resolveByState(config.frames, state);
 
         return (
-            <Box
+            <Image
                 ref={ref}
-                layout={{ width: texture.width, height: texture.height, ...layout }}
-            >
-                <pixiSprite
-                    texture={texture}
-                    width={texture.width}
-                    height={texture.height}
-                    eventMode="static"
-                    cursor="pointer"
-                    layout={{}}
-                    onPointerOver={handlers.onPointerOver}
-                    onPointerOut={handlers.onPointerOut}
-                    onPointerDown={handlePointerDown}
-                    onPointerUp={handlers.onPointerUp}
-                    onPointerUpOutside={handlers.onPointerUpOutside}
-                    onPointerTap={onClose}
-                />
-            </Box>
+                src={THEME_URLS[config.textureKey]}
+                frame={frame}
+                eventMode="static"
+                cursor="pointer"
+                onPointerOver={handlers.onPointerOver}
+                onPointerOut={handlers.onPointerOut}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlers.onPointerUp}
+                onPointerUpOutside={handlers.onPointerUpOutside}
+                onPointerTap={onClose}
+                layout={{ width: frame.width, height: frame.height, ...layout }}
+            />
         );
     },
 );

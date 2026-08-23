@@ -1,16 +1,16 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
-import { getRenderMode, VariantCascadeProvider } from '#base/theme-core';
+import { THEME_URLS, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box, BoxLayout } from './Box';
-import { spriteFrameToStyle } from './dom/spriteFrameDom';
+import { Image } from './Image';
 import { Text } from './Text';
 import { wrapTextChildren } from './utils';
 import { TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/useSpriteFrameTexture';
 
 interface CheckBoxVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared
@@ -103,12 +103,8 @@ export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<P
         const config = CHECK_BOX_VARIANTS[resolvedVariant] ?? CHECK_BOX_VARIANTS['0']!;
         const { state, handlers } = useInteractionState(disabled);
         const showSelected = !!selected && state !== 'pressed';
-        const isDom = getRenderMode() === 'dom';
         const activeTextureKey = showSelected ? config.selectedTextureKey : config.defaultTextureKey;
         const activeFrame = showSelected ? config.selectedFrame : config.defaultFrame;
-        const texture = useSpriteFrameTexture(isDom ? undefined : activeTextureKey, isDom ? undefined : activeFrame);
-
-        if (!isDom && !texture) return null;
 
         return (
             <Box
@@ -126,17 +122,14 @@ export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<P
                 }}
                 {...handlers}
             >
-                {isDom
-                    ? <div style={{ position: 'absolute', top: 0, left: 0, ...spriteFrameToStyle(activeTextureKey, activeFrame) }} />
-                    : (
-                            <pixiSprite
-                                texture={texture}
-                                width={config.width}
-                                height={config.height}
-                                eventMode="none"
-                                layout={{ position: 'absolute', top: 0, left: 0 }}
-                            />
-                        )}
+                <Image
+                    src={THEME_URLS[activeTextureKey]}
+                    frame={activeFrame}
+                    width={config.width}
+                    height={config.height}
+                    eventMode="none"
+                    layout={{ position: 'absolute', top: 0, left: 0 }}
+                />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
                         ? (
