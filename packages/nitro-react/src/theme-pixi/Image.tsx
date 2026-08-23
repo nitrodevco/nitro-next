@@ -1,4 +1,4 @@
-import { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer, EventMode } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { useConfigValue } from '#base/context';
@@ -9,6 +9,12 @@ import { useTextureFromUrl } from './utils/usePixiTexture';
 
 export interface ImageProps {
     src: string | undefined;
+    /** Explicit render size - omit to render at the resolved texture/image's own native size. */
+    width?: number;
+    height?: number;
+    eventMode?: EventMode;
+    cursor?: string;
+    onPointerTap?: () => void;
     layout?: BoxLayout;
 }
 
@@ -23,16 +29,15 @@ export interface ImageProps {
  *
  * `layout` sizes/positions an outer `Box` (matching DOM's `wrapperClassName`, e.g. catalog grid
  * items' `min-w-[32px] min-h-[32px] max-w-[32px] max-h-[32px]`) rather than the sprite itself -
- * DOM's actual `<img>` never has its own width/height set, so it always renders at its natural
- * resolution and is simply centered inside that wrapper by `flex items-center justify-center`.
- * Applying `layout`'s min/max constraints straight to the sprite instead (as this used to do)
+ * applying `layout`'s min/max constraints straight to the sprite instead (as this used to do)
  * makes @pixi/layout stretch the sprite's texture to exactly fill them, distorting any icon
  * whose native size doesn't already match - the "icon is zoomed in" bug this fixes. The sprite
- * itself gets an explicit `width`/`height` equal to the texture's own size (the same
- * intrinsic-sizing pattern NitroIcon.tsx already uses), so it renders at native resolution and
- * @pixi/layout has no smaller layout box to stretch it into.
+ * itself defaults to the texture's own size (the same intrinsic-sizing pattern NitroIcon.tsx
+ * already uses) so @pixi/layout has no smaller layout box to stretch it into, unless `width`/
+ * `height` are passed explicitly (e.g. a fixed-size icon button whose art has surrounding
+ * padding baked into a larger source image) - `<img>` mirrors the same explicit-or-native sizing.
  */
-const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => {
+const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, width, height, eventMode, cursor, onPointerTap, layout }, ref) => {
     const texture = useTextureFromUrl(src);
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
@@ -49,8 +54,11 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) =
         >
             <pixiSprite
                 texture={resolvedTexture}
-                width={resolvedTexture.width}
-                height={resolvedTexture.height}
+                width={width ?? resolvedTexture.width}
+                height={height ?? resolvedTexture.height}
+                eventMode={eventMode}
+                cursor={cursor}
+                onPointerTap={onPointerTap}
                 layout={{}}
             />
         </Box>
@@ -60,13 +68,14 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) =
 ImagePixi.displayName = 'ImagePixi';
 
 /**
- * A plain `<img>` at its natural resolution, centered in the same `Box` wrapper the Pixi
- * branch uses (see the docblock above for why - the wrapper sizes/centers, the image itself
- * never gets forced dimensions). No Pixi asset-manager preload/placeholder-swap dance needed
- * here - the browser's own `<img>` loading already covers that, and `Box` alone is enough to
- * reserve the layout space while it loads.
+ * A plain `<img>`, centered in the same `Box` wrapper the Pixi branch uses (see the docblock
+ * above for why). No Pixi asset-manager preload/placeholder-swap dance needed here - the
+ * browser's own `<img>` loading already covers that, and `Box` alone is enough to reserve the
+ * layout space while it loads. `width`/`height` are set as real attributes (not just CSS) so
+ * the browser reserves the correct box before the image has actually loaded, same as Pixi's
+ * sprite getting its size up front rather than after the texture resolves.
  */
-const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => (
+const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, width, height, eventMode, cursor, onPointerTap, layout }, ref) => (
     <Box
         ref={ref}
         layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
@@ -74,7 +83,15 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) =>
         {src && (
             <img
                 src={src}
-                style={{ display: 'block', imageRendering: 'pixelated' }}
+                width={width}
+                height={height}
+                style={{
+                    display: 'block',
+                    imageRendering: 'pixelated',
+                    pointerEvents: eventMode === 'none' ? 'none' : undefined,
+                    cursor,
+                }}
+                onClick={onPointerTap}
             />
         )}
     </Box>

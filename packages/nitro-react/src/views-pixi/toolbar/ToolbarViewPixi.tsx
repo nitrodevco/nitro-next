@@ -2,7 +2,7 @@ import { Graphics as PixiGraphics } from 'pixi.js';
 import { useState } from 'react';
 
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Box, ColorLayer, NitroIcon, useAvatarImageTexture, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, ColorLayer, Image, NitroIcon, useAvatarImageTexture } from '#base/theme-pixi';
 
 import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
@@ -39,8 +39,6 @@ export const ToolbarViewPixi = () => {
     const ownGender = useOwnUserGender();
     const { toggleWindow } = useSystemActions();
 
-    const collapseLeftTexture = useTextureFromUrl(leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png');
-    const collapseRightTexture = useTextureFromUrl(rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png');
     const { texture: avatarTexture, width: avatarWidth, height: avatarHeight } = useAvatarImageTexture(ownFigure, ownGender, { headOnly: true, direction: 3 });
 
     const toggleMenu = (menu: 'me' | 'progression') => {
@@ -67,17 +65,14 @@ export const ToolbarViewPixi = () => {
                         color="#525252"
                         layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
                     />
-                    {collapseLeftTexture && (
-                        <pixiSprite
-                            texture={collapseLeftTexture}
-                            width={14}
-                            height={43}
-                            eventMode="static"
-                            cursor="pointer"
-                            onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
-                            layout={{}}
-                        />
-                    )}
+                    <Image
+                        src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
+                        width={14}
+                        height={43}
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
+                    />
                     {!leftSideCollapsed && (
                         <NitroIcon
                             icon="icon-habbo"
@@ -203,17 +198,14 @@ export const ToolbarViewPixi = () => {
                             layout={{}}
                         />
                     </Box>
-                    {collapseRightTexture && (
-                        <pixiSprite
-                            texture={collapseRightTexture}
-                            width={14}
-                            height={43}
-                            eventMode="static"
-                            cursor="pointer"
-                            onPointerTap={() => setRightSideCollapsed(prev => !prev)}
-                            layout={{}}
-                        />
-                    )}
+                    <Image
+                        src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
+                        width={14}
+                        height={43}
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => setRightSideCollapsed(prev => !prev)}
+                    />
                 </Box>
             </Box>
         </>
