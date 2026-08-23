@@ -16,7 +16,8 @@ import {
 import { AdvancedMap, AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
-import { GetAssetManager } from '../../../../assets';
+import { GetAssetManager } from '#renderer/assets';
+
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import type { IAvatarAddition } from './additions';
 import {
@@ -451,7 +452,7 @@ export class AvatarVisualization
 
         headDirection = (headDirection % 360 + 360) % 360;
 
-        if (this._posture === AvatarActionStateType.Sit && this._canStandUp || this._posture === AvatarActionStateType.SnowwarDieBack || this._posture === AvatarActionStateType.SnowwarDieFront) headDirection -= headDirection % 90 - 45;
+        if ((this._posture === AvatarActionStateType.Sit && this._canStandUp) || this._posture === AvatarActionStateType.SnowwarDieBack || this._posture === AvatarActionStateType.SnowwarDieFront) headDirection -= headDirection % 90 - 45;
 
         if (direction !== this._angle || _arg_4) {
             didUpdate = true;

@@ -48,7 +48,6 @@ const config = [
             '**/coverage/**',
             '**/*.d.ts',
             '**/eslint.config.js',
-            '**/prettier.config.js',
             '**/postcss.config.js',
             '**/vite.config.*',
         ],

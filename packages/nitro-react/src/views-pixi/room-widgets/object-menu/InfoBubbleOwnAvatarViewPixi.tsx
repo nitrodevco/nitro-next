@@ -45,8 +45,8 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
     const isOwnDancing = useOwnIsDancing();
     const hasHabboClub = useOwnHasClub();
     const canDecorate = useRoomCanDecorate();
-    const [ mode, setMode ] = useState<number>((isOwnDancing && hasHabboClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
-    const [ collapsed, setCollapsed ] = useState<boolean>(false);
+    const [mode, setMode] = useState<number>((isOwnDancing && hasHabboClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
@@ -156,7 +156,7 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                         {mode === MODE_SIGNS && (
                             <Box layout={{ flexDirection: 'column', gap: 1 }}>
-                                {[ 0, 1, 2, 3, 4, 5 ].map(row => (
+                                {[0, 1, 2, 3, 4, 5].map(row => (
                                     <Box
                                         key={row}
                                         layout={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 1 }}
@@ -172,11 +172,11 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
                                             >
                                                 {icon
                                                     ? (
-                                                            <NitroIcon
-                                                                icon={icon as 'icon-sign-heart'}
-                                                                layout={{}}
-                                                            />
-                                                        )
+                                                        <NitroIcon
+                                                            icon={icon as 'icon-sign-heart'}
+                                                            layout={{}}
+                                                        />
+                                                    )
                                                     : label}
                                             </Button>
                                         ))}
@@ -187,17 +187,17 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
                         {(MODE_BUTTONS[mode] ?? []).map(({ visible, caption, action }) => (
                             visible
                                 ? (
-                                        <Button
-                                            key={caption}
-                                            variant="300"
-                                            tintColor="#2d2a27"
-                                            textColor="#ffffff"
-                                            onPress={action}
-                                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                                        >
-                                            {t(caption)}
-                                        </Button>
-                                    )
+                                    <Button
+                                        key={caption}
+                                        variant="300"
+                                        tintColor="#2d2a27"
+                                        textColor="#ffffff"
+                                        onPress={action}
+                                        layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
+                                    >
+                                        {t(caption)}
+                                    </Button>
+                                )
                                 : null
                         ))}
                     </Box>
