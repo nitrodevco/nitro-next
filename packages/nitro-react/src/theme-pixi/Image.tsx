@@ -16,6 +16,7 @@ export interface ImageProps {
     width?: number;
     height?: number;
     tint?: string;
+    alpha?: number;
     eventMode?: EventMode;
     cursor?: string;
     /**
@@ -60,7 +61,7 @@ export interface ImageProps {
  * unless a caller actually asks for one.
  */
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, eventMode, cursor,
+    src, frame, width, height, tint, alpha, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout,
 }, ref) => {
@@ -94,6 +95,7 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
                 width={width ?? resolvedTexture.width}
                 height={height ?? resolvedTexture.height}
                 tint={tint}
+                alpha={alpha}
                 eventMode={eventMode}
                 cursor={cursor}
                 onPointerOver={onPointerOver}
@@ -120,7 +122,7 @@ ImagePixi.displayName = 'ImagePixi';
  * established, sized/positioned to match whichever of the two the base render is.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, eventMode, cursor,
+    src, frame, width, height, tint, alpha, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap,
     layout,
 }, ref) => {
@@ -131,6 +133,7 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
 
     const sharedStyle: CSSProperties = {
         cursor,
+        opacity: alpha,
         pointerEvents: eventMode === 'none' ? 'none' : undefined,
     };
     const sharedHandlers = {

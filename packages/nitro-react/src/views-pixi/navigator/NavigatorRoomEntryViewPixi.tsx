@@ -1,7 +1,7 @@
 import { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
-import { Border, Box, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Border, Box, Image, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
 
 import { RESULTS_MODE_TILES } from './NavigatorCategoryViewPixi';
 import { getUserCountColor } from './NavigatorRoomEntryUtils';
@@ -30,7 +30,12 @@ export interface NavigatorRoomEntryViewPixiProps {
 export const NavigatorRoomEntryViewPixi = ({ room, mode, backgroundColor, onEnter, onShowInfo }: NavigatorRoomEntryViewPixiProps) => {
     const interpolate = useInterpolate();
     const doorModeIcon = DOOR_MODE_ICONS[room.doorMode];
-    const roomPicTexture = useTextureFromUrl(room.officialRoomPicRef?.length ? room.officialRoomPicRef : undefined);
+    const roomPicUrl = room.officialRoomPicRef?.length ? room.officialRoomPicRef : undefined;
+    // Image resolves its own texture internally, but this needs to know WHEN it's resolved to
+    // pick between it and the default-room icon fallback - read it here too just for that
+    // presence check (usePixiTexture/useTextureFromUrl share a module-level cache, so this
+    // doesn't trigger a second network fetch, only a second cheap lookup).
+    const roomPicTexture = useTextureFromUrl(roomPicUrl);
 
     const userCount = (
         <Border
@@ -66,8 +71,8 @@ export const NavigatorRoomEntryViewPixi = ({ room, mode, backgroundColor, onEnte
                 <Box layout={{ position: 'absolute', top: 6, left: 7, width: 108, height: 109, justifyContent: 'center', alignItems: 'center' }}>
                     {roomPicTexture
                         ? (
-                                <pixiSprite
-                                    texture={roomPicTexture}
+                                <Image
+                                    src={roomPicUrl}
                                     width={106}
                                     height={106}
                                     layout={{}}

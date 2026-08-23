@@ -2,7 +2,7 @@ import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useConfigValue } from '#base/context';
 import { useCatalogNavigation } from '#base/hooks';
-import { Box, ColorLayer, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, ColorLayer, Image, NitroIcon, Text } from '#base/theme-pixi';
 
 import { CatalogNavigationSetViewPixi } from './CatalogNavigationSetViewPixi';
 
@@ -14,7 +14,7 @@ export interface CatalogNavigationSetItemViewPixiProps {
 export const CatalogNavigationSetItemViewPixi = ({ node }: CatalogNavigationSetItemViewPixiProps) => {
     const { activateNode } = useCatalogNavigation();
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
-    const iconTexture = useTextureFromUrl(catalogIconUrl.replace('%name%', node.icon.toString()));
+    const iconUrl = catalogIconUrl.replace('%name%', node.icon.toString());
 
     return (
         <Box layout={{ flexDirection: 'column' }}>
@@ -28,12 +28,10 @@ export const CatalogNavigationSetItemViewPixi = ({ node }: CatalogNavigationSetI
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', flex: 1, minHeight: 16 }}>
                     {node.isActive && <ColorLayer color="#63c5e9" />}
                     <Box layout={{ width: 20, justifyContent: 'center', alignItems: 'center' }}>
-                        {iconTexture && (
-                            <pixiSprite
-                                texture={iconTexture}
-                                layout={{}}
-                            />
-                        )}
+                        <Image
+                            src={iconUrl}
+                            layout={{}}
+                        />
                     </Box>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', flex: 1, paddingLeft: 10, paddingRight: 10, justifyContent: 'space-between' }}>
                         <Text

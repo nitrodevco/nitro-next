@@ -1,5 +1,5 @@
 import { useCatalogSelectors, useConfigValue } from '#base/context';
-import { Box, ColorLayer, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, ColorLayer, Image, Text, useTextureFromUrl } from '#base/theme-pixi';
 
 /** Pixi port of views/catalog/CatalogHeaderView.tsx. */
 export const CatalogHeaderViewPixi = () => {
@@ -14,23 +14,24 @@ export const CatalogHeaderViewPixi = () => {
 
     if (headerData && headerData.length) headerImageUrl = catalogImageUrl.replace('%name%', headerData);
 
-    const iconTexture = useTextureFromUrl(catalogIconUrl?.replace('%name%', activeNode?.icon.toString() ?? '1'));
-    const backgroundTexture = useTextureFromUrl(headerImageUrl);
+    const iconUrl = catalogIconUrl?.replace('%name%', activeNode?.icon.toString() ?? '1');
+    // Image resolves its own texture internally, but this icon needs its NATIVE size doubled -
+    // read it here too just to compute that (usePixiTexture/useTextureFromUrl share a module-
+    // level cache, so this doesn't trigger a second network fetch, only a second cheap lookup).
+    const iconTexture = useTextureFromUrl(iconUrl);
 
     return (
         <Box layout={{ position: 'relative', width: '100%', height: 90, flexShrink: 0 }}>
-            {backgroundTexture && (
-                <pixiSprite
-                    texture={backgroundTexture}
-                    alpha={0.1}
-                    layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
-                />
-            )}
+            <Image
+                src={headerImageUrl}
+                alpha={0.1}
+                layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+            />
             <ColorLayer color="#0e3f52" />
             <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 20, paddingRight: 20 }}>
                 {iconTexture && (
-                    <pixiSprite
-                        texture={iconTexture}
+                    <Image
+                        src={iconUrl}
                         width={iconTexture.width * 2}
                         height={iconTexture.height * 2}
                         layout={{}}
