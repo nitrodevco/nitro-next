@@ -5,9 +5,9 @@ import { THEME_URLS } from '#base/theme-core';
 
 import { BoxLayout } from './Box';
 import { Image } from './Image';
+import { SpriteFrame } from './utils/spriteFrame';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame } from './utils/spriteFrame';
 
 interface ScrollbarSliderButtonUpVariant {
     textureKey: string;

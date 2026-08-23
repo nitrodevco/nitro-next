@@ -7,10 +7,10 @@ import { Box, BoxLayout } from './Box';
 import { Image } from './Image';
 import { Text } from './Text';
 import { wrapTextChildren } from './utils';
+import { SpriteFrame } from './utils/spriteFrame';
 import { TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame } from './utils/spriteFrame';
 
 interface RadioButtonVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared

@@ -5,8 +5,8 @@ import { THEME_URLS } from '#base/theme-core';
 
 import { BoxLayout } from './Box';
 import { Image } from './Image';
-import { useResolvedVariant } from './utils/useResolvedVariant';
 import { SpriteFrame } from './utils/spriteFrame';
+import { useResolvedVariant } from './utils/useResolvedVariant';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 
