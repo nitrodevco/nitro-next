@@ -1,7 +1,3 @@
-import { Rectangle, Texture } from 'pixi.js';
-import { useMemo } from 'react';
-
-import { useTextureFromUrl } from './usePixiTexture';
 import { SpriteFrame } from './useSpriteFrameTexture';
 
 /**
@@ -225,9 +221,7 @@ const ICON_ASSETS = {
  * reference their images via plain literal `url(...)` paths - not the `var(--x-src)` custom-
  * property indirection THEME_URLS exists to resolve - and habbo-icons.png itself has no
  * THEME_URLS entry at all. So this is addressed directly by its raw asset path below instead
- * of through a theme key, and sliced with the same offset/size Rectangle technique
- * useSpriteFrameTexture.ts uses for closebutton.png (see useHabboIconFrame below) rather than
- * reusing that hook outright, since its signature resolves its texture key through THEME_URLS.
+ * of through a theme key, sliced by `Image`'s own `frame` prop.
  */
 const HABBO_ICONS_URL = '/assets/icons/habbo-icons.png';
 
@@ -316,37 +310,28 @@ const HABBO_ICON_FRAMES = {
 
 export type IconKey = keyof typeof ICON_ASSETS | keyof typeof HABBO_ICON_FRAMES;
 
-/** Slices one icon's sub-rect out of the shared habbo-icons.png texture. */
-const useHabboIconFrame = (frame: SpriteFrame | undefined): Texture | undefined => {
-    const baseTexture = useTextureFromUrl(frame ? HABBO_ICONS_URL : undefined);
-
-    return useMemo(() => {
-        if (!baseTexture || !frame) return undefined;
-
-        return new Texture({
-            source: baseTexture.source,
-            frame: new Rectangle(baseTexture.frame.x + frame.x, baseTexture.frame.y + frame.y, frame.width, frame.height),
-        });
-    }, [ baseTexture, frame ]);
-};
+export interface IconAsset {
+    src: string;
+    frame: SpriteFrame | undefined;
+    width: number;
+    height: number;
+}
 
 /**
- * Resolves an IconKey to a Pixi texture, transparently dispatching to whichever of the two
- * registries above the key belongs to - discrete-PNG (ICON_ASSETS) or spritesheet-frame
- * (HABBO_ICON_FRAMES). The two registries' key sets are disjoint, so for any given `icon`
- * only one branch below ever has real data; the other hook call is simply handed `undefined`
- * and returns `undefined` without doing any work, so call order stays unconditional either way.
+ * Resolves an IconKey to an `Image`-ready `{src, frame, width, height}`, transparently
+ * dispatching to whichever of the two registries above the key belongs to - discrete-PNG
+ * (ICON_ASSETS, `frame: undefined` - `Image` renders it whole) or spritesheet-frame
+ * (HABBO_ICON_FRAMES, cropped out of the shared habbo-icons.png via `frame`). The two
+ * registries' key sets are disjoint, so for any given `icon` exactly one of them has real data.
  */
-export const useIconTexture = (icon: IconKey): { texture: Texture | undefined; width: number; height: number } => {
+export const resolveIconAsset = (icon: IconKey): IconAsset => {
     const discreteAsset: { url: string; width: number; height: number } | undefined = (ICON_ASSETS as Record<string, { url: string; width: number; height: number }>)[icon];
+
+    if (discreteAsset) return { src: discreteAsset.url, frame: undefined, width: discreteAsset.width, height: discreteAsset.height };
+
     const spriteFrame: SpriteFrame | undefined = (HABBO_ICON_FRAMES as Record<string, SpriteFrame>)[icon];
 
-    const discreteTexture = useTextureFromUrl(discreteAsset?.url);
-    const spriteTexture = useHabboIconFrame(spriteFrame);
+    if (spriteFrame) return { src: HABBO_ICONS_URL, frame: spriteFrame, width: spriteFrame.width, height: spriteFrame.height };
 
-    if (discreteAsset) return { texture: discreteTexture, width: discreteAsset.width, height: discreteAsset.height };
-
-    if (spriteFrame) return { texture: spriteTexture, width: spriteFrame.width, height: spriteFrame.height };
-
-    return { texture: undefined, width: 0, height: 0 };
+    return { src: '', frame: undefined, width: 0, height: 0 };
 };
