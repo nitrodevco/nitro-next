@@ -10,7 +10,7 @@ import { wrapTextChildren } from './utils';
 import { TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/spriteFrame';
 
 interface CheckBoxVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared

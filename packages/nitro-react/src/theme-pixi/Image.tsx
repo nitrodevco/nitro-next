@@ -6,7 +6,7 @@ import { getRenderMode } from '#base/theme-core';
 
 import { Box, BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
-import { SpriteFrame } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/spriteFrame';
 
 export interface ImageProps {
     src: string | undefined;
@@ -113,9 +113,8 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
 ImagePixi.displayName = 'ImagePixi';
 
 /**
- * A plain `<img>` (whole-image mode) or a `background-position`-cropped `<div>` (`frame` mode -
- * the same technique `dom/spriteFrameDom.ts` uses, operating on an already-resolved `src`
- * rather than a theme key). `width`/`height` are set as real attributes on the `<img>` (not
+ * A plain `<img>` (whole-image mode) or a `background-position`-cropped `<div>` (`frame` mode).
+ * `width`/`height` are set as real attributes on the `<img>` (not
  * just CSS) so the browser reserves the correct box before the image has actually loaded, same
  * as Pixi's sprite getting its size up front rather than after the texture resolves. `tint` is
  * an overlay `<div>` using the same mask+`mix-blend-mode:multiply` technique BubblePointer.tsx

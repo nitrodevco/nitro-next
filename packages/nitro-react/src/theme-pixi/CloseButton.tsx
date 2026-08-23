@@ -7,7 +7,7 @@ import { BoxLayout } from './Box';
 import { Image } from './Image';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/spriteFrame';
 
 interface CloseButtonVariant {
     textureKey: string;

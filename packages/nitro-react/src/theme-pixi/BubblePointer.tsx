@@ -6,7 +6,7 @@ import { THEME_URLS } from '#base/theme-core';
 import { BoxLayout } from './Box';
 import { Image } from './Image';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/spriteFrame';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 
