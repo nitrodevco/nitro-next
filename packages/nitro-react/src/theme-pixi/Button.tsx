@@ -1,19 +1,44 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
 import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, useThemeVariant, wrapTextChildren } from './utils';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
 type ButtonVariant = ThemeWithStatesVariant;
 
+const BUTTON_3_VARIANT: ButtonVariant = {
+    states: {
+        default: NineSlice('button-3-default-src', 5, 5, 5, 5),
+        hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
+        pressed: NineSlice('button-3-pressed-src', 5, 5, 5, 5),
+        disabled: NineSlice('button-3-disabled-src', 5, 5, 5, 5),
+    },
+    layout: {
+        paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
+        minWidth: 20, minHeight: 22,
+    },
+    textStyle: 'text-style-button-shiny-regular',
+};
+
+const BUTTON_100_VARIANT: ButtonVariant = {
+    states: {
+        default: NineSlice('button-100-default-src', 1, 1, 1, 1),
+        hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
+        pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
+    },
+    overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
+    layout: {
+        paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
+        minWidth: 48, minHeight: 48,
+    },
+    textStyle: 'text-style-il-button', textColor: '#000000',
+};
+
 const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
-    // default
+    // habbo_skin - white
     0: {
         states: {
             default: NineSlice('button-0-default-src', 3, 3, 3, 3),
@@ -26,7 +51,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         textStyle: 'text-style-button-regular', textColor: '#000000',
     },
-    // black
+    // Habbo_skin black
     1: {
         states: {
             default: NineSlice('button-1-default-src', 3, 3, 3, 3),
@@ -40,35 +65,11 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         textStyle: 'text-style-button-regular', textColor: '#ffffff',
     },
-    // white
-    2: {
-        states: {
-            default: NineSlice('button-0-default-src', 3, 3, 3, 3),
-            hovering: NineSlice('button-0-hovering-src', 3, 3, 3, 3),
-            pressed: NineSlice('button-0-pressed-src', 3, 3, 3, 3),
-            disabled: NineSlice('button-0-disabled-src', 3, 3, 3, 3),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'text-style-button-regular', textColor: '#000000',
-    },
-    // default
+    // ubuntu_skin - white
     3: {
-        states: {
-            default: NineSlice('button-3-default-src', 5, 5, 5, 5),
-            hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
-            pressed: NineSlice('button-3-pressed-src', 5, 5, 5, 5),
-            disabled: NineSlice('button-3-disabled-src', 5, 5, 5, 5),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
+        ...BUTTON_3_VARIANT, textColor: '#000000',
     },
-    // black
+    // ubuntu_skin - black
     4: {
         states: {
             default: NineSlice('button-4-default-src', 5, 5, 5, 5),
@@ -82,61 +83,20 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
-    // white
-    5: {
-        states: {
-            default: NineSlice('button-3-default-src', 5, 5, 5, 5),
-            hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
-            pressed: NineSlice('button-3-pressed-src', 5, 5, 5, 5),
-            disabled: NineSlice('button-3-disabled-src', 5, 5, 5, 5),
-        },
-        layout: {
-            paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28,
-        },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
-    },
     // green
     6: {
-        states: {
-            default: NineSlice('button-3-default-src', 5, 5, 5, 5),
-            hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
-            pressed: NineSlice('button-3-pressed-src', 5, 5, 5, 5),
-            disabled: NineSlice('button-3-disabled-src', 5, 5, 5, 5),
-        },
-        layout: {
-            paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28,
-        },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff', tintColor: '#00aa00',
+        ...BUTTON_3_VARIANT,
+        tintColor: '#00aa00',
+        textColor: '#ffffff',
     },
     // landing view
     100: {
-        states: {
-            default: NineSlice('button-100-default-src', 1, 1, 1, 1),
-            hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-            pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-        },
-        overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
-        layout: {
-            paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-            minWidth: 48, minHeight: 48,
-        },
-        textStyle: 'text-style-il-button', textColor: '#000000',
+        ...BUTTON_100_VARIANT,
     },
     // window
     101: {
-        states: {
-            default: NineSlice('button-100-default-src', 1, 1, 1, 1),
-            hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-            pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-        },
-        overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
-        layout: {
-            paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-            minWidth: 48, minHeight: 48,
-        },
-        textStyle: 'text-style-il-button', textColor: '#000000', tintColor: '#bbbbbb',
+        ...BUTTON_100_VARIANT,
+        tintColor: '#bbbbbb',
     },
     // plain
     102: {

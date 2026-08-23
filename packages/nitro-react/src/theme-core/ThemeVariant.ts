@@ -1,14 +1,12 @@
 import { VariantCascadeMap } from '#base/theme-core';
-
-import { BoxLayout } from '../Box';
-import { BackgroundLayerConfig } from '../layer';
-import { InteractionHandlers, InteractionState, InteractionStates, TextStyleKey } from '../utils';
+import { BackgroundLayerConfig, BoxLayout, InteractionHandlers, InteractionState, InteractionStates, TextStyleKey } from '#base/theme-pixi';
 
 export type ThemeBase = {
     layout?: BoxLayout;
     tintColor?: string;
     textStyle?: TextStyleKey;
     textColor?: string;
+    zIndex?: number;
 };
 
 export type ThemeVariant = {

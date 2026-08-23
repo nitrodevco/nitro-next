@@ -1,16 +1,13 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { CloseButton } from './CloseButton';
 import { BackgroundLayer, ColorLayer } from './layer';
 import { Text } from './Text';
 import { useThemeVariant } from './utils/useThemeVariant';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 interface HeaderPadding {
     left: number;

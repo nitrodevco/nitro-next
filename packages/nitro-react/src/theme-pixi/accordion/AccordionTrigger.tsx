@@ -1,10 +1,8 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
+import { Box, BoxLayout } from '../Box';
 import { useAccordion, useAccordionItem } from './AccordionContext';
-import { Box, type BoxLayout } from './Box';
 
 interface AccordionTriggerProps {
     layout?: BoxLayout;

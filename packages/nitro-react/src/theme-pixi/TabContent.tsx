@@ -1,14 +1,11 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
 import { useThemeVariant, wrapTextChildren } from './utils';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type TabContentVariant = ThemeVariant;
 
@@ -40,9 +37,9 @@ export interface TabContentProps extends ThemeProps<TabContentVariant> {
 }
 
 export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabContentProps>(
-    ({ variant, defaultVariant, layout, tintColor, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'tabContent', variants: TAB_CONTENT_VARIANTS, variant, defaultVariant, tintColor,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'tabContent', variants: TAB_CONTENT_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
         return (
@@ -55,13 +52,18 @@ export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttribut
                     ...config.layout,
                     ...layout,
                 }}
+                {...handlers}
             >
-                <BackgroundLayer
-                    layer={resolvedLayer}
-                    tintColor={resolvedTint}
-                />
-                <BackgroundLayer layer={resolvedOverlay} />
-                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+                <VariantCascadeProvider map={ownCascade}>
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                </VariantCascadeProvider>
             </Box>
         );
     },

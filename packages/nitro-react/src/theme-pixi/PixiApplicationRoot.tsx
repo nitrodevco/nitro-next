@@ -1,4 +1,4 @@
-import './utils/pixiElements';
+
 
 import { GetRoomStage, SetRenderer } from '@nitrodevco/nitro-renderer';
 import { Application } from '@pixi/react';

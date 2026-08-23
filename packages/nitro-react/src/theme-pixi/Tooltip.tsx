@@ -1,15 +1,11 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, NineSlice } from './layer';
-import { Text } from './Text';
-import { useResolvedVariant, wrapTextChildren } from './utils';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
+import { useThemeVariant, wrapTextChildren } from './utils';
 
 type TooltipVariant = ThemeVariant;
 
@@ -26,30 +22,26 @@ export interface TooltipProps extends ThemeProps<TooltipVariant> {
 }
 
 export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TooltipProps>(
-    ({ variant, defaultVariant, tintColor, textColor, layout, children }, ref) => {
-        const { resolvedVariant, ownCascade } = useResolvedVariant('tooltip', variant, defaultVariant);
-        const config = TOOLTIP_VARIANTS[resolvedVariant] ?? TOOLTIP_VARIANTS['0'];
-        const resolvedLayer = config.layer;
-        const resolvedOverlay = config.overlay;
-        const resolvedTint = tintColor || config.tintColor;
-        const resolvedTextColor = textColor || config.textColor;
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'tooltip', variants: TOOLTIP_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+        });
 
         return (
             <Box
                 ref={ref}
                 layout={{ ...config.layout, ...layout }}
+                {...handlers}
             >
-                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} />}
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    {typeof children === 'string'
-                        ? (
-                                <Text
-                                    text={children}
-                                    textStyle="text-style-u-tool-tip"
-                                />
-                            )
-                        : wrapTextChildren(children)}
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );

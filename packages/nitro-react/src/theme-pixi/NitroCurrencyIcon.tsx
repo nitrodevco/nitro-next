@@ -1,4 +1,4 @@
-import './utils/pixiElements';
+
 
 import type { Sprite as PixiSprite } from 'pixi.js';
 import { forwardRef } from 'react';

@@ -1,10 +1,8 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
 import { type ReactNode, type Ref } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 import { GetPixelRatio } from '#base/utils';
 
 import { Box } from './Box';
@@ -16,7 +14,6 @@ import { Scaler, type ScalerDirection } from './Scaler';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
 import { useThemeVariant } from './utils/useThemeVariant';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type FrameVariant = ThemeVariant & {
     minWidth: number;

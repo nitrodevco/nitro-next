@@ -1,16 +1,12 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BubblePointer } from './BubblePointer';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { useThemeVariant } from './utils/useThemeVariant';
-import { wrapTextChildren } from './utils/wrapTextChildren';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
+import { useThemeVariant, wrapTextChildren } from './utils';
 
 type PointerDirection = 'up' | 'down' | 'left' | 'right';
 

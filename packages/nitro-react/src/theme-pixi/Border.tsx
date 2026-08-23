@@ -1,14 +1,11 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, BlendOverlay, Composite, NineSlice } from './layer';
 import { useThemeVariant, wrapTextChildren } from './utils';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type BorderVariant = ThemeVariant;
 
@@ -111,7 +108,7 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 }
 
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, tintColor, textStyle, textColor, blend, layout, children }, ref) => {
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, blend, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });

@@ -1,5 +1,8 @@
 import './index.css';
+import '@pixi/layout';
 
+import { extend } from '@pixi/react';
+import { Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
 import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
@@ -14,6 +17,16 @@ import { setRenderMode } from './theme-core';
 // react-dom tree are different reconciler roots that can't mix within one mounted app (see
 // theme-core/renderMode.ts). Reloading the page with `?renderer=dom` is how you switch.
 if (new URLSearchParams(window.location.search).get('renderer') === 'dom') setRenderMode('dom');
+else {
+    extend({
+        Container,
+        Graphics,
+        NineSliceSprite,
+        Sprite,
+        Text,
+        TilingSprite,
+    });
+}
 
 declare global {
     interface Window {

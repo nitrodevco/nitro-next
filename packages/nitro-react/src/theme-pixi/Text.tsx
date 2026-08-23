@@ -17,6 +17,8 @@ export type TextConfig = {
 const TextPixi = ({ text, textStyle, textOptions, ...props }: TextConfig) => {
     const style = getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions);
 
+    if (!text?.length) return null;
+
     return (
         <pixiText
             text={text}

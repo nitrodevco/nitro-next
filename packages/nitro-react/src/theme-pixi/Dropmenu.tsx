@@ -1,15 +1,12 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, CompositeLayer, NineSlice, Stretch } from './layer';
 import { useThemeVariant } from './utils';
 import { wrapTextChildren } from './utils/wrapTextChildren';
-import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant } from './variant';
 
 type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
     arrowTextureKey?: string;

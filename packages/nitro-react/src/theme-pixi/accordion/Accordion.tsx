@@ -1,10 +1,7 @@
-import './utils/pixiElements';
-
 import { type ReactNode, useState } from 'react';
 
-import { AccordionContext, type AccordionType } from '#base/theme-core';
-
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from '../Box';
+import { AccordionContext, AccordionType } from './AccordionContext';
 
 type AccordionBaseProps = {
     layout?: BoxLayout;

@@ -1,4 +1,4 @@
-import './utils/pixiElements';
+
 
 import type { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';

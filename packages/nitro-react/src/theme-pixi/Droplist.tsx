@@ -1,14 +1,11 @@
-import './utils/pixiElements';
-
 import type { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme-core';
+import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 
 import { Box } from './Box';
 import { BackgroundLayer, CompositeLayer, NineSlice } from './layer';
 import { useThemeVariant, wrapTextChildren } from './utils';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 
 type DroplistVariant = ThemeVariant & {
     arrowTextureKey: string;
