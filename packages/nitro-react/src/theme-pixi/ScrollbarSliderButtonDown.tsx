@@ -1,10 +1,13 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, BoxLayout } from './Box';
-import { useInteractionState } from './utils/useInteractionState';
+import { THEME_URLS } from '#base/theme-core';
+
+import { BoxLayout } from './Box';
+import { Image } from './Image';
+import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import { SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import { SpriteFrame } from './utils/useSpriteFrameTexture';
 
 interface ScrollbarSliderButtonDownVariant {
     textureKey: string;
@@ -65,18 +68,9 @@ export interface ScrollbarSliderButtonDownProps {
 export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSliderButtonDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonDownProps>(
     ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonDown', variant, defaultVariant);
-        const config = SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS['0'];
+        const config = SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS['0']!;
         const { state, handlers } = useInteractionState(disabled);
-        const frame = config && (
-            state === 'pressed'
-                ? config.frames.pressed
-                : state === 'disabled'
-                    ? config.frames.disabled
-                    : state === 'hovering'
-                        ? config.frames.hovering
-                        : config.frames.default
-        );
-        const texture = useSpriteFrameTexture(config?.textureKey, frame);
+        const frame = resolveByState(config.frames, state);
 
         const handlePointerDown = () => {
             handlers.onPointerDown?.();
@@ -91,27 +85,20 @@ export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSlide
             onPointerUpOutside?.();
         };
 
-        if (!texture) return null;
-
         return (
-            <Box
+            <Image
                 ref={ref}
-                layout={{ width: texture.width, height: texture.height, ...layout }}
-            >
-                <pixiSprite
-                    texture={texture}
-                    width={texture.width}
-                    height={texture.height}
-                    eventMode={handlers.eventMode}
-                    cursor={disabled ? undefined : 'pointer'}
-                    layout={{}}
-                    onPointerOver={handlers.onPointerOver}
-                    onPointerOut={handlers.onPointerOut}
-                    onPointerDown={handlePointerDown}
-                    onPointerUp={handlePointerUp}
-                    onPointerUpOutside={handlePointerUpOutside}
-                />
-            </Box>
+                src={THEME_URLS[config.textureKey]}
+                frame={frame}
+                eventMode={handlers.eventMode}
+                cursor={disabled ? undefined : 'pointer'}
+                onPointerOver={handlers.onPointerOver}
+                onPointerOut={handlers.onPointerOut}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+                onPointerUpOutside={handlePointerUpOutside}
+                layout={{ width: frame.width, height: frame.height, ...layout }}
+            />
         );
     },
 );
