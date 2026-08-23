@@ -219,7 +219,10 @@ export const NavigatorViewPixi = () => {
                                     <Box
                                         eventMode="static"
                                         cursor="pointer"
-                                        onPointerTap={() => { send(new ForwardToARandomPromotedRoomComposer({ category: '' })); hideNavigator(); }}
+                                        onPointerTap={() => {
+                                            send(new ForwardToARandomPromotedRoomComposer({ category: '' }));
+                                            hideNavigator();
+                                        }}
                                         layout={{ position: 'relative', width: 189, height: 60 }}
                                     >
                                         <Border

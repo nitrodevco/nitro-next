@@ -95,7 +95,7 @@ const BoxDom = forwardRef<Container, BoxProps>(
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
         if (x || y) {
-            style.transform = `translate(${(x as number) || 0}px, ${(y as number) || 0}px)`;
+            style.transform = `translate(${~~(x as number) || 0}px, ${~~(y as number) || 0}px)`;
             style.transformOrigin = 'top left';
         }
 
