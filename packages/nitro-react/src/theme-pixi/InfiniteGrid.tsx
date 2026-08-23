@@ -24,25 +24,53 @@ export interface InfiniteGridProps<T> {
 }
 
 /**
- * DOM counterpart: a real CSS grid (`grid-template-columns: repeat(auto-fill, minmax(...))`,
- * the browser's own equivalent of measuring viewport width to pick a column count) inside a
- * native-scroll `ScrollArea`. No virtualizer of any kind - real DOM elements are cheap enough
- * at the item counts a catalog/inventory page actually renders (tens to low hundreds) that
- * reimplementing react-virtual's row-measurement dance here would be complexity with no
- * payoff; Pixi's own row virtualizer exists because *Pixi* render objects are the expensive
- * part there; that cost doesn't exist on this target.
+ * DOM counterpart: a real CSS grid inside a native-scroll `ScrollArea`. No virtualizer of any
+ * kind - real DOM elements are cheap enough at the item counts a catalog/inventory page
+ * actually renders (tens to low hundreds) that reimplementing react-virtual's row-measurement
+ * dance here would be complexity with no payoff; Pixi's own row virtualizer exists because
+ * *Pixi* render objects are the expensive part there; that cost doesn't exist on this target.
+ *
+ * `columnCount` is computed with the *exact same* `ResizeObserver`-measured-width formula
+ * `InfiniteGridPixi` uses (`Math.ceil(width / (itemWidth + 4))`, clamped to
+ * [MIN_COLUMNS, MAX_COLUMNS]) and rendered as explicit `repeat(columnCount, 1fr)` tracks,
+ * rather than letting CSS `grid-template-columns: repeat(auto-fill, minmax(...))` pick its own
+ * column count - `auto-fill`'s own packing algorithm doesn't match Pixi's formula (it fits as
+ * many `itemWidth`-or-wider tracks as the container allows, which rounds differently than
+ * `Math.ceil`), so the two targets disagreed on how many columns fit the same width and showed
+ * a different item count per row for identical content.
  */
 // The trailing comma below disambiguates a generic arrow function's `<T,>` from a JSX opening
 // tag in a .tsx file.
 // eslint-disable-next-line @stylistic/comma-dangle
 const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
+    const [ viewportNode, setViewportNode ] = useState<HTMLDivElement | null>(null);
+    const [ viewportWidth, setViewportWidth ] = useState(0);
+
+    useEffect(() => {
+        if (!viewportNode) return;
+
+        const measure = () => {
+            const width = viewportNode.clientWidth;
+
+            setViewportWidth(prev => (Math.abs(prev - width) > 0.5 ? width : prev));
+        };
+
+        measure();
+
+        const observer = new ResizeObserver(measure);
+
+        observer.observe(viewportNode);
+
+        return () => observer.disconnect();
+    }, [ viewportNode ]);
+
+    const columnCount = overrideColumnCount || Math.max(MIN_COLUMNS, Math.min(MAX_COLUMNS, Math.ceil(viewportWidth / (itemWidth + 4)))) || MIN_COLUMNS;
+
     const gridStyle: CSSProperties = {
         display: 'grid',
         width: '100%',
         gap: 4,
-        gridTemplateColumns: overrideColumnCount
-            ? `repeat(${overrideColumnCount}, 1fr)`
-            : `repeat(auto-fill, minmax(${itemWidth}px, 1fr))`,
+        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
     };
 
     return (
@@ -52,7 +80,10 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
                 layout={{ flex: 1 }}
                 viewportLayout={{ padding: 2 }}
             >
-                <div style={gridStyle}>
+                <div
+                    ref={setViewportNode}
+                    style={gridStyle}
+                >
                     {items.map((item, i) => (
                         <div key={getKey(item)}>
                             {itemRender(item, i)}
