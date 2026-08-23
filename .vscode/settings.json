@@ -38,7 +38,10 @@
             "mode": "auto"
         }
     ],
-    "tailwindAutoOptimizer.autoFixOnSave": true,
+    // Disabled: this extension runs its own fix-on-save pass independent of
+    // editor.formatOnSave/codeActionsOnSave (so disabling those doesn't stop it), and it was
+    // reverting ESLint's fixAll edits (e.g. array-bracket-spacing) right after they were applied.
+    "tailwindAutoOptimizer.autoFixOnSave": false,
     "tailwindCSS.experimental.configFile": "./packages/nitro-react/src/index.css",
     "tailwindCSS.experimental.classRegex": [
         [
