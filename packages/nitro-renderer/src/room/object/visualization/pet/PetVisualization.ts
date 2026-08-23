@@ -1,5 +1,4 @@
-import { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, RoomGeometryScaleType, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';

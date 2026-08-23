@@ -1,7 +1,5 @@
-import { RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { BLEND_MODES, Filter } from 'pixi.js';
-import { Texture } from 'pixi.js';
+import { AlphaTolerance, IRoomObjectSprite, RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
+import { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
 export class RoomObjectSprite implements IRoomObjectSprite {
     private static SPRITE_COUNTER: number = 0;

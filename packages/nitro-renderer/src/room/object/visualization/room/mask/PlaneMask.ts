@@ -1,5 +1,4 @@
-﻿import { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+﻿import { IGraphicAsset, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 

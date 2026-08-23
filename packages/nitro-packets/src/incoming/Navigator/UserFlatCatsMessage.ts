@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IFlatCategory } from './Data/FlatCategoryParser';
-import { FlatCategoryParser } from './Data/FlatCategoryParser';
+import { FlatCategoryParser, IFlatCategory } from './Data/FlatCategoryParser';
 
 export type UserFlatCatsMessageType = {
     nodes: IFlatCategory[];

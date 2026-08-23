@@ -1,9 +1,7 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActionDefinition, IActiveActionData, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IAvatarCanvas, IAvatarFigureContainer, IAvatarImage, IAvatarStructure, IFigureData, IFigurePartSet, IPartColor, IStructureData } from '@nitrodevco/nitro-api';
-import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActionDefinition, IActiveActionData, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IAvatarCanvas, IAvatarFigureContainer, IAvatarImage, IAvatarStructure, IFigureData, IFigurePartSet, IPartColor, IStructureData } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
-import { ActionDefinition } from './actions';
-import { AvatarActionManager } from './actions';
+import { ActionDefinition, AvatarActionManager } from './actions';
 import { AnimationManager } from './animation';
 import { AvatarImagePartContainer } from './AvatarImagePartContainer';
 import { AvatarModelGeometry } from './geometry';

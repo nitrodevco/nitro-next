@@ -1,4 +1,4 @@
-import {  IRoomGeometry, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 export class RoomGeometry implements IRoomGeometry {

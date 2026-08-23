@@ -1,5 +1,4 @@
-import { AvatarFigurePartType, IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
 
 import { FigurePartSet } from './FigurePartSet';
 

@@ -1,5 +1,4 @@
-import { IFurniData } from '@nitrodevco/nitro-api';
-import { FurniturePickupMode, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { FurniturePickupMode, IFurniData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { useTranslation } from '#base/context';
 import { Border, Box, Button, CloseButton, Text } from '#base/theme-pixi';

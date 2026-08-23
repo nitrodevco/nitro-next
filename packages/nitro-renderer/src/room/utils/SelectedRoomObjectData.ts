@@ -4,8 +4,7 @@ import {
     IVector3D,
     RoomObjectCategoryEnum,
     RoomObjectOperationType,
-} from '@nitrodevco/nitro-api';
-import { Vector3d } from '@nitrodevco/nitro-api';
+    Vector3d } from '@nitrodevco/nitro-api';
 
 export class SelectedRoomObjectData implements ISelectedRoomObjectData {
     private _id: number;

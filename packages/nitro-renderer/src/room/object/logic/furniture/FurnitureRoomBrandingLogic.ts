@@ -1,5 +1,4 @@
-import { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import {
+import { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent,
     MapDataType,
     MouseEventType,
     RoomObjectRoomAdEvent, RoomObjectVariableEnum,

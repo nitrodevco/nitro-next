@@ -1,5 +1,5 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import {  RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { clearStoredFrameSize, FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
 

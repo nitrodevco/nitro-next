@@ -1,7 +1,6 @@
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IRoomInfo } from '../../Navigator/Data/RoomSettingsParser';
-import { RoomSettingsParser } from '../../Navigator/Data/RoomSettingsParser';
+import { IRoomInfo, RoomSettingsParser } from '../../Navigator/Data/RoomSettingsParser';
 
 export interface ISearchResultList {
     searchCode: string;

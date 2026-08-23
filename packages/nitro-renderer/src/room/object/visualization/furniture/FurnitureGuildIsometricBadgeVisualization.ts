@@ -1,7 +1,5 @@
-import { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { Texture } from 'pixi.js';
-import { Matrix, Sprite } from 'pixi.js';
+import { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { Matrix, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
 import { IsometricImageFurniVisualization } from './IsometricImageFurniVisualization';

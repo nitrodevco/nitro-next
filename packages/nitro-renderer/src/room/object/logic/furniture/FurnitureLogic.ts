@@ -6,14 +6,11 @@ import {
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
     IVector3D,
-} from '@nitrodevco/nitro-api';
-import {
     MouseEventType, RoomObjectMouseEvent,
     RoomObjectRoomAdEvent,
     RoomObjectStateChangedEvent,
     RoomObjectVariableEnum, RoomObjectWidgetRequestEvent,
-    Vector3d,
-} from '@nitrodevco/nitro-api';
+    Vector3d } from '@nitrodevco/nitro-api';
 
 import {
     ObjectDataUpdateMessage,

@@ -1,5 +1,4 @@
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Vector3d } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';

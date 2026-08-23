@@ -1,7 +1,6 @@
 import { IAssetGesture, IAssetPosture, IAssetVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { AnimationSizeData, SizeData } from '../data';
-import { PetSizeData } from '../data';
+import { AnimationSizeData, PetSizeData, SizeData } from '../data';
 import { FurnitureAnimatedVisualizationData } from '../furniture';
 
 export class PetVisualizationData extends FurnitureAnimatedVisualizationData {

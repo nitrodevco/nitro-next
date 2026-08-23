@@ -1,9 +1,7 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IBreedingPetInfo } from '../../Data/BreedingPetInfoParser';
-import { BreedingPetInfoParser } from '../../Data/BreedingPetInfoParser';
-import { IRarityCategoryData } from '../../Data/RarityCategoryDataParser';
-import { RarityCategoryDataParser } from '../../Data/RarityCategoryDataParser';
+import { BreedingPetInfoParser, IBreedingPetInfo } from '../../Data/BreedingPetInfoParser';
+import { IRarityCategoryData, RarityCategoryDataParser } from '../../Data/RarityCategoryDataParser';
 
 export type ConfirmBreedingRequestEventMessageType = {
     nestId: number;

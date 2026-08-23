@@ -1,5 +1,4 @@
-import { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
-import { RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
 import { ColorMatrixFilter } from 'pixi.js';
 
 import { FurnitureVisualization, RoomVisualization } from '../object';

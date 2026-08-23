@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { ITopLevelContext } from './Data/TopLevelContextParser';
-import { TopLevelContextParser } from './Data/TopLevelContextParser';
+import { ITopLevelContext, TopLevelContextParser } from './Data/TopLevelContextParser';
 
 export type NavigatorMetadataMessageType = {
     topLevelContexts: ITopLevelContext[];

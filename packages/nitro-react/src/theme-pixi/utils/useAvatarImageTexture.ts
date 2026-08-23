@@ -1,5 +1,4 @@
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
-import { AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';

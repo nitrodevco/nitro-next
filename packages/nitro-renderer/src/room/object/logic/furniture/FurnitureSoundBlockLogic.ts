@@ -1,5 +1,4 @@
-import { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectSamplePlaybackEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage, RoomObjectSamplePlaybackEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

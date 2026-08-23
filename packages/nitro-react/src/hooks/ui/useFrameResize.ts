@@ -1,4 +1,4 @@
-import {  CSSProperties, PointerEvent as ReactPointerEvent, RefObject, useRef, useState } from 'react';
+import { CSSProperties, PointerEvent as ReactPointerEvent, RefObject, useRef, useState } from 'react';
 
 import { clearStoredFrameSize, FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
 

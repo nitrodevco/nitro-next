@@ -1,5 +1,4 @@
-import { IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureVisualization } from './FurnitureVisualization';
 

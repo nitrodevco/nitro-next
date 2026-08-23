@@ -1,7 +1,5 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, AvatarSetType, IActiveActionData, IAnimationLayerData, IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
-import { Filter, ImageLike, RenderTexture } from 'pixi.js';
-import { ColorMatrixFilter, Container, Sprite } from 'pixi.js';
+import { AvatarActionStateType, AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAnimationLayerData, IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, ISpriteDataContainer } from '@nitrodevco/nitro-api';
+import { ColorMatrixFilter, Container, Filter, ImageLike, RenderTexture, Sprite } from 'pixi.js';
 
 import { GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 

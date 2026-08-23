@@ -1,5 +1,4 @@
-import { IAssetData, IRoomObjectUpdateMessage, StringDataType } from '@nitrodevco/nitro-api';
-import { ContextMenuEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { ContextMenuEnum, IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

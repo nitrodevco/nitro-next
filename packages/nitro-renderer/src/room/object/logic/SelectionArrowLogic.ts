@@ -1,5 +1,4 @@
-import { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectVisibilityUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';

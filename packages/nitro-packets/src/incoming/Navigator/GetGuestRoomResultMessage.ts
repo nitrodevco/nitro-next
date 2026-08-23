@@ -2,8 +2,7 @@ import { IIncomingPacket, IMessageDataWrapper, IRoomChatSettings, IRoomModeratio
 
 import { RoomChatSettingsParser } from './Data/RoomChatSettingsParser';
 import { RoomModerationParser } from './Data/RoomModerationParser';
-import { IRoomInfo } from './Data/RoomSettingsParser';
-import { RoomSettingsParser } from './Data/RoomSettingsParser';
+import { IRoomInfo, RoomSettingsParser } from './Data/RoomSettingsParser';
 
 export type GetGuestRoomResultMessageType = {
     enterRoom: boolean;

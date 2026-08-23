@@ -3,12 +3,9 @@ import {
     IObjectVisualizationData,
     IRoomObjectGraphicVisualization,
     IRoomObjectVisualizationFactory,
-} from '@nitrodevco/nitro-api';
-import { RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+    RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
-import { RoomObjectSpriteVisualization } from '../object';
-import {
-    AvatarVisualization,
+import { AvatarVisualization,
     AvatarVisualizationData,
     FurnitureAnimatedVisualization,
     FurnitureAnimatedVisualizationData,
@@ -46,6 +43,7 @@ import {
     FurnitureYoutubeVisualization,
     PetVisualization,
     PetVisualizationData,
+    RoomObjectSpriteVisualization,
     RoomVisualization,
     RoomVisualizationData,
     TileCursorVisualization,

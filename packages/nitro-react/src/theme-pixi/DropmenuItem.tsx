@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from '#base/theme-core';
 import { Box, BoxLayout } from './Box';
 import { SpriteLayer } from './layer';
 import { Text } from './Text';
-import {  TextStyleKey } from './utils/textStyles';
+import { TextStyleKey } from './utils/textStyles';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import { wrapTextChildren } from './utils/wrapTextChildren';

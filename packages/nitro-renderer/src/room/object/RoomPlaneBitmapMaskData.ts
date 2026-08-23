@@ -1,4 +1,4 @@
-﻿import {  IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+﻿import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 export class RoomPlaneBitmapMaskData {
     public static WINDOW: string = 'window' as const;

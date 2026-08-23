@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IAreaHideMessageData } from '../../Data/AreaHideMessageDataParser';
-import { AreaHideMessageDataParser } from '../../Data/AreaHideMessageDataParser';
+import { AreaHideMessageDataParser, IAreaHideMessageData } from '../../Data/AreaHideMessageDataParser';
 
 export type AreaHideMessageType = {
     areaHideMessageData: IAreaHideMessageData;

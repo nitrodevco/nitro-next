@@ -1,5 +1,4 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
-import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 
 export type PlaceObjectComposerType = {
     itemId: number;

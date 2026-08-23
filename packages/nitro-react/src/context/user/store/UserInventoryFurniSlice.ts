@@ -1,5 +1,4 @@
-import { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
-import { RoomObjectCategoryEnum, RoomObjectPlacementSource } from '@nitrodevco/nitro-api';
+import { ISelectedRoomObjectData, RoomObjectCategoryEnum, RoomObjectPlacementSource } from '@nitrodevco/nitro-api';
 import { StateCreator } from 'zustand';
 
 type State = {

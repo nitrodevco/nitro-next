@@ -1,5 +1,4 @@
-import { AvatarGenderType, AvatarSetType, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, AvatarSetType, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { FurnitureMannequinVisualizationData } from './FurnitureMannequinVisualizationData';

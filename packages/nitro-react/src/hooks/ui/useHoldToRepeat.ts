@@ -1,4 +1,4 @@
-import {  PointerEvent as ReactPointerEvent, useEffect, useRef } from 'react';
+import { PointerEvent as ReactPointerEvent, useEffect, useRef } from 'react';
 
 const HOLD_INITIAL_DELAY_MS = 400;
 const HOLD_REPEAT_INTERVAL_MS = 60;

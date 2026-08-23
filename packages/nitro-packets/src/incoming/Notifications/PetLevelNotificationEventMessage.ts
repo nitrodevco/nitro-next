@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IPetFigureData } from '../Data/PetFigureDataParser';
-import { PetFigureDataParser } from '../Data/PetFigureDataParser';
+import { IPetFigureData, PetFigureDataParser } from '../Data/PetFigureDataParser';
 
 export type PetLevelNotificationEventMessageType = {
     petId: number;

@@ -1,12 +1,9 @@
 import {
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
-} from '@nitrodevco/nitro-api';
-import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
+    NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
 
-import { RoomObjectLogicBase } from '../object';
-import {
-    AvatarLogic,
+import { AvatarLogic,
     FurnitureAchievementResolutionLogic,
     FurnitureAreaHideLogic,
     FurnitureBadgeDisplayLogic,
@@ -70,6 +67,7 @@ import {
     FurnitureYoutubeLogic,
     PetLogic,
     RoomLogic,
+    RoomObjectLogicBase,
     SelectionArrowLogic,
     TileCursorLogic,
 } from '../object';

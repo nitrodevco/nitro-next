@@ -1,5 +1,4 @@
-import {  IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';

@@ -1,5 +1,4 @@
-import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import { RoomObjectUserType } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper, RoomObjectUserType } from '@nitrodevco/nitro-api';
 
 import { IRoomAvatar } from './IRoomAvatar';
 import { IRoomAvatarBot } from './IRoomAvatarBot';

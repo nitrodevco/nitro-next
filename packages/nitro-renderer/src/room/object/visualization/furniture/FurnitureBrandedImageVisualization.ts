@@ -1,5 +1,4 @@
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';

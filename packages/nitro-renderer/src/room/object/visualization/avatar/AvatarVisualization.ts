@@ -19,12 +19,11 @@ import { Texture } from 'pixi.js';
 import { GetAssetManager } from '#renderer/assets';
 
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
-import { IAvatarAddition } from './additions';
-import {
-    ExpressionAdditionFactory,
+import { ExpressionAdditionFactory,
     FloatingIdleZAddition,
     GameClickTargetAddition,
     GuideStatusBubbleAddition,
+    IAvatarAddition,
     MutedBubbleAddition,
     NumberBubbleAddition,
     TypingBubbleAddition,

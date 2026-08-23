@@ -1,7 +1,6 @@
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { ISavedSearch } from './SavedSearchParser';
-import { SavedSearchParser } from './SavedSearchParser';
+import { ISavedSearch, SavedSearchParser } from './SavedSearchParser';
 
 export interface ITopLevelContext {
     searchCode: string;

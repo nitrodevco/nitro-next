@@ -1,5 +1,5 @@
 import { Container as PixiContainer } from 'pixi.js';
-import {  Key, ReactElement, useEffect, useState } from 'react';
+import { Key, ReactElement, useEffect, useState } from 'react';
 
 import { Box } from './Box';
 import { ScrollbarVertical } from './ScrollbarVertical';

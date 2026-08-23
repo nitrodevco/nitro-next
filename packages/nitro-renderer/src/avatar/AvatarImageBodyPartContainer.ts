@@ -1,5 +1,4 @@
-﻿import { Container } from 'pixi.js';
-import { Point } from 'pixi.js';
+﻿import { Container, Point } from 'pixi.js';
 
 export class AvatarImageBodyPartContainer {
     private _image: Container;

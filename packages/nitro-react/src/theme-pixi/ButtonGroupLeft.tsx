@@ -1,7 +1,7 @@
 import { ThemeVariants } from '#base/theme-core';
 
 import { NineSlice } from './layer';
-import {  ButtonGroupComponentProps, ButtonGroupVariant, createButtonGroupComponent } from './utils/buttonGroupFactory';
+import { ButtonGroupComponentProps, ButtonGroupVariant, createButtonGroupComponent } from './utils/buttonGroupFactory';
 
 const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
     // default

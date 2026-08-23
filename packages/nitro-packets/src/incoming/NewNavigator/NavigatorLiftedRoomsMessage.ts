@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { ILiftedRoomData } from '../Data/LiftedRoomDataParser';
-import { LiftedRoomDataParser } from '../Data/LiftedRoomDataParser';
+import { ILiftedRoomData, LiftedRoomDataParser } from '../Data/LiftedRoomDataParser';
 
 export type NavigatorLiftedRoomsMessageType = {
     liftedRooms: ILiftedRoomData[];

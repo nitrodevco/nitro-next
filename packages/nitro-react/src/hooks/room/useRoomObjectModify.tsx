@@ -1,5 +1,4 @@
-import { IRoomObject } from '@nitrodevco/nitro-api';
-import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObject, NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from '@nitrodevco/nitro-packets';
 import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 

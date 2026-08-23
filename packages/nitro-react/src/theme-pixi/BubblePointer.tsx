@@ -6,7 +6,7 @@ import { getRenderMode, THEME_URLS } from '#base/theme-core';
 import { Box, BoxLayout } from './Box';
 import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { useResolvedVariant } from './utils/useResolvedVariant';
-import {  SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
+import { SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 

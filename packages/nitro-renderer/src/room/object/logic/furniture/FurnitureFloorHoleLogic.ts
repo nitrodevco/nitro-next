@@ -1,5 +1,4 @@
-import { IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectFloorHoleEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, IVector3D, RoomObjectFloorHoleEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

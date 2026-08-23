@@ -1,6 +1,6 @@
 import { useApplication } from '@pixi/react';
 import { Container as PixiContainer } from 'pixi.js';
-import {  RefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 /**
  * Pixi port of hooks/ui/useOutsideClick.ts. DOM's version hit-tests via `element.contains(

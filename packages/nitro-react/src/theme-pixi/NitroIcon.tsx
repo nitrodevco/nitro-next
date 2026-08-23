@@ -2,7 +2,7 @@ import { Sprite as PixiSprite } from 'pixi.js';
 import { forwardRef } from 'react';
 
 import { BoxLayout } from './Box';
-import {  IconKey, useIconTexture } from './utils/useIconTexture';
+import { IconKey, useIconTexture } from './utils/useIconTexture';
 
 export interface NitroIconProps {
     icon: IconKey;

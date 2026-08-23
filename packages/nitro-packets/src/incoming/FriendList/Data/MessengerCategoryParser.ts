@@ -1,4 +1,4 @@
-import {  IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IMessengerCategory } from './IMessengerCategory';
 

@@ -1,5 +1,4 @@
-import { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
-import { AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { GetTickerTime } from '#renderer/utils';

@@ -1,18 +1,12 @@
 import { IRoom } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
-import { RoomCameraSlice } from './RoomCameraSlice';
-import { createRoomCameraSlice, RoomCameraSliceInitialState } from './RoomCameraSlice';
-import { RoomMouseSlice } from './RoomMouseSlice';
-import { createRoomMouseSlice, RoomMouseSliceInitialState } from './RoomMouseSlice';
-import { RoomSelectedObjectSlice } from './RoomSelectedObjectSlice';
-import { createRoomSelectedObjectSlice, RoomSelectedObjectSliceInitialState } from './RoomSelectedObjectSlice';
-import { RoomSessionSlice } from './RoomSessionSlice';
-import { createRoomSessionSlice, RoomSessionSliceInitialState } from './RoomSessionSlice';
-import { RoomStackingHeightMapSlice } from './RoomStackingHeightMapSlice';
-import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from './RoomStackingHeightMapSlice';
-import { RoomUsersSlice } from './RoomUsersSlice';
-import { createRoomUsersSlice, RoomUsersSliceInitialState } from './RoomUsersSlice';
+import { createRoomCameraSlice, RoomCameraSlice, RoomCameraSliceInitialState } from './RoomCameraSlice';
+import { createRoomMouseSlice, RoomMouseSlice, RoomMouseSliceInitialState } from './RoomMouseSlice';
+import { createRoomSelectedObjectSlice, RoomSelectedObjectSlice, RoomSelectedObjectSliceInitialState } from './RoomSelectedObjectSlice';
+import { createRoomSessionSlice, RoomSessionSlice, RoomSessionSliceInitialState } from './RoomSessionSlice';
+import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from './RoomStackingHeightMapSlice';
+import { createRoomUsersSlice, RoomUsersSlice, RoomUsersSliceInitialState } from './RoomUsersSlice';
 
 type State = {
     room: IRoom | undefined;

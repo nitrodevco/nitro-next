@@ -1,7 +1,7 @@
 import './pixiElements';
 
 import { Container as PixiContainer, FederatedWheelEvent, Graphics as PixiGraphics } from 'pixi.js';
-import {  ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { BoxLayout } from '../Box';
 import { ScrollOrientation } from './useScrollController';

@@ -1,6 +1,5 @@
 import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
-import { HeightMapMessageType } from '@nitrodevco/nitro-packets';
-import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
 import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 import { useRef } from 'react';
 

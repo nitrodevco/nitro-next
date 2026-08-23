@@ -1,5 +1,4 @@
-import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import { GetObjectDataFromWrapper } from '@nitrodevco/nitro-api';
+import { GetObjectDataFromWrapper, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IRoomFloorItem } from './IRoomFloorItem';
 

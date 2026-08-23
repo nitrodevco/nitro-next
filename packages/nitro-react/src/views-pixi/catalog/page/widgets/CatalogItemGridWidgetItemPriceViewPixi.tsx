@@ -1,5 +1,4 @@
-import { IPurchasableOffer } from '@nitrodevco/nitro-api';
-import { CatalogPricingTypeEnum } from '@nitrodevco/nitro-api';
+import { CatalogPricingTypeEnum, IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { Box, NitroCurrencyIcon, Text } from '#base/theme-pixi';
 

@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { FriendsContext } from './FriendsContext';
 import { createFriendsContextStore } from './store';

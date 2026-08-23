@@ -1,5 +1,4 @@
-import {  IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

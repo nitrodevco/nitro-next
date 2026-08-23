@@ -1,6 +1,5 @@
 import { IGraphicAsset, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Texture } from 'pixi.js';
-import { Matrix, Sprite } from 'pixi.js';
+import { Matrix, Sprite, Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../../../../assets';
 import { TextureUtils } from '../../../../utils';

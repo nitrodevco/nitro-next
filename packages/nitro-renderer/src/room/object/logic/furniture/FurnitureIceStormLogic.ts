@@ -1,5 +1,4 @@
-import { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { LegacyDataType } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, LegacyDataType } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

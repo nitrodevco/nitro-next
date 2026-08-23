@@ -1,5 +1,4 @@
-import { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObjectController, IRoomObjectUpdateMessage, IVector3D, RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '#renderer/utils';
 

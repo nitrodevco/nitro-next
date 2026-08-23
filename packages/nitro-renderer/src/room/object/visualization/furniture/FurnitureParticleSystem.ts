@@ -7,8 +7,7 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-api';
-import { Graphics } from 'pixi.js';
-import { AlphaFilter, Matrix, Point, Sprite, Texture } from 'pixi.js';
+import { AlphaFilter, Graphics, Matrix, Point, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';

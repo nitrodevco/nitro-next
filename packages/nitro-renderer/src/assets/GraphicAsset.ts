@@ -1,6 +1,5 @@
 import { IGraphicAsset } from '@nitrodevco/nitro-api';
-import { Texture } from 'pixi.js';
-import { Rectangle } from 'pixi.js';
+import { Rectangle, Texture } from 'pixi.js';
 
 export class GraphicAsset implements IGraphicAsset {
     private static GRAPHIC_POOL: GraphicAsset[] = [];

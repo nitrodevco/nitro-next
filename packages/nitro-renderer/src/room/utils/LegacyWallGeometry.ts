@@ -1,5 +1,4 @@
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import {  ILegacyWallGeometry, IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { ILegacyWallGeometry, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 
 export class LegacyWallGeometry implements ILegacyWallGeometry {
     public static L: string = 'l' as const;

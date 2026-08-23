@@ -1,5 +1,4 @@
-import { IRoomObjectModel } from '@nitrodevco/nitro-api';
-import { RoomObjectRoomAdEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomObjectModel, RoomObjectRoomAdEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
 

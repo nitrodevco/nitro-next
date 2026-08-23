@@ -8,8 +8,7 @@ import {
     RoomGeometryScaleType,
     type RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
-import { ImageLike } from 'pixi.js';
-import { Container, Point, Rectangle, Sprite } from 'pixi.js';
+import { Container, ImageLike, Point, Rectangle, Sprite } from 'pixi.js';
 
 import { TextureUtils } from '../../../utils';
 import { RoomObjectSprite } from './RoomObjectSprite';

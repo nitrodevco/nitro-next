@@ -1,20 +1,17 @@
 import {
-    IEventDispatcher,
+    FurnitureTypeEnum,
+    GetConfigValue, IEventDispatcher,
     IFurnitureData,
     IGraphicAsset,
     IGraphicAssetCollection,
     IPetColorResult,
     IRoomContentListener,
     IRoomContentLoader,
-} from '@nitrodevco/nitro-api';
-import {
-    FurnitureTypeEnum,
-    GetConfigValue, NitroLogger,
+    NitroLogger,
     RoomContentLoadedEvent, RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectUserTypeName,
-    RoomObjectUserTypeUtils,
-} from '@nitrodevco/nitro-api';
+    RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';

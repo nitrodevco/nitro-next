@@ -1,5 +1,4 @@
-import {  IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectBadgeAssetEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectGroupBadgeUpdateMessage, ObjectSelectedMessage } from '../../../messages';
 import { FurnitureBadgeDisplayLogic } from './FurnitureBadgeDisplayLogic';

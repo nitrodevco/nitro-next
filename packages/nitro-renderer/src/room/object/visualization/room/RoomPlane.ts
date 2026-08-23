@@ -5,10 +5,8 @@ import {
     IRoomGeometry,
     IRoomPlane,
     IVector3D,
-} from '@nitrodevco/nitro-api';
-import { Vector3d } from '@nitrodevco/nitro-api';
-import { RenderTexture } from 'pixi.js';
-import { Container, Matrix, Point, Sprite, Texture, TilingSprite } from 'pixi.js';
+    Vector3d } from '@nitrodevco/nitro-api';
+import { Container, Matrix, Point, RenderTexture, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { TexturePool, TextureUtils } from '#renderer/utils';

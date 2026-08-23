@@ -1,7 +1,6 @@
 import { IAssetVisualAnimation, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { AnimationFrame, SizeData } from '../data';
-import { AnimationSizeData } from '../data';
+import { AnimationFrame, AnimationSizeData, SizeData } from '../data';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
 
 export class FurnitureAnimatedVisualizationData extends FurnitureVisualizationData {

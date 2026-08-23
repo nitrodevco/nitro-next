@@ -1,4 +1,4 @@
-import {  IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectTileCursorUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';

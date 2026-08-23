@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { ICategoriesWithVisitorCountData } from '../Data/CategoriesWithVisitorCountDataParser';
-import { CategoriesWithVisitorCountDataParser } from '../Data/CategoriesWithVisitorCountDataParser';
+import { CategoriesWithVisitorCountDataParser, ICategoriesWithVisitorCountData } from '../Data/CategoriesWithVisitorCountDataParser';
 
 export type CategoriesWithVisitorCountMessageType = {
     data: ICategoriesWithVisitorCountData;

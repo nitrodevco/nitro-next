@@ -1,6 +1,5 @@
-﻿import {  IVector3D, Vector3d } from '@nitrodevco/nitro-api';
-import { PointData } from 'pixi.js';
-import { Point } from 'pixi.js';
+﻿import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { Point, PointData } from 'pixi.js';
 
 import { RoomFloorHole } from './RoomFloorHole';
 import { RoomMapData } from './RoomMapData';

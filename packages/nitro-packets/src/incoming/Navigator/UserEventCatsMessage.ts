@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IEventCategory } from './Data/EventCategoryParser';
-import { EventCategoryParser } from './Data/EventCategoryParser';
+import { EventCategoryParser, IEventCategory } from './Data/EventCategoryParser';
 
 export type UserEventCatsMessageType = {
     eventCategories: IEventCategory[];

@@ -1,5 +1,4 @@
-﻿import { IActionDefinition, IPartColor } from '@nitrodevco/nitro-api';
-import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
+﻿import { AvatarFigurePartType, IActionDefinition, IPartColor } from '@nitrodevco/nitro-api';
 import { AdjustmentFilter } from 'pixi-filters';
 
 import { AvatarAnimationFrame } from './structure';

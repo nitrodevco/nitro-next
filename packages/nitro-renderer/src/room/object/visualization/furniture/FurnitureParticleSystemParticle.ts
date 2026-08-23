@@ -1,5 +1,4 @@
-﻿import { IGraphicAsset, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Vector3d } from '@nitrodevco/nitro-api';
+﻿import { IGraphicAsset, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 
 export class FurnitureParticleSystemParticle {
     private _x: number;

@@ -1,7 +1,6 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IPerk } from '../Data/PerkParser';
-import { PerkParser } from '../Data/PerkParser';
+import { IPerk, PerkParser } from '../Data/PerkParser';
 
 export type PerkAllowancesMessageType = {
     perks: IPerk[];

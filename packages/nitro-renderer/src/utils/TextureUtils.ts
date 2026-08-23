@@ -1,5 +1,4 @@
-import { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions } from 'pixi.js';
-import { Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions, Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
 import { GetRenderer } from './GetRenderer';
 

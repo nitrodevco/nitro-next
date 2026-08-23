@@ -1,7 +1,6 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import type JSZip from 'jszip';
-import { Texture } from 'pixi.js';
-import { Assets } from 'pixi.js';
+import { Assets, Texture } from 'pixi.js';
 
 export class NitroBundle {
     private static TEXT_DECODER: TextDecoder = new TextDecoder('utf-8');
