@@ -48,7 +48,7 @@ export const NitroDomView = () => {
                     preference: 'webgpu',
                     preserveDrawingBuffer: false,
                     eventMode: 'static',
-                });
+                }, { destroyEvents: false });
 
                 TexturePool.startAutoCleanup();
 
