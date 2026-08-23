@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RoomSettingsErrorEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class RoomSettingsErrorEventMessage implements IIncomingPacket<RoomSettingsErrorEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): RoomSettingsErrorEventMessageType
-  {
+export class RoomSettingsErrorEventMessage implements IIncomingPacket<RoomSettingsErrorEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): RoomSettingsErrorEventMessageType {
+        const packet: RoomSettingsErrorEventMessageType = {
+        };
 
-    const packet: RoomSettingsErrorEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

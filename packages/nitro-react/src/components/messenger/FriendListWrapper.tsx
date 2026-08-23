@@ -1,6 +1,6 @@
-import { FriendsContextProvider } from "#base/context"
+import { FriendsContextProvider } from '#base/context';
 
-import { FriendListComponent } from "./FriendListComponent"
+import { FriendListComponent } from './FriendListComponent';
 
 /**
  * Now mounted in Nitro.tsx's Pixi tree (see MainView.tsx) alongside MessengerComponent, since
@@ -13,4 +13,4 @@ export const FriendListWrapper = () => {
             <FriendListComponent />
         </FriendsContextProvider>
     );
-}
+};

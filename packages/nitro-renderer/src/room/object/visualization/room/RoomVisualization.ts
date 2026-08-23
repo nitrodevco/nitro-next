@@ -4,11 +4,11 @@ import type {
     IRoomGeometry,
     IRoomObjectModel,
     IRoomObjectSprite,
-    IRoomPlane
+    IRoomPlane,
 } from '@nitrodevco/nitro-api';
 import {
     AlphaTolerance, RoomGeometryScaleType,
-    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, ToInt32, Vector3d
+    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, ToInt32, Vector3d,
 } from '@nitrodevco/nitro-api';
 import type { Filter } from 'pixi.js';
 import { Rectangle, Texture } from 'pixi.js';
@@ -190,11 +190,11 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         const direction = geometry.direction;
 
         if (
-            direction &&
-            (direction.x !== this._directionX ||
-                direction.y !== this._directionY ||
-                direction.z !== this._directionZ ||
-                geometry.scale !== this._roomScale)
+            direction
+            && (direction.x !== this._directionX
+                || direction.y !== this._directionY
+                || direction.z !== this._directionZ
+                || geometry.scale !== this._roomScale)
         ) {
             this._directionX = direction.x;
             this._directionY = direction.y;
@@ -383,8 +383,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         -textureOffsetY,
                     );
 
-                    plane.color =
-                        _local_14.z !== 0
+                    plane.color
+                        = _local_14.z !== 0
                             ? RoomVisualization.FLOOR_COLOR
                             : _local_14.x !== 0
                                 ? RoomVisualization.FLOOR_COLOR_RIGHT
@@ -401,8 +401,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         randomSeed,
                     );
 
-                    plane.color =
-                        _local_14.x === 0 && _local_14.y === 0
+                    plane.color
+                        = _local_14.x === 0 && _local_14.y === 0
                             ? RoomVisualization.WALL_COLOR_BORDER
                             : _local_14.y > 0
                                 ? RoomVisualization.WALL_COLOR_TOP
@@ -425,8 +425,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                         maxY,
                     );
 
-                    plane.color =
-                        _local_14.y > 0
+                    plane.color
+                        = _local_14.y > 0
                             ? RoomVisualization.LANDSCAPE_COLOR_TOP
                             : _local_14.y === 0
                                 ? RoomVisualization.LANDSCAPE_COLOR_SIDE
@@ -546,7 +546,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                 sprite.spriteType = RoomObjectSpriteTypeEnum.RoomPlane;
 
                 if (this._roomPlaneParser.isPlaneTemporaryHighlighter(planeIndex)) {
-                    if (this._highlightFilter) sprite.filters = [this._highlightFilter];
+                    if (this._highlightFilter) sprite.filters = [ this._highlightFilter ];
 
                     sprite.skipMouseHandling = true;
                     plane.extraDepth = -100;
@@ -646,9 +646,9 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         landscapeVisibility: boolean,
     ): boolean {
         if (
-            floorVisibility === this._typeVisibility[RoomPlane.TYPE_FLOOR] &&
-            wallVisibility === this._typeVisibility[RoomPlane.TYPE_WALL] &&
-            landscapeVisibility === this._typeVisibility[RoomPlane.TYPE_LANDSCAPE]
+            floorVisibility === this._typeVisibility[RoomPlane.TYPE_FLOOR]
+            && wallVisibility === this._typeVisibility[RoomPlane.TYPE_WALL]
+            && landscapeVisibility === this._typeVisibility[RoomPlane.TYPE_LANDSCAPE]
         )
             return false;
 
@@ -665,7 +665,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     protected updatePlanes(
         geometry: IRoomGeometry,
         geometryUpdate: boolean,
-        timeSinceStartMs: number
+        timeSinceStartMs: number,
     ): boolean {
         this._assetUpdateCounter++;
 
@@ -786,9 +786,9 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                                 const rightSideLoc = Vector3d.scalarProjection(_local_14, plane.rightSide);
 
                                 if (
-                                    plane.type === RoomPlane.TYPE_WALL ||
-                                    (plane.type === RoomPlane.TYPE_LANDSCAPE &&
-                                        maskCategory === RoomPlaneBitmapMaskData.HOLE)
+                                    plane.type === RoomPlane.TYPE_WALL
+                                    || (plane.type === RoomPlane.TYPE_LANDSCAPE
+                                        && maskCategory === RoomPlaneBitmapMaskData.HOLE)
                                 ) {
                                     plane.addBitmapMask(maskType, leftSideLoc, rightSideLoc);
                                 } else if (plane.type === RoomPlane.TYPE_LANDSCAPE) {

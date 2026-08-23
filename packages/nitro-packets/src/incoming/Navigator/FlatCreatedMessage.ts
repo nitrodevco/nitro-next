@@ -1,20 +1,17 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FlatCreatedMessageType = {
-  roomId: number;
-  name: string;
+    roomId: number;
+    name: string;
 };
 
-export class FlatCreatedMessage implements IIncomingPacket<FlatCreatedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FlatCreatedMessageType
-  {
+export class FlatCreatedMessage implements IIncomingPacket<FlatCreatedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FlatCreatedMessageType {
+        const packet: FlatCreatedMessageType = {
+            roomId: wrapper.readInt(),
+            name: wrapper.readString(),
+        };
 
-    const packet: FlatCreatedMessageType = {
-      roomId: wrapper.readInt(),
-      name: wrapper.readString(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

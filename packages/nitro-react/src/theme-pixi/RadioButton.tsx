@@ -45,28 +45,28 @@ const sheetFrame = (x: number): SpriteFrame => ({ x, y: 0, width: 16, height: 16
  */
 const RADIO_BUTTON_VARIANTS: Partial<Record<string, RadioButtonVariant>> = {
     // default
-    '0': {
+    0: {
         defaultTextureKey: 'radiobutton-src', selectedTextureKey: 'radiobutton-src',
         defaultFrame: sheetFrame(0), selectedFrame: sheetFrame(16),
         width: 16, height: 16,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // black
-    '1': {
+    1: {
         defaultTextureKey: 'radiobutton-src', selectedTextureKey: 'radiobutton-src',
         defaultFrame: sheetFrame(32), selectedFrame: sheetFrame(48),
         width: 16, height: 16,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // white (DOM quirk: selected frame reuses '0's selected sprite, see comment above)
-    '2': {
+    2: {
         defaultTextureKey: 'radiobutton-src', selectedTextureKey: 'radiobutton-src',
         defaultFrame: sheetFrame(64), selectedFrame: sheetFrame(16),
         width: 16, height: 16,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // default
-    '100': {
+    100: {
         defaultTextureKey: 'radiobutton-100-default-src', selectedTextureKey: 'radiobutton-100-selected-src',
         defaultFrame: { x: 0, y: 0, width: 11, height: 14 }, selectedFrame: { x: 0, y: 0, width: 11, height: 14 },
         width: 11, height: 14,
@@ -120,22 +120,28 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
                 {isDom
                     ? <div style={{ position: 'absolute', top: 0, left: 0, ...spriteFrameToStyle(activeTextureKey, activeFrame) }} />
                     : (
-                        <pixiSprite
-                            texture={texture}
-                            width={config.width}
-                            height={config.height}
-                            eventMode="none"
-                            layout={{ position: 'absolute', top: 0, left: 0 }}
-                        />
-                    )}
+                            <pixiSprite
+                                texture={texture}
+                                width={config.width}
+                                height={config.height}
+                                eventMode="none"
+                                layout={{ position: 'absolute', top: 0, left: 0 }}
+                            />
+                        )}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                        ? (
+                                <Text
+                                    text={children}
+                                    textStyle={config.textStyleKey}
+                                    textOptions={{ fill: config.color }}
+                                />
+                            )
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 RadioButton.displayName = 'RadioButton';

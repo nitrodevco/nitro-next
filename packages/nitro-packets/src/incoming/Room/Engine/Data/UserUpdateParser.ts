@@ -1,6 +1,6 @@
-import { AvatarActionStateType, type IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, type IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import { IRoomAvatarUpdate } from "./IRoomAvatarUpdate";
+import { IRoomAvatarUpdate } from './IRoomAvatarUpdate';
 
 export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdate => {
     const item = {
@@ -18,7 +18,7 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
         didMove: false,
         canStandUp: false,
         skipPositionUpdate: false,
-        actions: []
+        actions: [],
     } as IRoomAvatarUpdate;
 
     const status = wrapper.readString();
@@ -64,4 +64,4 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
     }
 
     return item;
-}
+};

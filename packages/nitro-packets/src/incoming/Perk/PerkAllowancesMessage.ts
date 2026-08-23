@@ -4,25 +4,23 @@ import type { IPerk } from '../Data/PerkParser';
 import { PerkParser } from '../Data/PerkParser';
 
 export type PerkAllowancesMessageType = {
-  perks: IPerk[];
+    perks: IPerk[];
 };
 
-export class PerkAllowancesMessage implements IIncomingPacket<PerkAllowancesMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): PerkAllowancesMessageType
-  {
-    const packet: PerkAllowancesMessageType = {
-      perks: []
-    };
+export class PerkAllowancesMessage implements IIncomingPacket<PerkAllowancesMessageType> {
+    public parse(wrapper: IMessageDataWrapper): PerkAllowancesMessageType {
+        const packet: PerkAllowancesMessageType = {
+            perks: [],
+        };
 
-    let count = wrapper.readInt();
+        let count = wrapper.readInt();
 
-    while (count > 0) {
-      packet.perks.push(PerkParser(wrapper));
+        while (count > 0) {
+            packet.perks.push(PerkParser(wrapper));
 
-      count--;
+            count--;
+        }
+
+        return packet;
     }
-
-    return packet;
-  }
 }

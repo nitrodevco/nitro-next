@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HabboGroupDetailsMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class HabboGroupDetailsMessage implements IIncomingPacket<HabboGroupDetailsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): HabboGroupDetailsMessageType
-  {
+export class HabboGroupDetailsMessage implements IIncomingPacket<HabboGroupDetailsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): HabboGroupDetailsMessageType {
+        const packet: HabboGroupDetailsMessageType = {
+        };
 
-    const packet: HabboGroupDetailsMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

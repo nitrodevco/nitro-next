@@ -26,10 +26,10 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
         const packetType = Math.floor(extras / local3);
         const ribbonType = extras % local3;
 
-        this._packetType =
-            packetType > FurnitureGiftWrappedFireworksVisualization.MAX_PACKET_TYPE_VALUE ? 0 : packetType;
-        this._ribbonType =
-            ribbonType > FurnitureGiftWrappedFireworksVisualization.MAX_RIBBON_TYPE_VALUE ? 0 : ribbonType;
+        this._packetType
+            = packetType > FurnitureGiftWrappedFireworksVisualization.MAX_PACKET_TYPE_VALUE ? 0 : packetType;
+        this._ribbonType
+            = ribbonType > FurnitureGiftWrappedFireworksVisualization.MAX_RIBBON_TYPE_VALUE ? 0 : ribbonType;
     }
 
     public override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {

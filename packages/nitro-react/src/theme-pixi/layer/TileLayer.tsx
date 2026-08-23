@@ -1,6 +1,6 @@
-import { BoxLayout } from "../Box";
-import { FillLayout } from "../utils/FillLayout";
-import { usePixiTexture } from "../utils/usePixiTexture";
+import { BoxLayout } from '../Box';
+import { FillLayout } from '../utils/FillLayout';
+import { usePixiTexture } from '../utils/usePixiTexture';
 
 export interface TileLayerProps {
     textureKey: string | undefined;
@@ -13,5 +13,12 @@ export const TileLayer = ({ textureKey, tintColor, layout }: TileLayerProps) => 
 
     if (!texture) return null;
 
-    return <pixiTilingSprite texture={texture} tint={tintColor} eventMode="none" layout={layout ?? FillLayout} />;
+    return (
+        <pixiTilingSprite
+            texture={texture}
+            tint={tintColor}
+            eventMode="none"
+            layout={layout ?? FillLayout}
+        />
+    );
 };

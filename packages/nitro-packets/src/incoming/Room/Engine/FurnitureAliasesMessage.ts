@@ -1,13 +1,13 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FurnitureAliasesMessageType = {
-    aliases: { alias: string, original: string }[];
+    aliases: { alias: string; original: string }[];
 };
 
 export class FurnitureAliasesMessage implements IIncomingPacket<FurnitureAliasesMessageType> {
     public parse(wrapper: IMessageDataWrapper): FurnitureAliasesMessageType {
         const packet: FurnitureAliasesMessageType = {
-            aliases: []
+            aliases: [],
         };
 
         let count = wrapper.readInt();

@@ -1,14 +1,14 @@
-import { PollContentsEventMessage, PollErrorEventMessage, PollOfferEventMessage } from "@nitrodevco/nitro-packets";
+import { PollContentsEventMessage, PollErrorEventMessage, PollOfferEventMessage } from '@nitrodevco/nitro-packets';
 
-import { useMessageListener } from "#base/hooks";
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomPollHandler = () => {
-    useMessageListener(PollContentsEventMessage, data => {
+    useMessageListener(PollContentsEventMessage, (data) => {
     });
 
-    useMessageListener(PollOfferEventMessage, data => {
+    useMessageListener(PollOfferEventMessage, (data) => {
     });
 
-    useMessageListener(PollErrorEventMessage, data => {
+    useMessageListener(PollErrorEventMessage, (data) => {
     });
-}
+};

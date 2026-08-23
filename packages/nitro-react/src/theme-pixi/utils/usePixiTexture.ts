@@ -35,7 +35,7 @@ const loadTexture = (url: string): Promise<Texture | undefined> => {
  * fetched, decoded, and GPU-uploaded exactly once.
  */
 export const useTextureFromUrl = (url: string | undefined): Texture | undefined => {
-    const [texture, setTexture] = useState<Texture | undefined>(() => (url ? GetAssetManager().getTexture(url) : undefined));
+    const [ texture, setTexture ] = useState<Texture | undefined>(() => (url ? GetAssetManager().getTexture(url) : undefined));
 
     useEffect(() => {
         if (!url) {
@@ -47,14 +47,14 @@ export const useTextureFromUrl = (url: string | undefined): Texture | undefined 
 
         let cancelled = false;
 
-        void loadTexture(url).then(result => {
+        void loadTexture(url).then((result) => {
             if (!cancelled) setTexture(result);
         });
 
         return () => {
             cancelled = true;
         };
-    }, [url]);
+    }, [ url ]);
 
     return texture;
 };

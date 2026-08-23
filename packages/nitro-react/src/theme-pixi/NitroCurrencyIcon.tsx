@@ -41,8 +41,14 @@ export const NitroCurrencyIcon = forwardRef<PixiSprite, NitroCurrencyIconProps>(
 
         if (!resolvedTexture) return null;
 
-        return <pixiSprite ref={ref} texture={resolvedTexture} layout={layout ?? {}} />;
-    }
+        return (
+            <pixiSprite
+                ref={ref}
+                texture={resolvedTexture}
+                layout={layout ?? {}}
+            />
+        );
+    },
 );
 
 NitroCurrencyIcon.displayName = 'NitroCurrencyIcon';

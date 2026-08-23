@@ -186,7 +186,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
     public getVisualizationData(
         type: string,
         visualization: string | undefined,
-        asset: IAssetData | undefined
+        asset: IAssetData | undefined,
     ): IObjectVisualizationData | undefined {
         let visualizationData = this._visualizationDatas.get(type);
 

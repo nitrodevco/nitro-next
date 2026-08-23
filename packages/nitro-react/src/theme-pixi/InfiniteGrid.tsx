@@ -32,10 +32,10 @@ export interface InfiniteGridProps<T> {
  * elsewhere (see useScrollController.ts, useRowVirtualizer.ts) - close enough to the DOM
  * version's ~10ms debounce that no separate debounce is needed on top of it.
  */
-export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
-    const [viewportNode, setViewportNode] = useState<PixiContainer | null>(null);
-    const [viewportWidth, setViewportWidth] = useState(0);
-    const [viewportHeight, setViewportHeight] = useState(0);
+export function InfiniteGrid<T>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) {
+    const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
+    const [ viewportWidth, setViewportWidth ] = useState(0);
+    const [ viewportHeight, setViewportHeight ] = useState(0);
 
     useEffect(() => {
         if (!viewportNode) return;
@@ -51,7 +51,7 @@ export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 
         raf = requestAnimationFrame(tick);
 
         return () => cancelAnimationFrame(raf);
-    }, [viewportNode]);
+    }, [ viewportNode ]);
 
     const columnCount = overrideColumnCount || Math.max(MIN_COLUMNS, Math.min(MAX_COLUMNS, Math.ceil(viewportWidth / (itemWidth + 4)))) || MIN_COLUMNS;
     const rowCount = Math.ceil(items.length / (columnCount || 1)) || 1;
@@ -69,7 +69,7 @@ export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 
     return (
         <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
             <ScrollViewport
-                viewportRef={node => { scroll.viewportRef(node); setViewportNode(node); }}
+                viewportRef={(node) => { scroll.viewportRef(node); setViewportNode(node); }}
                 contentRef={scroll.contentRef}
                 onWheel={scroll.onWheel}
                 scrollOffset={scroll.scrollOffset}
@@ -97,7 +97,10 @@ export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 
                             // for a missing trailing item so the real items keep the same width
                             // as every other row instead of stretching to fill the gap.
                             return (
-                                <Box key={item !== undefined ? getKey(item) : i} layout={{ flexBasis: 0, flexGrow: 1 }}>
+                                <Box
+                                    key={item !== undefined ? getKey(item) : i}
+                                    layout={{ flexBasis: 0, flexGrow: 1 }}
+                                >
                                     {item !== undefined && (itemRender(item, i) ?? null)}
                                 </Box>
                             );
@@ -119,4 +122,4 @@ export const InfiniteGrid = <T,>({ items, itemWidth = 45, overrideColumnCount = 
             />
         </Box>
     );
-};
+}

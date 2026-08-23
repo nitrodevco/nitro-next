@@ -1,5 +1,5 @@
-﻿import type { AvatarImageBodyPartContainer } from "../AvatarImageBodyPartContainer";
-import type { AvatarImagePartContainer } from "../AvatarImagePartContainer";
+﻿import type { AvatarImageBodyPartContainer } from '../AvatarImageBodyPartContainer';
+import type { AvatarImagePartContainer } from '../AvatarImagePartContainer';
 
 export class AvatarImageDirectionCache {
     private _partList: AvatarImagePartContainer[];

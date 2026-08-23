@@ -162,8 +162,8 @@ export class PlaneMaskManager {
         return {
             texture: texture,
             position: { x: Math.trunc(posX) + asset.offsetX, y: Math.trunc(posY) + asset.offsetY },
-            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 }
-        }
+            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 },
+        };
     }
 
     public getMask(k: string): PlaneMask | undefined {

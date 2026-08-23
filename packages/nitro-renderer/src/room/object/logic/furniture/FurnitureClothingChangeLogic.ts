@@ -6,7 +6,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureClothingChangeLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.CLOTHING_CHANGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.CLOTHING_CHANGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -30,7 +30,7 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
     private updateClothingData(data: string): void {
         if (!data || !data.length) return;
 
-        const [male, female] = data.split(',');
+        const [ male, female ] = data.split(',');
 
         if (male && male.length) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingBoy, male);
         if (female && female.length)

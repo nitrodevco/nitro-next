@@ -11,9 +11,9 @@ export const useHoldToRepeat = (callback: () => void) => {
     const stop = () => {
         clearTimeout(timeoutRef.current);
         clearInterval(intervalRef.current);
-    }
+    };
 
-    useEffect(() => stop, [stop]);
+    useEffect(() => stop, [ stop ]);
 
     const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
         event.currentTarget.setPointerCapture(event.pointerId);
@@ -21,12 +21,12 @@ export const useHoldToRepeat = (callback: () => void) => {
         timeoutRef.current = setTimeout(() => {
             intervalRef.current = setInterval(() => callbackRef.current(), HOLD_REPEAT_INTERVAL_MS);
         }, HOLD_INITIAL_DELAY_MS);
-    }
+    };
 
     const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
         stop();
         if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    };
 
     return { onPointerDown, onPointerUp };
-}
+};

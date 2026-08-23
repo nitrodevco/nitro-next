@@ -6,10 +6,10 @@ import { UserContext } from './UserContext';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 export const UserContextProvider = ({ children }: ProviderProps) => {
-    const [userCtx] = useState(() => createUserStore());
+    const [ userCtx ] = useState(() => createUserStore());
 
     return (
         <UserContext value={userCtx}>

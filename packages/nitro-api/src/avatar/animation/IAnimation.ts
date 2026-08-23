@@ -1,9 +1,9 @@
-﻿import { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType } from "../enum";
-import { IAddDataContainer } from "./IAddDataContainer";
-import { IAnimationLayerData } from "./IAnimationLayerData";
-import { IAvatarDataContainer } from "./IAvatarDataContainer";
-import { IDirectionDataContainer } from "./IDirectionDataContainer";
-import { ISpriteDataContainer } from "./ISpriteDataContainer";
+﻿import { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType } from '../enum';
+import { IAddDataContainer } from './IAddDataContainer';
+import { IAnimationLayerData } from './IAnimationLayerData';
+import { IAvatarDataContainer } from './IAvatarDataContainer';
+import { IDirectionDataContainer } from './IDirectionDataContainer';
+import { ISpriteDataContainer } from './ISpriteDataContainer';
 
 export interface IAnimation {
     frameCount(name?: string): number;

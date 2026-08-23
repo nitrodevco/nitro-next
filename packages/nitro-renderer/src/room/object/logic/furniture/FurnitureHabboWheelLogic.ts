@@ -4,7 +4,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureHabboWheelLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectFurnitureActionEvent.USE_HABBOWHEEL]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectFurnitureActionEvent.USE_HABBOWHEEL ]);
     }
 
     public override useObject(): void {

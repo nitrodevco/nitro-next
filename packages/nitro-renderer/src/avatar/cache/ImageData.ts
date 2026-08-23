@@ -1,5 +1,5 @@
-﻿import type { Container, Point, Texture } from "pixi.js";
-import { Rectangle } from "pixi.js";
+﻿import type { Container, Point, Texture } from 'pixi.js';
+import { Rectangle } from 'pixi.js';
 
 export class ImageData {
     private _texture: Texture | undefined;

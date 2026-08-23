@@ -1,5 +1,6 @@
-import { AvatarGenderType } from "@nitrodevco/nitro-api";
-import { MessengerFriendRelationType } from "./MessengerFriendRelationType";
+import { AvatarGenderType } from '@nitrodevco/nitro-api';
+
+import { MessengerFriendRelationType } from './MessengerFriendRelationType';
 
 export interface IMessengerFriend {
     readonly playerId: number;

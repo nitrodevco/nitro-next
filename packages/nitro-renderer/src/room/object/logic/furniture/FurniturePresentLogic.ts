@@ -18,7 +18,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
     private static PURCHASER_FIGURE: string = 'PURCHASER_FIGURE';
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.PRESENT]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.PRESENT ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -26,7 +26,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
 
         if (asset?.logic?.particleSystems) this.object.model.setValue<IParticleSystem[]>(
             RoomObjectVariableEnum.FurnitureFireworksData,
-            asset.logic.particleSystems
+            asset.logic.particleSystems,
         );
     }
 

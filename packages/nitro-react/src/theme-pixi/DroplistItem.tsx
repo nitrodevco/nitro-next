@@ -34,12 +34,16 @@ export const DroplistItem: ForwardRefExoticComponent<DroplistItemProps & RefAttr
         const textureKey = resolveByState(DROPLIST_ITEM_TEXTURE_KEYS, state, selected);
 
         return (
-            <Box ref={ref} layout={{ minWidth: 5, minHeight: 19, ...layout }} {...handlers}>
+            <Box
+                ref={ref}
+                layout={{ minWidth: 5, minHeight: 19, ...layout }}
+                {...handlers}
+            >
                 <SpriteLayer textureKey={textureKey} />
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 DroplistItem.displayName = 'DroplistItem';

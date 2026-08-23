@@ -1,10 +1,10 @@
-import type { IRoomObject, RoomObjectEvent, RoomSpriteMouseEvent } from "@nitrodevco/nitro-api";
-import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomWidgetUpdateRoomObjectEvent } from "@nitrodevco/nitro-api";
-import { RoomObjectUpdateMessage } from "@nitrodevco/nitro-renderer";
-import { useEffect } from "react";
+import type { IRoomObject, RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+import { MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectUpdateMessage } from '@nitrodevco/nitro-renderer';
+import { useEffect } from 'react';
 
-import { useOwnControllerLevel, useOwnIsModerator, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from "#base/context";
-import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect } from "#base/hooks";
+import { useOwnControllerLevel, useOwnIsModerator, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from '#base/context';
+import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect } from '#base/hooks';
 
 export const RoomEventHandler = () => {
     const room = useRoomSelector();
@@ -58,8 +58,8 @@ export const RoomEventHandler = () => {
                 const category = room.getRoomObjectCategoryForType(event.objectType);
 
                 if (
-                    (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall) ||
-                    controllerLevel >= RoomControllerLevelEnum.Guest
+                    (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall)
+                    || controllerLevel >= RoomControllerLevelEnum.Guest
                 ) addCursorOwner(event.objectId, category);
                 return;
             }
@@ -68,7 +68,7 @@ export const RoomEventHandler = () => {
                 return;
             }
         }
-    }
+    };
 
     const handleRoomCanvasMouseEvent = (event: RoomSpriteMouseEvent, object: IRoomObject) => {
         if (!room || !object) return;
@@ -81,11 +81,11 @@ export const RoomEventHandler = () => {
 
         if (eventId === event.eventId) {
             if (
-                event.type === MouseEventType.MOUSE_CLICK ||
-                event.type === MouseEventType.DOUBLE_CLICK ||
-                event.type === MouseEventType.MOUSE_DOWN ||
-                event.type === MouseEventType.MOUSE_UP ||
-                event.type === MouseEventType.MOUSE_MOVE
+                event.type === MouseEventType.MOUSE_CLICK
+                || event.type === MouseEventType.DOUBLE_CLICK
+                || event.type === MouseEventType.MOUSE_DOWN
+                || event.type === MouseEventType.MOUSE_UP
+                || event.type === MouseEventType.MOUSE_MOVE
             )
                 return;
         } else if (event.eventId) {
@@ -93,7 +93,7 @@ export const RoomEventHandler = () => {
         }
 
         if (object.mouseHandler) object.mouseHandler.mouseEvent(event, room.getGeometry());
-    }
+    };
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.SELECTED,
@@ -104,9 +104,9 @@ export const RoomEventHandler = () => {
         RoomEngineObjectEvent.MOUSE_ENTER,
         RoomEngineObjectEvent.MOUSE_LEAVE,
         RoomEngineObjectEvent.DOUBLE_CLICK,
-    ], event => {
+    ], (event) => {
         if (!room) return;
-        //if (RoomId.isRoomPreviewerId(event.roomId)) return;
+        // if (RoomId.isRoomPreviewerId(event.roomId)) return;
 
         let updateEvent: RoomWidgetUpdateRoomObjectEvent | undefined = undefined;
 
@@ -211,7 +211,7 @@ export const RoomEventHandler = () => {
         room.eventHandler.setRoomObjectEventHandler(handleRoomObjectEvent);
 
         return () => room.eventHandler.setRoomObjectEventHandler(undefined);
-    }, [room, handleRoomObjectEvent]);
+    }, [ room, handleRoomObjectEvent ]);
 
     useEffect(() => {
         if (!room) return;
@@ -219,7 +219,7 @@ export const RoomEventHandler = () => {
         room.eventHandler.setRoomCanvasMouseHandler(handleRoomCanvasMouseEvent);
 
         return () => room.eventHandler.setRoomCanvasMouseHandler(undefined);
-    }, [room, handleRoomCanvasMouseEvent]);
+    }, [ room, handleRoomCanvasMouseEvent ]);
 
     return null;
-}
+};

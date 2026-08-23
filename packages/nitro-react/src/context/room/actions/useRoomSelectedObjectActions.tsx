@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useRoomContext } from "#base/context";
+import { useRoomContext } from '#base/context';
 
 export const useRoomSelectedObjectActions = () => useRoomContext(useShallow(x => ({
     setSelectedAvatarId: x.setSelectedAvatarId,
@@ -8,5 +8,5 @@ export const useRoomSelectedObjectActions = () => useRoomContext(useShallow(x =>
     setSelectedObjectCategory: x.setSelectedObjectCategory,
     setSelectedObject: x.setSelectedObject,
     setPlacedObject: x.setPlacedObject,
-    setObjectPlacementSource: x.setObjectPlacementSource
+    setObjectPlacementSource: x.setObjectPlacementSource,
 })));

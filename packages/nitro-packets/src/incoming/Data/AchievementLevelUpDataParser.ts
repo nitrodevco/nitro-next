@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IAchievementLevelUpData {
     type: number;
@@ -51,4 +51,4 @@ export const AchievementLevelUpDataParser = (wrapper: IMessageDataWrapper): IAch
     data.badgeRarityId = wrapper.readInt();
 
     return data;
-}
+};

@@ -1,5 +1,5 @@
-import { RoomGeometryScaleType } from "@nitrodevco/nitro-api";
-import { LegacyWallGeometry, RoomPlaneParser } from "@nitrodevco/nitro-renderer";
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { LegacyWallGeometry, RoomPlaneParser } from '@nitrodevco/nitro-renderer';
 
 export const useRoomMapping = () => {
     const createMapForSize = (size: number) => {
@@ -46,7 +46,7 @@ export const useRoomMapping = () => {
         const mapData = planeParser.getMapData();
 
         return { mapData, wallGeometry };
-    }
+    };
 
     return { createMapForSize };
-}
+};

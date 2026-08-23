@@ -1,9 +1,9 @@
-import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
-import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
-import { useRef } from "react";
+import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from '@nitrodevco/nitro-packets';
+import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
+import { useRef } from 'react';
 
-import { useRoomActions, useSystemActions } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useRoomActions, useSystemActions } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomDirectoryHandler = () => {
     const { setRoom, setOwnUserId } = useRoomActions();
@@ -11,7 +11,7 @@ export const useRoomDirectoryHandler = () => {
     // RoomMessageHandler keeps the current room id so it can dispose it on the next enter
     const currentRoomIdRef = useRef(0);
 
-    useMessageListener(UserObjectMessage, data => {
+    useMessageListener(UserObjectMessage, (data) => {
         setOwnUserId(data.userInfo.userId);
     });
 
@@ -48,4 +48,4 @@ export const useRoomDirectoryHandler = () => {
     });
 
     useMessageListener(RoomReadyMessage, data => enterRoom(data.roomId));
-}
+};

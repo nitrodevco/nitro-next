@@ -18,10 +18,10 @@ import { wrapTextChildren } from './utils/wrapTextChildren';
  * there). It's a plain presentational sizing/text-color leaf, meant to be placed inside a
  * scrollable content area by a caller (e.g. InfiniteGrid) that supplies its own children.
  */
-const SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS: Record<string, { minWidth: number, minHeight: number }> = {
-    '0': { minWidth: 40, minHeight: 40 },
-    '3': { minWidth: 40, minHeight: 40 },
-    '100': { minWidth: 40, minHeight: 40 },
+const SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS: Record<string, { minWidth: number; minHeight: number }> = {
+    0: { minWidth: 40, minHeight: 40 },
+    3: { minWidth: 40, minHeight: 40 },
+    100: { minWidth: 40, minHeight: 40 },
 };
 
 export interface ScrollableItemListVerticalProps {
@@ -37,14 +37,17 @@ export const ScrollableItemListVertical: ForwardRefExoticComponent<ScrollableIte
         const config = SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS[resolvedVariant] ?? SCROLLABLE_ITEM_LIST_VERTICAL_VARIANTS['0'];
 
         return (
-            <Box ref={ref} layout={{ minWidth: config.minWidth, minHeight: config.minHeight, ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ minWidth: config.minWidth, minHeight: config.minHeight, ...layout }}
+            >
                 {/* DOM's `text-[#000000]` needs no explicit style here - PixiJS's own default
                     TextStyle fill is already black, so wrapTextChildren's unstyled pixiText
                     matches it by coincidence rather than by an explicit override. */}
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 ScrollableItemListVertical.displayName = 'ScrollableItemListVertical';

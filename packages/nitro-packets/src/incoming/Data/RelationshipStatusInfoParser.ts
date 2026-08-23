@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IRelationshipStatusInfo {
     relationshipStatusType: number;
@@ -24,4 +24,4 @@ export const RelationshipStatusInfoParser = (wrapper: IMessageDataWrapper): IRel
     data.randomFriendFigure = wrapper.readString();
 
     return data;
-}
+};

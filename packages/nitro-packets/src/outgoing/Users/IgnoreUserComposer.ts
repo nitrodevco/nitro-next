@@ -8,6 +8,6 @@ export class IgnoreUserComposer implements IOutgoingPacket<IgnoreUserComposerTyp
     public constructor(private params: IgnoreUserComposerType) { }
 
     public compose(): (number | string | boolean)[] {
-        return [this.params.userId];
+        return [ this.params.userId ];
     }
 }

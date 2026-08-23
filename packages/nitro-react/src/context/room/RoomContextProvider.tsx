@@ -6,10 +6,10 @@ import { createRoomStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 export const RoomContextProvider = ({ children }: ProviderProps) => {
-    const [ctx] = useState(() => createRoomStore());
+    const [ ctx ] = useState(() => createRoomStore());
 
     return (
         <RoomContext value={ctx}>

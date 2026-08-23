@@ -4,7 +4,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureEffectBoxLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.EFFECTBOX_OPEN_DIALOG]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.EFFECTBOX_OPEN_DIALOG ]);
     }
 
     public override useObject(): void {

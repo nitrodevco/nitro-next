@@ -1,4 +1,3 @@
-
 import {
     EventDispatcher,
     FurniId,
@@ -27,18 +26,15 @@ import {
     RoomContentLoadedEvent,
     RoomEngineEvent,
     RoomEngineObjectEvent,
-    RoomGeometryScaleType
-    ,
+    RoomGeometryScaleType,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
-    RoomObjectUserTypeName
-    ,
+    RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
     RoomObjectVariableEnum,
-    RoomThicknessType
-    ,
+    RoomThicknessType,
     RoomToObjectOwnAvatarMoveEvent,
-    Vector3d
+    Vector3d,
 } from '@nitrodevco/nitro-api';
 import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
@@ -49,7 +45,7 @@ import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
 import type {
-    ObjectStateUpdateMessage
+    ObjectStateUpdateMessage,
 } from './messages';
 import {
     ObjectAvatarCarryObjectUpdateMessage,
@@ -114,6 +110,7 @@ export class Room implements IRoom {
         RoomObjectCategoryEnum.Cursor,
         RoomObjectCategoryEnum.Room,
     ];
+
     private _skipContentProcessingForNextFrame: boolean = false;
     private _skipFurnitureCreationForNextFrame: boolean = false;
     private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
@@ -378,7 +375,7 @@ export class Room implements IRoom {
     public getRoomInstanceRenderingCanvasOffset(): PointData {
         const offset = {
             x: 0,
-            y: 0
+            y: 0,
         };
 
         if (this._canvas) {
@@ -606,9 +603,9 @@ export class Room implements IRoom {
             }
         }
 
-        //EventStore.getState().emit(new RoomEngineObjectEvent(RoomEngineObjectEvent.CONTENT_UPDATED, id, objectId, category));
+        // EventStore.getState().emit(new RoomEngineObjectEvent(RoomEngineObjectEvent.CONTENT_UPDATED, id, objectId, category));
 
-        //this.addObjectToTileMap(id, object);
+        // this.addObjectToTileMap(id, object);
     }
 
     public reinitializeRoomObjectsByType(type: string): void {
@@ -621,14 +618,14 @@ export class Room implements IRoom {
         const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
             type,
             asset.data.visualizationType,
-            asset.data
+            asset.data,
         );
 
-        for (const [category, manager] of this._objectManagers.entries()) {
+        for (const [ category, manager ] of this._objectManagers.entries()) {
             for (const object of manager.objects.getValues()) {
                 if (!object || object.type !== type) continue;
 
-                const visualization = GetRoomObjectVisualizationFactory().getVisualization(asset.data.visualizationType)
+                const visualization = GetRoomObjectVisualizationFactory().getVisualization(asset.data.visualizationType);
 
                 if (visualization) {
                     visualization.asset = asset;
@@ -737,7 +734,7 @@ export class Room implements IRoom {
             ownerId,
             ownerName,
             realRoomObject,
-            sizeZ
+            sizeZ,
         };
 
         this.addFurnitureFloorFromData(this._floorStack[objectId]);
@@ -816,7 +813,7 @@ export class Room implements IRoom {
             ownerId,
             ownerName,
             realRoomObject,
-            sizeZ: -1
+            sizeZ: -1,
         };
 
         this.addFurnitureWallFromData(this._wallStack[objectId]);
@@ -920,7 +917,7 @@ export class Room implements IRoom {
         location: IVector3D | undefined,
         direction: IVector3D | undefined,
         state: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -940,7 +937,7 @@ export class Room implements IRoom {
 
     public updateRoomObjectWallLocation(
         objectId: number,
-        location: IVector3D | undefined
+        location: IVector3D | undefined,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -956,7 +953,7 @@ export class Room implements IRoom {
     public updateRoomObjectWallState(
         objectId: number,
         state: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -973,7 +970,7 @@ export class Room implements IRoom {
 
     public updateRoomObjectWallItemData(
         objectId: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -1037,7 +1034,7 @@ export class Room implements IRoom {
 
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, stateIndex);
 
-        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat)
+        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
         const data = GetObjectDataForFlags(dataKey);
 
         data.initializeFromRoomObjectModel(roomObject.model);
@@ -1273,9 +1270,9 @@ export class Room implements IRoom {
                 const screenLocation = this.getRoomObjectScreenLocation(objectId, RoomObjectCategoryEnum.Floor);
 
                 if (screenLocation) {
-                    const disabledPickingAnimation =
-                        roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDisablePickingAnimation) ===
-                        1;
+                    const disabledPickingAnimation
+                        = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDisablePickingAnimation)
+                            === 1;
 
                     if (!disabledPickingAnimation) {
                         const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
@@ -1311,9 +1308,9 @@ export class Room implements IRoom {
             const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
             if (
-                roomObject &&
-                roomObject.type.indexOf('post_it') === -1 &&
-                roomObject.type.indexOf('external_image_wallitem') === -1
+                roomObject
+                && roomObject.type.indexOf('post_it') === -1
+                && roomObject.type.indexOf('external_image_wallitem') === -1
             ) {
                 const screenLocation = this.getRoomObjectScreenLocation(objectId, RoomObjectCategoryEnum.Wall);
 

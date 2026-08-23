@@ -1,5 +1,5 @@
-import { useIsWindowVisible } from "#base/context/system";
-import { InventoryViewPixi } from "#base/views-pixi/inventory/InventoryViewPixi"
+import { useIsWindowVisible } from '#base/context/system';
+import { InventoryViewPixi } from '#base/views-pixi/inventory/InventoryViewPixi';
 
 export const InventoryComponent = () => {
     const isVisible = useIsWindowVisible('inventory');
@@ -7,4 +7,4 @@ export const InventoryComponent = () => {
     if (!isVisible) return null;
 
     return <InventoryViewPixi />;
-}
+};

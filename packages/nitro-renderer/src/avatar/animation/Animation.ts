@@ -165,8 +165,7 @@ export class Animation implements IAnimation {
 
         if (!name) {
             if (this._frames.length > 0) layers = this._frames[(frameCount % this._frames.length)];
-        }
-        else {
+        } else {
             const overrideLayers = this._overrideFrames.get(name);
 
             if (overrideLayers && (overrideLayers.length > 0)) layers = overrideLayers[(frameCount % overrideLayers.length)];

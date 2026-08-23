@@ -1,5 +1,5 @@
-import { IBinaryReader } from "../utils";
-import { IMessageDataWrapper } from "./IMessageDataWrapper";
+import { IBinaryReader } from '../utils';
+import { IMessageDataWrapper } from './IMessageDataWrapper';
 
 export class EvaWireDataWrapper implements IMessageDataWrapper {
     private _header: number;

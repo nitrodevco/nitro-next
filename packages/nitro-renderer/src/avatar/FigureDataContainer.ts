@@ -1,8 +1,8 @@
-﻿import type { AvatarGenderType } from "@nitrodevco/nitro-api";
-import { AvatarFigurePartType } from "@nitrodevco/nitro-api";
+﻿import type { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
 
 export class FigureDataContainer {
-    private static BLOCKED_FX_TYPES: number[] = [28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 68];
+    private static BLOCKED_FX_TYPES: number[] = [ 28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 68 ];
 
     private _gender: AvatarGenderType;
     private _data: Map<string, number> = new Map();
@@ -38,7 +38,7 @@ export class FigureDataContainer {
 
         const sets: string[] = [];
 
-        for (const [key, value] of this._data.entries()) {
+        for (const [ key, value ] of this._data.entries()) {
             let set = ((key + '-') + value);
 
             const colors = this._colors.get(key);
@@ -62,7 +62,7 @@ export class FigureDataContainer {
     }
 
     public getFigureStringWithFace(k: number): string {
-        const partSets: AvatarFigurePartType[] = [AvatarFigurePartType.Head];
+        const partSets: AvatarFigurePartType[] = [ AvatarFigurePartType.Head ];
 
         let figure = '';
         const sets: string[] = [];

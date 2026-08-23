@@ -21,13 +21,30 @@ export const CatalogViewPixi = () => {
 
     return (
         <>
-            <Frame id="catalog" resizeDirection="y" variant="3" layout={{ position: 'absolute', top: 20, left: 20, width: 570, height: 600 }} caption={t('catalog.title')} onClose={hideCatalog}>
-                <TabContext variant="3" layout={{}}>
-                    {rootNode.children.map(x => (x.visible ? (
-                        <TabButton key={x.pageId} selected={x.isActive} onPress={() => activateNode(x)} layout={{ width: '100%' }}>
-                            {x.localization.length ? x.localization : x.pageName}
-                        </TabButton>
-                    ) : null))}
+            <Frame
+                id="catalog"
+                resizeDirection="y"
+                variant="3"
+                layout={{ position: 'absolute', top: 20, left: 20, width: 570, height: 600 }}
+                caption={t('catalog.title')}
+                onClose={hideCatalog}
+            >
+                <TabContext
+                    variant="3"
+                    layout={{}}
+                >
+                    {rootNode.children.map(x => (x.visible
+                        ? (
+                                <TabButton
+                                    key={x.pageId}
+                                    selected={x.isActive}
+                                    onPress={() => activateNode(x)}
+                                    layout={{ width: '100%' }}
+                                >
+                                    {x.localization.length ? x.localization : x.pageName}
+                                </TabButton>
+                            )
+                        : null))}
                 </TabContext>
                 <CatalogHeaderViewPixi />
                 <TabContent layout={{ flexDirection: 'row', gap: 8, flex: 1, minHeight: 0 }}>

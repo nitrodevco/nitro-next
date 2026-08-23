@@ -8,4 +8,4 @@ export const useWebSocketContext = () => {
     if (!ctx) throw new Error('useRoomContext must be used within RoomContextProvider');
 
     return ctx;
-}
+};

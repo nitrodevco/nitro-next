@@ -130,8 +130,8 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
 
     protected override getSpriteAssetName(scale: RoomGeometryScaleType, layerId: number): string {
         if (
-            this._thumbnailImageNormal &&
-            this.getLayerTag(scale, this.direction, layerId) === IsometricImageFurniVisualization.THUMBNAIL
+            this._thumbnailImageNormal
+            && this.getLayerTag(scale, this.direction, layerId) === IsometricImageFurniVisualization.THUMBNAIL
         )
             return this.getThumbnailAssetName(scale);
 
@@ -145,6 +145,6 @@ export class IsometricImageFurniVisualization extends FurnitureAnimatedVisualiza
     }
 
     protected getFullThumbnailAssetName(k: number, _arg_2: number): string {
-        return [this._type, k, 'thumb', _arg_2].join('_');
+        return [ this._type, k, 'thumb', _arg_2 ].join('_');
     }
 }

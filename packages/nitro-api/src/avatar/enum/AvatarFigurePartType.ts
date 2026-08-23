@@ -29,7 +29,7 @@
     Shoes = 'sh',
     Ss = 'ss',
     Standard = 'std',
-    WaistAccessory = 'wa'
+    WaistAccessory = 'wa',
 }
 
 const DEFAULT_FRAME = 0;

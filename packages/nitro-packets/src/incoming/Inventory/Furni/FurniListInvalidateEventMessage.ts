@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FurniListInvalidateEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class FurniListInvalidateEventMessage implements IIncomingPacket<FurniListInvalidateEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FurniListInvalidateEventMessageType
-  {
+export class FurniListInvalidateEventMessage implements IIncomingPacket<FurniListInvalidateEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FurniListInvalidateEventMessageType {
+        const packet: FurniListInvalidateEventMessageType = {
+        };
 
-    const packet: FurniListInvalidateEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

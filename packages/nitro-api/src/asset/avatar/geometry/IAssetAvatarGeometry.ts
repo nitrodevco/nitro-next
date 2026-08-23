@@ -1,4 +1,4 @@
-import { AvatarGeometryType } from "#api/avatar/enum";
+import { AvatarGeometryType } from '#api/avatar/enum';
 
 export interface IAssetAvatarGeometry {
     id: AvatarGeometryType;

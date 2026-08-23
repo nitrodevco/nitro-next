@@ -1,4 +1,3 @@
-
 import type { IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket } from '@nitrodevco/nitro-api';
 import { BinaryReader, BinaryWriter, Byte, EvaWireDataWrapper, NitroLogger, Short } from '@nitrodevco/nitro-api';
 import { AuthenticationOKMessage, ClientHelloComposer, GetIncomingPackets, GetOutgoingPackets, PingMessage, PongComposer, SSOTicketComposer } from '@nitrodevco/nitro-packets';
@@ -13,13 +12,13 @@ import { WebSocketContext } from './WebSocketContext';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 type ConnectionPhase = 'idle' | 'connecting' | 'authenticating' | 'awaitingHandlers' | 'ready' | 'closed';
 
 export const WebSocketContextProvider = ({ children }: ProviderProps) => {
     const phase = useRef<ConnectionPhase>('idle');
-    const [renderedPhase, setRenderedPhase] = useState<ConnectionPhase>('idle');
+    const [ renderedPhase, setRenderedPhase ] = useState<ConnectionPhase>('idle');
     const { incomingByHeader, incomingCtors, incomingHeaderByCtor, registerManyIncoming } = useCommunicationIncoming();
     const { outgoingHeaderByComposerName, registerManyOutgoing } = useCommunicationOutgoing();
     const socketUrl = useConfigValue<string>('socket.url') ?? '';
@@ -52,7 +51,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                     production: production,
                     platform: 'WEB',
                     clientPlatform: 0,
-                    deviceCategory: 0
+                    deviceCategory: 0,
                 }));
 
                 const params = new URLSearchParams(window.location.search);
@@ -60,7 +59,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
                 if (sso && sso.length) send(new SSOTicketComposer({
                     ssoTicket: sso,
-                    elapsedMilliseconds: GetTickerTime()
+                    elapsedMilliseconds: GetTickerTime(),
                 }));
             };
 
@@ -95,7 +94,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         } catch (err) {
             NitroLogger.error(err);
         }
-    }
+    };
 
     const processBuffer = () => {
         try {
@@ -105,7 +104,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         } catch (err) {
             NitroLogger.error(err);
         }
-    }
+    };
 
     const encode = (header: number, messages: (number | string | boolean | Byte | Short | ArrayBuffer)[]) => {
         const writer = new BinaryWriter();
@@ -154,7 +153,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         const buffer = writer.getBuffer();
 
         return new BinaryWriter().writeInt(buffer.byteLength).writeBytes(buffer);
-    }
+    };
 
     const decodeWrappers = () => {
         const wrappers: IMessageDataWrapper[] = [];
@@ -190,7 +189,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         if (consumed) wsBuffer.current = wsBuffer.current.slice(consumed);
 
         return wrappers;
-    }
+    };
 
     const processWrapper = (wrapper: IMessageDataWrapper) => {
         try {
@@ -221,7 +220,7 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         } catch (err) {
             NitroLogger.error('IncomingFailed', wrapper?.header, err);
         }
-    }
+    };
 
     const dispatchWrappers = (wrappers: IMessageDataWrapper[]) => {
         for (let index = 0; index < wrappers.length; index++) {
@@ -237,9 +236,9 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
             processWrapper(wrappers[index]);
         }
-    }
+    };
 
-    const send = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
+    const send = <T extends object>(...packets: IOutgoingPacket<T>[]) => {
         if (!packets?.length) return;
 
         if (phase.current === 'awaitingHandlers') {
@@ -251,19 +250,19 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
         }
 
         sendRaw(...packets);
-    }
+    };
 
-    const sendRaw = <T extends object,>(...packets: IOutgoingPacket<T>[]) => {
+    const sendRaw = <T extends object>(...packets: IOutgoingPacket<T>[]) => {
         if (!packets?.length) return;
 
         if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
             for (const item of packets) {
                 NitroLogger.packets(
-'OutgoingDropped', 
-item.constructor.name, 
-'socket not open',
-                    ws.current?.readyState ?? 'no socket'
-);
+                    'OutgoingDropped',
+                    item.constructor.name,
+                    'socket not open',
+                    ws.current?.readyState ?? 'no socket',
+                );
             }
 
             return;
@@ -292,25 +291,25 @@ item.constructor.name,
                 NitroLogger.error(e);
             }
         }
-    }
+    };
 
     const setPhase = (next: ConnectionPhase) => {
         phase.current = next;
 
         setRenderedPhase(next);
-    }
+    };
 
     const subscribe = <T extends object>(
         event: IncomingPacketConstructor<T>,
-        handler: (data: T) => void
+        handler: (data: T) => void,
     ) => {
         if (!incomingCtors.current.has(event)) {
             const header = incomingHeaderByCtor.current.get(event);
 
             NitroLogger.error(
                 'CommunicationStore',
-                `Invalid listener: packet ${event?.name ?? '(unknown)'} is not registered.` +
-                (header != null ? ` (header: ${header})` : ''),
+                `Invalid listener: packet ${event?.name ?? '(unknown)'} is not registered.`
+                + (header != null ? ` (header: ${header})` : ''),
             );
 
             return () => { };
@@ -318,7 +317,7 @@ item.constructor.name,
 
         const existing = listeners.current.get(event) ?? [];
 
-        listeners.current.set(event, [...existing, handler]);
+        listeners.current.set(event, [ ...existing, handler ]);
 
         return () => {
             const existing = listeners.current.get(event) ?? [];
@@ -342,7 +341,7 @@ item.constructor.name,
 
         dispatchWrappers(pendingServer);
         sendRaw(...pendingClient);
-    }
+    };
 
     const state = { isAuthenticated: (renderedPhase === 'awaitingHandlers' || renderedPhase === 'ready'), isDisconnected: (renderedPhase === 'closed'), connect, send, subscribe, setReady };
 

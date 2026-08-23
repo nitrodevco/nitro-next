@@ -1,10 +1,10 @@
-import { AvatarActionStateType, AvatarExpressionStates, AvatarGenderType, AvatarGeometryType, AvatarGestureStates, AvatarPostureStates, AvatarScaleType, AvatarSetType, IAvatarImage, RoomGeometryScaleType } from "@nitrodevco/nitro-api";
-import { GetAvatarRenderManager, GetRenderer } from "@nitrodevco/nitro-renderer";
-import { Hono } from "hono";
-import { Container, Point, Sprite, Texture } from "pixi.js";
+import { AvatarActionStateType, AvatarExpressionStates, AvatarGenderType, AvatarGeometryType, AvatarGestureStates, AvatarPostureStates, AvatarScaleType, AvatarSetType, IAvatarImage, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { GetAvatarRenderManager, GetRenderer } from '@nitrodevco/nitro-renderer';
+import { Hono } from 'hono';
+import { Container, Point, Sprite, Texture } from 'pixi.js';
 
-import { ParseEnum } from "./ParseEnum";
-import { ParseIntInRange } from "./ParseIntInRange";
+import { ParseEnum } from './ParseEnum';
+import { ParseIntInRange } from './ParseIntInRange';
 
 const hono = new Hono();
 
@@ -126,11 +126,11 @@ hono.get('/avatar', async (c) => {
         const sizeOffset = new Point(((texture.width - RoomGeometryScaleType.ZoomedIn) / 2), (texture.height - (RoomGeometryScaleType.ZoomedIn / 4)));
         const canvasWithOffset = new Point(canvasOffset.x + sizeOffset.x, canvasOffset.y + sizeOffset.y);
 
-        //ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, false);
+        // ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, false);
 
         container.addChild(avatarSprite);
 
-        //ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, true);
+        // ProcessAvatarSprites(container, avatar, avatarOffset, canvasWithOffset, true);
     }
 
     let buffer = await GetRenderer().extract.base64(container);
@@ -140,7 +140,7 @@ hono.get('/avatar', async (c) => {
     container.destroy();
     avatar.dispose();
 
-    c.header('Content-Type', `image/png`);
+    c.header('Content-Type', 'image/png');
 
     return c.body(Buffer.from(buffer, 'base64'));
 });
@@ -160,8 +160,7 @@ const ProcessAvatarSprites = (container: Container, avatar: IAvatarImage, avatar
 
         if (!frontSprites) {
             if (offsetZ >= 0) continue;
-        }
-        else if (offsetZ < 0) continue;
+        } else if (offsetZ < 0) continue;
 
         if (layerData) {
             frame = layerData.animationFrame;
@@ -188,6 +187,6 @@ const ProcessAvatarSprites = (container: Container, avatar: IAvatarImage, avatar
 
         container.addChild(addonSprite);
     }
-}
+};
 
 export const GetHono = () => hono;

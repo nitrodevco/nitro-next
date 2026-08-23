@@ -9,7 +9,7 @@ export type CatalogPageMessageType = {
 export class CatalogPageMessage implements IIncomingPacket<CatalogPageMessageType> {
     public parse(wrapper: IMessageDataWrapper): CatalogPageMessageType {
         return {
-            page: CatalogPageParser(wrapper)
-        }
+            page: CatalogPageParser(wrapper),
+        };
     }
 }

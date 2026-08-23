@@ -1,5 +1,4 @@
-import { ContextMenuEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { ContextMenuEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

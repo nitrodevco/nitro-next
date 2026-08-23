@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TradingCloseEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TradingCloseEventMessage implements IIncomingPacket<TradingCloseEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TradingCloseEventMessageType
-  {
+export class TradingCloseEventMessage implements IIncomingPacket<TradingCloseEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TradingCloseEventMessageType {
+        const packet: TradingCloseEventMessageType = {
+        };
 
-    const packet: TradingCloseEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

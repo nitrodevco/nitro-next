@@ -8,11 +8,10 @@ export type ItemStateUpdateMessageType = {
 
 export class ItemStateUpdateMessage implements IIncomingPacket<ItemStateUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemStateUpdateMessageType {
-
         const packet: ItemStateUpdateMessageType = {
             objectId: wrapper.readInt(),
             data: wrapper.readString(),
-            state: 0
+            state: 0,
         };
 
         const state = parseFloat(packet.data);

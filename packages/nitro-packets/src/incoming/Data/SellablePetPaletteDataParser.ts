@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ISellablePetPaletteData {
     type: number;
@@ -24,4 +24,4 @@ export const SellablePetPaletteDataParser = (wrapper: IMessageDataWrapper): ISel
     data.rare = wrapper.readBoolean();
 
     return data;
-}
+};

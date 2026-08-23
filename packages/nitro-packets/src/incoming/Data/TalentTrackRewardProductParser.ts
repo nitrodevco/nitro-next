@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ITalentTrackRewardProduct {
     productCode: string;
@@ -15,4 +15,4 @@ export const TalentTrackRewardProductParser = (wrapper: IMessageDataWrapper): IT
     data.vipDays = wrapper.readInt();
 
     return data;
-}
+};

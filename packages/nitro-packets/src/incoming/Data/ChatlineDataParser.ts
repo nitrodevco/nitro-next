@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IChatlineData {
     timeStamp: string;
@@ -24,4 +24,4 @@ export const ChatlineDataParser = (wrapper: IMessageDataWrapper): IChatlineData 
     data.hasHighlighting = wrapper.readBoolean();
 
     return data;
-}
+};

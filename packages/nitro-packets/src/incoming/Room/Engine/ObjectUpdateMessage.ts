@@ -10,7 +10,7 @@ export type ObjectUpdateMessageType = {
 export class ObjectUpdateMessage implements IIncomingPacket<ObjectUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ObjectUpdateMessageType {
         const packet: ObjectUpdateMessageType = {
-            floorItem: FloorItemParser(wrapper)
+            floorItem: FloorItemParser(wrapper),
         };
 
         return packet;

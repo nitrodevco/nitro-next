@@ -67,12 +67,12 @@ export class RoomWallData {
 
         while (_local_6 < this._count) {
             if (
-                this._corners[_local_6].x == corner.x &&
-                this._corners[_local_6].y == corner.y &&
-                this._directions[_local_6] == direction &&
-                this._lengths[_local_6] == length &&
-                this._borders[_local_6] == border &&
-                this._leftTurns[_local_6] == leftTurn
+                this._corners[_local_6].x == corner.x
+                && this._corners[_local_6].y == corner.y
+                && this._directions[_local_6] == direction
+                && this._lengths[_local_6] == length
+                && this._borders[_local_6] == border
+                && this._leftTurns[_local_6] == leftTurn
             ) {
                 return false;
             }

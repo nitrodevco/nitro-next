@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type OpenConnectionMessageType = {
-  roomId: number;
+    roomId: number;
 };
 
-export class OpenConnectionMessage implements IIncomingPacket<OpenConnectionMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): OpenConnectionMessageType
-  {
+export class OpenConnectionMessage implements IIncomingPacket<OpenConnectionMessageType> {
+    public parse(wrapper: IMessageDataWrapper): OpenConnectionMessageType {
+        const packet: OpenConnectionMessageType = {
+            roomId: wrapper.readInt(),
+        };
 
-    const packet: OpenConnectionMessageType = {
-      roomId: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

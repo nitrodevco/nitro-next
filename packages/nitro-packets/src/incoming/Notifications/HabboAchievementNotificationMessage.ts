@@ -4,19 +4,17 @@ import type { IAchievementLevelUpData } from '../Data/AchievementLevelUpDataPars
 import { AchievementLevelUpDataParser } from '../Data/AchievementLevelUpDataParser';
 
 export type HabboAchievementNotificationMessageType = {
-  data: IAchievementLevelUpData;
+    data: IAchievementLevelUpData;
 };
 
-export class HabboAchievementNotificationMessage implements IIncomingPacket<HabboAchievementNotificationMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): HabboAchievementNotificationMessageType
-  {
-    const packet: HabboAchievementNotificationMessageType = {
-      data: {} as any,
-    };
+export class HabboAchievementNotificationMessage implements IIncomingPacket<HabboAchievementNotificationMessageType> {
+    public parse(wrapper: IMessageDataWrapper): HabboAchievementNotificationMessageType {
+        const packet: HabboAchievementNotificationMessageType = {
+            data: {} as any,
+        };
 
-    packet.data = AchievementLevelUpDataParser(wrapper);
+        packet.data = AchievementLevelUpDataParser(wrapper);
 
-    return packet;
-  }
+        return packet;
+    }
 }

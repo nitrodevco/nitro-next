@@ -9,7 +9,7 @@ export class UnignoreUserComposer implements IOutgoingPacket<UnignoreUserCompose
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.name
+            this.params.name,
         ];
     }
 }

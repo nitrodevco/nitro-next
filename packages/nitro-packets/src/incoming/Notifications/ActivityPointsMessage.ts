@@ -7,7 +7,7 @@ export type ActivityPointsMessageType = {
 export class ActivityPointsMessage implements IIncomingPacket<ActivityPointsMessageType> {
     public parse(wrapper: IMessageDataWrapper): ActivityPointsMessageType {
         const packet: ActivityPointsMessageType = {
-            pointsByCategoryId: {}
+            pointsByCategoryId: {},
         };
 
         let count = wrapper.readInt();

@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IFriendAcceptFailure } from './Data/IFriendAcceptFailure';
 
 export type AcceptFriendResultMessageType = {
@@ -8,7 +9,7 @@ export type AcceptFriendResultMessageType = {
 export class AcceptFriendResultMessage implements IIncomingPacket<AcceptFriendResultMessageType> {
     public parse(wrapper: IMessageDataWrapper): AcceptFriendResultMessageType {
         const packet: AcceptFriendResultMessageType = {
-            failures: []
+            failures: [],
         };
 
         let count = wrapper.readInt();

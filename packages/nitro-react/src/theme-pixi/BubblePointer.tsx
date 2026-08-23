@@ -30,9 +30,9 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         margin: { marginRight: -2 },
         frames: {
             // default
-            '0': { x: 11, y: 0, width: 8, height: 13 },
+            0: { x: 11, y: 0, width: 8, height: 13 },
             // ubuntu
-            '7': { x: 0, y: 0, width: 11, height: 18 },
+            7: { x: 0, y: 0, width: 11, height: 18 },
         },
     },
     right: {
@@ -41,9 +41,9 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         margin: { marginLeft: -2 },
         frames: {
             // default
-            '0': { x: 11, y: 0, width: 8, height: 13 },
+            0: { x: 11, y: 0, width: 8, height: 13 },
             // ubuntu
-            '7': { x: 0, y: 0, width: 11, height: 18 },
+            7: { x: 0, y: 0, width: 11, height: 18 },
         },
     },
     up: {
@@ -52,9 +52,9 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         margin: { marginBottom: -3 },
         frames: {
             // default
-            '0': { x: 16, y: 0, width: 13, height: 9 },
+            0: { x: 16, y: 0, width: 13, height: 9 },
             // ubuntu
-            '7': { x: 0, y: 0, width: 16, height: 10 },
+            7: { x: 0, y: 0, width: 16, height: 10 },
         },
     },
     down: {
@@ -63,9 +63,9 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         margin: { marginTop: -3 },
         frames: {
             // default
-            '0': { x: 16, y: 0, width: 13, height: 9 },
+            0: { x: 16, y: 0, width: 13, height: 9 },
             // ubuntu
-            '7': { x: 0, y: 0, width: 16, height: 11 },
+            7: { x: 0, y: 0, width: 16, height: 11 },
         },
     },
 };
@@ -97,21 +97,23 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
             if (!style) return null;
 
             return (
-                <Box ref={ref} layout={boxLayout}>
+                <Box
+                    ref={ref}
+                    layout={boxLayout}
+                >
                     <div style={style} />
                     {tintColor && (
-                        <div
-                            style={{
-                                position: 'absolute', inset: 0,
-                                backgroundColor: tintColor,
-                                mixBlendMode: 'multiply',
-                                WebkitMaskImage: `url(${THEME_URLS[config.textureKey]})`,
-                                maskImage: `url(${THEME_URLS[config.textureKey]})`,
-                                WebkitMaskPosition: style.backgroundPosition,
-                                maskPosition: style.backgroundPosition,
-                                WebkitMaskSize: 'none',
-                                maskSize: 'none',
-                            }}
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundColor: tintColor,
+                            mixBlendMode: 'multiply',
+                            WebkitMaskImage: `url(${THEME_URLS[config.textureKey]})`,
+                            maskImage: `url(${THEME_URLS[config.textureKey]})`,
+                            WebkitMaskPosition: style.backgroundPosition,
+                            maskPosition: style.backgroundPosition,
+                            WebkitMaskSize: 'none',
+                            maskSize: 'none',
+                        }}
                         />
                     )}
                 </Box>
@@ -121,11 +123,19 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
         if (!texture) return null;
 
         return (
-            <Box ref={ref} layout={boxLayout}>
-                <pixiSprite texture={texture} tint={tintColor} eventMode="none" layout={{}} />
+            <Box
+                ref={ref}
+                layout={boxLayout}
+            >
+                <pixiSprite
+                    texture={texture}
+                    tint={tintColor}
+                    eventMode="none"
+                    layout={{}}
+                />
             </Box>
         );
-    }
+    },
 );
 
 BubblePointer.displayName = 'BubblePointer';

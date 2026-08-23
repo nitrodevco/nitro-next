@@ -1,5 +1,5 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
-import { VariantCascadeMap } from "./VariantCascadeMap";
+import { VariantCascadeMap } from './VariantCascadeMap';
 
 export const VariantCascadeContext = createContext<VariantCascadeMap>({});

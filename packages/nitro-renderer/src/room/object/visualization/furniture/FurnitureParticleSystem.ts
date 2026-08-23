@@ -87,9 +87,9 @@ export class FurnitureParticleSystem {
             if (this._roomSprite.width <= 1 || this._roomSprite.height <= 1) return;
 
             if (
-                this._canvasTexture &&
-                (this._canvasTexture.width !== this._roomSprite.width ||
-                    this._canvasTexture.height !== this._roomSprite.height)
+                this._canvasTexture
+                && (this._canvasTexture.width !== this._roomSprite.width
+                    || this._canvasTexture.height !== this._roomSprite.height)
             ) {
                 this._canvasTexture.destroy();
                 this._canvasTexture = undefined;
@@ -156,10 +156,10 @@ export class FurnitureParticleSystem {
 
             for (const particle of this._currentEmitter.particles) {
                 const tx = this._centerX + (((particle.x - particle.z) * k) / 10) * this._scaleMultiplier;
-                const ty =
-                    this._centerY -
-                    offsetY +
-                    (((particle.y + (particle.x + particle.z) / 2) * k) / 10) * this._scaleMultiplier;
+                const ty
+                    = this._centerY
+                        - offsetY
+                        + (((particle.y + (particle.x + particle.z) / 2) * k) / 10) * this._scaleMultiplier;
                 const asset = particle.getAsset();
 
                 this._particleSprite.texture = Texture.EMPTY;
@@ -181,7 +181,7 @@ export class FurnitureParticleSystem {
 
                         this._particleColorTransform.alpha = particle.alphaMultiplier;
 
-                        this._particleSprite.filters = [this._particleColorTransform];
+                        this._particleSprite.filters = [ this._particleColorTransform ];
 
                         if (this._canvasTexture)
                             TextureUtils.writeToTexture(

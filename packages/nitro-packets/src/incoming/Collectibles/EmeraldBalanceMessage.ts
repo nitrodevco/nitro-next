@@ -6,7 +6,6 @@ export type EmeraldBalanceMessageType = {
 
 export class EmeraldBalanceMessage implements IIncomingPacket<EmeraldBalanceMessageType> {
     public parse(wrapper: IMessageDataWrapper): EmeraldBalanceMessageType {
-
         const packet: EmeraldBalanceMessageType = {
             emeraldBalance: wrapper.readInt(),
         };

@@ -37,13 +37,13 @@ const BLUE_FRAME_SHINE = Composite([
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
 const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
-    '0': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
-    '1': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
-    '2': { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
-    '3': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0' },
-    '4': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf' },
-    '7': { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
-    '100': {
+    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
+    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
+    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
+    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0' },
+    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf' },
+    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
+    100: {
         layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
             { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
@@ -54,10 +54,10 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
             { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
             { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
-        ]), minWidth: 50, minHeight: 50
+        ]), minWidth: 50, minHeight: 50,
     },
-    '101': { minWidth: 50, minHeight: 80 },
-    '200': { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
+    101: { minWidth: 50, minHeight: 80 },
+    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
 };
 
 export interface FrameProps extends ThemeProps<FrameVariant> {
@@ -89,7 +89,7 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
             y={offset.dy}
             zIndex={zIndex}
             eventMode="static"
-            filters={[dropShadow]}
+            filters={[ dropShadow ]}
             onPointerDown={onPointerDown}
             layout={{
                 flexDirection: 'column',
@@ -102,14 +102,25 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+            <BackgroundLayer
+                layer={resolvedLayer}
+                tintColor={resolvedTint}
+            />
             <BackgroundLayer layer={resolvedOverlay} />
             <VariantCascadeProvider map={ownCascade}>
-                <Header caption={caption} tintColor={resolvedTint} onClose={onClose} onPointerDown={onHeaderPointerDown} />
+                <Header
+                    caption={caption}
+                    tintColor={resolvedTint}
+                    onClose={onClose}
+                    onPointerDown={onHeaderPointerDown}
+                />
                 <ContentArea>
                     {children}
                 </ContentArea>
-                <Scaler direction={resizeDirection} onPointerDown={onScalerPointerDown} />
+                <Scaler
+                    direction={resizeDirection}
+                    onPointerDown={onScalerPointerDown}
+                />
             </VariantCascadeProvider>
         </Box>
     );

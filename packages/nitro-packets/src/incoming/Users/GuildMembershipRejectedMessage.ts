@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type GuildMembershipRejectedMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class GuildMembershipRejectedMessage implements IIncomingPacket<GuildMembershipRejectedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): GuildMembershipRejectedMessageType
-  {
+export class GuildMembershipRejectedMessage implements IIncomingPacket<GuildMembershipRejectedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): GuildMembershipRejectedMessageType {
+        const packet: GuildMembershipRejectedMessageType = {
+        };
 
-    const packet: GuildMembershipRejectedMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

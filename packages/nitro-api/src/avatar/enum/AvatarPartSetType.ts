@@ -15,5 +15,5 @@ export enum AvatarPartSetType {
     SnowWarPick = 'snowwarpick',
     SnowWarDieFront = 'snowwardiefront',
     SnowWarDieBack = 'snowwardieback',
-    SnowWarThrow = 'snowwarthrow'
+    SnowWarThrow = 'snowwarthrow',
 }

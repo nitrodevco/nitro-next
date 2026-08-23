@@ -52,5 +52,5 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     setTags: (tags: string[]) => set({ tags }),
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
-    ...createUserWalletSlice(set, get, store)
+    ...createUserWalletSlice(set, get, store),
 }));

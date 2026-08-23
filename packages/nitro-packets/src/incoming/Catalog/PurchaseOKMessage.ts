@@ -9,7 +9,7 @@ export type PurchaseOKMessageType = {
 export class PurchaseOKMessage implements IIncomingPacket<PurchaseOKMessageType> {
     public parse(wrapper: IMessageDataWrapper): PurchaseOKMessageType {
         return {
-            offer: CatalogOfferAsPurchasedParser(wrapper)
-        }
+            offer: CatalogOfferAsPurchasedParser(wrapper),
+        };
     }
 }

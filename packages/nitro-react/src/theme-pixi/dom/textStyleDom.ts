@@ -34,7 +34,7 @@ export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptio
     if (dropShadow) {
         const dx = Math.cos(dropShadow.angle) * dropShadow.distance;
         const dy = Math.sin(dropShadow.angle) * dropShadow.distance;
-        const [r, g, b] = [16, 8, 0].map(shift => (dropShadow.color >> shift) & 0xFF);
+        const [ r, g, b ] = [ 16, 8, 0 ].map(shift => (dropShadow.color >> shift) & 0xFF);
 
         style.textShadow = `${dx}px ${dy}px 0 rgba(${r}, ${g}, ${b}, ${dropShadow.alpha})`;
     }

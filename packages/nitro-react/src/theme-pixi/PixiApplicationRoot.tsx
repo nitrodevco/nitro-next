@@ -5,7 +5,6 @@ import { Application } from '@pixi/react';
 import { type Application as PixiApplication } from 'pixi.js';
 import { type ReactNode, useCallback, useRef } from 'react';
 
-
 interface PixiApplicationRootProps {
     onReady: () => void;
     children?: ReactNode;
@@ -36,7 +35,7 @@ export const PixiApplicationRoot = ({ onReady, children }: PixiApplicationRootPr
         app.renderer.on('resize', applyScreenLayout);
 
         onReady();
-    }, [onReady]);
+    }, [ onReady ]);
 
     return (
         <Application

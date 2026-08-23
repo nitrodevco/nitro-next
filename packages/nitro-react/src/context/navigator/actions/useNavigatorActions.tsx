@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useNavigatorContext } from "../useNavigatorContext";
+import { useNavigatorContext } from '../useNavigatorContext';
 
 export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     setTopLevelContexts: x.setTopLevelContexts,
@@ -20,5 +20,5 @@ export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     setSearchFilter: x.setSearchFilter,
     setIsSearching: x.setIsSearching,
     setCurrentRoom: x.setCurrentRoom,
-    resetNavigator: x.resetNavigator
+    resetNavigator: x.resetNavigator,
 })));

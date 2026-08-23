@@ -1,8 +1,8 @@
-import { getRenderMode } from "#base/theme-core";
+import { getRenderMode } from '#base/theme-core';
 
-import { BoxLayout } from "../Box";
-import { boxLayoutToStyle } from "../dom/boxStyle";
-import { FillLayout } from "../utils/FillLayout";
+import { BoxLayout } from '../Box';
+import { boxLayoutToStyle } from '../dom/boxStyle';
+import { FillLayout } from '../utils/FillLayout';
 
 export interface ColorLayerProps {
     color: string | undefined;
@@ -16,5 +16,11 @@ export const ColorLayer = ({ color, layout }: ColorLayerProps) => {
         return <div style={{ ...boxLayoutToStyle(layout ?? FillLayout), backgroundColor: color }} />;
     }
 
-    return <pixiGraphics eventMode="none" layout={layout ?? FillLayout} draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }} />;
+    return (
+        <pixiGraphics
+            eventMode="none"
+            layout={layout ?? FillLayout}
+            draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }}
+        />
+    );
 };

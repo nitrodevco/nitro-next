@@ -1,4 +1,4 @@
-import { ICatalogProduct } from "./ICatalogProduct";
+import { ICatalogProduct } from './ICatalogProduct';
 
 export interface ICatalogOffer {
     readonly id: number;

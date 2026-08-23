@@ -4,7 +4,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureRandomStateLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_RANDOM]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_RANDOM ]);
     }
 
     public override useObject(): void {

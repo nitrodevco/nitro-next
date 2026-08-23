@@ -1,4 +1,4 @@
-import { IRoomAvatarAction } from "./IRoomAvatarAction";
+import { IRoomAvatarAction } from './IRoomAvatarAction';
 
 export interface IRoomAvatarUpdate {
     objectId: number;

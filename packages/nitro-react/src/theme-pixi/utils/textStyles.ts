@@ -5,8 +5,8 @@ const TEXT_DROP_SHADOW: TextDropShadow = {
     angle: Math.PI / 4,
     blur: 0,
     color: 0x000000,
-    distance: 1
-}
+    distance: 1,
+};
 
 /** Exported (not module-private) so `theme-pixi/dom/textStyleDom.ts` can translate the same
  *  font/size/color/drop-shadow data to CSS instead of duplicating this table. */

@@ -7,7 +7,6 @@ export type BuildersClubPlacementWarningMessageType = {
 
 export class BuildersClubPlacementWarningMessage implements IIncomingPacket<BuildersClubPlacementWarningMessageType> {
     public parse(wrapper: IMessageDataWrapper): BuildersClubPlacementWarningMessageType {
-
         const packet: BuildersClubPlacementWarningMessageType = {
         };
 

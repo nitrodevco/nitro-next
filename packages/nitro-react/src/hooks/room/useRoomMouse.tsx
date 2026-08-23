@@ -1,10 +1,10 @@
-import type { IRoomObject } from "@nitrodevco/nitro-api";
-import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { Room, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { FederatedPointerEvent } from "pixi.js";
-import { useRef } from "react";
+import type { IRoomObject } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { Room, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
+import { FederatedPointerEvent } from 'pixi.js';
+import { useRef } from 'react';
 
-import { useRoomInteractionSelector, useRoomSelector } from "#base/context";
+import { useRoomInteractionSelector, useRoomSelector } from '#base/context';
 
 const DRAG_THRESHOLD: number = 15;
 
@@ -12,17 +12,17 @@ export const useRoomMouse = () => {
     const room = useRoomSelector();
     const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
     const mouseDataRef = useRef<{
-        mouseXY: { x: number, y: number },
-        dragStartXY: { x: number, y: number },
-        dragXY: { x: number, y: number },
-        isDragged: boolean,
-        wasDragged: boolean
+        mouseXY: { x: number; y: number };
+        dragStartXY: { x: number; y: number };
+        dragXY: { x: number; y: number };
+        isDragged: boolean;
+        wasDragged: boolean;
     }>({
         mouseXY: { x: 0, y: 0 },
         dragStartXY: { x: 0, y: 0 },
         dragXY: { x: 0, y: 0 },
         isDragged: false,
-        wasDragged: false
+        wasDragged: false,
     });
 
     const handleRoomDragging = (
@@ -31,7 +31,7 @@ export const useRoomMouse = () => {
         type: string,
         altKey: boolean,
         ctrlKey: boolean,
-        shiftKey: boolean
+        shiftKey: boolean,
     ) => {
         if (!room || !room.canvas || isPlayingGame) return false;
 
@@ -66,10 +66,10 @@ export const useRoomMouse = () => {
                     offsetY = y - mouseData.dragStartXY.y;
 
                     if (
-                        offsetX <= -DRAG_THRESHOLD ||
-                        offsetX >= DRAG_THRESHOLD ||
-                        offsetY <= -DRAG_THRESHOLD ||
-                        offsetY >= DRAG_THRESHOLD
+                        offsetX <= -DRAG_THRESHOLD
+                        || offsetX >= DRAG_THRESHOLD
+                        || offsetY <= -DRAG_THRESHOLD
+                        || offsetY >= DRAG_THRESHOLD
                     ) {
                         mouseData.wasDragged = true;
                     }
@@ -97,7 +97,7 @@ export const useRoomMouse = () => {
         }
 
         return false;
-    }
+    };
 
     const dispatchMouseEvent = (
         x: number,
@@ -106,7 +106,7 @@ export const useRoomMouse = () => {
         altKey: boolean,
         ctrlKey: boolean,
         shiftKey: boolean,
-        buttonDown: boolean
+        buttonDown: boolean,
     ) => {
         if (!room) return;
 
@@ -120,8 +120,8 @@ export const useRoomMouse = () => {
         }
 
         if (
-            !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
-            !room.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+            !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey)
+            && !room.canvas?.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
         ) {
             let eventType: string = '';
 
@@ -142,7 +142,7 @@ export const useRoomMouse = () => {
         }
 
         mouseDataRef.current.mouseXY = { x, y };
-    }
+    };
 
     const registerPointerEvents = () => {
         if (!room?.canvas?.master) return;
@@ -212,9 +212,9 @@ export const useRoomMouse = () => {
                 event.altKey,
                 event.ctrlKey || event.metaKey,
                 event.shiftKey,
-                isMouseDown
+                isMouseDown,
             );
-        }
+        };
 
         container.on('click', handlePointerEvent);
         container.on('pointerdown', handlePointerEvent);
@@ -224,7 +224,7 @@ export const useRoomMouse = () => {
         container.on('pointerout', handlePointerEvent);
         container.on('pointermove', handlePointerEvent);
         container.on('rightclick', handlePointerEvent);
-    }
+    };
 
     return { mouseDataRef, registerPointerEvents };
-}
+};

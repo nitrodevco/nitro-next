@@ -9,7 +9,7 @@ export class SignComposer implements IOutgoingPacket<SignComposerType> {
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.signType
+            this.params.signType,
         ];
     }
 }

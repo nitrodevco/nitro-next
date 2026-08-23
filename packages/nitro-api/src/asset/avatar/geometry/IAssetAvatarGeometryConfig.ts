@@ -1,7 +1,7 @@
-import { IAssetAvatarCamera } from "./IAssetAvatarCamera";
-import { IAssetAvatarCanvas } from "./IAssetAvatarCanvas";
-import { IAssetAvatarSetGroup } from "./IAssetAvatarSetGroup";
-import { IAssetAvatarType } from "./IAssetAvatarType";
+import { IAssetAvatarCamera } from './IAssetAvatarCamera';
+import { IAssetAvatarCanvas } from './IAssetAvatarCanvas';
+import { IAssetAvatarSetGroup } from './IAssetAvatarSetGroup';
+import { IAssetAvatarType } from './IAssetAvatarType';
 
 export interface IAssetAvatarGeometryConfig {
     direction: number;

@@ -47,7 +47,7 @@ export class AvatarVisualization
     private static SNOWBOARDING_EFFECT: number = 97;
     private static INITIAL_RESERVED_SPRITES: number = 2;
     private static ANIMATION_FRAME_UPDATE_INTERVAL: number = 2;
-    private static DEFAULT_CANVAS_OFFSETS: number[] = [0, 0, 0];
+    private static DEFAULT_CANVAS_OFFSETS: number[] = [ 0, 0, 0 ];
     private static MAX_EFFECT_CACHE: number = 2;
     private static SPRITE_INDEX_AVATAR: number = 0;
     private static BASE_Y_SCALE: number = 1000;
@@ -245,9 +245,9 @@ export class AvatarVisualization
             const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
             if (sprite) {
-                const highlightEnabled =
-                    this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1 &&
-                    this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
+                const highlightEnabled
+                    = this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1
+                        && this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
 
                 const avatarImage = this._avatarImage.getImage(AvatarSetType.Full, highlightEnabled);
 
@@ -374,11 +374,11 @@ export class AvatarVisualization
                         }
 
                         if (this._isLaying) {
-                            sprite.relativeDepth =
-                                AvatarVisualization.AVATAR_SPRITE_LAYING_DEPTH - 0.001 * this.totalSprites * offsetZ;
+                            sprite.relativeDepth
+                                = AvatarVisualization.AVATAR_SPRITE_LAYING_DEPTH - 0.001 * this.totalSprites * offsetZ;
                         } else {
-                            sprite.relativeDepth =
-                                AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.001 * this.totalSprites * offsetZ;
+                            sprite.relativeDepth
+                                = AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.001 * this.totalSprites * offsetZ;
                         }
 
                         if (spriteData.ink === 33) sprite.blendMode = 'add';
@@ -431,9 +431,9 @@ export class AvatarVisualization
         _arg_4: boolean = false,
     ): boolean {
         if (
-            !_arg_4 &&
-            this.updateObjectCounter === object.updateCounter &&
-            this._geometryUpdateCounter === geometry.updateId
+            !_arg_4
+            && this.updateObjectCounter === object.updateCounter
+            && this._geometryUpdateCounter === geometry.updateId
         )
             return false;
 
@@ -553,8 +553,8 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        const verticalOffset =
-            model.getValue<number>(RoomObjectVariableEnum.FigureVerticalOffset) * AvatarVisualization.BASE_Y_SCALE;
+        const verticalOffset
+            = model.getValue<number>(RoomObjectVariableEnum.FigureVerticalOffset) * AvatarVisualization.BASE_Y_SCALE;
 
         if (verticalOffset !== this._verticalOffset) {
             this._verticalOffset = verticalOffset;
@@ -914,8 +914,8 @@ export class AvatarVisualization
 
         if (!sprite) return;
 
-        let hasShadow =
-            this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
+        let hasShadow
+            = this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
 
         if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT) hasShadow = false;
 
@@ -923,7 +923,6 @@ export class AvatarVisualization
             sprite.visible = true;
 
             if (!this._shadow || scale !== this._scale) {
-
                 if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
                     sprite.libraryAssetName = 'sh_std_sd_1_0_0';
 

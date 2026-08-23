@@ -24,9 +24,9 @@ export const useFurnitureImageTexturePixi = (
     colorIndex: number = 0,
     direction: number = 2,
     scale: RoomGeometryScaleType,
-    extra: number = 0
+    extra: number = 0,
 ): FurnitureImageTexture => {
-    const [result, setResult] = useState<FurnitureImageTexture>(EMPTY);
+    const [ result, setResult ] = useState<FurnitureImageTexture>(EMPTY);
     const textureRef = useRef<Texture | undefined>(undefined);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export const useFurnitureImageTexturePixi = (
                 new Vector3d(direction),
                 scale,
                 { imageReady: () => { }, imageFailed: () => { } },
-                extra
+                extra,
             );
 
             if (!image || cancelled) return;
@@ -59,7 +59,7 @@ export const useFurnitureImageTexturePixi = (
         return () => {
             cancelled = true;
         };
-    }, [type, colorIndex, direction, scale, extra]);
+    }, [ type, colorIndex, direction, scale, extra ]);
 
     useEffect(() => () => {
         textureRef.current?.destroy(true);

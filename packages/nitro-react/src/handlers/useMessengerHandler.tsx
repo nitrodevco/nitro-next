@@ -1,15 +1,15 @@
-import { AcceptFriendResultMessage, ConsoleMessageHistoryMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListFragmentMessage, FriendListUpdateMessage, FriendNotificationMessage, FriendRequestsMessage, HabboSearchResultMessage, InstantMessageErrorMessage, MessengerErrorMessage, MessengerInitMessage, MiniMailNewMessage, MiniMailUnreadCountMessage, NewConsoleMessageMessage, NewFriendRequestMessage, RoomInviteErrorMessage, RoomInviteMessage } from "@nitrodevco/nitro-packets";
+import { AcceptFriendResultMessage, ConsoleMessageHistoryMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListFragmentMessage, FriendListUpdateMessage, FriendNotificationMessage, FriendRequestsMessage, HabboSearchResultMessage, InstantMessageErrorMessage, MessengerErrorMessage, MessengerInitMessage, MiniMailNewMessage, MiniMailUnreadCountMessage, NewConsoleMessageMessage, NewFriendRequestMessage, RoomInviteErrorMessage, RoomInviteMessage } from '@nitrodevco/nitro-packets';
 
-import { useTranslation, useWebSocketContext } from "#base/context";
-import { useUserMessengerActions } from "#base/context/user";
-import { useMessageListener } from "#base/hooks";
+import { useTranslation, useWebSocketContext } from '#base/context';
+import { useUserMessengerActions } from '#base/context/user';
+import { useMessageListener } from '#base/hooks';
 
 export const useMessengerHandler = () => {
     const { setFriendLimits, setFriendCategories, processFriends, processFriendUpdates, processFriendRequests } = useUserMessengerActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();
 
-    useMessageListener(AcceptFriendResultMessage, data => {
+    useMessageListener(AcceptFriendResultMessage, (data) => {
         if (!data.failures.length) return;
 
         for (const failure of data.failures) {
@@ -20,18 +20,18 @@ export const useMessengerHandler = () => {
         }
     });
 
-    useMessageListener(ConsoleMessageHistoryMessage, data => {
+    useMessageListener(ConsoleMessageHistoryMessage, (data) => {
     });
 
-    useMessageListener(FindFriendsProcessResultMessage, data => {
+    useMessageListener(FindFriendsProcessResultMessage, (data) => {
         const title = data.success ? 'friendbar.find.success.title' : 'friendbar.find.error.title';
         const text = data.success ? 'friendbar.find.success.text' : 'friendbar.find.error.text';
 
         // window.notify(t(title), t(text))
     });
 
-    useMessageListener(FollowFriendFailedMessage, data => {
-        const title = "friendlist.alert.title"
+    useMessageListener(FollowFriendFailedMessage, (data) => {
+        const title = 'friendlist.alert.title';
 
         let errorText = 'Unknown follow friend error' + data.errorCode;
 
@@ -53,58 +53,58 @@ export const useMessengerHandler = () => {
         // window.simpleAlert(title, errorText)
     });
 
-    useMessageListener(FriendListFragmentMessage, data => {
+    useMessageListener(FriendListFragmentMessage, (data) => {
         if (!data.fragment.length) return;
 
         processFriends(data.fragment);
     });
 
-    useMessageListener(FriendListUpdateMessage, data => {
+    useMessageListener(FriendListUpdateMessage, (data) => {
         if (data.friendCategories) setFriendCategories(data.friendCategories);
 
         if (data.updates && data.updates.length > 0) processFriendUpdates(data.updates);
     });
 
-    useMessageListener(FriendNotificationMessage, data => {
+    useMessageListener(FriendNotificationMessage, (data) => {
     });
 
-    useMessageListener(FriendRequestsMessage, data => {
+    useMessageListener(FriendRequestsMessage, (data) => {
         if (!data.requests.length) return;
 
         processFriendRequests(data.requests);
     });
 
-    useMessageListener(HabboSearchResultMessage, data => {
+    useMessageListener(HabboSearchResultMessage, (data) => {
     });
 
-    useMessageListener(InstantMessageErrorMessage, data => {
+    useMessageListener(InstantMessageErrorMessage, (data) => {
     });
 
-    useMessageListener(MessengerErrorMessage, data => {
+    useMessageListener(MessengerErrorMessage, (data) => {
     });
 
-    useMessageListener(MessengerInitMessage, data => {
+    useMessageListener(MessengerInitMessage, (data) => {
         setFriendLimits(data.userFriendLimit, data.normalFriendLimit, data.extendedFriendLimit);
 
         if (data.friendCategories) setFriendCategories(data.friendCategories);
     });
 
-    useMessageListener(MiniMailNewMessage, data => {
+    useMessageListener(MiniMailNewMessage, (data) => {
     });
 
-    useMessageListener(MiniMailUnreadCountMessage, data => {
+    useMessageListener(MiniMailUnreadCountMessage, (data) => {
     });
 
-    useMessageListener(NewConsoleMessageMessage, data => {
+    useMessageListener(NewConsoleMessageMessage, (data) => {
     });
 
-    useMessageListener(NewFriendRequestMessage, data => {
-        processFriendRequests([data.request]);
+    useMessageListener(NewFriendRequestMessage, (data) => {
+        processFriendRequests([ data.request ]);
     });
 
-    useMessageListener(RoomInviteErrorMessage, data => {
+    useMessageListener(RoomInviteErrorMessage, (data) => {
     });
 
-    useMessageListener(RoomInviteMessage, data => {
+    useMessageListener(RoomInviteMessage, (data) => {
     });
-}
+};

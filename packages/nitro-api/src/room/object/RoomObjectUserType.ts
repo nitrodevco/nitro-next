@@ -16,27 +16,28 @@ export class RoomObjectUserTypeName {
 
 export class RoomObjectUserTypeUtils {
     private static _avatarTypeToName: Map<RoomObjectUserType, string> = new Map([
-        [RoomObjectUserType.User, RoomObjectUserTypeName.User],
-        [RoomObjectUserType.Pet, RoomObjectUserTypeName.Pet],
-        [RoomObjectUserType.Bot, RoomObjectUserTypeName.Bot],
-        [RoomObjectUserType.RentableBot, RoomObjectUserTypeName.RentableBot],
-    ]);
-    private static _avatarNameToType: Map<string, RoomObjectUserType> = new Map([
-        [RoomObjectUserTypeName.User, RoomObjectUserType.User],
-        [RoomObjectUserTypeName.Pet, RoomObjectUserType.Pet],
-        [RoomObjectUserTypeName.Bot, RoomObjectUserType.Bot],
-        [RoomObjectUserTypeName.RentableBot, RoomObjectUserType.RentableBot],
+        [ RoomObjectUserType.User, RoomObjectUserTypeName.User ],
+        [ RoomObjectUserType.Pet, RoomObjectUserTypeName.Pet ],
+        [ RoomObjectUserType.Bot, RoomObjectUserTypeName.Bot ],
+        [ RoomObjectUserType.RentableBot, RoomObjectUserTypeName.RentableBot ],
     ]);
 
-    public static getAvatarType(type: string): RoomObjectUserType | undefined { //getTypeNumber
+    private static _avatarNameToType: Map<string, RoomObjectUserType> = new Map([
+        [ RoomObjectUserTypeName.User, RoomObjectUserType.User ],
+        [ RoomObjectUserTypeName.Pet, RoomObjectUserType.Pet ],
+        [ RoomObjectUserTypeName.Bot, RoomObjectUserType.Bot ],
+        [ RoomObjectUserTypeName.RentableBot, RoomObjectUserType.RentableBot ],
+    ]);
+
+    public static getAvatarType(type: string): RoomObjectUserType | undefined { // getTypeNumber
         return this._avatarNameToType.get(type);
     }
 
-    public static getAvatarTypeName(type: RoomObjectUserType): string | undefined { //getTypeString
+    public static getAvatarTypeName(type: RoomObjectUserType): string | undefined { // getTypeString
         return this._avatarTypeToName.get(type);
     }
 
-    public static getAvatarRealType(type: RoomObjectUserType): RoomObjectUserType { //getRealType
+    public static getAvatarRealType(type: RoomObjectUserType): RoomObjectUserType { // getRealType
         switch (type) {
             case RoomObjectUserType.Bot:
             case RoomObjectUserType.RentableBot:
@@ -46,7 +47,7 @@ export class RoomObjectUserTypeUtils {
         }
     }
 
-    public static getAvatarRealTypeByName(type: string): RoomObjectUserType | undefined { //getRealType
+    public static getAvatarRealTypeByName(type: string): RoomObjectUserType | undefined { // getRealType
         const avatarType = this.getAvatarType(type);
 
         switch (avatarType) {

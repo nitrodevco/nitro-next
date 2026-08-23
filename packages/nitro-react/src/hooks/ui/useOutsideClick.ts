@@ -16,10 +16,10 @@ export const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>,
             if (!element || element.contains(event.target as Node)) return;
 
             handlerRef.current();
-        }
+        };
 
         document.addEventListener('pointerdown', onPointerDown);
 
         return () => document.removeEventListener('pointerdown', onPointerDown);
-    }, [ref, enabled]);
-}
+    }, [ ref, enabled ]);
+};

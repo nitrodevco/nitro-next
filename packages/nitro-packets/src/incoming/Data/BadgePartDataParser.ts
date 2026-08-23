@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IBadgePartData {
     id: number;
@@ -18,4 +18,4 @@ export const BadgePartDataParser = (wrapper: IMessageDataWrapper): IBadgePartDat
     data.maskFileName = wrapper.readString();
 
     return data;
-}
+};

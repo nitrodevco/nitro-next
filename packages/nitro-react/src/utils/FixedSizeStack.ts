@@ -13,8 +13,7 @@ export class FixedSizeStack {
     public addValue(value: number): void {
         if (this._data.length < this._maxSize) {
             this._data.push(value);
-        }
-        else {
+        } else {
             this._data[this._index] = value;
         }
 

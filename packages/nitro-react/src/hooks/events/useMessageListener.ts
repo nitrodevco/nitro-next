@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 import { useWebSocketContext } from '#base/context';
 
-export const useMessageListener = <T extends object,>(event: IncomingPacketConstructor<T>, handler: (data: T) => void, enabled: boolean = true) => {
+export const useMessageListener = <T extends object>(event: IncomingPacketConstructor<T>, handler: (data: T) => void, enabled: boolean = true) => {
     const { subscribe } = useWebSocketContext();
     const handlerRef = useRef(handler);
 
@@ -15,7 +15,7 @@ export const useMessageListener = <T extends object,>(event: IncomingPacketConst
         if (!enabled) return;
 
         return subscribe(event, x => handlerRef.current(x));
-    }, [event, enabled, subscribe]);
+    }, [ event, enabled, subscribe ]);
 
     return null;
-}
+};

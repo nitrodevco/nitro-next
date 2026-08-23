@@ -1,6 +1,5 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectSamplePlaybackEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectSamplePlaybackEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
@@ -108,8 +107,8 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
         if (heightScaled > FurnitureSoundBlockLogic.HIGHEST_SEMITONE) {
             heightScaled = Math.min(
                 0,
-                FurnitureSoundBlockLogic.LOWEST_SEMITONE +
-                (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
+                FurnitureSoundBlockLogic.LOWEST_SEMITONE
+                + (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
             );
         }
 

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IMemberData {
     userId: number;
@@ -22,4 +22,4 @@ export const MemberDataParser = (wrapper: IMessageDataWrapper): IMemberData => {
     data.memberSince = wrapper.readString();
 
     return data;
-}
+};

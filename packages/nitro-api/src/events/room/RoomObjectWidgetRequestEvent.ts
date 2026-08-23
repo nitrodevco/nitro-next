@@ -21,8 +21,9 @@ export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
     public static MANNEQUIN: string = 'ROWRE_MANNEQUIN' as const;
     public static PET_PRODUCT_MENU: string = 'ROWRE_PET_PRODUCT_MENU' as const;
     public static GUILD_FURNI_CONTEXT_MENU: string = 'ROWRE_GUILD_FURNI_CONTEXT_MENU' as const;
-    public static MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG: string =
-        'ROWRE_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG' as const;
+    public static MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG: string
+        = 'ROWRE_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG' as const;
+
     public static PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG: string = 'ROWRE_PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG' as const;
     public static BACKGROUND_COLOR: string = 'ROWRE_BACKGROUND_COLOR' as const;
     public static AREA_HIDE: string = 'ROWRE_AREA_HIDE' as const;

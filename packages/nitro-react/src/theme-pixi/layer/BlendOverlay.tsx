@@ -1,11 +1,11 @@
-import { NineSliceSprite } from "pixi.js";
-import { useState } from "react";
+import { NineSliceSprite } from 'pixi.js';
+import { useState } from 'react';
 
-import { getRenderMode } from "#base/theme-core";
+import { getRenderMode } from '#base/theme-core';
 
-import { BoxLayout } from "../Box";
-import { FillLayout } from "../utils/FillLayout";
-import { usePixiTexture } from "../utils/usePixiTexture";
+import { BoxLayout } from '../Box';
+import { FillLayout } from '../utils/FillLayout';
+import { usePixiTexture } from '../utils/usePixiTexture';
 
 export interface BlendOverlayProps {
     textureKey: string | undefined;
@@ -25,7 +25,7 @@ export interface BlendOverlayProps {
  */
 export const BlendOverlay = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, blend, layout }: BlendOverlayProps) => {
     const texture = usePixiTexture(textureKey);
-    const [maskNode, setMaskNode] = useState<NineSliceSprite | null>(null);
+    const [ maskNode, setMaskNode ] = useState<NineSliceSprite | null>(null);
 
     if (getRenderMode() === 'dom') return null;
     if (!texture || !blend || blend <= 0) return null;
@@ -49,7 +49,7 @@ export const BlendOverlay = ({ textureKey, leftWidth, topHeight, rightWidth, bot
                     alpha={blend}
                     eventMode="none"
                     layout={layout ?? FillLayout}
-                    draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(0xFFFFFF); }}
+                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill(0xFFFFFF); }}
                 />
             )}
         </>

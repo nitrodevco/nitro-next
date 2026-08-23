@@ -7,9 +7,9 @@ export class FurnitureSoundBlockVisualization extends FurnitureAnimatedVisualiza
     private _internalFrameIncreaseCounter: number = 0;
 
     protected override updateAnimations(scale: RoomGeometryScaleType): number {
-        this._internalFrameIncreaseCounter =
-            this._internalFrameIncreaseCounter +
-            this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed);
+        this._internalFrameIncreaseCounter
+            = this._internalFrameIncreaseCounter
+                + this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed);
         this._frameIncrease = this._internalFrameIncreaseCounter;
         this._internalFrameIncreaseCounter = this._internalFrameIncreaseCounter - this._frameIncrease;
 

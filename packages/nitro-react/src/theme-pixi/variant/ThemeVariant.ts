@@ -1,15 +1,15 @@
-import { VariantCascadeMap } from "#base/theme-core";
+import { VariantCascadeMap } from '#base/theme-core';
 
-import { BoxLayout } from "../Box";
-import { BackgroundLayerConfig } from "../layer";
-import { InteractionHandlers, InteractionState, InteractionStates, TextStyleKey } from "../utils";
+import { BoxLayout } from '../Box';
+import { BackgroundLayerConfig } from '../layer';
+import { InteractionHandlers, InteractionState, InteractionStates, TextStyleKey } from '../utils';
 
 export type ThemeBase = {
     layout?: BoxLayout;
     tintColor?: string;
     textStyle?: TextStyleKey;
     textColor?: string;
-}
+};
 
 export type ThemeVariant = {
     layer?: BackgroundLayerConfig;
@@ -40,7 +40,7 @@ export type ThemeOptions<T extends AnyThemeVariant = AnyThemeVariant> = {
     textColor?: string;
     disabled?: boolean;
     selected?: boolean;
-}
+};
 
 export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     resolvedVariant: string;
@@ -53,4 +53,4 @@ export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     resolvedTint: string | undefined;
     resolvedTextStyle: TextStyleKey | undefined;
     resolvedTextColor: string | undefined;
-}
+};

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IRewardTrackPrizeData {
     id: string;
@@ -36,4 +36,4 @@ export const RewardTrackPrizeDataParser = (wrapper: IMessageDataWrapper): IRewar
     data.claimed = wrapper.readBoolean();
 
     return data;
-}
+};

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type QuestsMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class QuestsMessage implements IIncomingPacket<QuestsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): QuestsMessageType
-  {
+export class QuestsMessage implements IIncomingPacket<QuestsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): QuestsMessageType {
+        const packet: QuestsMessageType = {
+        };
 
-    const packet: QuestsMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

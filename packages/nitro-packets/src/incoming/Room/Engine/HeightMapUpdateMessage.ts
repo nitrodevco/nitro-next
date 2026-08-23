@@ -1,13 +1,13 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HeightMapUpdateMessageType = {
-    heightUpdates: { x: number, y: number, height: number }[];
+    heightUpdates: { x: number; y: number; height: number }[];
 };
 
 export class HeightMapUpdateMessage implements IIncomingPacket<HeightMapUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): HeightMapUpdateMessageType {
         const packet: HeightMapUpdateMessageType = {
-            heightUpdates: []
+            heightUpdates: [],
         };
 
         let count = wrapper.readByte();

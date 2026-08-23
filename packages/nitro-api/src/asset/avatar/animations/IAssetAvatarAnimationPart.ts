@@ -1,5 +1,6 @@
-import { AvatarFigurePartType } from "#api/avatar";
-import { IAssetAvatarAnimationFrame } from "./IAssetAvatarAnimationFrame";
+import { AvatarFigurePartType } from '#api/avatar';
+
+import { IAssetAvatarAnimationFrame } from './IAssetAvatarAnimationFrame';
 
 export interface IAssetAvatarAnimationPart {
     setType: AvatarFigurePartType;

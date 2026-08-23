@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useRoomContext } from "#base/context";
+import { useRoomContext } from '#base/context';
 
 export const useRoomMouseActions = () => useRoomContext(useShallow(x => ({
     getMouseEventId: x.getMouseEventId,
@@ -8,5 +8,5 @@ export const useRoomMouseActions = () => useRoomContext(useShallow(x => ({
     addCursorOwner: x.addCursorOwner,
     removeCursorOwner: x.removeCursorOwner,
     hasAndResetCursorUpdate: x.hasAndResetCursorUpdate,
-    hasCursorOwners: x.hasCursorOwners
+    hasCursorOwners: x.hasCursorOwners,
 })));

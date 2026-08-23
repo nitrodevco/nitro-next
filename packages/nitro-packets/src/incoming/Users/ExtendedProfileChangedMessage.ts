@@ -1,17 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ExtendedProfileChangedMessageType = {
-  userId: number;
+    userId: number;
 };
 
-export class ExtendedProfileChangedMessage implements IIncomingPacket<ExtendedProfileChangedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ExtendedProfileChangedMessageType
-  {
-    const packet: ExtendedProfileChangedMessageType = {
-      userId: wrapper.readInt(),
-    };
+export class ExtendedProfileChangedMessage implements IIncomingPacket<ExtendedProfileChangedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ExtendedProfileChangedMessageType {
+        const packet: ExtendedProfileChangedMessageType = {
+            userId: wrapper.readInt(),
+        };
 
-    return packet;
-  }
+        return packet;
+    }
 }

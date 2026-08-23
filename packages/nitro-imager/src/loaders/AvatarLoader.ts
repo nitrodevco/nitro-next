@@ -22,4 +22,4 @@ export const AvatarLoader = async () => {
     } catch (err) {
         NitroLogger.error(err);
     }
-}
+};

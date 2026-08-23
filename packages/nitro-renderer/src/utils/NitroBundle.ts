@@ -28,8 +28,7 @@ export class NitroBundle {
                         break;
                     }
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 NitroLogger.error(err);
             }
         }

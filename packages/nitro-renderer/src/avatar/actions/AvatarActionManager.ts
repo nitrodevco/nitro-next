@@ -33,7 +33,7 @@ export class AvatarActionManager {
                 const y = canvasOffset.y ?? 0;
                 const z = canvasOffset.z ?? 0;
 
-                action.setOffsets(canvasOffset.size, canvasOffset.direction, [x, y, z]);
+                action.setOffsets(canvasOffset.size, canvasOffset.direction, [ x, y, z ]);
             }
         }
     }

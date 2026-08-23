@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ChatReviewSessionResultsMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ChatReviewSessionResultsMessage implements IIncomingPacket<ChatReviewSessionResultsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ChatReviewSessionResultsMessageType
-  {
+export class ChatReviewSessionResultsMessage implements IIncomingPacket<ChatReviewSessionResultsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ChatReviewSessionResultsMessageType {
+        const packet: ChatReviewSessionResultsMessageType = {
+        };
 
-    const packet: ChatReviewSessionResultsMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

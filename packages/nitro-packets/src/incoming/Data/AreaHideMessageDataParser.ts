@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IAreaHideMessageData {
     furniId: number;
@@ -30,4 +30,4 @@ export const AreaHideMessageDataParser = (wrapper: IMessageDataWrapper): IAreaHi
     data.invert = wrapper.readBoolean();
 
     return data;
-}
+};

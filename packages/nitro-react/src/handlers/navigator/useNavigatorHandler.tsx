@@ -1,13 +1,13 @@
-import { CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, PerkAllowancesMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { CantConnectMessage, DoorbellMessage, FavouriteChangedMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, NavigatorCollapsedCategoriesMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, PerkAllowancesMessage, RoomEntryInfoMessage, RoomForwardMessage, RoomRatingMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
 
-import { useNavigatorActions, useWebSocketContext } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useNavigatorActions, useWebSocketContext } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useNavigatorHandler = () => {
     const { send } = useWebSocketContext();
     const {
         setTopLevelContexts, setTopLevelContext, setFlatCategories, setEventCategories,
-        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden
+        setSearchResult, setCollapsedCategories, setCurrentRoom, setIsSearching, setSavedSearches, setPerks, setPreferences, setLeftPaneHidden,
     } = useNavigatorActions();
 
     useMessageListener(UserObjectMessage, () => {
@@ -16,7 +16,7 @@ export const useNavigatorHandler = () => {
         send(new NewNavigatorInitComposer({}));
     });
 
-    useMessageListener(NavigatorMetadataMessage, data => {
+    useMessageListener(NavigatorMetadataMessage, (data) => {
         setTopLevelContexts(data.topLevelContexts);
 
         // the SWF opens on the first context in the list
@@ -38,7 +38,7 @@ export const useNavigatorHandler = () => {
      *     window.x = windowX; window.y = windowY; window.height = windowHeight
      * resultsMode is passed but unused there.
      */
-    useMessageListener(NewNavigatorPreferencesMessage, data => {
+    useMessageListener(NewNavigatorPreferencesMessage, (data) => {
         setLeftPaneHidden(data.leftPaneHidden);
 
         setPreferences({
@@ -46,7 +46,7 @@ export const useNavigatorHandler = () => {
             windowY: data.windowY,
             windowWidth: data.windowWidth,
             windowHeight: data.windowHeight,
-            resultsMode: data.resultsMode
+            resultsMode: data.resultsMode,
         });
     });
 
@@ -56,7 +56,7 @@ export const useNavigatorHandler = () => {
 
     useMessageListener(NavigatorSearchResultBlocksMessage, data => setSearchResult(data.searchResult));
 
-    useMessageListener(NavigatorCollapsedCategoriesMessage, data => {
+    useMessageListener(NavigatorCollapsedCategoriesMessage, (data) => {
         setCollapsedCategories((data as { collapsedCategories?: string[] }).collapsedCategories ?? []);
     });
 
@@ -65,23 +65,23 @@ export const useNavigatorHandler = () => {
         // roomPicker > securityLevel >= SecurityLevel.COMMUNITY
     });
 
-    useMessageListener(RoomForwardMessage, data => {
+    useMessageListener(RoomForwardMessage, (data) => {
         send(new GetGuestRoomComposer({
             roomId: data.roomId,
             enterRoom: false,
-            roomForward: true
+            roomForward: true,
         }));
     });
 
-    useMessageListener(RoomEntryInfoMessage, data => {
+    useMessageListener(RoomEntryInfoMessage, (data) => {
         send(new GetGuestRoomComposer({
             roomId: data.roomId,
             enterRoom: true,
-            roomForward: false
+            roomForward: false,
         }));
     });
 
-    useMessageListener(GetGuestRoomResultMessage, data => {
+    useMessageListener(GetGuestRoomResultMessage, (data) => {
         if (data.enterRoom || !data.roomForward) setCurrentRoom(data.roomInfo, data.roomInfo?.ownerName?.length > 0);
     });
 
@@ -89,19 +89,19 @@ export const useNavigatorHandler = () => {
         // currentRoomRating data.rating / canRate data.canRate
     });
 
-    useMessageListener(DoorbellMessage, data => {
+    useMessageListener(DoorbellMessage, (data) => {
         if (!data.username || !data.username.length) {
             // door state: waiting
         }
     });
 
-    useMessageListener(FlatAccessibleMessage, data => {
+    useMessageListener(FlatAccessibleMessage, (data) => {
         if (!data.username || !data.username.length) {
             // door state: accepted
         }
     });
 
-    useMessageListener(FlatAccessDeniedMessage, data => {
+    useMessageListener(FlatAccessDeniedMessage, (data) => {
         if (!data.username || !data.username.length) {
             // door state: no answer
         }
@@ -117,4 +117,4 @@ export const useNavigatorHandler = () => {
     useMessageListener(CantConnectMessage, () => {
         setIsSearching(false);
     });
-}
+};

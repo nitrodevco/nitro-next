@@ -18,7 +18,7 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
         animationTime: number = NaN,
         skipPositionUpdate: boolean = false,
         overshootAnimationTime: number = NaN,
-        curveStrength: number = NaN
+        curveStrength: number = NaN,
     ) {
         super(location, direction);
 

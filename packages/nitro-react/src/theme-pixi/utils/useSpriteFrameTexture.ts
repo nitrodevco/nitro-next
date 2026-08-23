@@ -25,5 +25,5 @@ export const useSpriteFrameTexture = (themeKey: string | undefined, frame: Sprit
             source: baseTexture.source,
             frame: new Rectangle(baseTexture.frame.x + frame.x, baseTexture.frame.y + frame.y, frame.width, frame.height),
         });
-    }, [baseTexture, frame?.x, frame?.y, frame?.width, frame?.height]);
+    }, [ baseTexture, frame?.x, frame?.y, frame?.width, frame?.height ]);
 };

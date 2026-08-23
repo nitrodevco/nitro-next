@@ -1,4 +1,4 @@
-import { IAssetAvatarFrameOffsetData } from "./IAssetAvatarFrameOffsetData";
+import { IAssetAvatarFrameOffsetData } from './IAssetAvatarFrameOffsetData';
 
 export interface IAssetAvatarAnimationOffsets {
     frames: IAssetAvatarFrameOffsetData[];

@@ -153,7 +153,7 @@ export class FurnitureParticleSystemParticle {
     }
 
     public toString(): string {
-        return [this._x, this._y, this._z].toString();
+        return [ this._x, this._y, this._z ].toString();
     }
 
     public copy(particle: FurnitureParticleSystemParticle, scale: RoomGeometryScaleType): void {

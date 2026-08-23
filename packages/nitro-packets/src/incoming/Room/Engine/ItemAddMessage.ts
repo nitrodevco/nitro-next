@@ -10,7 +10,7 @@ export type ItemAddMessageType = {
 export class ItemAddMessage implements IIncomingPacket<ItemAddMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemAddMessageType {
         const packet: ItemAddMessageType = {
-            wallItem: WallItemParser(wrapper)
+            wallItem: WallItemParser(wrapper),
         };
 
         packet.wallItem.ownerName = wrapper.readString();

@@ -7,7 +7,7 @@ import type {
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
     RoomGeometryScaleType,
-    RoomObjectSpriteData
+    RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
 import { MouseEventType, RoomObjectSpriteTypeEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
@@ -423,8 +423,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             sortableSprite.sprite = sprite;
 
             if (
-                sprite.spriteType === RoomObjectSpriteTypeEnum.Avatar ||
-                sprite.spriteType === RoomObjectSpriteTypeEnum.AvatarOwn
+                sprite.spriteType === RoomObjectSpriteTypeEnum.Avatar
+                || sprite.spriteType === RoomObjectSpriteTypeEnum.AvatarOwn
             ) {
                 sortableSprite.sprite.libraryAssetName = 'avatar_' + object.id;
             }
@@ -484,8 +484,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         if (
-            extendedSprite.needsUpdate(objectSprite.id, objectSprite.updateCounter) ||
-            RoomEnterEffect.isVisualizationOn()
+            extendedSprite.needsUpdate(objectSprite.id, objectSprite.updateCounter)
+            || RoomEnterEffect.isVisualizationOn()
         ) {
             extendedSprite.tag = objectSprite.tag;
             extendedSprite.alphaTolerance = objectSprite.alphaTolerance;
@@ -716,8 +716,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             if (extendedSprite && extendedSprite.containsXY(x - extendedSprite.x, y - extendedSprite.y)) {
                 if (!extendedSprite.skipMouseHandling) {
                     if (
-                        extendedSprite.clickHandling &&
-                        (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK)
+                        extendedSprite.clickHandling
+                        && (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK)
                     ) {
                         //
                     } else {
@@ -788,8 +788,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                             mouseData.spriteTag = tag;
 
                             if (
-                                mouseEvent &&
-                                (type !== MouseEventType.MOUSE_MOVE || x !== this._mouseOldX || y !== this._mouseOldY)
+                                mouseEvent
+                                && (type !== MouseEventType.MOUSE_MOVE || x !== this._mouseOldX || y !== this._mouseOldY)
                             )
                                 this.bufferMouseEvent(mouseEvent, identifier);
 
@@ -826,7 +826,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                 ctrlKey,
                 shiftKey,
                 buttonDown,
-            ), key)
+            ), key);
         }
 
         this.processMouseEvents();
@@ -875,7 +875,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     protected processMouseEvents(): void {
         if (!this._eventCache) return;
 
-        for (const [key, event] of this._eventCache.entries()) {
+        for (const [ key, event ] of this._eventCache.entries()) {
             if (!this._eventCache) return;
 
             if (!event) continue;
@@ -942,16 +942,16 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (this._rotationOrigin) location.assign(this._rotationOrigin);
 
-            location.x =
-                location.x +
-                this._rotationRodLength *
-                Math.cos(((direction.x + 180) / 180) * Math.PI) *
-                Math.cos((direction.y / 180) * Math.PI);
-            location.y =
-                location.y +
-                this._rotationRodLength *
-                Math.sin(((direction.x + 180) / 180) * Math.PI) *
-                Math.cos((direction.y / 180) * Math.PI);
+            location.x
+                = location.x
+                    + this._rotationRodLength
+                    * Math.cos(((direction.x + 180) / 180) * Math.PI)
+                    * Math.cos((direction.y / 180) * Math.PI);
+            location.y
+                = location.y
+                    + this._rotationRodLength
+                    * Math.sin(((direction.x + 180) / 180) * Math.PI)
+                    * Math.cos((direction.y / 180) * Math.PI);
             location.z = location.z + this._rotationRodLength * Math.sin((direction.y / 180) * Math.PI);
 
             this._geometry.setLocation(location);

@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IMessengerCategory } from './Data/IMessengerCategory';
 import { MessengerCategoryParser } from './Data/MessengerCategoryParser';
 
@@ -15,7 +16,7 @@ export class MessengerInitMessage implements IIncomingPacket<MessengerInitMessag
             userFriendLimit: wrapper.readInt(),
             normalFriendLimit: wrapper.readInt(),
             extendedFriendLimit: wrapper.readInt(),
-            friendCategories: []
+            friendCategories: [],
         };
 
         let count = wrapper.readInt();

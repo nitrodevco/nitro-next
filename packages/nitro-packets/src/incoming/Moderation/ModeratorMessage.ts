@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ModeratorMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ModeratorMessage implements IIncomingPacket<ModeratorMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ModeratorMessageType
-  {
+export class ModeratorMessage implements IIncomingPacket<ModeratorMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ModeratorMessageType {
+        const packet: ModeratorMessageType = {
+        };
 
-    const packet: ModeratorMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

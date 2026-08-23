@@ -61,7 +61,7 @@ export enum AvatarActionStateType {
     SnowwarDieFront = 'swdiefront',
     SnowwarPick = 'swpick',
     SnowwarRun = 'swrun',
-    SnowwarThrow = 'swthrow'
+    SnowwarThrow = 'swthrow',
 }
 
 export class AvatarActionStateTypeUtilities {

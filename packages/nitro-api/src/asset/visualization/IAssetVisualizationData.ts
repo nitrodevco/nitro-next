@@ -14,6 +14,6 @@ export interface IAssetVisualizationData {
     directions?: IAssetVisualizationDirection[];
     animations?: IAssetVisualAnimation[];
     defaultPosture?: string;
-    postures?: { defaultPosture?: string, postures?: IAssetPosture[] };
+    postures?: { defaultPosture?: string; postures?: IAssetPosture[] };
     gestures?: IAssetGesture[];
 }

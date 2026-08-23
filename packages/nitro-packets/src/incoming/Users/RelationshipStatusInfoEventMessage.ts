@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RelationshipStatusInfoEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class RelationshipStatusInfoEventMessage implements IIncomingPacket<RelationshipStatusInfoEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): RelationshipStatusInfoEventMessageType
-  {
+export class RelationshipStatusInfoEventMessage implements IIncomingPacket<RelationshipStatusInfoEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): RelationshipStatusInfoEventMessageType {
+        const packet: RelationshipStatusInfoEventMessageType = {
+        };
 
-    const packet: RelationshipStatusInfoEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

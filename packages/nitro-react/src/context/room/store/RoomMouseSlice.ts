@@ -1,11 +1,11 @@
-import type { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import type { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = {
     eventIds: Map<RoomObjectCategoryEnum, Map<string, number>>;
     cursorOwners: string[];
     hasCursorUpdate: boolean;
-}
+};
 
 type Actions = {
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => number | undefined;
@@ -19,7 +19,7 @@ type Actions = {
 export const RoomMouseSliceInitialState: State = {
     eventIds: new Map(),
     cursorOwners: [],
-    hasCursorUpdate: false
+    hasCursorUpdate: false,
 };
 
 export type RoomMouseSlice = State & Actions;
@@ -42,21 +42,21 @@ export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMous
     addCursorOwner: (objectId: number, category: RoomObjectCategoryEnum) => {
         const key = `${category}_${objectId}`;
 
-        set(x => {
+        set((x) => {
             if (x.cursorOwners.indexOf(key) >= 0) return x;
 
-            return { cursorOwners: [...x.cursorOwners, key], hasCursorUpdate: true };
+            return { cursorOwners: [ ...x.cursorOwners, key ], hasCursorUpdate: true };
         });
     },
     removeCursorOwner: (objectId: number, category: RoomObjectCategoryEnum) => {
         const key = `${category}_${objectId}`;
 
-        set(x => {
+        set((x) => {
             const index = x.cursorOwners.indexOf(key);
 
             if (index === 1) return x;
 
-            const cursorOwners = [...x.cursorOwners];
+            const cursorOwners = [ ...x.cursorOwners ];
 
             cursorOwners.splice(index, 1);
 
@@ -70,5 +70,5 @@ export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMous
 
         return true;
     },
-    hasCursorOwners: () => get().cursorOwners.length > 0
+    hasCursorOwners: () => get().cursorOwners.length > 0,
 });

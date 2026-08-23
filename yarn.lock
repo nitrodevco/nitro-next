@@ -4672,10 +4672,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nitro-next@workspace:."
   dependencies:
+    "@eslint/js": "npm:^10.0.1"
+    "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/node": "npm:^25.9.1"
+    eslint: "npm:^10.6.0"
+    eslint-plugin-import: "npm:^2.32.0"
+    eslint-plugin-react-hooks: "npm:^7.1.1"
+    eslint-plugin-react-refresh: "npm:^0.5.3"
+    eslint-plugin-simple-import-sort: "npm:^13.0.0"
+    eslint-plugin-unused-imports: "npm:^4.4.1"
     globals: "npm:^17.6.0"
     pixi.js: "npm:^8.18.1"
+    prettier: "npm:^3.8.3"
+    prettier-plugin-tailwindcss: "npm:^0.8.0"
     typescript: "npm:^5.9.3"
+    typescript-eslint: "npm:^8.21.1"
   languageName: unknown
   linkType: soft
 

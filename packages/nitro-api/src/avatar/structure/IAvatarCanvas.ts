@@ -1,4 +1,4 @@
-import { PointData } from "pixi.js";
+import { PointData } from 'pixi.js';
 
 export interface IAvatarCanvas {
     readonly width: number;

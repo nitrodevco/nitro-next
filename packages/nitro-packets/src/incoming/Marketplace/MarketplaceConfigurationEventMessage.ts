@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type MarketplaceConfigurationEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class MarketplaceConfigurationEventMessage implements IIncomingPacket<MarketplaceConfigurationEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): MarketplaceConfigurationEventMessageType
-  {
+export class MarketplaceConfigurationEventMessage implements IIncomingPacket<MarketplaceConfigurationEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): MarketplaceConfigurationEventMessageType {
+        const packet: MarketplaceConfigurationEventMessageType = {
+        };
 
-    const packet: MarketplaceConfigurationEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

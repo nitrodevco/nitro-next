@@ -13,7 +13,7 @@ import { Border, Box, NitroIcon, TextInput } from '#base/theme-pixi';
  * built out for this one call site.
  */
 export const CatalogSearchViewPixi = () => {
-    const [searchValue, setSearchValue] = useState('');
+    const [ searchValue, setSearchValue ] = useState('');
     const { floorItems, wallItems } = useFurnitureDataSelector();
     const { catalogType, rootNode, offersToNodes } = useCatalogSelectors();
     const { setSearchResult } = useCatalogActions();
@@ -40,7 +40,7 @@ export const CatalogSearchViewPixi = () => {
         if (node.visible && (node.pageId > 0)) {
             let nodeAdded = false;
 
-            const hayStack = [node.pageName, node.localization].join(' ').toLowerCase().replace(/ /gi, '');
+            const hayStack = [ node.pageName, node.localization ].join(' ').toLowerCase().replace(/ /gi, '');
 
             if (hayStack.indexOf(search) > -1) {
                 nodes.push(node);
@@ -85,7 +85,7 @@ export const CatalogSearchViewPixi = () => {
 
                 if ((catalogType === CatalogTypeEnum.Normal) && furnitureData.excludeDynamic) continue;
 
-                const searchValues = [furnitureData.className, furnitureData.localizedName, furnitureData.description].join(' ').replace(/ /gi, '').toLowerCase();
+                const searchValues = [ furnitureData.className, furnitureData.localizedName, furnitureData.description ].join(' ').replace(/ /gi, '').toLowerCase();
 
                 if ((catalogType === CatalogTypeEnum.BuildersClub) && (furnitureData.purchaseOfferId === -1) && (furnitureData.rentOfferId === -1)) {
                     if ((furnitureData.furniLine !== '') && (foundFurniLines.indexOf(furnitureData.furniLine) < 0)) {
@@ -129,14 +129,29 @@ export const CatalogSearchViewPixi = () => {
         }, 300);
 
         return () => clearTimeout(timeout);
-         
-    }, [offersToNodes, catalogType, rootNode, searchValue]);
+    }, [ offersToNodes, catalogType, rootNode, searchValue ]);
 
     return (
-        <Border variant="105" layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24, paddingLeft: 6, paddingRight: 6, gap: 6 }}>
-            <TextInput value={searchValue} onChange={setSearchValue} fontSize={10} layout={{ flex: 1, height: 22 }} />
-            <Box eventMode="static" cursor="pointer" onPointerTap={onIconPress} layout={{ flexShrink: 0 }}>
-                <NitroIcon icon={searchValue.length > 0 ? 'catalog-icon-clear' : 'pencil-icon'} layout={{}} />
+        <Border
+            variant="105"
+            layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24, paddingLeft: 6, paddingRight: 6, gap: 6 }}
+        >
+            <TextInput
+                value={searchValue}
+                onChange={setSearchValue}
+                fontSize={10}
+                layout={{ flex: 1, height: 22 }}
+            />
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerTap={onIconPress}
+                layout={{ flexShrink: 0 }}
+            >
+                <NitroIcon
+                    icon={searchValue.length > 0 ? 'catalog-icon-clear' : 'pencil-icon'}
+                    layout={{}}
+                />
             </Box>
         </Border>
     );

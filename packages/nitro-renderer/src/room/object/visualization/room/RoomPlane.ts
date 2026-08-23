@@ -269,7 +269,7 @@ export class RoomPlane implements IRoomPlane {
                 width,
                 height,
                 tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
-                tint: color
+                tint: color,
             });
 
             if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) {
@@ -334,9 +334,9 @@ export class RoomPlane implements IRoomPlane {
 
         this.updateCorners(geometry);
 
-        let relativeDepth =
-            Math.max(this._cornerA.z, this._cornerB.z, this._cornerC.z, this._cornerD.z) -
-            geometry.getScreenPosition(this._origin).z;
+        let relativeDepth
+            = Math.max(this._cornerA.z, this._cornerB.z, this._cornerC.z, this._cornerD.z)
+                - geometry.getScreenPosition(this._origin).z;
 
         switch (this._type) {
             case RoomPlane.TYPE_FLOOR:
@@ -355,8 +355,8 @@ export class RoomPlane implements IRoomPlane {
     }
 
     private getTextureAndColorForPlane(planeId: string, planeType: number, planeGeometry: IRoomGeometry) {
-        const dataType: PlaneDataType =
-            planeType === RoomPlane.TYPE_FLOOR
+        const dataType: PlaneDataType
+            = planeType === RoomPlane.TYPE_FLOOR
                 ? 'floorData'
                 : planeType === RoomPlane.TYPE_WALL
                     ? 'wallData'
@@ -367,10 +367,10 @@ export class RoomPlane implements IRoomPlane {
 
         let plane = planeVisualizationData?.planes?.find(p => p.id === planeId);
 
-        if (!plane) plane = planeVisualizationData?.planes?.find(p => p.id === "default");
+        if (!plane) plane = planeVisualizationData?.planes?.find(p => p.id === 'default');
 
-        const planeVisualization =
-            (dataType === 'landscapeData' ? plane?.animatedVisualization : plane?.visualizations)?.find(
+        const planeVisualization
+            = (dataType === 'landscapeData' ? plane?.animatedVisualization : plane?.visualizations)?.find(
                 v => v.size === planeGeometry.scale,
             ) ?? null;
 
@@ -378,8 +378,8 @@ export class RoomPlane implements IRoomPlane {
         const materialId = planeLayer?.materialId;
         const color = planeLayer?.color ?? 0xffffff;
 
-        const assetName =
-            planeVisualizationData?.textures?.find(t => t.id === materialId)?.bitmaps?.[0]?.assetName ?? '';
+        const assetName
+            = planeVisualizationData?.textures?.find(t => t.id === materialId)?.bitmaps?.[0]?.assetName ?? '';
 
         const texture = GetAssetManager().getAsset(assetName)?.texture ?? Texture.WHITE;
 
@@ -496,10 +496,10 @@ export class RoomPlane implements IRoomPlane {
             if (!mask) continue;
 
             if (
-                mask.leftSideLoc === leftLocation &&
-                mask.rightSideLoc === rightLocation &&
-                mask.leftSideLength === leftLength &&
-                mask.rightSideLength === rightLength
+                mask.leftSideLoc === leftLocation
+                && mask.rightSideLoc === rightLocation
+                && mask.leftSideLength === leftLength
+                && mask.rightSideLength === rightLength
             ) {
                 return false;
             }
@@ -556,7 +556,7 @@ export class RoomPlane implements IRoomPlane {
             masks.push({
                 texture: Texture.WHITE,
                 position: { x: Math.trunc(posX - wd), y: Math.trunc(posY - ht) },
-                size: { width: Math.trunc(wd), height: Math.trunc(ht) }
+                size: { width: Math.trunc(wd), height: Math.trunc(ht) },
             });
         }
 
@@ -589,7 +589,7 @@ export class RoomPlane implements IRoomPlane {
         TextureUtils.getRenderer().render({
             target: this._maskTexture,
             container,
-            clear: true
+            clear: true,
         });
 
         return this._maskTexture;

@@ -109,7 +109,7 @@ export class GeometryBodyPart extends Node3D {
 
             part.applyTransform(matrix);
 
-            parts.push([part.getDistance(loc), part]);
+            parts.push([ part.getDistance(loc), part ]);
         }
 
         const existingDynamic = this._dynamicParts.get(avatar);
@@ -122,7 +122,7 @@ export class GeometryBodyPart extends Node3D {
 
                 part.applyTransform(matrix);
 
-                parts.push([part.getDistance(loc), part]);
+                parts.push([ part.getDistance(loc), part ]);
             }
         }
 

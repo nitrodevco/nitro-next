@@ -1,6 +1,5 @@
 import type { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -9,7 +8,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
     private _updateCount: number = 0;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.INERNAL_LINK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INERNAL_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

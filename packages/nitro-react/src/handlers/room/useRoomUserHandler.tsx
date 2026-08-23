@@ -1,11 +1,10 @@
+import type { IRoomUserData, IVector3D } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import type { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from '@nitrodevco/nitro-packets';
+import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
 
-import type { IRoomUserData, IVector3D } from "@nitrodevco/nitro-api";
-import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
-import type { IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser } from "@nitrodevco/nitro-packets";
-import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from "@nitrodevco/nitro-packets";
-
-import { useOwnRoomObjectId, useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useOwnRoomObjectId, useOwnUserId, useRoomSelector, useRoomSessionActions, useRoomUsersActions } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomUserHandler = () => {
     const room = useRoomSelector();
@@ -14,7 +13,7 @@ export const useRoomUserHandler = () => {
     const { setOwnRoomIndex, setIsOwnDancing } = useRoomSessionActions();
     const { updateUsers, updateUserPartial, removeUser } = useRoomUsersActions();
 
-    useMessageListener(UsersMessage, data => {
+    useMessageListener(UsersMessage, (data) => {
         if (!room) return;
 
         const datas: IRoomUserData[] = [];
@@ -60,7 +59,7 @@ export const useRoomUserHandler = () => {
                         hasBreedingPermission: false,
                         petLevel: -1,
                         petPosture: '',
-                        botSkills: []
+                        botSkills: [],
                     });
 
                     room.updateRoomObjectUserFigure(avatarUser.objectId, avatarUser.figure, avatarUser.gender);
@@ -96,7 +95,7 @@ export const useRoomUserHandler = () => {
                         hasBreedingPermission: false,
                         petLevel: -1,
                         petPosture: '',
-                        botSkills: []
+                        botSkills: [],
                     });
 
                     room.updateRoomObjectUserFigure(avatarBot.objectId, avatarBot.figure, avatarBot.gender);
@@ -132,7 +131,7 @@ export const useRoomUserHandler = () => {
                         hasBreedingPermission: false,
                         petLevel: -1,
                         petPosture: '',
-                        botSkills: avatarRentableBot.skills
+                        botSkills: avatarRentableBot.skills,
                     });
 
                     room.updateRoomObjectUserFigure(avatarRentableBot.objectId, avatarRentableBot.figure, avatarRentableBot.gender);
@@ -168,7 +167,7 @@ export const useRoomUserHandler = () => {
                         hasBreedingPermission: avatarPet.hasBreedingPermission,
                         petLevel: avatarPet.petLevel,
                         petPosture: avatarPet.petPosture,
-                        botSkills: []
+                        botSkills: [],
                     });
 
                     room.updateRoomObjectUserFigure(avatarPet.objectId, avatarPet.figure, 'm', avatarPet.subType, avatarPet.isRiding);
@@ -183,7 +182,7 @@ export const useRoomUserHandler = () => {
         updateUsers(datas);
     });
 
-    useMessageListener(UserUpdateMessage, data => {
+    useMessageListener(UserUpdateMessage, (data) => {
         if (!room) return;
 
         const zScale = room.getRoomValue<number>(RoomObjectVariableEnum.RoomZScale) || 1;
@@ -263,7 +262,7 @@ export const useRoomUserHandler = () => {
         }
     });
 
-    useMessageListener(UserRemoveMessage, data => {
+    useMessageListener(UserRemoveMessage, (data) => {
         if (!room) return;
 
         room.removeRoomObject(data.objectId, RoomObjectCategoryEnum.Unit);
@@ -271,7 +270,7 @@ export const useRoomUserHandler = () => {
         removeUser(data.objectId);
     });
 
-    useMessageListener(UserChangeMessage, data => {
+    useMessageListener(UserChangeMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserFigure(data.objectId, data.figure, data.gender);
@@ -282,17 +281,17 @@ export const useRoomUserHandler = () => {
             custom: data.customInfo,
             activityPoints: data.achievementScore,
             hasSaddle: false,
-            isRiding: false
+            isRiding: false,
         });
     });
 
-    useMessageListener(ExpressionMessage, data => {
+    useMessageListener(ExpressionMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureExpression, data.expressionType);
     });
 
-    useMessageListener(DanceMessage, data => {
+    useMessageListener(DanceMessage, (data) => {
         if (!room) return;
 
         if (data.objectId === ownRoomObjectId) setIsOwnDancing(data.danceStyle > 0);
@@ -300,33 +299,33 @@ export const useRoomUserHandler = () => {
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureDance, data.danceStyle);
     });
 
-    useMessageListener(AvatarEffectMessage, data => {
+    useMessageListener(AvatarEffectMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserEffect(data.objectId, data.effectId, data.delayMilliseconds);
     });
 
-    useMessageListener(SleepMessage, data => {
+    useMessageListener(SleepMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureSleep, data.isSleeping ? 1 : 0);
     });
 
-    useMessageListener(CarryObjectMessage, data => {
+    useMessageListener(CarryObjectMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureCarryObject, data.itemType);
     });
 
-    useMessageListener(UseObjectMessage, data => {
+    useMessageListener(UseObjectMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureUseObject, data.itemType);
     });
 
-    useMessageListener(UserTypingMessage, data => {
+    useMessageListener(UserTypingMessage, (data) => {
         if (!room) return;
 
         room.updateRoomObjectUserAction(data.objectId, RoomObjectVariableEnum.FigureIsTyping, data.isTyping ? 1 : 0);
     });
-}
+};

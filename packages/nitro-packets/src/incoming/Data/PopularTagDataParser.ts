@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IPopularTagData {
     tagName: string;
@@ -15,4 +15,4 @@ export const PopularTagDataParser = (wrapper: IMessageDataWrapper): IPopularTagD
     data.userCount = wrapper.readInt();
 
     return data;
-}
+};

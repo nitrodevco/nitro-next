@@ -5,7 +5,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureHockeyScoreLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_CHANGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_CHANGE ]);
     }
 
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {

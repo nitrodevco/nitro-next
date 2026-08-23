@@ -19,18 +19,37 @@ export const InventoryViewPixi = () => {
     };
 
     return (
-        <Frame id="inventory" variant="3" resizeDirection="y" layout={{ position: 'absolute', top: 20, left: 20, width: 490, height: 342 }} caption={t('inventory.title')} onClose={() => toggleWindow('inventory')}>
+        <Frame
+            id="inventory"
+            variant="3"
+            resizeDirection="y"
+            layout={{ position: 'absolute', top: 20, left: 20, width: 490, height: 342 }}
+            caption={t('inventory.title')}
+            onClose={() => toggleWindow('inventory')}
+        >
             <TabContext>
-                <TabButton onPress={() => setActiveTab('furni')} selected={activeTab === 'furni'}>
+                <TabButton
+                    onPress={() => setActiveTab('furni')}
+                    selected={activeTab === 'furni'}
+                >
                     {t('inventory.furni')}
                 </TabButton>
-                <TabButton onPress={() => setActiveTab('pets')} selected={activeTab === 'pets'}>
+                <TabButton
+                    onPress={() => setActiveTab('pets')}
+                    selected={activeTab === 'pets'}
+                >
                     {t('inventory.furni.tab.pets')}
                 </TabButton>
-                <TabButton onPress={() => setActiveTab('bots')} selected={activeTab === 'bots'}>
+                <TabButton
+                    onPress={() => setActiveTab('bots')}
+                    selected={activeTab === 'bots'}
+                >
                     {t('inventory.bots')}
                 </TabButton>
-                <TabButton onPress={() => setActiveTab('badges')} selected={activeTab === 'badges'}>
+                <TabButton
+                    onPress={() => setActiveTab('badges')}
+                    selected={activeTab === 'badges'}
+                >
                     {t('inventory.badges')}
                 </TabButton>
             </TabContext>

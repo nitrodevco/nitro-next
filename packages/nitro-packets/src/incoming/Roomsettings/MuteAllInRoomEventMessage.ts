@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type MuteAllInRoomEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class MuteAllInRoomEventMessage implements IIncomingPacket<MuteAllInRoomEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): MuteAllInRoomEventMessageType
-  {
+export class MuteAllInRoomEventMessage implements IIncomingPacket<MuteAllInRoomEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): MuteAllInRoomEventMessageType {
+        const packet: MuteAllInRoomEventMessageType = {
+        };
 
-    const packet: MuteAllInRoomEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

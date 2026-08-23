@@ -1,4 +1,4 @@
-import { FurnitureTypeEnum, IFurnitureData, IProductData } from "../session";
+import { FurnitureTypeEnum, IFurnitureData, IProductData } from '../session';
 
 export interface IProduct {
     readonly productType: FurnitureTypeEnum;

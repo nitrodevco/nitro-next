@@ -1,4 +1,3 @@
-
 import type { RoomObjectSpriteData } from '#api/room';
 
 import type { IRoomObjectGraphicVisualization } from './IRoomObjectGraphicVisualization';

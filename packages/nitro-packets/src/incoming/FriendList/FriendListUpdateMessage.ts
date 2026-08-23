@@ -1,4 +1,5 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IMessengerCategory } from './Data/IMessengerCategory';
 import { IMessengerUpdate } from './Data/IMessengerUpdate';
 import { MessengerCategoryParser } from './Data/MessengerCategoryParser';
@@ -13,7 +14,7 @@ export class FriendListUpdateMessage implements IIncomingPacket<FriendListUpdate
     public parse(wrapper: IMessageDataWrapper): FriendListUpdateMessageType {
         const packet: FriendListUpdateMessageType = {
             friendCategories: [],
-            updates: []
+            updates: [],
         };
 
         let count = wrapper.readInt();

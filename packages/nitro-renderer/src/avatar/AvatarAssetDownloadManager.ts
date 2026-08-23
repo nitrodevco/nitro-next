@@ -4,7 +4,7 @@ import { AvatarAssetDownloadLibrary } from './AvatarAssetDownloadLibrary';
 import type { AvatarStructure } from './AvatarStructure';
 
 export class AvatarAssetDownloadManager {
-    private static MANDATORY_LIBRARIES: string[] = ['bd:1', 'li:0'];
+    private static MANDATORY_LIBRARIES: string[] = [ 'bd:1', 'li:0' ];
 
     private _structure: AvatarStructure;
     private _missingMandatoryLibs: string[] = AvatarAssetDownloadManager.MANDATORY_LIBRARIES;
@@ -58,7 +58,7 @@ export class AvatarAssetDownloadManager {
     }
 
     public processPendingContainers(): void {
-        for (const [container, listener] of this._pendingContainers) this.downloadAvatarFigure(container, listener);
+        for (const [ container, listener ] of this._pendingContainers) this.downloadAvatarFigure(container, listener);
 
         this._pendingContainers = [];
     }
@@ -69,7 +69,7 @@ export class AvatarAssetDownloadManager {
 
     public downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void {
         if (!this._isReady) {
-            this._pendingContainers.push([container, listener]);
+            this._pendingContainers.push([ container, listener ]);
 
             return;
         }
@@ -91,8 +91,7 @@ export class AvatarAssetDownloadManager {
             this._incompleteFigures.set(figure, libraries);
 
             for (const library of libraries) this.downloadLibrary(library);
-        }
-        else listener.resetFigure(figure);
+        } else listener.resetFigure(figure);
     }
 
     public async downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void> {
@@ -174,7 +173,7 @@ export class AvatarAssetDownloadManager {
 
         const loadedFigures: string[] = [];
 
-        for (const [figure, libraries] of this._incompleteFigures.entries()) {
+        for (const [ figure, libraries ] of this._incompleteFigures.entries()) {
             let isReady = true;
 
             for (const library of libraries) {

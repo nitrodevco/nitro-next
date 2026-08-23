@@ -1,11 +1,10 @@
-import { RoomObjectVariableEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectDataRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectDataRequestEvent, RoomObjectVariableEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureRentableSpaceLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectDataRequestEvent.RODRE_CURRENT_USER_ID]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectDataRequestEvent.RODRE_CURRENT_USER_ID ]);
     }
 
     public override update(time: number): void {

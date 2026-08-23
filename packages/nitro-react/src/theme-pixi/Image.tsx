@@ -45,8 +45,16 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) =
     if (!resolvedTexture) return null;
 
     return (
-        <Box ref={ref} layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}>
-            <pixiSprite texture={resolvedTexture} width={resolvedTexture.width} height={resolvedTexture.height} layout={{}} />
+        <Box
+            ref={ref}
+            layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
+        >
+            <pixiSprite
+                texture={resolvedTexture}
+                width={resolvedTexture.width}
+                height={resolvedTexture.height}
+                layout={{}}
+            />
         </Box>
     );
 });
@@ -61,14 +69,34 @@ ImagePixi.displayName = 'ImagePixi';
  * reserve the layout space while it loads.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, layout }, ref) => (
-    <Box ref={ref} layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}>
-        {src && <img src={src} style={{ display: 'block', imageRendering: 'pixelated' }} />}
+    <Box
+        ref={ref}
+        layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
+    >
+        {src && (
+            <img
+                src={src}
+                style={{ display: 'block', imageRendering: 'pixelated' }}
+            />
+        )}
     </Box>
 ));
 
 ImageDom.displayName = 'ImageDom';
 
 export const Image = forwardRef<PixiContainer, ImageProps>((props, ref) =>
-    getRenderMode() === 'dom' ? <ImageDom ref={ref} {...props} /> : <ImagePixi ref={ref} {...props} />);
+    getRenderMode() === 'dom'
+        ? (
+                <ImageDom
+                    ref={ref}
+                    {...props}
+                />
+            )
+        : (
+                <ImagePixi
+                    ref={ref}
+                    {...props}
+                />
+            ));
 
 Image.displayName = 'Image';

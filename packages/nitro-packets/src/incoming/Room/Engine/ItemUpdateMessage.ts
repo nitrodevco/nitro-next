@@ -10,7 +10,7 @@ export type ItemUpdateMessageType = {
 export class ItemUpdateMessage implements IIncomingPacket<ItemUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemUpdateMessageType {
         const packet: ItemUpdateMessageType = {
-            wallItem: WallItemParser(wrapper)
+            wallItem: WallItemParser(wrapper),
         };
 
         return packet;

@@ -8,4 +8,4 @@ export const NavigatorWrapper = () => {
             <NavigatorComponent />
         </NavigatorContextProvider>
     );
-}
+};

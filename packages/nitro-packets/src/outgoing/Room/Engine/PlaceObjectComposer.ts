@@ -16,10 +16,10 @@ export class PlaceObjectComposer implements IOutgoingPacket<PlaceObjectComposerT
     public compose(): (number | string | boolean)[] {
         switch (this.params.category) {
             case RoomObjectCategoryEnum.Floor: {
-                return [`${this.params.itemId} ${this.params.x} ${this.params.y} ${this.params.rotation}`];
+                return [ `${this.params.itemId} ${this.params.x} ${this.params.y} ${this.params.rotation}` ];
             }
             case RoomObjectCategoryEnum.Wall: {
-                return [`${this.params.itemId} ${this.params.wallLocation}`];
+                return [ `${this.params.itemId} ${this.params.wallLocation}` ];
             }
         }
 

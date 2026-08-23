@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IHotLookInfo {
     gender: string;
@@ -15,4 +15,4 @@ export const HotLookInfoParser = (wrapper: IMessageDataWrapper): IHotLookInfo =>
     data.figureString = wrapper.readString();
 
     return data;
-}
+};

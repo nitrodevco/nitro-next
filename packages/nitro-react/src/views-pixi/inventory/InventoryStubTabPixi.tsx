@@ -13,7 +13,10 @@ import { Border, Dropmenu } from '#base/theme-pixi';
  * pixel width DOM's own source never specified.
  */
 export const InventoryStubTabPixi = () => (
-    <Border tintColor="#CACACA" layout={{ flexDirection: 'row', gap: 6, padding: 4 }}>
+    <Border
+        tintColor="#CACACA"
+        layout={{ flexDirection: 'row', gap: 6, padding: 4 }}
+    >
         <Border layout={{}} />
         <Dropmenu />
     </Border>

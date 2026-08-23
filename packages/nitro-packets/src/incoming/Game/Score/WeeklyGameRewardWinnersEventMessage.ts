@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type WeeklyGameRewardWinnersEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class WeeklyGameRewardWinnersEventMessage implements IIncomingPacket<WeeklyGameRewardWinnersEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): WeeklyGameRewardWinnersEventMessageType
-  {
+export class WeeklyGameRewardWinnersEventMessage implements IIncomingPacket<WeeklyGameRewardWinnersEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): WeeklyGameRewardWinnersEventMessageType {
+        const packet: WeeklyGameRewardWinnersEventMessageType = {
+        };
 
-    const packet: WeeklyGameRewardWinnersEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

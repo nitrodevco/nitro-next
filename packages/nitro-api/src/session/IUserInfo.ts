@@ -1,4 +1,4 @@
-import { AvatarGenderType } from "../avatar";
+import { AvatarGenderType } from '../avatar';
 
 export interface IUserInfo {
     userId: number;

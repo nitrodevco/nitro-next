@@ -36,11 +36,14 @@ export const AccordionContent: ForwardRefExoticComponent<AccordionContentProps &
         if (unwrapped) return <Fragment>{children}</Fragment>;
 
         return (
-            <Box ref={ref} layout={layout}>
+            <Box
+                ref={ref}
+                layout={layout}
+            >
                 {children}
             </Box>
         );
-    }
+    },
 );
 
 AccordionContent.displayName = 'AccordionContent';

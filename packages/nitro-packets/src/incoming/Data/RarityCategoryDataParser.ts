@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IRarityCategoryData {
     chance: number;
@@ -19,4 +19,4 @@ export const RarityCategoryDataParser = (wrapper: IMessageDataWrapper): IRarityC
     }
 
     return data;
-}
+};

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type GuildMembershipsMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class GuildMembershipsMessage implements IIncomingPacket<GuildMembershipsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): GuildMembershipsMessageType
-  {
+export class GuildMembershipsMessage implements IIncomingPacket<GuildMembershipsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): GuildMembershipsMessageType {
+        const packet: GuildMembershipsMessageType = {
+        };
 
-    const packet: GuildMembershipsMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IPrizeMessageSubProduct {
     productItemType: string;
@@ -15,4 +15,4 @@ export const PrizeMessageSubProductParser = (wrapper: IMessageDataWrapper): IPri
     data.productItemTypeId = wrapper.readInt();
 
     return data;
-}
+};

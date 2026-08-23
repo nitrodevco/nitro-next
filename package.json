@@ -9,7 +9,10 @@
     "scripts": {
         "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
-        "lint": "yarn workspaces foreach --all -pt run lint",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "clean": "yarn workspaces foreach --all -pt run clean",
         "dev": "yarn workspace @nitrodevco/nitro-react dev"
     },
@@ -17,8 +20,19 @@
         "pixi.js": "^8.18.1"
     },
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@stylistic/eslint-plugin": "^5.10.0",
         "@types/node": "^25.9.1",
+        "eslint": "^10.6.0",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-react-hooks": "^7.1.1",
+        "eslint-plugin-react-refresh": "^0.5.3",
+        "eslint-plugin-simple-import-sort": "^13.0.0",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "globals": "^17.6.0",
-        "typescript": "^5.9.3"
+        "prettier": "^3.8.3",
+        "prettier-plugin-tailwindcss": "^0.8.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.21.1"
     }
 }

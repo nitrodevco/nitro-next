@@ -1,8 +1,9 @@
 import { IIncomingPacket, IMessageDataWrapper, WiredMovementType } from '@nitrodevco/nitro-api';
-import { IWiredUserMove } from './Data/IWiredUserMove';
+
 import { IWiredFloorMove } from './Data/IWiredFloorMove';
-import { IWiredWallMove } from './Data/IWiredWallMove';
 import { IWiredUserDirection } from './Data/IWiredUserDirection';
+import { IWiredUserMove } from './Data/IWiredUserMove';
+import { IWiredWallMove } from './Data/IWiredWallMove';
 
 export type WiredMovementsMessageType = {
     userMoves: IWiredUserMove[];
@@ -26,9 +27,9 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 animationTime: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
                 headRotation: wrapper.readInt(),
-                jumpPower: wrapper.readInt()
-            } as IWiredUserMove;
-        }
+                jumpPower: wrapper.readInt(),
+            };
+        };
 
         const parseFloorMove = (wrapper: IMessageDataWrapper) => {
             return {
@@ -40,9 +41,9 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 targetZ: parseFloat(wrapper.readString()),
                 objectId: wrapper.readInt(),
                 animationTime: wrapper.readInt(),
-                rotation: wrapper.readInt()
-            } as IWiredFloorMove;
-        }
+                rotation: wrapper.readInt(),
+            };
+        };
 
         const parseWallMove = (wrapper: IMessageDataWrapper) => {
             return {
@@ -56,29 +57,29 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 targetY: wrapper.readInt(),
                 targetOffsetX: wrapper.readInt(),
                 targetOffsetY: wrapper.readInt(),
-                animationTime: wrapper.readInt()
-            } as IWiredWallMove;
-        }
+                animationTime: wrapper.readInt(),
+            };
+        };
 
         const parseUserDirection = (wrapper: IMessageDataWrapper) => {
             return {
                 objectId: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
                 headRotation: wrapper.readInt(),
-            } as IWiredUserDirection;
-        }
+            };
+        };
 
         const packet: WiredMovementsMessageType = {
             userMoves: [],
             floorMoves: [],
             wallMoves: [],
-            userDirections: []
+            userDirections: [],
         };
 
         let count = wrapper.readInt();
 
         while (count > 0) {
-            const type = wrapper.readInt() as WiredMovementType;
+            const type = wrapper.readInt();
 
             switch (type) {
                 case WiredMovementType.User: {

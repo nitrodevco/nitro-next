@@ -1,13 +1,13 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ItemsStateUpdateMessageType = {
-    updates: { objectId: number, data: string, state: number }[];
+    updates: { objectId: number; data: string; state: number }[];
 };
 
 export class ItemsStateUpdateMessage implements IIncomingPacket<ItemsStateUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemsStateUpdateMessageType {
         const packet: ItemsStateUpdateMessageType = {
-            updates: []
+            updates: [],
         };
 
         let count = wrapper.readInt();

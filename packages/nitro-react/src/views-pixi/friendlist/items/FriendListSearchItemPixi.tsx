@@ -18,9 +18,22 @@ export const FriendListSearchItemPixi = ({ result, isFriend, showAvatarHead, zeb
     const hover = tooltipHandlers(isFriend ? 'friendlist.tip.im' : 'friendlist.tip.addfriend');
 
     return (
-        <FriendListItemPixi user={result} showAvatarHead={showAvatarHead} zebraColor={zebraColor}>
-            <Box eventMode="static" cursor="pointer" onPointerOver={hover.onMouseEnter} onPointerOut={hover.onMouseLeave} layout={{ marginLeft: 'auto' }}>
-                <NitroIcon icon={isFriend ? 'icon-message-small' : 'icon-add'} layout={{}} />
+        <FriendListItemPixi
+            user={result}
+            showAvatarHead={showAvatarHead}
+            zebraColor={zebraColor}
+        >
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerOver={hover.onMouseEnter}
+                onPointerOut={hover.onMouseLeave}
+                layout={{ marginLeft: 'auto' }}
+            >
+                <NitroIcon
+                    icon={isFriend ? 'icon-message-small' : 'icon-add'}
+                    layout={{}}
+                />
             </Box>
         </FriendListItemPixi>
     );

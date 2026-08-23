@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IBreedingPetInfo {
     webId: number;
@@ -24,4 +24,4 @@ export const BreedingPetInfoParser = (wrapper: IMessageDataWrapper): IBreedingPe
     data.owner = wrapper.readString();
 
     return data;
-}
+};

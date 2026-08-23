@@ -1,4 +1,4 @@
-import { AvatarActionStateType } from "./AvatarActionStateType";
+import { AvatarActionStateType } from './AvatarActionStateType';
 
 export enum AvatarActionType {
     Default = 'Default',
@@ -32,7 +32,6 @@ export enum AvatarActionType {
 }
 
 export class AvatarActionTypeUtilities {
-
     public static actionTypeToState(type: AvatarActionType): string {
         switch (type) {
             case AvatarActionType.Lay: return AvatarActionStateType.Lay;

@@ -1,4 +1,4 @@
-import type { AvatarActionStateType, IActionDefinition, IActiveActionData } from "@nitrodevco/nitro-api";
+import type { AvatarActionStateType, IActionDefinition, IActiveActionData } from '@nitrodevco/nitro-api';
 
 export class ActiveActionData implements IActiveActionData {
     private _type: AvatarActionStateType;

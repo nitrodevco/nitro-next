@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ITreasureHuntWinnerInfo {
     huntId: string;
@@ -24,4 +24,4 @@ export const TreasureHuntWinnerInfoParser = (wrapper: IMessageDataWrapper): ITre
     data.userGender = wrapper.readString();
 
     return data;
-}
+};

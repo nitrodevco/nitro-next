@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ModeratorToolPreferencesEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ModeratorToolPreferencesEventMessage implements IIncomingPacket<ModeratorToolPreferencesEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ModeratorToolPreferencesEventMessageType
-  {
+export class ModeratorToolPreferencesEventMessage implements IIncomingPacket<ModeratorToolPreferencesEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ModeratorToolPreferencesEventMessageType {
+        const packet: ModeratorToolPreferencesEventMessageType = {
+        };
 
-    const packet: ModeratorToolPreferencesEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -6,10 +6,10 @@ import { createNavigatorContextStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 export const NavigatorContextProvider = ({ children }: ProviderProps) => {
-    const [ctx] = useState(() => createNavigatorContextStore());
+    const [ ctx ] = useState(() => createNavigatorContextStore());
 
     return (
         <NavigatorContext value={ctx}>

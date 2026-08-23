@@ -17,7 +17,7 @@ const MODE_CLUB_DANCES = 1;
 const MODE_EXPRESSIONS = 3;
 const MODE_SIGNS = 4;
 
-const SIGN_BUTTONS: { key: string, action: string, icon?: string, label?: string }[] = [
+const SIGN_BUTTONS: { key: string; action: string; icon?: string; label?: string }[] = [
     { key: '1', action: 'sign_1', label: '1' },
     { key: '2', action: 'sign_2', label: '2' },
     { key: '3', action: 'sign_3', label: '3' },
@@ -45,8 +45,8 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
     const isOwnDancing = useOwnIsDancing();
     const hasHabboClub = useOwnHasClub();
     const canDecorate = useRoomCanDecorate();
-    const [mode, setMode] = useState<number>((isOwnDancing && hasHabboClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [ mode, setMode ] = useState<number>((isOwnDancing && hasHabboClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
+    const [ collapsed, setCollapsed ] = useState<boolean>(false);
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
@@ -105,7 +105,7 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
         if (hideMenu && onClose) onClose();
     };
 
-    const MODE_BUTTONS: Record<number, { visible: unknown, caption: string, action: () => void }[]> = {
+    const MODE_BUTTONS: Record<number, { visible: unknown; caption: string; action: () => void }[]> = {
         0: [
             { visible: canDecorate, caption: 'widget.avatar.decorate', action: () => undefined },
             { visible: true, caption: 'widget.memenu.myclothes', action: () => undefined },
@@ -139,20 +139,45 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
     };
 
     return (
-        <Bubble variant="0" tintColor="#6e6b67" layout={{ flexDirection: 'column' }}>
+        <Bubble
+            variant="0"
+            tintColor="#6e6b67"
+            layout={{ flexDirection: 'column' }}
+        >
             {!collapsed && (
                 <Box layout={{ minWidth: 100, maxWidth: 100, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
-                        <Text text={userData.name} textStyle="text-style-u-bold" textOptions={{ fontSize: 11, fill: '#ffffff' }} />
+                        <Text
+                            text={userData.name}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fontSize: 11, fill: '#ffffff' }}
+                        />
                     </Box>
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                         {mode === MODE_SIGNS && (
                             <Box layout={{ flexDirection: 'column', gap: 1 }}>
-                                {[0, 1, 2, 3, 4, 5].map(row => (
-                                    <Box key={row} layout={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 1 }}>
+                                {[ 0, 1, 2, 3, 4, 5 ].map(row => (
+                                    <Box
+                                        key={row}
+                                        layout={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 1 }}
+                                    >
                                         {SIGN_BUTTONS.slice(row * 3, row * 3 + 3).map(({ key, action, icon, label }) => (
-                                            <Button key={key} variant="300" tintColor="#2d2a27" textColor="#ffffff" onPress={() => processAction(action)} layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}>
-                                                {icon ? <NitroIcon icon={icon as 'icon-sign-heart'} layout={{}} /> : label}
+                                            <Button
+                                                key={key}
+                                                variant="300"
+                                                tintColor="#2d2a27"
+                                                textColor="#ffffff"
+                                                onPress={() => processAction(action)}
+                                                layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
+                                            >
+                                                {icon
+                                                    ? (
+                                                            <NitroIcon
+                                                                icon={icon as 'icon-sign-heart'}
+                                                                layout={{}}
+                                                            />
+                                                        )
+                                                    : label}
                                             </Button>
                                         ))}
                                     </Box>
@@ -160,17 +185,34 @@ export const InfoBubbleOwnAvatarViewPixi = ({ objectData, onClose }: InfoBubbleO
                             </Box>
                         )}
                         {(MODE_BUTTONS[mode] ?? []).map(({ visible, caption, action }) => (
-                            visible ? (
-                                <Button key={caption} variant="300" tintColor="#2d2a27" textColor="#ffffff" onPress={action} layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}>
-                                    {t(caption)}
-                                </Button>
-                            ) : null
+                            visible
+                                ? (
+                                        <Button
+                                            key={caption}
+                                            variant="300"
+                                            tintColor="#2d2a27"
+                                            textColor="#ffffff"
+                                            onPress={action}
+                                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
+                                        >
+                                            {t(caption)}
+                                        </Button>
+                                    )
+                                : null
                         ))}
                     </Box>
                 </Box>
             )}
-            <Box eventMode="static" cursor="pointer" onPointerTap={() => setCollapsed(!collapsed)} layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}>
-                <NitroIcon icon={!collapsed ? 'icon-tri-arrow-down' : 'icon-tri-arrow-up'} layout={{}} />
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerTap={() => setCollapsed(!collapsed)}
+                layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}
+            >
+                <NitroIcon
+                    icon={!collapsed ? 'icon-tri-arrow-down' : 'icon-tri-arrow-up'}
+                    layout={{}}
+                />
             </Box>
         </Bubble>
     );

@@ -13,7 +13,7 @@ NitroLogger.LOG_ERROR = true;
 
 const init = async () => {
     try {
-        NitroLogger.log(`Preparing Imager`);
+        NitroLogger.log('Preparing Imager');
         await PrepareRenderer({});
         await AvatarLoader();
 
@@ -22,12 +22,12 @@ const init = async () => {
         serve({
             fetch: GetHono().fetch,
             port: Number(process.env.WEB_PORT) || 3000,
-        }, info => {
-            console.log(`listening!`)
+        }, (info) => {
+            console.log('listening!');
         });
     } catch (err) {
         NitroLogger.error(err);
     }
-}
+};
 
 void init();

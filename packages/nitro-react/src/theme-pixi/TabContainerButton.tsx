@@ -48,7 +48,7 @@ export const TabContainerButton: ForwardRefExoticComponent<TabContainerButtonPro
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 TabContainerButton.displayName = 'TabContainerButton';

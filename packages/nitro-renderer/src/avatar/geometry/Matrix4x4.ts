@@ -7,7 +7,7 @@ export class Matrix4x4 {
     private _data: number[];
 
     constructor(k: number = 0, _arg_2: number = 0, _arg_3: number = 0, _arg_4: number = 0, _arg_5: number = 0, _arg_6: number = 0, _arg_7: number = 0, _arg_8: number = 0, _arg_9: number = 0) {
-        this._data = [k, _arg_2, _arg_3, _arg_4, _arg_5, _arg_6, _arg_7, _arg_8, _arg_9];
+        this._data = [ k, _arg_2, _arg_3, _arg_4, _arg_5, _arg_6, _arg_7, _arg_8, _arg_9 ];
     }
 
     public static getXRotationMatrix(k: number): Matrix4x4 {
@@ -35,7 +35,7 @@ export class Matrix4x4 {
     }
 
     public identity(): Matrix4x4 {
-        this._data = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+        this._data = [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ];
 
         return this;
     }

@@ -1,10 +1,10 @@
-import { ISimpleRoomObjectData, RoomObjectUserType, RoomRenderedEvent } from "@nitrodevco/nitro-api";
-import { PointData, Rectangle } from "pixi.js";
-import { ReactNode, useEffect, useRef } from "react";
+import { ISimpleRoomObjectData, RoomObjectUserType, RoomRenderedEvent } from '@nitrodevco/nitro-api';
+import { PointData, Rectangle } from 'pixi.js';
+import { ReactNode, useEffect, useRef } from 'react';
 
-import { useRoomSelector } from "#base/context";
-import { useRoomEventDispatcher } from "#base/hooks";
-import { FixedSizeStack } from "#base/utils";
+import { useRoomSelector } from '#base/context';
+import { useRoomEventDispatcher } from '#base/hooks';
+import { FixedSizeStack } from '#base/utils';
 
 const LOCATION_STACK_SIZE: number = 25;
 const BUBBLE_DROP_SPEED: number = 3;
@@ -21,7 +21,7 @@ type RoomObjectInfoBubbleProps = {
     fades?: boolean;
     children?: ReactNode;
     onClose?: () => void;
-}
+};
 
 export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     const { objectData, userType, fades = false, children, onClose = undefined } = props;
@@ -45,7 +45,7 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
         }
 
         elementRef.current.style.opacity = `${newOpacity ?? 0}`;
-    }
+    };
 
     const updatePosition = (bounds: Rectangle, location: PointData) => {
         if (!bounds || !location || !FIXED_STACK || !elementRef?.current) return;
@@ -79,9 +79,9 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
 
         elementRef.current.style.left = `${~~x}px`;
         elementRef.current.style.top = `${~~y}px`;
-    }
+    };
 
-    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, event => {
+    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, (event) => {
         if (!room || !elementRef.current || !objectData) return;
 
         updateFade(event.time);
@@ -102,7 +102,7 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
         const timeout = setTimeout(() => isFading.current = true, FADE_DELAY);
 
         return () => clearTimeout(timeout);
-    }, [fades]);
+    }, [ fades ]);
 
     useEffect(() => {
         FIXED_STACK = new FixedSizeStack(LOCATION_STACK_SIZE);
@@ -110,5 +110,12 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
         fadeTime.current = 1;
     }, []);
 
-    return <div ref={elementRef} className="absolute z-50 invisible">{children}</div>
-}
+    return (
+        <div
+            ref={elementRef}
+            className="absolute z-50 invisible"
+        >
+            {children}
+        </div>
+    );
+};

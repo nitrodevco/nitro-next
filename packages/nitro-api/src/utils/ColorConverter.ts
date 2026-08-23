@@ -1,8 +1,8 @@
-﻿import { IVector3D } from "./IVector3D";
-import { Vector3d } from "./Vector3d";
+﻿import { IVector3D } from './IVector3D';
+import { Vector3d } from './Vector3d';
 
 export class ColorConverter {
-    private static HEX_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    private static HEX_DIGITS = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
 
     public static hex2rgb(hex: number, out: Array<number> | Float32Array = []): Array<number> | Float32Array {
         out[0] = ((hex >> 16) & 0xff) / 255;
@@ -33,10 +33,10 @@ export class ColorConverter {
         const extracted = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/) ?? [];
 
         return (
-            '#' +
-            ColorConverter.getHex(extracted[1]) +
-            ColorConverter.getHex(extracted[2]) +
-            ColorConverter.getHex(extracted[3])
+            '#'
+            + ColorConverter.getHex(extracted[1])
+            + ColorConverter.getHex(extracted[2])
+            + ColorConverter.getHex(extracted[3])
         );
     }
 
@@ -51,7 +51,7 @@ export class ColorConverter {
         const r = (color & 0xff0000) >>> 16;
         const a = ((color & 0xff000000) >>> 24) / 255;
 
-        return 'rgba(' + [r, g, b, 1].join(',') + ')';
+        return 'rgba(' + [ r, g, b, 1 ].join(',') + ')';
     }
 
     public static rgbToHSL(rgbValue: number): number {
@@ -105,7 +105,7 @@ export class ColorConverter {
             const t2 = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;
             const t1 = 2 * lightness - t2;
 
-            const rgb = [hue + 1 / 3, hue, hue - 1 / 3].map(color => {
+            const rgb = [ hue + 1 / 3, hue, hue - 1 / 3 ].map((color) => {
                 if (color < 0) color += 1;
                 if (color > 1) color -= 1;
                 if (color * 6 < 1) return t1 + (t2 - t1) * 6 * color;
@@ -114,7 +114,7 @@ export class ColorConverter {
                 return t1;
             });
 
-            [red, green, blue] = rgb;
+            [ red, green, blue ] = rgb;
         } else {
             red = green = blue = lightness; // In the case of no saturation, all colors are the same.
         }

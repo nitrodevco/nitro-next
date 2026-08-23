@@ -1,4 +1,4 @@
-import { CatalogFrontPageItemType } from "./CatalogFrontPageItemType";
+import { CatalogFrontPageItemType } from './CatalogFrontPageItemType';
 
 export interface ICatalogFrontPageItem {
     position: number;

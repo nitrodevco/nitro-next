@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useConfigValue, useFurnitureDataActions, useFurnitureDataSelector, useSystemActions } from '#base/context';
 
 export const useFurnitureDataLoader = () => {
-    const [needsUpdate, setNeedsUpdate] = useState(true);
+    const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const { floorItems, wallItems } = useFurnitureDataSelector();
     const { parseFloorItems, parseWallItems } = useFurnitureDataActions();
     const furnidataUrl = useConfigValue<string>('furnituredata.url') ?? '';
@@ -13,7 +13,7 @@ export const useFurnitureDataLoader = () => {
 
     const isFurnitureDataReady = () => {
         return !needsUpdate;
-    }
+    };
 
     useEffect(() => {
         const items = Object.values(floorItems);
@@ -22,7 +22,7 @@ export const useFurnitureDataLoader = () => {
 
         setLocalizationForFurniture(items);
         GetRoomContentLoader().processFurnitureData(items);
-    }, [floorItems]);
+    }, [ floorItems ]);
 
     useEffect(() => {
         const items = Object.values(wallItems);
@@ -31,7 +31,7 @@ export const useFurnitureDataLoader = () => {
 
         setLocalizationForFurniture(items);
         GetRoomContentLoader().processFurnitureData(items);
-    }, [wallItems]);
+    }, [ wallItems ]);
 
     useEffect(() => {
         if (!needsUpdate || !furnidataUrl || !furnidataUrl.length) return;
@@ -55,7 +55,7 @@ export const useFurnitureDataLoader = () => {
         };
 
         void loadAsync(furnidataUrl);
-    }, [needsUpdate, furnidataUrl]);
+    }, [ needsUpdate, furnidataUrl ]);
 
     return { isFurnitureDataReady };
 };

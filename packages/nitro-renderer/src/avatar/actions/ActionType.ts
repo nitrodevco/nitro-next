@@ -1,4 +1,4 @@
-import type { AvatarActionStateType, IAssetAvatarActionType } from "@nitrodevco/nitro-api";
+import type { AvatarActionStateType, IAssetAvatarActionType } from '@nitrodevco/nitro-api';
 
 export class ActionType {
     private readonly _id: number;

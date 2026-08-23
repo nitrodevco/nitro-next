@@ -15,9 +15,9 @@ export class SetType implements ISetType {
         this._partSets = new Map();
 
         this._isMandatory = {
-            'F': [data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false],
-            'M': [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false],
-            'U': [false, false]
+            F: [ data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false ],
+            M: [ data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false ],
+            U: [ false, false ],
         };
 
         this.append(data);

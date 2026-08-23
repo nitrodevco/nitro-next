@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useFriendsContext } from "../useFriendsContext";
+import { useFriendsContext } from '../useFriendsContext';
 
 export const useFriendsActions = () => useFriendsContext(useShallow(x => ({
     setTooltip: x.setTooltip,
@@ -10,5 +10,5 @@ export const useFriendsActions = () => useFriendsContext(useShallow(x => ({
     setRelationshipDropdownId: x.setRelationshipDropdownId,
     toggleListSearchInput: x.toggleListSearchInput,
     toggleSelectedFriendId: x.toggleSelectedFriendId,
-    tooltipHandlers: x.tooltipHandlers
+    tooltipHandlers: x.tooltipHandlers,
 })));

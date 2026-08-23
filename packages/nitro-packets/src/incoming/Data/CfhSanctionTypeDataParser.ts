@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ICfhSanctionTypeData {
     name: string;
@@ -29,4 +29,4 @@ export const CfhSanctionTypeDataParser = (wrapper: IMessageDataWrapper): ICfhSan
     }
 
     return data;
-}
+};

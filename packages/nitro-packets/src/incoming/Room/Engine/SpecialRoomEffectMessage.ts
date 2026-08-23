@@ -7,7 +7,7 @@ export type SpecialRoomEffectMessageType = {
 export class SpecialRoomEffectMessage implements IIncomingPacket<SpecialRoomEffectMessageType> {
     public parse(wrapper: IMessageDataWrapper): SpecialRoomEffectMessageType {
         const packet: SpecialRoomEffectMessageType = {
-            effectId: wrapper.readInt()
+            effectId: wrapper.readInt(),
         };
 
         return packet;

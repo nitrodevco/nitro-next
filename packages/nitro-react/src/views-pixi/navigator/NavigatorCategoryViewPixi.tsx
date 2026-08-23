@@ -49,7 +49,10 @@ export const NavigatorCategoryViewPixi = ({ block, onEnter, onShowInfo, onCollap
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                 >
                     {block.actionAllowed !== 2 && (
-                        <NitroIcon icon={isCollapsed ? 'icon-nav-plus' : 'icon-nav-minus'} layout={{ position: 'absolute', left: 5, top: isCollapsed ? 4 : 7 }} />
+                        <NitroIcon
+                            icon={isCollapsed ? 'icon-nav-plus' : 'icon-nav-minus'}
+                            layout={{ position: 'absolute', left: 5, top: isCollapsed ? 4 : 7 }}
+                        />
                     )}
                     <Text
                         layout={{ position: 'absolute', top: 5, left: 20, width: 320 }}
@@ -66,22 +69,49 @@ export const NavigatorCategoryViewPixi = ({ block, onEnter, onShowInfo, onCollap
                             onPointerTap={() => onToggleMode(block.searchCode, mode === RESULTS_MODE_ROWS ? RESULTS_MODE_TILES : RESULTS_MODE_ROWS)}
                             layout={{}}
                         >
-                            <NitroIcon icon={mode === RESULTS_MODE_ROWS ? 'icon-nav-thumbnail' : 'icon-nav-inline'} layout={{}} />
+                            <NitroIcon
+                                icon={mode === RESULTS_MODE_ROWS ? 'icon-nav-thumbnail' : 'icon-nav-inline'}
+                                layout={{}}
+                            />
                         </Box>
                     )}
                     {block.actionAllowed === 1 && (
-                        <Box eventMode="static" cursor="pointer" onPointerTap={() => onShowMore(block.searchCode)} layout={{}}>
-                            <NitroIcon icon="icon-nav-category-show-more" layout={{}} />
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            onPointerTap={() => onShowMore(block.searchCode)}
+                            layout={{}}
+                        >
+                            <NitroIcon
+                                icon="icon-nav-category-show-more"
+                                layout={{}}
+                            />
                         </Box>
                     )}
                     {!isCollapsed && block.actionAllowed === 2 && (
-                        <Box eventMode="static" cursor="pointer" onPointerTap={onBack} layout={{}}>
-                            <NitroIcon icon="icon-nav-view-mini" layout={{}} />
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            onPointerTap={onBack}
+                            layout={{}}
+                        >
+                            <NitroIcon
+                                icon="icon-nav-view-mini"
+                                layout={{}}
+                            />
                         </Box>
                     )}
                     {!isOfficialView && (
-                        <Box eventMode="static" cursor="pointer" onPointerTap={() => onAddQuickLink(block.searchCode)} layout={{}}>
-                            <NitroIcon icon="icon-nav-quicklink-add" layout={{}} />
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            onPointerTap={() => onAddQuickLink(block.searchCode)}
+                            layout={{}}
+                        >
+                            <NitroIcon
+                                icon="icon-nav-quicklink-add"
+                                layout={{}}
+                            />
                         </Box>
                     )}
                 </Box>

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 /** PerkAllowancesMessageParser: code, errorMessage, isAllowed per entry */
 export interface IPerk {
@@ -11,6 +11,6 @@ export const PerkParser = (wrapper: IMessageDataWrapper): IPerk => {
     return {
         code: wrapper.readString(),
         errorMessage: wrapper.readString(),
-        isAllowed: wrapper.readBoolean()
+        isAllowed: wrapper.readBoolean(),
     };
-}
+};

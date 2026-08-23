@@ -28,9 +28,9 @@ const ROW_GAP = 4;
  * Pixi-native text input control yet) rather than inventing search functionality DOM lacks.
  */
 export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: string }) => {
-    const [itemCount, setItemCount] = useState(PAGE_SIZE);
-    const [viewportNode, setViewportNode] = useState<PixiContainer | null>(null);
-    const [viewportHeight, setViewportHeight] = useState(0);
+    const [ itemCount, setItemCount ] = useState(PAGE_SIZE);
+    const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
+    const [ viewportHeight, setViewportHeight ] = useState(0);
     const t = useTranslation();
 
     const scroll = useScrollController({ orientation: 'vertical' });
@@ -47,7 +47,7 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
         raf = requestAnimationFrame(tick);
 
         return () => cancelAnimationFrame(raf);
-    }, [viewportNode]);
+    }, [ viewportNode ]);
 
     const rowCount = Math.ceil(itemCount / COLUMNS);
 
@@ -70,19 +70,32 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setItemCount(count => Math.min(count + PAGE_SIZE, MAX_ITEMS));
         }
-    }, [virtualItems, rowCount, itemCount]);
+    }, [ virtualItems, rowCount, itemCount ]);
 
     return (
         <Box layout={{ flexDirection: 'column', gap: 4, height: '100%' }}>
-            <Border variant="3" tintColor="#cacaca" layout={{ flexDirection: 'row', gap: 6, padding: 4, height: 25, alignItems: 'center' }}>
-                <Border variant="0" layout={{ width: 139, height: 20 }} />
-                <Dropmenu variant="100" layout={{ width: 119, height: 21 }} />
-                <Dropmenu variant="100" layout={{ width: 119, height: 21 }} />
+            <Border
+                variant="3"
+                tintColor="#cacaca"
+                layout={{ flexDirection: 'row', gap: 6, padding: 4, height: 25, alignItems: 'center' }}
+            >
+                <Border
+                    variant="0"
+                    layout={{ width: 139, height: 20 }}
+                />
+                <Dropmenu
+                    variant="100"
+                    layout={{ width: 119, height: 21 }}
+                />
+                <Dropmenu
+                    variant="100"
+                    layout={{ width: 119, height: 21 }}
+                />
             </Border>
             <Box layout={{ flexDirection: 'row', flex: 1, gap: 4 }}>
                 <Box layout={{ flexDirection: 'row', flex: 1, gap: 2 }}>
                     <ScrollViewport
-                        viewportRef={node => { scroll.viewportRef(node); setViewportNode(node); }}
+                        viewportRef={(node) => { scroll.viewportRef(node); setViewportNode(node); }}
                         contentRef={node => scroll.contentRef(node)}
                         onWheel={scroll.onWheel}
                         scrollOffset={scroll.scrollOffset}
@@ -90,7 +103,7 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
                         layout={{ flex: 1, height: '100%', padding: 4 }}
                         contentLayout={{ position: 'relative', width: '100%', height: totalSize }}
                     >
-                        {virtualItems.map(row => {
+                        {virtualItems.map((row) => {
                             const rowStart = row.index * COLUMNS;
                             const rowItemCount = Math.min(COLUMNS, itemCount - rowStart);
 
@@ -101,7 +114,10 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
                                     layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 4 }}
                                 >
                                     {Array.from({ length: rowItemCount }, (_, i) => (
-                                        <ScrollableItemGridVertical key={rowStart + i} variant="3" />
+                                        <ScrollableItemGridVertical
+                                            key={rowStart + i}
+                                            variant="3"
+                                        />
                                     ))}
                                 </Box>
                             );
@@ -121,7 +137,11 @@ export const InventoryFurniViewPixi = ({ scrollVariant }: { scrollVariant: strin
                 </Box>
                 <Box layout={{ flexDirection: 'column', width: 180, flexShrink: 0 }}>
                     <Box layout={{ flex: 1 }}>
-                        <Text text="preview" textStyle="text-style-regular" textOptions={{}} />
+                        <Text
+                            text="preview"
+                            textStyle="text-style-regular"
+                            textOptions={{}}
+                        />
                     </Box>
                     <Box layout={{ flexDirection: 'row' }}>
                         <Button variant="102">{t('inventory.furni.placetoroom')}</Button>

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IOutfitData {
     slotId: number;
@@ -18,4 +18,4 @@ export const OutfitDataParser = (wrapper: IMessageDataWrapper): IOutfitData => {
     data.gender = wrapper.readString();
 
     return data;
-}
+};

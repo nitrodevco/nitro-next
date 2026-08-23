@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ModeratorCautionEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ModeratorCautionEventMessage implements IIncomingPacket<ModeratorCautionEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ModeratorCautionEventMessageType
-  {
+export class ModeratorCautionEventMessage implements IIncomingPacket<ModeratorCautionEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ModeratorCautionEventMessageType {
+        const packet: ModeratorCautionEventMessageType = {
+        };
 
-    const packet: ModeratorCautionEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

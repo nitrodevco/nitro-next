@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useNavigatorContext } from "../useNavigatorContext";
+import { useNavigatorContext } from '../useNavigatorContext';
 
 export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => ({
     topLevelContexts: x.topLevelContexts,
@@ -19,5 +19,5 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     leftPaneHidden: x.leftPaneHidden,
     isSearching: x.isSearching,
     currentRoom: x.currentRoom,
-    currentRoomIsOwner: x.currentRoomIsOwner
+    currentRoomIsOwner: x.currentRoomIsOwner,
 })));

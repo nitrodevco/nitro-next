@@ -1,4 +1,4 @@
-import type { AvatarFigurePartType, IAssetAvatarPartSetItem } from "@nitrodevco/nitro-api";
+import type { AvatarFigurePartType, IAssetAvatarPartSetItem } from '@nitrodevco/nitro-api';
 
 export class PartDefinition {
     private _setType: string;

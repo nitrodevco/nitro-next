@@ -23,7 +23,7 @@ export class AvatarImageBodyPartCache {
     public disposeActions(time: number, max: number): void {
         if (!this._cache || this._disposed) return;
 
-        for (const [key, cache] of this._cache.entries()) {
+        for (const [ key, cache ] of this._cache.entries()) {
             if (!cache) continue;
 
             if ((max - cache.lastAccessTime) >= time) {

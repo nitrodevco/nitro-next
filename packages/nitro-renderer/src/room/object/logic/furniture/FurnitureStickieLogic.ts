@@ -1,12 +1,11 @@
 import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectItemDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureStickieLogic extends FurnitureLogic {
-    private static STICKIE_COLORS: string[] = ['9CCEFF', 'FF9CFF', '9CFF9C', 'FFFF33'];
+    private static STICKIE_COLORS: string[] = [ '9CCEFF', 'FF9CFF', '9CFF9C', 'FFFF33' ];
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [

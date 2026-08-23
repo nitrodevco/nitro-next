@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useRoomContext } from "#base/context";
+import { useRoomContext } from '#base/context';
 
 export const useRoomUsersActions = () => useRoomContext(useShallow(x => ({
     getUserDataByIndex: x.getUserByRoomObjectId,

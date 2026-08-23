@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ISavedSearch {
     id: number;
@@ -12,6 +12,6 @@ export const SavedSearchParser = (wrapper: IMessageDataWrapper): ISavedSearch =>
         id: wrapper.readInt(),
         searchCode: wrapper.readString(),
         filter: wrapper.readString(),
-        localization: wrapper.readString()
+        localization: wrapper.readString(),
     };
-}
+};

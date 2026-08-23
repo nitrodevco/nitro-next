@@ -1,3 +1,5 @@
-import { useConfigData } from "./useConfigData";
+import { useConfigData } from './useConfigData';
 
-export const useConfigValue = <T,>(key: string) => useConfigData()[key] as T | undefined;
+export function useConfigValue<T>(key: string) {
+    return useConfigData()[key] as T | undefined;
+}

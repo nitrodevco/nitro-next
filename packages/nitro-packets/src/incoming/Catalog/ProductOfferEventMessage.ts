@@ -9,7 +9,7 @@ export type ProductOfferEventMessageType = {
 export class ProductOfferEventMessage implements IIncomingPacket<ProductOfferEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): ProductOfferEventMessageType {
         return {
-            offer: CatalogOfferParser(wrapper)
-        }
+            offer: CatalogOfferParser(wrapper),
+        };
     }
 }

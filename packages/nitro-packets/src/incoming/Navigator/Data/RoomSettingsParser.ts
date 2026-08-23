@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper, RoomTradeModeEnum } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export interface IRoomInfo {
     roomId: number;
@@ -57,8 +57,8 @@ export const RoomSettingsParser = (wrapper: IMessageDataWrapper) => {
         adExpiresIn: -1,
         showOwner: false,
         allowPets: false,
-        displayAd: false
-    }
+        displayAd: false,
+    };
 
     let count = wrapper.readInt();
 
@@ -89,4 +89,4 @@ export const RoomSettingsParser = (wrapper: IMessageDataWrapper) => {
     info.displayAd = (bitmask & DISPLAY_ROOMAD_BITMASK) > 0;
 
     return info;
-}
+};

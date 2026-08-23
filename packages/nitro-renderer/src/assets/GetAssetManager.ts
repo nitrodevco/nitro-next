@@ -1,6 +1,6 @@
 import { AssetManager } from './AssetManager';
 
-//Assets.init();
+// Assets.init();
 
 const assetManager = new AssetManager();
 

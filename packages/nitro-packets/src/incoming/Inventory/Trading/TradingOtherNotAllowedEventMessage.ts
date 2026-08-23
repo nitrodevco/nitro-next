@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TradingOtherNotAllowedEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TradingOtherNotAllowedEventMessage implements IIncomingPacket<TradingOtherNotAllowedEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TradingOtherNotAllowedEventMessageType
-  {
+export class TradingOtherNotAllowedEventMessage implements IIncomingPacket<TradingOtherNotAllowedEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TradingOtherNotAllowedEventMessageType {
+        const packet: TradingOtherNotAllowedEventMessageType = {
+        };
 
-    const packet: TradingOtherNotAllowedEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -1,4 +1,4 @@
-import { RoomObjectUserType } from "@nitrodevco/nitro-api";
+import { RoomObjectUserType } from '@nitrodevco/nitro-api';
 
 export interface IRoomAvatar {
     webId: number;

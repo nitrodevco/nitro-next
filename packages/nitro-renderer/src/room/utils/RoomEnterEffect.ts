@@ -23,8 +23,8 @@ export class RoomEnterEffect {
 
     public static turnVisualizationOn(): void {
         if (
-            RoomEnterEffect._state === RoomEnterEffect.STATE_NOT_INITIALIZED ||
-            RoomEnterEffect._state === RoomEnterEffect.STATE_OVER
+            RoomEnterEffect._state === RoomEnterEffect.STATE_NOT_INITIALIZED
+            || RoomEnterEffect._state === RoomEnterEffect.STATE_OVER
         )
             return;
 
@@ -58,8 +58,8 @@ export class RoomEnterEffect {
 
     public static isRunning(): boolean {
         if (
-            RoomEnterEffect._state === RoomEnterEffect.STATE_START_DELAY ||
-            RoomEnterEffect._state === RoomEnterEffect.STATE_RUNNING
+            RoomEnterEffect._state === RoomEnterEffect.STATE_START_DELAY
+            || RoomEnterEffect._state === RoomEnterEffect.STATE_RUNNING
         )
             return true;
 

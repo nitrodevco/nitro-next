@@ -9,7 +9,7 @@ export type BundleDiscountRulesetMessageType = {
 export class BundleDiscountRulesetMessage implements IIncomingPacket<BundleDiscountRulesetMessageType> {
     public parse(wrapper: IMessageDataWrapper): BundleDiscountRulesetMessageType {
         return {
-            bundleDiscountRuleset: BundleDiscountRulesetParser(wrapper)
-        }
+            bundleDiscountRuleset: BundleDiscountRulesetParser(wrapper),
+        };
     }
 }

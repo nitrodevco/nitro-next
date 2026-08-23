@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type WiredAllVariableHoldersEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class WiredAllVariableHoldersEventMessage implements IIncomingPacket<WiredAllVariableHoldersEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): WiredAllVariableHoldersEventMessageType
-  {
+export class WiredAllVariableHoldersEventMessage implements IIncomingPacket<WiredAllVariableHoldersEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): WiredAllVariableHoldersEventMessageType {
+        const packet: WiredAllVariableHoldersEventMessageType = {
+        };
 
-    const packet: WiredAllVariableHoldersEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -17,7 +17,7 @@ interface FramePointerDownVariant {
  *  ("bubble"), no other variants, a fixed-size sprite with no interaction states, no tint,
  *  no overlay. */
 const FRAME_POINTER_DOWN_VARIANTS: Record<string, FramePointerDownVariant> = {
-    '7': { textureKey: 'framepointerdown-src', width: 16, height: 12 },
+    7: { textureKey: 'framepointerdown-src', width: 16, height: 12 },
 };
 
 export interface FramePointerDownProps {
@@ -32,11 +32,14 @@ export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps &
         const config = FRAME_POINTER_DOWN_VARIANTS[resolvedVariant] ?? FRAME_POINTER_DOWN_VARIANTS['7'];
 
         return (
-            <Box ref={ref} layout={{ width: config.width, height: config.height, ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ width: config.width, height: config.height, ...layout }}
+            >
                 <SpriteLayer textureKey={config.textureKey} />
             </Box>
         );
-    }
+    },
 );
 
 FramePointerDown.displayName = 'FramePointerDown';

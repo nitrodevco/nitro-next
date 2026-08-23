@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type IssueDeletedMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class IssueDeletedMessage implements IIncomingPacket<IssueDeletedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): IssueDeletedMessageType
-  {
+export class IssueDeletedMessage implements IIncomingPacket<IssueDeletedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): IssueDeletedMessageType {
+        const packet: IssueDeletedMessageType = {
+        };
 
-    const packet: IssueDeletedMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

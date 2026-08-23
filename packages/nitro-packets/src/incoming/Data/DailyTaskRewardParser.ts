@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IDailyTaskReward {
     productItemTypeId: number;
@@ -21,4 +21,4 @@ export const DailyTaskRewardParser = (wrapper: IMessageDataWrapper): IDailyTaskR
     data.amount = wrapper.readInt();
 
     return data;
-}
+};

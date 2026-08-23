@@ -1,6 +1,5 @@
 import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectDimmerStateUpdateEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectDimmerStateUpdateEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';

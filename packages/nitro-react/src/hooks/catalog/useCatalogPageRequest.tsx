@@ -1,17 +1,17 @@
-import { CatalogPageRequestType, CatalogRequestedPageUtilities, ICatalogRequestedPage } from "@nitrodevco/nitro-api";
-import { useEffect } from "react";
+import { CatalogPageRequestType, CatalogRequestedPageUtilities, ICatalogRequestedPage } from '@nitrodevco/nitro-api';
+import { useEffect } from 'react';
 
-import { useCatalogActions, useCatalogSelectors, useWindowParams } from "#base/context";
+import { useCatalogActions, useCatalogSelectors, useWindowParams } from '#base/context';
 
-import { useCatalogNavigation } from "./useCatalogNavigation";
-import { useCatalogVisibility } from "./useCatalogVisibility";
+import { useCatalogNavigation } from './useCatalogNavigation';
+import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogPageRequest = () => {
     const { isCatalogVisible } = useCatalogVisibility();
     const { rootNode, activePage, requestedPage } = useCatalogSelectors();
     const { activateNode, openPageById, openPageByName, openPageByOfferId } = useCatalogNavigation();
     const { setRequestedPage } = useCatalogActions();
-    
+
     const params = useWindowParams('catalog');
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export const useCatalogPageRequest = () => {
         if (params.pageId !== undefined) {
             requestedPage = CatalogRequestedPageUtilities.getForPageId(params.pageId);
         }
-        
+
         if (params.pageName !== undefined) {
             requestedPage = CatalogRequestedPageUtilities.getForPageName(params.pageName);
         }
@@ -29,10 +29,10 @@ export const useCatalogPageRequest = () => {
             requestedPage = CatalogRequestedPageUtilities.getForOfferId(params.offerId);
         }
 
-        if(!requestedPage) return;
+        if (!requestedPage) return;
 
         setRequestedPage(requestedPage);
-    }, [params]);
+    }, [ params ]);
 
     useEffect(() => {
         if (!isCatalogVisible || !rootNode || !requestedPage) return;
@@ -67,5 +67,5 @@ export const useCatalogPageRequest = () => {
                 return;
             }
         }
-    }, [isCatalogVisible, rootNode, requestedPage]);
-}
+    }, [ isCatalogVisible, rootNode, requestedPage ]);
+};

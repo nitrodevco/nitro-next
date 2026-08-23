@@ -1,9 +1,9 @@
-import type { IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 
-import { useRoomSelector } from "#base/context";
+import { useRoomSelector } from '#base/context';
 
-import { useRoomObjectValidation } from "./useRoomObjectValidation";
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectMove = () => {
     const room = useRoomSelector();
@@ -108,4 +108,4 @@ export const useRoomObjectMove = () => {
     };
 
     return { handleFurnitureMove, handleWallItemMove, handleObjectMove };
-}
+};

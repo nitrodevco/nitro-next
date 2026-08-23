@@ -1,6 +1,6 @@
-import { AvatarGenderTypeUtilities, type IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { IHistoricConsoleMessage } from "./IConsoleMessage";
-import { IMessengerFriend } from "./IMessengerFriend";
+import { AvatarGenderTypeUtilities, type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
+import { IMessengerFriend } from './IMessengerFriend';
 
 export const MessengerFriendParser = (wrapper: IMessageDataWrapper): IMessengerFriend => {
     return {
@@ -17,6 +17,6 @@ export const MessengerFriendParser = (wrapper: IMessageDataWrapper): IMessengerF
         persistedUser: wrapper.readBoolean(),
         vipMember: wrapper.readBoolean(),
         pocketHabboUser: wrapper.readBoolean(),
-        relationshipType: wrapper.readShort()
+        relationshipType: wrapper.readShort(),
     };
-}
+};

@@ -84,8 +84,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             const instance = new logic() as IRoomObjectEventHandler;
 
             return instance;
-        }
-        catch (err) {
+        } catch (err) {
             NitroLogger.error(err);
 
             return undefined;

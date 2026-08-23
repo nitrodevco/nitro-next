@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ICommunityGoalData {
     hasGoalExpired: boolean;
@@ -43,4 +43,4 @@ export const CommunityGoalDataParser = (wrapper: IMessageDataWrapper): ICommunit
     }
 
     return data;
-}
+};

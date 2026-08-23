@@ -47,28 +47,28 @@ const sheetFrame = (x: number): SpriteFrame => ({ x, y: 0, width: 15, height: 15
  */
 const CHECK_BOX_VARIANTS: Partial<Record<string, CheckBoxVariant>> = {
     // default
-    '0': {
+    0: {
         defaultTextureKey: 'checkbox-src', selectedTextureKey: 'checkbox-src',
         defaultFrame: sheetFrame(0), selectedFrame: sheetFrame(15),
         width: 15, height: 15,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // black
-    '1': {
+    1: {
         defaultTextureKey: 'checkbox-src', selectedTextureKey: 'checkbox-src',
         defaultFrame: sheetFrame(30), selectedFrame: sheetFrame(45),
         width: 15, height: 15,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // white (DOM quirk: identical sprite positions to '0', see comment above)
-    '2': {
+    2: {
         defaultTextureKey: 'checkbox-src', selectedTextureKey: 'checkbox-src',
         defaultFrame: sheetFrame(0), selectedFrame: sheetFrame(15),
         width: 15, height: 15,
         paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
     },
     // switch
-    '100': {
+    100: {
         defaultTextureKey: 'checkbox-100-default-src', selectedTextureKey: 'checkbox-100-selected-src',
         defaultFrame: { x: 0, y: 0, width: 38, height: 21 }, selectedFrame: { x: 0, y: 0, width: 38, height: 21 },
         width: 38, height: 21,
@@ -76,7 +76,7 @@ const CHECK_BOX_VARIANTS: Partial<Record<string, CheckBoxVariant>> = {
         textStyleKey: 'text-style-il-button', color: '#000000',
     },
     // basic
-    '101': {
+    101: {
         defaultTextureKey: 'checkbox-101-default-src', selectedTextureKey: 'checkbox-101-selected-src',
         defaultFrame: { x: 0, y: 0, width: 19, height: 20 }, selectedFrame: { x: 0, y: 0, width: 19, height: 20 },
         width: 19, height: 20,
@@ -131,22 +131,28 @@ export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<P
                 {isDom
                     ? <div style={{ position: 'absolute', top: 0, left: 0, ...spriteFrameToStyle(activeTextureKey, activeFrame) }} />
                     : (
-                        <pixiSprite
-                            texture={texture}
-                            width={config.width}
-                            height={config.height}
-                            eventMode="none"
-                            layout={{ position: 'absolute', top: 0, left: 0 }}
-                        />
-                    )}
+                            <pixiSprite
+                                texture={texture}
+                                width={config.width}
+                                height={config.height}
+                                eventMode="none"
+                                layout={{ position: 'absolute', top: 0, left: 0 }}
+                            />
+                        )}
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                        ? (
+                                <Text
+                                    text={children}
+                                    textStyle={config.textStyleKey}
+                                    textOptions={{ fill: config.color }}
+                                />
+                            )
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 CheckBox.displayName = 'CheckBox';

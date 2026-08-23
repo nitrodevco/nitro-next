@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useCatalogContext } from "../useCatalogContext";
+import { useCatalogContext } from '../useCatalogContext';
 
 export const useCatalogActions = () => useCatalogContext(useShallow(x => ({
     setRootNode: x.setRootNode,
@@ -15,5 +15,5 @@ export const useCatalogActions = () => useCatalogContext(useShallow(x => ({
     setPurchaseOptions: x.setPurchaseOptions,
     setActivePurchase: x.setActivePurchase,
     setSearchResult: x.setSearchResult,
-    resetCatalog: x.resetCatalog
+    resetCatalog: x.resetCatalog,
 })));

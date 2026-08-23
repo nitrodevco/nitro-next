@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HabboGroupBadgesMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class HabboGroupBadgesMessage implements IIncomingPacket<HabboGroupBadgesMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): HabboGroupBadgesMessageType
-  {
+export class HabboGroupBadgesMessage implements IIncomingPacket<HabboGroupBadgesMessageType> {
+    public parse(wrapper: IMessageDataWrapper): HabboGroupBadgesMessageType {
+        const packet: HabboGroupBadgesMessageType = {
+        };
 
-    const packet: HabboGroupBadgesMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

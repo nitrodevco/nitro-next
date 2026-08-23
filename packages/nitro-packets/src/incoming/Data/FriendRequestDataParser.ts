@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFriendRequestData {
     requestId: number;
@@ -18,4 +18,4 @@ export const FriendRequestDataParser = (wrapper: IMessageDataWrapper): IFriendRe
     data.figureString = wrapper.readString();
 
     return data;
-}
+};

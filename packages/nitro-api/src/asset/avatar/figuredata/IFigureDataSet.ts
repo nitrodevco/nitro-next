@@ -1,4 +1,5 @@
 import { AvatarGenderType } from '#api/avatar/enum';
+
 import type { IFigureDataHiddenLayer } from './IFigureDataHiddenLayer';
 import type { IFigureDataPart } from './IFigureDataPart';
 

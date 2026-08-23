@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type GuideTicketResolutionMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class GuideTicketResolutionMessage implements IIncomingPacket<GuideTicketResolutionMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): GuideTicketResolutionMessageType
-  {
+export class GuideTicketResolutionMessage implements IIncomingPacket<GuideTicketResolutionMessageType> {
+    public parse(wrapper: IMessageDataWrapper): GuideTicketResolutionMessageType {
+        const packet: GuideTicketResolutionMessageType = {
+        };
 
-    const packet: GuideTicketResolutionMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

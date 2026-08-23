@@ -48,7 +48,7 @@ export interface ScrollbarVerticalProps {
 export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarVerticalProps>(
     (
         { trackRef, thumbSize, thumbOffset, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, layout },
-        ref
+        ref,
     ) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('scrollbarVertical', variant, defaultVariant);
 
@@ -68,7 +68,10 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
         if (!scrollable) return null;
 
         return (
-            <Box ref={ref} layout={{ flexDirection: 'column', alignItems: 'stretch', ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ flexDirection: 'column', alignItems: 'stretch', ...layout }}
+            >
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonUp
                         defaultVariant={resolvedVariant}
@@ -99,7 +102,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarVertical.displayName = 'ScrollbarVertical';

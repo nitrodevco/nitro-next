@@ -17,7 +17,7 @@ const TAB_OFFSET_EXPANDED = 85;
 const TAB_OFFSET_COLLAPSED = 5;
 /** etching_color 0x3f000000 at etching_position bottom-right. */
 const NAV_BUTTON_DROP_SHADOW = { color: 0x000000, alpha: 0.247, distance: 1, blur: 0, angle: Math.PI / 4 };
-const PROMOTE_SEARCH_CODES = ['roomads_view', 'myworld_view'];
+const PROMOTE_SEARCH_CODES = [ 'roomads_view', 'myworld_view' ];
 
 /**
  * Pixi port of views/navigator/NavigatorView.tsx. Drops the `getBoundingClientRect`-driven
@@ -88,10 +88,21 @@ export const NavigatorViewPixi = () => {
             onClose={hideNavigator}
         >
             <Box layout={{ flexDirection: 'row', alignItems: 'center', flexShrink: 0 }}>
-                <Box eventMode="static" cursor="pointer" onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)} layout={{ flexShrink: 0, marginLeft: 4 }}>
-                    <NitroIcon icon="icon-nav-quicklink-add" layout={{}} />
+                <Box
+                    eventMode="static"
+                    cursor="pointer"
+                    onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)}
+                    layout={{ flexShrink: 0, marginLeft: 4 }}
+                >
+                    <NitroIcon
+                        icon="icon-nav-quicklink-add"
+                        layout={{}}
+                    />
                 </Box>
-                <TabContext variant="3" layout={{ marginLeft: leftPaneHidden ? TAB_OFFSET_COLLAPSED : TAB_OFFSET_EXPANDED }}>
+                <TabContext
+                    variant="3"
+                    layout={{ marginLeft: leftPaneHidden ? TAB_OFFSET_COLLAPSED : TAB_OFFSET_EXPANDED }}
+                >
                     {topLevelContexts.map(context => (
                         <TabButton
                             key={context.searchCode}
@@ -106,20 +117,41 @@ export const NavigatorViewPixi = () => {
             </Box>
             <TabContent layout={{ flexDirection: 'row', gap: 12, flex: 1, minHeight: 0 }}>
                 <NavigatorQuickLinksViewPixi />
-                <Box sortableChildren layout={{ flexDirection: 'column', flex: 1, minWidth: 0, height: '100%' }}>
-                    <Box zIndex={5} layout={{}}>
+                <Box
+                    sortableChildren
+                    layout={{ flexDirection: 'column', flex: 1, minWidth: 0, height: '100%' }}
+                >
+                    <Box
+                        zIndex={5}
+                        layout={{}}
+                    >
                         <NavigatorSearchViewPixi />
                     </Box>
-                    <Border blend={0.5} variant="6" layout={{ flex: 1, minHeight: 0, padding: 4 }}>
-                        <ScrollArea variant="3" layout={{ flex: 1, minHeight: 0 }}>
+                    <Border
+                        blend={0.5}
+                        variant="6"
+                        layout={{ flex: 1, minHeight: 0, padding: 4 }}
+                    >
+                        <ScrollArea
+                            variant="3"
+                            layout={{ flex: 1, minHeight: 0 }}
+                        >
                             {isSearching && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <Text text={t('navigator.searching')} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
+                                    <Text
+                                        text={t('navigator.searching')}
+                                        textStyle="text-style-u-regular"
+                                        textOptions={{ fill: '#000000' }}
+                                    />
                                 </Box>
                             )}
                             {!isSearching && !searchResult?.blocks.length && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <Text text={t('navigator.search.returned.no.results')} textStyle="text-style-headline-small" textOptions={{ fontSize: 16, fill: '#000000' }} />
+                                    <Text
+                                        text={t('navigator.search.returned.no.results')}
+                                        textStyle="text-style-headline-small"
+                                        textOptions={{ fontSize: 16, fill: '#000000' }}
+                                    />
                                 </Box>
                             )}
                             {!isSearching && searchResult?.blocks.map(block => (
@@ -137,37 +169,78 @@ export const NavigatorViewPixi = () => {
                         </ScrollArea>
                     </Border>
                     <Box layout={{ flexDirection: 'row', gap: 16, flexShrink: 0, paddingTop: 20, paddingBottom: 10 }}>
-                        <Box eventMode="static" cursor="pointer" layout={{ position: 'relative', width: 189, height: 60 }}>
-                            <Border variant="4" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} />
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            layout={{ position: 'relative', width: 189, height: 60 }}
+                        >
+                            <Border
+                                variant="4"
+                                layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+                            />
                             <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                <NitroIcon icon="icon-nav-create-room" layout={{}} />
+                                <NitroIcon
+                                    icon="icon-nav-create-room"
+                                    layout={{}}
+                                />
                             </Box>
-                            <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.create.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
+                            <Text
+                                layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
+                                text={t('navigator.create.room')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                            />
                         </Box>
                         {PROMOTE_SEARCH_CODES.includes(searchResult?.searchCodeOriginal ?? '')
                             ? (
-                                <Box eventMode="static" cursor="pointer" layout={{ position: 'relative', width: 189, height: 60 }}>
-                                    <Border variant="5" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} />
-                                    <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                        <NitroIcon icon="icon-nav-promote-room" layout={{}} />
+                                    <Box
+                                        eventMode="static"
+                                        cursor="pointer"
+                                        layout={{ position: 'relative', width: 189, height: 60 }}
+                                    >
+                                        <Border
+                                            variant="5"
+                                            layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+                                        />
+                                        <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                                            <NitroIcon
+                                                icon="icon-nav-promote-room"
+                                                layout={{}}
+                                            />
+                                        </Box>
+                                        <Text
+                                            layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
+                                            text={t('navigator.promote.room')}
+                                            textStyle="text-style-u-bold"
+                                            textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                                        />
                                     </Box>
-                                    <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.promote.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
-                                </Box>
-                            )
+                                )
                             : (
-                                <Box
-                                    eventMode="static"
-                                    cursor="pointer"
-                                    onPointerTap={() => { send(new ForwardToARandomPromotedRoomComposer({ category: '' })); hideNavigator(); }}
-                                    layout={{ position: 'relative', width: 189, height: 60 }}
-                                >
-                                    <Border variant="5" layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} />
-                                    <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                        <NitroIcon icon="icon-nav-random-room" layout={{}} />
+                                    <Box
+                                        eventMode="static"
+                                        cursor="pointer"
+                                        onPointerTap={() => { send(new ForwardToARandomPromotedRoomComposer({ category: '' })); hideNavigator(); }}
+                                        layout={{ position: 'relative', width: 189, height: 60 }}
+                                    >
+                                        <Border
+                                            variant="5"
+                                            layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+                                        />
+                                        <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                                            <NitroIcon
+                                                icon="icon-nav-random-room"
+                                                layout={{}}
+                                            />
+                                        </Box>
+                                        <Text
+                                            layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
+                                            text={t('navigator.random.room')}
+                                            textStyle="text-style-u-bold"
+                                            textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                                        />
                                     </Box>
-                                    <Text layout={{ position: 'absolute', top: 24, left: 62, width: 125 }} text={t('navigator.random.room')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }} />
-                                </Box>
-                            )}
+                                )}
                     </Box>
                 </Box>
             </TabContent>

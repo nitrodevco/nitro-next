@@ -1,5 +1,3 @@
-
-
 import type { AvatarBodyPartType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
 import { AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
@@ -128,8 +126,7 @@ export class AvatarImageCache {
                     if (layer.dd < 0) {
                         if (dirOffset < 0) dirOffset = (8 + dirOffset);
                         else if (dirOffset > 7) dirOffset = (8 - dirOffset);
-                    }
-                    else if (dirOffset < 0) dirOffset = (dirOffset + 8);
+                    } else if (dirOffset < 0) dirOffset = (dirOffset + 8);
                     else if (dirOffset > 7) dirOffset = (dirOffset - 8);
 
                     if (this._scale === AvatarScaleType.Large) {
@@ -148,8 +145,7 @@ export class AvatarImageCache {
                         if (layer.action != null) activeAction = layer.action;
 
                         direction = dirOffset;
-                    }
-                    else if (layer.type === AvatarAnimationLayerData.FX) direction = dirOffset;
+                    } else if (layer.type === AvatarAnimationLayerData.FX) direction = dirOffset;
 
                     layerItems = layer.items;
                 }
@@ -242,14 +238,12 @@ export class AvatarImageCache {
                 frameNumber = animationFrame.number;
 
                 if ((animationFrame.assetPartDefinition) && (animationFrame.assetPartDefinition !== '')) assetPartDefinition = animationFrame.assetPartDefinition;
-            }
-            else frameNumber = container.getFrameIndex(frameCount);
+            } else frameNumber = container.getFrameIndex(frameCount);
 
             if (isFlipped) {
                 if (((assetPartDefinition === 'wav') && ((partType === AvatarFigurePartType.LeftHand || partType === AvatarFigurePartType.LeftSleeve) || (partType === AvatarFigurePartType.LeftCoatSleeve))) || ((assetPartDefinition === 'drk') && (((partType === AvatarFigurePartType.RightHand) || (partType === AvatarFigurePartType.RightSleeve)) || (partType === AvatarFigurePartType.RightCoatSleeve))) || ((assetPartDefinition === 'blw') && (partType === AvatarFigurePartType.RightHand)) || ((assetPartDefinition === 'sig') && (partType === AvatarFigurePartType.LeftHand)) || ((assetPartDefinition === 'respect') && (partType === AvatarFigurePartType.LeftHand)) || (partType === AvatarFigurePartType.RightHandItem) || (partType === AvatarFigurePartType.LeftHandItem) || (partType === AvatarFigurePartType.ChestPrint)) {
                     flipH = true;
-                }
-                else {
+                } else {
                     if (direction === 4) assetDirection = 2;
                     else if (direction === 5) assetDirection = 1;
                     else if (direction === 6) assetDirection = 0;
@@ -355,8 +349,7 @@ export class AvatarImageCache {
                 this._matrix.a = -1;
                 this._matrix.tx = ((data.rect.x + data.rect.width) + regPoint.x);
                 this._matrix.ty = (regPoint.y - data.rect.y);
-            }
-            else {
+            } else {
                 this._matrix.a = 1;
                 this._matrix.tx = (regPoint.x - data.rect.x);
                 this._matrix.ty = (regPoint.y - data.rect.y);

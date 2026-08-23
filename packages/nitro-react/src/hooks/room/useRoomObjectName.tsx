@@ -1,6 +1,6 @@
-import { IFurnitureData, IRoomObjectNameData, ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
+import { IFurnitureData, IRoomObjectNameData, ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
-import { useFurnitureDataSelector, useRoomSelector, useRoomUsersActions, useTranslation } from "#base/context";
+import { useFurnitureDataSelector, useRoomSelector, useRoomUsersActions, useTranslation } from '#base/context';
 
 export const useRoomObjectName = (objectData: ISimpleRoomObjectData) => {
     const { objectId, category } = objectData;
@@ -61,4 +61,4 @@ export const useRoomObjectName = (objectData: ISimpleRoomObjectData) => {
     }
 
     return { id, objectId, category, name, userType } as IRoomObjectNameData;
-}
+};

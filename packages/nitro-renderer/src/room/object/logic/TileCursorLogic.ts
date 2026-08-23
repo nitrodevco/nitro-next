@@ -19,9 +19,9 @@ export class TileCursorLogic extends RoomObjectLogicBase {
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         if (
-            !message ||
-            !(message instanceof ObjectTileCursorUpdateMessage) ||
-            (this._lastEventId && this._lastEventId === message.sourceEventId)
+            !message
+            || !(message instanceof ObjectTileCursorUpdateMessage)
+            || (this._lastEventId && this._lastEventId === message.sourceEventId)
         )
             return;
 

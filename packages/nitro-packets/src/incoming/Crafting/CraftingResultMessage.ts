@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CraftingResultMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class CraftingResultMessage implements IIncomingPacket<CraftingResultMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CraftingResultMessageType
-  {
+export class CraftingResultMessage implements IIncomingPacket<CraftingResultMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CraftingResultMessageType {
+        const packet: CraftingResultMessageType = {
+        };
 
-    const packet: CraftingResultMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

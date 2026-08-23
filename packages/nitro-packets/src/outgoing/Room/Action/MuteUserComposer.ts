@@ -11,7 +11,7 @@ export class MuteUserComposer implements IOutgoingPacket<MuteUserComposerType> {
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userId, this.params.roomId, this.params.durationInMinutes
+            this.params.userId, this.params.roomId, this.params.durationInMinutes,
         ];
     }
 }

@@ -21,7 +21,7 @@ export class UserChangeMessage implements IIncomingPacket<UserChangeMessageType>
             achievementScore: wrapper.readInt(),
             unknownString: wrapper.readString(),
             unknownTotal: wrapper.readInt(),
-            badgesRank: wrapper.readInt()
+            badgesRank: wrapper.readInt(),
         };
 
         return packet;

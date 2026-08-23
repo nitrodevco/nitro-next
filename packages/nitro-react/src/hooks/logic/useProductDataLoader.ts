@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import { useConfigValue, useFurnitureDataActions } from '#base/context';
 
 export const useProductDataLoader = () => {
-    const [needsUpdate, setNeedsUpdate] = useState(true);
+    const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const { parseProductData } = useFurnitureDataActions();
     const productdataUrl = useConfigValue<string>('productdata.url') ?? '';
 
     const isProductDataReady = () => {
         return !needsUpdate;
-    }
+    };
 
     useEffect(() => {
         if (!needsUpdate || !productdataUrl || !productdataUrl.length) return;
@@ -33,7 +33,7 @@ export const useProductDataLoader = () => {
         };
 
         void loadAsync(productdataUrl);
-    }, [needsUpdate, productdataUrl]);
+    }, [ needsUpdate, productdataUrl ]);
 
     return { isProductDataReady };
 };

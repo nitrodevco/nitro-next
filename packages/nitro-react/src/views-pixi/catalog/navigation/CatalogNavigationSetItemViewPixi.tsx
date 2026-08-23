@@ -28,12 +28,24 @@ export const CatalogNavigationSetItemViewPixi = ({ node }: CatalogNavigationSetI
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', flex: 1, minHeight: 16 }}>
                     {node.isActive && <ColorLayer color="#63c5e9" />}
                     <Box layout={{ width: 20, justifyContent: 'center', alignItems: 'center' }}>
-                        {iconTexture && <pixiSprite texture={iconTexture} layout={{}} />}
+                        {iconTexture && (
+                            <pixiSprite
+                                texture={iconTexture}
+                                layout={{}}
+                            />
+                        )}
                     </Box>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', flex: 1, paddingLeft: 10, paddingRight: 10, justifyContent: 'space-between' }}>
-                        <Text text={node.localization} textStyle="text-style-u-bold" textOptions={{ fill: node.isActive ? '#ffffff' : '#666666' }} />
+                        <Text
+                            text={node.localization}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: node.isActive ? '#ffffff' : '#666666' }}
+                        />
                         {node.children.length > 0 && (
-                            <NitroIcon icon={node.isOpen ? 'icon-tri-arrow-up' : 'icon-tri-arrow-down'} layout={{}} />
+                            <NitroIcon
+                                icon={node.isOpen ? 'icon-tri-arrow-up' : 'icon-tri-arrow-down'}
+                                layout={{}}
+                            />
                         )}
                     </Box>
                 </Box>

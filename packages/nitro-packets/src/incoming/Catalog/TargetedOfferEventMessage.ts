@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TargetedOfferEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TargetedOfferEventMessage implements IIncomingPacket<TargetedOfferEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TargetedOfferEventMessageType
-  {
+export class TargetedOfferEventMessage implements IIncomingPacket<TargetedOfferEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TargetedOfferEventMessageType {
+        const packet: TargetedOfferEventMessageType = {
+        };
 
-    const packet: TargetedOfferEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

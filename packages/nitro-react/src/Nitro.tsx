@@ -3,7 +3,7 @@ import {
     GetRoomContentLoader,
     GetRoomEngine,
     RoomContentLoader,
-    TexturePool
+    TexturePool,
 } from '@nitrodevco/nitro-renderer';
 import { type FC, useEffect, useState } from 'react';
 
@@ -17,8 +17,8 @@ import { MainView } from './MainView';
 import { LoadingScreenView } from './views-pixi/loading-screen/LoadingScreenView';
 
 export const Nitro: FC = () => {
-    const [isRendererReady, setIsRendererReady] = useState(false);
-    const [isEngineReady, setIsEngineReady] = useState(false);
+    const [ isRendererReady, setIsRendererReady ] = useState(false);
+    const [ isEngineReady, setIsEngineReady ] = useState(false);
 
     const { isConfigReady } = useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
@@ -32,7 +32,7 @@ export const Nitro: FC = () => {
         if (!isEngineReady) return;
 
         connect();
-    }, [isEngineReady, connect]);
+    }, [ isEngineReady, connect ]);
 
     useEffect(() => {
         if (!isRendererReady) return;
@@ -56,7 +56,7 @@ export const Nitro: FC = () => {
         };
 
         void setup();
-    }, [isRendererReady]);
+    }, [ isRendererReady ]);
 
     const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isProductDataReady();
 

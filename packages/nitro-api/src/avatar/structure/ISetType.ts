@@ -1,7 +1,6 @@
 import { IFigureDataSetType } from '#api/asset/index';
-import type { IAdvancedMap } from '#api/utils';
-import { AvatarFigurePartType, AvatarGenderType } from '../enum';
 
+import { AvatarFigurePartType, AvatarGenderType } from '../enum';
 import type { IFigurePartSet } from './IFigurePartSet';
 
 export interface ISetType {

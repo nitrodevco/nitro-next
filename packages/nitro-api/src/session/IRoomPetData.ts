@@ -1,4 +1,4 @@
-import { IRoomObjectData } from "./IRoomObjectData";
+import { IRoomObjectData } from './IRoomObjectData';
 
 export interface IRoomPetData extends IRoomObjectData {
     level: number;

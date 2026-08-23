@@ -1,4 +1,4 @@
-import { SlideAvatarMoveType } from "@nitrodevco/nitro-api";
+import { SlideAvatarMoveType } from '@nitrodevco/nitro-api';
 
 export interface IWiredUserMove {
     sourceX: number;

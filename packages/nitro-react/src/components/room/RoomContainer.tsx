@@ -1,15 +1,15 @@
-import { RoomEngineEvent } from "@nitrodevco/nitro-api";
-import { useState } from "react";
+import { RoomEngineEvent } from '@nitrodevco/nitro-api';
+import { useState } from 'react';
 
-import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomModifications, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler } from "#base/handlers";
-import { useRoomEventDispatcher } from "#base/hooks";
+import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomModifications, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler } from '#base/handlers';
+import { useRoomEventDispatcher } from '#base/hooks';
 
-import { RoomCanvas } from "./RoomCanvas";
-import { RoomEventHandler } from "./RoomEventHandler";
-import { RoomWidgetsPixi } from "./widgets";
+import { RoomCanvas } from './RoomCanvas';
+import { RoomEventHandler } from './RoomEventHandler';
+import { RoomWidgetsPixi } from './widgets';
 
 export const RoomContainer = () => {
-    const [isReady, setIsReady] = useState<boolean>(false);
+    const [ isReady, setIsReady ] = useState<boolean>(false);
 
     useRoomChatHandler();
     useRoomDataHandler();
@@ -23,11 +23,11 @@ export const RoomContainer = () => {
 
     useRoomModifications();
 
-    useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, event => {
+    useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, (event) => {
         setIsReady(true);
     });
 
-    useRoomEventDispatcher(RoomEngineEvent.DISPOSED, event => {
+    useRoomEventDispatcher(RoomEngineEvent.DISPOSED, (event) => {
         setIsReady(false);
     });
 
@@ -40,4 +40,4 @@ export const RoomContainer = () => {
             <RoomCanvas />
         </>
     );
-}
+};

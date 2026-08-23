@@ -1,7 +1,7 @@
-import { FurnitureTypeEnum, IProduct } from "@nitrodevco/nitro-api";
-import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
+import { FurnitureTypeEnum, IProduct } from '@nitrodevco/nitro-api';
+import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 
-import { useConfigValue } from "#base/context";
+import { useConfigValue } from '#base/context';
 
 export const useProductIconUrl = (product: IProduct) => {
     const catalogAssetUrl = useConfigValue<string>('catalog.asset.url') ?? '';
@@ -14,13 +14,13 @@ export const useProductIconUrl = (product: IProduct) => {
 
             switch (product.furnitureData.className) {
                 case 'floor':
-                    iconName = ['th', product.furnitureData.className, product.extraParam].join('_');
+                    iconName = [ 'th', product.furnitureData.className, product.extraParam ].join('_');
                     break;
                 case 'wallpaper':
-                    iconName = ['th', 'wall', product.extraParam].join('_');
+                    iconName = [ 'th', 'wall', product.extraParam ].join('_');
                     break;
                 case 'landscape':
-                    iconName = ['th', product.furnitureData.className, (product.extraParam || '').replace('.', '_'), '001'].join('_');
+                    iconName = [ 'th', product.furnitureData.className, (product.extraParam || '').replace('.', '_'), '001' ].join('_');
                     break;
             }
 
@@ -39,4 +39,4 @@ export const useProductIconUrl = (product: IProduct) => {
     }
 
     return '';
-}
+};

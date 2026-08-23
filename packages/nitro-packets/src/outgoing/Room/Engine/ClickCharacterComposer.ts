@@ -9,7 +9,7 @@ export class ClickCharacterComposer implements IOutgoingPacket<ClickCharacterCom
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.objectId
+            this.params.objectId,
         ];
     }
 }

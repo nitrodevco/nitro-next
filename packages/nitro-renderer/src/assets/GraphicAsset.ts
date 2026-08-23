@@ -28,9 +28,9 @@ export class GraphicAsset implements IGraphicAsset {
         flipV: boolean = false,
         usesPalette: boolean = false,
     ): GraphicAsset {
-        const graphicAsset =
-            (GraphicAsset.GRAPHIC_POOL.length ? GraphicAsset.GRAPHIC_POOL.pop() : new GraphicAsset()) ||
-            new GraphicAsset();
+        const graphicAsset
+            = (GraphicAsset.GRAPHIC_POOL.length ? GraphicAsset.GRAPHIC_POOL.pop() : new GraphicAsset())
+                || new GraphicAsset();
 
         graphicAsset._name = name;
         graphicAsset._source = source || undefined;

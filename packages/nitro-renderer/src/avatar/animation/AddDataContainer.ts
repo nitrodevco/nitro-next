@@ -1,4 +1,4 @@
-﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAssetAnimationAdd } from "@nitrodevco/nitro-api";
+﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAssetAnimationAdd } from '@nitrodevco/nitro-api';
 
 export class AddDataContainer implements IAddDataContainer {
     private _id: AvatarFigurePartType | string;

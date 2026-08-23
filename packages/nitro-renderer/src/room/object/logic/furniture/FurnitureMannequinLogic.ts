@@ -10,7 +10,7 @@ export class FurnitureMannequinLogic extends FurnitureLogic {
     private static OUTFIT_NAME: string = 'OUTFIT_NAME';
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.MANNEQUIN]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.MANNEQUIN ]);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

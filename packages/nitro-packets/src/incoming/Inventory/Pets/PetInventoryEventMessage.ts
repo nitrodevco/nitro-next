@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PetInventoryEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class PetInventoryEventMessage implements IIncomingPacket<PetInventoryEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): PetInventoryEventMessageType
-  {
+export class PetInventoryEventMessage implements IIncomingPacket<PetInventoryEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): PetInventoryEventMessageType {
+        const packet: PetInventoryEventMessageType = {
+        };
 
-    const packet: PetInventoryEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CollectibleMintTokenOffersMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class CollectibleMintTokenOffersMessage implements IIncomingPacket<CollectibleMintTokenOffersMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CollectibleMintTokenOffersMessageType
-  {
+export class CollectibleMintTokenOffersMessage implements IIncomingPacket<CollectibleMintTokenOffersMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CollectibleMintTokenOffersMessageType {
+        const packet: CollectibleMintTokenOffersMessageType = {
+        };
 
-    const packet: CollectibleMintTokenOffersMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

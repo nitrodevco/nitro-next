@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ICollectibleItemClaim {
     claimId: string;
@@ -21,4 +21,4 @@ export const CollectibleItemClaimParser = (wrapper: IMessageDataWrapper): IColle
     data.status = wrapper.readShort();
 
     return data;
-}
+};

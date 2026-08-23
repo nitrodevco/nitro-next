@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IRewardTrackTaskLevelData {
     requiredCount: number;
@@ -18,4 +18,4 @@ export const RewardTrackTaskLevelDataParser = (wrapper: IMessageDataWrapper): IR
     data.premium = wrapper.readBoolean();
 
     return data;
-}
+};

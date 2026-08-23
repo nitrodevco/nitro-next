@@ -1,31 +1,25 @@
-﻿export class ObjectMouseData
-{
+﻿export class ObjectMouseData {
     private _objectId: string;
     private _spriteTag: string;
 
-    constructor()
-    {
+    constructor() {
         this._objectId = '';
         this._spriteTag = '';
     }
 
-    public get objectId(): string
-    {
+    public get objectId(): string {
         return this._objectId;
     }
 
-    public set objectId(k: string)
-    {
+    public set objectId(k: string) {
         this._objectId = k;
     }
 
-    public get spriteTag(): string
-    {
+    public get spriteTag(): string {
         return this._spriteTag;
     }
 
-    public set spriteTag(k: string)
-    {
+    public set spriteTag(k: string) {
         this._spriteTag = k;
     }
 }

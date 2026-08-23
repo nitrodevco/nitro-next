@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useCatalogContext } from "../useCatalogContext";
+import { useCatalogContext } from '../useCatalogContext';
 
 export const useCatalogSelectors = () => useCatalogContext(useShallow(x => ({
     catalogType: x.catalogType,
@@ -15,5 +15,5 @@ export const useCatalogSelectors = () => useCatalogContext(useShallow(x => ({
     purchaseOptions: x.purchaseOptions,
     activePurchase: x.activePurchase,
     searchResult: x.searchResult,
-    frontPageItems: x.frontPageItems
+    frontPageItems: x.frontPageItems,
 })));

@@ -22,7 +22,15 @@ export const NitroIcon = forwardRef<PixiSprite, NitroIconProps>(({ icon, layout 
 
     if (!texture) return null;
 
-    return <pixiSprite ref={ref} texture={texture} width={width} height={height} layout={layout ?? {}} />;
+    return (
+        <pixiSprite
+            ref={ref}
+            texture={texture}
+            width={width}
+            height={height}
+            layout={layout ?? {}}
+        />
+    );
 });
 
 NitroIcon.displayName = 'NitroIcon';

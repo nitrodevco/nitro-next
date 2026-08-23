@@ -6,10 +6,10 @@ import { createFriendsContextStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 export const FriendsContextProvider = ({ children }: ProviderProps) => {
-    const [ctx] = useState(() => createFriendsContextStore());
+    const [ ctx ] = useState(() => createFriendsContextStore());
 
     return (
         <FriendsContext value={ctx}>

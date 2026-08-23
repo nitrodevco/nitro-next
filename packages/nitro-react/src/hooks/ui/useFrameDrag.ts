@@ -31,14 +31,14 @@ export const useFrameDrag = (id: string | undefined) => {
     const dragStateRef = useRef<DragState | null>(null);
     const activeListenersRef = useRef<ActiveListeners | null>(null);
 
-    const [offset, setOffset] = useState(() => (id && getStoredFramePosition(id)) || { dx: 0, dy: 0 });
+    const [ offset, setOffset ] = useState(() => (id && getStoredFramePosition(id)) || { dx: 0, dy: 0 });
 
     const zIndex = useWindowZIndex(stackId);
     const { bringWindowToFront } = useWindowActions();
 
     useEffect(() => {
         bringWindowToFront(stackId);
-    }, [stackId, bringWindowToFront]);
+    }, [ stackId, bringWindowToFront ]);
 
     const stopDragging = () => {
         const listeners = activeListenersRef.current;
@@ -50,9 +50,9 @@ export const useFrameDrag = (id: string | undefined) => {
         }
 
         dragStateRef.current = null;
-    }
+    };
 
-    useEffect(() => stopDragging, [stopDragging]);
+    useEffect(() => stopDragging, [ stopDragging ]);
 
     const handleHeaderPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
         if (event.button !== 0) return;
@@ -110,15 +110,15 @@ export const useFrameDrag = (id: string | undefined) => {
 
         window.addEventListener('pointermove', handleMove);
         window.addEventListener('pointerup', handleUp);
-    }
+    };
 
     const handleActivate = () => {
         bringWindowToFront(stackId);
-    }
+    };
 
     const style: CSSProperties = {
         transform: offset.dx || offset.dy ? `translate(${~~offset.dx}px, ${~~offset.dy}px)` : undefined,
-        transformOrigin: `top left`,
+        transformOrigin: 'top left',
         zIndex,
     };
 

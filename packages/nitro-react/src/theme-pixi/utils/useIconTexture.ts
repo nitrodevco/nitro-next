@@ -217,7 +217,7 @@ const ICON_ASSETS = {
     'icon-currency-credits': { url: '/assets/flash/purse/-1.png', width: 15, height: 15 },
     'icon-currency-duckets': { url: '/assets/flash/purse/0.png', width: 15, height: 15 },
     'icon-currency-diamonds': { url: '/assets/flash/purse/5.png', width: 15, height: 15 },
-} as const satisfies Record<string, { url: string, width: number, height: number }>;
+} as const satisfies Record<string, { url: string; width: number; height: number }>;
 
 /**
  * theme/habbo-icons.css's shared spritesheet. Unlike icons.css and the rest of the button/
@@ -327,7 +327,7 @@ const useHabboIconFrame = (frame: SpriteFrame | undefined): Texture | undefined 
             source: baseTexture.source,
             frame: new Rectangle(baseTexture.frame.x + frame.x, baseTexture.frame.y + frame.y, frame.width, frame.height),
         });
-    }, [baseTexture, frame]);
+    }, [ baseTexture, frame ]);
 };
 
 /**
@@ -337,8 +337,8 @@ const useHabboIconFrame = (frame: SpriteFrame | undefined): Texture | undefined 
  * only one branch below ever has real data; the other hook call is simply handed `undefined`
  * and returns `undefined` without doing any work, so call order stays unconditional either way.
  */
-export const useIconTexture = (icon: IconKey): { texture: Texture | undefined, width: number, height: number } => {
-    const discreteAsset: { url: string, width: number, height: number } | undefined = (ICON_ASSETS as Record<string, { url: string, width: number, height: number }>)[icon];
+export const useIconTexture = (icon: IconKey): { texture: Texture | undefined; width: number; height: number } => {
+    const discreteAsset: { url: string; width: number; height: number } | undefined = (ICON_ASSETS as Record<string, { url: string; width: number; height: number }>)[icon];
     const spriteFrame: SpriteFrame | undefined = (HABBO_ICON_FRAMES as Record<string, SpriteFrame>)[icon];
 
     const discreteTexture = useTextureFromUrl(discreteAsset?.url);

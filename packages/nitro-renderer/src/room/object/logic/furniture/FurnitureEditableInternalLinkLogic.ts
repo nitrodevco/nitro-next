@@ -8,7 +8,7 @@ export class FurnitureEditableInternalLinkLogic extends FurnitureLogic {
     private _updateCount: number = 0;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.INERNAL_LINK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INERNAL_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

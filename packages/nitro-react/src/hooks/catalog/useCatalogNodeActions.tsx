@@ -1,6 +1,6 @@
-import { ICatalogNode } from "@nitrodevco/nitro-api";
+import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors } from "#base/context";
+import { useCatalogSelectors } from '#base/context';
 
 export const useCatalogNodeActions = () => {
     const { rootNode, offersToNodes, activeNodes } = useCatalogSelectors();
@@ -17,7 +17,7 @@ export const useCatalogNodeActions = () => {
         }
 
         return undefined;
-    }
+    };
 
     const getNodeByPageName = (pageName: string, node: ICatalogNode): ICatalogNode | undefined => {
         if (node.pageName === pageName && node !== rootNode) return node;
@@ -29,7 +29,7 @@ export const useCatalogNodeActions = () => {
         }
 
         return undefined;
-    }
+    };
 
     const getNodesByOfferId = (offerId: number, flag: boolean = false): ICatalogNode[] => {
         if (flag) {
@@ -44,7 +44,7 @@ export const useCatalogNodeActions = () => {
         }
 
         return offersToNodes[offerId] ?? [];
-    }
+    };
 
     return { isNodeActive, getNodeByPageId, getNodeByPageName, getNodesByOfferId };
-}
+};

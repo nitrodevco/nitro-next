@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IMessengerFriend } from './Data/IMessengerFriend';
 import { MessengerFriendParser } from './Data/MessengerFriendParser';
 
@@ -13,7 +14,7 @@ export class FriendListFragmentMessage implements IIncomingPacket<FriendListFrag
         const packet: FriendListFragmentMessageType = {
             totalFragments: wrapper.readInt(),
             fragmentIndex: wrapper.readInt(),
-            fragment: []
+            fragment: [],
         };
 
         let count = wrapper.readInt();

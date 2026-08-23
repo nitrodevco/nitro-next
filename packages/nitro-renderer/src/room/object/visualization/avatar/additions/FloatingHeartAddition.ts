@@ -35,9 +35,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             if (this.visualization.angle === 90 || this.visualization.angle === 270) {
                 offsetX = 0;
             } else if (
-                this.visualization.angle === 135 ||
-                this.visualization.angle === 180 ||
-                this.visualization.angle === 225
+                this.visualization.angle === 135
+                || this.visualization.angle === 180
+                || this.visualization.angle === 225
             ) {
                 offsetX = 6;
             } else offsetX = -6;
@@ -51,9 +51,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             if (this.visualization.angle === 90 || this.visualization.angle === 270) {
                 offsetX = -3;
             } else if (
-                this.visualization.angle === 135 ||
-                this.visualization.angle === 180 ||
-                this.visualization.angle === 225
+                this.visualization.angle === 135
+                || this.visualization.angle === 180
+                || this.visualization.angle === 225
             ) {
                 offsetX = 22;
             } else offsetX = -30;

@@ -1,5 +1,4 @@
-﻿
-import { GetTickerTime } from '../../utils';
+﻿import { GetTickerTime } from '../../utils';
 import type { AvatarImageDirectionCache } from './AvatarImageDirectionCache';
 
 export class AvatarImageActionCache {

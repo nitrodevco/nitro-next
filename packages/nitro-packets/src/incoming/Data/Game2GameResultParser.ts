@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IGame2GameResult {
     isDeathMatch: boolean;
@@ -18,4 +18,4 @@ export const Game2GameResultParser = (wrapper: IMessageDataWrapper): IGame2GameR
     data.winnerId = wrapper.readInt();
 
     return data;
-}
+};

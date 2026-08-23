@@ -45,7 +45,7 @@ export interface RowVirtualizer {
  * `measureRow` (an event-time callback, never called during render itself).
  */
 export const useRowVirtualizer = ({ count, estimateSize, overscan = 1, viewportHeight, scrollOffset, gap = 0 }: RowVirtualizerOptions): RowVirtualizer => {
-    const [sizes, setSizes] = useState<number[]>(() => new Array(count).fill(estimateSize));
+    const [ sizes, setSizes ] = useState<number[]>(() => new Array(count).fill(estimateSize));
     const nodesRef = useRef<Map<number, PixiContainer>>(new Map());
 
     if (sizes.length !== count) {
@@ -58,14 +58,14 @@ export const useRowVirtualizer = ({ count, estimateSize, overscan = 1, viewportH
         for (const index of nodesRef.current.keys()) {
             if (index >= count) nodesRef.current.delete(index);
         }
-    }, [count]);
+    }, [ count ]);
 
     useEffect(() => {
         let raf = 0;
         const tick = () => {
-            setSizes(prev => {
+            setSizes((prev) => {
                 let changed = false;
-                const next = [...prev];
+                const next = [ ...prev ];
 
                 nodesRef.current.forEach((node, index) => {
                     if (index >= next.length) return;

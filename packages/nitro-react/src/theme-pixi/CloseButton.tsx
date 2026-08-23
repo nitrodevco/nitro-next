@@ -13,11 +13,11 @@ import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameT
 
 interface CloseButtonVariant {
     textureKey: string;
-    frames: { default: SpriteFrame, hovering: SpriteFrame, pressed: SpriteFrame };
+    frames: { default: SpriteFrame; hovering: SpriteFrame; pressed: SpriteFrame };
 }
 
 const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
-    '0': {
+    0: {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 114, y: 0, width: 15, height: 15 },
@@ -27,7 +27,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
     },
     // DOM has no hover: rule and sets active: to the same background-position as the base -
     // model as static, repeating the default frame for hovering/pressed.
-    '1': {
+    1: {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 159, y: 0, width: 15, height: 15 },
@@ -35,7 +35,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
             pressed: { x: 159, y: 0, width: 15, height: 15 },
         },
     },
-    '2': {
+    2: {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 174, y: 0, width: 15, height: 15 },
@@ -43,7 +43,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
             pressed: { x: 174, y: 0, width: 15, height: 15 },
         },
     },
-    '3': {
+    3: {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 0, y: 0, width: 19, height: 20 },
@@ -51,7 +51,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
             pressed: { x: 38, y: 0, width: 19, height: 20 },
         },
     },
-    '4': {
+    4: {
         textureKey: 'closebutton-src',
         frames: {
             default: { x: 57, y: 0, width: 19, height: 20 },
@@ -60,7 +60,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
         },
     },
     // Separate, smaller texture - the whole texture is the frame, no hover/press states.
-    '100': {
+    100: {
         textureKey: 'closebutton-100-src',
         frames: {
             default: { x: 0, y: 0, width: 20, height: 20 },
@@ -100,7 +100,10 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
             if (!style) return null;
 
             return (
-                <Box ref={ref} layout={{ width: frame!.width, height: frame!.height, ...layout }}>
+                <Box
+                    ref={ref}
+                    layout={{ width: frame!.width, height: frame!.height, ...layout }}
+                >
                     <div
                         style={{ ...style, cursor: 'pointer' }}
                         onPointerEnter={handlers.onPointerOver}
@@ -116,7 +119,10 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
         if (!texture) return null;
 
         return (
-            <Box ref={ref} layout={{ width: texture.width, height: texture.height, ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ width: texture.width, height: texture.height, ...layout }}
+            >
                 <pixiSprite
                     texture={texture}
                     width={texture.width}
@@ -133,7 +139,7 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
                 />
             </Box>
         );
-    }
+    },
 );
 
 CloseButton.displayName = 'CloseButton';

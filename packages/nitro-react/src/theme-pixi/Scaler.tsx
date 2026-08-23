@@ -24,11 +24,11 @@ interface ScalerVariant {
 
 /** Only '100' (DOM's fully-empty, no-visual, no-offset variant) has no texture. */
 const SCALER_VARIANTS: Partial<Record<string, ScalerVariant>> = {
-    '0': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: true },
-    '1': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
-    '2': { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
-    '3': { textureKey: 'scaler-src', offset: true },
-    '4': { textureKey: 'scaler-src', offset: false },
+    0: { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: true },
+    1: { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
+    2: { textureKey: 'scaler-0-default-src', overlayTextureKey: 'scaler-0-default-shine-src', offset: false },
+    3: { textureKey: 'scaler-src', offset: true },
+    4: { textureKey: 'scaler-src', offset: false },
 };
 
 export type ScalerDirection = 'x' | 'y' | 'all' | 'none';
@@ -73,27 +73,29 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                     ...layout,
                 }}
             >
-                {isDom ? (
-                    <img
-                        src={domUrl}
-                        style={{ display: 'block', cursor: CURSOR_BY_DIRECTION[direction], imageRendering: 'pixelated' }}
-                        onPointerDown={onPointerDown as unknown as PointerEventHandler}
-                    />
-                ) : (
-                    <pixiSprite
-                        texture={texture}
-                        width={texture!.width}
-                        height={texture!.height}
-                        eventMode="static"
-                        cursor={CURSOR_BY_DIRECTION[direction]}
-                        layout={{}}
-                        onPointerDown={onPointerDown}
-                    />
-                )}
+                {isDom
+                    ? (
+                            <img
+                                src={domUrl}
+                                style={{ display: 'block', cursor: CURSOR_BY_DIRECTION[direction], imageRendering: 'pixelated' }}
+                                onPointerDown={onPointerDown as unknown as PointerEventHandler}
+                            />
+                        )
+                    : (
+                            <pixiSprite
+                                texture={texture}
+                                width={texture!.width}
+                                height={texture!.height}
+                                eventMode="static"
+                                cursor={CURSOR_BY_DIRECTION[direction]}
+                                layout={{}}
+                                onPointerDown={onPointerDown}
+                            />
+                        )}
                 {config.overlayTextureKey && <BackgroundLayer layer={{ kind: 'sprite', textureKey: config.overlayTextureKey }} />}
             </Box>
         );
-    }
+    },
 );
 
 Scaler.displayName = 'Scaler';

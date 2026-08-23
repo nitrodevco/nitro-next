@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ThreadMessagesMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ThreadMessagesMessage implements IIncomingPacket<ThreadMessagesMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ThreadMessagesMessageType
-  {
+export class ThreadMessagesMessage implements IIncomingPacket<ThreadMessagesMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ThreadMessagesMessageType {
+        const packet: ThreadMessagesMessageType = {
+        };
 
-    const packet: ThreadMessagesMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

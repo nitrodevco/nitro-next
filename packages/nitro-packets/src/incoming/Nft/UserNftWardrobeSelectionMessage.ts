@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UserNftWardrobeSelectionMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class UserNftWardrobeSelectionMessage implements IIncomingPacket<UserNftWardrobeSelectionMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserNftWardrobeSelectionMessageType
-  {
+export class UserNftWardrobeSelectionMessage implements IIncomingPacket<UserNftWardrobeSelectionMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserNftWardrobeSelectionMessageType {
+        const packet: UserNftWardrobeSelectionMessageType = {
+        };
 
-    const packet: UserNftWardrobeSelectionMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

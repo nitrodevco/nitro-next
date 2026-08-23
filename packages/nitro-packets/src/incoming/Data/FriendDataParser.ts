@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFriendData {
     id: number;
@@ -51,4 +51,4 @@ export const FriendDataParser = (wrapper: IMessageDataWrapper): IFriendData => {
     data.relationshipStatus = wrapper.readShort();
 
     return data;
-}
+};

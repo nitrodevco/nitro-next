@@ -1,0 +1,20 @@
+# ESLint (see eslint.config.js) is the formatter of record for code files - it can enforce
+# things Prettier deliberately can't be configured to do (spacing inside array literals, always
+# breaking multi-prop JSX onto separate lines), and Prettier would otherwise fight it by
+# reformatting those files back to its own opinion on every run. Prettier still formats
+# everything else (JSON, CSS, Markdown, YAML, ...).
+**/*.js
+**/*.jsx
+**/*.mjs
+**/*.cjs
+**/*.ts
+**/*.tsx
+**/*.mts
+**/*.cts
+
+**/node_modules/**
+**/dist/**
+**/build/**
+**/.turbo/**
+**/.vite/**
+**/coverage/**

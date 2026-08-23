@@ -1,5 +1,4 @@
-﻿
-import type { AvatarBodyPartType, AvatarFigurePartType, IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
+﻿import type { AvatarBodyPartType, AvatarFigurePartType, IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
 
 import { ActiveActionData } from '../actions';
 

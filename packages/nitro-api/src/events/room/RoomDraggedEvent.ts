@@ -1,4 +1,4 @@
-import { RoomEngineEvent } from "./RoomEngineEvent";
+import { RoomEngineEvent } from './RoomEngineEvent';
 
 export class RoomDraggedEvent extends RoomEngineEvent {
     public static ROOM_DRAGGED: string = 'RDE_ROOM_DRAGGED' as const;

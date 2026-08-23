@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ICallForHelpTopicData {
     name: string;
@@ -18,4 +18,4 @@ export const CallForHelpTopicDataParser = (wrapper: IMessageDataWrapper): ICallF
     data.consequence = wrapper.readString();
 
     return data;
-}
+};

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ConcurrentUsersGoalProgressMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ConcurrentUsersGoalProgressMessage implements IIncomingPacket<ConcurrentUsersGoalProgressMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ConcurrentUsersGoalProgressMessageType
-  {
+export class ConcurrentUsersGoalProgressMessage implements IIncomingPacket<ConcurrentUsersGoalProgressMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ConcurrentUsersGoalProgressMessageType {
+        const packet: ConcurrentUsersGoalProgressMessageType = {
+        };
 
-    const packet: ConcurrentUsersGoalProgressMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

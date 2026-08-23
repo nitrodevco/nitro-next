@@ -1,12 +1,12 @@
-import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = {
     targetId: number;
     targetCategory: RoomObjectCategoryEnum;
     cameraFollowDisabled: boolean;
     followDuration: number;
-}
+};
 
 type Actions = {
     setTargetId: (id: number) => void;
@@ -21,7 +21,7 @@ export const RoomCameraSliceInitialState: State = {
     targetId: -1,
     targetCategory: RoomObjectCategoryEnum.Minimum,
     cameraFollowDisabled: false,
-    followDuration: 1000
+    followDuration: 1000,
 };
 
 export type RoomCameraSlice = State & Actions;
@@ -36,5 +36,5 @@ export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCa
     disableFollowTemporarily: (duration: number) => {
         set({ cameraFollowDisabled: true, followDuration: duration });
         setTimeout(() => set({ cameraFollowDisabled: false }), duration);
-    }
+    },
 });

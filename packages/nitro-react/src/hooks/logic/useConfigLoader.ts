@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useConfigActions, useConfigData } from '#base/context';
 
 export const useConfigLoader = () => {
-    const [isReady, setIsReady] = useState(false);
-    const [needsUpdate, setNeedsUpdate] = useState(true);
+    const [ isReady, setIsReady ] = useState(false);
+    const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const config = useConfigData();
     const { setConfig } = useConfigActions();
 
@@ -13,7 +13,7 @@ export const useConfigLoader = () => {
         window.NitroParsedConfig = { ...config };
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsReady(true);
-    }, [config]);
+    }, [ config ]);
 
     useEffect(() => {
         if (!needsUpdate) return;
@@ -34,9 +34,7 @@ export const useConfigLoader = () => {
                     const responseData = await response.json() as Record<string, object>;
 
                     data = { ...data, ...responseData };
-                }
-
-                catch (err) {
+                } catch (err) {
                     NitroLogger.error(`Trouble loading the configuration using: ${url}`, err.message);
                 }
             }
@@ -50,10 +48,10 @@ export const useConfigLoader = () => {
 
             setConfig(dataToProcess);
             setNeedsUpdate(false);
-        }
+        };
 
         void load(urls);
-    }, [needsUpdate]);
+    }, [ needsUpdate ]);
 
     return { isConfigReady: isReady };
 };

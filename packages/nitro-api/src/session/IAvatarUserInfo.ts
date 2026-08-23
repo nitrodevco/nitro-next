@@ -1,5 +1,5 @@
-import { AvatarActionStateType, AvatarGenderType } from "../avatar";
-import { RoomControllerLevelEnum, RoomObjectUserType } from "../room";
+import { AvatarActionStateType, AvatarGenderType } from '../avatar';
+import { RoomControllerLevelEnum, RoomObjectUserType } from '../room';
 
 export interface IAvatarUserInfo {
     objectId: number;

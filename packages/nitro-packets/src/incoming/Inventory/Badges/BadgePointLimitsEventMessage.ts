@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type BadgePointLimitsEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class BadgePointLimitsEventMessage implements IIncomingPacket<BadgePointLimitsEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): BadgePointLimitsEventMessageType
-  {
+export class BadgePointLimitsEventMessage implements IIncomingPacket<BadgePointLimitsEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): BadgePointLimitsEventMessageType {
+        const packet: BadgePointLimitsEventMessageType = {
+        };
 
-    const packet: BadgePointLimitsEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

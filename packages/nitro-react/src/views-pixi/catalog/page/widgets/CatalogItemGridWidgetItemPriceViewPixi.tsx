@@ -15,16 +15,36 @@ export const CatalogItemGridWidgetItemPriceViewPixi = ({ offer }: CatalogItemGri
         <Box layout={{ flexDirection: 'column', width: '100%', gap: 2, paddingLeft: 4, paddingRight: 4 }}>
             {(offer.pricingType === CatalogPricingTypeEnum.Credits || offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints) && (
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
-                    <Text text={String(offer.priceInCredits)} textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
-                    <NitroCurrencyIcon type="-1" mini layout={{}} />
+                    <Text
+                        text={String(offer.priceInCredits)}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#000000' }}
+                    />
+                    <NitroCurrencyIcon
+                        type="-1"
+                        mini
+                        layout={{}}
+                    />
                 </Box>
             )}
             {offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints && (
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
-                    <Text text="+" textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
+                    <Text
+                        text="+"
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#000000' }}
+                    />
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                        <Text text={String(offer.priceInActivityPoints)} textStyle="text-style-u-bold" textOptions={{ fill: '#000000' }} />
-                        <NitroCurrencyIcon type={offer.activityPointType.toString()} mini layout={{}} />
+                        <Text
+                            text={String(offer.priceInActivityPoints)}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#000000' }}
+                        />
+                        <NitroCurrencyIcon
+                            type={offer.activityPointType.toString()}
+                            mini
+                            layout={{}}
+                        />
                     </Box>
                 </Box>
             )}

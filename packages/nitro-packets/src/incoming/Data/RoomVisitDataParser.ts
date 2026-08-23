@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IRoomVisitData {
     roomId: number;
@@ -21,4 +21,4 @@ export const RoomVisitDataParser = (wrapper: IMessageDataWrapper): IRoomVisitDat
     data.enterMinute = wrapper.readInt();
 
     return data;
-}
+};

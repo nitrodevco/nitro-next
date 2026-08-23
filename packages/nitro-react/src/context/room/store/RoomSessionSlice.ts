@@ -1,5 +1,5 @@
-import { IRoomChatSettings, IRoomModerationSettings, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomControllerLevelEnum, RoomDoorModeEnum, RoomModerationType, RoomTradeModeEnum } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import { IRoomChatSettings, IRoomModerationSettings, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomControllerLevelEnum, RoomDoorModeEnum, RoomModerationType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = {
     doorMode: RoomDoorModeEnum;
@@ -16,7 +16,7 @@ type State = {
     isOwnDancing: boolean;
     moderationSettings: IRoomModerationSettings;
     chatSettings: IRoomChatSettings;
-}
+};
 
 type Actions = {
     setDoorMode: (mode: RoomDoorModeEnum) => void;
@@ -50,15 +50,15 @@ export const RoomSessionSliceInitialState: State = {
     moderationSettings: {
         whoCanMute: RoomModerationType.None,
         whoCanKick: RoomModerationType.None,
-        whoCanBan: RoomModerationType.None
+        whoCanBan: RoomModerationType.None,
     },
     chatSettings: {
         mode: RoomChatModeType.FreeFlow,
         bubbleSize: RoomChatBubbleWidthType.Normal,
         scrollUpFrequency: RoomChatScrollSpeedType.Normal,
         fullHearRange: 0,
-        floodSensitivity: RoomChatFloodSensitivityType.Normal
-    }
+        floodSensitivity: RoomChatFloodSensitivityType.Normal,
+    },
 };
 
 export type RoomSessionSlice = State & Actions;

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IAchievementResolutionData {
     achievementId: number;
@@ -24,4 +24,4 @@ export const AchievementResolutionDataParser = (wrapper: IMessageDataWrapper): I
     data.state = wrapper.readInt();
 
     return data;
-}
+};

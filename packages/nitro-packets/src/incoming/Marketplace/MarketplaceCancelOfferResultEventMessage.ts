@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type MarketplaceCancelOfferResultEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class MarketplaceCancelOfferResultEventMessage implements IIncomingPacket<MarketplaceCancelOfferResultEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): MarketplaceCancelOfferResultEventMessageType
-  {
+export class MarketplaceCancelOfferResultEventMessage implements IIncomingPacket<MarketplaceCancelOfferResultEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): MarketplaceCancelOfferResultEventMessageType {
+        const packet: MarketplaceCancelOfferResultEventMessageType = {
+        };
 
-    const packet: MarketplaceCancelOfferResultEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

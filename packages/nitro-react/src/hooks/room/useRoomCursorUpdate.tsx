@@ -1,10 +1,10 @@
-import type { RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
-import { ObjectTileCursorUpdateMessage } from "@nitrodevco/nitro-renderer";
+import type { RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectTileMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+import { ObjectTileCursorUpdateMessage } from '@nitrodevco/nitro-renderer';
 
-import { useRoomSelector } from "#base/context";
+import { useRoomSelector } from '#base/context';
 
-import { useRoomObjectValidation } from "./useRoomObjectValidation";
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomCursorUpdate = () => {
     const room = useRoomSelector();
@@ -57,4 +57,4 @@ export const useRoomCursorUpdate = () => {
     };
 
     return { handleMouseOverTile, handleMouseOverObject, updateCursorForEvent };
-}
+};

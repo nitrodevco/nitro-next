@@ -1,5 +1,5 @@
-﻿import type { Container } from "pixi.js";
-import { Point } from "pixi.js";
+﻿import type { Container } from 'pixi.js';
+import { Point } from 'pixi.js';
 
 export class AvatarImageBodyPartContainer {
     private _image: Container;
@@ -20,7 +20,7 @@ export class AvatarImageBodyPartContainer {
     public dispose(): void {
         if (this._image) {
             this._image.destroy({
-                children: true
+                children: true,
             });
         }
     }
@@ -45,7 +45,7 @@ export class AvatarImageBodyPartContainer {
     public set image(k: Container) {
         if (this._image && (this._image !== k)) {
             this._image.destroy({
-                children: true
+                children: true,
             });
         }
 

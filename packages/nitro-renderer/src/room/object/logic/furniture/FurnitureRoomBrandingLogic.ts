@@ -2,10 +2,8 @@ import type { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMo
 import {
     MapDataType,
     MouseEventType,
-    RoomObjectVariableEnum,
-    RoomWidgetEnumItemExtradataParameter,
-} from '@nitrodevco/nitro-api';
-import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-api';
+    RoomObjectRoomAdEvent, RoomObjectVariableEnum,
+    RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../../../assets';
 import { ObjectAdUpdateMessage, ObjectDataUpdateMessage } from '../../../messages';
@@ -23,7 +21,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
     protected _hasClickUrl: boolean = false;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -105,8 +103,8 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         let options = FurnitureRoomBrandingLogic.IMAGEURL_KEY + '=' + (imageUrl !== null ? imageUrl : '') + '\t';
 
         if (this._hasClickUrl)
-            options =
-                options + (FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (clickUrl !== null ? clickUrl : '') + '\t');
+            options
+                = options + (FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (clickUrl !== null ? clickUrl : '') + '\t');
 
         options = options + (FurnitureRoomBrandingLogic.OFFSETX_KEY + '=' + offsetX + '\t');
         options = options + (FurnitureRoomBrandingLogic.OFFSETY_KEY + '=' + offsetY + '\t');

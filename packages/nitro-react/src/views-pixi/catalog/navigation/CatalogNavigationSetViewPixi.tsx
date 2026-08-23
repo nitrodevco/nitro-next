@@ -14,7 +14,14 @@ export const CatalogNavigationSetViewPixi = ({ node }: CatalogNavigationSetViewP
 
     return (
         <Box layout={{ flexDirection: 'column', gap: 2 }}>
-            {node.children.map(x => (x.visible ? <CatalogNavigationSetItemViewPixi key={x.pageId} node={x} /> : null))}
+            {node.children.map(x => (x.visible
+                ? (
+                        <CatalogNavigationSetItemViewPixi
+                            key={x.pageId}
+                            node={x}
+                        />
+                    )
+                : null))}
         </Box>
     );
 };

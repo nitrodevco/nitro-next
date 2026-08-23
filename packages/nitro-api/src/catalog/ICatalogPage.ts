@@ -1,7 +1,7 @@
-import { CatalogTypeEnum } from "./CatalogTypeEnum";
-import { ICatalogFrontPageItem } from "./ICatalogFrontPageItem";
-import { ICatalogOffer } from "./ICatalogOffer";
-import { ICatalogPageLocalization } from "./ICatalogPageLocalization";
+import { CatalogTypeEnum } from './CatalogTypeEnum';
+import { ICatalogFrontPageItem } from './ICatalogFrontPageItem';
+import { ICatalogOffer } from './ICatalogOffer';
+import { ICatalogPageLocalization } from './ICatalogPageLocalization';
 
 export interface ICatalogPage {
     readonly pageId: number;

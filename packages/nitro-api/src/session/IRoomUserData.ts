@@ -1,6 +1,6 @@
-import { AvatarGenderType } from "../avatar";
-import { RoomObjectUserType } from "../room";
-import { IRoomObjectData } from "./IRoomObjectData";
+import { AvatarGenderType } from '../avatar';
+import { RoomObjectUserType } from '../room';
+import { IRoomObjectData } from './IRoomObjectData';
 
 export interface IRoomUserData extends IRoomObjectData {
     objectId: number;

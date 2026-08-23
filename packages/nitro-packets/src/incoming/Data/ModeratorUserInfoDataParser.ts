@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IModeratorUserInfoData {
     userId: number;
@@ -68,4 +68,4 @@ export const ModeratorUserInfoDataParser = (wrapper: IMessageDataWrapper): IMode
     }
 
     return data;
-}
+};

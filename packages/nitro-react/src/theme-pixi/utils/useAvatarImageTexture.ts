@@ -29,10 +29,10 @@ const EMPTY: AvatarImageTexture = { texture: undefined, width: 0, height: 0 };
 export const useAvatarImageTexture = (
     figure: string | undefined,
     gender: AvatarGenderType,
-    { headOnly = false, direction = 0 }: { headOnly?: boolean, direction?: number } = {}
+    { headOnly = false, direction = 0 }: { headOnly?: boolean; direction?: number } = {},
 ): AvatarImageTexture => {
-    const [result, setResult] = useState<AvatarImageTexture>(EMPTY);
-    const [randomValue, setRandomValue] = useState(-1);
+    const [ result, setResult ] = useState<AvatarImageTexture>(EMPTY);
+    const [ randomValue, setRandomValue ] = useState(-1);
     const disposed = useRef(false);
     const textureRef = useRef<Texture | undefined>(undefined);
 
@@ -65,7 +65,6 @@ export const useAvatarImageTexture = (
             textureRef.current?.destroy(true);
             textureRef.current = texture;
 
-             
             setResult({ texture, width: image.width, height: image.height });
         };
 
@@ -74,7 +73,7 @@ export const useAvatarImageTexture = (
         return () => {
             cancelled = true;
         };
-    }, [figure, gender, headOnly, direction, randomValue]);
+    }, [ figure, gender, headOnly, direction, randomValue ]);
 
     useEffect(() => () => {
         disposed.current = true;

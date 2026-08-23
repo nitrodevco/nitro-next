@@ -1,12 +1,12 @@
-import type { IRoomObject } from "@nitrodevco/nitro-api";
-import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
-import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from "@nitrodevco/nitro-packets";
-import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
+import type { IRoomObject } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from '@nitrodevco/nitro-packets';
+import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
-import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from "#base/context";
+import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from '#base/context';
 
-import { useRoomObjectSelect } from "./useRoomObjectSelect";
-import { useRoomObjectValidation } from "./useRoomObjectValidation";
+import { useRoomObjectSelect } from './useRoomObjectSelect';
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectModify = () => {
     const room = useRoomSelector();
@@ -49,7 +49,7 @@ export const useRoomObjectModify = () => {
                                         new PetMoveComposer(userData.webID, Math.trunc(x), Math.trunc(y), Math.trunc(direction / 45)),
                                     )`);
                     } else {
-                        send(new MoveObjectComposer({ objectId, x, y, rotation: direction / 45 }))
+                        send(new MoveObjectComposer({ objectId, x, y, rotation: direction / 45 }));
                     }
                 }
 
@@ -61,20 +61,20 @@ export const useRoomObjectModify = () => {
                 break;
             case RoomObjectOperationType.OBJECT_PICKUP_PET: {
                 /* const session = GetRoomSessionManager().getSession(roomId);
-         
+
                     if (session) {
                         const userData = session.userDataManager.getUserDataByIndex(objectId);
-         
+
                         session.pickupPet(userData.webID);
                     } */
                 break;
             }
             case RoomObjectOperationType.OBJECT_PICKUP_BOT: {
                 /* const session = GetRoomSessionManager().getSession(roomId);
-         
+
                     if (session) {
                         const userData = session.userDataManager.getUserDataByIndex(objectId);
-         
+
                         session.pickupBot(userData.webID);
                     } */
                 break;
@@ -119,7 +119,7 @@ export const useRoomObjectModify = () => {
                     send(new MoveObjectComposer({ objectId, x: location.x, y: location.y, rotation }));
                 } else if (category === RoomObjectCategoryEnum.Wall) {
                     const _angle = roomObject.getDirection().x % 360;
-                    const location = room.legacyGeometry?.getOldLocationString(roomObject.getLocation(), _angle)
+                    const location = room.legacyGeometry?.getOldLocationString(roomObject.getLocation(), _angle);
 
                     send(new MoveWallItemComposer({ objectId, wallPosition: location ?? '' }));
                 } else if (category === RoomObjectCategoryEnum.Unit) {
@@ -129,8 +129,8 @@ export const useRoomObjectModify = () => {
                     const _race = parseInt(roomObject.model.getValue<string>(RoomObjectVariableEnum.Race));
 
                     NitroLogger.sendPacket(
-                        `new PetMoveComposer(userData.webID, location.x, location.y, direction`
-                    )
+                        'new PetMoveComposer(userData.webID, location.x, location.y, direction',
+                    );
                 }
 
                 break;
@@ -145,4 +145,4 @@ export const useRoomObjectModify = () => {
     };
 
     return { canManipulateFurniture, modifyRoomObject };
-}
+};

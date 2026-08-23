@@ -44,7 +44,7 @@ export class AssetManager implements IAssetManager {
     public addAssetToCollection(
         collectionName: string,
         assetName: string,
-        texture: Texture
+        texture: Texture,
     ): IGraphicAsset | undefined {
         const collection = this.getCollection(collectionName);
 
@@ -63,7 +63,7 @@ export class AssetManager implements IAssetManager {
 
         const collection = new GraphicAssetCollection(data, spritesheet?.textureSource, spritesheet?.textures);
 
-        for (const [name, texture] of collection.textures.entries()) this.setTexture(name, texture);
+        for (const [ name, texture ] of collection.textures.entries()) this.setTexture(name, texture);
 
         this._collections.set(collection.name, collection);
 
@@ -91,7 +91,7 @@ export class AssetManager implements IAssetManager {
             const ext = url.slice(url.lastIndexOf('.') + 1);
             const response = await fetch(url);
 
-            if (!response || response.status !== 200) throw new Error(`Invalid response`);
+            if (!response || response.status !== 200) throw new Error('Invalid response');
 
             const responseData = await response.arrayBuffer();
 
@@ -147,7 +147,7 @@ export class AssetManager implements IAssetManager {
         let spritesheet: Spritesheet | undefined = undefined;
 
         for (const key in bundle.files) {
-            const name = key.substring(0, key.lastIndexOf('.'))
+            const name = key.substring(0, key.lastIndexOf('.'));
             const value = bundle.files[key];
 
             try {
@@ -163,15 +163,14 @@ export class AssetManager implements IAssetManager {
 
                         await spritesheet.parse();
 
-                        //if (spritesheet.textureSource) spritesheet.textureSource.label = bundle.name;
+                        // if (spritesheet.textureSource) spritesheet.textureSource.label = bundle.name;
 
                         this.setTexture(name, texture);
                     }
                 } else {
                     assetData = { ...assetData, ...value };
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 NitroLogger.error(err);
 
                 continue;

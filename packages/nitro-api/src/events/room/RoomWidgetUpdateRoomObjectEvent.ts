@@ -1,4 +1,5 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
 export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {

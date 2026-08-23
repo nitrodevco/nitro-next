@@ -11,7 +11,13 @@ export const MessengerViewPixi = () => {
     const t = useTranslation();
 
     return (
-        <Frame variant="100" id="messenger" layout={{ position: 'absolute', bottom: 4, left: 4, width: 230, minHeight: 107 }} caption={t('friendlist.messages')} onClose={() => toggleWindow('messenger')}>
+        <Frame
+            variant="100"
+            id="messenger"
+            layout={{ position: 'absolute', bottom: 4, left: 4, width: 230, minHeight: 107 }}
+            caption={t('friendlist.messages')}
+            onClose={() => toggleWindow('messenger')}
+        >
             chats
         </Frame>
     );

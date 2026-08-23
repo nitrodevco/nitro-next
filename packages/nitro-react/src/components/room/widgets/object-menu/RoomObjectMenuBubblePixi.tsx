@@ -104,7 +104,7 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
         node.y = ~~y;
     };
 
-    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, event => {
+    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, (event) => {
         if (!room || !bubbleRef.current || !objectData) return;
 
         updateFade(event.time);
@@ -125,7 +125,7 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
         const timeout = setTimeout(() => isFading.current = true, FADE_DELAY);
 
         return () => clearTimeout(timeout);
-    }, [fades]);
+    }, [ fades ]);
 
     useEffect(() => {
         FIXED_STACK = new FixedSizeStack(LOCATION_STACK_SIZE);
@@ -134,7 +134,12 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
     }, []);
 
     return (
-        <Box ref={bubbleRef} visible={false} zIndex={500} layout={{ position: 'absolute', top: 0, left: 0 }}>
+        <Box
+            ref={bubbleRef}
+            visible={false}
+            zIndex={500}
+            layout={{ position: 'absolute', top: 0, left: 0 }}
+        >
             {children}
         </Box>
     );

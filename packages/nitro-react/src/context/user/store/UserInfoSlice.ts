@@ -1,5 +1,5 @@
-import { AvatarGenderType, IUserInfo } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import { AvatarGenderType, IUserInfo } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = IUserInfo;
 

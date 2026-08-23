@@ -1,11 +1,10 @@
-import { ContextMenuEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { ContextMenuEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureMysteryTrophyLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.MYSTERYTROPHY_OPEN_DIALOG]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.MYSTERYTROPHY_OPEN_DIALOG ]);
     }
 
     public override useObject(): void {

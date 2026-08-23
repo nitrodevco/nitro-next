@@ -9,7 +9,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurniturePetCustomizationLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU ]);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

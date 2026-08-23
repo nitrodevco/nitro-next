@@ -1,19 +1,17 @@
 import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PetPlacingErrorMessageType = {
-  errorCode: number;
+    errorCode: number;
 };
 
-export class PetPlacingErrorMessage implements IIncomingPacket<PetPlacingErrorMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): PetPlacingErrorMessageType
-  {
-    const packet: PetPlacingErrorMessageType = {
-      errorCode: 0,
-    };
+export class PetPlacingErrorMessage implements IIncomingPacket<PetPlacingErrorMessageType> {
+    public parse(wrapper: IMessageDataWrapper): PetPlacingErrorMessageType {
+        const packet: PetPlacingErrorMessageType = {
+            errorCode: 0,
+        };
 
-    packet.errorCode = wrapper.readInt();
+        packet.errorCode = wrapper.readInt();
 
-    return packet;
-  }
+        return packet;
+    }
 }

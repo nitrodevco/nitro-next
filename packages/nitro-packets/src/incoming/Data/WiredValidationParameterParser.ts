@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IWiredValidationParameter {
     key: string;
@@ -15,4 +15,4 @@ export const WiredValidationParameterParser = (wrapper: IMessageDataWrapper): IW
     data.value = wrapper.readString();
 
     return data;
-}
+};

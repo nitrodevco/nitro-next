@@ -38,7 +38,7 @@ export interface ScrollAreaProps {
 export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollAreaProps>(
     (
         { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, layout, viewportLayout, contentLayout, children },
-        ref
+        ref,
     ) => {
         const showVertical = orientation === 'vertical' || orientation === 'both';
         const showHorizontal = orientation === 'horizontal' || orientation === 'both';
@@ -67,7 +67,7 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
 
         // Only used by the 'both' branch below - kept unconditional since hooks can't be
         // called conditionally.
-        const [maskNode, setMaskNode] = useState<PixiGraphics | null>(null);
+        const [ maskNode, setMaskNode ] = useState<PixiGraphics | null>(null);
 
         // DOM's content wrapper is always `relative w-full` regardless of orientation - a plain
         // block div, whose children stack vertically by default with no flex involved. Yoga has
@@ -79,7 +79,10 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
         const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', flexDirection: 'column' };
 
         return (
-            <Box ref={ref} layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 1, ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 1, ...layout }}
+            >
                 {isBoth ? (
                     // ScrollViewport only ever translates a single axis (see its `orientation`
                     // prop) - 'both' needs two axes moving together, so this hand-composes the
@@ -91,9 +94,9 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
                     // useScrollController.ts's `computedSize`/`sizeAxis`), so two independent
                     // controllers sharing one physical viewport/content pair never conflict.
                     <pixiContainer
-                        ref={node => { vertical.viewportRef(node); horizontal.viewportRef(node); }}
+                        ref={(node) => { vertical.viewportRef(node); horizontal.viewportRef(node); }}
                         eventMode="static"
-                        onWheel={event => { vertical.onWheel(event); horizontal.onWheel(event); }}
+                        onWheel={(event) => { vertical.onWheel(event); horizontal.onWheel(event); }}
                         mask={maskNode ?? undefined}
                         layout={{ flex: 1, minWidth: 0, minHeight: 0, ...viewportLayout }}
                     >
@@ -101,10 +104,10 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
                             ref={setMaskNode}
                             eventMode="none"
                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
-                            draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill(0xFFFFFF); }}
+                            draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill(0xFFFFFF); }}
                         />
                         <pixiContainer
-                            ref={node => { vertical.contentRef(node); horizontal.contentRef(node); }}
+                            ref={(node) => { vertical.contentRef(node); horizontal.contentRef(node); }}
                             x={-horizontal.scrollOffset}
                             y={-vertical.scrollOffset}
                             layout={resolvedContentLayout}
@@ -159,7 +162,7 @@ export const ScrollArea: ForwardRefExoticComponent<ScrollAreaProps & RefAttribut
                 )}
             </Box>
         );
-    }
+    },
 );
 
 ScrollArea.displayName = 'ScrollArea';

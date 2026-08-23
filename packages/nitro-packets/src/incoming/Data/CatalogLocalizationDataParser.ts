@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ICatalogLocalizationData {
     images: string[];
@@ -23,4 +23,4 @@ export const CatalogLocalizationDataParser = (wrapper: IMessageDataWrapper): ICa
     }
 
     return data;
-}
+};

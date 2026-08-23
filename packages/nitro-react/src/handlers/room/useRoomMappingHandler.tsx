@@ -1,16 +1,16 @@
-import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType } from "@nitrodevco/nitro-api";
-import type { HeightMapMessageType } from "@nitrodevco/nitro-packets";
-import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from "@nitrodevco/nitro-packets";
-import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from "@nitrodevco/nitro-renderer";
-import { useRef } from "react";
+import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
+import type { HeightMapMessageType } from '@nitrodevco/nitro-packets';
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
+import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
+import { useRef } from 'react';
 
-import { useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useRoomSelector, useRoomStackingHeightMapActions } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomMappingHandler = () => {
     const room = useRoomSelector();
     const { setHeightMap, setHeightMapUpdates } = useRoomStackingHeightMapActions();
-    const entryTile = useRef<{ x: number, y: number, dir: number } | undefined>(undefined);
+    const entryTile = useRef<{ x: number; y: number; dir: number } | undefined>(undefined);
 
     const decodeTileHeight = (height: number) => ((height < 0) ? -1 : ((height & 16383) / 0x0100));
     const decodeIsStackingBlocked = (height: number) => !!(height & 0x4000);
@@ -20,19 +20,19 @@ export const useRoomMappingHandler = () => {
         if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return -1;
 
         return decodeTileHeight(data.heights[(y * data.width) + x]);
-    }
+    };
 
     const getStackingBlocked = (data: HeightMapMessageType, x: number, y: number) => {
         if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return true;
 
         return decodeIsStackingBlocked(data.heights[(y * data.width) + x]);
-    }
+    };
 
     const isRoomTile = (data: HeightMapMessageType, x: number, y: number) => {
         if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return true;
 
         return decodeIsRoomTile(data.heights[(y * data.width) + x]);
-    }
+    };
 
     const parseMapData = (modelData: string, wallHeight: number) => {
         const model = modelData.split('\r');
@@ -112,14 +112,14 @@ export const useRoomMappingHandler = () => {
                 const tileHeight = heightMap[y]?.[x] ?? RoomPlaneParser.TILE_BLOCKED;
 
                 if (
-                    ((y > 0 && y < height - 1) || (x > 0 && x < width - 1)) &&
-                    !(tileHeight === RoomPlaneParser.TILE_BLOCKED) &&
-                    (!entryTile.current || (x === entryTile.current.x && y === entryTile.current.y))
+                    ((y > 0 && y < height - 1) || (x > 0 && x < width - 1))
+                    && !(tileHeight === RoomPlaneParser.TILE_BLOCKED)
+                    && (!entryTile.current || (x === entryTile.current.x && y === entryTile.current.y))
                 ) {
                     if (
-                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
-                        (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
-                        (heightMap[y + 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y + 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
                     ) {
                         doorX = x + 0.5;
                         doorY = y;
@@ -128,9 +128,9 @@ export const useRoomMappingHandler = () => {
                     }
 
                     if (
-                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
-                        (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED &&
-                        (heightMap[y]?.[x + 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x + 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
                     ) {
                         doorX = x;
                         doorY = y + 0.5;
@@ -176,15 +176,15 @@ export const useRoomMappingHandler = () => {
         return { mapData, wallGeometry };
     };
 
-    useMessageListener(RoomEntryTileMessage, data => {
+    useMessageListener(RoomEntryTileMessage, (data) => {
         entryTile.current = {
             x: data.x,
             y: data.y,
-            dir: data.rotation
+            dir: data.rotation,
         };
     });
 
-    useMessageListener(FloorHeightMapMessage, data => {
+    useMessageListener(FloorHeightMapMessage, (data) => {
         if (!room) return;
 
         const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
@@ -193,7 +193,7 @@ export const useRoomMappingHandler = () => {
         room.setLegacyGeometry(wallGeometry);
     });
 
-    useMessageListener(HeightMapMessage, data => {
+    useMessageListener(HeightMapMessage, (data) => {
         if (!room) return;
 
         const width = data.width;
@@ -223,36 +223,36 @@ export const useRoomMappingHandler = () => {
         setHeightMap(width, height, heights, stackingBlocked, validTiles);
     });
 
-    useMessageListener(HeightMapUpdateMessage, data => {
+    useMessageListener(HeightMapUpdateMessage, (data) => {
         if (!room || !data.heightUpdates.length) return;
 
-        const updates: { x: number, y: number, height: number, stackingBlocked: boolean, validTile: boolean }[] = [];
+        const updates: { x: number; y: number; height: number; stackingBlocked: boolean; validTile: boolean }[] = [];
 
         for (const update of data.heightUpdates) updates.push({
             x: update.x,
             y: update.y,
             height: decodeTileHeight(update.height),
             stackingBlocked: decodeIsStackingBlocked(update.height),
-            validTile: decodeIsRoomTile(update.height)
+            validTile: decodeIsRoomTile(update.height),
         });
 
         setHeightMapUpdates(updates);
     });
 
-    useMessageListener(RoomPropertyMessage, data => {
+    useMessageListener(RoomPropertyMessage, (data) => {
         if (!room) return;
 
-        room.updateRoomPlaneType((data.key === "floor") ? data.value : undefined, (data.key === "wallpaper") ? data.value : undefined, (data.key === "landscape") ? data.value : undefined);
+        room.updateRoomPlaneType((data.key === 'floor') ? data.value : undefined, (data.key === 'wallpaper') ? data.value : undefined, (data.key === 'landscape') ? data.value : undefined);
     });
 
-    useMessageListener(RoomVisualizationSettingsMessage, data => {
+    useMessageListener(RoomVisualizationSettingsMessage, (data) => {
         if (!room) return;
 
         room.updateRoomPlaneVisibilities(!data.wallsHidden);
         room.updateRoomPlaneThickness(data.wallThickness, data.floorThickness);
     });
 
-    useMessageListener(SpecialRoomEffectMessage, data => {
+    useMessageListener(SpecialRoomEffectMessage, (data) => {
         if (!room) return;
 
         switch (data.effectId) {
@@ -274,13 +274,13 @@ export const useRoomMappingHandler = () => {
                 const colors = [
                     0x0072BB, 0xFF953B, 0xFFD700, 0x9B59B6,
                     0x0072BB, 0xFF953B, 0xFFD700, 0x9B59B6,
-                    0x000000
+                    0x000000,
                 ];
 
                 let index = 0;
                 const timer = setInterval(() => {
                     const isLastColor = index === colors.length;
-                    //roomEngine.updateObjectRoomColor(objectId, colors[index], 176, isLastColor);
+                    // roomEngine.updateObjectRoomColor(objectId, colors[index], 176, isLastColor);
 
                     if (++index > colors.length) clearInterval(timer);
                 }, 1000);
@@ -290,4 +290,4 @@ export const useRoomMappingHandler = () => {
             }
         }
     });
-}
+};

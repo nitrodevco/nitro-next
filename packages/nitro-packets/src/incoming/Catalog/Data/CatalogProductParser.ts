@@ -1,4 +1,4 @@
-import { FurnitureTypeEnum, ICatalogProduct, IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import { FurnitureTypeEnum, ICatalogProduct, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const CatalogProductParser = (wrapper: IMessageDataWrapper): ICatalogProduct => {
     const result = {
@@ -8,7 +8,7 @@ export const CatalogProductParser = (wrapper: IMessageDataWrapper): ICatalogProd
         quantity: 1,
         isUnique: false,
         uniqueSize: 0,
-        uniqueRemaining: 0
+        uniqueRemaining: 0,
     } as ICatalogProduct;
 
     if (result.productType !== FurnitureTypeEnum.Badge) {
@@ -26,4 +26,4 @@ export const CatalogProductParser = (wrapper: IMessageDataWrapper): ICatalogProd
     }
 
     return result;
-}
+};

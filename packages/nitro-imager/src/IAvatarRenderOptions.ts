@@ -1,4 +1,4 @@
-import { AvatarActionStateType, AvatarSetType } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, AvatarSetType } from '@nitrodevco/nitro-api';
 
 export interface IAvatarRenderOptions {
     figure: string;

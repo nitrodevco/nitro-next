@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ForumsListMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ForumsListMessage implements IIncomingPacket<ForumsListMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ForumsListMessageType
-  {
+export class ForumsListMessage implements IIncomingPacket<ForumsListMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ForumsListMessageType {
+        const packet: ForumsListMessageType = {
+        };
 
-    const packet: ForumsListMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

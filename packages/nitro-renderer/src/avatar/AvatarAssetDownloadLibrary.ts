@@ -1,7 +1,7 @@
-import type { IAvatarAssetDownloadLibrary } from "@nitrodevco/nitro-api";
-import { AvatarAssetDownloadStatus, NitroLogger } from "@nitrodevco/nitro-api";
+import type { IAvatarAssetDownloadLibrary } from '@nitrodevco/nitro-api';
+import { AvatarAssetDownloadStatus, NitroLogger } from '@nitrodevco/nitro-api';
 
-import { GetAssetManager } from "#renderer/assets";
+import { GetAssetManager } from '#renderer/assets';
 
 export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary {
     private _state: AvatarAssetDownloadStatus = AvatarAssetDownloadStatus.NotLoaded;
@@ -33,7 +33,7 @@ export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary {
 
         const library = this as unknown as IAvatarAssetDownloadLibrary;
 
-        GetAssetManager().downloadAsset(this._assetUrl).then(flag => {
+        GetAssetManager().downloadAsset(this._assetUrl).then((flag) => {
             if (!flag) return;
 
             this._state = AvatarAssetDownloadStatus.Loaded;

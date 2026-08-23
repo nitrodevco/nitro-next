@@ -26,7 +26,7 @@ const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
  * tested this session). Left as implemented rather than reworked on unconfirmed suspicion.
  */
 export const NavigatorSearchViewPixi = () => {
-    const [isFilterOpen, setFilterOpen] = useState(false);
+    const [ isFilterOpen, setFilterOpen ] = useState(false);
     const { topLevelContext, searchFilter, filterType } = useNavigatorSelectors();
     const { setSearchFilter, setFilterType, setIsSearching } = useNavigatorActions();
     const { send } = useWebSocketContext();
@@ -45,11 +45,22 @@ export const NavigatorSearchViewPixi = () => {
     return (
         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, height: 36, paddingLeft: 4, paddingRight: 4 }}>
             <Box layout={{ position: 'relative', flexShrink: 0 }}>
-                <Dropmenu variant="100" onPress={() => setFilterOpen(prev => !prev)} layout={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 4, width: 116, height: 24 }}>
-                    <Text text={t(`navigator.filter.${filterType}`)} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
+                <Dropmenu
+                    variant="100"
+                    onPress={() => setFilterOpen(prev => !prev)}
+                    layout={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 4, width: 116, height: 24 }}
+                >
+                    <Text
+                        text={t(`navigator.filter.${filterType}`)}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#000000' }}
+                    />
                 </Dropmenu>
                 {isFilterOpen && (
-                    <Box zIndex={10} layout={{ position: 'absolute', top: 24, left: 0, width: 116, flexDirection: 'column' }}>
+                    <Box
+                        zIndex={10}
+                        layout={{ position: 'absolute', top: 24, left: 0, width: 116, flexDirection: 'column' }}
+                    >
                         {FILTER_TYPES.map(({ type }) => (
                             <DropmenuItem
                                 key={type}
@@ -62,15 +73,27 @@ export const NavigatorSearchViewPixi = () => {
                     </Box>
                 )}
             </Box>
-            <Border variant="4" layout={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingLeft: 6, paddingRight: 6, width: 235, height: 24 }}>
-                <TextInput value={searchFilter} onChange={setSearchFilter} onEnter={() => search(searchFilter)} fontSize={10} layout={{ flex: 1, height: 22 }} />
+            <Border
+                variant="4"
+                layout={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingLeft: 6, paddingRight: 6, width: 235, height: 24 }}
+            >
+                <TextInput
+                    value={searchFilter}
+                    onChange={setSearchFilter}
+                    onEnter={() => search(searchFilter)}
+                    fontSize={10}
+                    layout={{ flex: 1, height: 22 }}
+                />
                 <Box
                     eventMode="static"
                     cursor="pointer"
                     onPointerTap={() => { if (searchFilter.length > 0) { setSearchFilter(''); search(''); } }}
                     layout={{ flexShrink: 0 }}
                 >
-                    <NitroIcon icon={searchFilter.length > 0 ? 'icon-nav-close' : 'icon-nav-small-pen'} layout={{}} />
+                    <NitroIcon
+                        icon={searchFilter.length > 0 ? 'icon-nav-close' : 'icon-nav-small-pen'}
+                        layout={{}}
+                    />
                 </Box>
             </Border>
         </Box>

@@ -1,4 +1,3 @@
-
 import type { IEventDispatcher, IRoomObjectEvent } from '#api/events';
 
 import type { IRoomSpriteMouseEvent } from './IRoomSpriteMouseEvent';

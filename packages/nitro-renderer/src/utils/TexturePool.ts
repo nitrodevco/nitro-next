@@ -1,8 +1,8 @@
-import { NitroLogger } from "@nitrodevco/nitro-api";
-import { RenderTexture } from "pixi.js";
+import { NitroLogger } from '@nitrodevco/nitro-api';
+import { RenderTexture } from 'pixi.js';
 
-import { ExtendedSprite } from "./ExtendedSprite";
-import { GetTicker } from "./GetTicker";
+import { ExtendedSprite } from './ExtendedSprite';
+import { GetTicker } from './GetTicker';
 
 export class TexturePool {
     private static _texturePool: Record<number, Record<number, RenderTexture[]>> = {};

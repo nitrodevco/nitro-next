@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useUserContext } from "../useUserContext";
+import { useUserContext } from '../useUserContext';
 
 export const useOwnUserInfo = () => useUserContext(useShallow(x => ({
     userId: x.userId,

@@ -14,7 +14,7 @@ type ButtonVariant = ThemeWithStatesVariant;
 
 const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
     // default
-    '0': {
+    0: {
         states: {
             default: NineSlice('button-0-default-src', 3, 3, 3, 3),
             hovering: NineSlice('button-0-hovering-src', 3, 3, 3, 3),
@@ -22,12 +22,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             disabled: NineSlice('button-0-disabled-src', 3, 3, 3, 3),
         },
         layout: {
-            padding: 8
+            padding: 8,
         },
         textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // black
-    '1': {
+    1: {
         states: {
             default: NineSlice('button-1-default-src', 3, 3, 3, 3),
             hovering: NineSlice('button-1-hovering-src', 3, 3, 3, 3),
@@ -41,7 +41,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         textStyle: 'text-style-button-regular', textColor: '#ffffff',
     },
     // white
-    '2': {
+    2: {
         states: {
             default: NineSlice('button-0-default-src', 3, 3, 3, 3),
             hovering: NineSlice('button-0-hovering-src', 3, 3, 3, 3),
@@ -50,12 +50,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22
+            minWidth: 20, minHeight: 22,
         },
         textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // default
-    '3': {
+    3: {
         states: {
             default: NineSlice('button-3-default-src', 5, 5, 5, 5),
             hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
@@ -64,12 +64,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-            minWidth: 20, minHeight: 22
+            minWidth: 20, minHeight: 22,
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
     },
     // black
-    '4': {
+    4: {
         states: {
             default: NineSlice('button-4-default-src', 5, 5, 5, 5),
             hovering: NineSlice('button-4-hovering-src', 5, 5, 5, 5),
@@ -78,12 +78,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28
+            minWidth: 20, minHeight: 28,
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
     // white
-    '5': {
+    5: {
         states: {
             default: NineSlice('button-3-default-src', 5, 5, 5, 5),
             hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
@@ -92,12 +92,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28
+            minWidth: 20, minHeight: 28,
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
     // green
-    '6': {
+    6: {
         states: {
             default: NineSlice('button-3-default-src', 5, 5, 5, 5),
             hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
@@ -106,12 +106,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28
+            minWidth: 20, minHeight: 28,
         },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff', tintColor: '#00aa00'
+        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff', tintColor: '#00aa00',
     },
     // landing view
-    '100': {
+    100: {
         states: {
             default: NineSlice('button-100-default-src', 1, 1, 1, 1),
             hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
@@ -120,12 +120,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
         layout: {
             paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-            minWidth: 48, minHeight: 48
+            minWidth: 48, minHeight: 48,
         },
         textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // window
-    '101': {
+    101: {
         states: {
             default: NineSlice('button-100-default-src', 1, 1, 1, 1),
             hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
@@ -134,12 +134,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
         layout: {
             paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-            minWidth: 48, minHeight: 48
+            minWidth: 48, minHeight: 48,
         },
-        textStyle: 'text-style-il-button', textColor: '#000000', tintColor: '#bbbbbb'
+        textStyle: 'text-style-il-button', textColor: '#000000', tintColor: '#bbbbbb',
     },
     // plain
-    '102': {
+    102: {
         states: {
             default: NineSlice('button-102-default-src', 6, 8, 4, 8),
             pressed: NineSlice('button-102-pressed-src', 6, 8, 4, 8),
@@ -147,12 +147,12 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
         layout: {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28
+            minWidth: 28, minHeight: 28,
         },
         textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // unetched
-    '103': {
+    103: {
         states: {
             default: NineSlice('button-103-default-src', 6, 8, 4, 8),
             pressed: NineSlice('button-103-pressed-src', 6, 8, 4, 8),
@@ -160,23 +160,23 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
         layout: {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28
+            minWidth: 28, minHeight: 28,
         },
         textStyle: 'text-style-il-button', textColor: '#000000',
     },
     // default
-    '200': {
+    200: {
         states: {
             default: NineSlice('button-200-default-src', 4, 4, 4, 5),
         },
         layout: {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28
+            minWidth: 28, minHeight: 28,
         },
         textStyle: 'text-style-id-button', textColor: '#000000',
     },
     // borderless
-    '300': {
+    300: {
         states: {
             default: NineSlice('button-300-default-src', 3, 3, 3, 3),
             hovering: NineSlice('button-300-hovering-src', 3, 3, 3, 3),
@@ -185,7 +185,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-            minWidth: 20, minHeight: 22
+            minWidth: 20, minHeight: 22,
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
     },
@@ -201,7 +201,7 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
         });
 
         return (
@@ -217,14 +217,19 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                 {...handlers}
                 onPointerTap={disabled ? undefined : onPress}
             >
-                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 Button.displayName = 'Button';

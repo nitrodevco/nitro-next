@@ -43,14 +43,26 @@ export const ToolbarMenu: ForwardRefExoticComponent<ToolbarMenuProps & RefAttrib
                     />
                 )}
                 {items.map(({ icon, label }) => (
-                    <Box key={icon} eventMode="static" cursor="pointer" layout={{ width: 62, height: 43, flexDirection: 'column', alignItems: 'center' }}>
-                        <NitroIcon icon={icon} layout={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                        <Text text={label} textStyle="text-style-regular" textOptions={{ fontSize: 9.6, fill: '#ffffff' }} />
+                    <Box
+                        key={icon}
+                        eventMode="static"
+                        cursor="pointer"
+                        layout={{ width: 62, height: 43, flexDirection: 'column', alignItems: 'center' }}
+                    >
+                        <NitroIcon
+                            icon={icon}
+                            layout={{ marginLeft: 'auto', marginRight: 'auto' }}
+                        />
+                        <Text
+                            text={label}
+                            textStyle="text-style-regular"
+                            textOptions={{ fontSize: 9.6, fill: '#ffffff' }}
+                        />
                     </Box>
                 ))}
             </Box>
         );
-    }
+    },
 );
 
 ToolbarMenu.displayName = 'ToolbarMenu';

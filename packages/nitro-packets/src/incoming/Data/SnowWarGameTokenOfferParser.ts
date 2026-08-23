@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ISnowWarGameTokenOffer {
     offerId: number;
@@ -24,4 +24,4 @@ export const SnowWarGameTokenOfferParser = (wrapper: IMessageDataWrapper): ISnow
     data.activityPointType = wrapper.readInt();
 
     return data;
-}
+};

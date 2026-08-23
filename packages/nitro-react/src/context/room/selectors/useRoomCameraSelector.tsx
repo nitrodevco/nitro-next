@@ -1,10 +1,10 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useRoomContext } from "../useRoomContext";
+import { useRoomContext } from '../useRoomContext';
 
 export const useRoomCameraSelector = () => useRoomContext(useShallow(x => ({
     targetId: x.targetId,
     targetCategory: x.targetCategory,
     cameraFollowDisabled: x.cameraFollowDisabled,
-    followDuration: x.followDuration
+    followDuration: x.followDuration,
 })));

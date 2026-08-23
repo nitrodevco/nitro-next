@@ -31,5 +31,5 @@ export const useRoomEventDispatcher = <T extends NitroEvent>(
                 room.eventDispatcher.removeEventListener(type, handlerRef.current);
             }
         };
-    }, [room, type, enabled]);
+    }, [ room, type, enabled ]);
 };

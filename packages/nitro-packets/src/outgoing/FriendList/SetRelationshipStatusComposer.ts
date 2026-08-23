@@ -11,7 +11,7 @@ export class SetRelationshipStatusComposer implements IOutgoingPacket<SetRelatio
     public compose(): (number | string | boolean)[] {
         return [
             this.params.playerId,
-            this.params.relationshipType
+            this.params.relationshipType,
         ];
     }
 }

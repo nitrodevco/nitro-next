@@ -1,4 +1,4 @@
-import { AvatarActionStateType } from "./AvatarActionStateType";
+import { AvatarActionStateType } from './AvatarActionStateType';
 
 export const AvatarExpressionStates = new Set<AvatarActionStateType>([
     AvatarActionStateType.BlowAKiss,

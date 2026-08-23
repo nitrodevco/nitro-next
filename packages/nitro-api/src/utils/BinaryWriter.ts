@@ -1,4 +1,4 @@
-import { IBinaryWriter } from "./IBinaryWriter";
+import { IBinaryWriter } from './IBinaryWriter';
 
 export class BinaryWriter implements IBinaryWriter {
     private _buffer: Uint8Array;
@@ -57,8 +57,7 @@ export class BinaryWriter implements IBinaryWriter {
         if (includeLength) {
             this.writeShort(array.length);
             this.appendArray(array);
-        }
-        else {
+        } else {
             this.appendArray(array);
         }
 

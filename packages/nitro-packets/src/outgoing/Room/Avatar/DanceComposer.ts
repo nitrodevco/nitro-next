@@ -9,7 +9,7 @@ export class DanceComposer implements IOutgoingPacket<DanceComposerType> {
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.danceType
+            this.params.danceType,
         ];
     }
 }

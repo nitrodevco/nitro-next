@@ -33,13 +33,35 @@ export const FriendListSearchPixi = ({ value }: FriendListSearchPixiProps) => {
     const isFriend = (result: IMessengerSearchResult) => !!Object.values(friends).find(friend => friend.playerId === result.playerId);
 
     return (
-        <FriendListTabPixi darkHeader value={value} caption="people.search.title" gradientColors={['#6b6b6b', '#555555']} contentBackgroundColor="#b6b6b6" tooltip="friendlist.tip.tab.3">
+        <FriendListTabPixi
+            darkHeader
+            value={value}
+            caption="people.search.title"
+            gradientColors={[ '#6b6b6b', '#555555' ]}
+            contentBackgroundColor="#b6b6b6"
+            tooltip="friendlist.tip.tab.3"
+        >
             <ScrollArea layout={{ flex: 1 }}>
-                <Accordion type="multiple" unwrapped alwaysOpen>
+                <Accordion
+                    type="multiple"
+                    unwrapped
+                    alwaysOpen
+                >
                     {groups.map(group => (
-                        <FriendListGroupPixi key={group.value} value={group.value} caption={t(getCaption(group), '', { cnt: group.results.length.toString() })} showArrows={false}>
+                        <FriendListGroupPixi
+                            key={group.value}
+                            value={group.value}
+                            caption={t(getCaption(group), '', { cnt: group.results.length.toString() })}
+                            showArrows={false}
+                        >
                             {group.results.map((result: IMessengerSearchResult, i: number) => (
-                                <FriendListSearchItemPixi key={result.playerId} isFriend={isFriend(result)} showAvatarHead={isFriend(result) && result.isOnline} result={result} zebraColor={i % 2 === 0 ? '#9f9f9f' : undefined} />
+                                <FriendListSearchItemPixi
+                                    key={result.playerId}
+                                    isFriend={isFriend(result)}
+                                    showAvatarHead={isFriend(result) && result.isOnline}
+                                    result={result}
+                                    zebraColor={i % 2 === 0 ? '#9f9f9f' : undefined}
+                                />
                             ))}
                         </FriendListGroupPixi>
                     ))}

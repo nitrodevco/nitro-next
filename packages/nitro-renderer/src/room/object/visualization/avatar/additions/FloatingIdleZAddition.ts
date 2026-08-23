@@ -34,11 +34,11 @@ export class FloatingIdleZAddition implements IAvatarAddition {
         let side = 'left';
 
         if (
-            this._visualization !== undefined &&
-            (this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270)
+            this._visualization !== undefined
+            && (this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270)
         )
             side = 'right';
 
@@ -58,10 +58,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
 
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             if (
-                this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270
+                this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270
             ) {
                 offsetX = 10;
             } else {
@@ -73,10 +73,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
             additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             if (
-                this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270
+                this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270
             ) {
                 offsetX = 22;
             } else {

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IEventCategory {
     categoryId: number;
@@ -10,6 +10,6 @@ export const EventCategoryParser = (wrapper: IMessageDataWrapper): IEventCategor
     return {
         categoryId: wrapper.readInt(),
         categoryName: wrapper.readString(),
-        visible: wrapper.readBoolean()
+        visible: wrapper.readBoolean(),
     };
-}
+};

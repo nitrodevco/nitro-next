@@ -1,7 +1,7 @@
-import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
+import type { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
-import { useFurnitureDataSelector, useRoomSelector, useRoomStackingHeightMapActions } from "#base/context";
+import { useFurnitureDataSelector, useRoomSelector, useRoomStackingHeightMapActions } from '#base/context';
 
 export const useRoomObjectValidation = () => {
     const room = useRoomSelector();
@@ -27,7 +27,7 @@ export const useRoomObjectValidation = () => {
         let sizeY = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeY);
         const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
 
-        if (direction.x === 90 || direction.x === 270) [sizeX, sizeY] = [sizeY, sizeX];
+        if (direction.x === 90 || direction.x === 270) [ sizeX, sizeY ] = [ sizeY, sizeX ];
 
         if (sizeX < 1) sizeX = 1;
         if (sizeY < 1) sizeY = 1;
@@ -67,10 +67,10 @@ export const useRoomObjectValidation = () => {
         let prevSizeY = sizeY;
 
         const curQuadrant = Math.trunc((Math.trunc(roomObject.getDirection().x + 45) % 360) / 90);
-        if (curQuadrant === 1 || curQuadrant === 3) [sizeX, sizeY] = [sizeY, sizeX];
+        if (curQuadrant === 1 || curQuadrant === 3) [ sizeX, sizeY ] = [ sizeY, sizeX ];
 
         const prevQuadrant = Math.trunc((Math.trunc(prevDir.x + 45) % 360) / 90);
-        if (prevQuadrant === 1 || prevQuadrant === 3) [prevSizeX, prevSizeY] = [prevSizeY, prevSizeX];
+        if (prevQuadrant === 1 || prevQuadrant === 3) [ prevSizeX, prevSizeY ] = [ prevSizeY, prevSizeX ];
 
         const stackable = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlwaysStackable) === 1;
 
@@ -135,10 +135,10 @@ export const useRoomObjectValidation = () => {
         let prevSizeY = sizeY;
 
         const goalQuadrant = Math.trunc((Math.trunc(goalDirection.x + 45) % 360) / 90);
-        if (goalQuadrant === 1 || goalQuadrant === 3) [sizeX, sizeY] = [sizeY, sizeX];
+        if (goalQuadrant === 1 || goalQuadrant === 3) [ sizeX, sizeY ] = [ sizeY, sizeX ];
 
         const dirQuadrant = Math.trunc((Math.trunc(direction.x + 45) % 360) / 90);
-        if (dirQuadrant === 1 || dirQuadrant === 3) [prevSizeX, prevSizeY] = [prevSizeY, prevSizeX];
+        if (dirQuadrant === 1 || dirQuadrant === 3) [ prevSizeX, prevSizeY ] = [ prevSizeY, prevSizeX ];
 
         const alwaysStackable = object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlwaysStackable) === 1;
 
@@ -182,4 +182,4 @@ export const useRoomObjectValidation = () => {
     };
 
     return { setFurnitureAlphaMultiplier, getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation, getValidRoomObjectDirection };
-}
+};

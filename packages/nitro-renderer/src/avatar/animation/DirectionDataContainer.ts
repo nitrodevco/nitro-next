@@ -1,4 +1,4 @@
-﻿import type { IAssetAnimationDirection, IDirectionDataContainer } from "@nitrodevco/nitro-api";
+﻿import type { IAssetAnimationDirection, IDirectionDataContainer } from '@nitrodevco/nitro-api';
 
 export class DirectionDataContainer implements IDirectionDataContainer {
     private _offset: number;

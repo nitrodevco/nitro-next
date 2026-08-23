@@ -39,7 +39,7 @@ export class RoomLogic extends RoomObjectLogicBase {
     private _skipColorTransition = false;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectMouseEvent.MOUSE_MOVE, RoomObjectMouseEvent.CLICK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectMouseEvent.MOUSE_MOVE, RoomObjectMouseEvent.CLICK ]);
     }
 
     public override dispose(): void {
@@ -265,10 +265,10 @@ export class RoomLogic extends RoomObjectLogicBase {
         const tileZ = _local_18.z;
 
         if (
-            planePosition.x >= 0 &&
-            planePosition.x < leftSideLength &&
-            planePosition.y >= 0 &&
-            planePosition.y < rightSideLength
+            planePosition.x >= 0
+            && planePosition.x < leftSideLength
+            && planePosition.y >= 0
+            && planePosition.y < rightSideLength
         ) {
             this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedX, tileX);
             this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedY, tileY);

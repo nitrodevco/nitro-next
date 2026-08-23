@@ -40,7 +40,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     protected _image: RenderTexture | undefined;
     protected _avatarSpriteData: IAvatarDataContainer | undefined = undefined;
 
-
     protected _mainAction: IActiveActionData;
     protected _disposed: boolean = false;
     protected _canvasOffsets: number[] = [];
@@ -211,7 +210,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
             if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
 
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+            // if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
 
             container.filters = filters;
         }
@@ -219,7 +218,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         TextureUtils.getRenderer().render({
             target: this._image,
             container,
-            clear: true
+            clear: true,
         });
 
         if (cacheKey && isCachable) {
@@ -229,7 +228,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
                 TextureUtils.getRenderer().render({
                     target: imageClone,
                     container,
-                    clear: true
+                    clear: true,
                 });
 
                 this.cacheFullImage(cacheKey, imageClone);
@@ -284,7 +283,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
             if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
 
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+            // if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
 
             container.filters = filters;
         }
@@ -296,7 +295,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         TextureUtils.getRenderer().render({
             target: texture,
             container,
-            clear: true
+            clear: true,
         });
 
         const image = await TextureUtils.generateImage(texture);
@@ -351,7 +350,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
             if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
 
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+            // if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
 
             container.filters = filters;
         }
@@ -363,7 +362,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         TextureUtils.getRenderer().render({
             target: texture,
             container,
-            clear: true
+            clear: true,
         });
 
         const base64 = await TextureUtils.getRenderer().extract.base64(new Sprite(texture));
@@ -606,7 +605,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this._animationFrameCount = this._structure.maxFrames(this._sortedActions);
 
         if (!this._sortedActions) {
-            this._canvasOffsets = [0, 0, 0];
+            this._canvasOffsets = [ 0, 0, 0 ];
 
             if (this._lastActionsString !== '') {
                 sorted = true;
@@ -774,7 +773,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         const filter = new ColorMatrixFilter();
 
-        filter.matrix = [r, g, b, 0, 0, r, g, b, 0, 0, r, g, b, 0, 0, 0, 0, 0, 1, 0];
+        filter.matrix = [ r, g, b, 0, 0, r, g, b, 0, 0, r, g, b, 0, 0, 0, 0, 0, 1, 0 ];
 
         return filter;
     }

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FlatControllerAddedEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class FlatControllerAddedEventMessage implements IIncomingPacket<FlatControllerAddedEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FlatControllerAddedEventMessageType
-  {
+export class FlatControllerAddedEventMessage implements IIncomingPacket<FlatControllerAddedEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FlatControllerAddedEventMessageType {
+        const packet: FlatControllerAddedEventMessageType = {
+        };
 
-    const packet: FlatControllerAddedEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

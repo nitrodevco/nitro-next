@@ -7,7 +7,7 @@ type State = {
     filterValue: string;
     selectedFriendIds: number[];
     relationshipDropdownId: number;
-}
+};
 
 type Actions = {
     setTooltip: (tooltip: string) => void;
@@ -17,8 +17,8 @@ type Actions = {
     setRelationshipDropdownId: (relationshipDropdownId: number) => void;
     toggleListSearchInput: (value: boolean) => void;
     toggleSelectedFriendId: (friendId: number) => void;
-    tooltipHandlers: (tooltip: string) => { onMouseEnter: () => void, onMouseLeave: () => void };
-}
+    tooltipHandlers: (tooltip: string) => { onMouseEnter: () => void; onMouseLeave: () => void };
+};
 
 const initialState: State = {
     tooltip: '',
@@ -26,7 +26,7 @@ const initialState: State = {
     listSearchValue: '',
     filterValue: '',
     selectedFriendIds: [],
-    relationshipDropdownId: 0
+    relationshipDropdownId: 0,
 };
 
 export type FriendsContextStore = State & Actions;
@@ -38,8 +38,8 @@ export const createFriendsContextStore = () => createStore<FriendsContextStore>(
     setFilterValue: (filterValue: string) => set({ filterValue }),
     setSelectedFriendIds: (selectedFriendIds: number[]) => set({ selectedFriendIds }),
     setRelationshipDropdownId: (relationshipDropdownId: number) => set({ relationshipDropdownId }),
-    toggleListSearchInput: (value: boolean) => set(x => {
-        const results = { ...x, showListSearchInput: value }
+    toggleListSearchInput: (value: boolean) => set((x) => {
+        const results = { ...x, showListSearchInput: value };
 
         if (!value) {
             results.listSearchValue = '';
@@ -48,8 +48,8 @@ export const createFriendsContextStore = () => createStore<FriendsContextStore>(
 
         return results;
     }),
-    toggleSelectedFriendId: (friendId: number) => set(x => {
-        const selectedFriendIds = [...x.selectedFriendIds];
+    toggleSelectedFriendId: (friendId: number) => set((x) => {
+        const selectedFriendIds = [ ...x.selectedFriendIds ];
         const index = selectedFriendIds.indexOf(friendId);
 
         if (index >= 0) selectedFriendIds.splice(index, 1);
@@ -60,7 +60,7 @@ export const createFriendsContextStore = () => createStore<FriendsContextStore>(
     tooltipHandlers: (tooltip: string) => {
         return {
             onMouseEnter: () => set({ tooltip }),
-            onMouseLeave: () => set({ tooltip: '' })
-        }
-    }
+            onMouseLeave: () => set({ tooltip: '' }),
+        };
+    },
 }));

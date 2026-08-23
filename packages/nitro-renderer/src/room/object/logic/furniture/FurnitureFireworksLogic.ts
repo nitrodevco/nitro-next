@@ -5,7 +5,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureFireworksLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_CHANGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_CHANGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -13,7 +13,7 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
 
         if (asset?.logic?.particleSystems) this.object.model.setValue<IParticleSystem[]>(
             RoomObjectVariableEnum.FurnitureFireworksData,
-            asset.logic.particleSystems
+            asset.logic.particleSystems,
         );
     }
 

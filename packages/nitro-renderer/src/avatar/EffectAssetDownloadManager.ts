@@ -4,7 +4,7 @@ import type { AvatarStructure } from './AvatarStructure';
 import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
 
 export class EffectAssetDownloadManager {
-    private static MANDATORY_LIBRARIES: string[] = ['dance.1', 'dance.2', 'dance.3', 'dance.4'];
+    private static MANDATORY_LIBRARIES: string[] = [ 'dance.1', 'dance.2', 'dance.3', 'dance.4' ];
 
     private _structure: AvatarStructure;
     private _missingMandatoryLibs: string[] = EffectAssetDownloadManager.MANDATORY_LIBRARIES;
@@ -52,7 +52,7 @@ export class EffectAssetDownloadManager {
     }
 
     public processPendingDownloads(): void {
-        for (const [id, listener] of this._pendingDownloads) this.downloadAvatarEffect(id, listener);
+        for (const [ id, listener ] of this._pendingDownloads) this.downloadAvatarEffect(id, listener);
 
         this._pendingDownloads = [];
     }
@@ -63,7 +63,7 @@ export class EffectAssetDownloadManager {
 
     public downloadAvatarEffect(id: number, listener: IAvatarEffectListener): void {
         if (!this._isReady) {
-            this._pendingDownloads.push([id, listener]);
+            this._pendingDownloads.push([ id, listener ]);
 
             return;
         }
@@ -84,8 +84,7 @@ export class EffectAssetDownloadManager {
             this._incompleteEffects.set(id, libraries);
 
             for (const library of libraries) this.downloadLibrary(library);
-        }
-        else listener.resetEffect(id);
+        } else listener.resetEffect(id);
     }
 
     public async downloadAvatarEffectAsync(id: number): Promise<void> {
@@ -153,7 +152,7 @@ export class EffectAssetDownloadManager {
 
         this._structure.registerAnimations(library.animations);
 
-        for (const [id, libraries] of this._incompleteEffects.entries()) {
+        for (const [ id, libraries ] of this._incompleteEffects.entries()) {
             let isReady = true;
 
             for (const library of libraries) {

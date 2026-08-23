@@ -1,12 +1,12 @@
-import { GetGuestRoomResultMessage } from "@nitrodevco/nitro-packets";
+import { GetGuestRoomResultMessage } from '@nitrodevco/nitro-packets';
 
-import { useRoomSettingActions } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useRoomSettingActions } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomDataHandler = () => {
     const { setTradeMode, setIsGuildRoom, setDoorMode, setAllowPets, setModerationSettings, setChatSettings } = useRoomSettingActions();
 
-    useMessageListener(GetGuestRoomResultMessage, data => {
+    useMessageListener(GetGuestRoomResultMessage, (data) => {
         if (data.roomForward) return;
 
         const roomInfo = data.roomInfo;
@@ -18,4 +18,4 @@ export const useRoomDataHandler = () => {
         setModerationSettings(data.moderation);
         setChatSettings(data.chat);
     });
-}
+};

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IGameLobbyPlayerData {
     userId: number;
@@ -33,4 +33,4 @@ export const GameLobbyPlayerDataParser = (wrapper: IMessageDataWrapper): IGameLo
     data.scoreToNextLevel = wrapper.readInt();
 
     return data;
-}
+};

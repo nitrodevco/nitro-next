@@ -1,5 +1,4 @@
-import type { Rectangle } from 'pixi.js';
-import type { ImageLike } from 'pixi.js';
+import type { ImageLike, Rectangle } from 'pixi.js';
 
 import type { IRoomGeometry } from '../../IRoomGeometry';
 import type { IRoomObject } from '../IRoomObject';

@@ -5,7 +5,7 @@ import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

@@ -17,7 +17,7 @@ export const useAccordion = () => {
     if (!context) throw new Error('useAccordion must be used within an Accordion');
 
     return context;
-}
+};
 
 export const AccordionItemContext = createContext<string | null>(null);
 
@@ -28,4 +28,4 @@ export const useAccordionItem = () => {
     if (value === null) throw new Error('useAccordionItem must be used within an AccordionItem');
 
     return { value, isOpen: isOpen(value), toggle: () => toggle(value) };
-}
+};

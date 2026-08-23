@@ -1,11 +1,10 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { RoomObjectUserType } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { RoomObjectUserType } from '@nitrodevco/nitro-api';
 
-import { IRoomAvatar } from "./IRoomAvatar";
-import { IRoomAvatarUser } from "./IRoomAvatarUser";
-import { IRoomAvatarBot } from "./IRoomAvatarBot";
-import { IRoomAvatarRentableBot } from "./IRoomAvatarRentableBot";
-import { convertSwimFigure } from "./SwimFigureUtils";
+import { IRoomAvatar } from './IRoomAvatar';
+import { IRoomAvatarBot } from './IRoomAvatarBot';
+import { IRoomAvatarRentableBot } from './IRoomAvatarRentableBot';
+import { convertSwimFigure } from './SwimFigureUtils';
 
 export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
     let avatar = {
@@ -18,8 +17,8 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
         y: wrapper.readInt(),
         z: parseFloat(wrapper.readString()),
         bodyRotation: wrapper.readInt(),
-        avatarType: wrapper.readInt()
-    } as IRoomAvatar;
+        avatarType: wrapper.readInt(),
+    };
 
     switch (avatar.avatarType) {
         case RoomObjectUserType.User: {
@@ -30,8 +29,8 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
                 groupName: wrapper.readString(),
                 swimFigure: wrapper.readString(),
                 activityPoints: wrapper.readInt(),
-                isModerator: wrapper.readBoolean()
-            } as IRoomAvatarUser;
+                isModerator: wrapper.readBoolean(),
+            };
 
             if (data.swimFigure !== '') avatar.figure = convertSwimFigure(data.swimFigure, avatar.figure, data.gender);
 
@@ -52,7 +51,7 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
                 gender: wrapper.readString(),
                 ownerId: wrapper.readInt(),
                 ownerName: wrapper.readString(),
-                skills: []
+                skills: [],
             } as IRoomAvatarRentableBot;
 
             let count = wrapper.readInt();
@@ -69,4 +68,4 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
     }
 
     return avatar;
-}
+};

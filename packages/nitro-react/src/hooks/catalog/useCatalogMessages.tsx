@@ -1,12 +1,12 @@
-import { ICatalogNode, IPurchasableOffer } from "@nitrodevco/nitro-api";
-import { CatalogIndexMessage, CatalogPageMessage, CatalogPublishedMessage, ProductOfferEventMessage } from "@nitrodevco/nitro-packets";
+import { ICatalogNode, IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { CatalogIndexMessage, CatalogPageMessage, CatalogPublishedMessage, ProductOfferEventMessage } from '@nitrodevco/nitro-packets';
 
-import { useCatalogActions, useCatalogSelectors } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useCatalogActions, useCatalogSelectors } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
-import { useCatalogNavigation } from "./useCatalogNavigation";
-import { useCatalogOfferActions } from "./useCatalogOfferActions";
-import { useCatalogVisibility } from "./useCatalogVisibility";
+import { useCatalogNavigation } from './useCatalogNavigation';
+import { useCatalogOfferActions } from './useCatalogOfferActions';
+import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogMessages = () => {
     const { catalogType, activePageId } = useCatalogSelectors();
@@ -15,14 +15,14 @@ export const useCatalogMessages = () => {
     const { processOffer } = useCatalogOfferActions();
     const { hideCatalog } = useCatalogVisibility();
 
-    useMessageListener(CatalogPublishedMessage, data => {
+    useMessageListener(CatalogPublishedMessage, (data) => {
         resetCatalog();
         hideCatalog();
 
-        //alert catalog.alert.published.description
+        // alert catalog.alert.published.description
     });
 
-    useMessageListener(CatalogPageMessage, data => {
+    useMessageListener(CatalogPageMessage, (data) => {
         const page = data.page;
 
         if (!page || page.catalogType !== catalogType || page.pageId !== activePageId) return;
@@ -42,7 +42,7 @@ export const useCatalogMessages = () => {
         showCatalogPage(page.pageId, page.layout, page.localization, purchasableOffers, page.offerId, page.acceptSeasonCurrencyAsCredits);
     });
 
-    useMessageListener(ProductOfferEventMessage, data => {
+    useMessageListener(ProductOfferEventMessage, (data) => {
         const purchasableOffer = processOffer(data.offer);
 
         if (!purchasableOffer) return;
@@ -50,7 +50,7 @@ export const useCatalogMessages = () => {
         selectOffer(purchasableOffer);
     });
 
-    useMessageListener(CatalogIndexMessage, data => {
+    useMessageListener(CatalogIndexMessage, (data) => {
         if (data.catalogType !== catalogType) return;
 
         const offers: Record<number, ICatalogNode[]> = {};
@@ -61,7 +61,7 @@ export const useCatalogMessages = () => {
 
             for (const offerId of node.offerIds) {
                 if (offers[offerId] !== undefined) offers[offerId].push(node);
-                else offers[offerId] = [node];
+                else offers[offerId] = [ node ];
             }
 
             depth++;
@@ -76,4 +76,4 @@ export const useCatalogMessages = () => {
     });
 
     return null;
-}
+};

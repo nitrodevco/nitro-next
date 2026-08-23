@@ -1,6 +1,7 @@
-import { type IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { IFriendRequest } from "./IFriendRequest";
-import { FriendRequestStateType } from "./FriendRequestStateType";
+import { type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
+import { FriendRequestStateType } from './FriendRequestStateType';
+import { IFriendRequest } from './IFriendRequest';
 
 export const FriendRequestParser = (wrapper: IMessageDataWrapper): IFriendRequest => {
     const packet = {
@@ -11,4 +12,4 @@ export const FriendRequestParser = (wrapper: IMessageDataWrapper): IFriendReques
     } as IFriendRequest;
 
     return packet;
-}
+};

@@ -1,32 +1,32 @@
-import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, ShoutMessage, WhisperMessage } from "@nitrodevco/nitro-packets";
+import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, ShoutMessage, WhisperMessage } from '@nitrodevco/nitro-packets';
 
-import { useMessageListener } from "#base/hooks";
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomChatHandler = () => {
-    useMessageListener(ChatMessage, data => {
+    useMessageListener(ChatMessage, (data) => {
     });
 
-    useMessageListener(ShoutMessage, data => {
+    useMessageListener(ShoutMessage, (data) => {
     });
 
-    useMessageListener(WhisperMessage, data => {
+    useMessageListener(WhisperMessage, (data) => {
     });
 
-    useMessageListener(HandItemReceivedMessage, data => {
+    useMessageListener(HandItemReceivedMessage, (data) => {
     });
 
-    useMessageListener(RespectNotificationMessage, data => {
+    useMessageListener(RespectNotificationMessage, (data) => {
     });
 
-    useMessageListener(PetRespectNotificationEventMessage, data => {
+    useMessageListener(PetRespectNotificationEventMessage, (data) => {
     });
 
-    useMessageListener(PetSupplementedNotificationEventMessage, data => {
+    useMessageListener(PetSupplementedNotificationEventMessage, (data) => {
     });
 
-    useMessageListener(FloodControlMessage, data => {
+    useMessageListener(FloodControlMessage, (data) => {
     });
 
-    useMessageListener(RemainingMutePeriodMessage, data => {
+    useMessageListener(RemainingMutePeriodMessage, (data) => {
     });
-}
+};

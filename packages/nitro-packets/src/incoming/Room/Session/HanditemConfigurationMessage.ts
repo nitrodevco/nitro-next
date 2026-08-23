@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HanditemConfigurationMessageType = {
-  isHanditemControlBlocked: boolean;
+    isHanditemControlBlocked: boolean;
 };
 
-export class HanditemConfigurationMessage implements IIncomingPacket<HanditemConfigurationMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): HanditemConfigurationMessageType
-  {
+export class HanditemConfigurationMessage implements IIncomingPacket<HanditemConfigurationMessageType> {
+    public parse(wrapper: IMessageDataWrapper): HanditemConfigurationMessageType {
+        const packet: HanditemConfigurationMessageType = {
+            isHanditemControlBlocked: wrapper.readBoolean(),
+        };
 
-    const packet: HanditemConfigurationMessageType = {
-      isHanditemControlBlocked: wrapper.readBoolean(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

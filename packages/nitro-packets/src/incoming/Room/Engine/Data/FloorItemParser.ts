@@ -1,7 +1,7 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { GetObjectDataFromWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { GetObjectDataFromWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomFloorItem } from "./IRoomFloorItem";
+import type { IRoomFloorItem } from './IRoomFloorItem';
 
 export const FloorItemParser = (wrapper: IMessageDataWrapper): IRoomFloorItem => {
     const item = {
@@ -18,10 +18,10 @@ export const FloorItemParser = (wrapper: IMessageDataWrapper): IRoomFloorItem =>
         usagePolicy: wrapper.readInt(),
         ownerId: wrapper.readInt(),
         ownerName: '',
-        spriteName: undefined
+        spriteName: undefined,
     } as IRoomFloorItem;
 
     if (item.spriteId < 0) item.spriteName = wrapper.readString();
 
     return item;
-}
+};

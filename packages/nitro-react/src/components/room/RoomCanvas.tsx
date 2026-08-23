@@ -1,19 +1,19 @@
-import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { GetRoomStage, RoomAreaSelectionManager } from "@nitrodevco/nitro-renderer";
-import { useApplication } from "@pixi/react";
-import { FederatedPointerEvent, Ticker } from "pixi.js";
-import { useEffect, useRef } from "react";
+import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { GetRoomStage, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
+import { useApplication } from '@pixi/react';
+import { FederatedPointerEvent, Ticker } from 'pixi.js';
+import { useEffect, useRef } from 'react';
 
-import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from "#base/context";
-import { useRoomCamera } from "#base/hooks";
+import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from '#base/context';
+import { useRoomCamera } from '#base/hooks';
 
 type MouseData = {
-    mouseXY: { x: number, y: number };
-    dragStartXY: { x: number, y: number };
-    dragXY: { x: number, y: number };
+    mouseXY: { x: number; y: number };
+    dragStartXY: { x: number; y: number };
+    dragXY: { x: number; y: number };
     isDragged: boolean;
     wasDragged: boolean;
-}
+};
 
 const DRAG_THRESHOLD: number = 15;
 
@@ -28,7 +28,7 @@ export const RoomCanvas = () => {
         dragStartXY: { x: 0, y: 0 },
         dragXY: { x: 0, y: 0 },
         isDragged: false,
-        wasDragged: false
+        wasDragged: false,
     });
 
     const handleRoomDragging = (
@@ -37,7 +37,7 @@ export const RoomCanvas = () => {
         type: string,
         altKey: boolean,
         ctrlKey: boolean,
-        shiftKey: boolean
+        shiftKey: boolean,
     ) => {
         if (!room || !room.canvas || isPlayingGame) return false;
 
@@ -72,10 +72,10 @@ export const RoomCanvas = () => {
                     offsetY = y - mouseData.dragStartXY.y;
 
                     if (
-                        offsetX <= -DRAG_THRESHOLD ||
-                        offsetX >= DRAG_THRESHOLD ||
-                        offsetY <= -DRAG_THRESHOLD ||
-                        offsetY >= DRAG_THRESHOLD
+                        offsetX <= -DRAG_THRESHOLD
+                        || offsetX >= DRAG_THRESHOLD
+                        || offsetY <= -DRAG_THRESHOLD
+                        || offsetY >= DRAG_THRESHOLD
                     ) {
                         mouseData.wasDragged = true;
                     }
@@ -103,7 +103,7 @@ export const RoomCanvas = () => {
         }
 
         return false;
-    }
+    };
 
     const dispatchMouseEvent = (
         x: number,
@@ -112,7 +112,7 @@ export const RoomCanvas = () => {
         altKey: boolean,
         ctrlKey: boolean,
         shiftKey: boolean,
-        buttonDown: boolean
+        buttonDown: boolean,
     ) => {
         if (!room?.canvas) return;
 
@@ -126,8 +126,8 @@ export const RoomCanvas = () => {
         }
 
         if (
-            !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey) &&
-            !room.canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+            !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey)
+            && !room.canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
         ) {
             let eventType: string = '';
 
@@ -148,7 +148,7 @@ export const RoomCanvas = () => {
         }
 
         mouseDataRef.current.mouseXY = { x, y };
-    }
+    };
 
     useEffect(() => {
         if (!app || !room) return;
@@ -181,7 +181,7 @@ export const RoomCanvas = () => {
             room.canvas.initialize(width, height);
 
             updateRoomCamera(-1);
-        }
+        };
 
         app.renderer.on('resize', resizeCanvas);
 
@@ -201,11 +201,11 @@ export const RoomCanvas = () => {
 
                 room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 
-                mouseData.dragXY = { x: 0, y: 0 }
+                mouseData.dragXY = { x: 0, y: 0 };
             }
 
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
-        }
+        };
 
         app.ticker.add(tick);
 
@@ -269,9 +269,9 @@ export const RoomCanvas = () => {
                 event.altKey,
                 event.ctrlKey || event.metaKey,
                 event.shiftKey,
-                isMouseDown
+                isMouseDown,
             );
-        }
+        };
 
         container.on('click', handlePointerEvent);
         container.on('pointermove', handlePointerEvent);
@@ -288,8 +288,8 @@ export const RoomCanvas = () => {
             container.off('pointerdown', handlePointerEvent);
             container.off('pointerup', handlePointerEvent);
             container.off('rightclick', handlePointerEvent);
-        }
-    }, [app, room]);
+        };
+    }, [ app, room ]);
 
     return null;
-}
+};

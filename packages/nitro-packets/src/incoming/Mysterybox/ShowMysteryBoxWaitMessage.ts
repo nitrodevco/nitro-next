@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ShowMysteryBoxWaitMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ShowMysteryBoxWaitMessage implements IIncomingPacket<ShowMysteryBoxWaitMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ShowMysteryBoxWaitMessageType
-  {
+export class ShowMysteryBoxWaitMessage implements IIncomingPacket<ShowMysteryBoxWaitMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ShowMysteryBoxWaitMessageType {
+        const packet: ShowMysteryBoxWaitMessageType = {
+        };
 
-    const packet: ShowMysteryBoxWaitMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

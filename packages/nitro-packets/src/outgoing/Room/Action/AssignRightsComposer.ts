@@ -9,7 +9,7 @@ export class AssignRightsComposer implements IOutgoingPacket<AssignRightsCompose
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userId
+            this.params.userId,
         ];
     }
 }

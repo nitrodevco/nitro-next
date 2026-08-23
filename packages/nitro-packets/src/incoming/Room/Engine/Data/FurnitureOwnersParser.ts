@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const FurnitureOwnersParser = (wrapper: IMessageDataWrapper) => {
     const owners: Map<number, string> = new Map();
@@ -12,4 +12,4 @@ export const FurnitureOwnersParser = (wrapper: IMessageDataWrapper) => {
     }
 
     return owners;
-}
+};

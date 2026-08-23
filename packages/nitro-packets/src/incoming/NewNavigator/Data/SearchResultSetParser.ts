@@ -1,7 +1,7 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { ISearchResultList } from "./SearchResultListParser";
-import { SearchResultListParser } from "./SearchResultListParser";
+import type { ISearchResultList } from './SearchResultListParser';
+import { SearchResultListParser } from './SearchResultListParser';
 
 export interface ISearchResultSet {
     searchCodeOriginal: string;
@@ -13,7 +13,7 @@ export const SearchResultSetParser = (wrapper: IMessageDataWrapper): ISearchResu
     const result: ISearchResultSet = {
         searchCodeOriginal: wrapper.readString(),
         filteringData: wrapper.readString(),
-        blocks: []
+        blocks: [],
     };
 
     let count = wrapper.readInt();
@@ -25,4 +25,4 @@ export const SearchResultSetParser = (wrapper: IMessageDataWrapper): ISearchResu
     }
 
     return result;
-}
+};

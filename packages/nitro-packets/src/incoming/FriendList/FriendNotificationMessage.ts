@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { FriendNotificationCodeType } from './Data/FriendNotificationCodeType';
 
 export type FriendNotificationMessageType = {
@@ -12,7 +13,7 @@ export class FriendNotificationMessage implements IIncomingPacket<FriendNotifica
         const packet: FriendNotificationMessageType = {
             playerId: parseInt(wrapper.readString()),
             typeCode: wrapper.readInt(),
-            message: wrapper.readString()
+            message: wrapper.readString(),
         };
 
         return packet;

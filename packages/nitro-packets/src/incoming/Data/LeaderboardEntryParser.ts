@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ILeaderboardEntry {
     userId: number;
@@ -27,4 +27,4 @@ export const LeaderboardEntryParser = (wrapper: IMessageDataWrapper): ILeaderboa
     data.gender = wrapper.readString();
 
     return data;
-}
+};

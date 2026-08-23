@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useRoomSelector, useRoomStackingHeightMapSelector } from "#base/context"
+import { useRoomSelector, useRoomStackingHeightMapSelector } from '#base/context';
 
 export const useRoomModifications = () => {
     const room = useRoomSelector();
@@ -14,6 +14,6 @@ export const useRoomModifications = () => {
 
         return () => {
             room.getTileHeight = (x: number, y: number) => 0;
-        }
-    }, [room, heights]);
-}
+        };
+    }, [ room, heights ]);
+};

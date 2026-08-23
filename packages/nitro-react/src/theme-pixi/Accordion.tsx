@@ -11,7 +11,7 @@ type AccordionBaseProps = {
     unwrapped?: boolean;
     alwaysOpen?: boolean;
     children?: ReactNode;
-}
+};
 
 type AccordionSingleProps = AccordionBaseProps & {
     type?: 'single';
@@ -19,14 +19,14 @@ type AccordionSingleProps = AccordionBaseProps & {
     value?: string;
     defaultValue?: string;
     onValueChange?: (value: string) => void;
-}
+};
 
 type AccordionMultipleProps = AccordionBaseProps & {
     type: 'multiple';
     value?: string[];
     defaultValue?: string[];
     onValueChange?: (value: string[]) => void;
-}
+};
 
 export type AccordionProps = AccordionSingleProps | AccordionMultipleProps;
 
@@ -36,14 +36,14 @@ type AccordionResolvedProps = AccordionBaseProps & {
     value?: string | string[];
     defaultValue?: string | string[];
     onValueChange?: (value: string | string[]) => void;
-}
+};
 
 const toValues = (value: string | string[] | undefined) => {
     if (Array.isArray(value)) return value;
     if (!value) return [];
 
-    return [value];
-}
+    return [ value ];
+};
 
 /**
  * Pixi port of theme/Accordion.tsx. The open/close state machine below (single vs multiple,
@@ -60,7 +60,7 @@ export const Accordion = (props: AccordionProps) => {
     const isSingle = (type ?? 'single') === 'single';
     const isControlled = value !== undefined;
 
-    const [internalValues, setInternalValues] = useState<string[]>(() => toValues(defaultValue));
+    const [ internalValues, setInternalValues ] = useState<string[]>(() => toValues(defaultValue));
 
     const openValues = isControlled ? toValues(value) : internalValues;
 
@@ -68,7 +68,7 @@ export const Accordion = (props: AccordionProps) => {
         if (!isControlled) setInternalValues(values);
 
         onValueChange?.(isSingle ? values[0] ?? '' : values);
-    }
+    };
 
     const isOpen = (item: string) => alwaysOpen || openValues.includes(item);
 
@@ -76,14 +76,14 @@ export const Accordion = (props: AccordionProps) => {
         if (alwaysOpen) return;
 
         if (isSingle) {
-            if (!isOpen(item)) return setValues([item]);
+            if (!isOpen(item)) return setValues([ item ]);
             if (collapsible) return setValues([]);
 
             return;
         }
 
-        setValues(isOpen(item) ? openValues.filter(x => x !== item) : [...openValues, item]);
-    }
+        setValues(isOpen(item) ? openValues.filter(x => x !== item) : [ ...openValues, item ]);
+    };
 
     const context = { openValues, alwaysOpen, isOpen, toggle };
 
@@ -102,6 +102,6 @@ export const Accordion = (props: AccordionProps) => {
             </AccordionContext.Provider>
         </Box>
     );
-}
+};
 
 Accordion.displayName = 'Accordion';

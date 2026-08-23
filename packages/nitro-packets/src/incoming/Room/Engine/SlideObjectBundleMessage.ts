@@ -5,9 +5,9 @@ export type SlideObjectBundleMessageType = {
     fromY: number;
     toX: number;
     toY: number;
-    heights: { objectId: number; fromHeight: number; toHeight: number; }[];
+    heights: { objectId: number; fromHeight: number; toHeight: number }[];
     rollerItemId: number;
-    avatar: { moveType: SlideAvatarMoveType, objectId: number, fromHeight: number; toHeight: number; } | undefined;
+    avatar: { moveType: SlideAvatarMoveType; objectId: number; fromHeight: number; toHeight: number } | undefined;
 };
 
 export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBundleMessageType> {
@@ -19,7 +19,7 @@ export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBund
             toY: wrapper.readInt(),
             heights: [],
             rollerItemId: -1,
-            avatar: undefined
+            avatar: undefined,
         };
 
         let count = wrapper.readInt();
@@ -28,7 +28,7 @@ export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBund
             packet.heights.push({
                 objectId: wrapper.readInt(),
                 fromHeight: parseFloat(wrapper.readString()),
-                toHeight: parseFloat(wrapper.readString())
+                toHeight: parseFloat(wrapper.readString()),
             });
 
             count--;
@@ -41,9 +41,9 @@ export class SlideObjectBundleMessage implements IIncomingPacket<SlideObjectBund
                 moveType: wrapper.readInt(),
                 objectId: wrapper.readInt(),
                 fromHeight: parseFloat(wrapper.readString()),
-                toHeight: parseFloat(wrapper.readString())
+                toHeight: parseFloat(wrapper.readString()),
 
-            }
+            };
         }
 
         return packet;

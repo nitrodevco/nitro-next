@@ -30,11 +30,11 @@ const ICON_SPACING = 15;
  * same visual intent (a round headshot icon), simpler path to it.
  */
 export const ToolbarViewPixi = () => {
-    const [isMeExpanded, setMeExpanded] = useState(false);
-    const [isProgressionExpanded, setProgressionExpanded] = useState(false);
-    const [leftSideCollapsed, setLeftSideCollapsed] = useState(false);
-    const [rightSideCollapsed, setRightSideCollapsed] = useState(false);
-    const [avatarMaskNode, setAvatarMaskNode] = useState<PixiGraphics | null>(null);
+    const [ isMeExpanded, setMeExpanded ] = useState(false);
+    const [ isProgressionExpanded, setProgressionExpanded ] = useState(false);
+    const [ leftSideCollapsed, setLeftSideCollapsed ] = useState(false);
+    const [ rightSideCollapsed, setRightSideCollapsed ] = useState(false);
+    const [ avatarMaskNode, setAvatarMaskNode ] = useState<PixiGraphics | null>(null);
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
     const { toggleWindow } = useSystemActions();
@@ -52,23 +52,22 @@ export const ToolbarViewPixi = () => {
         <>
             {isMeExpanded && <ToolbarMeMenuPixi />}
             {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
-            <Box
-                layout={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', height: 54,
-                    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8,
-                }}
+            <Box layout={{
+                position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', height: 54,
+                flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8,
+            }}
             >
                 <ColorLayer color="rgba(46, 45, 44, 0.76)" />
                 <pixiGraphics
                     eventMode="none"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill('rgba(0, 0, 0, 0.3)'); }}
+                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('rgba(0, 0, 0, 0.3)'); }}
                 />
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingRight: ICON_SPACING }}>
                     <pixiGraphics
                         eventMode="none"
                         layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
+                        draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
                     />
                     {collapseLeftTexture && (
                         <pixiSprite
@@ -81,23 +80,63 @@ export const ToolbarViewPixi = () => {
                             layout={{}}
                         />
                     )}
-                    {!leftSideCollapsed && <NitroIcon icon="icon-habbo" layout={{}} />}
                     {!leftSideCollapsed && (
-                        <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleWindow('navigator')} layout={{}}>
-                            <NitroIcon icon="icon-rooms" layout={{}} />
+                        <NitroIcon
+                            icon="icon-habbo"
+                            layout={{}}
+                        />
+                    )}
+                    {!leftSideCollapsed && (
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            onPointerTap={() => toggleWindow('navigator')}
+                            layout={{}}
+                        >
+                            <NitroIcon
+                                icon="icon-rooms"
+                                layout={{}}
+                            />
                         </Box>
                     )}
                     {!leftSideCollapsed && (
-                        <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleMenu('progression')} layout={{}}>
-                            <NitroIcon icon="icon-progression" layout={{}} />
+                        <Box
+                            eventMode="static"
+                            cursor="pointer"
+                            onPointerTap={() => toggleMenu('progression')}
+                            layout={{}}
+                        >
+                            <NitroIcon
+                                icon="icon-progression"
+                                layout={{}}
+                            />
                         </Box>
                     )}
-                    <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleWindow('catalog')} layout={{}}>
-                        <NitroIcon icon="icon-catalog" layout={{}} />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => toggleWindow('catalog')}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-catalog"
+                            layout={{}}
+                        />
                     </Box>
-                    <NitroIcon icon="icon-builders-club" layout={{}} />
-                    <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleWindow('inventory')} layout={{}}>
-                        <NitroIcon icon="icon-inventory" layout={{}} />
+                    <NitroIcon
+                        icon="icon-builders-club"
+                        layout={{}}
+                    />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => toggleWindow('inventory')}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-inventory"
+                            layout={{}}
+                        />
                     </Box>
                     <Box
                         eventMode="static"
@@ -107,32 +146,65 @@ export const ToolbarViewPixi = () => {
                     >
                         <ColorLayer color="#262016" />
                         {avatarTexture && (
-                            <Box mask={avatarMaskNode ?? undefined} layout={{ width: 34, height: 34, justifyContent: 'center', alignItems: 'center' }}>
+                            <Box
+                                mask={avatarMaskNode ?? undefined}
+                                layout={{ width: 34, height: 34, justifyContent: 'center', alignItems: 'center' }}
+                            >
                                 <pixiGraphics
                                     ref={setAvatarMaskNode}
                                     eventMode="none"
                                     layout={{ position: 'absolute', top: 0, left: 0 }}
-                                    draw={g => { g.clear(); g.circle(17, 17, 17).fill(0xFFFFFF); }}
+                                    draw={(g) => { g.clear(); g.circle(17, 17, 17).fill(0xFFFFFF); }}
                                 />
-                                <pixiSprite texture={avatarTexture} width={avatarWidth} height={avatarHeight} layout={{ position: 'absolute', top: (34 - avatarHeight) / 2, left: (34 - avatarWidth) / 2 }} />
+                                <pixiSprite
+                                    texture={avatarTexture}
+                                    width={avatarWidth}
+                                    height={avatarHeight}
+                                    layout={{ position: 'absolute', top: (34 - avatarHeight) / 2, left: (34 - avatarWidth) / 2 }}
+                                />
                             </Box>
                         )}
-                        <NitroIcon icon="icon-me-circle" layout={{ position: 'absolute', top: 0, left: 0 }} />
+                        <NitroIcon
+                            icon="icon-me-circle"
+                            layout={{ position: 'absolute', top: 0, left: 0 }}
+                        />
                     </Box>
-                    <NitroIcon icon="icon-wired" layout={{}} />
-                    <NitroIcon icon="icon-camera" layout={{}} />
+                    <NitroIcon
+                        icon="icon-wired"
+                        layout={{}}
+                    />
+                    <NitroIcon
+                        icon="icon-camera"
+                        layout={{}}
+                    />
                 </Box>
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingLeft: ICON_SPACING }}>
                     <pixiGraphics
                         eventMode="none"
                         layout={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
+                        draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
                     />
-                    <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleWindow('friendlist')} layout={{}}>
-                        <NitroIcon icon="icon-friendall" layout={{}} />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => toggleWindow('friendlist')}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-friendall"
+                            layout={{}}
+                        />
                     </Box>
-                    <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })} layout={{}}>
-                        <NitroIcon icon="icon-friendsearch" layout={{}} />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-friendsearch"
+                            layout={{}}
+                        />
                     </Box>
                     {collapseRightTexture && (
                         <pixiSprite

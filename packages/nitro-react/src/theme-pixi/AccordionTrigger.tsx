@@ -59,7 +59,7 @@ export const AccordionTrigger: ForwardRefExoticComponent<AccordionTriggerProps &
                 {content}
             </Box>
         );
-    }
+    },
 );
 
 AccordionTrigger.displayName = 'AccordionTrigger';

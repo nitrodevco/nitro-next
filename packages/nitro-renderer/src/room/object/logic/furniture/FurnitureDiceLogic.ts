@@ -23,9 +23,9 @@ export class FurnitureDiceLogic extends FurnitureLogic {
             case MouseEventType.DOUBLE_CLICK:
                 if (this._noTags) {
                     if (
-                        !this._noTagsLastStateActivate ||
-                        this.object.getState(0) === 0 ||
-                        this.object.getState(0) === 100
+                        !this._noTagsLastStateActivate
+                        || this.object.getState(0) === 0
+                        || this.object.getState(0) === 100
                     ) {
                         objectEvent = new RoomObjectFurnitureActionEvent(
                             RoomObjectFurnitureActionEvent.DICE_ACTIVATE,
@@ -42,9 +42,9 @@ export class FurnitureDiceLogic extends FurnitureLogic {
                         this._noTagsLastStateActivate = false;
                     }
                 } else if (
-                    event.spriteTag === 'activate' ||
-                    this.object.getState(0) === 0 ||
-                    this.object.getState(0) === 100
+                    event.spriteTag === 'activate'
+                    || this.object.getState(0) === 0
+                    || this.object.getState(0) === 100
                 ) {
                     objectEvent = new RoomObjectFurnitureActionEvent(
                         RoomObjectFurnitureActionEvent.DICE_ACTIVATE,

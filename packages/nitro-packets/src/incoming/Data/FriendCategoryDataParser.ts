@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFriendCategoryData {
     id: number;
@@ -15,4 +15,4 @@ export const FriendCategoryDataParser = (wrapper: IMessageDataWrapper): IFriendC
     data.name = wrapper.readString();
 
     return data;
-}
+};

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PingMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class PingMessage implements IIncomingPacket<PingMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): PingMessageType
-  {
+export class PingMessage implements IIncomingPacket<PingMessageType> {
+    public parse(wrapper: IMessageDataWrapper): PingMessageType {
+        const packet: PingMessageType = {
+        };
 
-    const packet: PingMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

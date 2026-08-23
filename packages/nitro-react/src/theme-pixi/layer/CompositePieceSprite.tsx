@@ -1,7 +1,7 @@
-import { usePixiTexture } from "../utils/usePixiTexture";
-import { CompositePiece } from "./CompositePiece";
+import { usePixiTexture } from '../utils/usePixiTexture';
+import { CompositePiece } from './CompositePiece';
 
-export const CompositePieceSprite = ({ piece, tintColor }: { piece: CompositePiece, tintColor?: string }) => {
+export const CompositePieceSprite = ({ piece, tintColor }: { piece: CompositePiece; tintColor?: string }) => {
     const texture = usePixiTexture(piece.textureKey);
 
     if (!texture) return null;

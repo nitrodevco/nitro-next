@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper, IRoomChatSettings } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper, IRoomChatSettings } from '@nitrodevco/nitro-api';
 
 /**
  * Mirrors RoomChatSettings.fromFloodSensitivity() in the SWF: the wire only
@@ -10,6 +10,6 @@ export const RoomChatSettingsParser = (wrapper: IMessageDataWrapper) => {
         bubbleSize: 1,
         scrollUpFrequency: 1,
         fullHearRange: 0,
-        floodSensitivity: wrapper.readInt()
+        floodSensitivity: wrapper.readInt(),
     } as IRoomChatSettings;
-}
+};

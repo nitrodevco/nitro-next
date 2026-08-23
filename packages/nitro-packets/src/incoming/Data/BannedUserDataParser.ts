@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IBannedUserData {
     userId: number;
@@ -15,4 +15,4 @@ export const BannedUserDataParser = (wrapper: IMessageDataWrapper): IBannedUserD
     data.userName = wrapper.readString();
 
     return data;
-}
+};

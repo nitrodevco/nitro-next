@@ -62,14 +62,14 @@ export class AnimationFrameSequenceData {
             const frame = this._frames[this._frames.length - 1];
 
             if (
-                frame.id === id &&
-                !frame.hasDirectionalOffsets() &&
-                frame.x === x &&
-                frame.y === y &&
-                frame.randomX === randomX &&
-                randomX === 0 &&
-                frame.randomY === randomY &&
-                randomY === 0
+                frame.id === id
+                && !frame.hasDirectionalOffsets()
+                && frame.x === x
+                && frame.y === y
+                && frame.randomX === randomX
+                && randomX === 0
+                && frame.randomY === randomY
+                && randomY === 0
             ) {
                 repeats += frame.repeats;
 

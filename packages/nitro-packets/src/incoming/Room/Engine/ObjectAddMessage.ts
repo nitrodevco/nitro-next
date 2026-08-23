@@ -10,7 +10,7 @@ export type ObjectAddMessageType = {
 export class ObjectAddMessage implements IIncomingPacket<ObjectAddMessageType> {
     public parse(wrapper: IMessageDataWrapper): ObjectAddMessageType {
         const packet: ObjectAddMessageType = {
-            floorItem: FloorItemParser(wrapper)
+            floorItem: FloorItemParser(wrapper),
         };
 
         packet.floorItem.ownerName = wrapper.readString();

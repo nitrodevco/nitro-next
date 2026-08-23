@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ChatReviewSessionDetachedMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ChatReviewSessionDetachedMessage implements IIncomingPacket<ChatReviewSessionDetachedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ChatReviewSessionDetachedMessageType
-  {
+export class ChatReviewSessionDetachedMessage implements IIncomingPacket<ChatReviewSessionDetachedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ChatReviewSessionDetachedMessageType {
+        const packet: ChatReviewSessionDetachedMessageType = {
+        };
 
-    const packet: ChatReviewSessionDetachedMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

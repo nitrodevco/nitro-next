@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IBadgeLeaderboardEntryData {
     userId: number;
@@ -24,4 +24,4 @@ export const BadgeLeaderboardEntryDataParser = (wrapper: IMessageDataWrapper): I
     data.score = wrapper.readInt();
 
     return data;
-}
+};

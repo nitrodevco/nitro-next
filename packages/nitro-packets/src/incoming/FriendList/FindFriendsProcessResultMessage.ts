@@ -7,7 +7,7 @@ export type FindFriendsProcessResultMessageType = {
 export class FindFriendsProcessResultMessage implements IIncomingPacket<FindFriendsProcessResultMessageType> {
     public parse(wrapper: IMessageDataWrapper): FindFriendsProcessResultMessageType {
         const packet: FindFriendsProcessResultMessageType = {
-            success: wrapper.readBoolean()
+            success: wrapper.readBoolean(),
         };
 
         return packet;

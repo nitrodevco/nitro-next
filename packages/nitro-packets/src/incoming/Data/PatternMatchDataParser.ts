@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IPatternMatchData {
     pattern: string;
@@ -18,4 +18,4 @@ export const PatternMatchDataParser = (wrapper: IMessageDataWrapper): IPatternMa
     data.endIndex = wrapper.readInt();
 
     return data;
-}
+};

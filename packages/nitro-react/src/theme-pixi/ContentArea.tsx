@@ -13,8 +13,8 @@ import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 type ContentAreaVariant = ThemeVariant;
 
 const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
-    '0': { layout: { paddingBottom: 3 } },
-    '3': { layout: { position: 'relative' } },
+    0: { layout: { paddingBottom: 3 } },
+    3: { layout: { position: 'relative' } },
 };
 
 export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
@@ -24,7 +24,7 @@ export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
 export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContentAreaProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'contentArea', variants: CONTENT_AREA_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
+            cascadeKey: 'contentArea', variants: CONTENT_AREA_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
         return (
@@ -41,14 +41,19 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
                 }}
                 {...handlers}
             >
-                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 ContentArea.displayName = 'ContentArea';

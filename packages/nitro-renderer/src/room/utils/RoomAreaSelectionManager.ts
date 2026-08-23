@@ -1,7 +1,5 @@
-import type { IRoom, IRoomAreaSelectionManager, IRoomObject } from '@nitrodevco/nitro-api';
-import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-import type { RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
-import { RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import type { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
 import { ColorMatrixFilter } from 'pixi.js';
 
 import type { FurnitureVisualization, RoomVisualization } from '../object';
@@ -47,15 +45,15 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         const brightenFilter = new ColorMatrixFilter();
 
-        brightenFilter.matrix = [1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1, 0, 0.0784, 0.0784, 0];
+        brightenFilter.matrix = [ 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1, 0, 0.0784, 0.0784, 0 ];
 
         const blueFilter = new ColorMatrixFilter();
 
-        blueFilter.matrix = [1.05, 0, 0, 0, 0, 1.3, 0, 0, 0, 0, 1.8, 0, 0, 0, 0, 1, 0, 0.0314, 0.0784, 0];
+        blueFilter.matrix = [ 1.05, 0, 0, 0, 0, 1.3, 0, 0, 0, 0, 1.8, 0, 0, 0, 0, 1, 0, 0.0314, 0.0784, 0 ];
 
         const darkenFilter = new ColorMatrixFilter();
 
-        darkenFilter.matrix = [0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 1, -0.0392, -0.0392, -0.0392, 0];
+        darkenFilter.matrix = [ 0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 1, -0.0392, -0.0392, -0.0392, 0 ];
 
         RoomAreaSelectionManager.HIGHLIGHT_FILTERS[RoomAreaSelectionManager.HIGHLIGHT_DARKEN] = darkenFilter;
         RoomAreaSelectionManager.HIGHLIGHT_FILTERS[RoomAreaSelectionManager.HIGHLIGHT_BRIGHTEN] = brightenFilter;
@@ -88,14 +86,14 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
     }
 
     public handleTileMouseEvent(event: RoomObjectTileMouseEvent): void {
-        let isWaitingForMouseDown =
-            this._state === RoomAreaSelectionManager.AWAITING_MOUSE_DOWN &&
-            event.type == RoomObjectMouseEvent.MOUSE_DOWN;
+        let isWaitingForMouseDown
+            = this._state === RoomAreaSelectionManager.AWAITING_MOUSE_DOWN
+                && event.type == RoomObjectMouseEvent.MOUSE_DOWN;
 
         if (
-            event.shiftKey &&
-            this._state === RoomAreaSelectionManager.NOT_SELECTING_AREA &&
-            event.type == RoomObjectMouseEvent.MOUSE_DOWN
+            event.shiftKey
+            && this._state === RoomAreaSelectionManager.NOT_SELECTING_AREA
+            && event.type == RoomObjectMouseEvent.MOUSE_DOWN
         ) {
             this.startSelecting();
 

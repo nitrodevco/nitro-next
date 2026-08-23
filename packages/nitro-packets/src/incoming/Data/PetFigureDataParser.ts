@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IPetFigureData {
     typeId: number;
@@ -30,4 +30,4 @@ export const PetFigureDataParser = (wrapper: IMessageDataWrapper): IPetFigureDat
     }
 
     return data;
-}
+};

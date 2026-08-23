@@ -3,5 +3,5 @@ export enum RoomModerationType {
     Rights = 1,
     All = 2,
     GroupRights = 4,
-    RightsOrGroup = 5
+    RightsOrGroup = 5,
 }

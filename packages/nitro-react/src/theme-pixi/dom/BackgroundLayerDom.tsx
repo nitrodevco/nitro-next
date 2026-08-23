@@ -46,30 +46,28 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             const width = `${layer.topHeight}px ${layer.rightWidth}px ${layer.bottomHeight}px ${layer.leftWidth}px`;
 
             return (
-                <div
-                    style={{
-                        ...box,
-                        borderStyle: 'solid',
-                        borderColor: 'transparent',
-                        borderWidth: width,
-                        borderImageSource: `url(${url})`,
-                        borderImageSlice: slice,
-                        borderImageWidth: width,
-                        borderImageRepeat: 'stretch',
-                        imageRendering: 'pixelated',
-                    }}
+                <div style={{
+                    ...box,
+                    borderStyle: 'solid',
+                    borderColor: 'transparent',
+                    borderWidth: width,
+                    borderImageSource: `url(${url})`,
+                    borderImageSlice: slice,
+                    borderImageWidth: width,
+                    borderImageRepeat: 'stretch',
+                    imageRendering: 'pixelated',
+                }}
                 >
                     {tintColor && (
-                        <div
-                            style={{
-                                position: 'absolute', inset: 0,
-                                backgroundColor: tintColor,
-                                mixBlendMode: 'multiply',
-                                WebkitMaskBoxImageSource: `url(${url})`,
-                                WebkitMaskBoxImageSlice: slice,
-                                WebkitMaskBoxImageWidth: width,
-                                WebkitMaskBoxImageRepeat: 'stretch',
-                            }}
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundColor: tintColor,
+                            mixBlendMode: 'multiply',
+                            WebkitMaskBoxImageSource: `url(${url})`,
+                            WebkitMaskBoxImageSlice: slice,
+                            WebkitMaskBoxImageWidth: width,
+                            WebkitMaskBoxImageRepeat: 'stretch',
+                        }}
                         />
                     )}
                 </div>
@@ -83,26 +81,24 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             if (!url) return null;
 
             return (
-                <div
-                    style={{
-                        ...box,
-                        backgroundImage: `url(${url})`,
-                        backgroundSize: '100% 100%',
-                        backgroundRepeat: 'no-repeat',
-                        imageRendering: 'pixelated',
-                    }}
+                <div style={{
+                    ...box,
+                    backgroundImage: `url(${url})`,
+                    backgroundSize: '100% 100%',
+                    backgroundRepeat: 'no-repeat',
+                    imageRendering: 'pixelated',
+                }}
                 >
                     {tintColor && (
-                        <div
-                            style={{
-                                position: 'absolute', inset: 0,
-                                backgroundColor: tintColor,
-                                mixBlendMode: 'multiply',
-                                WebkitMaskImage: `url(${url})`,
-                                maskImage: `url(${url})`,
-                                WebkitMaskSize: '100% 100%',
-                                maskSize: '100% 100%',
-                            }}
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundColor: tintColor,
+                            mixBlendMode: 'multiply',
+                            WebkitMaskImage: `url(${url})`,
+                            maskImage: `url(${url})`,
+                            WebkitMaskSize: '100% 100%',
+                            maskSize: '100% 100%',
+                        }}
                         />
                     )}
                 </div>
@@ -115,25 +111,23 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             if (!url) return null;
 
             return (
-                <div
-                    style={{
-                        ...box,
-                        backgroundImage: `url(${url})`,
-                        backgroundRepeat: 'repeat',
-                        imageRendering: 'pixelated',
-                    }}
+                <div style={{
+                    ...box,
+                    backgroundImage: `url(${url})`,
+                    backgroundRepeat: 'repeat',
+                    imageRendering: 'pixelated',
+                }}
                 >
                     {tintColor && (
-                        <div
-                            style={{
-                                position: 'absolute', inset: 0,
-                                backgroundColor: tintColor,
-                                mixBlendMode: 'multiply',
-                                WebkitMaskImage: `url(${url})`,
-                                maskImage: `url(${url})`,
-                                WebkitMaskRepeat: 'repeat',
-                                maskRepeat: 'repeat',
-                            }}
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundColor: tintColor,
+                            mixBlendMode: 'multiply',
+                            WebkitMaskImage: `url(${url})`,
+                            maskImage: `url(${url})`,
+                            WebkitMaskRepeat: 'repeat',
+                            maskRepeat: 'repeat',
+                        }}
                         />
                     )}
                 </div>
@@ -155,27 +149,28 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                         };
 
                         return (
-                            <div key={i} style={pieceBox}>
-                                <div
-                                    style={{
-                                        position: 'absolute', inset: 0,
-                                        backgroundImage: `url(${url})`,
-                                        backgroundSize: '100% 100%',
-                                        backgroundRepeat: 'no-repeat',
-                                        imageRendering: 'pixelated',
-                                    }}
+                            <div
+                                key={i}
+                                style={pieceBox}
+                            >
+                                <div style={{
+                                    position: 'absolute', inset: 0,
+                                    backgroundImage: `url(${url})`,
+                                    backgroundSize: '100% 100%',
+                                    backgroundRepeat: 'no-repeat',
+                                    imageRendering: 'pixelated',
+                                }}
                                 />
                                 {tintColor && (
-                                    <div
-                                        style={{
-                                            position: 'absolute', inset: 0,
-                                            backgroundColor: tintColor,
-                                            mixBlendMode: 'multiply',
-                                            WebkitMaskImage: `url(${url})`,
-                                            maskImage: `url(${url})`,
-                                            WebkitMaskSize: '100% 100%',
-                                            maskSize: '100% 100%',
-                                        }}
+                                    <div style={{
+                                        position: 'absolute', inset: 0,
+                                        backgroundColor: tintColor,
+                                        mixBlendMode: 'multiply',
+                                        WebkitMaskImage: `url(${url})`,
+                                        maskImage: `url(${url})`,
+                                        WebkitMaskSize: '100% 100%',
+                                        maskSize: '100% 100%',
+                                    }}
                                     />
                                 )}
                             </div>

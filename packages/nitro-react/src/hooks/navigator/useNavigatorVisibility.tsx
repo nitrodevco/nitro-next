@@ -1,4 +1,4 @@
-import { useIsWindowVisible, useSystemActions } from "#base/context";
+import { useIsWindowVisible, useSystemActions } from '#base/context';
 
 export const useNavigatorVisibility = () => {
     const windowName = 'navigator';
@@ -10,4 +10,4 @@ export const useNavigatorVisibility = () => {
     const hideNavigator = () => hideWindow(windowName);
 
     return { isNavigatorVisible, showNavigator, hideNavigator };
-}
+};

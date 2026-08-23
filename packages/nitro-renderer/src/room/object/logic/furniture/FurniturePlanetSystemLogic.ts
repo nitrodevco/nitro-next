@@ -8,7 +8,7 @@ export class FurniturePlanetSystemLogic extends FurnitureLogic {
 
         if (asset?.logic?.planetSystems) this.object.model.setValue<IAssetLogicPlanetSystem[]>(
             RoomObjectVariableEnum.FurniturePlanetsystemData,
-            asset.logic.planetSystems
+            asset.logic.planetSystems,
         );
     }
 }

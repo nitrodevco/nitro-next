@@ -1,4 +1,4 @@
-import type { StateCreator } from "zustand";
+import type { StateCreator } from 'zustand';
 
 type State = {
     width: number;
@@ -6,11 +6,11 @@ type State = {
     heights: number[];
     stackingBlocked: boolean[];
     validTiles: boolean[];
-}
+};
 
 type Actions = {
     setHeightMap: (width: number, height: number, heights: number[], stackingBlocked: boolean[], validTiles: boolean[]) => void;
-    setHeightMapUpdates: (updates: { x: number, y: number, height: number, stackingBlocked: boolean, validTile: boolean }[]) => void;
+    setHeightMapUpdates: (updates: { x: number; y: number; height: number; stackingBlocked: boolean; validTile: boolean }[]) => void;
     getTileHeight: (x: number, y: number) => number;
     validateLocation: (
         x: number,
@@ -31,7 +31,7 @@ export const RoomStackingHeightMapSliceInitialState: State = {
     height: 0,
     heights: [],
     stackingBlocked: [],
-    validTiles: []
+    validTiles: [],
 };
 
 export type RoomStackingHeightMapSlice = State & Actions;
@@ -41,13 +41,13 @@ export const createRoomStackingHeightMapSlice: StateCreator<RoomStackingHeightMa
     setHeightMap: (width: number, height: number, heights: number[], stackingBlocked: boolean[], validTiles: boolean[]) => {
         set({ width, height, heights, stackingBlocked, validTiles });
     },
-    setHeightMapUpdates: (updates: { x: number, y: number, height: number, stackingBlocked: boolean, validTile: boolean }[]) => {
-        set(state => {
+    setHeightMapUpdates: (updates: { x: number; y: number; height: number; stackingBlocked: boolean; validTile: boolean }[]) => {
+        set((state) => {
             const width = state.width;
             const height = state.height;
-            const heights = [...state.heights];
-            const stackingBlocked = [...state.stackingBlocked];
-            const validTiles = [...state.validTiles];
+            const heights = [ ...state.heights ];
+            const stackingBlocked = [ ...state.stackingBlocked ];
+            const validTiles = [ ...state.validTiles ];
 
             for (const update of updates) {
                 if (update.x >= 0 && update.x < width && update.y >= 0 && update.y < height) {
@@ -103,19 +103,19 @@ export const createRoomStackingHeightMapSlice: StateCreator<RoomStackingHeightMa
 
             while (tileX < x + sizeX) {
                 if (
-                    tileX < prevX ||
-                    tileX >= prevX + prevSizeX ||
-                    tileY < prevY ||
-                    tileY >= prevY + prevSizeY
+                    tileX < prevX
+                    || tileX >= prevX + prevSizeX
+                    || tileY < prevY
+                    || tileY >= prevY + prevSizeY
                 ) {
                     const tileIndex = tileY * mapWidth + tileX;
 
                     if (alwaysStackable) {
                         if (!state.validTiles[tileIndex]) return false;
                     } else if (
-                        state.stackingBlocked[tileIndex] ||
-                        !state.validTiles[tileIndex] ||
-                        Math.abs(state.heights[tileIndex] - height) > 0.01
+                        state.stackingBlocked[tileIndex]
+                        || !state.validTiles[tileIndex]
+                        || Math.abs(state.heights[tileIndex] - height) > 0.01
                     )
                         return false;
                 }
@@ -127,5 +127,5 @@ export const createRoomStackingHeightMapSlice: StateCreator<RoomStackingHeightMa
         }
 
         return true;
-    }
+    },
 });

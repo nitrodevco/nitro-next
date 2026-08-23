@@ -23,7 +23,7 @@ type State = {
     isSearching: boolean;
     currentRoom: IRoomInfo | undefined;
     currentRoomIsOwner: boolean;
-}
+};
 
 type Actions = {
     setTopLevelContexts: (topLevelContexts: ITopLevelContext[]) => void;
@@ -44,7 +44,7 @@ type Actions = {
     setIsSearching: (isSearching: boolean) => void;
     setCurrentRoom: (currentRoom: IRoomInfo | undefined, currentRoomIsOwner: boolean) => void;
     resetNavigator: () => void;
-}
+};
 
 const initialState: State = {
     topLevelContexts: [],
@@ -63,7 +63,7 @@ const initialState: State = {
     leftPaneHidden: false,
     isSearching: false,
     currentRoom: undefined,
-    currentRoomIsOwner: false
+    currentRoomIsOwner: false,
 };
 
 export type NavigatorContextStore = State & Actions;
@@ -81,18 +81,18 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
         searchResult,
         isSearching: false,
         // BlockResultsView reseeds _searchCodeViewMode from the incoming blocks
-        viewModes: Object.fromEntries((searchResult?.blocks ?? []).map(x => [x.searchCode, x.viewMode]))
+        viewModes: Object.fromEntries((searchResult?.blocks ?? []).map(x => [ x.searchCode, x.viewMode ])),
     }),
     setCollapsedCategories: collapsedCategories => set({ collapsedCategories }),
     toggleCollapsedCategory: code => set(x => ({
         collapsedCategories: x.collapsedCategories.includes(code)
             ? x.collapsedCategories.filter(y => y !== code)
-            : [...x.collapsedCategories, code]
+            : [ ...x.collapsedCategories, code ],
     })),
     toggleExpandedCategory: code => set(x => ({
         expandedCategories: x.expandedCategories.includes(code)
             ? x.expandedCategories.filter(y => y !== code)
-            : [...x.expandedCategories, code]
+            : [ ...x.expandedCategories, code ],
     })),
     setFilterType: filterType => set({ filterType }),
     setLeftPaneHidden: leftPaneHidden => set({ leftPaneHidden }),
@@ -100,7 +100,7 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     setSearchFilter: searchFilter => set({ searchFilter }),
     setIsSearching: isSearching => set({ isSearching }),
     setCurrentRoom: (currentRoom, currentRoomIsOwner) => set({ currentRoom, currentRoomIsOwner }),
-    resetNavigator: () => set({ ...initialState })
+    resetNavigator: () => set({ ...initialState }),
 }));
 
 export type { ISearchResultList };

@@ -1,4 +1,4 @@
-import { CatalogFrontPageItemType, ICatalogFrontPageItem, IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import { CatalogFrontPageItemType, ICatalogFrontPageItem, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export const CatalogFrontPageItemParser = (wrapper: IMessageDataWrapper) => {
     const result = {
@@ -6,7 +6,7 @@ export const CatalogFrontPageItemParser = (wrapper: IMessageDataWrapper) => {
         itemName: wrapper.readString(),
         itemPromoImage: wrapper.readString(),
         type: wrapper.readInt(),
-        expiresInSeconds: -1
+        expiresInSeconds: -1,
     } as ICatalogFrontPageItem;
 
     switch (result.type) {
@@ -24,4 +24,4 @@ export const CatalogFrontPageItemParser = (wrapper: IMessageDataWrapper) => {
     result.expiresInSeconds = wrapper.readInt();
 
     return result;
-}
+};

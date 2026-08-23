@@ -13,7 +13,7 @@ export class LimitedOfferAppearingNextMessage implements IIncomingPacket<Limited
             appearsInSeconds: wrapper.readInt(),
             pageId: wrapper.readInt(),
             offerId: wrapper.readInt(),
-            productClassName: wrapper.readString()
-        }
+            productClassName: wrapper.readString(),
+        };
     }
 }

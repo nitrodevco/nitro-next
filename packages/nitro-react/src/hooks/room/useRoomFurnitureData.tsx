@@ -1,6 +1,6 @@
-import { FurnitureUsagePolicyEnum, GetObjectDataForFlags, IFurniData, IFurnitureData, RoomObjectCategoryEnum, RoomObjectVariableEnum } from "@nitrodevco/nitro-api";
+import { FurnitureUsagePolicyEnum, GetObjectDataForFlags, IFurniData, IFurnitureData, RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
-import { useFurnitureDataSelector, useRoomSelector, useTranslation } from "#base/context"
+import { useFurnitureDataSelector, useRoomSelector, useTranslation } from '#base/context';
 
 export const useRoomFurnitureData = (objectId: number, category: RoomObjectCategoryEnum) => {
     const room = useRoomSelector();
@@ -61,6 +61,6 @@ export const useRoomFurnitureData = (objectId: number, category: RoomObjectCateg
         ownerId,
         ownerName,
         usagePolicy,
-        groupId
+        groupId,
     } as IFurniData;
-}
+};

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type GuideSessionAttachedMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class GuideSessionAttachedMessage implements IIncomingPacket<GuideSessionAttachedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): GuideSessionAttachedMessageType
-  {
+export class GuideSessionAttachedMessage implements IIncomingPacket<GuideSessionAttachedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): GuideSessionAttachedMessageType {
+        const packet: GuideSessionAttachedMessageType = {
+        };
 
-    const packet: GuideSessionAttachedMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

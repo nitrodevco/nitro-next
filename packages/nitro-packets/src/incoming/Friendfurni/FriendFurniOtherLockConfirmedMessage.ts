@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FriendFurniOtherLockConfirmedMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class FriendFurniOtherLockConfirmedMessage implements IIncomingPacket<FriendFurniOtherLockConfirmedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FriendFurniOtherLockConfirmedMessageType
-  {
+export class FriendFurniOtherLockConfirmedMessage implements IIncomingPacket<FriendFurniOtherLockConfirmedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FriendFurniOtherLockConfirmedMessageType {
+        const packet: FriendFurniOtherLockConfirmedMessageType = {
+        };
 
-    const packet: FriendFurniOtherLockConfirmedMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

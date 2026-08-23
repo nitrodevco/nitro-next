@@ -1,6 +1,6 @@
-import { ICatalogOffer, IMessageDataWrapper, ParseArray } from "@nitrodevco/nitro-api";
+import { ICatalogOffer, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
 
-import { CatalogProductParser } from "./CatalogProductParser";
+import { CatalogProductParser } from './CatalogProductParser';
 
 export const CatalogOfferParser = (wrapper: IMessageDataWrapper): ICatalogOffer => {
     return {
@@ -16,6 +16,6 @@ export const CatalogOfferParser = (wrapper: IMessageDataWrapper): ICatalogOffer 
         clubLevel: wrapper.readInt(),
         canBundle: wrapper.readBoolean(),
         unknown1: wrapper.bytesAvailable ? wrapper.readBoolean() : false,
-        previewImage: wrapper.bytesAvailable ? wrapper.readString() : ''
-    }
-}
+        previewImage: wrapper.bytesAvailable ? wrapper.readString() : '',
+    };
+};

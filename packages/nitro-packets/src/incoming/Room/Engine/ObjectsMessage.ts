@@ -13,7 +13,7 @@ export class ObjectsMessage implements IIncomingPacket<ObjectsMessageType> {
     public parse(wrapper: IMessageDataWrapper): ObjectsMessageType {
         const packet: ObjectsMessageType = {
             owners: FurnitureOwnersParser(wrapper),
-            floorItems: []
+            floorItems: [],
         };
 
         let count = wrapper.readInt();

@@ -23,32 +23,82 @@ export const FriendListFriendsFooterPixi = () => {
 
     return (
         <Box layout={{ height: 40, flexShrink: 0, paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 }}>
-            <Border tintColor="#d8d8d8" layout={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingRight: 5 }}>
+            <Border
+                tintColor="#d8d8d8"
+                layout={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingRight: 5 }}
+            >
                 <Box layout={{ flexDirection: 'row', gap: 4 }}>
-                    <Button disabled={selectedFriendIds.length < 1} onPress={() => toggleWindow('friendlist_invite')} layout={BUTTON_LAYOUT}>
-                        <NitroIcon icon="icon-room-invite" layout={{}} />
+                    <Button
+                        disabled={selectedFriendIds.length < 1}
+                        onPress={() => toggleWindow('friendlist_invite')}
+                        layout={BUTTON_LAYOUT}
+                    >
+                        <NitroIcon
+                            icon="icon-room-invite"
+                            layout={{}}
+                        />
                     </Button>
-                    <Button disabled={selectedFriendIds.length !== 1} layout={BUTTON_LAYOUT}>
-                        <NitroIcon icon="icon-homepage-outline" layout={{}} />
+                    <Button
+                        disabled={selectedFriendIds.length !== 1}
+                        layout={BUTTON_LAYOUT}
+                    >
+                        <NitroIcon
+                            icon="icon-homepage-outline"
+                            layout={{}}
+                        />
                     </Button>
                 </Box>
                 <Box layout={{ flex: 1, flexDirection: 'row', gap: 4, justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <Box onPointerOver={searchHover.onMouseEnter} onPointerOut={searchHover.onMouseLeave} eventMode="static" layout={{ position: 'relative' }}>
-                        {showListSearchInput ? (
-                            <>
-                                <TextInput value={listSearchValue} onChange={setListSearchValue} onEnter={() => setFilterValue(listSearchValue)} fontSize={9} layout={{ width: 108, height: 20 }} />
-                                <Box eventMode="static" cursor="pointer" onPointerTap={() => toggleListSearchInput(false)} layout={{ position: 'absolute', right: 4, top: 6 }}>
-                                    <NitroIcon icon="icon-close-gray" layout={{}} />
-                                </Box>
-                            </>
-                        ) : (
-                            <Button onPress={() => toggleListSearchInput(true)} layout={BUTTON_LAYOUT}>
-                                <NitroIcon icon="icon-search-outline" layout={{}} />
-                            </Button>
-                        )}
+                    <Box
+                        onPointerOver={searchHover.onMouseEnter}
+                        onPointerOut={searchHover.onMouseLeave}
+                        eventMode="static"
+                        layout={{ position: 'relative' }}
+                    >
+                        {showListSearchInput
+                            ? (
+                                    <>
+                                        <TextInput
+                                            value={listSearchValue}
+                                            onChange={setListSearchValue}
+                                            onEnter={() => setFilterValue(listSearchValue)}
+                                            fontSize={9}
+                                            layout={{ width: 108, height: 20 }}
+                                        />
+                                        <Box
+                                            eventMode="static"
+                                            cursor="pointer"
+                                            onPointerTap={() => toggleListSearchInput(false)}
+                                            layout={{ position: 'absolute', right: 4, top: 6 }}
+                                        >
+                                            <NitroIcon
+                                                icon="icon-close-gray"
+                                                layout={{}}
+                                            />
+                                        </Box>
+                                    </>
+                                )
+                            : (
+                                    <Button
+                                        onPress={() => toggleListSearchInput(true)}
+                                        layout={BUTTON_LAYOUT}
+                                    >
+                                        <NitroIcon
+                                            icon="icon-search-outline"
+                                            layout={{}}
+                                        />
+                                    </Button>
+                                )}
                     </Box>
-                    <Button disabled={selectedFriendIds.length < 1} onPress={() => toggleWindow('friendlist_remove_confirmation')} layout={BUTTON_LAYOUT}>
-                        <NitroIcon icon="icon-trash-outline" layout={{}} />
+                    <Button
+                        disabled={selectedFriendIds.length < 1}
+                        onPress={() => toggleWindow('friendlist_remove_confirmation')}
+                        layout={BUTTON_LAYOUT}
+                    >
+                        <NitroIcon
+                            icon="icon-trash-outline"
+                            layout={{}}
+                        />
                     </Button>
                 </Box>
             </Border>

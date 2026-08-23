@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type SelectInitialRoomEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class SelectInitialRoomEventMessage implements IIncomingPacket<SelectInitialRoomEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): SelectInitialRoomEventMessageType
-  {
+export class SelectInitialRoomEventMessage implements IIncomingPacket<SelectInitialRoomEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): SelectInitialRoomEventMessageType {
+        const packet: SelectInitialRoomEventMessageType = {
+        };
 
-    const packet: SelectInitialRoomEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

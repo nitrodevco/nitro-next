@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarFigurePartType, type IAssetAvatarAnimation } from "@nitrodevco/nitro-api";
+import { AvatarBodyPartType, AvatarFigurePartType, type IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
 
 export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
     {
@@ -14,8 +14,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.BodySwim,
@@ -27,8 +27,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Legs,
@@ -40,8 +40,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Shoes,
@@ -53,8 +53,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Chest,
@@ -66,8 +66,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.CoatChest,
@@ -79,8 +79,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
@@ -92,8 +92,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
@@ -105,8 +105,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHand,
@@ -118,8 +118,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHandSwim,
@@ -131,8 +131,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHand,
@@ -144,8 +144,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHandSwim,
@@ -157,8 +157,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftSleeve,
@@ -170,8 +170,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightSleeve,
@@ -183,8 +183,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.HeadAccessoryExtra,
@@ -196,8 +196,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.WaistAccessory,
@@ -209,10 +209,10 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
-            }
-        ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
+            },
+        ],
     },
     {
         id: 'Sit',
@@ -227,8 +227,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.BodySwim,
@@ -240,8 +240,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Legs,
@@ -253,8 +253,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Shoes,
@@ -266,8 +266,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Chest,
@@ -279,8 +279,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.CoatChest,
@@ -292,8 +292,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
@@ -305,8 +305,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
@@ -318,8 +318,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'sit' },
                     { number: 5, assetPartDefinition: 'sit' },
                     { number: 6, assetPartDefinition: 'sit' },
-                    { number: 7, assetPartDefinition: 'sit' }
-                ]
+                    { number: 7, assetPartDefinition: 'sit' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.WaistAccessory,
@@ -331,10 +331,10 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'std' },
                     { number: 5, assetPartDefinition: 'std' },
                     { number: 6, assetPartDefinition: 'std' },
-                    { number: 7, assetPartDefinition: 'std' }
-                ]
-            }
-        ]
+                    { number: 7, assetPartDefinition: 'std' },
+                ],
+            },
+        ],
     },
     {
         id: 'Lay',
@@ -349,8 +349,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.BodySwim,
@@ -362,8 +362,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Legs,
@@ -375,8 +375,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Shoes,
@@ -388,8 +388,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Chest,
@@ -401,8 +401,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.CoatChest,
@@ -414,8 +414,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
@@ -427,8 +427,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
@@ -440,8 +440,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.WaistAccessory,
@@ -453,8 +453,8 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
             },
             {
                 setType: AvatarFigurePartType.HeadAccessoryExtra,
@@ -466,10 +466,10 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     { number: 4, assetPartDefinition: 'lay' },
                     { number: 5, assetPartDefinition: 'lay' },
                     { number: 6, assetPartDefinition: 'lay' },
-                    { number: 7, assetPartDefinition: 'lay' }
-                ]
-            }
-        ]
+                    { number: 7, assetPartDefinition: 'lay' },
+                ],
+            },
+        ],
     },
     {
         id: 'Move',
@@ -479,296 +479,296 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.BodySwim,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Ss,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Legs,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Shoes,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHand,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHandSwim,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHand,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHandSwim,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Chest,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wlk'
+                        assetPartDefinition: 'wlk',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wlk'
-                    }
-                ]
-            }
-        ]
+                        assetPartDefinition: 'wlk',
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Wave',
@@ -778,75 +778,75 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHandSwim,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Chest,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 2,
-                        assetPartDefinition: 'wav'
+                        assetPartDefinition: 'wav',
                     },
                     {
                         number: 3,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
-            }
-        ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Talk',
@@ -856,41 +856,41 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'spk'
+                        assetPartDefinition: 'spk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'spk'
-                    }
-                ]
+                        assetPartDefinition: 'spk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Face,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'spk'
+                        assetPartDefinition: 'spk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'spk'
-                    }
-                ]
+                        assetPartDefinition: 'spk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.FaceAccessory,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'spk'
+                        assetPartDefinition: 'spk',
                     },
                     {
                         number: 1,
-                        assetPartDefinition: 'spk'
-                    }
-                ]
-            }
-        ]
+                        assetPartDefinition: 'spk',
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Sign',
@@ -900,38 +900,38 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'sig'
-                    }
-                ]
+                        assetPartDefinition: 'sig',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftHandItem,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'sig'
-                    }
-                ]
+                        assetPartDefinition: 'sig',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'wav'
-                    }
-                ]
-            }
-        ]
+                        assetPartDefinition: 'wav',
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Respect',
@@ -942,14 +942,14 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'respect',
-                        repeats: 15
+                        repeats: 15,
                     },
                     {
                         number: 1,
                         assetPartDefinition: 'respect',
-                        repeats: 15
-                    }
-                ]
+                        repeats: 15,
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftSleeve,
@@ -957,14 +957,14 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'wav',
-                        repeats: 15
+                        repeats: 15,
                     },
                     {
                         number: 1,
                         assetPartDefinition: 'wav',
-                        repeats: 15
-                    }
-                ]
+                        repeats: 15,
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.LeftCoatSleeve,
@@ -972,16 +972,16 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'wav',
-                        repeats: 15
+                        repeats: 15,
                     },
                     {
                         number: 1,
                         assetPartDefinition: 'wav',
-                        repeats: 15
-                    }
-                ]
-            }
-        ]
+                        repeats: 15,
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Blow',
@@ -992,41 +992,41 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'blw',
-                        repeats: 10
+                        repeats: 10,
                     },
                     {
                         number: 1,
                         assetPartDefinition: 'blw',
-                        repeats: 10
-                    }
-                ]
+                        repeats: 10,
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'drk'
-                    }
-                ]
+                        assetPartDefinition: 'drk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'drk'
-                    }
-                ]
+                        assetPartDefinition: 'drk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHandItem,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: ''
-                    }
-                ]
+                        assetPartDefinition: '',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Eyes,
@@ -1034,14 +1034,14 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'std',
-                        repeats: 10
+                        repeats: 10,
                     },
                     {
                         number: 0,
                         assetPartDefinition: 'eyb',
-                        repeats: 10
-                    }
-                ]
+                        repeats: 10,
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Face,
@@ -1049,16 +1049,16 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'std',
-                        repeats: 10
+                        repeats: 10,
                     },
                     {
                         number: 0,
                         assetPartDefinition: 'blw',
-                        repeats: 10
-                    }
-                ]
-            }
-        ]
+                        repeats: 10,
+                    },
+                ],
+            },
+        ],
     },
     {
         id: 'Laugh',
@@ -1068,36 +1068,36 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'blw'
-                    }
-                ]
+                        assetPartDefinition: 'blw',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'drk'
-                    }
-                ]
+                        assetPartDefinition: 'drk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightCoatSleeve,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'drk'
-                    }
-                ]
+                        assetPartDefinition: 'drk',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.RightHandItem,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: ''
-                    }
-                ]
+                        assetPartDefinition: '',
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Eyes,
@@ -1105,19 +1105,19 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                     {
                         number: 0,
                         assetPartDefinition: 'std',
-                        repeats: 2
-                    }
-                ]
+                        repeats: 2,
+                    },
+                ],
             },
             {
                 setType: AvatarFigurePartType.Face,
                 frames: [
                     {
                         number: 0,
-                        assetPartDefinition: 'sml'
-                    }
-                ]
-            }
+                        assetPartDefinition: 'sml',
+                    },
+                ],
+            },
         ],
         offsets: {
             frames: [
@@ -1130,9 +1130,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 1,
@@ -1140,9 +1140,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 2,
@@ -1150,9 +1150,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 3,
@@ -1160,9 +1160,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 4,
@@ -1170,9 +1170,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 5,
@@ -1180,9 +1180,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 6,
@@ -1190,9 +1190,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
+                                    dy: 1,
+                                },
+                            ],
                         },
                         {
                             id: 7,
@@ -1200,11 +1200,11 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 1
-                                }
-                            ]
-                        }
-                    ]
+                                    dy: 1,
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     id: 1,
@@ -1215,9 +1215,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 1,
@@ -1225,9 +1225,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 2,
@@ -1235,9 +1235,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 3,
@@ -1245,9 +1245,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 4,
@@ -1255,9 +1255,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 5,
@@ -1265,9 +1265,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 6,
@@ -1275,9 +1275,9 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
+                                    dy: 0,
+                                },
+                            ],
                         },
                         {
                             id: 7,
@@ -1285,13 +1285,13 @@ export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
                                 {
                                     id: AvatarBodyPartType.Head,
                                     dx: 0,
-                                    dy: 0
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    }
+                                    dy: 0,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    },
 ];

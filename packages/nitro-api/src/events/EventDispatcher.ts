@@ -1,6 +1,6 @@
-import { NitroLogger } from "../utils";
-import { IEventDispatcher } from "./IEventDispatcher";
-import { INitroEvent } from "./INitroEvent";
+import { NitroLogger } from '../utils';
+import { IEventDispatcher } from './IEventDispatcher';
+import { INitroEvent } from './INitroEvent';
 
 export class EventDispatcher implements IEventDispatcher {
     private _listeners: Map<string, ((event: INitroEvent) => void)[]> = new Map();
@@ -38,7 +38,7 @@ export class EventDispatcher implements IEventDispatcher {
 
         if (!existing || !existing.length) return;
 
-        for (const [i, cb] of existing.entries()) {
+        for (const [ i, cb ] of existing.entries()) {
             if (!cb || cb !== cb) continue;
 
             existing.splice(i, 1);

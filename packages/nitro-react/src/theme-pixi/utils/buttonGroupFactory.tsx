@@ -24,7 +24,7 @@ export interface ButtonGroupComponentProps extends ThemeProps<ButtonGroupVariant
 export const createButtonGroupComponent = (
     displayName: string,
     cascadeKey: string,
-    variants: ThemeVariants<ButtonGroupVariant>
+    variants: ThemeVariants<ButtonGroupVariant>,
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
@@ -42,16 +42,25 @@ export const createButtonGroupComponent = (
                     {...handlers}
                     onPointerTap={disabled ? undefined : onPress}
                 >
-                    <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
                     {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                     <VariantCascadeProvider map={ownCascade}>
                         {typeof children === 'string'
-                            ? <Text text={children} textStyle={config.textStyle} textOptions={{ fill: config.textColor }} />
+                            ? (
+                                    <Text
+                                        text={children}
+                                        textStyle={config.textStyle}
+                                        textOptions={{ fill: config.textColor }}
+                                    />
+                                )
                             : wrapTextChildren(children)}
                     </VariantCascadeProvider>
                 </Box>
             );
-        }
+        },
     );
 
     Component.displayName = displayName;

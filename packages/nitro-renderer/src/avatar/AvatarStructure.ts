@@ -159,11 +159,11 @@ export class AvatarStructure implements IAvatarStructure {
                         nx: 0,
                         ny: 0,
                         nz: -1,
-                        double: true
+                        double: true,
                     } as IAssetAvatarBodyPartItem;
 
                     const partSetItem = {
-                        setType: ''
+                        setType: '',
                     } as IAssetAvatarPartSetItem;
 
                     for (const add of animation.addData) {
@@ -173,12 +173,12 @@ export class AvatarStructure implements IAvatarStructure {
 
                         if (!bodyPart) continue;
 
-                        //@ts-expect-error typing issue
+                        // @ts-expect-error typing issue
                         partItem.id = add.id;
 
                         bodyPart.addPart(partItem, avatar);
 
-                        //@ts-expect-error typing issue
+                        // @ts-expect-error typing issue
                         partSetItem.setType = add.id;
 
                         const partDefinition = this._partSetsData.addPartDefinition(partSetItem);
@@ -231,7 +231,7 @@ export class AvatarStructure implements IAvatarStructure {
         const animationAction = this._animationData.getAction(activeAction.definition);
 
         let animation: IAnimation | undefined = undefined;
-        let emptyFrames: number[] = [0];
+        let emptyFrames: number[] = [ 0 ];
 
         if (activeAction.definition.isAnimation) {
             animation = this._animationManager.getAnimation(`${activeAction.definition.state}.${activeAction.actionParameter}`);

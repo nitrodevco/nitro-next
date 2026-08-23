@@ -1,10 +1,10 @@
-import type { IRoomUserData } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import type { IRoomUserData } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = {
     usersByRoomObjectId: Record<number, IRoomUserData>;
     userBadges: Record<number, string[]>;
-}
+};
 
 type Actions = {
     getUserByRoomObjectId: (objectId: number) => IRoomUserData | undefined;
@@ -17,7 +17,7 @@ type Actions = {
 
 export const RoomUsersSliceInitialState: State = {
     usersByRoomObjectId: {},
-    userBadges: {}
+    userBadges: {},
 };
 
 export type RoomUsersSlice = State & Actions;
@@ -27,28 +27,28 @@ export const createRoomUsersSlice: StateCreator<RoomUsersSlice, [], [], RoomUser
     getUserByRoomObjectId: (objectId: number) => {
         return get().usersByRoomObjectId[objectId];
     },
-    updateUsers: (datas: IRoomUserData[]) => set(x => {
+    updateUsers: (datas: IRoomUserData[]) => set((x) => {
         const updates = datas.reduce((acc, data) => ({
             ...acc,
-            [data.objectId]: data
+            [data.objectId]: data,
         }), {});
 
         return {
-            usersByRoomObjectId: { ...x.usersByRoomObjectId, ...updates }
+            usersByRoomObjectId: { ...x.usersByRoomObjectId, ...updates },
         };
     }),
     updateUser: (data: IRoomUserData) => set(x => ({
-        usersByRoomObjectId: { ...x.usersByRoomObjectId, [data.objectId]: data }
+        usersByRoomObjectId: { ...x.usersByRoomObjectId, [data.objectId]: data },
     })),
     updateUserPartial: (objectId: number, data: Partial<IRoomUserData>) => set(x => ({
-        usersByRoomObjectId: { ...x.usersByRoomObjectId, [objectId]: { ...x.usersByRoomObjectId[objectId], ...data } }
+        usersByRoomObjectId: { ...x.usersByRoomObjectId, [objectId]: { ...x.usersByRoomObjectId[objectId], ...data } },
     })),
-    removeUser: (objectId: number) => set(x => {
+    removeUser: (objectId: number) => set((x) => {
         const { [objectId]: _, ...rest } = x.usersByRoomObjectId;
 
         return { usersByRoomObjectId: rest };
     }),
     setBadges: (webId: number, badges: string[]) => set(x => ({
-        userBadges: { ...x.userBadges, [webId]: badges }
-    }))
+        userBadges: { ...x.userBadges, [webId]: badges },
+    })),
 });

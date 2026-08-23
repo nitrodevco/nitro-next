@@ -9,7 +9,7 @@ export class KickUserComposer implements IOutgoingPacket<KickUserComposerType> {
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userId
+            this.params.userId,
         ];
     }
 }

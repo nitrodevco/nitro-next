@@ -1,27 +1,30 @@
-import { TextStyleOptions } from "pixi.js";
+import { TextStyleOptions } from 'pixi.js';
 
-import { getRenderMode } from "#base/theme-core";
+import { getRenderMode } from '#base/theme-core';
 
-import { BoxLayout } from "./Box";
-import { boxLayoutToStyle } from "./dom/boxStyle";
-import { getDomTextStyle } from "./dom/textStyleDom";
-import { getPixiTextStyle, TextStyleKey } from "./utils/textStyles";
+import { BoxLayout } from './Box';
+import { boxLayoutToStyle } from './dom/boxStyle';
+import { getDomTextStyle } from './dom/textStyleDom';
+import { getPixiTextStyle, TextStyleKey } from './utils/textStyles';
 
 export type TextConfig = {
     text: string;
     textStyle?: TextStyleKey;
     textOptions?: TextStyleOptions;
     layout?: BoxLayout;
-}
+};
 
 const TextPixi = ({ text, textStyle, textOptions, ...props }: TextConfig) => {
-    const style = getPixiTextStyle(textStyle ?? "text-style-regular", textOptions);
+    const style = getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions);
 
-    return <pixiText
-        text={text}
-        style={style}
-        {...props} />;
-}
+    return (
+        <pixiText
+            text={text}
+            style={style}
+            {...props}
+        />
+    );
+};
 
 /** `textOptions` is Pixi's own `TextStyleOptions` - only the handful of fields views actually
  *  pass (`fill`, `fontSize`, and the word-wrap trio) are translated; anything else Pixi-specific

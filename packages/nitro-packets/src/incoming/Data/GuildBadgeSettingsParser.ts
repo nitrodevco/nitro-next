@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IGuildBadgeSettings {
     partId: number;
@@ -18,4 +18,4 @@ export const GuildBadgeSettingsParser = (wrapper: IMessageDataWrapper): IGuildBa
     data.position = wrapper.readInt();
 
     return data;
-}
+};

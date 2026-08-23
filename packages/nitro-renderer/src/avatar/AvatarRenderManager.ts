@@ -194,7 +194,7 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
                     if (!figurePartSet) continue;
 
-                    container.updatePart(id, figurePartSet.id, [0]);
+                    container.updatePart(id, figurePartSet.id, [ 0 ]);
 
                     isValid = true;
                 } else {
@@ -210,7 +210,7 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
                     if (!partSet) continue;
 
-                    container.updatePart(id, partSet.id, [0]);
+                    container.updatePart(id, partSet.id, [ 0 ]);
 
                     isValid = true;
                 }

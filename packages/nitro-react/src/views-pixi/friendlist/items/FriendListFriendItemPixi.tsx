@@ -32,8 +32,17 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
     const messageHover = tooltipHandlers('friendlist.tip.im');
 
     return (
-        <FriendListItemPixi user={friend} selected={isSelected} showAvatarHead={friend.isOnline} zebraColor={zebraColor} onPress={() => toggleSelectedFriendId(friend.playerId)}>
-            <Box ref={dropdownRef} layout={{ position: 'relative', width: 16, height: 5, flexShrink: 0, alignItems: 'flex-end', justifyContent: 'center' }}>
+        <FriendListItemPixi
+            user={friend}
+            selected={isSelected}
+            showAvatarHead={friend.isOnline}
+            zebraColor={zebraColor}
+            onPress={() => toggleSelectedFriendId(friend.playerId)}
+        >
+            <Box
+                ref={dropdownRef}
+                layout={{ position: 'relative', width: 16, height: 5, flexShrink: 0, alignItems: 'flex-end', justifyContent: 'center' }}
+            >
                 {showRelationshipIcon && (
                     <>
                         <Box
@@ -44,7 +53,10 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
                             onPointerOut={relationshipHover.onMouseLeave}
                             layout={{}}
                         >
-                            <NitroIcon icon="icon-arrow-down-black" layout={{}} />
+                            <NitroIcon
+                                icon="icon-arrow-down-black"
+                                layout={{}}
+                            />
                         </Box>
                         {isDropdownVisible && (
                             <Box
@@ -52,11 +64,41 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
                                 onPointerTap={() => setRelationshipDropdownId(0)}
                                 layout={{ position: 'absolute', right: 0, top: -46, width: 30 }}
                             >
-                                <Border variant="100" layout={{ padding: 2, flexDirection: 'column', gap: 2 }}>
+                                <Border
+                                    variant="100"
+                                    layout={{ padding: 2, flexDirection: 'column', gap: 2 }}
+                                >
                                     <Box layout={{ height: 14 }} />
-                                    <Box eventMode="static" cursor="pointer" layout={{}}><NitroIcon icon="icon-heart-relationship" layout={{}} /></Box>
-                                    <Box eventMode="static" cursor="pointer" layout={{}}><NitroIcon icon="icon-smile-relationship" layout={{}} /></Box>
-                                    <Box eventMode="static" cursor="pointer" layout={{}}><NitroIcon icon="icon-bobba-relationship" layout={{}} /></Box>
+                                    <Box
+                                        eventMode="static"
+                                        cursor="pointer"
+                                        layout={{}}
+                                    >
+                                        <NitroIcon
+                                            icon="icon-heart-relationship"
+                                            layout={{}}
+                                        />
+                                    </Box>
+                                    <Box
+                                        eventMode="static"
+                                        cursor="pointer"
+                                        layout={{}}
+                                    >
+                                        <NitroIcon
+                                            icon="icon-smile-relationship"
+                                            layout={{}}
+                                        />
+                                    </Box>
+                                    <Box
+                                        eventMode="static"
+                                        cursor="pointer"
+                                        layout={{}}
+                                    >
+                                        <NitroIcon
+                                            icon="icon-bobba-relationship"
+                                            layout={{}}
+                                        />
+                                    </Box>
                                 </Border>
                             </Box>
                         )}
@@ -65,15 +107,33 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
             </Box>
             <Box layout={{ width: 16, height: 14, flexShrink: 0 }}>
                 {showFollowIcon && (
-                    <Box eventMode="static" cursor="pointer" onPointerOver={followHover.onMouseEnter} onPointerOut={followHover.onMouseLeave} layout={{}}>
-                        <NitroIcon icon="icon-follow" layout={{}} />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerOver={followHover.onMouseEnter}
+                        onPointerOut={followHover.onMouseLeave}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-follow"
+                            layout={{}}
+                        />
                     </Box>
                 )}
             </Box>
             <Box layout={{ width: 16, height: 14, flexShrink: 0 }}>
                 {showMessageIcon && (
-                    <Box eventMode="static" cursor="pointer" onPointerOver={messageHover.onMouseEnter} onPointerOut={messageHover.onMouseLeave} layout={{}}>
-                        <NitroIcon icon="icon-message-small" layout={{}} />
+                    <Box
+                        eventMode="static"
+                        cursor="pointer"
+                        onPointerOver={messageHover.onMouseEnter}
+                        onPointerOut={messageHover.onMouseLeave}
+                        layout={{}}
+                    >
+                        <NitroIcon
+                            icon="icon-message-small"
+                            layout={{}}
+                        />
                     </Box>
                 )}
             </Box>

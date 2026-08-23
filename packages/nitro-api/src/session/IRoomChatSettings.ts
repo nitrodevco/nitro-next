@@ -1,4 +1,4 @@
-import { RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType } from "./enum";
+import { RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType } from './enum';
 
 export interface IRoomChatSettings {
     mode: RoomChatModeType;

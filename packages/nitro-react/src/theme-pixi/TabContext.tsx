@@ -13,8 +13,8 @@ import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 type TabContextVariant = ThemeVariant;
 
 const TAB_CONTEXT_VARIANTS: ThemeVariants<TabContextVariant> = {
-    '0': { layout: { minHeight: 22, maxHeight: 22 } },
-    '3': {},
+    0: { layout: { minHeight: 22, maxHeight: 22 } },
+    3: {},
 };
 
 export interface TabContextProps extends ThemeProps<TabContextVariant> {
@@ -42,12 +42,15 @@ export const TabContext: ForwardRefExoticComponent<TabContextProps & RefAttribut
                     ...layout,
                 }}
             >
-                <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />
+                <BackgroundLayer
+                    layer={resolvedLayer}
+                    tintColor={resolvedTint}
+                />
                 <BackgroundLayer layer={resolvedOverlay} />
                 <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 TabContext.displayName = 'TabContext';

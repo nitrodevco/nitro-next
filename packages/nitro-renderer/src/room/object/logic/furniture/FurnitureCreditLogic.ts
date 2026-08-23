@@ -5,7 +5,7 @@ import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureCreditLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.CREDITFURNI]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.CREDITFURNI ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

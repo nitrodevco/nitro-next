@@ -1,4 +1,4 @@
-import { AvatarFigurePartType } from "#api/avatar";
+import { AvatarFigurePartType } from '#api/avatar';
 
 export interface IFigureMapLibraryPart {
     id: number;

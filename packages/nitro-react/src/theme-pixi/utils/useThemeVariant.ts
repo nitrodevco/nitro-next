@@ -1,10 +1,9 @@
-
 import type { AnyThemeVariant, ThemeOptions, ThemeResult, ThemeVariant, ThemeWithStatesVariant } from '../variant/ThemeVariant';
 import { resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
 
 export const useThemeVariant = <T extends AnyThemeVariant>({
-    cascadeKey, variants, variant, defaultVariant = '0', tintColor, textStyle, textColor, disabled, selected
+    cascadeKey, variants, variant, defaultVariant = '0', tintColor, textStyle, textColor, disabled, selected,
 }: ThemeOptions<T>): ThemeResult<T> => {
     const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
     const config = variants[resolvedVariant];

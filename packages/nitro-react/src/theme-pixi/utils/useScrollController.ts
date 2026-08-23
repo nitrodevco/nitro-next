@@ -75,21 +75,21 @@ export const useScrollController = ({
     const isVertical = orientation === 'vertical';
     const sizeAxis = isVertical ? 'height' : 'width';
 
-    const [viewportNode, setViewportNode] = useState<PixiContainer | null>(null);
-    const [contentNode, setContentNode] = useState<PixiContainer | null>(null);
-    const [trackNode, setTrackNode] = useState<PixiContainer | null>(null);
+    const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
+    const [ contentNode, setContentNode ] = useState<PixiContainer | null>(null);
+    const [ trackNode, setTrackNode ] = useState<PixiContainer | null>(null);
 
-    const [scrollOffset, setScrollOffset] = useState(0);
+    const [ scrollOffset, setScrollOffset ] = useState(0);
     const scrollOffsetRef = useRef(0);
     useEffect(() => {
         scrollOffsetRef.current = scrollOffset;
-    }, [scrollOffset]);
+    }, [ scrollOffset ]);
 
-    const [metrics, setMetrics] = useState({ thumbSize: minThumbSize, thumbOffset: 0, atStart: true, atEnd: true, scrollable: false, scrollMax: 0 });
+    const [ metrics, setMetrics ] = useState({ thumbSize: minThumbSize, thumbOffset: 0, atStart: true, atEnd: true, scrollable: false, scrollMax: 0 });
     const metricsRef = useRef(metrics);
     useEffect(() => {
         metricsRef.current = metrics;
-    }, [metrics]);
+    }, [ metrics ]);
 
     const wasAtStartRef = useRef(true);
     const wasAtEndRef = useRef(true);
@@ -100,8 +100,8 @@ export const useScrollController = ({
         onReachEndRef.current = onReachEnd;
     });
 
-    const dragOriginRef = useRef<{ pointer: number, scroll: number, availableTrack: number, scrollMax: number } | null>(null);
-    const activeListenersRef = useRef<{ move: (e: PointerEvent) => void, up: (e: PointerEvent) => void } | null>(null);
+    const dragOriginRef = useRef<{ pointer: number; scroll: number; availableTrack: number; scrollMax: number } | null>(null);
+    const activeListenersRef = useRef<{ move: (e: PointerEvent) => void; up: (e: PointerEvent) => void } | null>(null);
 
     const measure = useCallback(() => {
         const clientSize = computedSize(viewportNode, sizeAxis);
@@ -131,7 +131,7 @@ export const useScrollController = ({
         if (atEnd && !wasAtEndRef.current) onReachEndRef.current?.();
         wasAtStartRef.current = atStart;
         wasAtEndRef.current = atEnd;
-    }, [viewportNode, contentNode, trackNode, sizeAxis, minThumbSize, reachThreshold]);
+    }, [ viewportNode, contentNode, trackNode, sizeAxis, minThumbSize, reachThreshold ]);
 
     useEffect(() => {
         if (!viewportNode) return;
@@ -146,7 +146,7 @@ export const useScrollController = ({
         raf = requestAnimationFrame(tick);
 
         return () => cancelAnimationFrame(raf);
-    }, [viewportNode, measure]);
+    }, [ viewportNode, measure ]);
 
     const stopDragging = useCallback(() => {
         const listeners = activeListenersRef.current;
@@ -158,7 +158,7 @@ export const useScrollController = ({
         dragOriginRef.current = null;
     }, []);
 
-    useEffect(() => stopDragging, [stopDragging]);
+    useEffect(() => stopDragging, [ stopDragging ]);
 
     const onWheel = (event: FederatedWheelEvent) => {
         const delta = isVertical ? event.deltaY : event.deltaX;

@@ -58,8 +58,8 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
 
         if (message instanceof ObjectDataUpdateMessage) {
             if (message.state > 0) {
-                this.updateInterval =
-                    MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state);
+                this.updateInterval
+                    = MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state);
             } else {
                 this.updateInterval = 1;
             }

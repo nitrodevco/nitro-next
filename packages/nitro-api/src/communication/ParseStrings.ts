@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from "./IMessageDataWrapper";
+import { IMessageDataWrapper } from './IMessageDataWrapper';
 
 export const ParseStrings = (wrapper: IMessageDataWrapper): string[] => {
     const results: string[] = [];
@@ -12,4 +12,4 @@ export const ParseStrings = (wrapper: IMessageDataWrapper): string[] => {
     }
 
     return results;
-}
+};

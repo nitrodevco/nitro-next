@@ -1,4 +1,4 @@
-﻿import type { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from "@nitrodevco/nitro-api";
+﻿import type { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
 export class SpriteDataContainer implements ISpriteDataContainer {
     private _animation: IAnimation;

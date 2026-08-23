@@ -15,7 +15,7 @@ type State = {
     topId: string | undefined;
     zIndexById: Record<string, number>;
     landingViewVisible: boolean;
-}
+};
 
 type Actions = {
     setConfig: (config: Record<string, unknown>) => void;
@@ -42,8 +42,8 @@ const areWindowParamsEqual = (current: object, params: object) => {
 
     if (entries.length !== Object.keys(params).length) return false;
 
-    return entries.every(([key, value]) => value === (params as Record<string, unknown>)[key]);
-}
+    return entries.every(([ key, value ]) => value === (params as Record<string, unknown>)[key]);
+};
 
 const initialState: State = {
     config: {},
@@ -56,7 +56,7 @@ const initialState: State = {
     topZIndex: BASE_FRAME_Z_INDEX,
     topId: undefined,
     zIndexById: {},
-    landingViewVisible: true
+    landingViewVisible: true,
 };
 
 export type SystemStore = State & Actions;
@@ -117,7 +117,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         return result;
     },
     setLocalization: (localizations: Record<string, string>) =>
-        set(state => {
+        set((state) => {
             return {
                 localizations: { ...state.localizations, ...localizations },
                 localizationNeedsUpdate: false,
@@ -143,15 +143,15 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
 
         if (locals.size === 0) return;
 
-        set(state => {
+        set((state) => {
             const localizations = { ...state.localizations };
 
-            for (const [key, value] of locals) localizations[key] = value;
+            for (const [ key, value ] of locals) localizations[key] = value;
 
             return { localizations };
         });
     },
-    parseFloorItems: (data: IFurnitureType[]) => set(x => {
+    parseFloorItems: (data: IFurnitureType[]) => set((x) => {
         const floorItems: Record<number, IFurnitureData> = {};
 
         for (const furniture of data) {
@@ -208,13 +208,13 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 furniLine: furniture.furniline ?? '',
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
-                isExternalImage: !(className.indexOf('external_image') === -1)
+                isExternalImage: !(className.indexOf('external_image') === -1),
             };
         }
 
         return { floorItems };
     }),
-    parseWallItems: (data: IFurnitureType[]) => set(x => {
+    parseWallItems: (data: IFurnitureType[]) => set((x) => {
         const wallItems = { ...x.wallItems };
 
         for (const furniture of data) {
@@ -250,14 +250,14 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 furniLine: furniture.furniline ?? '',
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
-                isExternalImage: !(furniture.classname.indexOf('external_image') === -1)
+                isExternalImage: !(furniture.classname.indexOf('external_image') === -1),
             };
         }
 
         return { wallItems };
     }),
-    parseProductData: (data: IProductData[]) => set({ productData: Object.fromEntries(data.map(x => [x.code, x])) }),
-    toggleWindow: <T extends WindowName>(name: T, params?: WindowRegistry[T]) => set(x => {
+    parseProductData: (data: IProductData[]) => set({ productData: Object.fromEntries(data.map(x => [ x.code, x ])) }),
+    toggleWindow: <T extends WindowName>(name: T, params?: WindowRegistry[T]) => set((x) => {
         const current = x.visibleWindows[name];
         const visibleWindows = { ...x.visibleWindows };
 
@@ -266,7 +266,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
 
         return { visibleWindows };
     }),
-    showWindow: <T extends WindowName>(name: T, params?: WindowRegistry[T]) => set(x => {
+    showWindow: <T extends WindowName>(name: T, params?: WindowRegistry[T]) => set((x) => {
         if (!params && x.visibleWindows[name]) return x;
 
         const visibleWindows = { ...x.visibleWindows };
@@ -275,7 +275,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
 
         return { visibleWindows };
     }),
-    hideWindow: (name: WindowName) => set(x => {
+    hideWindow: (name: WindowName) => set((x) => {
         if (!x.visibleWindows[name]) return x;
 
         const visibleWindows = { ...x.visibleWindows };
@@ -284,7 +284,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
 
         return { visibleWindows };
     }),
-    updateWindowParams: <T extends WindowName>(name: T, params: Partial<WindowRegistry[T]>) => set(x => {
+    updateWindowParams: <T extends WindowName>(name: T, params: Partial<WindowRegistry[T]>) => set((x) => {
         const current = x.visibleWindows[name];
 
         if (!current) return x;

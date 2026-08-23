@@ -1,483 +1,483 @@
-import { AvatarFigurePartType, AvatarPartSetType, type IAssetAvatarPartSets } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, AvatarPartSetType, type IAssetAvatarPartSets } from '@nitrodevco/nitro-api';
 
 export const HabboAvatarPartSets: IAssetAvatarPartSets = {
     partSet: [
         {
             setType: AvatarFigurePartType.RightHandItem,
-            flippedSetType: AvatarFigurePartType.RightHandItem
+            flippedSetType: AvatarFigurePartType.RightHandItem,
         },
         {
             setType: AvatarFigurePartType.RightHand,
-            flippedSetType: AvatarFigurePartType.LeftHand
+            flippedSetType: AvatarFigurePartType.LeftHand,
         },
         {
             setType: AvatarFigurePartType.RightHandSwim,
-            flippedSetType: AvatarFigurePartType.LeftHandSwim
+            flippedSetType: AvatarFigurePartType.LeftHandSwim,
         },
         {
             setType: AvatarFigurePartType.RightSleeve,
             swim: '0',
-            flippedSetType: AvatarFigurePartType.LeftSleeve
+            flippedSetType: AvatarFigurePartType.LeftSleeve,
         },
         {
             setType: AvatarFigurePartType.RightCoatSleeve,
             swim: '0',
-            flippedSetType: AvatarFigurePartType.LeftCoatSleeve
+            flippedSetType: AvatarFigurePartType.LeftCoatSleeve,
         },
         {
-            setType: AvatarFigurePartType.Body
+            setType: AvatarFigurePartType.Body,
         },
         {
-            setType: AvatarFigurePartType.BodySwim
+            setType: AvatarFigurePartType.BodySwim,
         },
         {
-            setType: AvatarFigurePartType.Ss
+            setType: AvatarFigurePartType.Ss,
         },
         {
             setType: AvatarFigurePartType.Shoes,
-            swim: '0'
+            swim: '0',
         },
         {
             setType: AvatarFigurePartType.Legs,
-            swim: '0'
+            swim: '0',
         },
         {
-            setType: AvatarFigurePartType.Chest
+            setType: AvatarFigurePartType.Chest,
         },
         {
-            setType: AvatarFigurePartType.ChestPrint
+            setType: AvatarFigurePartType.ChestPrint,
         },
         {
-            setType: AvatarFigurePartType.CoatChest
+            setType: AvatarFigurePartType.CoatChest,
         },
         {
-            setType: AvatarFigurePartType.Head
+            setType: AvatarFigurePartType.Head,
         },
         {
-            setType: AvatarFigurePartType.Face
+            setType: AvatarFigurePartType.Face,
         },
         {
-            setType: AvatarFigurePartType.Eyes
+            setType: AvatarFigurePartType.Eyes,
         },
         {
-            setType: AvatarFigurePartType.Hair
+            setType: AvatarFigurePartType.Hair,
         },
         {
             setType: AvatarFigurePartType.HairBig,
-            removeSetType: AvatarFigurePartType.Hair
+            removeSetType: AvatarFigurePartType.Hair,
         },
         {
             setType: AvatarFigurePartType.LeftHandItem,
-            flippedSetType: AvatarFigurePartType.LeftHandItem
+            flippedSetType: AvatarFigurePartType.LeftHandItem,
         },
         {
             setType: AvatarFigurePartType.LeftHand,
-            flippedSetType: AvatarFigurePartType.RightHand
+            flippedSetType: AvatarFigurePartType.RightHand,
         },
         {
             setType: AvatarFigurePartType.LeftHandSwim,
-            flippedSetType: AvatarFigurePartType.RightHandSwim
+            flippedSetType: AvatarFigurePartType.RightHandSwim,
         },
         {
             setType: AvatarFigurePartType.LeftSleeve,
             swim: '0',
-            flippedSetType: AvatarFigurePartType.RightSleeve
+            flippedSetType: AvatarFigurePartType.RightSleeve,
         },
         {
             setType: AvatarFigurePartType.LeftCoatSleeve,
             swim: '0',
-            flippedSetType: AvatarFigurePartType.RightCoatSleeve
+            flippedSetType: AvatarFigurePartType.RightCoatSleeve,
         },
         {
             setType: AvatarFigurePartType.WaistAccessory,
-            swim: '0'
+            swim: '0',
         },
         {
-            setType: AvatarFigurePartType.EyeAccessory
+            setType: AvatarFigurePartType.EyeAccessory,
         },
         {
             setType: AvatarFigurePartType.ChestAccessory,
-            swim: '0'
+            swim: '0',
         },
         {
-            setType: AvatarFigurePartType.FaceAccessory
+            setType: AvatarFigurePartType.FaceAccessory,
         },
         {
-            setType: AvatarFigurePartType.HeadAccessory
+            setType: AvatarFigurePartType.HeadAccessory,
         },
         {
-            setType: AvatarFigurePartType.HeadAccessoryExtra
-        }
+            setType: AvatarFigurePartType.HeadAccessoryExtra,
+        },
     ],
-    'activePartSets': [
+    activePartSets: [
         {
             id: AvatarPartSetType.Figure,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.RightHand
+                    setType: AvatarFigurePartType.RightHand,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandSwim
+                    setType: AvatarFigurePartType.RightHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.RightSleeve
+                    setType: AvatarFigurePartType.RightSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightCoatSleeve
+                    setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.Body
+                    setType: AvatarFigurePartType.Body,
                 },
                 {
-                    setType: AvatarFigurePartType.BodySwim
+                    setType: AvatarFigurePartType.BodySwim,
                 },
                 {
-                    setType: AvatarFigurePartType.Ss
+                    setType: AvatarFigurePartType.Ss,
                 },
                 {
-                    setType: AvatarFigurePartType.Shoes
+                    setType: AvatarFigurePartType.Shoes,
                 },
                 {
-                    setType: AvatarFigurePartType.Legs
+                    setType: AvatarFigurePartType.Legs,
                 },
                 {
-                    setType: AvatarFigurePartType.Chest
+                    setType: AvatarFigurePartType.Chest,
                 },
                 {
-                    setType: AvatarFigurePartType.ChestPrint
+                    setType: AvatarFigurePartType.ChestPrint,
                 },
                 {
-                    setType: AvatarFigurePartType.CoatChest
+                    setType: AvatarFigurePartType.CoatChest,
                 },
                 {
-                    setType: AvatarFigurePartType.WaistAccessory
+                    setType: AvatarFigurePartType.WaistAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.Head
+                    setType: AvatarFigurePartType.Head,
                 },
                 {
-                    setType: AvatarFigurePartType.Face
+                    setType: AvatarFigurePartType.Face,
                 },
                 {
-                    setType: AvatarFigurePartType.Eyes
+                    setType: AvatarFigurePartType.Eyes,
                 },
                 {
-                    setType: AvatarFigurePartType.Hair
+                    setType: AvatarFigurePartType.Hair,
                 },
                 {
-                    setType: AvatarFigurePartType.HairBig
+                    setType: AvatarFigurePartType.HairBig,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHand
+                    setType: AvatarFigurePartType.LeftHand,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHandSwim
+                    setType: AvatarFigurePartType.LeftHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftSleeve
+                    setType: AvatarFigurePartType.LeftSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftCoatSleeve
+                    setType: AvatarFigurePartType.LeftCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.EyeAccessory
+                    setType: AvatarFigurePartType.EyeAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.ChestAccessory
+                    setType: AvatarFigurePartType.ChestAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.FaceAccessory
+                    setType: AvatarFigurePartType.FaceAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.HeadAccessory
+                    setType: AvatarFigurePartType.HeadAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.HeadAccessoryExtra
-                }
-            ]
+                    setType: AvatarFigurePartType.HeadAccessoryExtra,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Head,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Head
+                    setType: AvatarFigurePartType.Head,
                 },
                 {
-                    setType: AvatarFigurePartType.Face
+                    setType: AvatarFigurePartType.Face,
                 },
                 {
-                    setType: AvatarFigurePartType.Eyes
+                    setType: AvatarFigurePartType.Eyes,
                 },
                 {
-                    setType: AvatarFigurePartType.Hair
+                    setType: AvatarFigurePartType.Hair,
                 },
                 {
-                    setType: AvatarFigurePartType.HairBig
+                    setType: AvatarFigurePartType.HairBig,
                 },
                 {
-                    setType: AvatarFigurePartType.EyeAccessory
+                    setType: AvatarFigurePartType.EyeAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.FaceAccessory
+                    setType: AvatarFigurePartType.FaceAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.HeadAccessory
+                    setType: AvatarFigurePartType.HeadAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.HeadAccessoryExtra
-                }
-            ]
+                    setType: AvatarFigurePartType.HeadAccessoryExtra,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Speak,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Head
+                    setType: AvatarFigurePartType.Head,
                 },
                 {
-                    setType: AvatarFigurePartType.Hair
+                    setType: AvatarFigurePartType.Hair,
                 },
                 {
-                    setType: AvatarFigurePartType.HairBig
+                    setType: AvatarFigurePartType.HairBig,
                 },
                 {
-                    setType: AvatarFigurePartType.Face
+                    setType: AvatarFigurePartType.Face,
                 },
                 {
-                    setType: AvatarFigurePartType.FaceAccessory
+                    setType: AvatarFigurePartType.FaceAccessory,
                 },
                 {
-                    setType: AvatarFigurePartType.HeadAccessory
-                }
-            ]
+                    setType: AvatarFigurePartType.HeadAccessory,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Gesture,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Eyes
+                    setType: AvatarFigurePartType.Eyes,
                 },
                 {
-                    setType: AvatarFigurePartType.Face
-                }
-            ]
+                    setType: AvatarFigurePartType.Face,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Eye,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Eyes
-                }
-            ]
+                    setType: AvatarFigurePartType.Eyes,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.HandRight,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.RightHand
+                    setType: AvatarFigurePartType.RightHand,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandSwim
+                    setType: AvatarFigurePartType.RightHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.RightSleeve
+                    setType: AvatarFigurePartType.RightSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightCoatSleeve
+                    setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandItem
-                }
-            ]
+                    setType: AvatarFigurePartType.RightHandItem,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.HandRightAndHead,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.RightHand
+                    setType: AvatarFigurePartType.RightHand,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandSwim
+                    setType: AvatarFigurePartType.RightHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.RightSleeve
+                    setType: AvatarFigurePartType.RightSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightCoatSleeve
+                    setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandItem
+                    setType: AvatarFigurePartType.RightHandItem,
                 },
                 {
-                    setType: AvatarFigurePartType.Eyes
+                    setType: AvatarFigurePartType.Eyes,
                 },
                 {
-                    setType: AvatarFigurePartType.Face
+                    setType: AvatarFigurePartType.Face,
                 },
                 {
-                    setType: AvatarFigurePartType.Head
-                }
-            ]
+                    setType: AvatarFigurePartType.Head,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.HandLeft,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.LeftHand
+                    setType: AvatarFigurePartType.LeftHand,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHandSwim
+                    setType: AvatarFigurePartType.LeftHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftSleeve
+                    setType: AvatarFigurePartType.LeftSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftCoatSleeve
+                    setType: AvatarFigurePartType.LeftCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHandItem
-                }
-            ]
+                    setType: AvatarFigurePartType.LeftHandItem,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Walk,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Body
+                    setType: AvatarFigurePartType.Body,
                 },
                 {
-                    setType: AvatarFigurePartType.BodySwim
+                    setType: AvatarFigurePartType.BodySwim,
                 },
                 {
-                    setType: AvatarFigurePartType.Ss
+                    setType: AvatarFigurePartType.Ss,
                 },
                 {
-                    setType: AvatarFigurePartType.Legs
+                    setType: AvatarFigurePartType.Legs,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHand
+                    setType: AvatarFigurePartType.LeftHand,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHandSwim
+                    setType: AvatarFigurePartType.LeftHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHand
+                    setType: AvatarFigurePartType.RightHand,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandSwim
+                    setType: AvatarFigurePartType.RightHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftSleeve
+                    setType: AvatarFigurePartType.LeftSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftCoatSleeve
+                    setType: AvatarFigurePartType.LeftCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightSleeve
+                    setType: AvatarFigurePartType.RightSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.RightCoatSleeve
+                    setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
-                    setType: AvatarFigurePartType.Shoes
-                }
-            ]
+                    setType: AvatarFigurePartType.Shoes,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Sit,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Body
+                    setType: AvatarFigurePartType.Body,
                 },
                 {
-                    setType: AvatarFigurePartType.BodySwim
+                    setType: AvatarFigurePartType.BodySwim,
                 },
                 {
-                    setType: AvatarFigurePartType.Ss
+                    setType: AvatarFigurePartType.Ss,
                 },
                 {
-                    setType: AvatarFigurePartType.Legs
+                    setType: AvatarFigurePartType.Legs,
                 },
                 {
-                    setType: AvatarFigurePartType.Shoes
+                    setType: AvatarFigurePartType.Shoes,
                 },
                 {
-                    setType: AvatarFigurePartType.CoatChest
-                }
-            ]
+                    setType: AvatarFigurePartType.CoatChest,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.ItemRight,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.RightHandItem
-                }
-            ]
+                    setType: AvatarFigurePartType.RightHandItem,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.Swim,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.BodySwim
+                    setType: AvatarFigurePartType.BodySwim,
                 },
                 {
-                    setType: AvatarFigurePartType.Ss
+                    setType: AvatarFigurePartType.Ss,
                 },
                 {
-                    setType: AvatarFigurePartType.LeftHandSwim
+                    setType: AvatarFigurePartType.LeftHandSwim,
                 },
                 {
-                    setType: AvatarFigurePartType.RightHandSwim
+                    setType: AvatarFigurePartType.RightHandSwim,
                 },
-            ]
+            ],
         },
         {
             id: AvatarPartSetType.SnowWarnRun,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Chest
-                }
-            ]
+                    setType: AvatarFigurePartType.Chest,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.SnowWarPick,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Chest
+                    setType: AvatarFigurePartType.Chest,
                 },
                 {
-                    setType: AvatarFigurePartType.Head
-                }
-            ]
+                    setType: AvatarFigurePartType.Head,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.SnowWarDieFront,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Chest
+                    setType: AvatarFigurePartType.Chest,
                 }, {
-                    setType: AvatarFigurePartType.Head
-                }
-            ]
+                    setType: AvatarFigurePartType.Head,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.SnowWarDieBack,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Chest
+                    setType: AvatarFigurePartType.Chest,
                 },
                 {
-                    setType: AvatarFigurePartType.Head
-                }
-            ]
+                    setType: AvatarFigurePartType.Head,
+                },
+            ],
         },
         {
             id: AvatarPartSetType.SnowWarThrow,
             activeParts: [
                 {
-                    setType: AvatarFigurePartType.Chest
-                }
-            ]
+                    setType: AvatarFigurePartType.Chest,
+                },
+            ],
         },
-    ]
+    ],
 };

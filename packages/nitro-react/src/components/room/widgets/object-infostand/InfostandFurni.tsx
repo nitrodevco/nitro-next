@@ -1,13 +1,13 @@
-import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from "@nitrodevco/nitro-api";
+import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
-import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useSystemActions } from "#base/context";
-import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from "#base/hooks";
-import { InfostandFurniViewPixi } from "#base/views-pixi/room-widgets/object-infostand/InfostandFurniViewPixi";
+import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useSystemActions } from '#base/context';
+import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from '#base/hooks';
+import { InfostandFurniViewPixi } from '#base/views-pixi/room-widgets/object-infostand/InfostandFurniViewPixi';
 
 type InfostandFurniViewProps = {
     objectData: ISimpleRoomObjectData;
     onClose: () => void;
-}
+};
 
 export const InfostandFurni = (props: InfostandFurniViewProps) => {
     const { objectData, onClose } = props;
@@ -67,12 +67,25 @@ export const InfostandFurni = (props: InfostandFurniViewProps) => {
                 changeItemState(objectId, category, 0, false);
                 break;
             case 'buy':
-                toggleWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId })
+                toggleWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId });
                 break;
             default:
                 break;
         }
-    }
+    };
 
-    return <InfostandFurniViewPixi furniData={furniData} canMove={canMove} canRotate={canRotate} canUse={canUse} pickupMode={pickupMode} hasButtons={hasButtons} canSeeFurniId={canSeeFurniId} godMode={godMode} processAction={processAction} onClose={onClose} />;
-}
+    return (
+        <InfostandFurniViewPixi
+            furniData={furniData}
+            canMove={canMove}
+            canRotate={canRotate}
+            canUse={canUse}
+            pickupMode={pickupMode}
+            hasButtons={hasButtons}
+            canSeeFurniId={canSeeFurniId}
+            godMode={godMode}
+            processAction={processAction}
+            onClose={onClose}
+        />
+    );
+};

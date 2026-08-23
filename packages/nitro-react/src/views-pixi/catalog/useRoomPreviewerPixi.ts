@@ -14,7 +14,7 @@ const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
 
 export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObject<PixiContainer | null>) => {
     const { app } = useApplication();
-    const [room, setRoom] = useState<IRoom | undefined>(undefined);
+    const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
     const { createMapForSize } = useRoomMapping();
     const previewData = useRef<IRoomPreviewerData>({
         objectType: 0,
@@ -352,7 +352,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
                 resizeRoomPreview(width, height);
             }
-        }
+        };
 
         app.ticker.add(tick);
 
@@ -373,7 +373,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
                     }
                 }
             }
-        }
+        };
 
         const listeners = [
             room.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
@@ -387,7 +387,7 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
             mountedMasterRef.current = undefined;
         };
-    }, [room]);
+    }, [ room ]);
 
     useEffect(() => {
         const inst = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
@@ -402,10 +402,9 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
             inst.updateRoomPlaneType('110', '99999', undefined);
         }
 
-
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setRoom(inst);
-    }, [roomId]);
+    }, [ roomId ]);
 
     return { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState };
 };

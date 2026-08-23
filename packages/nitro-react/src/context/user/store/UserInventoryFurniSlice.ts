@@ -1,6 +1,6 @@
-import type { ISelectedRoomObjectData } from "@nitrodevco/nitro-api";
-import { RoomObjectCategoryEnum, RoomObjectPlacementSource } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import type { ISelectedRoomObjectData } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectPlacementSource } from '@nitrodevco/nitro-api';
+import type { StateCreator } from 'zustand';
 
 type State = {
     selectedAvatarId: number;
@@ -9,7 +9,7 @@ type State = {
     selectedObject: ISelectedRoomObjectData | undefined;
     placedObject: ISelectedRoomObjectData | undefined;
     objectPlacementSource: RoomObjectPlacementSource;
-}
+};
 
 type Actions = {
     getSelectedObject: () => ISelectedRoomObjectData | undefined;
@@ -27,7 +27,7 @@ export const UserInventoryFurniSliceInitialState: State = {
     selectedObjectCategory: RoomObjectCategoryEnum.Minimum,
     selectedObject: undefined,
     placedObject: undefined,
-    objectPlacementSource: RoomObjectPlacementSource.INVENTORY
+    objectPlacementSource: RoomObjectPlacementSource.INVENTORY,
 };
 
 export type UserInventoryFurniSlice = State & Actions;

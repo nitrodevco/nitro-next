@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ObjectRemoveConfirmMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class ObjectRemoveConfirmMessage implements IIncomingPacket<ObjectRemoveConfirmMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ObjectRemoveConfirmMessageType
-  {
+export class ObjectRemoveConfirmMessage implements IIncomingPacket<ObjectRemoveConfirmMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ObjectRemoveConfirmMessageType {
+        const packet: ObjectRemoveConfirmMessageType = {
+        };
 
-    const packet: ObjectRemoveConfirmMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

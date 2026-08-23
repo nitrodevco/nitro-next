@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarFigurePartType } from "../enum";
+import { AvatarBodyPartType, AvatarFigurePartType } from '../enum';
 
 export interface IAddDataContainer {
     readonly id: AvatarFigurePartType | string;

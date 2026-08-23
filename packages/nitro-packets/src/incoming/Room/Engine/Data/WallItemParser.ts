@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomWallItem } from "./IRoomWallItem";
+import type { IRoomWallItem } from './IRoomWallItem';
 
 export const WallItemParser = (wrapper: IMessageDataWrapper): IRoomWallItem => {
     const item = {
@@ -12,7 +12,7 @@ export const WallItemParser = (wrapper: IMessageDataWrapper): IRoomWallItem => {
         expires: wrapper.readInt(),
         usagePolicy: wrapper.readInt(),
         ownerId: wrapper.readInt(),
-        ownerName: ''
+        ownerName: '',
     };
 
     const state = parseFloat(item.data);
@@ -20,4 +20,4 @@ export const WallItemParser = (wrapper: IMessageDataWrapper): IRoomWallItem => {
     if (!isNaN(state)) item.state = state;
 
     return item;
-}
+};

@@ -1,5 +1,5 @@
-import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerUpdate } from "@nitrodevco/nitro-packets";
-import type { StateCreator } from "zustand";
+import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerUpdate } from '@nitrodevco/nitro-packets';
+import type { StateCreator } from 'zustand';
 
 type State = {
     userFriendLimit: number;
@@ -8,7 +8,7 @@ type State = {
     categories: IMessengerCategory[];
     friends: Record<number, IMessengerFriend>;
     requests: Record<number, IFriendRequest>;
-}
+};
 
 type Actions = {
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => void;
@@ -24,7 +24,7 @@ export const UserFriendsSlice: State = {
     extendedFriendLimit: 0,
     categories: [],
     friends: {},
-    requests: {}
+    requests: {},
 };
 
 export type UserFriendsSlice = State & Actions;
@@ -33,17 +33,17 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
     ...UserFriendsSlice,
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => set({ userFriendLimit, normalFriendLimit, extendedFriendLimit }),
     setFriendCategories: (categories: IMessengerCategory[]) => set({ categories }),
-    processFriends: (friends: IMessengerFriend[]) => set(x => {
+    processFriends: (friends: IMessengerFriend[]) => set((x) => {
         const updates = friends.reduce((acc, data) => ({
             ...acc,
-            [data.playerId]: data
+            [data.playerId]: data,
         }), {});
 
         return {
-            friends: { ...x.friends, ...updates }
+            friends: { ...x.friends, ...updates },
         };
     }),
-    processFriendUpdates: (updates: IMessengerUpdate[]) => set(x => {
+    processFriendUpdates: (updates: IMessengerUpdate[]) => set((x) => {
         const friends = { ...x.friends };
 
         for (const update of updates) {
@@ -60,14 +60,14 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
 
         return { friends };
     }),
-    processFriendRequests: (requests: IFriendRequest[]) => set(x => {
+    processFriendRequests: (requests: IFriendRequest[]) => set((x) => {
         const updates = requests.reduce((acc, data) => ({
             ...acc,
-            [data.playerId]: data
+            [data.playerId]: data,
         }), {});
 
         return {
-            requests: { ...x.requests, ...updates }
+            requests: { ...x.requests, ...updates },
         };
     }),
 });

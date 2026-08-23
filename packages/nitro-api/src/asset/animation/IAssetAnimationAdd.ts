@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarFigurePartType } from "#api/avatar";
+import { AvatarBodyPartType, AvatarFigurePartType } from '#api/avatar';
 
 export interface IAssetAnimationAdd {
     id: AvatarFigurePartType | string;

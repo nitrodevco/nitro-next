@@ -17,12 +17,34 @@ export const FriendListRequestItemPixi = ({ request, zebraColor }: FriendListReq
     const declineHover = tooltipHandlers('friendlist.tip.decline');
 
     return (
-        <FriendListItemPixi user={request} hideAvatarElement zebraColor={zebraColor}>
-            <Box eventMode="static" cursor="pointer" onPointerOver={acceptHover.onMouseEnter} onPointerOut={acceptHover.onMouseLeave} layout={{}}>
-                <NitroIcon icon="icon-accept-check" layout={{}} />
+        <FriendListItemPixi
+            user={request}
+            hideAvatarElement
+            zebraColor={zebraColor}
+        >
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerOver={acceptHover.onMouseEnter}
+                onPointerOut={acceptHover.onMouseLeave}
+                layout={{}}
+            >
+                <NitroIcon
+                    icon="icon-accept-check"
+                    layout={{}}
+                />
             </Box>
-            <Box eventMode="static" cursor="pointer" onPointerOver={declineHover.onMouseEnter} onPointerOut={declineHover.onMouseLeave} layout={{}}>
-                <NitroIcon icon="icon-decline-x" layout={{}} />
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerOver={declineHover.onMouseEnter}
+                onPointerOut={declineHover.onMouseLeave}
+                layout={{}}
+            >
+                <NitroIcon
+                    icon="icon-decline-x"
+                    layout={{}}
+                />
             </Box>
         </FriendListItemPixi>
     );

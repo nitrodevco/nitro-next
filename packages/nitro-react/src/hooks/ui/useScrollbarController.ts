@@ -41,7 +41,7 @@ export function useScrollbarController({
     onReachStart,
     onReachEnd,
 }: ScrollbarControllerOptions): ScrollbarController {
-    const [state, setState] = useState({ thumbSize: minThumbSize, thumbOffset: 0, atStart: true, atEnd: true, scrollable: false });
+    const [ state, setState ] = useState({ thumbSize: minThumbSize, thumbOffset: 0, atStart: true, atEnd: true, scrollable: false });
     const trackRef = useRef<HTMLDivElement>(null);
     const wasAtStart = useRef(true);
     const wasAtEnd = useRef(true);
@@ -86,7 +86,7 @@ export function useScrollbarController({
         if (atEnd && !wasAtEnd.current) onReachEndRef.current?.();
         wasAtStart.current = atStart;
         wasAtEnd.current = atEnd;
-    }, [viewportRef, isVertical, minThumbSize, reachThreshold]);
+    }, [ viewportRef, isVertical, minThumbSize, reachThreshold ]);
 
     useEffect(() => {
         const viewport = viewportRef.current;
@@ -106,7 +106,7 @@ export function useScrollbarController({
             observer.disconnect();
             viewport.removeEventListener('scroll', recompute);
         };
-    }, [viewportRef, contentRef, recompute]);
+    }, [ viewportRef, contentRef, recompute ]);
 
     const onThumbPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
         const viewport = viewportRef.current;
@@ -129,7 +129,7 @@ export function useScrollbarController({
             availableTrack: Math.max(0, trackSize - thumbSize),
             scrollMax,
         };
-    }
+    };
 
     const onThumbPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
         const origin = dragOrigin.current;
@@ -140,12 +140,12 @@ export function useScrollbarController({
         const next = Math.min(origin.scrollMax, Math.max(0, origin.scroll + scrollDelta));
         if (isVertical) viewport.scrollTop = next;
         else viewport.scrollLeft = next;
-    }
+    };
 
     const onThumbPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
         dragOrigin.current = null;
         event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    };
 
     const onTrackPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
         const viewport = viewportRef.current;
@@ -162,21 +162,21 @@ export function useScrollbarController({
         if (direction === 0) return;
         const next = Math.min(scrollMax, Math.max(0, current + direction * clientSize));
         viewport.scrollTo(isVertical ? { top: next, behavior: 'smooth' } : { left: next, behavior: 'smooth' });
-    }
+    };
 
     const stepBackward = () => {
         const viewport = viewportRef.current;
         if (!viewport) return;
         if (isVertical) viewport.scrollTop -= step;
         else viewport.scrollLeft -= step;
-    }
+    };
 
     const stepForward = () => {
         const viewport = viewportRef.current;
         if (!viewport) return;
         if (isVertical) viewport.scrollTop += step;
         else viewport.scrollLeft += step;
-    }
+    };
 
     return {
         trackRef,

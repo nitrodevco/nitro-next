@@ -16,10 +16,20 @@ export const FriendListRequestsPixi = ({ value }: FriendListRequestsPixiProps) =
     if (!Object.keys(requests).length) return null;
 
     return (
-        <FriendListTabPixi darkHeader value={value} caption="friendlist.tab.friendrequests" gradientColors={['#ff9302', '#ea8000']} tooltip="friendlist.tip.tab.2">
+        <FriendListTabPixi
+            darkHeader
+            value={value}
+            caption="friendlist.tab.friendrequests"
+            gradientColors={[ '#ff9302', '#ea8000' ]}
+            tooltip="friendlist.tip.tab.2"
+        >
             <ScrollArea layout={{ flex: 1 }}>
                 {Object.values(requests).map((request, i) => (
-                    <FriendListRequestItemPixi key={request.playerId} request={request} zebraColor={i % 2 === 0 ? '#eeeeee' : '#ffffff'} />
+                    <FriendListRequestItemPixi
+                        key={request.playerId}
+                        request={request}
+                        zebraColor={i % 2 === 0 ? '#eeeeee' : '#ffffff'}
+                    />
                 ))}
             </ScrollArea>
             <FriendListRequestsFooterPixi />

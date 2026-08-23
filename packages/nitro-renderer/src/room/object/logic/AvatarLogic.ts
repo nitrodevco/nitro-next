@@ -90,10 +90,10 @@ export class AvatarLogic extends MovingObjectLogic {
             const location = this.object.getLocation();
 
             if (
-                !this._reportedLocation ||
-                this._reportedLocation.x !== location.x ||
-                this._reportedLocation.y !== location.y ||
-                this._reportedLocation.z !== location.z
+                !this._reportedLocation
+                || this._reportedLocation.x !== location.x
+                || this._reportedLocation.y !== location.y
+                || this._reportedLocation.z !== location.z
             ) {
                 if (!this._reportedLocation) this._reportedLocation = new Vector3d();
 
@@ -328,8 +328,8 @@ export class AvatarLogic extends MovingObjectLogic {
                 this._talkingPauseEndTimestamp = 0;
             } else if (!this._talkingPauseEndTimestamp && !this._talkingPauseStartTimestamp) {
                 this._talkingPauseStartTimestamp = time + this.randomTalkingPauseStartTimestamp();
-                this._talkingPauseEndTimestamp =
-                    this._talkingPauseStartTimestamp + this.randomTalkingPauseEndTimestamp();
+                this._talkingPauseEndTimestamp
+                    = this._talkingPauseStartTimestamp + this.randomTalkingPauseEndTimestamp();
             } else if (this._talkingPauseStartTimestamp > 0 && time > this._talkingPauseStartTimestamp) {
                 model.setValue(RoomObjectVariableEnum.FigureTalk, 0);
 

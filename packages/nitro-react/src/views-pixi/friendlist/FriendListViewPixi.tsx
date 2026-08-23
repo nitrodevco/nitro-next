@@ -37,20 +37,35 @@ export const FriendListViewPixi = () => {
     };
 
     return (
-        <Frame variant="0" id="friendlist" layout={{ position: 'absolute', top: 20, left: 20, width: 230, height: activeTab ? 350 : undefined }} caption={t('friendlist.friends')} onClose={() => toggleWindow('friendlist')}>
-            <Accordion collapsible value={activeTab} onValueChange={setActiveTab} layout={{ position: 'relative', flex: activeTab ? 1 : undefined, minHeight: 0 }}>
+        <Frame
+            variant="0"
+            id="friendlist"
+            layout={{ position: 'absolute', top: 20, left: 20, width: 230, height: activeTab ? 350 : undefined }}
+            caption={t('friendlist.friends')}
+            onClose={() => toggleWindow('friendlist')}
+        >
+            <Accordion
+                collapsible
+                value={activeTab}
+                onValueChange={setActiveTab}
+                layout={{ position: 'relative', flex: activeTab ? 1 : undefined, minHeight: 0 }}
+            >
                 <ColorLayer color="#ffffff" />
                 <pixiGraphics
                     eventMode="none"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={g => { g.clear(); g.rect(0, 0, 1, 1).fill('#000000'); }}
+                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#000000'); }}
                 />
                 <FriendListFriendsPixi value="friends" />
                 <FriendListRequestsPixi value="requests" />
                 <FriendListSearchPixi value="search" />
             </Accordion>
             <Box layout={{ width: '100%', height: 20, flexShrink: 0, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingTop: 8, paddingRight: 32 }}>
-                <Text text={t(tooltip)} textStyle="text-style-regular" textOptions={{ fontSize: 8.75, fill: '#ffffff' }} />
+                <Text
+                    text={t(tooltip)}
+                    textStyle="text-style-regular"
+                    textOptions={{ fontSize: 8.75, fill: '#ffffff' }}
+                />
             </Box>
         </Frame>
     );

@@ -1,7 +1,7 @@
-import { CatalogPricingModelEnum } from "./CatalogPricingModelEnum";
-import { CatalogPricingTypeEnum } from "./CatalogPricingTypeEnum";
-import { IActivePage } from "./IActivePage";
-import { IProduct } from "./IProduct";
+import { CatalogPricingModelEnum } from './CatalogPricingModelEnum';
+import { CatalogPricingTypeEnum } from './CatalogPricingTypeEnum';
+import { IActivePage } from './IActivePage';
+import { IProduct } from './IProduct';
 
 export interface IPurchasableOffer {
     readonly pricingModel: CatalogPricingModelEnum;

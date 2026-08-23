@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFlatControllerData {
     userId: number;
@@ -15,4 +15,4 @@ export const FlatControllerDataParser = (wrapper: IMessageDataWrapper): IFlatCon
     data.userName = wrapper.readString();
 
     return data;
-}
+};

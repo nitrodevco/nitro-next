@@ -36,25 +36,25 @@ interface TabButtonVariant {
  */
 const TAB_BUTTON_VARIANTS: Record<string, TabButtonVariant> = {
     // default
-    '0': {
+    0: {
         paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
         minWidth: 20, minHeight: 22,
         textStyleKey: 'text-style-button-tab', color: '#000000',
     },
     // black
-    '1': {
+    1: {
         paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
         minWidth: 20, minHeight: 22,
         textStyleKey: 'text-style-button-tab', color: '#ffffff',
     },
     // white - reuses '0's sizing wholesale
-    '2': {
+    2: {
         paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
         minWidth: 20, minHeight: 22,
         textStyleKey: 'text-style-button-tab', color: '#000000',
     },
     // shiny/pill
-    '3': {
+    3: {
         paddingLeft: 10, paddingTop: 0, paddingRight: 10, paddingBottom: 0,
         minHeight: 32, maxHeight: 32,
         textStyleKey: 'text-style-button-shiny-regular', color: '#000000',
@@ -109,12 +109,18 @@ export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes
                 <BackgroundLayer layer={resolvedLayer} />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                        ? (
+                                <Text
+                                    text={children}
+                                    textStyle={config.textStyleKey}
+                                    textOptions={{ fill: config.color }}
+                                />
+                            )
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 TabButton.displayName = 'TabButton';

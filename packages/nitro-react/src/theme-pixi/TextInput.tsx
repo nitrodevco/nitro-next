@@ -44,8 +44,8 @@ export interface TextInputProps {
  */
 export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TextInputProps>(
     ({ value, onChange, onEnter, maxLength, multiline = false, fontSize = 12, textColor = '#000000', backgroundColor = '#ffffff', layout }, ref) => {
-        const [focused, setFocused] = useState(false);
-        const [wrapWidth, setWrapWidth] = useState(0);
+        const [ focused, setFocused ] = useState(false);
+        const [ wrapWidth, setWrapWidth ] = useState(0);
         const boxRef = useRef<PixiContainer | null>(null);
 
         useOutsideClick(boxRef, () => setFocused(false), focused);
@@ -65,7 +65,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             raf = requestAnimationFrame(tick);
 
             return () => cancelAnimationFrame(raf);
-        }, [multiline]);
+        }, [ multiline ]);
 
         useEffect(() => {
             if (!focused) return;
@@ -103,11 +103,11 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             window.addEventListener('keydown', onKeyDown);
 
             return () => window.removeEventListener('keydown', onKeyDown);
-        }, [focused, value, onChange, onEnter, maxLength, multiline]);
+        }, [ focused, value, onChange, onEnter, maxLength, multiline ]);
 
         return (
             <Box
-                ref={node => { boxRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; }}
+                ref={(node) => { boxRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; }}
                 eventMode="static"
                 cursor="text"
                 onPointerTap={() => setFocused(true)}
@@ -127,7 +127,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                 />
             </Box>
         );
-    }
+    },
 );
 
 TextInput.displayName = 'TextInput';

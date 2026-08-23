@@ -7,7 +7,7 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     private _timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.ROOM_LINK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.ROOM_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

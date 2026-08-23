@@ -102,9 +102,9 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
     public getPaletteColors(paletteId: number): number[] {
         const palette = this.getPalette(paletteId);
 
-        if (palette) return [palette.primaryColor, palette.secondaryColor];
+        if (palette) return [ palette.primaryColor, palette.secondaryColor ];
 
-        return [0, 0];
+        return [ 0, 0 ];
     }
 
     public addAsset(
@@ -115,7 +115,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         flipH: boolean = false,
         flipV: boolean = false,
         usesPalette: boolean = false,
-        replace: boolean = false
+        replace: boolean = false,
     ): IGraphicAsset | undefined {
         if (!name || !texture) return undefined;
 
@@ -140,11 +140,10 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (!asset || !this._assets.delete(name)) return;
 
         if (asset.texture) {
-
-            const isSubTexture = asset.texture.frame.x !== 0 ||
-                asset.texture.frame.y !== 0 ||
-                asset.texture.frame.width !== asset.texture.source.width ||
-                asset.texture.frame.height !== asset.texture.source.height;
+            const isSubTexture = asset.texture.frame.x !== 0
+                || asset.texture.frame.y !== 0
+                || asset.texture.frame.width !== asset.texture.source.width
+                || asset.texture.frame.height !== asset.texture.source.height;
 
             if (!isSubTexture) asset.texture.destroy(true);
         }

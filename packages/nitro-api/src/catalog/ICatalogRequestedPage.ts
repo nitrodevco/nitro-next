@@ -1,4 +1,4 @@
-import { CatalogPageRequestType } from "./CatalogPageRequestType";
+import { CatalogPageRequestType } from './CatalogPageRequestType';
 
 export interface ICatalogRequestedPage {
     type: CatalogPageRequestType;

@@ -1,5 +1,3 @@
-
-
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { type ILegacyWallGeometry, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
@@ -134,7 +132,7 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         return _local_11;
     }
 
-    public getLocationFromString(loc: string): { width: number, height: number, localX: number, localY: number, direction: string } {
+    public getLocationFromString(loc: string): { width: number; height: number; localX: number; localY: number; direction: string } {
         let width = 0;
         let height = 0;
         let localX = 0;
@@ -205,9 +203,9 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
             x++;
         }
 
-        let _local_11 =
-            (this.getHeight(finalX, finalY) * this.scale) / 2 +
-            ((-_local_7 * this.scale) / 2 + (((-_arg_2 * 18) / 32) * this.scale) / 2);
+        let _local_11
+            = (this.getHeight(finalX, finalY) * this.scale) / 2
+                + ((-_local_7 * this.scale) / 2 + (((-_arg_2 * 18) / 32) * this.scale) / 2);
 
         if (dir == LegacyWallGeometry.R) {
             _local_11 = _local_11 + (_local_6 * this.scale) / 4;
@@ -245,7 +243,7 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
             return undefined;
         }
 
-        return [x, y, wallOffset, z, dir];
+        return [ x, y, wallOffset, z, dir ];
     }
 
     public getOldLocationString(loc: IVector3D, angle: number): string {
@@ -254,16 +252,16 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         if (!_local_3) return '';
 
         return (
-            ':w=' +
-            Math.trunc(_local_3[0]) +
-            ',' +
-            Math.trunc(_local_3[1]) +
-            ' l=' +
-            Math.trunc(_local_3[2]) +
-            ',' +
-            Math.trunc(_local_3[3]) +
-            ' ' +
-            _local_3[4]
+            ':w='
+            + Math.trunc(_local_3[0])
+            + ','
+            + Math.trunc(_local_3[1])
+            + ' l='
+            + Math.trunc(_local_3[2])
+            + ','
+            + Math.trunc(_local_3[3])
+            + ' '
+            + _local_3[4]
         );
     }
 
@@ -278,15 +276,15 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         const _local_4 = height + 1;
 
         return (
-            height +
-            (Math.trunc(this.getHeight(x - 1, y - 1)) == _local_4 ||
-                Math.trunc(this.getHeight(x, y - 1)) == _local_4 ||
-                Math.trunc(this.getHeight(x + 1, y - 1)) == _local_4 ||
-                Math.trunc(this.getHeight(x - 1, y)) == _local_4 ||
-                Math.trunc(this.getHeight(x + 1, y)) == _local_4 ||
-                Math.trunc(this.getHeight(x - 1, y + 1)) == _local_4 ||
-                Math.trunc(this.getHeight(x, y + 1)) == _local_4 ||
-                Math.trunc(this.getHeight(x + 1, y + 1)) == _local_4
+            height
+            + (Math.trunc(this.getHeight(x - 1, y - 1)) == _local_4
+                || Math.trunc(this.getHeight(x, y - 1)) == _local_4
+                || Math.trunc(this.getHeight(x + 1, y - 1)) == _local_4
+                || Math.trunc(this.getHeight(x - 1, y)) == _local_4
+                || Math.trunc(this.getHeight(x + 1, y)) == _local_4
+                || Math.trunc(this.getHeight(x - 1, y + 1)) == _local_4
+                || Math.trunc(this.getHeight(x, y + 1)) == _local_4
+                || Math.trunc(this.getHeight(x + 1, y + 1)) == _local_4
                 ? 0.5
                 : 0)
         );

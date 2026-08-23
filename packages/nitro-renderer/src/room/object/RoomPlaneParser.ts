@@ -325,7 +325,7 @@ export class RoomPlaneParser {
             y++;
         }
 
-        for (const [holeId, holeData] of this._floorHoles.entries()) {
+        for (const [ holeId, holeData ] of this._floorHoles.entries()) {
             if (!holeData) continue;
 
             data.holeMap.push({
@@ -338,7 +338,7 @@ export class RoomPlaneParser {
             });
         }
 
-        for (const [holeId, holeData] of this._floorHolesInverted.entries()) {
+        for (const [ holeId, holeData ] of this._floorHolesInverted.entries()) {
             if (!holeData) continue;
 
             data.holeMap.push({
@@ -541,9 +541,9 @@ export class RoomPlaneParser {
             wallData.addWall(corner, direction, length, border, highlight);
 
             if (
-                extraction.x == k.x &&
-                extraction.y == k.y &&
-                (!(extraction.x == corner.x) || !(extraction.y == corner.y))
+                extraction.x == k.x
+                && extraction.y == k.y
+                && (!(extraction.x == corner.x) || !(extraction.y == corner.y))
             )
                 break;
 
@@ -744,10 +744,10 @@ export class RoomPlaneParser {
                 loc = Vector3d.sum(loc, Vector3d.product(_local_12, 0.5));
                 loc = Vector3d.sum(loc, Vector3d.product(_local_11, -0.5));
 
-                const _local_17 =
-                    this.wallHeight +
-                    Math.min(RoomPlaneParser.MAX_WALL_ADDITIONAL_HEIGHT, this.floorHeight) -
-                    _local_13;
+                const _local_17
+                    = this.wallHeight
+                        + Math.min(RoomPlaneParser.MAX_WALL_ADDITIONAL_HEIGHT, this.floorHeight)
+                        - _local_13;
                 const leftSideLoc = Vector3d.product(_local_11, -_local_10);
                 const rightSideLoc = new Vector3d(0, 0, _local_17);
 
@@ -942,9 +942,9 @@ export class RoomPlaneParser {
         _arg_6: boolean,
         _arg_7: boolean,
     ): void {
-        this.addPlane(RoomPlaneData.PLANE_WALL, loc, leftSideLoc, rightSideLoc, [secondaryNormal]);
+        this.addPlane(RoomPlaneData.PLANE_WALL, loc, leftSideLoc, rightSideLoc, [ secondaryNormal ]);
 
-        this.addPlane(RoomPlaneData.PLANE_LANDSCAPE, loc, leftSideLoc, rightSideLoc, [secondaryNormal]);
+        this.addPlane(RoomPlaneData.PLANE_LANDSCAPE, loc, leftSideLoc, rightSideLoc, [ secondaryNormal ]);
 
         const wallThickness = RoomPlaneParser.WALL_THICKNESS * this._wallThicknessMultiplier;
         const floorThickness = RoomPlaneParser.FLOOR_THICKNESS * this._floorThicknessMultiplier;
@@ -962,7 +962,7 @@ export class RoomPlaneParser {
                 Vector3d.sum(Vector3d.sum(loc, leftSideLoc), rightSideLoc),
                 Vector3d.product(rightSideLoc, -(rightSideLoc.length + floorThickness) / rightSideLoc.length),
                 planeRightSideLoc,
-                [normal, secondaryNormal],
+                [ normal, secondaryNormal ],
             );
 
         if (_arg_6) {
@@ -971,7 +971,7 @@ export class RoomPlaneParser {
                 Vector3d.sum(loc, Vector3d.product(rightSideLoc, -floorThickness / rightSideLoc.length)),
                 Vector3d.product(rightSideLoc, (rightSideLoc.length + floorThickness) / rightSideLoc.length),
                 planeRightSideLoc,
-                [normal, secondaryNormal],
+                [ normal, secondaryNormal ],
             );
 
             if (_arg_7) {
@@ -981,7 +981,7 @@ export class RoomPlaneParser {
                     Vector3d.sum(Vector3d.sum(loc, rightSideLoc), Vector3d.product(_local_12, -1)),
                     _local_12,
                     planeRightSideLoc,
-                    [normal, leftSideLoc, secondaryNormal],
+                    [ normal, leftSideLoc, secondaryNormal ],
                 );
             }
         }
@@ -1159,9 +1159,9 @@ export class RoomPlaneParser {
                     _loc19_ = _loc25_ + 1;
                     while (_loc19_ < _loc22_) {
                         if (
-                            param1[_loc24_][_loc19_] != _loc9_ ||
-                            _loc7_[_loc24_][_loc19_] ||
-                            (_loc24_ > 0 && (param1[_loc24_ - 1][_loc19_] == _loc9_) == _loc8_)
+                            param1[_loc24_][_loc19_] != _loc9_
+                            || _loc7_[_loc24_][_loc19_]
+                            || (_loc24_ > 0 && (param1[_loc24_ - 1][_loc19_] == _loc9_) == _loc8_)
                         ) {
                             break;
                         }
@@ -1172,11 +1172,11 @@ export class RoomPlaneParser {
                     _loc16_ = _loc24_ + 1;
                     while (_loc16_ <= _loc27_ && !_loc11_) {
                         _loc12_ = _loc16_ == _loc14_ || param1[_loc16_][_loc25_] != _loc9_;
-                        _loc11_ =
-                            _loc16_ == _loc27_ ||
-                            _loc12_ ||
-                            (_loc25_ > 0 && (param1[_loc16_][_loc25_ - 1] == _loc9_) == _loc10_) ||
-                            (_loc19_ < _loc26_ && (param1[_loc16_][_loc19_] == _loc9_) == _loc20_);
+                        _loc11_
+                            = _loc16_ == _loc27_
+                                || _loc12_
+                                || (_loc25_ > 0 && (param1[_loc16_][_loc25_ - 1] == _loc9_) == _loc10_)
+                                || (_loc19_ < _loc26_ && (param1[_loc16_][_loc19_] == _loc9_) == _loc20_);
                         if (_loc16_ == _loc14_) {
                             break;
                         }
@@ -1361,8 +1361,8 @@ export class RoomPlaneParser {
 
         while (i < _local_6.length - 1) {
             if (
-                Math.trunc(_local_6[i]) <= Math.trunc(_local_6[i - 1]) - 1 &&
-                Math.trunc(_local_6[i]) <= Math.trunc(_local_6[i + 1]) - 1
+                Math.trunc(_local_6[i]) <= Math.trunc(_local_6[i - 1]) - 1
+                && Math.trunc(_local_6[i]) <= Math.trunc(_local_6[i + 1]) - 1
             )
                 return new Point(Math.trunc(_local_6[i] | 0), i);
 
@@ -1406,8 +1406,8 @@ export class RoomPlaneParser {
                         while (_local_7 < 4) {
                             if (_local_4[_local_9 + _local_8] === undefined) _local_4[_local_9 + _local_8] = [];
 
-                            _local_4[_local_9 + _local_8][_local_10 + _local_7] =
-                                _local_11 < 0 ? _local_11 : _local_11 * 4;
+                            _local_4[_local_9 + _local_8][_local_10 + _local_7]
+                                = _local_11 < 0 ? _local_11 : _local_11 * 4;
 
                             _local_7++;
                         }
@@ -1426,14 +1426,14 @@ export class RoomPlaneParser {
                     while (_local_7 < 3) {
                         const _local_17 = _local_7 + 1;
 
-                        _local_4[_local_9][_local_10 + _local_7] =
-                            (_local_13 * (3 - _local_7) + _local_14 * _local_7) / 3;
-                        _local_4[_local_9 + 3][_local_10 + _local_17] =
-                            (_local_15 * (3 - _local_17) + _local_16 * _local_17) / 3;
-                        _local_4[_local_9 + _local_17][_local_10] =
-                            (_local_13 * (3 - _local_17) + _local_15 * _local_17) / 3;
-                        _local_4[_local_9 + _local_7][_local_10 + 3] =
-                            (_local_14 * (3 - _local_7) + _local_16 * _local_7) / 3;
+                        _local_4[_local_9][_local_10 + _local_7]
+                            = (_local_13 * (3 - _local_7) + _local_14 * _local_7) / 3;
+                        _local_4[_local_9 + 3][_local_10 + _local_17]
+                            = (_local_15 * (3 - _local_17) + _local_16 * _local_17) / 3;
+                        _local_4[_local_9 + _local_17][_local_10]
+                            = (_local_13 * (3 - _local_17) + _local_15 * _local_17) / 3;
+                        _local_4[_local_9 + _local_7][_local_10 + 3]
+                            = (_local_14 * (3 - _local_7) + _local_16 * _local_7) / 3;
                         _local_7++;
                     }
 
@@ -1479,11 +1479,11 @@ export class RoomPlaneParser {
                     const _local_15 = _local_6 + 1;
                     const _local_16 = _local_6 - 1;
 
-                    let _local_17 =
-                        (_local_7 == _local_15 || _local_8 == _local_15 || _local_10 == _local_15 ? 8 : 0) |
-                        (_local_9 == _local_15 || _local_8 == _local_15 || _local_11 == _local_15 ? 4 : 0) |
-                        (_local_12 == _local_15 || _local_13 == _local_15 || _local_10 == _local_15 ? 2 : 0) |
-                        (_local_14 == _local_15 || _local_13 == _local_15 || _local_11 == _local_15 ? 1 : 0);
+                    let _local_17
+                        = (_local_7 == _local_15 || _local_8 == _local_15 || _local_10 == _local_15 ? 8 : 0)
+                            | (_local_9 == _local_15 || _local_8 == _local_15 || _local_11 == _local_15 ? 4 : 0)
+                            | (_local_12 == _local_15 || _local_13 == _local_15 || _local_10 == _local_15 ? 2 : 0)
+                            | (_local_14 == _local_15 || _local_13 == _local_15 || _local_11 == _local_15 ? 1 : 0);
 
                     if (_local_17 == 15) _local_17 = 0;
 

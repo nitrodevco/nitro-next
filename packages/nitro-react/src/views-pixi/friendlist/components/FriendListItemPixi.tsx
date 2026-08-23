@@ -47,14 +47,35 @@ export const FriendListItemPixi = ({ user, selected = false, hideAvatarElement =
             <Box layout={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 {!hideAvatarElement && (
                     <Box layout={{ width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
-                        {avatarTexture && <pixiSprite texture={avatarTexture} width={20} height={20} layout={{}} />}
+                        {avatarTexture && (
+                            <pixiSprite
+                                texture={avatarTexture}
+                                width={20}
+                                height={20}
+                                layout={{}}
+                            />
+                        )}
                     </Box>
                 )}
-                <Box eventMode="static" cursor="pointer" onPointerOver={profileHover.onMouseEnter} onPointerOut={profileHover.onMouseLeave} layout={{}}>
-                    <NitroIcon icon="icon-profile-small" layout={{}} />
+                <Box
+                    eventMode="static"
+                    cursor="pointer"
+                    onPointerOver={profileHover.onMouseEnter}
+                    onPointerOut={profileHover.onMouseLeave}
+                    layout={{}}
+                >
+                    <NitroIcon
+                        icon="icon-profile-small"
+                        layout={{}}
+                    />
                 </Box>
             </Box>
-            <Text layout={{ flex: 1 }} text={user.name} textStyle="text-style-regular" textOptions={{ fontSize: 10.88, fill: '#000000' }} />
+            <Text
+                layout={{ flex: 1 }}
+                text={user.name}
+                textStyle="text-style-regular"
+                textOptions={{ fontSize: 10.88, fill: '#000000' }}
+            />
             <Box layout={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'space-around', flexShrink: 0, minWidth: 45, maxWidth: 52 }}>
                 {children}
             </Box>

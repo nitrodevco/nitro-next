@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IMintTokenOffer {
     offerId: number;
@@ -21,4 +21,4 @@ export const MintTokenOfferParser = (wrapper: IMessageDataWrapper): IMintTokenOf
     data.amountTokens = wrapper.readInt();
 
     return data;
-}
+};

@@ -66,5 +66,5 @@ export const useAvatarLoader = () => {
         void loadFigureMapAsync(figureMapUrl);
         void loadEffectMapAsync(effectMapUrl);
         void loadFigureDataAsync(figureDataUrl);
-    }, [figureMapUrl, effectMapUrl]);
+    }, [ figureMapUrl, effectMapUrl ]);
 };

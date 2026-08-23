@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IHabboGroupEntryData {
     groupId: number;
@@ -33,4 +33,4 @@ export const HabboGroupEntryDataParser = (wrapper: IMessageDataWrapper): IHabboG
     data.hasForum = wrapper.readBoolean();
 
     return data;
-}
+};

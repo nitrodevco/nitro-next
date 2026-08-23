@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UnseenItemsEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class UnseenItemsEventMessage implements IIncomingPacket<UnseenItemsEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UnseenItemsEventMessageType
-  {
+export class UnseenItemsEventMessage implements IIncomingPacket<UnseenItemsEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UnseenItemsEventMessageType {
+        const packet: UnseenItemsEventMessageType = {
+        };
 
-    const packet: UnseenItemsEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

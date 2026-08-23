@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TalentTrackLevelMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TalentTrackLevelMessage implements IIncomingPacket<TalentTrackLevelMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TalentTrackLevelMessageType
-  {
+export class TalentTrackLevelMessage implements IIncomingPacket<TalentTrackLevelMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TalentTrackLevelMessageType {
+        const packet: TalentTrackLevelMessageType = {
+        };
 
-    const packet: TalentTrackLevelMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

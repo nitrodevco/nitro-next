@@ -1,5 +1,5 @@
-import { IObjectData } from "../room";
-import { IPurchasableOffer } from "./IPurchasableOffer";
+import { IObjectData } from '../room';
+import { IPurchasableOffer } from './IPurchasableOffer';
 
 export interface IPurchaseOptions {
     offer: IPurchasableOffer | undefined;

@@ -35,27 +35,27 @@ const border = (textureKey: string, leftWidth: number, rightWidth: number): BarB
  * dropped; '100'/'200' reuse one texture for all three states.
  */
 const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: Record<string, ScrollbarSliderBarHorizontalVariant> = {
-    '0': {
+    0: {
         default: border('scrollbarsliderbarhorizontal-0-default-src', 2, 2),
         hovering: border('scrollbarsliderbarhorizontal-0-default-src', 2, 2),
         pressed: border('scrollbarsliderbarhorizontal-0-pressed-src', 2, 2),
     },
-    '1': {
+    1: {
         default: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
         hovering: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
         pressed: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
     },
-    '3': {
+    3: {
         default: border('scrollbarsliderbarhorizontal-3-default-src', 5, 5),
         hovering: border('scrollbarsliderbarhorizontal-3-hovering-src', 5, 5),
         pressed: border('scrollbarsliderbarhorizontal-3-pressed-src', 5, 5),
     },
-    '100': {
+    100: {
         default: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
         hovering: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
         pressed: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
     },
-    '200': {
+    200: {
         default: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
         hovering: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
         pressed: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
@@ -81,8 +81,8 @@ interface BarOverlay {
  * (full fill, no inset) - preserved as-is rather than "fixed" to match '0'.
  */
 const SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY: Partial<Record<string, BarOverlay>> = {
-    '0': { defaultTextureKey: 'scrollbarsliderbarhorizontal-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-0-pressed-grd-src', insetLeft: 2, insetRight: 2 },
-    '1': { defaultTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', insetLeft: 0, insetRight: 0 },
+    0: { defaultTextureKey: 'scrollbarsliderbarhorizontal-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-0-pressed-grd-src', insetLeft: 2, insetRight: 2 },
+    1: { defaultTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', insetLeft: 0, insetRight: 0 },
 };
 
 export interface ScrollbarSliderBarHorizontalProps {
@@ -120,15 +120,34 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
                 onPointerUp={handlers.onPointerUp}
                 onPointerUpOutside={handlers.onPointerUpOutside}
             >
-                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tintColor={tintColor} />
+                <NineSliceLayer
+                    textureKey={layer.textureKey}
+                    leftWidth={layer.leftWidth}
+                    topHeight={layer.topHeight}
+                    rightWidth={layer.rightWidth}
+                    bottomHeight={layer.bottomHeight}
+                    tintColor={tintColor}
+                />
                 {overlay && (
                     isPressed
-                        ? <TileLayer textureKey={overlay.pressedTextureKey} tintColor={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }} />
-                        : <SpriteLayer textureKey={overlay.defaultTextureKey} tintColor={tintColor} layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }} />
+                        ? (
+                                <TileLayer
+                                    textureKey={overlay.pressedTextureKey}
+                                    tintColor={tintColor}
+                                    layout={{ position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }}
+                                />
+                            )
+                        : (
+                                <SpriteLayer
+                                    textureKey={overlay.defaultTextureKey}
+                                    tintColor={tintColor}
+                                    layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }}
+                                />
+                            )
                 )}
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarSliderBarHorizontal.displayName = 'ScrollbarSliderBarHorizontal';

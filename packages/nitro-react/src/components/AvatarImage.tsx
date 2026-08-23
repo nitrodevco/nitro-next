@@ -14,8 +14,8 @@ type AvatarImageProps = {
 export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
     (props, ref) => {
         const { figure, gender, headOnly = false, direction = 0, scale = 1 } = props;
-        const [randomValue, setRandomValue] = useState<number>(-1);
-        const [imageData, setImageData] = useState<{
+        const [ randomValue, setRandomValue ] = useState<number>(-1);
+        const [ imageData, setImageData ] = useState<{
             width: number;
             height: number;
             url: string;
@@ -66,7 +66,7 @@ export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
             };
 
             void load();
-        }, [figure, direction, randomValue]);
+        }, [ figure, direction, randomValue ]);
 
         useEffect(() => {
             return () => {

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IObjectIdAndValuePair {
     objectId: number;
@@ -15,4 +15,4 @@ export const ObjectIdAndValuePairParser = (wrapper: IMessageDataWrapper): IObjec
     data.value = wrapper.readInt();
 
     return data;
-}
+};

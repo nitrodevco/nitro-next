@@ -1,6 +1,5 @@
 import type { IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType } from '@nitrodevco/nitro-api';
-import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
+import { MouseEventType, RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

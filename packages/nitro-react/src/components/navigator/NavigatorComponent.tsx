@@ -11,4 +11,4 @@ export const NavigatorComponent = () => {
     if (!isNavigatorVisible) return null;
 
     return <NavigatorViewPixi />;
-}
+};

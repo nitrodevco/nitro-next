@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface INftWardrobeItem {
     id: string;
@@ -24,4 +24,4 @@ export const NftWardrobeItemParser = (wrapper: IMessageDataWrapper): INftWardrob
     data.contractKey = wrapper.readString();
 
     return data;
-}
+};

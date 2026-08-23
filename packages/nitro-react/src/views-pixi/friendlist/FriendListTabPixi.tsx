@@ -33,13 +33,26 @@ export const FriendListTabPixi = ({ value, caption, tooltip = '', gradientColors
                     <>
                         {gradientColors && (
                             <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'column' }}>
-                                <ColorLayer color={gradientColors[0]} layout={{ width: '100%', height: '50%' }} />
-                                <ColorLayer color={gradientColors[1]} layout={{ width: '100%', height: '50%' }} />
+                                <ColorLayer
+                                    color={gradientColors[0]}
+                                    layout={{ width: '100%', height: '50%' }}
+                                />
+                                <ColorLayer
+                                    color={gradientColors[1]}
+                                    layout={{ width: '100%', height: '50%' }}
+                                />
                             </Box>
                         )}
                         <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 8, paddingRight: 8, gap: 6 }}>
-                            <Text text={t(caption)} textStyle="text-style-regular" textOptions={{ fontSize: 10.88, fill: darkHeader ? '#ffffff' : '#000000' }} />
-                            <NitroIcon icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'} layout={{}} />
+                            <Text
+                                text={t(caption)}
+                                textStyle="text-style-regular"
+                                textOptions={{ fontSize: 10.88, fill: darkHeader ? '#ffffff' : '#000000' }}
+                            />
+                            <NitroIcon
+                                icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'}
+                                layout={{}}
+                            />
                         </Box>
                     </>
                 )}

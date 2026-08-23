@@ -80,8 +80,7 @@ export const CatalogProductViewWidgetViewPixi = () => {
                 addAvatarIntoRoom(ownFigure, product.classId);
                 return;
         }
-         
-    }, [activeOffer]);
+    }, [ activeOffer ]);
 
     return (
         <Box layout={{ position: 'relative', width: '100%', height: '100%' }}>

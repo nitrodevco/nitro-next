@@ -140,9 +140,9 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
     protected updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (
-            this.updateObjectCounter === this.object.updateCounter &&
-            scale === this._scale &&
-            this._lastCameraAngle === direction
+            this.updateObjectCounter === this.object.updateCounter
+            && scale === this._scale
+            && this._lastCameraAngle === direction
         )
             return false;
 
@@ -173,8 +173,8 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
         this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
-        this._clickHandling =
-            (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
+        this._clickHandling
+            = (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
         this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
 
         let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
@@ -323,9 +323,9 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         }
 
         if (assetName.length > 0) {
-            assetName =
-                this._type +
-                (isntIcon ? '_' + size + '_' + assetName + '_' + this._direction + '_' : '_icon_' + assetName);
+            assetName
+                = this._type
+                    + (isntIcon ? '_' + size + '_' + assetName + '_' + this._direction + '_' : '_icon_' + assetName);
         }
 
         if (cache) {

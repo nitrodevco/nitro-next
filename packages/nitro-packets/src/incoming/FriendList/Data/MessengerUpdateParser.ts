@@ -1,8 +1,9 @@
-import { type IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { IMessengerFriend } from "./IMessengerFriend";
-import { IMessengerUpdate } from "./IMessengerUpdate";
-import { FriendListUpdateActionType } from "./FriendListUpdateActionType";
-import { MessengerFriendParser } from "./MessengerFriendParser";
+import { type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
+import { FriendListUpdateActionType } from './FriendListUpdateActionType';
+import { IMessengerFriend } from './IMessengerFriend';
+import { IMessengerUpdate } from './IMessengerUpdate';
+import { MessengerFriendParser } from './MessengerFriendParser';
 
 export const MessengerUpdateParser = (wrapper: IMessageDataWrapper): IMessengerUpdate => {
     const actionType = wrapper.readInt();
@@ -20,6 +21,6 @@ export const MessengerUpdateParser = (wrapper: IMessageDataWrapper): IMessengerU
     return {
         actionType,
         friendId,
-        friend
+        friend,
     };
-}
+};

@@ -1,9 +1,10 @@
-import { IAssetAvatarActionType } from "#api/asset/index";
-import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from "../enum";
+import { IAssetAvatarActionType } from '#api/asset/index';
+
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from '../enum';
 
 export interface IActionDefinition {
     getOffsets(size: string, direction: number): [number, number, number];
-    setOffsets(size: string, direction: number, offset: [number, number, number]): void
+    setOffsets(size: string, direction: number, offset: [number, number, number]): void;
     getType(id: number): IAssetAvatarActionType | undefined;
     getParameterValue(id: string): string;
     getPrevents(typeId: number): AvatarActionStateType[];

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfigValue, useSystemActions } from '#base/context';
 
 export const useLocalizationLoader = () => {
-    const [needsUpdate, setNeedsUpdate] = useState<boolean>(true);
+    const [ needsUpdate, setNeedsUpdate ] = useState<boolean>(true);
     const { setLocalization } = useSystemActions();
     const localizationUrl = useConfigValue<string>('gamedata.urls.externalTexts') ?? '';
 
@@ -26,7 +26,7 @@ export const useLocalizationLoader = () => {
                 if (typeof resolvedConfig[key] === 'string')
                     resolvedConfig[key] = resolvedConfig[key].replace(/\$\{([^}]+)\}/g, (_, refKey) =>
 
-                        getValue(refKey),);
+                        getValue(refKey));
             }
 
             return resolvedConfig;
@@ -81,7 +81,7 @@ export const useLocalizationLoader = () => {
         };
 
         void load(urls);
-    }, [needsUpdate, localizationUrl]);
+    }, [ needsUpdate, localizationUrl ]);
 
     return { isLocalizationReady };
 };

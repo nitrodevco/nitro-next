@@ -19,8 +19,8 @@ export interface InteractionStates<T> {
     selected?: T;
 }
 
-export const useInteractionState = (disabled?: boolean): { state: InteractionState, handlers: InteractionHandlers } => {
-    const [state, setState] = useState<InteractionState>('default');
+export const useInteractionState = (disabled?: boolean): { state: InteractionState; handlers: InteractionHandlers } => {
+    const [ state, setState ] = useState<InteractionState>('default');
 
     const handlers = useMemo<InteractionHandlers>(() => {
         if (disabled) return { eventMode: 'none' };
@@ -33,12 +33,12 @@ export const useInteractionState = (disabled?: boolean): { state: InteractionSta
             onPointerUp: () => setState('hovering'),
             onPointerUpOutside: () => setState('default'),
         };
-    }, [disabled]);
+    }, [ disabled ]);
 
     return { state: disabled ? 'disabled' : state, handlers };
 };
 
-export const resolveByState = <T,>(states: InteractionStates<T>, state: InteractionState, selected?: boolean): T => {
+export const resolveByState = <T>(states: InteractionStates<T>, state: InteractionState, selected?: boolean): T => {
     if (state === 'disabled' && states.disabled !== undefined) return states.disabled;
     if ((selected || state === 'pressed') && states.selected !== undefined) return states.selected;
     if (state === 'pressed' && states.pressed !== undefined) return states.pressed;

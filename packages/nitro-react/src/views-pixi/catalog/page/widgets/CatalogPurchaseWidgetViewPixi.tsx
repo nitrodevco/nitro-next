@@ -14,16 +14,34 @@ export const CatalogPurchaseWidgetViewPixi = () => {
     return (
         <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', gap: 8 }}>
             {!activeOffer && (
-                <Border variant="6" blend={0.5} layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', height: 30 }}>
-                    <Text text={t('catalog.purchase.select.info')} textStyle="text-style-headline-small" textOptions={{ fill: '#666666' }} />
+                <Border
+                    variant="6"
+                    blend={0.5}
+                    layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', height: 30 }}
+                >
+                    <Text
+                        text={t('catalog.purchase.select.info')}
+                        textStyle="text-style-headline-small"
+                        textOptions={{ fill: '#666666' }}
+                    />
                 </Border>
             )}
             {activeOffer && (
                 <>
-                    <Button variant="3" disabled={purchaseOptions.quantity > 1 || !activeOffer.giftable} layout={{ width: '100%' }}>
+                    <Button
+                        variant="3"
+                        disabled={purchaseOptions.quantity > 1 || !activeOffer.giftable}
+                        layout={{ width: '100%' }}
+                    >
                         {t('catalog.purchase_confirmation.gift')}
                     </Button>
-                    <ButtonThick variant="3" tintColor="#00aa00" textColor="#ffffff" onPress={purchase} layout={{ width: '100%' }}>
+                    <ButtonThick
+                        variant="3"
+                        tintColor="#00aa00"
+                        textColor="#ffffff"
+                        onPress={purchase}
+                        layout={{ width: '100%' }}
+                    >
                         {t('catalog.purchase_confirmation.buy')}
                     </ButtonThick>
                 </>

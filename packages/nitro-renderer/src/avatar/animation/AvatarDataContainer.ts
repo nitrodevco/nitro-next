@@ -1,6 +1,6 @@
-﻿import type { IAssetAnimationAvatar, IAvatarDataContainer } from "@nitrodevco/nitro-api";
-import type { Filter } from "pixi.js";
-import { AdjustmentFilter } from "pixi-filters";
+﻿import type { IAssetAnimationAvatar, IAvatarDataContainer } from '@nitrodevco/nitro-api';
+import type { Filter } from 'pixi.js';
+import { AdjustmentFilter } from 'pixi-filters';
 
 export class AvatarDataContainer implements IAvatarDataContainer {
     private _ink: number;
@@ -65,6 +65,7 @@ export class AvatarDataContainer implements IAvatarDataContainer {
     public get paletteIsGrayscale(): boolean {
         return this._paletteIsGrayscale;
     }
+
     public get colorTransform(): Filter | undefined {
         return this._colorTransform;
     }
@@ -96,10 +97,10 @@ export class AvatarDataContainer implements IAvatarDataContainer {
         }
 
         return new Map([
-            ['alphas', alphas],
-            ['reds', colors],
-            ['greens', colors],
-            ['blues', colors],
+            [ 'alphas', alphas ],
+            [ 'reds', colors ],
+            [ 'greens', colors ],
+            [ 'blues', colors ],
         ]);
     }
 

@@ -13,19 +13,19 @@ import { ThemeProps, ThemeVariant, ThemeVariants } from './variant';
 type BorderVariant = ThemeVariant;
 
 const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
-    '0': { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
-    '1': { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
-    '2': { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
-    '3': { layer: NineSlice('border-3-default-src', 3, 3, 3, 3) },
-    '4': { layer: NineSlice('border-4-default-src', 6, 6, 6, 6) },
-    '5': { layer: NineSlice('border-5-default-src', 5, 5, 5, 5) },
-    '6': { layer: NineSlice('border-6-default-src', 8, 8, 8, 8) },
-    '7': { layer: NineSlice('border-7-default-src', 6, 6, 6, 7) },
-    '8': { layer: NineSlice('border-8-default-src', 10, 10, 10, 10) },
-    '9': { layer: NineSlice('border-9-default-src', 7, 7, 7, 8), tintColor: '#686661' },
-    '10': { layer: NineSlice('border-10-default-src', 6, 6, 6, 8) },
-    '100': { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
-    '101': {
+    0: { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
+    1: { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
+    2: { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
+    3: { layer: NineSlice('border-3-default-src', 3, 3, 3, 3) },
+    4: { layer: NineSlice('border-4-default-src', 6, 6, 6, 6) },
+    5: { layer: NineSlice('border-5-default-src', 5, 5, 5, 5) },
+    6: { layer: NineSlice('border-6-default-src', 8, 8, 8, 8) },
+    7: { layer: NineSlice('border-7-default-src', 6, 6, 6, 7) },
+    8: { layer: NineSlice('border-8-default-src', 10, 10, 10, 10) },
+    9: { layer: NineSlice('border-9-default-src', 7, 7, 7, 8), tintColor: '#686661' },
+    10: { layer: NineSlice('border-10-default-src', 6, 6, 6, 8) },
+    100: { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
+    101: {
         layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
             { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
@@ -38,7 +38,7 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
         ]),
     },
-    '102': {
+    102: {
         layer: Composite([
             { textureKey: 'border-102-default-top-left-src', top: 0, left: 0, width: 12, height: 14 },
             { textureKey: 'border-102-default-top-center-src', top: 0, left: 12, right: 6, height: 14 },
@@ -51,7 +51,7 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-102-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 4 },
         ]),
     },
-    '103': {
+    103: {
         layer: Composite([
             { textureKey: 'border-103-default-top-src', top: 0, left: 0, right: 0, height: 4 },
             { textureKey: 'border-103-default-center-src', top: 4, bottom: 12, left: 0, right: 0 },
@@ -60,7 +60,7 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-103-default-bottom-right-src', bottom: 0, right: 0, width: 4, height: 12 },
         ]),
     },
-    '104': {
+    104: {
         layer: NineSlice('border-104-default-src', 7, 7, 7, 7),
         overlay: Composite([
             { textureKey: 'border-104-default-border-top-left-src', top: 0, left: 0, width: 4, height: 4 },
@@ -73,11 +73,11 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-104-default-border-bottom-right-src', right: 0, bottom: 0, width: 4, height: 5 },
         ]),
     },
-    '105': {
+    105: {
         layer: NineSlice('border-105-default-src', 5, 5, 5, 5),
         overlay: NineSlice('border-105-default-shine-src', 5, 5, 5, 5),
     },
-    '106': {
+    106: {
         layer: Composite([
             { textureKey: 'border-106-default-top-left-src', top: 0, left: 0, width: 4, height: 5 },
             { textureKey: 'border-106-default-top-center-src', top: 0, left: 4, right: 4, height: 5 },
@@ -88,7 +88,7 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-106-default-bottom-right-src', bottom: 0, right: 0, width: 4, height: 7 },
         ]),
     },
-    '107': {
+    107: {
         layer: Composite([
             { textureKey: 'border-107-default-background-top-left-src', top: 0, left: 0, width: 5, height: 10 },
             { textureKey: 'border-107-default-background-top-center-src', top: 0, left: 5, right: 5, height: 10 },
@@ -101,8 +101,8 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             { textureKey: 'border-107-default-background-bottom-right-src', right: 0, bottom: 0, width: 5, height: 5 },
         ]),
     },
-    '108': { layer: NineSlice('border-108-default-src', 3, 3, 3, 3), tintColor: '#676767' },
-    '200': { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
+    108: { layer: NineSlice('border-108-default-src', 3, 3, 3, 3), tintColor: '#676767' },
+    200: { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
 };
 
 export interface BorderProps extends ThemeProps<BorderVariant> {
@@ -113,12 +113,21 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
     ({ variant, defaultVariant, tintColor, textStyle, textColor, blend, layout, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
+            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
         return (
-            <Box ref={ref} layout={{ ...config.layout, ...layout }} {...handlers}>
-                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+            <Box
+                ref={ref}
+                layout={{ ...config.layout, ...layout }}
+                {...handlers}
+            >
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 {resolvedLayer && resolvedLayer.kind === 'nineSlice' && (
                     <BlendOverlay
@@ -135,7 +144,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 Border.displayName = 'Border';

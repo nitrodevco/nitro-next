@@ -1,4 +1,3 @@
-
 import { MouseEventType, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectOperationType, RoomObjectTileMouseEvent, RoomObjectUserTypeName, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-api';
 import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer } from '@nitrodevco/nitro-packets';
 
@@ -143,9 +142,9 @@ export const useRoomEventHandler = () => {
 
                 if (category === RoomObjectCategoryEnum.Room) {
                     if (
-                        getMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK) !== event.eventId &&
-                        getMouseEventId(RoomObjectCategoryEnum.Unit, MouseEventType.MOUSE_CLICK) !== event.eventId &&
-                        !didMove
+                        getMouseEventId(RoomObjectCategoryEnum.Minimum, MouseEventType.MOUSE_CLICK) !== event.eventId
+                        && getMouseEventId(RoomObjectCategoryEnum.Unit, MouseEventType.MOUSE_CLICK) !== event.eventId
+                        && !didMove
                     ) {
                         deselectObject();
 
@@ -182,9 +181,9 @@ export const useRoomEventHandler = () => {
                 const category = room.getRoomObjectCategoryForType(event.objectType);
 
                 if (
-                    operation === RoomObjectOperationType.OBJECT_UNDEFINED &&
-                    (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall || event.objectType === RoomObjectUserTypeName.MonsterPlant) &&
-                    ((event.altKey && !event.ctrlKey && !event.shiftKey) || (isDecorating && !(event.ctrlKey || event.shiftKey)))
+                    operation === RoomObjectOperationType.OBJECT_UNDEFINED
+                    && (category === RoomObjectCategoryEnum.Floor || category === RoomObjectCategoryEnum.Wall || event.objectType === RoomObjectUserTypeName.MonsterPlant)
+                    && ((event.altKey && !event.ctrlKey && !event.shiftKey) || (isDecorating && !(event.ctrlKey || event.shiftKey)))
                 ) {
                     if (canManipulateFurniture(event.objectId, category)) modifyRoomObject(event.objectId, category, RoomObjectOperationType.OBJECT_MOVE);
                 }
@@ -204,11 +203,11 @@ export const useRoomEventHandler = () => {
                 );
                 return;
         }
-    }
+    };
 
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.ADDED,
-    ], event => {
+    ], (event) => {
         if (!placedObject || placedObject.objectId !== event.objectId || placedObject.category !== event.category) return;
 
         selectObject(event.objectId, event.category);

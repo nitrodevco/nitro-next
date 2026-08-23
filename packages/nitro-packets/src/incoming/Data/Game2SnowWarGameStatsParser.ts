@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IGame2SnowWarGameStats {
     playerWithMostKills: number;
@@ -15,4 +15,4 @@ export const Game2SnowWarGameStatsParser = (wrapper: IMessageDataWrapper): IGame
     data.playerWithMostHits = wrapper.readInt();
 
     return data;
-}
+};

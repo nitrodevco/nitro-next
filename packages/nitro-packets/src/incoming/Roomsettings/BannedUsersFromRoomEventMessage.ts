@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type BannedUsersFromRoomEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class BannedUsersFromRoomEventMessage implements IIncomingPacket<BannedUsersFromRoomEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): BannedUsersFromRoomEventMessageType
-  {
+export class BannedUsersFromRoomEventMessage implements IIncomingPacket<BannedUsersFromRoomEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): BannedUsersFromRoomEventMessageType {
+        const packet: BannedUsersFromRoomEventMessageType = {
+        };
 
-    const packet: BannedUsersFromRoomEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

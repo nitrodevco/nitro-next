@@ -12,7 +12,6 @@ export type FloorHeightMapMessageType = {
 
 export class FloorHeightMapMessage implements IIncomingPacket<FloorHeightMapMessageType> {
     public parse(wrapper: IMessageDataWrapper): FloorHeightMapMessageType {
-
         const packet: FloorHeightMapMessageType = {
             scaleType: wrapper.readBoolean(),
             fixedWallsHeight: wrapper.readInt(),

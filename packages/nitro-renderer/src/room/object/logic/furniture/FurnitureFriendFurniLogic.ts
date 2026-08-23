@@ -12,7 +12,7 @@ export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
     private _state: number = -1;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

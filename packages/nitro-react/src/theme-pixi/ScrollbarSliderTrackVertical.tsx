@@ -7,9 +7,9 @@ import { Box, type BoxLayout } from './Box';
 import { NineSliceLayer, SpriteLayer } from './layer';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 
-type TrackLayer =
-    | { kind: 'sprite', textureKey: string, disabledTextureKey?: string }
-    | { kind: 'nineSlice', textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number };
+type TrackLayer
+    = | { kind: 'sprite'; textureKey: string; disabledTextureKey?: string }
+        | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number };
 
 interface ScrollbarSliderTrackVerticalVariant {
     layer: TrackLayer;
@@ -31,11 +31,11 @@ interface ScrollbarSliderTrackVerticalVariant {
  * set of their own. Preserved verbatim rather than "fixed".
  */
 const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: Record<string, ScrollbarSliderTrackVerticalVariant> = {
-    '0': { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-0-default-src' }, minWidth: 17, minHeight: 1 },
-    '1': { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-1-default-src' }, minWidth: 17, minHeight: 1 },
-    '3': { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-3-default-src', disabledTextureKey: 'scrollbarslidertrackvertical-3-disabled-src' }, minWidth: 17, minHeight: 2 },
-    '100': { layer: { kind: 'nineSlice', textureKey: 'scrollbarslidertrackhorizontal-100-default-src', leftWidth: 0, topHeight: 2, rightWidth: 0, bottomHeight: 2 }, minWidth: 10, minHeight: 1 },
-    '200': { layer: { kind: 'nineSlice', textureKey: 'scrollbarslidertrackhorizontal-200-default-src', leftWidth: 0, topHeight: 3, rightWidth: 0, bottomHeight: 3 }, minWidth: 8, minHeight: 1 },
+    0: { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-0-default-src' }, minWidth: 17, minHeight: 1 },
+    1: { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-1-default-src' }, minWidth: 17, minHeight: 1 },
+    3: { layer: { kind: 'sprite', textureKey: 'scrollbarslidertrackvertical-3-default-src', disabledTextureKey: 'scrollbarslidertrackvertical-3-disabled-src' }, minWidth: 17, minHeight: 2 },
+    100: { layer: { kind: 'nineSlice', textureKey: 'scrollbarslidertrackhorizontal-100-default-src', leftWidth: 0, topHeight: 2, rightWidth: 0, bottomHeight: 2 }, minWidth: 10, minHeight: 1 },
+    200: { layer: { kind: 'nineSlice', textureKey: 'scrollbarslidertrackhorizontal-200-default-src', leftWidth: 0, topHeight: 3, rightWidth: 0, bottomHeight: 3 }, minWidth: 8, minHeight: 1 },
 };
 
 export interface ScrollbarSliderTrackVerticalProps {
@@ -67,11 +67,19 @@ export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSl
             >
                 {layer.kind === 'sprite'
                     ? <SpriteLayer textureKey={disabled && layer.disabledTextureKey ? layer.disabledTextureKey : layer.textureKey} />
-                    : <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} />}
+                    : (
+                            <NineSliceLayer
+                                textureKey={layer.textureKey}
+                                leftWidth={layer.leftWidth}
+                                topHeight={layer.topHeight}
+                                rightWidth={layer.rightWidth}
+                                bottomHeight={layer.bottomHeight}
+                            />
+                        )}
                 {children}
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarSliderTrackVertical.displayName = 'ScrollbarSliderTrackVertical';

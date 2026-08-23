@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IClubGiftData {
     offerId: number;
@@ -21,4 +21,4 @@ export const ClubGiftDataParser = (wrapper: IMessageDataWrapper): IClubGiftData 
     data.isSelectable = wrapper.readBoolean();
 
     return data;
-}
+};

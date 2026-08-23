@@ -301,7 +301,7 @@ import {
     YouAreSpectatorMessage,
     YoutubeControlVideoMessage,
     YoutubeDisplayPlaylistsMessage,
-    YoutubeDisplayVideoMessage
+    YoutubeDisplayVideoMessage,
 } from './incoming';
 import { IncomingHeader } from './IncomingHeader';
 
@@ -542,7 +542,7 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.UserUpdateMessage]: UserUpdateMessage,
         [IncomingHeader.WiredMovementsMessage]: WiredMovementsMessage,
         [IncomingHeader.AreaHideMessage]: AreaHideMessage,
-        //[IncomingHeader.CustomStackingHeightUpdateMessage]: CustomStackingHeightUpdateMessage, // removed in WIN63-202607011411-782849652
+        // [IncomingHeader.CustomStackingHeightUpdateMessage]: CustomStackingHeightUpdateMessage, // removed in WIN63-202607011411-782849652
         [IncomingHeader.CustomUserNotificationMessage]: CustomUserNotificationMessage,
         [IncomingHeader.DiceValueMessage]: DiceValueMessage,
         [IncomingHeader.FurniRentOrBuyoutOfferMessage]: FurniRentOrBuyoutOfferMessage,
@@ -580,7 +580,7 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.CloseConnectionMessage]: CloseConnectionMessage,
         [IncomingHeader.FlatAccessibleMessage]: FlatAccessibleMessage,
         [IncomingHeader.GamePlayerValueMessage]: GamePlayerValueMessage,
-        //[IncomingHeader.HanditemConfigurationMessage]: HanditemConfigurationMessage, // removed in WIN63-202607011411-782849652
+        // [IncomingHeader.HanditemConfigurationMessage]: HanditemConfigurationMessage, // removed in WIN63-202607011411-782849652
         [IncomingHeader.OpenConnectionMessage]: OpenConnectionMessage,
         [IncomingHeader.RoomForwardMessage]: RoomForwardMessage,
         [IncomingHeader.RoomQueueStatusMessage]: RoomQueueStatusMessage,
@@ -604,7 +604,7 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.EmailStatusResultMessage]: EmailStatusResultEventMessage,
         [IncomingHeader.ExtendedProfileChangedMessage]: ExtendedProfileChangedMessage,
         [IncomingHeader.ScrSendUserInfoMessage]: ScrSendUserInfoMessage,
-        //[IncomingHeader.CreditVaultStatusMessage]: CreditVaultStatusMessage,
+        // [IncomingHeader.CreditVaultStatusMessage]: CreditVaultStatusMessage,
         [IncomingHeader.IncomeRewardClaimResponseMessage]: IncomeRewardClaimResponseMessage,
         [IncomingHeader.IncomeRewardStatusMessage]: IncomeRewardStatusMessage,
 

@@ -6,5 +6,5 @@
     Cry = 4,
     Idle = 5,
     Jump = 6,
-    Respect = 7
+    Respect = 7,
 }

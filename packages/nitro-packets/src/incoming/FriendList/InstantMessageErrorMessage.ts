@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { InstantMessageErrorCodeType } from './Data/InstantMessageErrorCodeType';
 
 export type InstantMessageErrorMessageType = {

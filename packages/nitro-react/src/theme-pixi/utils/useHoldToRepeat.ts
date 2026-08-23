@@ -17,7 +17,7 @@ export const useHoldToRepeat = (callback: () => void) => {
     const callbackRef = useRef(callback);
     useEffect(() => {
         callbackRef.current = callback;
-    }, [callback]);
+    }, [ callback ]);
 
     const stop = () => {
         clearTimeout(timeoutRef.current);

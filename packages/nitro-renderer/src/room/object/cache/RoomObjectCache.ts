@@ -15,7 +15,7 @@ export class RoomObjectCache {
 
     public dispose(): void {
         if (this._data) {
-            for (const [key, item] of this._data.entries()) {
+            for (const [ key, item ] of this._data.entries()) {
                 if (!item) continue;
 
                 this._data.delete(key);
@@ -84,13 +84,13 @@ export class RoomObjectCache {
                     if (isSkewed) data.skew = sprite.sprite.direction % 4 === 0 ? -0.5 : 0.5;
 
                     if (
-                        (isSkewed ||
-                            sprite.name.indexOf('%image.library.url%') >= 0 ||
-                            sprite.name.indexOf('%group.badge.url%') >= 0) &&
-                        data.width <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR &&
-                        data.height <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
+                        (isSkewed
+                            || sprite.name.indexOf('%image.library.url%') >= 0
+                            || sprite.name.indexOf('%group.badge.url%') >= 0)
+                        && data.width <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
+                        && data.height <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
                     ) {
-                        //data.color = Canvas._Str_23439(sprite.sprite.texture).toString();
+                        // data.color = Canvas._Str_23439(sprite.sprite.texture).toString();
 
                         if (sprite.sprite.name.indexOf('external_image_wallitem') === 0) {
                             data.frame = true;

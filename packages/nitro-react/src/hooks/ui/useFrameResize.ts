@@ -37,7 +37,7 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
     const latestSizeRef = useRef<FrameSize | null>(null);
     const lastTapRef = useRef<TapState | null>(null);
 
-    const [size, setSize] = useState<FrameSize | null>(() => (id && getStoredFrameSize(id)) || null);
+    const [ size, setSize ] = useState<FrameSize | null>(() => (id && getStoredFrameSize(id)) || null);
 
     const endGesture = (event: ReactPointerEvent<HTMLElement>) => {
         resizeStateRef.current = null;
@@ -47,7 +47,7 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         }
 
         if (id && latestSizeRef.current) setStoredFrameSize(id, latestSizeRef.current);
-    }
+    };
 
     const resetSize = () => {
         latestSizeRef.current = null;
@@ -55,7 +55,7 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         setSize(null);
 
         if (id) clearStoredFrameSize(id);
-    }
+    };
 
     const handlePointerDown = (event: ReactPointerEvent<HTMLElement>) => {
         if (event.button !== 0 || direction === 'none') return;
@@ -87,7 +87,7 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         };
 
         event.currentTarget.setPointerCapture(event.pointerId);
-    }
+    };
 
     const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
         const resizeState = resizeStateRef.current;
@@ -112,8 +112,8 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
 
         latestSizeRef.current = next;
 
-        setSize((current) => (current && current.width === next.width && current.height === next.height ? current : next));
-    }
+        setSize(current => (current && current.width === next.width && current.height === next.height ? current : next));
+    };
 
     const handlePointerUp = (event: ReactPointerEvent<HTMLElement>) => {
         const resizeState = resizeStateRef.current;
@@ -141,7 +141,7 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         }
 
         lastTapRef.current = { time: event.timeStamp, x: event.clientX, y: event.clientY };
-    }
+    };
 
     const handlePointerCancel = (event: ReactPointerEvent<HTMLElement>) => {
         const resizeState = resizeStateRef.current;
@@ -151,15 +151,17 @@ export const useFrameResize = (id: string | undefined, frameRef: RefObject<HTMLE
         endGesture(event);
 
         lastTapRef.current = null;
-    }
+    };
 
     // only pin the axis the frame can actually resize — a 'y' frame that emits a width
     // freezes it at whatever it was when the user first dragged, so the className (and
     // anything driving it, e.g. the navigator's left pane collapsing) can never change it
-    const style: CSSProperties = size ? {
-        ...(direction === 'y' ? {} : { width: size.width }),
-        ...(direction === 'x' ? {} : { height: size.height })
-    } : {};
+    const style: CSSProperties = size
+        ? {
+                ...(direction === 'y' ? {} : { width: size.width }),
+                ...(direction === 'x' ? {} : { height: size.height }),
+            }
+        : {};
 
     return {
         style,

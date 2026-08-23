@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFurnitureProductItem {
     recipeCode: string;
@@ -18,4 +18,4 @@ export const FurnitureProductItemParser = (wrapper: IMessageDataWrapper): IFurni
     data.furnitureClassName = wrapper.readString();
 
     return data;
-}
+};

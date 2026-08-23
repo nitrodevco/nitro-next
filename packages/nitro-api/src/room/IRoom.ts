@@ -138,7 +138,7 @@ export interface IRoom {
     updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean;
     updateRoomObjectWallExpiration(objectId: number, expires: number): boolean;
-    updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D | undefined, canStandUp?: boolean, baseY?: number, direction?: IVector3D | undefined, headDirection?: number, animationTime?: number, skipPositionUpdate?: boolean, jumpingPower?: number): boolean;
+    updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D, headDirection?: number, animationTime?: number, skipPositionUpdate?: boolean, jumpingPower?: number): boolean;
     updateRoomObjectUserDirection(objectId: number, direction: IVector3D, headDirection: number): boolean;
     updateRoomObjectUserOwn(objectId: number): boolean;
     updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter?: string): boolean;
@@ -155,7 +155,7 @@ export interface IRoom {
     getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;
     getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly?: boolean, customParts?: IPetCustomPart[], posture?: string): Promise<ImageLike | undefined>;
     setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra?: string, posture?: string): Promise<void>;
-    setRoomOverlayIconSpriteVisibility(flag: boolean): void
+    setRoomOverlayIconSpriteVisibility(flag: boolean): void;
     removeRoomOverlayIconSprite(): void;
     setLegacyGeometry(geometry: ILegacyWallGeometry): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;

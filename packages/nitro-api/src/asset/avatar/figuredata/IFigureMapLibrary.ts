@@ -1,4 +1,4 @@
-import { IFigureMapLibraryPart } from "./IFigureMapLibraryPart";
+import { IFigureMapLibraryPart } from './IFigureMapLibraryPart';
 
 export interface IFigureMapLibrary {
     id: string;

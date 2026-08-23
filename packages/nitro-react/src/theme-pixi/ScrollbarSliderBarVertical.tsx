@@ -38,27 +38,27 @@ const border = (textureKey: string, topHeight: number, bottomHeight: number): Ba
  * the same texture).
  */
 const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: Record<string, ScrollbarSliderBarVerticalVariant> = {
-    '0': {
+    0: {
         default: border('scrollbarsliderbarvertical-0-default-src', 2, 2),
         hovering: border('scrollbarsliderbarvertical-0-default-src', 2, 2),
         pressed: border('scrollbarsliderbarvertical-0-pressed-src', 2, 2),
     },
-    '1': {
+    1: {
         default: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
         hovering: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
         pressed: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
     },
-    '3': {
+    3: {
         default: border('scrollbarsliderbarvertical-3-default-src', 5, 5),
         hovering: border('scrollbarsliderbarvertical-3-hovering-src', 5, 5),
         pressed: border('scrollbarsliderbarvertical-3-pressed-src', 5, 5),
     },
-    '100': {
+    100: {
         default: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
         hovering: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
         pressed: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
     },
-    '200': {
+    200: {
         default: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
         hovering: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
         pressed: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
@@ -84,8 +84,8 @@ interface BarOverlay {
  * sprite and only the pressed state tiles, a genuine asymmetry preserved from DOM.
  */
 const SCROLLBAR_SLIDER_BAR_VERTICAL_OVERLAY: Partial<Record<string, BarOverlay>> = {
-    '0': { defaultTextureKey: 'scrollbarsliderbarvertical-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-0-pressed-grd-src', insetTop: 4, insetBottom: 4 },
-    '1': { defaultTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', insetTop: 4, insetBottom: 4 },
+    0: { defaultTextureKey: 'scrollbarsliderbarvertical-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-0-pressed-grd-src', insetTop: 4, insetBottom: 4 },
+    1: { defaultTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', insetTop: 4, insetBottom: 4 },
 };
 
 export interface ScrollbarSliderBarVerticalProps {
@@ -123,7 +123,14 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
                 onPointerUp={handlers.onPointerUp}
                 onPointerUpOutside={handlers.onPointerUpOutside}
             >
-                <NineSliceLayer textureKey={layer.textureKey} leftWidth={layer.leftWidth} topHeight={layer.topHeight} rightWidth={layer.rightWidth} bottomHeight={layer.bottomHeight} tintColor={tintColor} />
+                <NineSliceLayer
+                    textureKey={layer.textureKey}
+                    leftWidth={layer.leftWidth}
+                    topHeight={layer.topHeight}
+                    rightWidth={layer.rightWidth}
+                    bottomHeight={layer.bottomHeight}
+                    tintColor={tintColor}
+                />
                 {overlay && (
                     <TileLayer
                         textureKey={isPressed ? overlay.pressedTextureKey : overlay.defaultTextureKey}
@@ -133,7 +140,7 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
                 )}
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarSliderBarVertical.displayName = 'ScrollbarSliderBarVertical';

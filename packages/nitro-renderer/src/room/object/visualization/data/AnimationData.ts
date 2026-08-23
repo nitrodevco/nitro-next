@@ -29,8 +29,8 @@ export class AnimationData {
 
     public static isTransitionToAnimation(animationId: number): boolean {
         return (
-            animationId >= AnimationData.TRANSITION_TO_ANIMATION_OFFSET &&
-            animationId < AnimationData.TRANSITION_FROM_ANIMATION_OFFSET
+            animationId >= AnimationData.TRANSITION_TO_ANIMATION_OFFSET
+            && animationId < AnimationData.TRANSITION_FROM_ANIMATION_OFFSET
         );
     }
 
@@ -86,8 +86,8 @@ export class AnimationData {
         if (layer.frameSequences) {
             for (const animationSequence of layer.frameSequences) {
                 const loopCount = animationSequence.loopCount ?? 1;
-                const isSequenceRandom =
-                    animationSequence.random !== undefined && animationSequence.random !== 0 ? true : false;
+                const isSequenceRandom
+                    = animationSequence.random !== undefined && animationSequence.random !== 0 ? true : false;
 
                 const frame = layerData.addFrameSequence(loopCount, isSequenceRandom);
 

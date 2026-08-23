@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IOutgoingIngredient {
     count: number;
@@ -15,4 +15,4 @@ export const OutgoingIngredientParser = (wrapper: IMessageDataWrapper): IOutgoin
     data.furnitureClassName = wrapper.readString();
 
     return data;
-}
+};

@@ -1,4 +1,4 @@
-import type { IAssetManager, IEffectMapLibrary, IFigureMapLibrary, IGraphicAsset } from '../asset';
+import type { IEffectMapLibrary, IFigureMapLibrary, IGraphicAsset } from '../asset';
 import { AvatarGenderType, AvatarScaleType } from './enum';
 import type { IAvatarEffectListener } from './IAvatarEffectListener';
 import type { IAvatarFigureContainer } from './IAvatarFigureContainer';
@@ -12,7 +12,7 @@ export interface IAvatarRenderManager {
     processEffectMap(data: IEffectMapLibrary[], assetUrl: string);
     createFigureContainer(figure: string): IAvatarFigureContainer;
     isFigureContainerReady(container: IAvatarFigureContainer): boolean;
-    createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType, listener: IAvatarImageListener, effectListener?: IAvatarEffectListener | undefined): IAvatarImage | undefined;
+    createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType, listener: IAvatarImageListener, effectListener?: IAvatarEffectListener): IAvatarImage | undefined;
     createAvatarImageAsync(figure: string, size: AvatarScaleType, gender: AvatarGenderType): Promise<IAvatarImage | undefined>;
     downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void;
     downloadAvatarFigureAsync(container: IAvatarFigureContainer): Promise<void>;

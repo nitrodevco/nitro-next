@@ -18,7 +18,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
         jumpingPower: number = NaN,
         isSlide: boolean = false,
         animationTime: number = NaN,
-        skipPositionUpdate: boolean = false
+        skipPositionUpdate: boolean = false,
     ) {
         super(location, targetLocation, direction, isSlide, animationTime, skipPositionUpdate);
 

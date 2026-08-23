@@ -1,5 +1,5 @@
-import { IVector3D } from "../utils";
-import { IObjectData } from "./object";
+import { IVector3D } from '../utils';
+import { IObjectData } from './object';
 
 export interface IRoomFurnitureData {
     readonly objectId: number;

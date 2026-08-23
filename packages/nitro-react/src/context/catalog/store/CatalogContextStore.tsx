@@ -15,7 +15,7 @@ type State = {
     purchaseOptions: IPurchaseOptions;
     activePurchase: IPurchaseOptions | undefined;
     searchResult: ICatalogSearchResult | undefined;
-}
+};
 
 type Actions = {
     setRootNode: (rootNode: ICatalogNode) => void;
@@ -31,7 +31,7 @@ type Actions = {
     setActivePurchase: (activePurchase: IPurchaseOptions | undefined) => void;
     setSearchResult: (searchResult: ICatalogSearchResult | undefined) => void;
     resetCatalog: () => void;
-}
+};
 
 const initialState: State = {
     catalogType: CatalogTypeEnum.Normal,
@@ -46,7 +46,7 @@ const initialState: State = {
     requestedPage: CatalogRequestedPageUtilities.getEmpty(),
     purchaseOptions: { offer: undefined, quantity: 1, extraData: '', extraParamRequired: false, objectData: undefined },
     activePurchase: undefined,
-    searchResult: undefined
+    searchResult: undefined,
 };
 
 export type CatalogContextStore = State & Actions;
@@ -66,5 +66,5 @@ export const createCatalogContextStore = (catalogType: CatalogTypeEnum) => creat
     setPurchaseOptions: (purchaseOptions: Partial<IPurchaseOptions>) => set(x => ({ purchaseOptions: { ...x.purchaseOptions, ...purchaseOptions } })),
     setActivePurchase: (activePurchase: IPurchaseOptions) => set({ activePurchase }),
     setSearchResult: (searchResult: ICatalogSearchResult | undefined) => set({ searchResult }),
-    resetCatalog: () => set({ ...initialState, catalogType })
+    resetCatalog: () => set({ ...initialState, catalogType }),
 }));

@@ -1,47 +1,47 @@
-import { ChangeUserNameResultMessageCode } from "@nitrodevco/nitro-api";
-import { ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from "@nitrodevco/nitro-packets";
+import { ChangeUserNameResultMessageCode } from '@nitrodevco/nitro-api';
+import { ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
 
-import { useOwnUserId, useUserActions, useUserInfoActions } from "#base/context";
-import { useMessageListener } from "#base/hooks";
+import { useOwnUserId, useUserActions, useUserInfoActions } from '#base/context';
+import { useMessageListener } from '#base/hooks';
 
 export const useUserInfoHandler = () => {
     const userId = useOwnUserId();
     const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects } = useUserActions();
     const { setUserInfo, setName, setFigure, setEmailVerified } = useUserInfoActions();
 
-    useMessageListener(FigureUpdateEventMessage, data => {
+    useMessageListener(FigureUpdateEventMessage, (data) => {
         setFigure(data.figure, data.gender);
     });
 
-    useMessageListener(UserObjectMessage, data => {
+    useMessageListener(UserObjectMessage, (data) => {
         setUserInfo(data.userInfo);
     });
 
-    useMessageListener(NoobnessLevelMessage, data => {
+    useMessageListener(NoobnessLevelMessage, (data) => {
         setNoobnessLevel(data.noobnessLevel);
     });
 
-    useMessageListener(UserRightsMessage, data => {
+    useMessageListener(UserRightsMessage, (data) => {
         setRights(data.clubLevel, data.securityLevel, data.isAmbassador);
     });
 
-    useMessageListener(PetRespectFailedMessage, data => {
+    useMessageListener(PetRespectFailedMessage, (data) => {
         decreasePetRespects();
     });
 
-    useMessageListener(ChangeUserNameResultMessage, data => {
+    useMessageListener(ChangeUserNameResultMessage, (data) => {
         if (data.resultCode !== ChangeUserNameResultMessageCode.NameOk) return;
 
         setName(data.name, false);
     });
 
-    useMessageListener(UserNameChangedMessage, data => {
+    useMessageListener(UserNameChangedMessage, (data) => {
         if (data.webId !== userId) return;
 
         setName(data.newName, false);
     });
 
-    useMessageListener(EmailStatusResultEventMessage, data => {
+    useMessageListener(EmailStatusResultEventMessage, (data) => {
         setEmailVerified(data.isVerified);
     });
-}
+};

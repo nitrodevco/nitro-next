@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type NoOwnedRoomsAlertMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class NoOwnedRoomsAlertMessage implements IIncomingPacket<NoOwnedRoomsAlertMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): NoOwnedRoomsAlertMessageType
-  {
+export class NoOwnedRoomsAlertMessage implements IIncomingPacket<NoOwnedRoomsAlertMessageType> {
+    public parse(wrapper: IMessageDataWrapper): NoOwnedRoomsAlertMessageType {
+        const packet: NoOwnedRoomsAlertMessageType = {
+        };
 
-    const packet: NoOwnedRoomsAlertMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

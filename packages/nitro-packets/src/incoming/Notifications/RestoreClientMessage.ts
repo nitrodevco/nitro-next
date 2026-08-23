@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RestoreClientMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class RestoreClientMessage implements IIncomingPacket<RestoreClientMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): RestoreClientMessageType
-  {
+export class RestoreClientMessage implements IIncomingPacket<RestoreClientMessageType> {
+    public parse(wrapper: IMessageDataWrapper): RestoreClientMessageType {
+        const packet: RestoreClientMessageType = {
+        };
 
-    const packet: RestoreClientMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

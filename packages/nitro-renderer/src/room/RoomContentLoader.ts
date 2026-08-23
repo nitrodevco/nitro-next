@@ -13,7 +13,7 @@ import {
     RoomContentLoadedEvent, RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectUserTypeName,
-    RoomObjectUserTypeUtils
+    RoomObjectUserTypeUtils,
 } from '@nitrodevco/nitro-api';
 import type { Texture } from 'pixi.js';
 
@@ -52,9 +52,9 @@ export class RoomContentLoader implements IRoomContentLoader {
     public async init(): Promise<void> {
         const petTypes = GetConfigValue<string[]>('renderer.petTypes') ?? [];
 
-        if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
+        if (petTypes) for (const [ index, name ] of petTypes.entries()) this._pets[name] = index;
 
-        //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
+        // await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
 
         return Promise.resolve();
     }
@@ -190,7 +190,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     public addAssetToCollection(
         collectionName: string,
         assetName: string,
-        texture: Texture
+        texture: Texture,
     ): IGraphicAsset | undefined {
         return GetAssetManager().addAssetToCollection(collectionName, assetName, texture);
     }
@@ -238,7 +238,6 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getPetNameForType(type: number): string | undefined {
-
         return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
     }
 
@@ -274,9 +273,9 @@ export class RoomContentLoader implements IRoomContentLoader {
             image.onload = () => {
                 image.onerror = null;
 
-                this._images.set([type, param].join('_'), image);
+                this._images.set([ type, param ].join('_'), image);
 
-                this._iconListener.onRoomContentLoaded(id, [type, param].join('_'), true);
+                this._iconListener.onRoomContentLoaded(id, [ type, param ].join('_'), true);
             };
 
             image.onerror = () => {
@@ -284,7 +283,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
                 NitroLogger.error('Failed to download asset', url);
 
-                this._iconListener.onRoomContentLoaded(id, [type, param].join('_'), false);
+                this._iconListener.onRoomContentLoaded(id, [ type, param ].join('_'), false);
             };
 
             return true;
@@ -302,7 +301,7 @@ export class RoomContentLoader implements IRoomContentLoader {
         this._events.set(type, events);
 
         GetAssetManager().downloadAsset(assetUrl)
-            .then(flag => {
+            .then((flag) => {
                 if (!flag) {
                     this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
 
@@ -333,7 +332,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
                 GetRoomEngine().initalizeTemporaryObjectsByType(type, true);
             })
-            .catch(_err => {
+            .catch((_err) => {
                 this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
 
                 GetRoomEngine().initalizeTemporaryObjectsByType(type, false);
@@ -390,17 +389,17 @@ export class RoomContentLoader implements IRoomContentLoader {
     public getAssetUrls(type: string, param: string = '', icon: boolean = false): string[] {
         switch (type) {
             case RoomContentLoader.PLACE_HOLDER:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderFurniture')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderFurniture') ];
             case RoomContentLoader.PLACE_HOLDER_WALL:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderWallItem')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderWallItem') ];
             case RoomContentLoader.PLACE_HOLDER_PET:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderPet')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderPet') ];
             case RoomContentLoader.ROOM_CONTENT:
-                return [this.getAssetUrlWithGenericBase('HabboRoomContent')];
+                return [ this.getAssetUrlWithGenericBase('HabboRoomContent') ];
             case RoomContentLoader.TILE_CURSOR:
-                return [this.getAssetUrlWithGenericBase('TileCursor')];
+                return [ this.getAssetUrlWithGenericBase('TileCursor') ];
             case RoomContentLoader.SELECTION_ARROW:
-                return [this.getAssetUrlWithGenericBase('SelectionArrow')];
+                return [ this.getAssetUrlWithGenericBase('SelectionArrow') ];
             default: {
                 const category = this.getCategoryForType(type);
 
@@ -415,11 +414,11 @@ export class RoomContentLoader implements IRoomContentLoader {
                         assetUrl = assetUrl.replace(/%param%/gi, active ? '_' + param : '');
                     }
 
-                    return [assetUrl];
+                    return [ assetUrl ];
                 }
 
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    return [this.getAssetUrlWithPetBase(type)];
+                    return [ this.getAssetUrlWithPetBase(type) ];
                 }
             }
         }

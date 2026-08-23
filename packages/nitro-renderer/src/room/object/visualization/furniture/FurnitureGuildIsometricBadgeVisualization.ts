@@ -127,12 +127,12 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
     ): string | undefined {
         if (sprite.tag === FurnitureGuildIsometricBadgeVisualization.THUMBNAIL) {
             if (
-                this.object &&
-                this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
+                this.object
+                && this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
             ) {
                 return (
-                    '%group.badge.url%' +
-                    this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
+                    '%group.badge.url%'
+                    + this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
                 );
             }
         }

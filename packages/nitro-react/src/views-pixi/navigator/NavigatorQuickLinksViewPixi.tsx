@@ -11,7 +11,7 @@ export const NavigatorQuickLinksViewPixi = () => {
     const { send } = useWebSocketContext();
     const t = useTranslation();
     const interpolate = useInterpolate();
-    const [hoveredId, setHoveredId] = useState<number | null>(null);
+    const [ hoveredId, setHoveredId ] = useState<number | null>(null);
 
     const runSearch = (searchCode: string, filter: string) => {
         setIsSearching(true);
@@ -22,10 +22,22 @@ export const NavigatorQuickLinksViewPixi = () => {
     if (leftPaneHidden) return null;
 
     return (
-        <Border blend={0.5} variant="2" layout={{ flexDirection: 'column', flexShrink: 0, width: 141, height: '100%', padding: 4 }}>
+        <Border
+            blend={0.5}
+            variant="2"
+            layout={{ flexDirection: 'column', flexShrink: 0, width: 141, height: '100%', padding: 4 }}
+        >
             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 5, flexShrink: 0, height: 21, paddingLeft: 4 }}>
-                <NitroIcon icon="icon-nav-quicklink-add" layout={{}} />
-                <Text layout={{ flex: 1 }} text={t('navigator.quick.links.title')} textStyle="text-style-u-bold" textOptions={{ fill: '#ffffff' }} />
+                <NitroIcon
+                    icon="icon-nav-quicklink-add"
+                    layout={{}}
+                />
+                <Text
+                    layout={{ flex: 1 }}
+                    text={t('navigator.quick.links.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
             </Box>
             <ScrollArea layout={{ flex: 1 }}>
                 {savedSearches.map(link => (
@@ -39,15 +51,23 @@ export const NavigatorQuickLinksViewPixi = () => {
                         layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: 4, minHeight: 17, maxHeight: 17 }}
                     >
                         {hoveredId === link.id && <ColorLayer color="#82d1ed" />}
-                        <Text layout={{ flex: 1 }} text={interpolate(link.localization)} textStyle="text-style-u-regular" textOptions={{ fill: '#000000' }} />
+                        <Text
+                            layout={{ flex: 1 }}
+                            text={interpolate(link.localization)}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#000000' }}
+                        />
                         {hoveredId === link.id && (
                             <Box
                                 eventMode="static"
                                 cursor="pointer"
-                                onPointerTap={event => { event.stopPropagation(); send(new NavigatorDeleteSavedSearchComposer({ searchId: link.id })); }}
+                                onPointerTap={(event) => { event.stopPropagation(); send(new NavigatorDeleteSavedSearchComposer({ searchId: link.id })); }}
                                 layout={{ flexShrink: 0 }}
                             >
-                                <NitroIcon icon="icon-nav-quicklink-remove" layout={{}} />
+                                <NitroIcon
+                                    icon="icon-nav-quicklink-remove"
+                                    layout={{}}
+                                />
                             </Box>
                         )}
                     </Box>

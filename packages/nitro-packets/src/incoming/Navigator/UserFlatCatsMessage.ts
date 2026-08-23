@@ -4,25 +4,23 @@ import type { IFlatCategory } from './Data/FlatCategoryParser';
 import { FlatCategoryParser } from './Data/FlatCategoryParser';
 
 export type UserFlatCatsMessageType = {
-  nodes: IFlatCategory[];
+    nodes: IFlatCategory[];
 };
 
-export class UserFlatCatsMessage implements IIncomingPacket<UserFlatCatsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserFlatCatsMessageType
-  {
-    const packet: UserFlatCatsMessageType = {
-      nodes: []
-    };
+export class UserFlatCatsMessage implements IIncomingPacket<UserFlatCatsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserFlatCatsMessageType {
+        const packet: UserFlatCatsMessageType = {
+            nodes: [],
+        };
 
-    let count = wrapper.readInt();
+        let count = wrapper.readInt();
 
-    while (count > 0) {
-      packet.nodes.push(FlatCategoryParser(wrapper));
+        while (count > 0) {
+            packet.nodes.push(FlatCategoryParser(wrapper));
 
-      count--;
+            count--;
+        }
+
+        return packet;
     }
-
-    return packet;
-  }
 }

@@ -37,8 +37,9 @@
     public static ROOM_THUMBNAIL_CAMERA: string = 'RWE_ROOM_THUMBNAIL_CAMERA' as const;
     public static ROOM_BACKGROUND_COLOR: string = 'RWE_ROOM_BACKGROUND_COLOR' as const;
     public static CUSTOM_USER_NOTIFICATION: string = 'RWE_CUSTOM_USER_NOTIFICATION' as const;
-    public static FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING: string =
-        'RWE_FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING' as const;
+    public static FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING: string
+        = 'RWE_FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING' as const;
+
     public static FRIEND_FURNI_CONFIRM: string = 'RWE_FRIEND_FURNI_CONFIRM' as const;
     public static FRIEND_FURNI_ENGRAVING: string = 'RWE_FRIEND_FURNI_ENGRAVING' as const;
     public static HIGH_SCORE_DISPLAY: string = 'RWE_HIGH_SCORE_DISPLAY' as const;

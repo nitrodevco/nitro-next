@@ -33,10 +33,10 @@ interface DropmenuItemVariant {
  * "selected" art in every variant, collapsed to one Pixi `selected` prop.
  */
 const DROPMENU_ITEM_VARIANTS: Record<string, DropmenuItemVariant> = {
-    '0': { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-regular', color: '#000000' },
-    '1': { defaultTextureKey: 'dropmenuitem-1-default-src', hoveringTextureKey: 'dropmenuitem-1-hovering-src', selectedTextureKey: 'dropmenuitem-1-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-regular', color: '#ffffff' },
-    '3': { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-3-hovering-src', selectedTextureKey: 'dropmenuitem-3-selected-src', paddingLeft: 4, paddingTop: 2, paddingRight: 4, paddingBottom: 4, textStyleKey: 'text-style-u-regular', color: '#000000' },
-    '100': { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-il-regular', color: '#000000' },
+    0: { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-regular', color: '#000000' },
+    1: { defaultTextureKey: 'dropmenuitem-1-default-src', hoveringTextureKey: 'dropmenuitem-1-hovering-src', selectedTextureKey: 'dropmenuitem-1-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-regular', color: '#ffffff' },
+    3: { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-3-hovering-src', selectedTextureKey: 'dropmenuitem-3-selected-src', paddingLeft: 4, paddingTop: 2, paddingRight: 4, paddingBottom: 4, textStyleKey: 'text-style-u-regular', color: '#000000' },
+    100: { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-il-regular', color: '#000000' },
 };
 
 export interface DropmenuItemProps {
@@ -68,12 +68,18 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
                 <SpriteLayer textureKey={textureKey} />
                 <VariantCascadeProvider map={ownCascade}>
                     {typeof children === 'string'
-                        ? <Text text={children} textStyle={config.textStyleKey} textOptions={{ fill: config.color }} />
+                        ? (
+                                <Text
+                                    text={children}
+                                    textStyle={config.textStyleKey}
+                                    textOptions={{ fill: config.color }}
+                                />
+                            )
                         : wrapTextChildren(children)}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 DropmenuItem.displayName = 'DropmenuItem';

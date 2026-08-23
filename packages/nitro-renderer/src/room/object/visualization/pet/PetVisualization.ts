@@ -98,8 +98,8 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
             const difference = time - this._experienceTimestamp;
 
             if (difference < PetVisualization.EXPERIENCE_BUBBLE_VISIBLE_IN_MS) {
-                this._experienceData.alpha =
-                    Math.sin((difference / PetVisualization.EXPERIENCE_BUBBLE_VISIBLE_IN_MS) * Math.PI) * 0xff;
+                this._experienceData.alpha
+                    = Math.sin((difference / PetVisualization.EXPERIENCE_BUBBLE_VISIBLE_IN_MS) * Math.PI) * 0xff;
             } else {
                 this._experienceTimestamp = 0;
             }
@@ -136,8 +136,8 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
         this.setPostureAndGesture(posture, gesture);
 
-        let alphaMultiplier =
-            this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier) || null;
+        let alphaMultiplier
+            = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier) || null;
 
         if (alphaMultiplier === null || isNaN(alphaMultiplier)) alphaMultiplier = 1;
 
@@ -269,8 +269,8 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
                     if (!stateData.animationOver) {
                         animationOver = false;
                     } else if (
-                        AnimationData.isTransitionFromAnimation(stateData.animationId) ||
-                        AnimationData.isTransitionToAnimation(stateData.animationId)
+                        AnimationData.isTransitionFromAnimation(stateData.animationId)
+                        || AnimationData.isTransitionToAnimation(stateData.animationId)
                     ) {
                         this.setAnimationForIndex(index, stateData.animationAfterTransitionId);
 
@@ -305,15 +305,15 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
                 if (validScale === 1) return this._type + '_icon_' + layerLetter;
 
                 return (
-                    this._type +
-                    '_' +
-                    validScale +
-                    '_' +
-                    layerLetter +
-                    '_' +
-                    this.getDirection(scale, layerId) +
-                    '_' +
-                    this.getFrameNumber(validScale, layerId)
+                    this._type
+                    + '_'
+                    + validScale
+                    + '_'
+                    + layerLetter
+                    + '_'
+                    + this.getDirection(scale, layerId)
+                    + '_'
+                    + this.getFrameNumber(validScale, layerId)
                 );
             }
 
@@ -399,12 +399,12 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
     private isHeadSprite(layerId: number): boolean {
         if (this._headSprites[layerId] === undefined) {
-            const isHead =
-                this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId) ===
-                PetVisualization.HEAD;
-            const isHair =
-                this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId) ===
-                PetVisualization.HAIR;
+            const isHead
+                = this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId)
+                    === PetVisualization.HEAD;
+            const isHair
+                = this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId)
+                    === PetVisualization.HAIR;
 
             if (isHead || isHair) this._headSprites[layerId] = true;
             else this._headSprites[layerId] = false;
@@ -434,8 +434,8 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
     private _parser3(layerId: number): boolean {
         if (this._saddleSprites[layerId] === undefined) {
             if (
-                this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId) ===
-                PetVisualization.SADDLE
+                this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId)
+                === PetVisualization.SADDLE
             ) {
                 this._saddleSprites[layerId] = true;
             } else {

@@ -3,5 +3,5 @@
     Sitting = 'sitting',
     Horizontal = 'hotizontal',
     Swim = 'swim',
-    SnowwarsHorizontal = 'swhorizontal'
+    SnowwarsHorizontal = 'swhorizontal',
 }

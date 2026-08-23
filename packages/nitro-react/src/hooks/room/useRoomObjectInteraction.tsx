@@ -1,9 +1,9 @@
-import { RoomObjectCategoryEnum } from "@nitrodevco/nitro-api";
-import { MoveAvatarComposer, type RoomObjectMouseEvent, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from "@nitrodevco/nitro-packets";
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import { MoveAvatarComposer, type RoomObjectMouseEvent, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from "#base/context";
+import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from '#base/context';
 
-import { useRoomObjectValidation } from "./useRoomObjectValidation";
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectInteraction = () => {
     const room = useRoomSelector();
@@ -47,7 +47,7 @@ export const useRoomObjectInteraction = () => {
         }
 
         return true;
-    }
+    };
 
     return { handleMoveTargetFurni, changeItemState };
-}
+};

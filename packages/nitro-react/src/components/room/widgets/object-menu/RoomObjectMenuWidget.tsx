@@ -1,48 +1,47 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from "@nitrodevco/nitro-api";
-import { useState } from "react";
+import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
+import { useState } from 'react';
 
-import { useOwnRoomObjectId, useRoomSelector } from "#base/context";
-import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from "#base/hooks";
-import { InfoBubbleAvatarViewPixi } from "#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarViewPixi";
-import { InfoBubbleOwnAvatarViewPixi } from "#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarViewPixi";
+import { useOwnRoomObjectId, useRoomSelector } from '#base/context';
+import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from '#base/hooks';
+import { InfoBubbleAvatarViewPixi } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarViewPixi';
+import { InfoBubbleOwnAvatarViewPixi } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarViewPixi';
 
-import { RoomObjectMenuBubblePixi } from "./RoomObjectMenuBubblePixi";
-import { RoomObjectMenuNameBubble } from "./RoomObjectMenuNameBubble";
+import { RoomObjectMenuBubblePixi } from './RoomObjectMenuBubblePixi';
+import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
 
 export const RoomObjectMenuWidget = () => {
+    const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
 
-    const [selectedData, setSelectedData] = useState<ISimpleRoomObjectData | undefined>(undefined);
-
-    const [hoverData, setHoverData] = useState<ISimpleRoomObjectData | undefined>(undefined);
+    const [ hoverData, setHoverData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
     const room = useRoomSelector();
     const ownRoomObjectId = useOwnRoomObjectId();
 
     const onClose = () => {
         setSelectedData(undefined);
-    }
+    };
 
-    useRoomObjectDeselected(_e => {
+    useRoomObjectDeselected((_e) => {
         setSelectedData(undefined);
     });
 
-    useRoomObjectSelected(event => {
+    useRoomObjectSelected((event) => {
         setSelectedData({
             objectId: event.objectId,
-            category: event.category
+            category: event.category,
         });
         setHoverData(undefined);
     });
 
-    useRoomObjectRollOver(event => {
+    useRoomObjectRollOver((event) => {
         if (selectedData || event.category !== RoomObjectCategoryEnum.Unit) return;
 
         setHoverData({
             objectId: event.objectId,
-            category: event.category
+            category: event.category,
         });
     });
 
-    useRoomObjectRollOut(event => {
+    useRoomObjectRollOut((event) => {
         if (!hoverData || event.category !== RoomObjectCategoryEnum.Unit || hoverData.objectId !== event.objectId) return;
 
         setHoverData(undefined);
@@ -74,9 +73,22 @@ export const RoomObjectMenuWidget = () => {
                 }
                 case RoomObjectUserType.User: {
                     return (
-                        <RoomObjectMenuBubblePixi objectData={selectedData} userType={userType}>
-                            {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarViewPixi objectData={selectedData} onClose={onClose} />}
-                            {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarViewPixi objectData={selectedData} onClose={onClose} />}
+                        <RoomObjectMenuBubblePixi
+                            objectData={selectedData}
+                            userType={userType}
+                        >
+                            {selectedData.objectId === ownRoomObjectId && (
+                                <InfoBubbleOwnAvatarViewPixi
+                                    objectData={selectedData}
+                                    onClose={onClose}
+                                />
+                            )}
+                            {selectedData.objectId !== ownRoomObjectId && (
+                                <InfoBubbleAvatarViewPixi
+                                    objectData={selectedData}
+                                    onClose={onClose}
+                                />
+                            )}
                         </RoomObjectMenuBubblePixi>
                     );
                 }
@@ -85,4 +97,4 @@ export const RoomObjectMenuWidget = () => {
     }
 
     return null;
-}
+};

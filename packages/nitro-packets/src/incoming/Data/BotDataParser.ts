@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IBotData {
     id: number;
@@ -24,4 +24,4 @@ export const BotDataParser = (wrapper: IMessageDataWrapper): IBotData => {
     data.figure = wrapper.readString();
 
     return data;
-}
+};

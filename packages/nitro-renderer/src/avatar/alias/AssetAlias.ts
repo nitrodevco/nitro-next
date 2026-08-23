@@ -1,4 +1,4 @@
-﻿import type { IAssetAlias } from "@nitrodevco/nitro-api";
+﻿import type { IAssetAlias } from '@nitrodevco/nitro-api';
 
 export class AssetAlias {
     private _name: string;

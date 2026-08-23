@@ -17,8 +17,8 @@ type DroplistVariant = ThemeVariant & {
 };
 
 const DROPLIST_VARIANTS: ThemeVariants<DroplistVariant> = {
-    '0': { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
-    '1': { layer: NineSlice('droplist-1-default-src', 6, 6, 6, 6), arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
+    0: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
+    1: { layer: NineSlice('droplist-1-default-src', 6, 6, 6, 6), arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
 };
 
 export interface DroplistProps extends ThemeProps<DroplistVariant> {
@@ -28,20 +28,29 @@ export interface DroplistProps extends ThemeProps<DroplistVariant> {
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'droplist', variants: DROPLIST_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor
+            cascadeKey: 'droplist', variants: DROPLIST_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
         return (
-            <Box ref={ref} layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }} {...handlers}>
-                {resolvedLayer && <BackgroundLayer layer={resolvedLayer} tintColor={resolvedTint} />}
+            <Box
+                ref={ref}
+                layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
+                {...handlers}
+            >
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                {config.arrowTextureKey && <CompositeLayer pieces={[{ textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 }]} />}
+                {config.arrowTextureKey && <CompositeLayer pieces={[ { textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 } ]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 Droplist.displayName = 'Droplist';

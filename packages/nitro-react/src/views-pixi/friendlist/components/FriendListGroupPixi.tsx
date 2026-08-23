@@ -15,8 +15,17 @@ export const FriendListGroupPixi = ({ value, caption, children, showArrows = tru
         <AccordionTrigger layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, height: 20 }}>
             {({ isOpen }) => (
                 <>
-                    <Text text={caption} textStyle="text-style-regular" textOptions={{ fontSize: 10.88, fill: '#000000', fontWeight: 'bold' }} />
-                    {showArrows && <NitroIcon icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'} layout={{}} />}
+                    <Text
+                        text={caption}
+                        textStyle="text-style-regular"
+                        textOptions={{ fontSize: 10.88, fill: '#000000', fontWeight: 'bold' }}
+                    />
+                    {showArrows && (
+                        <NitroIcon
+                            icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'}
+                            layout={{}}
+                        />
+                    )}
                 </>
             )}
         </AccordionTrigger>

@@ -10,7 +10,7 @@ import { type SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameT
 
 interface ScrollbarSliderButtonUpVariant {
     textureKey: string;
-    frames: { default: SpriteFrame, hovering: SpriteFrame, pressed: SpriteFrame, disabled: SpriteFrame };
+    frames: { default: SpriteFrame; hovering: SpriteFrame; pressed: SpriteFrame; disabled: SpriteFrame };
 }
 
 /**
@@ -21,7 +21,7 @@ interface ScrollbarSliderButtonUpVariant {
  * CloseButton.tsx's variant '1'/'2'.
  */
 const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: Partial<Record<string, ScrollbarSliderButtonUpVariant>> = {
-    '0': {
+    0: {
         textureKey: 'scrollbarsliderbuttonup-src',
         frames: {
             default: { x: 0, y: 0, width: 17, height: 16 },
@@ -30,7 +30,7 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: Partial<Record<string, ScrollbarSlide
             disabled: { x: 34, y: 0, width: 17, height: 16 },
         },
     },
-    '1': {
+    1: {
         textureKey: 'scrollbarsliderbuttonup-src',
         frames: {
             default: { x: 51, y: 0, width: 17, height: 16 },
@@ -39,7 +39,7 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: Partial<Record<string, ScrollbarSlide
             disabled: { x: 85, y: 0, width: 17, height: 16 },
         },
     },
-    '3': {
+    3: {
         textureKey: 'scrollbarsliderbuttonup-src',
         frames: {
             default: { x: 102, y: 0, width: 17, height: 16 },
@@ -73,9 +73,12 @@ export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderB
         const config = SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS['0'];
         const { state, handlers } = useInteractionState(disabled);
         const frame = config && (
-            state === 'pressed' ? config.frames.pressed
-                : state === 'disabled' ? config.frames.disabled
-                    : state === 'hovering' ? config.frames.hovering
+            state === 'pressed'
+                ? config.frames.pressed
+                : state === 'disabled'
+                    ? config.frames.disabled
+                    : state === 'hovering'
+                        ? config.frames.hovering
                         : config.frames.default
         );
         const texture = useSpriteFrameTexture(config?.textureKey, frame);
@@ -96,7 +99,10 @@ export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderB
         if (!texture) return null;
 
         return (
-            <Box ref={ref} layout={{ width: texture.width, height: texture.height, ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ width: texture.width, height: texture.height, ...layout }}
+            >
                 <pixiSprite
                     texture={texture}
                     width={texture.width}
@@ -112,7 +118,7 @@ export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderB
                 />
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarSliderButtonUp.displayName = 'ScrollbarSliderButtonUp';

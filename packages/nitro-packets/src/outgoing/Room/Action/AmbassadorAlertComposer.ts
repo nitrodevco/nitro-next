@@ -9,7 +9,7 @@ export class AmbassadorAlertComposer implements IOutgoingPacket<AmbassadorAlertC
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userId
+            this.params.userId,
         ];
     }
 }

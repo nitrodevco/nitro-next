@@ -1,4 +1,4 @@
-import { FriendRequestStateType } from "./FriendRequestStateType";
+import { FriendRequestStateType } from './FriendRequestStateType';
 
 export interface IFriendRequest {
     readonly playerId: number;

@@ -1,4 +1,4 @@
-import { FriendListErrorCodeType } from "./FriendListErrorCodeType";
+import { FriendListErrorCodeType } from './FriendListErrorCodeType';
 
 export interface IFriendAcceptFailure {
     readonly playerId: number;

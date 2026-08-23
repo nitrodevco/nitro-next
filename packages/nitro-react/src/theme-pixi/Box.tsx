@@ -59,10 +59,17 @@ const BoxPixi = forwardRef<Container, BoxProps>(
 
             if (typeof ref === 'function') ref(node);
             else if (ref) ref.current = node;
-        }, [ref]);
+        }, [ ref ]);
 
-        return <pixiContainer ref={setRef} {...props}>{wrapTextChildren(children as ReactNode)}</pixiContainer>;
-    }
+        return (
+            <pixiContainer
+                ref={setRef}
+                {...props}
+            >
+                {wrapTextChildren(children as ReactNode)}
+            </pixiContainer>
+        );
+    },
 );
 
 BoxPixi.displayName = 'BoxPixi';
@@ -103,13 +110,25 @@ const BoxDom = forwardRef<Container, BoxProps>(
                 {wrapTextChildren(children as ReactNode)}
             </div>
         );
-    }
+    },
 );
 
 BoxDom.displayName = 'BoxDom';
 
 export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>> = forwardRef<Container, BoxProps>(
-    (props, ref) => getRenderMode() === 'dom' ? <BoxDom ref={ref} {...props} /> : <BoxPixi ref={ref} {...props} />
+    (props, ref) => getRenderMode() === 'dom'
+        ? (
+                <BoxDom
+                    ref={ref}
+                    {...props}
+                />
+            )
+        : (
+                <BoxPixi
+                    ref={ref}
+                    {...props}
+                />
+            ),
 );
 
 Box.displayName = 'Box';

@@ -5,7 +5,7 @@ import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureCustomStackHeightLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.STACK_HEIGHT]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.STACK_HEIGHT ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

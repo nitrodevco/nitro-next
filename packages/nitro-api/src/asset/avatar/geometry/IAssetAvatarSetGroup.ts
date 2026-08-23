@@ -1,5 +1,6 @@
-import { AvatarSetType } from "#api/avatar/enum";
-import { IAssetAvatarSet } from "./IAssetAvatarSet";
+import { AvatarSetType } from '#api/avatar/enum';
+
+import { IAssetAvatarSet } from './IAssetAvatarSet';
 
 export interface IAssetAvatarSetGroup {
     id: AvatarSetType;

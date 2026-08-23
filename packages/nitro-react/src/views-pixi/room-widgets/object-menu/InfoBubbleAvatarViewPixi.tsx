@@ -39,8 +39,8 @@ export const InfoBubbleAvatarViewPixi = ({ objectData, onClose }: InfoBubbleAvat
     const ownObjectId = useOwnRoomObjectId();
     const userData = useRoomUserData(objectId);
     const ownUserData = useRoomUserData(ownObjectId);
-    const [mode, setMode] = useState<number>(MODE_NORMAL);
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [ mode, setMode ] = useState<number>(MODE_NORMAL);
+    const [ collapsed, setCollapsed ] = useState<boolean>(false);
     const { isRoomOwner } = useRoomPermissionsSelector();
     const { isGuildRoom } = useRoomSettingsSelector();
     const { respectLeft } = useOwnRespectData();
@@ -100,7 +100,7 @@ export const InfoBubbleAvatarViewPixi = ({ objectData, onClose }: InfoBubbleAvat
                 send(new AssignRightsComposer({ userId: userData.webId }));
                 break;
             case 'remove_rights':
-                send(new RemoveRightsComposer({ userIds: [userData.webId] }));
+                send(new RemoveRightsComposer({ userIds: [ userData.webId ] }));
                 break;
             case 'ban_hour':
                 send(new BanUserWithDurationComposer({ userId: userData.webId, roomId: room.roomId, banType: 'RWUAM_BAN_USER_HOUR' }));
@@ -153,7 +153,7 @@ export const InfoBubbleAvatarViewPixi = ({ objectData, onClose }: InfoBubbleAvat
     const canRemoveRights = isRoomOwner && userData.controllerLevel === RoomControllerLevelEnum.Guest && !isGuildRoom;
     const canModerate = userData.canBeKicked || userData.canBeBanned || userData.canBeMuted || canGiveRights || canRemoveRights;
 
-    const MODE_BUTTONS: Record<number, { visible: unknown, caption: string, action: string }[]> = {
+    const MODE_BUTTONS: Record<number, { visible: unknown; caption: string; action: string }[]> = {
         0: [
             { visible: canRequestFriend, caption: 'infostand.button.friend', action: 'friend' },
             { visible: true, caption: 'infostand.button.trade', action: 'trade' },
@@ -202,25 +202,50 @@ export const InfoBubbleAvatarViewPixi = ({ objectData, onClose }: InfoBubbleAvat
     };
 
     return (
-        <Bubble variant="0" tintColor="#6e6b67" layout={{ flexDirection: 'column' }}>
+        <Bubble
+            variant="0"
+            tintColor="#6e6b67"
+            layout={{ flexDirection: 'column' }}
+        >
             {!collapsed && (
                 <Box layout={{ minWidth: 120, maxWidth: 120, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
-                        <Text text={userData.name} textStyle="text-style-u-bold" textOptions={{ fontSize: 11, fill: '#ffffff' }} />
+                        <Text
+                            text={userData.name}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fontSize: 11, fill: '#ffffff' }}
+                        />
                     </Box>
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                         {MODE_BUTTONS[mode].map(({ visible, caption, action }) => (
-                            visible ? (
-                                <Button key={action} variant="300" tintColor="#2d2a27" textColor="#ffffff" onPress={() => processAction(action)} layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}>
-                                    {t(caption)}
-                                </Button>
-                            ) : null
+                            visible
+                                ? (
+                                        <Button
+                                            key={action}
+                                            variant="300"
+                                            tintColor="#2d2a27"
+                                            textColor="#ffffff"
+                                            onPress={() => processAction(action)}
+                                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
+                                        >
+                                            {t(caption)}
+                                        </Button>
+                                    )
+                                : null
                         ))}
                     </Box>
                 </Box>
             )}
-            <Box eventMode="static" cursor="pointer" onPointerTap={() => setCollapsed(!collapsed)} layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}>
-                <NitroIcon icon={!collapsed ? 'icon-context-menu-arrow-down' : 'icon-context-menu-arrow-up'} layout={{}} />
+            <Box
+                eventMode="static"
+                cursor="pointer"
+                onPointerTap={() => setCollapsed(!collapsed)}
+                layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}
+            >
+                <NitroIcon
+                    icon={!collapsed ? 'icon-context-menu-arrow-down' : 'icon-context-menu-arrow-up'}
+                    layout={{}}
+                />
             </Box>
         </Bubble>
     );

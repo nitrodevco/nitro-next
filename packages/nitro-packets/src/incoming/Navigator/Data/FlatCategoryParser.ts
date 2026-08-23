@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IFlatCategory {
     nodeId: number;
@@ -18,6 +18,6 @@ export const FlatCategoryParser = (wrapper: IMessageDataWrapper): IFlatCategory 
         automatic: wrapper.readBoolean(),
         automaticCategoryKey: wrapper.readString(),
         globalCategoryKey: wrapper.readString(),
-        staffOnly: wrapper.readBoolean()
+        staffOnly: wrapper.readBoolean(),
     };
-}
+};

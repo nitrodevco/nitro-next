@@ -61,7 +61,7 @@ export class ActionDefinition implements IActionDefinition {
     }
 
     public getOffsets(size: AvatarScaleType, direction: number): [number, number, number] {
-        return this._canvasOffsets.get(size)?.get(direction) ?? [0, 0, 0];
+        return this._canvasOffsets.get(size)?.get(direction) ?? [ 0, 0, 0 ];
     }
 
     public setOffsets(size: AvatarScaleType, direction: number, offset: [number, number, number]): void {

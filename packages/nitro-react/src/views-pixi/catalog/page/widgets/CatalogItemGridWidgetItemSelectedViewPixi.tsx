@@ -17,9 +17,19 @@ export const CatalogItemGridWidgetItemSelectedViewPixi = ({ offer }: CatalogItem
     if (!offer || !product) return null;
 
     return (
-        <Border variant="3" tintColor="#63c5e9" layout={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', padding: 2 }}>
-            <Border variant="3" layout={{ width: '100%', height: '100%', flexDirection: 'column', alignItems: 'center', gap: 3, paddingTop: 3, paddingBottom: 3 }}>
-                <Image src={iconUrl} layout={{ minWidth: 32, minHeight: 32, maxWidth: 32, maxHeight: 32 }} />
+        <Border
+            variant="3"
+            tintColor="#63c5e9"
+            layout={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', padding: 2 }}
+        >
+            <Border
+                variant="3"
+                layout={{ width: '100%', height: '100%', flexDirection: 'column', alignItems: 'center', gap: 3, paddingTop: 3, paddingBottom: 3 }}
+            >
+                <Image
+                    src={iconUrl}
+                    layout={{ minWidth: 32, minHeight: 32, maxWidth: 32, maxHeight: 32 }}
+                />
                 <CatalogItemGridWidgetItemPriceViewPixi offer={offer} />
             </Border>
         </Border>

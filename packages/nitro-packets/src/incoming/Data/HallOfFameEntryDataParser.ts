@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface IHallOfFameEntryData {
     userId: number;
@@ -24,4 +24,4 @@ export const HallOfFameEntryDataParser = (wrapper: IMessageDataWrapper): IHallOf
     data.currentScore = wrapper.readInt();
 
     return data;
-}
+};

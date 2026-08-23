@@ -1,11 +1,10 @@
+import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { useApplication } from '@pixi/react';
+import { PointData, Ticker } from 'pixi.js';
+import { RefObject, useEffect, useEffectEvent, useRef, useState } from 'react';
 
-import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
-import { GetRoomEngine, GetTicker, GetTickerTime } from "@nitrodevco/nitro-renderer";
-import { useApplication } from "@pixi/react";
-import { PointData, Ticker } from "pixi.js";
-import { RefObject, useEffect, useEffectEvent, useRef, useState } from "react";
-
-import { useRoomMapping } from "./useRoomMapping";
+import { useRoomMapping } from './useRoomMapping';
 
 const PREVIEW_OBJECT_ID: number = 1;
 const PREVIEW_OBJECT_LOCATION_X: number = 2;
@@ -14,7 +13,7 @@ const ALLOWED_IMAGE_CUT: number = 0.5;
 const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
 
 export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvasElement | null>) => {
-    const [room, setRoom] = useState<IRoom | undefined>(undefined);
+    const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
     const { app } = useApplication();
     const { createMapForSize } = useRoomMapping();
     const previewData = useRef<IRoomPreviewerData>({
@@ -27,7 +26,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         previewScale: 1,
         previewOffset: { x: 0, y: 0 },
         autoStateChange: false,
-        autoStateChangeTime: -1
+        autoStateChangeTime: -1,
     });
 
     const getValidRoomObjectDirection = (roomObject: IRoomObjectController, forward: boolean) => {
@@ -77,7 +76,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         }
 
         updateRoomPreview();
-    }
+    };
 
     const changeObjectState = () => {
         if (!room) return;
@@ -89,7 +88,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         if (objectCategory !== RoomObjectCategoryEnum.Unit) room.updateRoomObjectState(PREVIEW_OBJECT_ID, objectCategory);
 
         updateRoomPreview();
-    }
+    };
 
     const onObjectEvent = useEffectEvent((event: RoomEngineObjectEvent) => {
         if (!room || !event) return;
@@ -122,7 +121,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
             room.updateRoomObjectState(PREVIEW_OBJECT_ID, objectCategory);
         }
-    }
+    };
 
     const getCanvasOffset = (point: PointData) => {
         const { previewRectangle, previewHeight, previewScale, objectCategory, previewOffset } = previewData.current;
@@ -164,7 +163,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         }
 
         return undefined;
-    }
+    };
 
     const validatePreviewSize = (point: PointData) => {
         const { previewRectangle, previewWidth, previewHeight } = previewData.current;
@@ -197,7 +196,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         }
 
         return point;
-    }
+    };
 
     const updatePreviewObjectBoundingRectangle = (point: PointData) => {
         if (!room) return;
@@ -221,7 +220,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
             if (((((expandedBounds.width - previewRectangle.width) > ((previewWidth - previewRectangle.width) >> 1)) || ((expandedBounds.height - previewRectangle.height) > ((previewHeight - previewRectangle.height) >> 1))) || (previewRectangle.width < 1)) || (previewRectangle.height < 1)) previewData.current.previewRectangle = expandedBounds;
         }
-    }
+    };
 
     const resizeRoomPreview = (width: number, height: number) => {
         if (!room) return;
@@ -242,7 +241,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         }
 
         render();
-    }
+    };
 
     const updateRoomPreview = () => {
         if (!room) return;
@@ -266,7 +265,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         if (canvasOffset) room.setRoomInstanceRenderingCanvasOffset(canvasOffset);
 
         if (previewData.current.previewScale !== scale) previewData.current.previewRectangle = undefined;
-    }
+    };
 
     const resetRoomPreview = (flag: boolean) => {
         if (!room) return;
@@ -278,7 +277,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         if (!flag) updateRoomPreview();
 
         previewData.current.objectCategory = RoomObjectCategoryEnum.Minimum;
-    }
+    };
 
     const addFloorItemIntoRoom = (classId: number, direction: IVector3D, objectData?: IObjectData, extra: number = NaN) => {
         if (!room) return -1;
@@ -303,7 +302,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         updateRoomPreview();
 
         return PREVIEW_OBJECT_ID;
-    }
+    };
 
     const addWallItemIntoRoom = (classId: number, direction: IVector3D, objectData: string) => {
         if (!room) return -1;
@@ -324,7 +323,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         updateRoomPreview();
 
         return PREVIEW_OBJECT_ID;
-    }
+    };
 
     const addAvatarIntoRoom = (figure: string, effect: number) => {
         if (!room) return -1;
@@ -347,7 +346,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         updateRoomPreview();
 
         return PREVIEW_OBJECT_ID;
-    }
+    };
 
     const render = (time: number = -1) => {
         if (!room || !room.canvas?.master || !canvasRef.current) return;
@@ -363,7 +362,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
         ctx.clearRect(0, 0, room.canvas.master.width, room.canvas.master.height);
         ctx.drawImage(extracted as unknown as CanvasImageSource, 0, 0, room.canvas.master.width, room.canvas.master.height);
-    }
+    };
 
     useEffect(() => {
         if (!room) return;
@@ -375,7 +374,7 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
         let timer: ReturnType<typeof setTimeout>;
 
-        const observer = new ResizeObserver(x => {
+        const observer = new ResizeObserver((x) => {
             const width = x[0]?.contentRect.width;
             const height = x[0]?.contentRect.height;
 
@@ -396,8 +395,8 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
             if (observer) observer.disconnect();
             if (timer) clearTimeout(timer);
             if (ticker) ticker.remove(tick);
-        }
-    }, [room]);
+        };
+    }, [ room ]);
 
     useEffect(() => {
         const inst = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
@@ -409,11 +408,11 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
             if (map.mapData) inst.applyRoomMap(map.mapData);
 
-            inst.updateRoomPlaneType("110", "99999", undefined);
+            inst.updateRoomPlaneType('110', '99999', undefined);
         }
 
         const listeners = [
-            inst.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent)
+            inst.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
         ];
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -421,8 +420,8 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
 
         return () => {
             listeners.map(x => x?.());
-        }
-    }, [roomId]);
+        };
+    }, [ roomId ]);
 
     return { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState };
-}
+};

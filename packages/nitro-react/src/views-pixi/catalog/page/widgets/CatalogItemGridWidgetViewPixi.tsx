@@ -12,7 +12,11 @@ export const CatalogItemGridWidgetViewPixi = () => {
     if (!activePage) return null;
 
     return (
-        <Border variant="6" blend={0.5} layout={{ width: '100%', height: '100%' }}>
+        <Border
+            variant="6"
+            blend={0.5}
+            layout={{ width: '100%', height: '100%' }}
+        >
             <InfiniteGrid<IPurchasableOffer>
                 items={activePage.offers}
                 getKey={x => x.offerId}

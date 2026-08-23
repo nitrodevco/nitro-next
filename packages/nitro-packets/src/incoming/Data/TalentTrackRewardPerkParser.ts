@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ITalentTrackRewardPerk {
     perkId: string;
@@ -12,4 +12,4 @@ export const TalentTrackRewardPerkParser = (wrapper: IMessageDataWrapper): ITale
     data.perkId = wrapper.readString();
 
     return data;
-}
+};

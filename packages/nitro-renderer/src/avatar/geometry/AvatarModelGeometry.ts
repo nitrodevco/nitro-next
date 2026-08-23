@@ -126,7 +126,7 @@ export class AvatarModelGeometry {
 
             part.applyTransform(transformation);
 
-            sets.push([part.getDistance(this._camera), part]);
+            sets.push([ part.getDistance(this._camera), part ]);
         }
 
         sets.sort((a, b) => {

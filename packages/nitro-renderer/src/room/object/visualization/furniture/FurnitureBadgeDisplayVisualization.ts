@@ -42,8 +42,8 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
         if (
-            tag !== FurnitureBadgeDisplayVisualization.BADGE ||
-            (this._badgeVisibleInState !== -1 && this.object.getState(0) !== this._badgeVisibleInState)
+            tag !== FurnitureBadgeDisplayVisualization.BADGE
+            || (this._badgeVisibleInState !== -1 && this.object.getState(0) !== this._badgeVisibleInState)
         )
             return super.getSpriteAssetName(scale, layerId);
 

@@ -1,6 +1,6 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IAreaHide } from "./IAreaHide";
+import type { IAreaHide } from './IAreaHide';
 
 export const AreaHideParser = (wrapper: IMessageDataWrapper): IAreaHide[] => {
     const parseItem = (wrapper: IMessageDataWrapper) => {
@@ -11,9 +11,9 @@ export const AreaHideParser = (wrapper: IMessageDataWrapper): IAreaHide[] => {
             rootY: wrapper.readInt(),
             width: wrapper.readInt(),
             length: wrapper.readInt(),
-            invert: wrapper.readBoolean()
+            invert: wrapper.readBoolean(),
         };
-    }
+    };
 
     const datas: IAreaHide[] = [];
 
@@ -26,4 +26,4 @@ export const AreaHideParser = (wrapper: IMessageDataWrapper): IAreaHide[] => {
     }
 
     return datas;
-}
+};

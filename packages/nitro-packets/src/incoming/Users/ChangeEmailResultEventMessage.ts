@@ -1,17 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ChangeEmailResultEventMessageType = {
-  result: number;
+    result: number;
 };
 
-export class ChangeEmailResultEventMessage implements IIncomingPacket<ChangeEmailResultEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ChangeEmailResultEventMessageType
-  {
-    const packet: ChangeEmailResultEventMessageType = {
-      result: wrapper.readInt(),
-    };
+export class ChangeEmailResultEventMessage implements IIncomingPacket<ChangeEmailResultEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ChangeEmailResultEventMessageType {
+        const packet: ChangeEmailResultEventMessageType = {
+            result: wrapper.readInt(),
+        };
 
-    return packet;
-  }
+        return packet;
+    }
 }

@@ -3,5 +3,5 @@ export enum CatalogPricingModelEnum {
     Single = 1,
     Multi = 2,
     Bundle = 3,
-    Furniture = 4
+    Furniture = 4,
 }

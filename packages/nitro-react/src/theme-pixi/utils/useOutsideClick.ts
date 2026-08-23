@@ -39,5 +39,5 @@ export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null
         window.addEventListener('pointerdown', onPointerDown);
 
         return () => window.removeEventListener('pointerdown', onPointerDown);
-    }, [app, ref, enabled, callback]);
+    }, [ app, ref, enabled, callback ]);
 };

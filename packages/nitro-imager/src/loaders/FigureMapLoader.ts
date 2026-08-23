@@ -1,5 +1,5 @@
-import { IFigureMapLibrary, NitroLogger } from "@nitrodevco/nitro-api";
-import { GetAvatarRenderManager } from "@nitrodevco/nitro-renderer";
+import { IFigureMapLibrary, NitroLogger } from '@nitrodevco/nitro-api';
+import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 
 export const FigureMapLoader = async (url: string) => {
     if (!url || !url.length) return;
@@ -13,8 +13,8 @@ export const FigureMapLoader = async (url: string) => {
 
         GetAvatarRenderManager().processFigureMap(reponse.libraries, `${process.env.AVATAR_ASSET_URL}`);
 
-        NitroLogger.log(`Figure Map Loaded`);
+        NitroLogger.log('Figure Map Loaded');
     } catch (e) {
         NitroLogger.error(e);
     }
-}
+};

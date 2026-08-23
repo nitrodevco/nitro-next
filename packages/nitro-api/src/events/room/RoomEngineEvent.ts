@@ -1,4 +1,4 @@
-import { NitroEvent } from "../NitroEvent";
+import { NitroEvent } from '../NitroEvent';
 
 export class RoomEngineEvent extends NitroEvent {
     public static INITIALIZED: string = 'REE_INITIALIZED' as const;

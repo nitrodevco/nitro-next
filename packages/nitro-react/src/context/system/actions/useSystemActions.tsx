@@ -1,6 +1,6 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
 
-import { useSystemContext } from "../useSystemContext";
+import { useSystemContext } from '../useSystemContext';
 
 export const useSystemActions = () => useSystemContext(useShallow(x => ({
     toggleWindow: x.toggleWindow,
@@ -10,5 +10,5 @@ export const useSystemActions = () => useSystemContext(useShallow(x => ({
     getLocalizationValue: x.getLocalizationValue,
     setLocalization: x.setLocalization,
     setLocalizationForFurniture: x.setLocalizationForFurniture,
-    setLandingViewVisible: x.setLandingViewVisible
+    setLandingViewVisible: x.setLandingViewVisible,
 })));

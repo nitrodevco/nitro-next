@@ -57,8 +57,8 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
 
             if (figure) {
                 this._figure = `${figure}.${this._placeHolderFigure}`;
-                this._gender =
-                    this.object.model.getValue<AvatarGenderType>(RoomObjectVariableEnum.FurnitureMannequinGender) ?? AvatarGenderType.Male;
+                this._gender
+                    = this.object.model.getValue<AvatarGenderType>(RoomObjectVariableEnum.FurnitureMannequinGender) ?? AvatarGenderType.Male;
 
                 this.updateAvatar();
             }
@@ -95,8 +95,8 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
 
     protected override getLayerXOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (
-            this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
-            this._avatarImage
+            this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG
+            && this._avatarImage
         )
             return -this._avatarWidth / 3;
 
@@ -105,8 +105,8 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
 
     protected override getLayerYOffset(scale: RoomGeometryScaleType, direction: number, layerId: number): number {
         if (
-            this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
-            this._avatarImage
+            this.getLayerTag(scale, direction, layerId) === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG
+            && this._avatarImage
         )
             return -this._avatarHeight / 3;
 
@@ -115,9 +115,9 @@ export class FurnitureMannequinVisualization extends FurnitureVisualization impl
 
     public override getTexture(scale: RoomGeometryScaleType, layerId: number, asset: IGraphicAsset): Texture {
         if (
-            this.getLayerTag(scale, this.direction, layerId) ===
-            FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG &&
-            this._avatarImage
+            this.getLayerTag(scale, this.direction, layerId)
+            === FurnitureMannequinVisualization.AVATAR_IMAGE_SPRITE_TAG
+            && this._avatarImage
         ) {
             this._avatarImage.setDirection(AvatarSetType.Full, this.direction);
 

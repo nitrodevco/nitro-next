@@ -1,4 +1,4 @@
-import { Composite, CompositePiece } from "../layer";
+import { Composite, CompositePiece } from '../layer';
 
 const buttonPieces = (prefix: string): CompositePiece[] => [
     { textureKey: `${prefix}-top-left-src`, top: 11, left: 11, width: 6, height: 8 },

@@ -1,12 +1,12 @@
-import type { IVector3D } from "@nitrodevco/nitro-api";
-import { RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from "@nitrodevco/nitro-api";
-import { Room } from "@nitrodevco/nitro-renderer";
-import { Matrix, Point, Rectangle } from "pixi.js";
-import { useRef } from "react";
+import type { IVector3D } from '@nitrodevco/nitro-api';
+import { RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { Room } from '@nitrodevco/nitro-renderer';
+import { Matrix, Point, Rectangle } from 'pixi.js';
+import { useRef } from 'react';
 
-import { useConfigValue, useRoomCameraSelector, useRoomSelector } from "#base/context";
+import { useConfigValue, useRoomCameraSelector, useRoomSelector } from '#base/context';
 
-import { useRoomEventDispatcher } from "./useRoomEventDispatcher";
+import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 
 export const useRoomCamera = () => {
     const room = useRoomSelector();
@@ -16,10 +16,10 @@ export const useRoomCamera = () => {
         currentLocation: IVector3D | undefined;
         targetLocation: IVector3D | undefined;
         targetObjectLocation: IVector3D | undefined;
-        limitedLocation: { x: boolean; y: boolean; };
-        centeredLocation: { x: boolean; y: boolean; };
-        screenSize: { w: number; h: number; };
-        roomSize: { w: number; h: number; };
+        limitedLocation: { x: boolean; y: boolean };
+        centeredLocation: { x: boolean; y: boolean };
+        screenSize: { w: number; h: number };
+        roomSize: { w: number; h: number };
         scale: RoomGeometryScaleType;
         moveDistance: number;
         previousMoveSpeed: number;
@@ -43,7 +43,7 @@ export const useRoomCamera = () => {
         geometryUpdateId: -1,
         scaleChanged: false,
         lastOffsetX: 0,
-        lastOffsetY: 0
+        lastOffsetY: 0,
     });
 
     const setCameraTarget = (target: IVector3D) => {
@@ -59,7 +59,7 @@ export const useRoomCamera = () => {
 
         cameraData.moveDistance = diff.length;
         cameraData.maintainPreviousMoveSpeed = true;
-    }
+    };
 
     const adjustCamera = (time: number, threshold: number) => {
         const cameraData = cameraDataRef.current;
@@ -106,7 +106,7 @@ export const useRoomCamera = () => {
         diff.multiply(speed);
 
         cameraData.currentLocation = Vector3d.sum(cameraData.currentLocation, diff);
-    }
+    };
 
     const updateRoomCamera = (time: number) => {
         const canvas = room?.canvas;
@@ -122,13 +122,13 @@ export const useRoomCamera = () => {
         const targetObject = room.getRoomObject(targetId, targetCategory);
         const goalLocation = targetObject?.getLocation() ?? new Vector3d();
 
-        const needsUpdate =
-            cameraData.screenSize.w !== viewport.width ||
-            cameraData.screenSize.h !== viewport.height ||
-            cameraData.scale !== canvas.geometry.scale ||
-            cameraData.geometryUpdateId !== canvas.geometry.updateId ||
-            !Vector3d.isEqual(goalLocation, cameraData.targetObjectLocation) ||
-            (cameraData.targetLocation !== undefined && cameraData.currentLocation !== undefined);
+        const needsUpdate
+            = cameraData.screenSize.w !== viewport.width
+                || cameraData.screenSize.h !== viewport.height
+                || cameraData.scale !== canvas.geometry.scale
+                || cameraData.geometryUpdateId !== canvas.geometry.updateId
+                || !Vector3d.isEqual(goalLocation, cameraData.targetObjectLocation)
+                || (cameraData.targetLocation !== undefined && cameraData.currentLocation !== undefined);
 
         if (!needsUpdate) {
             cameraData.limitedLocation = { x: false, y: false };
@@ -319,9 +319,9 @@ export const useRoomCamera = () => {
 
             room.setRoomInstanceRenderingCanvasOffset(new Point(offsetX, offsetY));
         }
-    }
+    };
 
-    useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, event => {
+    useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, (event) => {
         const cameraData = cameraDataRef.current;
 
         if (cameraData.currentLocation === undefined || cameraData.targetLocation === undefined) cameraData.centeredLocation = { x: false, y: false };
@@ -330,4 +330,4 @@ export const useRoomCamera = () => {
     });
 
     return { updateRoomCamera };
-}
+};

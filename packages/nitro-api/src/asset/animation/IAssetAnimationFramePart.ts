@@ -1,4 +1,5 @@
 import { AvatarActionType, AvatarBodyPartType } from '#api/avatar';
+
 import type { IAssetAnimationFramePartItem } from './IAssetAnimationFramePartItem';
 
 export interface IAssetAnimationFramePart {

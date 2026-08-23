@@ -1,4 +1,4 @@
-import { AvatarBodyPartType } from "#api/avatar";
+import { AvatarBodyPartType } from '#api/avatar';
 
 export interface IAssetAvatarBodyPartOffset {
     id: AvatarBodyPartType;

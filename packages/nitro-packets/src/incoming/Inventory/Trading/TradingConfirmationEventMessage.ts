@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TradingConfirmationEventMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TradingConfirmationEventMessage implements IIncomingPacket<TradingConfirmationEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TradingConfirmationEventMessageType
-  {
+export class TradingConfirmationEventMessage implements IIncomingPacket<TradingConfirmationEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TradingConfirmationEventMessageType {
+        const packet: TradingConfirmationEventMessageType = {
+        };
 
-    const packet: TradingConfirmationEventMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

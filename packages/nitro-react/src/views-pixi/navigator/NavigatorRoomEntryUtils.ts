@@ -10,12 +10,12 @@ const toHex = (argb: number) => `#${(argb & 0xFFFFFF).toString(16).padStart(6, '
 export const getUserCountColor = (userCount: number, maxUserCount: number) => {
     const percent = 100 * (userCount / maxUserCount);
 
-    if (percent >= 92) return toHex(4290917164);   // #c2332c
-    if (percent >= 80) return toHex(4294947099);   // #ffb11b
-    if (percent >= 50) return toHex(4294947099);   // #ffb11b
-    if (userCount > 0) return toHex(4284723554);   // #63b162
+    if (percent >= 92) return toHex(4290917164); // #c2332c
+    if (percent >= 80) return toHex(4294947099); // #ffb11b
+    if (percent >= 50) return toHex(4294947099); // #ffb11b
+    if (userCount > 0) return toHex(4284723554); // #63b162
 
-    return toHex(4291545793);                      // #cbcac1
+    return toHex(4291545793); // #cbcac1
 };
 
 /** CategoryElementFactory: colorMod = 9412607, color = -1, accumulator starts at 1 */

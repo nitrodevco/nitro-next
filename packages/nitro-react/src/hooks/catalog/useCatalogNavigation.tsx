@@ -1,11 +1,11 @@
-import { CatalogRequestedPageUtilities, FurnitureTypeEnum, IActivePage, ICatalogNode, ICatalogPageLocalization, IPurchasableOffer } from "@nitrodevco/nitro-api";
-import { GetCatalogPageComposer, GetProductOfferComposer } from "@nitrodevco/nitro-packets";
+import { CatalogRequestedPageUtilities, FurnitureTypeEnum, IActivePage, ICatalogNode, ICatalogPageLocalization, IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { GetCatalogPageComposer, GetProductOfferComposer } from '@nitrodevco/nitro-packets';
 
-import { useCatalogActions, useCatalogSelectors, useWebSocketContext } from "#base/context";
+import { useCatalogActions, useCatalogSelectors, useWebSocketContext } from '#base/context';
 
-import { useCatalogNodeActions } from "./useCatalogNodeActions";
-import { useCatalogOfferActions } from "./useCatalogOfferActions";
-import { useCatalogVisibility } from "./useCatalogVisibility";
+import { useCatalogNodeActions } from './useCatalogNodeActions';
+import { useCatalogOfferActions } from './useCatalogOfferActions';
+import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogNavigation = () => {
     const { catalogType, activeNodes, rootNode } = useCatalogSelectors();
@@ -22,7 +22,7 @@ export const useCatalogNavigation = () => {
         setActivePageId(pageId);
 
         send(new GetCatalogPageComposer({ pageId, offerId, catalogType }));
-    }
+    };
 
     const showCatalogPage = (pageId: number, layoutCode: string, localization: ICatalogPageLocalization, offers: IPurchasableOffer[], offerId: number, acceptSeasonCurrencyAsCredits: boolean, mode: number = -1) => {
         const page = {
@@ -31,7 +31,7 @@ export const useCatalogNavigation = () => {
             localization,
             offers,
             acceptSeasonCurrencyAsCredits,
-            mode: mode === -1 ? 0 : mode
+            mode: mode === -1 ? 0 : mode,
         } as IActivePage;
 
         for (const offer of page.offers) offer.page = page;
@@ -49,7 +49,7 @@ export const useCatalogNavigation = () => {
         }
 
         setActiveOffer(undefined);
-    }
+    };
 
     const activateNode = (targetNode: ICatalogNode, offerId: number = -1) => {
         if (targetNode.parent?.pageName && targetNode.parent.pageName === 'root') {
@@ -74,7 +74,7 @@ export const useCatalogNavigation = () => {
 
         nodes.reverse();
 
-        const prevNodes = [...activeNodes];
+        const prevNodes = [ ...activeNodes ];
         const isActive = prevNodes.indexOf(targetNode) >= 0;
         const isOpen = targetNode.isOpen;
 
@@ -98,7 +98,7 @@ export const useCatalogNavigation = () => {
         setActiveNodes(nodes);
 
         if (targetNode.pageId > -1) loadCatalogPage(targetNode.pageId, offerId);
-    }
+    };
 
     const selectOffer = (offer: IPurchasableOffer) => {
         const product = getOfferProduct(offer);
@@ -112,7 +112,7 @@ export const useCatalogNavigation = () => {
 
             if (product.productType === FurnitureTypeEnum.Wall) setPurchaseOptions({ extraData: product.extraParam });
         }
-    }
+    };
 
     const openPageById = (pageId: number) => {
         if (!isCatalogVisible) {
@@ -126,7 +126,7 @@ export const useCatalogNavigation = () => {
 
             if (node) activateNode(node);
         }
-    }
+    };
 
     const openPageByName = (pageName: string) => {
         if (!isCatalogVisible) {
@@ -140,7 +140,7 @@ export const useCatalogNavigation = () => {
 
             if (node) activateNode(node);
         }
-    }
+    };
 
     const openPageByOfferId = (offerId: number) => {
         if (!isCatalogVisible) {
@@ -148,11 +148,11 @@ export const useCatalogNavigation = () => {
 
             showCatalog();
         } else {
-            const nodes = getNodesByOfferId(offerId)
+            const nodes = getNodesByOfferId(offerId);
 
             if (nodes.length) activateNode(nodes[0], offerId);
         }
-    }
+    };
 
     return { loadCatalogPage, showCatalogPage, activateNode, selectOffer, openPageById, openPageByName, openPageByOfferId };
-}
+};

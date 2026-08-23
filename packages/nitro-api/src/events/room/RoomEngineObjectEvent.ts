@@ -1,4 +1,5 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+
 import { RoomEngineEvent } from './RoomEngineEvent';
 
 export class RoomEngineObjectEvent extends RoomEngineEvent {

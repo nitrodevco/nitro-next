@@ -1,13 +1,13 @@
-import type { IRoomObjectController, RoomObjectMouseEvent } from "@nitrodevco/nitro-api";
-import { NitroLogger, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectTileMouseEvent, RoomObjectUserType, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from "@nitrodevco/nitro-api";
-import { PlaceObjectComposer } from "@nitrodevco/nitro-packets";
-import { SelectedRoomObjectData } from "@nitrodevco/nitro-renderer";
+import type { IRoomObjectController, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectTileMouseEvent, RoomObjectUserType, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+import { PlaceObjectComposer } from '@nitrodevco/nitro-packets';
+import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
-import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from "#base/context";
+import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from '#base/context';
 
-import { useRoomObjectMove } from "./useRoomObjectMove";
-import { useRoomObjectSelect } from "./useRoomObjectSelect";
-import { useRoomObjectValidation } from "./useRoomObjectValidation";
+import { useRoomObjectMove } from './useRoomObjectMove';
+import { useRoomObjectSelect } from './useRoomObjectSelect';
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectPlace = () => {
     const room = useRoomSelector();
@@ -53,18 +53,16 @@ export const useRoomObjectPlace = () => {
 
             if (objectPlacementSource !== RoomObjectPlacementSource.CATALOG) {
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
                     if (selectedObject.typeId === RoomObjectUserType.Pet) {
                         NitroLogger.sendPacket(`new PetPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
                     } else if (selectedObject.typeId === RoomObjectUserType.RentableBot) {
                         NitroLogger.sendPacket(`new BotPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
                     }
                 } else if (roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureIsStickie) !== undefined) {
-                    NitroLogger.sendPacket(`new FurniturePostItPlaceComposer(objectId, wallLocation)`);
+                    NitroLogger.sendPacket('new FurniturePostItPlaceComposer(objectId, wallLocation)');
                 } else {
                     send(new PlaceObjectComposer({
-                        itemId: objectId, category, wallLocation, x: Math.trunc(x), y: Math.trunc(y), rotation: direction
+                        itemId: objectId, category, wallLocation, x: Math.trunc(x), y: Math.trunc(y), rotation: direction,
                     }));
                 }
             }
@@ -174,8 +172,8 @@ export const useRoomObjectPlace = () => {
                 added = false;
             }
         } else if (selectedObject.category === RoomObjectCategoryEnum.Wall) {
-            added = event instanceof RoomObjectWallMouseEvent &&
-                handleWallItemMove(roomObject, selectedObject, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction);
+            added = event instanceof RoomObjectWallMouseEvent
+                && handleWallItemMove(roomObject, selectedObject, event.wallLocation, event.wallWidth, event.wallHeight, event.x, event.y, event.direction);
 
             if (!added) room.removeRoomObjectWall(selectedObject.objectId);
 
@@ -192,4 +190,4 @@ export const useRoomObjectPlace = () => {
     };
 
     return { placeObject, placeObjectOnUser, handleUserPlace, handleObjectPlace };
-}
+};

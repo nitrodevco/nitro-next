@@ -1,10 +1,10 @@
-import { FriendListUpdateComposer, MessengerInitComposer } from "@nitrodevco/nitro-packets";
-import { useEffect } from "react";
+import { FriendListUpdateComposer, MessengerInitComposer } from '@nitrodevco/nitro-packets';
+import { useEffect } from 'react';
 
-import { useIsWindowVisible, useWebSocketContext } from "#base/context";
-import { FriendListRemoveConfirmationViewPixi } from "#base/views-pixi/friendlist/dialogs/FriendListRemoveConfirmationViewPixi";
-import { FriendListRoomInviteViewPixi } from "#base/views-pixi/friendlist/dialogs/FriendListRoomInviteViewPixi";
-import { FriendListViewPixi } from "#base/views-pixi/friendlist/FriendListViewPixi";
+import { useIsWindowVisible, useWebSocketContext } from '#base/context';
+import { FriendListRemoveConfirmationViewPixi } from '#base/views-pixi/friendlist/dialogs/FriendListRemoveConfirmationViewPixi';
+import { FriendListRoomInviteViewPixi } from '#base/views-pixi/friendlist/dialogs/FriendListRoomInviteViewPixi';
+import { FriendListViewPixi } from '#base/views-pixi/friendlist/FriendListViewPixi';
 
 export const FriendListComponent = () => {
     const isVisible = useIsWindowVisible('friendlist');
@@ -17,7 +17,7 @@ export const FriendListComponent = () => {
 
         return () => {
             clearInterval(interval);
-        }
+        };
     }, []);
 
     if (!isVisible) return null;
@@ -29,4 +29,4 @@ export const FriendListComponent = () => {
             <FriendListRemoveConfirmationViewPixi />
         </>
     );
-}
+};

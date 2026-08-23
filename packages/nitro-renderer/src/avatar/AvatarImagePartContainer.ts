@@ -112,6 +112,6 @@ export class AvatarImagePartContainer {
     }
 
     public toString(): string {
-        return [this._bodyPartId, this._partType, this._partId].join(':');
+        return [ this._bodyPartId, this._partType, this._partId ].join(':');
     }
 }

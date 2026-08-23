@@ -20,14 +20,27 @@ export const CatalogHeaderViewPixi = () => {
     return (
         <Box layout={{ position: 'relative', width: '100%', height: 90, flexShrink: 0 }}>
             {backgroundTexture && (
-                <pixiSprite texture={backgroundTexture} alpha={0.1} layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} />
+                <pixiSprite
+                    texture={backgroundTexture}
+                    alpha={0.1}
+                    layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+                />
             )}
             <ColorLayer color="#0e3f52" />
             <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 20, paddingRight: 20 }}>
                 {iconTexture && (
-                    <pixiSprite texture={iconTexture} width={iconTexture.width * 2} height={iconTexture.height * 2} layout={{}} />
+                    <pixiSprite
+                        texture={iconTexture}
+                        width={iconTexture.width * 2}
+                        height={iconTexture.height * 2}
+                        layout={{}}
+                    />
                 )}
-                <Text text={activeNode?.localization ?? ''} textStyle="text-style-headline-big" textOptions={{ fill: '#ffffff' }} />
+                <Text
+                    text={activeNode?.localization ?? ''}
+                    textStyle="text-style-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
+                />
             </Box>
         </Box>
     );

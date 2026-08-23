@@ -45,7 +45,7 @@ export interface ScrollbarHorizontalProps {
 export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarHorizontalProps>(
     (
         { trackRef, thumbSize, thumbOffset, atStart, atEnd, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, layout },
-        ref
+        ref,
     ) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('scrollbarHorizontal', variant, defaultVariant);
 
@@ -60,7 +60,10 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
         if (!scrollable) return null;
 
         return (
-            <Box ref={ref} layout={{ flexDirection: 'row', alignItems: 'stretch', ...layout }}>
+            <Box
+                ref={ref}
+                layout={{ flexDirection: 'row', alignItems: 'stretch', ...layout }}
+            >
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonLeft
                         defaultVariant={resolvedVariant}
@@ -93,7 +96,7 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                 </VariantCascadeProvider>
             </Box>
         );
-    }
+    },
 );
 
 ScrollbarHorizontal.displayName = 'ScrollbarHorizontal';

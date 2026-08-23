@@ -58,4 +58,4 @@ export const GetObjectDataFromWrapper = (wrapper: IMessageDataWrapper) => {
     data.parseWrapper(wrapper);
 
     return data;
-}
+};

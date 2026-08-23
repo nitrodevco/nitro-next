@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type QuizResultsMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class QuizResultsMessage implements IIncomingPacket<QuizResultsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): QuizResultsMessageType
-  {
+export class QuizResultsMessage implements IIncomingPacket<QuizResultsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): QuizResultsMessageType {
+        const packet: QuizResultsMessageType = {
+        };
 
-    const packet: QuizResultsMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

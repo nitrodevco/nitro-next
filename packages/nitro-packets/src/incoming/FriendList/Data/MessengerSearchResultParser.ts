@@ -1,5 +1,6 @@
-import { AvatarGenderTypeUtilities, type IMessageDataWrapper } from "@nitrodevco/nitro-api";
-import { IMessengerSearchResult } from "./IMessengerSearchResult";
+import { AvatarGenderTypeUtilities, type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
+import { IMessengerSearchResult } from './IMessengerSearchResult';
 
 export const MessengerSearchResultParser = (wrapper: IMessageDataWrapper): IMessengerSearchResult => {
     return {
@@ -11,6 +12,6 @@ export const MessengerSearchResultParser = (wrapper: IMessageDataWrapper): IMess
         unknownString: wrapper.readString(),
         gender: AvatarGenderTypeUtilities.numberToGender(wrapper.readInt()),
         figure: wrapper.readString(),
-        realName: wrapper.readString()
+        realName: wrapper.readString(),
     };
-}
+};

@@ -170,11 +170,11 @@ export class FurnitureLogic extends MovingObjectLogic {
                 const location = this.object.getLocation();
 
                 if (
-                    direction.x !== message.direction.x &&
-                    this._directionInitialized &&
-                    location.x === message.location.x &&
-                    location.y === message.location.y &&
-                    location.z === message.location.z
+                    direction.x !== message.direction.x
+                    && this._directionInitialized
+                    && location.x === message.location.x
+                    && location.y === message.location.y
+                    && location.z === message.location.z
                 ) {
                     this._bouncingStep = 1;
                     this._storedRotateMessage = new RoomObjectUpdateMessage(message.location, message.direction);
@@ -384,8 +384,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                     this._storedRotateMessage = undefined;
                 }
 
-                this._locationOffset.z =
-                    FurnitureLogic.BOUNCING_Z * (FurnitureLogic.BOUNCING_STEPS - this._bouncingStep);
+                this._locationOffset.z
+                    = FurnitureLogic.BOUNCING_Z * (FurnitureLogic.BOUNCING_STEPS - this._bouncingStep);
             }
 
             return this._locationOffset;

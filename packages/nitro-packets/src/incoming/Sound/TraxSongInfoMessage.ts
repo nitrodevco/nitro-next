@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type TraxSongInfoMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class TraxSongInfoMessage implements IIncomingPacket<TraxSongInfoMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TraxSongInfoMessageType
-  {
+export class TraxSongInfoMessage implements IIncomingPacket<TraxSongInfoMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TraxSongInfoMessageType {
+        const packet: TraxSongInfoMessageType = {
+        };
 
-    const packet: TraxSongInfoMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

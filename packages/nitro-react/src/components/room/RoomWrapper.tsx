@@ -1,9 +1,9 @@
-import { OpenFlatConnectionComposer } from "@nitrodevco/nitro-packets";
-import { useEffect } from "react";
+import { OpenFlatConnectionComposer } from '@nitrodevco/nitro-packets';
+import { useEffect } from 'react';
 
-import { RoomContextProvider, useWebSocketContext } from "#base/context";
+import { RoomContextProvider, useWebSocketContext } from '#base/context';
 
-import { RoomContainer } from "./RoomContainer";
+import { RoomContainer } from './RoomContainer';
 
 export const RoomWrapper = () => {
     const { send } = useWebSocketContext();
@@ -15,7 +15,7 @@ export const RoomWrapper = () => {
         if (roomId > 0) send(new OpenFlatConnectionComposer({
             roomId,
             password: '',
-            unknown1: -1
+            unknown1: -1,
         }));
     }, []);
 
@@ -24,4 +24,4 @@ export const RoomWrapper = () => {
             <RoomContainer />
         </RoomContextProvider>
     );
-}
+};

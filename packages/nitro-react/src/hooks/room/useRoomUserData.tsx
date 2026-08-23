@@ -1,12 +1,12 @@
-import { AvatarActionStateType, IAvatarUserInfo, RoomControllerLevelEnum, RoomModerationType, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomTradeModeEnum } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, IAvatarUserInfo, RoomControllerLevelEnum, RoomModerationType, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
-import { useIsSystemShutdown, useOwnControllerLevel, useOwnUserId, useRoomContext, useRoomSelector, useRoomSettingsSelector } from "#base/context"
+import { useIsSystemShutdown, useOwnControllerLevel, useOwnUserId, useRoomContext, useRoomSelector, useRoomSettingsSelector } from '#base/context';
 
 const canModerate = (
     action: RoomModerationType,
     targetControllerLevel: RoomControllerLevelEnum,
     ownControllerLevel: RoomControllerLevelEnum,
-    isGuildRoom: boolean
+    isGuildRoom: boolean,
 ): boolean => {
     const hasGuildOrOwnerRights = isGuildRoom
         ? ownControllerLevel >= RoomControllerLevelEnum.GuildAdmin
@@ -58,7 +58,7 @@ export const useRoomUserData = (objectId: number) => {
         canBeBanned: false,
         canTrade: false,
         isOwnUser,
-        isIgnored
+        isIgnored,
     };
 
     if (!isOwnUser) {
@@ -79,4 +79,4 @@ export const useRoomUserData = (objectId: number) => {
     }
 
     return userInfo;
-}
+};

@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export interface ILiftedRoomData {
     flatId: number;
@@ -21,4 +21,4 @@ export const LiftedRoomDataParser = (wrapper: IMessageDataWrapper): ILiftedRoomD
     data.caption = wrapper.readString();
 
     return data;
-}
+};

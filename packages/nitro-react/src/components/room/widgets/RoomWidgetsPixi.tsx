@@ -1,11 +1,11 @@
-import { RoomEngineEvent } from "@nitrodevco/nitro-api";
-import { useState } from "react";
+import { RoomEngineEvent } from '@nitrodevco/nitro-api';
+import { useState } from 'react';
 
-import { useRoomEventDispatcher } from "#base/hooks";
-import { Box } from "#base/theme-pixi";
+import { useRoomEventDispatcher } from '#base/hooks';
+import { Box } from '#base/theme-pixi';
 
-import { RoomObjectInfostandWidget } from "./object-infostand";
-import { RoomObjectMenuWidget } from "./object-menu";
+import { RoomObjectInfostandWidget } from './object-infostand';
+import { RoomObjectMenuWidget } from './object-menu';
 
 /**
  * Pixi port of components/room/widgets/RoomWidgets.tsx. DOM used `createPortal` to mount into
@@ -17,7 +17,7 @@ import { RoomObjectMenuWidget } from "./object-menu";
  * boundary, since RoomContainer itself remains DOM-based).
  */
 export const RoomWidgetsPixi = () => {
-    const [isReady, setIsReady] = useState<boolean>(false);
+    const [ isReady, setIsReady ] = useState<boolean>(false);
 
     useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, () => setIsReady(true));
     useRoomEventDispatcher(RoomEngineEvent.DISPOSED, () => setIsReady(false));

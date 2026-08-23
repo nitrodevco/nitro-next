@@ -7,5 +7,5 @@ export enum AvatarBodyPartType {
     RightItem = 'rightitem',
     LeftArm = 'leftarm',
     RightArm = 'rightarm',
-    Head = 'head'
+    Head = 'head',
 }

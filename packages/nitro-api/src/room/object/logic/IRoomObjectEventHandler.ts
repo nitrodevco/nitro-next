@@ -1,4 +1,5 @@
 import { IAssetData } from '#api/asset/IAssetData';
+
 import type { IRoomEventHandler } from '../../IRoomEventHandler';
 import type { IRoomObjectController } from '../IRoomObjectController';
 import type { IRoomObjectUpdateMessage } from '../IRoomObjectUpdateMessage';

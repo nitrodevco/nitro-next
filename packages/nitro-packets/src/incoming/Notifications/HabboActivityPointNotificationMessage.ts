@@ -11,7 +11,7 @@ export class HabboActivityPointNotificationMessage implements IIncomingPacket<Ha
         const packet: HabboActivityPointNotificationMessageType = {
             amount: wrapper.readInt(),
             change: wrapper.readInt(),
-            type: wrapper.readInt()
+            type: wrapper.readInt(),
         };
 
         return packet;

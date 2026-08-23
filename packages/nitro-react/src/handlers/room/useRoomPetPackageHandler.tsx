@@ -1,11 +1,11 @@
-import { OpenPetPackageRequestedMessage, OpenPetPackageResultMessage } from "@nitrodevco/nitro-packets";
+import { OpenPetPackageRequestedMessage, OpenPetPackageResultMessage } from '@nitrodevco/nitro-packets';
 
-import { useMessageListener } from "#base/hooks";
+import { useMessageListener } from '#base/hooks';
 
 export const useRoomPetPackageHandler = () => {
-    useMessageListener(OpenPetPackageRequestedMessage, data => {
+    useMessageListener(OpenPetPackageRequestedMessage, (data) => {
     });
 
-    useMessageListener(OpenPetPackageResultMessage, data => {
+    useMessageListener(OpenPetPackageResultMessage, (data) => {
     });
-}
+};

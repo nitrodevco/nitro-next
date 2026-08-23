@@ -23,10 +23,10 @@ export class RoomObjectLocationCacheItem {
             this._objectUpdateId = object.updateCounter;
 
             if (
-                geometry.updateId !== this._geometryUpdateId ||
-                location.x !== this._location.x ||
-                location.y !== this._location.y ||
-                location.z !== this._location.z
+                geometry.updateId !== this._geometryUpdateId
+                || location.x !== this._location.x
+                || location.y !== this._location.y
+                || location.z !== this._location.z
             ) {
                 this._geometryUpdateId = geometry.updateId;
                 this._location.assign(location);
@@ -50,8 +50,7 @@ export class RoomObjectLocationCacheItem {
                 this._screenLocation.assign(screenLocation);
 
                 if (roundedScreen) this._screenLocation.z = roundedScreen.z;
-            }
-            else {
+            } else {
                 this._screenLocation.assign(screenLocation);
             }
 

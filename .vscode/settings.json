@@ -7,18 +7,20 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
+        "source.fixAll.eslint": true,
     },
     "editor.quickSuggestions": {
         "strings": true
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript,javascriptreact,typescript,typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
         "js/ts.preferences.importModuleSpecifier": "shortest"
     },
     "[json]": {
         "editor.tabSize": 4
     },
+    "eslint.format.enable": true,
     "prettier.prettierPath": "./node_modules/prettier/index.cjs",
     "prettier.configPath": "prettier.config.js",
     "eslint.validate": [
@@ -26,6 +28,11 @@
         "javascriptreact",
         "typescript",
         "typescriptreact"
+    ],
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
     ],
     "tailwindAutoOptimizer.autoFixOnSave": true,
     "tailwindCSS.experimental.configFile": "./packages/nitro-react/src/index.css",

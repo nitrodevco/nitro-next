@@ -42,8 +42,8 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
 
     protected getAnimationId(animationData: AnimationStateData): number {
         if (
-            this.animationId !== FurnitureAnimatedVisualization.DEFAULT_ANIMATION_ID &&
-            this.data.hasAnimation(this._animationScale, this.animationId)
+            this.animationId !== FurnitureAnimatedVisualization.DEFAULT_ANIMATION_ID
+            && this.data.hasAnimation(this._animationScale, this.animationId)
         )
             return this.animationId;
 
@@ -60,8 +60,8 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
 
             this._state = state;
 
-            this._animationChangeTime =
-                this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureStateUpdateTime) || 0;
+            this._animationChangeTime
+                = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureStateUpdateTime) || 0;
         }
 
         return true;
@@ -93,8 +93,8 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
 
     private isPlayingTransition(animationData: AnimationStateData, animationId: number): boolean {
         if (
-            !AnimationData.isTransitionFromAnimation(animationData.animationId) &&
-            !AnimationData.isTransitionToAnimation(animationData.animationId)
+            !AnimationData.isTransitionFromAnimation(animationData.animationId)
+            && !AnimationData.isTransitionToAnimation(animationData.animationId)
         )
             return false;
 
@@ -109,8 +109,8 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
         const animationId = animationData.animationId;
 
         if (
-            !AnimationData.isTransitionFromAnimation(animationId) &&
-            !AnimationData.isTransitionToAnimation(animationId)
+            !AnimationData.isTransitionFromAnimation(animationId)
+            && !AnimationData.isTransitionToAnimation(animationId)
         )
             return animationId;
 
@@ -216,8 +216,8 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
 
         if (this._animationData.animationOver) {
             if (
-                AnimationData.isTransitionFromAnimation(this._animationData.animationId) ||
-                AnimationData.isTransitionToAnimation(this._animationData.animationId)
+                AnimationData.isTransitionFromAnimation(this._animationData.animationId)
+                || AnimationData.isTransitionToAnimation(this._animationData.animationId)
             ) {
                 this.setAnimation(this._animationData.animationAfterTransitionId);
                 this._animationData.animationOver = false;
@@ -260,10 +260,10 @@ export class FurnitureAnimatedVisualization extends FurnitureVisualization {
                 }
 
                 if (
-                    this._directionChanged ||
-                    !frame ||
-                    (frame.remainingFrameRepeats >= 0 &&
-                        (frame.remainingFrameRepeats = frame.remainingFrameRepeats - this.frameIncrease) <= 0)
+                    this._directionChanged
+                    || !frame
+                    || (frame.remainingFrameRepeats >= 0
+                        && (frame.remainingFrameRepeats = frame.remainingFrameRepeats - this.frameIncrease) <= 0)
                 ) {
                     sequenceId = AnimationFrame.SEQUENCE_NOT_DEFINED;
 

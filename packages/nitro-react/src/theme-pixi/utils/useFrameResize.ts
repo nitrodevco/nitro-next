@@ -55,14 +55,14 @@ export const useFrameResize = (
     id: string | undefined,
     frameRef: RefObject<PixiContainer | HTMLElement | null>,
     direction: FrameResizeDirection = 'all',
-    minSize: { width: number, height: number } = { width: MIN_SIZE, height: MIN_SIZE },
+    minSize: { width: number; height: number } = { width: MIN_SIZE, height: MIN_SIZE },
 ) => {
     const resizeStateRef = useRef<ResizeState | null>(null);
     const latestSizeRef = useRef<FrameSize | null>(null);
     const lastTapRef = useRef<TapState | null>(null);
     const activeListenersRef = useRef<ActiveListeners | null>(null);
 
-    const [size, setSize] = useState<FrameSize | null>(() => (id && getStoredFrameSize(id)) || null);
+    const [ size, setSize ] = useState<FrameSize | null>(() => (id && getStoredFrameSize(id)) || null);
 
     const stopResizing = () => {
         const listeners = activeListenersRef.current;
@@ -76,7 +76,7 @@ export const useFrameResize = (
         resizeStateRef.current = null;
     };
 
-    useEffect(() => stopResizing, [stopResizing]);
+    useEffect(() => stopResizing, [ stopResizing ]);
 
     const resetSize = () => {
         latestSizeRef.current = null;

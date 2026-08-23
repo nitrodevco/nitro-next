@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CameraPublishStatusMessageType = {
-  // no fields
+    // no fields
 
 };
 
-export class CameraPublishStatusMessage implements IIncomingPacket<CameraPublishStatusMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CameraPublishStatusMessageType
-  {
+export class CameraPublishStatusMessage implements IIncomingPacket<CameraPublishStatusMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CameraPublishStatusMessageType {
+        const packet: CameraPublishStatusMessageType = {
+        };
 
-    const packet: CameraPublishStatusMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

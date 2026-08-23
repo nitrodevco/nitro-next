@@ -6,7 +6,7 @@ import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.AREA_HIDE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.AREA_HIDE ]);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

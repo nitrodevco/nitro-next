@@ -1,4 +1,3 @@
-
 import {
     GetObjectDataForFlags,
     IGetImageListener,
@@ -13,7 +12,7 @@ import {
     RoomObjectCategoryEnum,
     RoomObjectUserTypeName,
     RoomObjectVariableEnum,
-    Vector3d
+    Vector3d,
 } from '@nitrodevco/nitro-api';
 import { type ImageLike } from 'pixi.js';
 
@@ -120,10 +119,10 @@ export class RoomEngine implements IRoomEngine {
                 break;
             case RoomObjectCategoryEnum.Unit:
                 if (
-                    type === RoomObjectUserTypeName.User ||
-                    type === RoomObjectUserTypeName.Bot ||
-                    type === RoomObjectUserTypeName.RentableBot ||
-                    type === RoomObjectUserTypeName.Pet
+                    type === RoomObjectUserTypeName.User
+                    || type === RoomObjectUserTypeName.Bot
+                    || type === RoomObjectUserTypeName.RentableBot
+                    || type === RoomObjectUserTypeName.Pet
                 ) {
                     model.setValue(RoomObjectVariableEnum.Figure, value);
                 } else {
@@ -246,7 +245,7 @@ export class RoomEngine implements IRoomEngine {
                         if (image) listener.imageReady(image);
                         else listener.imageFailed();
                     }
-                }
+                };
 
                 void notify();
             }

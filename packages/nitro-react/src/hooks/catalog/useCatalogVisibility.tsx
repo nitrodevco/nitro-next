@@ -1,4 +1,4 @@
-import { useIsWindowVisible, useSystemActions } from "#base/context";
+import { useIsWindowVisible, useSystemActions } from '#base/context';
 
 export const useCatalogVisibility = () => {
     const windowName = 'catalog';
@@ -10,4 +10,4 @@ export const useCatalogVisibility = () => {
     const hideCatalog = () => hideWindow(windowName);
 
     return { isCatalogVisible, showCatalog, hideCatalog };
-}
+};
