@@ -9,13 +9,20 @@ import { useThemeVariant, wrapTextChildren } from './utils';
 
 type TabButtonVariant = ThemeWithStatesVariant;
 
+// Variants 0/1's bottomHeight is 2, not 0 - the legacy DOM port (theme/TabButton.tsx, deleted)
+// sliced these at `border-image-slice: 5 5 2 5 fill`. Both `tabbutton-0-*`/`tabbutton-1-*`
+// textures have two fully-transparent padding rows at the very bottom (confirmed by inspecting
+// the PNGs directly) - with bottomHeight dropped to 0 during the Pixi port, the nine-slice's
+// stretched "fill" region extended all the way into those transparent rows instead of stopping
+// short of them, so the stretched middle faded to transparent right at the button's bottom edge
+// instead of cutting off crisply.
 const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
     // default
     0: {
         states: {
-            default: NineSlice('tabbutton-0-default-src', 5, 5, 5, 0),
-            hovering: NineSlice('tabbutton-0-hovering-src', 5, 5, 5, 0),
-            selected: NineSlice('tabbutton-0-selected-src', 5, 5, 5, 0),
+            default: NineSlice('tabbutton-0-default-src', 5, 5, 5, 2),
+            hovering: NineSlice('tabbutton-0-hovering-src', 5, 5, 5, 2),
+            selected: NineSlice('tabbutton-0-selected-src', 5, 5, 5, 2),
         },
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
@@ -27,9 +34,9 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
     // black
     1: {
         states: {
-            default: NineSlice('tabbutton-1-default-src', 5, 5, 5, 0),
-            hovering: NineSlice('tabbutton-1-hovering-src', 5, 5, 5, 0),
-            selected: NineSlice('tabbutton-1-selected-src', 5, 5, 5, 0),
+            default: NineSlice('tabbutton-1-default-src', 5, 5, 5, 2),
+            hovering: NineSlice('tabbutton-1-hovering-src', 5, 5, 5, 2),
+            selected: NineSlice('tabbutton-1-selected-src', 5, 5, 5, 2),
         },
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
@@ -41,9 +48,9 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
     // white - reuses variant '0's art wholesale
     2: {
         states: {
-            default: NineSlice('tabbutton-0-default-src', 5, 5, 5, 0),
-            hovering: NineSlice('tabbutton-0-hovering-src', 5, 5, 5, 0),
-            selected: NineSlice('tabbutton-0-selected-src', 5, 5, 5, 0),
+            default: NineSlice('tabbutton-0-default-src', 5, 5, 5, 2),
+            hovering: NineSlice('tabbutton-0-hovering-src', 5, 5, 5, 2),
+            selected: NineSlice('tabbutton-0-selected-src', 5, 5, 5, 2),
         },
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
