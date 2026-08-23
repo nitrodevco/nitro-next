@@ -1,5 +1,5 @@
 import { RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { BLEND_MODES, Filter } from 'pixi.js';
 import { Texture } from 'pixi.js';
 

@@ -1,9 +1,9 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { VariantCascadeProvider } from '#base/theme-core';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { ScrollbarSliderBarHorizontal } from './ScrollbarSliderBarHorizontal';
 import { ScrollbarSliderButtonLeft } from './ScrollbarSliderButtonLeft';
 import { ScrollbarSliderButtonRight } from './ScrollbarSliderButtonRight';

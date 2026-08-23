@@ -1,9 +1,9 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type PointerEvent as ReactPointerEvent, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, PointerEvent as ReactPointerEvent, RefAttributes } from 'react';
 
 import { getRenderMode } from '#base/theme-core';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { resolveByState, useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';

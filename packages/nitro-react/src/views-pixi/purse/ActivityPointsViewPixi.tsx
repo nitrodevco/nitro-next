@@ -1,5 +1,5 @@
 import { useTranslation, useWallet } from '#base/context';
-import { Border, Box, type BoxLayout, Text } from '#base/theme-pixi';
+import { Border, Box, BoxLayout, Text } from '#base/theme-pixi';
 
 export interface ActivityPointsViewPixiProps {
     layout?: BoxLayout;

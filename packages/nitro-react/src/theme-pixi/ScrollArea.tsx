@@ -1,7 +1,7 @@
 import { Container as PixiContainer, Graphics as PixiGraphics } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes, useState } from 'react';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useState } from 'react';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { ScrollbarHorizontal } from './ScrollbarHorizontal';
 import { ScrollbarVertical } from './ScrollbarVertical';
 import { ScrollViewport } from './utils/ScrollViewport';

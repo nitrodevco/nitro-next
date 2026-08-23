@@ -1,6 +1,6 @@
 import './pixiElements';
 
-import { Children, type ReactNode } from 'react';
+import { Children, ReactNode } from 'react';
 
 import { Text } from '../Text';
 import { TextStyleKey } from './textStyles';

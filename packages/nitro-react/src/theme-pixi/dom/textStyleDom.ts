@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-import { TEXT_STYLES, type TextStyleKey } from '../utils/textStyles';
+import { TEXT_STYLES, TextStyleKey } from '../utils/textStyles';
 
 export interface DomTextStyleOptions {
     fill?: string;

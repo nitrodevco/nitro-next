@@ -1,4 +1,4 @@
-import { IBundleDiscountRuleset, type IMessageDataWrapper, ParseInts } from '@nitrodevco/nitro-api';
+import { IBundleDiscountRuleset, IMessageDataWrapper, ParseInts } from '@nitrodevco/nitro-api';
 
 export const BundleDiscountRulesetParser = (wrapper: IMessageDataWrapper): IBundleDiscountRuleset => {
     return {

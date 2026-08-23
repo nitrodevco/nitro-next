@@ -1,4 +1,4 @@
-import { AvatarGenderTypeUtilities, type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { AvatarGenderTypeUtilities, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IMessengerSearchResult } from './IMessengerSearchResult';
 

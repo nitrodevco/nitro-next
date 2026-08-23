@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, type IconKey, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, IconKey, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
 
 export interface ToolbarMenuItem {
     icon: IconKey;

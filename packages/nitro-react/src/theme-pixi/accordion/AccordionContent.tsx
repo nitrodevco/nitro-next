@@ -1,5 +1,5 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, Fragment, type ReactNode, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, Fragment, ReactNode, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from '../Box';
 import { useAccordionItem } from './AccordionContext';

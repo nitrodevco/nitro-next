@@ -1,4 +1,4 @@
-import { AlphaTolerance, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RenderTexture } from 'pixi.js';
 
 import { IAvatarAddition } from './IAvatarAddition';

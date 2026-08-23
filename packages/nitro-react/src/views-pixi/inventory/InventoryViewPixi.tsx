@@ -1,4 +1,4 @@
-import { useSystemActions, useTranslation, useWindowParams, type WindowParams } from '#base/context';
+import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
 import { Frame, TabButton, TabContent, TabContext } from '#base/theme-pixi';
 
 import { InventoryBadgesViewPixi } from './InventoryBadgesViewPixi';

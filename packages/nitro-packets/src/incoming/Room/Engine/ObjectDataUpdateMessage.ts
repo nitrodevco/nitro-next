@@ -1,4 +1,4 @@
-import { GetObjectDataFromWrapper, type IIncomingPacket, type IMessageDataWrapper, type IObjectData } from '@nitrodevco/nitro-api';
+import { GetObjectDataFromWrapper, IIncomingPacket, IMessageDataWrapper, IObjectData } from '@nitrodevco/nitro-api';
 
 export type ObjectDataUpdateMessageType = {
     objectId: number;

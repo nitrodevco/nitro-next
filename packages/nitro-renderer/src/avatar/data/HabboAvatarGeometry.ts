@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, type IAssetAvatarGeometryConfig } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IAssetAvatarGeometryConfig } from '@nitrodevco/nitro-api';
 
 export const HabboAvatarGeometry: IAssetAvatarGeometryConfig = {
     direction: 0,

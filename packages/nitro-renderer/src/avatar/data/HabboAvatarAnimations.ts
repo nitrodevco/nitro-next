@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarFigurePartType, type IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarAnimation } from '@nitrodevco/nitro-api';
 
 export const HabboAvatarAnimations: IAssetAvatarAnimation[] = [
     {

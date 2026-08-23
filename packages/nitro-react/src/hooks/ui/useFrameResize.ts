@@ -1,6 +1,6 @@
-import {  CSSProperties, type PointerEvent as ReactPointerEvent, type RefObject, useRef, useState } from 'react';
+import {  CSSProperties, PointerEvent as ReactPointerEvent, RefObject, useRef, useState } from 'react';
 
-import { clearStoredFrameSize, type FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
+import { clearStoredFrameSize, FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
 
 export type FrameResizeDirection = 'x' | 'y' | 'all' | 'none';
 

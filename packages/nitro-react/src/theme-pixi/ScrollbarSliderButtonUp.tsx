@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { useInteractionState } from './utils/useInteractionState';
 import { useResolvedVariant } from './utils/useResolvedVariant';
 import {  SpriteFrame, useSpriteFrameTexture } from './utils/useSpriteFrameTexture';

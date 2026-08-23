@@ -1,11 +1,11 @@
 import {
-    type IRoomObjectController,
-    type IRoomObjectEventHandler,
-    type IRoomObjectModel,
-    type IRoomObjectMouseHandler,
-    type IRoomObjectUpdateMessage,
-    type IRoomObjectVisualization,
-    type IVector3D,
+    IRoomObjectController,
+    IRoomObjectEventHandler,
+    IRoomObjectModel,
+    IRoomObjectMouseHandler,
+    IRoomObjectUpdateMessage,
+    IRoomObjectVisualization,
+    IVector3D,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 

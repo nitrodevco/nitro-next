@@ -1,4 +1,4 @@
-import { AvatarActionStateType, type IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IRoomAvatarUpdate } from './IRoomAvatarUpdate';
 

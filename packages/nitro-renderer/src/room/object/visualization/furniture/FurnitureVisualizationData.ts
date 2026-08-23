@@ -1,4 +1,4 @@
-import {  IAssetColor, type IAssetData, type IAssetVisualizationData, type IAssetVisualizationDirection, type IAssetVisualizationLayer, type IObjectVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import {  IAssetColor, IAssetData, IAssetVisualizationData, IAssetVisualizationDirection, IAssetVisualizationLayer, IObjectVisualizationData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { BLEND_MODES } from 'pixi.js';
 
 import { ColorData, LayerData, SizeData } from '../data';

@@ -36,17 +36,13 @@ import {
     RoomToObjectOwnAvatarMoveEvent,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
-import { Container, Texture } from 'pixi.js';
+import { Container, ImageLike, PointData, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { PetFigureData } from '../session';
 import { GetTickerTime } from '../utils';
 import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
-import {
-    ObjectStateUpdateMessage,
-} from './messages';
 import {
     ObjectAvatarCarryObjectUpdateMessage,
     ObjectAvatarChatUpdateMessage,
@@ -78,8 +74,8 @@ import {
     ObjectRoomPlanePropertyUpdateMessage,
     ObjectRoomPlaneVisibilityUpdateMessage,
     ObjectRoomUpdateMessage,
-    RoomObjectUpdateMessage,
-} from './messages';
+    ObjectStateUpdateMessage,
+    RoomObjectUpdateMessage } from './messages';
 import { RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';

@@ -1,6 +1,6 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
-import {  ReactNode, type Ref } from 'react';
+import {  ReactNode, Ref } from 'react';
 
 import { ThemeProps, ThemeVariant, ThemeVariants, VariantCascadeProvider } from '#base/theme-core';
 import { GetPixelRatio } from '#base/utils';
@@ -10,7 +10,7 @@ import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { BackgroundLayer, Composite } from './layer';
 import { NineSlice } from './layer/NineSlice';
-import { Scaler, type ScalerDirection } from './Scaler';
+import { Scaler, ScalerDirection } from './Scaler';
 import { useFrameDrag } from './utils/useFrameDrag';
 import { useFrameResize } from './utils/useFrameResize';
 import { useThemeVariant } from './utils/useThemeVariant';

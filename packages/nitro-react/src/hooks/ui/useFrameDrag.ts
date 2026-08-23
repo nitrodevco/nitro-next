@@ -1,4 +1,4 @@
-import {  CSSProperties, type PointerEvent as ReactPointerEvent, useEffect, useId, useRef, useState } from 'react';
+import {  CSSProperties, PointerEvent as ReactPointerEvent, useEffect, useId, useRef, useState } from 'react';
 
 import { useWindowActions, useWindowZIndex } from '#base/context';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';

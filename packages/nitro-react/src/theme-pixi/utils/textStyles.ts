@@ -1,4 +1,4 @@
-import { TextDropShadow, TextStyle, type TextStyleOptions } from 'pixi.js';
+import { TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
 
 const TEXT_DROP_SHADOW: TextDropShadow = {
     alpha: 0.3,

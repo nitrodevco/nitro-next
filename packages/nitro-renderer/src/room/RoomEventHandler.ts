@@ -5,7 +5,7 @@ import {
     IRoomObject,
     IRoomObjectEvent,
     IRoomSpriteMouseEvent,
-    type RoomObjectEvent, type RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+    type RoomObjectEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 
 import { RoomEnterEffect } from './utils';
 

@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type RefAttributes, useEffect, useRef, useState } from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes, useEffect, useRef, useState } from 'react';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { ColorLayer } from './layer';
 import { Text } from './Text';
 import { useOutsideClick } from './utils/useOutsideClick';

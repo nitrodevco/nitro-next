@@ -1,4 +1,4 @@
-import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType, AvatarScaleType, type IAssetAvatarActionData } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType, AvatarScaleType, IAssetAvatarActionData } from '@nitrodevco/nitro-api';
 
 export const HabboAvatarActionsDefault: IAssetAvatarActionData = {
     actions: [

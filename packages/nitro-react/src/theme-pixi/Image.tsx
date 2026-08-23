@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { useConfigValue } from '#base/context';
 import { getRenderMode } from '#base/theme-core';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
 
 export interface ImageProps {

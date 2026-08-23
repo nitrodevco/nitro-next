@@ -1,5 +1,5 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, VariantCascadeProvider } from '#base/theme-core';
 

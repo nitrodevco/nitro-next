@@ -1,9 +1,9 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { forwardRef, type ForwardRefExoticComponent, type ReactNode, type RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { getRenderMode, VariantCascadeProvider } from '#base/theme-core';
 
-import { Box, type BoxLayout } from './Box';
+import { Box, BoxLayout } from './Box';
 import { spriteFrameToStyle } from './dom/spriteFrameDom';
 import { Text } from './Text';
 import { wrapTextChildren } from './utils';
