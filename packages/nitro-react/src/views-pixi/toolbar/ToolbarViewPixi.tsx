@@ -1,8 +1,8 @@
-import { Graphics as PixiGraphics } from 'pixi.js';
 import { useState } from 'react';
 
+import { AvatarImage } from '#base/components';
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Box, ColorLayer, Image, NitroIcon, useAvatarImageTexture } from '#base/theme-pixi';
+import { Box, ColorLayer, Image, NitroIcon } from '#base/theme-pixi';
 
 import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
@@ -34,12 +34,9 @@ export const ToolbarViewPixi = () => {
     const [ isProgressionExpanded, setProgressionExpanded ] = useState(false);
     const [ leftSideCollapsed, setLeftSideCollapsed ] = useState(false);
     const [ rightSideCollapsed, setRightSideCollapsed ] = useState(false);
-    const [ avatarMaskNode, setAvatarMaskNode ] = useState<PixiGraphics | null>(null);
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
     const { toggleWindow } = useSystemActions();
-
-    const { texture: avatarTexture, width: avatarWidth, height: avatarHeight } = useAvatarImageTexture(ownFigure, ownGender, { headOnly: true, direction: 3 });
 
     const toggleMenu = (menu: 'me' | 'progression') => {
         setMeExpanded(menu === 'me' && !isMeExpanded);
@@ -138,25 +135,12 @@ export const ToolbarViewPixi = () => {
                         layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
                     >
                         <ColorLayer color="#262016" />
-                        {avatarTexture && (
-                            <Box
-                                mask={avatarMaskNode ?? undefined}
-                                layout={{ width: 34, height: 34, justifyContent: 'center', alignItems: 'center' }}
-                            >
-                                <pixiGraphics
-                                    ref={setAvatarMaskNode}
-                                    eventMode="none"
-                                    layout={{ position: 'absolute', top: 0, left: 0 }}
-                                    draw={(g) => { g.clear().circle(17, 17, 17).fill(0xFFFFFF); }}
-                                />
-                                <pixiSprite
-                                    texture={avatarTexture}
-                                    width={avatarWidth}
-                                    height={avatarHeight}
-                                    layout={{ position: 'absolute', top: (34 - avatarHeight) / 2, left: (34 - avatarWidth) / 2 }}
-                                />
-                            </Box>
-                        )}
+                        <AvatarImage
+                            figure={ownFigure}
+                            gender={ownGender}
+                            direction={3}
+                            headOnly
+                        />
                         <NitroIcon
                             icon="icon-me-circle"
                             layout={{ position: 'absolute', top: 0, left: 0 }}

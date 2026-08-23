@@ -22,7 +22,6 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
     } as IRoomAvatarUpdate;
 
     const status = wrapper.readString();
-
     const parts = status.split('/');
 
     for (const part of parts) {

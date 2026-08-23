@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from '#base/context';
 import { useRoomCamera } from '#base/hooks';
+import { getRenderMode } from '#base/theme-core';
 
 type MouseData = {
     mouseXY: { x: number; y: number };
@@ -28,6 +29,7 @@ export const RoomCanvas = () => {
         isDragged: false,
         wasDragged: false,
     });
+    const renderMode = getRenderMode();
 
     const handleRoomDragging = (
         x: number,
@@ -159,11 +161,12 @@ export const RoomCanvas = () => {
         if (!canvas) {
             canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
 
-            if (canvas.master) GetRoomStage().addChild(canvas.master);
+            if (renderMode === 'pixi' && canvas.master) GetRoomStage().addChild(canvas.master);
         } else {
             canvas.initialize(width, height);
         }
 
+        const renderer = GetRenderer();
         const container = canvas.master;
 
         if (!container) return;
@@ -179,9 +182,11 @@ export const RoomCanvas = () => {
             room.canvas.initialize(width, height);
 
             updateRoomCamera(-1);
+
+            if (renderMode === 'dom') renderer.render(container);
         };
 
-        GetRenderer().on('resize', resizeCanvas);
+        renderer.on('resize', resizeCanvas);
 
         const tick = (ticker: Ticker) => {
             if (!room || !canvas || !container) return;
@@ -203,6 +208,8 @@ export const RoomCanvas = () => {
             }
 
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
+
+            if (renderMode === 'dom') renderer.render(container);
         };
 
         GetTicker().add(tick);
