@@ -51,10 +51,9 @@ export const FriendListViewPixi = () => {
                 layout={{ position: 'relative', flex: activeTab ? 1 : undefined, minHeight: 0 }}
             >
                 <ColorLayer color="#ffffff" />
-                <pixiGraphics
-                    eventMode="none"
+                <ColorLayer
+                    color="#000000"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#000000'); }}
                 />
                 <FriendListFriendsPixi value="friends" />
                 <FriendListRequestsPixi value="requests" />

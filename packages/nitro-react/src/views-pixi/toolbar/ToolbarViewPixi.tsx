@@ -58,16 +58,14 @@ export const ToolbarViewPixi = () => {
             }}
             >
                 <ColorLayer color="rgba(46, 45, 44, 0.76)" />
-                <pixiGraphics
-                    eventMode="none"
+                <ColorLayer
+                    color="rgba(0, 0, 0, 0.3)"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('rgba(0, 0, 0, 0.3)'); }}
                 />
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingRight: ICON_SPACING }}>
-                    <pixiGraphics
-                        eventMode="none"
+                    <ColorLayer
+                        color="#525252"
                         layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#525252'); }}
                     />
                     {collapseLeftTexture && (
                         <pixiSprite
@@ -179,10 +177,9 @@ export const ToolbarViewPixi = () => {
                     />
                 </Box>
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingLeft: ICON_SPACING }}>
-                    <pixiGraphics
-                        eventMode="none"
+                    <ColorLayer
+                        color="#525252"
                         layout={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#525252'); }}
                     />
                     <Box
                         eventMode="static"
