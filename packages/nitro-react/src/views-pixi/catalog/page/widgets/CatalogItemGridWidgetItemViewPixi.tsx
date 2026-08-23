@@ -30,6 +30,7 @@ export const CatalogItemGridWidgetItemViewPixi = ({ offer }: CatalogItemGridWidg
             >
                 <Image
                     src={iconUrl}
+                    showLoadingPlaceholder
                     layout={{ minWidth: 32, minHeight: 32, maxWidth: 32, maxHeight: 32 }}
                 />
                 <CatalogItemGridWidgetItemPriceViewPixi offer={offer} />

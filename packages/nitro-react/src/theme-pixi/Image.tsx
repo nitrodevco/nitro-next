@@ -1,49 +1,80 @@
-import { Container as PixiContainer, EventMode } from 'pixi.js';
-import { forwardRef } from 'react';
+import { Container as PixiContainer, EventMode, Rectangle, Texture } from 'pixi.js';
+import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, useMemo } from 'react';
 
 import { useConfigValue } from '#base/context';
 import { getRenderMode } from '#base/theme-core';
 
 import { Box, BoxLayout } from './Box';
 import { useTextureFromUrl } from './utils/usePixiTexture';
+import { SpriteFrame } from './utils/useSpriteFrameTexture';
 
 export interface ImageProps {
     src: string | undefined;
-    /** Explicit render size - omit to render at the resolved texture/image's own native size. */
+    /** Crop a sub-region out of `src` (a shared spritesheet) instead of showing it whole. */
+    frame?: SpriteFrame;
+    /** Explicit render size - omit to use `frame`'s own size, or the resolved image's native size. */
     width?: number;
     height?: number;
+    tint?: string;
     eventMode?: EventMode;
     cursor?: string;
+    onPointerOver?: () => void;
+    onPointerOut?: () => void;
+    onPointerDown?: () => void;
+    onPointerUp?: () => void;
+    onPointerUpOutside?: () => void;
     onPointerTap?: () => void;
+    /**
+     * Falls back to `loading.icon.url` while `src` is resolving/erroring, instead of rendering
+     * nothing. Only meaningful for whole-image (no `frame`) use - matches DOM's Image.tsx
+     * loading-placeholder behavior. Left off by default: for a cropped UI-chrome sprite (an
+     * icon, a button skin) a generic loading icon squeezed into that frame's size would look
+     * broken, so those usages render nothing until their real art is ready, same as before.
+     */
+    showLoadingPlaceholder?: boolean;
     layout?: BoxLayout;
 }
 
 /**
- * Pixi port of theme/Image.tsx, generalizing the same loading-placeholder pattern
- * NitroCurrencyIcon.tsx already established for its own `src` (see that file's own docblock for
- * the full reasoning): DOM shows a `loading.icon.url` placeholder under the real `<img>` until
- * it loads, and never removes that placeholder on error - only ever the real `<img>` disappears.
- * Pixi textures have no distinct "errored" state, so "the real texture is still undefined"
- * stands in for both loading and errored, converging on the same end visual DOM does (the
- * loading icon shown indefinitely) whenever `src` never resolves.
+ * The single dual-target sprite/image primitive - every themed icon, button skin, or loose
+ * `<img>`-equivalent (whole image or cropped out of a shared spritesheet via `frame`) goes
+ * through this rather than writing a raw `pixiSprite`/`<img>` directly, the same way `Box`/
+ * `ColorLayer` are the sanctioned primitives for containers/solid fills. The one deliberate
+ * exception is the `layer/` family (SpriteLayer, CompositePieceSprite, ...) - those stretch a
+ * texture to exactly fill an arbitrary layout box (a `BackgroundLayerConfig` piece), a
+ * fundamentally different contract from this component's "native/explicit pixel size, centered
+ * in a positioning wrapper" one, so they keep their own internal pixiSprite exactly as
+ * `ColorLayer` keeps its own internal pixiGraphics.
  *
- * `layout` sizes/positions an outer `Box` (matching DOM's `wrapperClassName`, e.g. catalog grid
- * items' `min-w-[32px] min-h-[32px] max-w-[32px] max-h-[32px]`) rather than the sprite itself -
- * applying `layout`'s min/max constraints straight to the sprite instead (as this used to do)
- * makes @pixi/layout stretch the sprite's texture to exactly fill them, distorting any icon
- * whose native size doesn't already match - the "icon is zoomed in" bug this fixes. The sprite
- * itself defaults to the texture's own size (the same intrinsic-sizing pattern NitroIcon.tsx
- * already uses) so @pixi/layout has no smaller layout box to stretch it into, unless `width`/
- * `height` are passed explicitly (e.g. a fixed-size icon button whose art has surrounding
- * padding baked into a larger source image) - `<img>` mirrors the same explicit-or-native sizing.
+ * `layout` sizes/positions an outer `Box` rather than the sprite/img itself - applying it
+ * directly to the sprite instead (as this used to do) makes @pixi/layout stretch the texture to
+ * fill it, distorting any icon whose native size doesn't already match. The sprite/img itself
+ * renders at `frame`'s size, an explicit `width`/`height`, or the resolved image's own native
+ * size, in that priority order, so @pixi/layout/CSS never has a smaller box to stretch it into
+ * unless a caller actually asks for one.
  */
-const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, width, height, eventMode, cursor, onPointerTap, layout }, ref) => {
-    const texture = useTextureFromUrl(src);
+const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
+    src, frame, width, height, tint, eventMode, cursor,
+    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    showLoadingPlaceholder, layout,
+}, ref) => {
+    const baseTexture = useTextureFromUrl(src);
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
-    const loadingTexture = useTextureFromUrl(!texture ? (loadingIconUrl || undefined) : undefined);
+    const loadingTexture = useTextureFromUrl(showLoadingPlaceholder && !frame && !baseTexture ? (loadingIconUrl || undefined) : undefined);
 
-    const resolvedTexture = texture ?? loadingTexture;
+    const resolvedBaseTexture = baseTexture ?? loadingTexture;
+
+    const croppedTexture = useMemo(() => {
+        if (!resolvedBaseTexture || !frame) return undefined;
+
+        return new Texture({
+            source: resolvedBaseTexture.source,
+            frame: new Rectangle(resolvedBaseTexture.frame.x + frame.x, resolvedBaseTexture.frame.y + frame.y, frame.width, frame.height),
+        });
+    }, [ resolvedBaseTexture, frame?.x, frame?.y, frame?.width, frame?.height ]);
+
+    const resolvedTexture = frame ? croppedTexture : resolvedBaseTexture;
 
     if (!resolvedTexture) return null;
 
@@ -56,8 +87,14 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, width, height, e
                 texture={resolvedTexture}
                 width={width ?? resolvedTexture.width}
                 height={height ?? resolvedTexture.height}
+                tint={tint}
                 eventMode={eventMode}
                 cursor={cursor}
+                onPointerOver={onPointerOver}
+                onPointerOut={onPointerOut}
+                onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
+                onPointerUpOutside={onPointerUpOutside}
                 onPointerTap={onPointerTap}
                 layout={{}}
             />
@@ -68,34 +105,85 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({ src, width, height, e
 ImagePixi.displayName = 'ImagePixi';
 
 /**
- * A plain `<img>`, centered in the same `Box` wrapper the Pixi branch uses (see the docblock
- * above for why). No Pixi asset-manager preload/placeholder-swap dance needed here - the
- * browser's own `<img>` loading already covers that, and `Box` alone is enough to reserve the
- * layout space while it loads. `width`/`height` are set as real attributes (not just CSS) so
- * the browser reserves the correct box before the image has actually loaded, same as Pixi's
- * sprite getting its size up front rather than after the texture resolves.
+ * A plain `<img>` (whole-image mode) or a `background-position`-cropped `<div>` (`frame` mode -
+ * the same technique `dom/spriteFrameDom.ts` uses, operating on an already-resolved `src`
+ * rather than a theme key). `width`/`height` are set as real attributes on the `<img>` (not
+ * just CSS) so the browser reserves the correct box before the image has actually loaded, same
+ * as Pixi's sprite getting its size up front rather than after the texture resolves. `tint` is
+ * an overlay `<div>` using the same mask+`mix-blend-mode:multiply` technique BubblePointer.tsx
+ * established, sized/positioned to match whichever of the two the base render is.
  */
-const ImageDom = forwardRef<PixiContainer, ImageProps>(({ src, width, height, eventMode, cursor, onPointerTap, layout }, ref) => (
-    <Box
-        ref={ref}
-        layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
-    >
-        {src && (
-            <img
-                src={src}
-                width={width}
-                height={height}
-                style={{
-                    display: 'block',
-                    imageRendering: 'pixelated',
-                    pointerEvents: eventMode === 'none' ? 'none' : undefined,
-                    cursor,
+const ImageDom = forwardRef<PixiContainer, ImageProps>(({
+    src, frame, width, height, tint, eventMode, cursor,
+    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap,
+    layout,
+}, ref) => {
+    if (!src) return null;
+
+    const resolvedWidth = frame?.width ?? width;
+    const resolvedHeight = frame?.height ?? height;
+
+    const sharedStyle: CSSProperties = {
+        cursor,
+        pointerEvents: eventMode === 'none' ? 'none' : undefined,
+    };
+    const sharedHandlers = {
+        onPointerEnter: onPointerOver as unknown as PointerEventHandler,
+        onPointerLeave: onPointerOut as unknown as PointerEventHandler,
+        onPointerDown: onPointerDown as unknown as PointerEventHandler,
+        onPointerUp: onPointerUp as unknown as PointerEventHandler,
+        onClick: onPointerTap as unknown as MouseEventHandler,
+    };
+
+    return (
+        <Box
+            ref={ref}
+            layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
+        >
+            {frame
+                ? (
+                        <div
+                            style={{
+                                ...sharedStyle,
+                                width: resolvedWidth,
+                                height: resolvedHeight,
+                                backgroundImage: `url(${src})`,
+                                backgroundPosition: `-${frame.x}px -${frame.y}px`,
+                                backgroundRepeat: 'no-repeat',
+                                imageRendering: 'pixelated',
+                            }}
+                            {...sharedHandlers}
+                        />
+                    )
+                : (
+                        <img
+                            src={src}
+                            width={resolvedWidth}
+                            height={resolvedHeight}
+                            style={{ ...sharedStyle, display: 'block', imageRendering: 'pixelated' }}
+                            {...sharedHandlers}
+                        />
+                    )}
+            {tint && (
+                <div style={{
+                    position: 'absolute', top: 0, left: 0,
+                    width: resolvedWidth ?? '100%',
+                    height: resolvedHeight ?? '100%',
+                    backgroundColor: tint,
+                    mixBlendMode: 'multiply',
+                    pointerEvents: 'none',
+                    WebkitMaskImage: `url(${src})`,
+                    maskImage: `url(${src})`,
+                    WebkitMaskPosition: frame ? `-${frame.x}px -${frame.y}px` : '0 0',
+                    maskPosition: frame ? `-${frame.x}px -${frame.y}px` : '0 0',
+                    WebkitMaskSize: frame ? 'none' : (resolvedWidth && resolvedHeight ? `${resolvedWidth}px ${resolvedHeight}px` : 'auto'),
+                    maskSize: frame ? 'none' : (resolvedWidth && resolvedHeight ? `${resolvedWidth}px ${resolvedHeight}px` : 'auto'),
                 }}
-                onClick={onPointerTap}
-            />
-        )}
-    </Box>
-));
+                />
+            )}
+        </Box>
+    );
+});
 
 ImageDom.displayName = 'ImageDom';
 
