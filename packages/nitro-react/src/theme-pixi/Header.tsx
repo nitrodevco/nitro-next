@@ -17,7 +17,6 @@ interface HeaderPadding {
 }
 
 type HeaderVariant = ThemeVariant & {
-    tintable?: boolean;
     minHeight: number;
     margin?: number;
     padding: HeaderPadding;
@@ -31,7 +30,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
     4: { layer: { kind: 'stretch', textureKey: 'header-3-default-src' }, minHeight: 20, padding: { left: 8, top: 1, right: 8, bottom: 1 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
     7: { minHeight: 33, padding: { left: 8, top: 4, right: 8, bottom: 4 }, textStyle: 'text-style-u-frame-title', textColor: '#000000' },
     100: { minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-il-frame-title', textColor: '#000000' },
-    200: { layer: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, tintable: false, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
+    200: { layer: { kind: 'nineSlice', textureKey: 'border-200-default-src', leftWidth: 3, topHeight: 3, rightWidth: 3, bottomHeight: 3 }, minHeight: 30, padding: { left: 0, top: 0, right: 0, bottom: 0 }, textStyle: 'text-style-u-frame-title', textColor: '#ffffff' },
 };
 
 export interface HeaderProps extends ThemeProps<HeaderVariant> {
@@ -45,7 +44,6 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
         const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
             cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor,
         });
-        const resolvedBackgroundTint = config.tintable === false ? undefined : resolvedTint;
 
         return (
             <Box
@@ -65,7 +63,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
             >
                 <BackgroundLayer
                     layer={resolvedLayer}
-                    tintColor={resolvedBackgroundTint}
+                    tintColor={resolvedTint}
                 />
                 <BackgroundLayer layer={resolvedOverlay} />
                 <Box layout={{
@@ -82,9 +80,9 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                 }}
                 >
                     <VariantCascadeProvider map={ownCascade}>
-                        <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                             {caption && (
-                                <Box layout={{ position: 'relative', paddingLeft: 8, paddingRight: 8 }}>
+                                <Box layout={{ position: 'relative', alignItems: 'center', paddingLeft: 6, paddingRight: 6, height: '100%' }}>
                                     <ColorLayer color={resolvedTint} />
                                     <Text
                                         text={caption}
@@ -94,7 +92,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                                 </Box>
                             )}
                         </Box>
-                        <Box layout={{ position: 'absolute', right: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box layout={{ position: 'absolute', right: 0, paddingLeft: 2, flexDirection: 'row', alignItems: 'center' }}>
                             <ColorLayer color={resolvedTint} />
                             <CloseButton onClose={onClose} />
                         </Box>

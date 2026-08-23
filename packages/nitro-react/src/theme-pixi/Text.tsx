@@ -2,6 +2,7 @@ import { CanvasTextMetrics, TextStyleOptions } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { getRenderMode } from '#base/theme-core';
+import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle } from './dom/boxStyle';
@@ -49,7 +50,6 @@ export type TextConfig = {
  */
 const TextPixi = ({ text, textStyle, textOptions, layout, ...props }: TextConfig) => {
     const style = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
-
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
 
     if (!text?.length || !metrics) return null;
@@ -58,6 +58,7 @@ const TextPixi = ({ text, textStyle, textOptions, layout, ...props }: TextConfig
         <pixiText
             text={text}
             style={style}
+            resolution={GetPixelRatio()}
             layout={{
                 width: Math.ceil(metrics.width),
                 height: Math.ceil(metrics.height),

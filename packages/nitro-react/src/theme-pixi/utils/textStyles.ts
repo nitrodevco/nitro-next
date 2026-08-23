@@ -11,7 +11,7 @@ const TEXT_DROP_SHADOW: TextDropShadow = {
 /** Exported (not module-private) so `theme-pixi/dom/textStyleDom.ts` can translate the same
  *  font/size/color/drop-shadow data to CSS instead of duplicating this table. */
 export const TEXT_STYLES = {
-    'text-style-regular': { fontFamily: 'Goldfish', fontSize: 10.88, dropShadow: TEXT_DROP_SHADOW },
+    'text-style-regular': { fontFamily: 'Goldfish', fontSize: 10 },
     'text-style-headline-big': { fontFamily: 'UbuntuBold', fontSize: 18 },
     'text-style-headline-small': { fontFamily: 'UbuntuBold', fontSize: 14 },
     'text-style-u-regular': { fontFamily: 'Ubuntu', fontSize: 12 },
@@ -21,16 +21,16 @@ export const TEXT_STYLES = {
     'text-style-u-italic-small': { fontFamily: 'UbuntuItalics', fontSize: 10 },
     'text-style-u-tool-tip': { fontFamily: 'Ubuntu', fontSize: 11, color: '#ffffff' },
     'text-style-u-frame-title': { fontFamily: 'UbuntuBold', fontSize: 12 },
-    'text-style-button-regular': { fontFamily: 'Goldfish', fontSize: 9, dropShadow: TEXT_DROP_SHADOW },
-    'text-style-button-bold': { fontFamily: 'GoldfishBold', fontSize: 9, dropShadow: TEXT_DROP_SHADOW },
+    'text-style-button-regular': { fontFamily: 'Goldfish', fontSize: 9 },
+    'text-style-button-bold': { fontFamily: 'GoldfishBold', fontSize: 9 },
     'text-style-button-shiny-regular': { fontFamily: 'Ubuntu', fontSize: 12 },
     'text-style-button-shiny-bold': { fontFamily: 'UbuntuBold', fontSize: 12 },
     'text-style-il-regular': { fontFamily: 'Ubuntu', fontSize: 11 },
     'text-style-il-button': { fontFamily: 'UbuntuBold', fontSize: 10 },
     'text-style-id-button': { fontFamily: 'UbuntuBold', fontSize: 10, color: '#ffffff' },
-    'text-style-button-tab': { fontFamily: 'Goldfish', fontSize: 9, dropShadow: TEXT_DROP_SHADOW },
+    'text-style-button-tab': { fontFamily: 'Goldfish', fontSize: 9 },
     'text-style-il-frame-title': { fontFamily: 'UbuntuBold', fontSize: 10 },
-    'text-style-frame-title': { fontFamily: 'GoldfishBold', fontSize: 9, color: '#ffffff', dropShadow: TEXT_DROP_SHADOW },
+    'text-style-frame-title': { fontFamily: 'GoldfishBold', fontSize: 9, color: '#ffffff' },
 } as const satisfies Record<string, TextStyleOptions & { color?: string }>;
 
 export type TextStyleKey = keyof typeof TEXT_STYLES;

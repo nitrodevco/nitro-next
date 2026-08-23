@@ -42,14 +42,6 @@ export const PixiApplicationRoot = ({ onReady, children }: PixiApplicationRootPr
             className="fixed inset-0 z-0 size-full"
             onInit={handleInit}
             resizeTo={window}
-            // `pixiText`'s own resolution isn't set anywhere (Text.tsx), so it stays in Pixi's
-            // default auto mode and follows this renderer's `resolution` (confirmed in
-            // pixi.js's CanvasTextPipe - `text._resolution = text._autoResolution ?
-            // this._renderer.resolution : text.resolution`) - a hardcoded `resolution={1}` here
-            // rasterizes every glyph's canvas texture at 1x, then the browser has to upscale
-            // that low-res bitmap to fill the CSS box on any HiDPI/Retina screen, reading as
-            // blurry text. `GetPixelRatio()` matches what `NitroDomView.tsx`'s own renderer
-            // already uses for the DOM-mode canvas, for the same reason.
             resolution={GetPixelRatio()}
             autoDensity={true}
             backgroundAlpha={0}

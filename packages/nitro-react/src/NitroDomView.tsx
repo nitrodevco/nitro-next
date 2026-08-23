@@ -27,7 +27,7 @@ export const NitroDomView = () => {
     }, [ isEngineReady, connect ]);
 
     useEffect(() => {
-        const resize = (event: UIEvent) => GetRenderer().resize(window.innerWidth, window.innerHeight);
+        const resize = (event: UIEvent) => GetRenderer().resize(window.innerWidth, window.innerHeight, GetPixelRatio());
 
         window.addEventListener('resize', resize);
 
