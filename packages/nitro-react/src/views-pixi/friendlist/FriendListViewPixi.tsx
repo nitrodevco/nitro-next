@@ -54,7 +54,7 @@ export const FriendListViewPixi = () => {
                 <pixiGraphics
                     eventMode="none"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#000000'); }}
+                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#000000'); }}
                 />
                 <FriendListFriendsPixi value="friends" />
                 <FriendListRequestsPixi value="requests" />

@@ -20,7 +20,7 @@ export const ColorLayer = ({ color, layout }: ColorLayerProps) => {
         <pixiGraphics
             eventMode="none"
             layout={layout ?? FillLayout}
-            draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill(color); }}
+            draw={(g) => { g.clear().rect(0, 0, 1, 1).fill(color); }}
         />
     );
 };

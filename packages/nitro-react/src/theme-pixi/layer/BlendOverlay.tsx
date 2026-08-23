@@ -49,7 +49,7 @@ export const BlendOverlay = ({ textureKey, leftWidth, topHeight, rightWidth, bot
                     alpha={blend}
                     eventMode="none"
                     layout={layout ?? FillLayout}
-                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill(0xFFFFFF); }}
+                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill(0xFFFFFF); }}
                 />
             )}
         </>

@@ -61,13 +61,13 @@ export const ToolbarViewPixi = () => {
                 <pixiGraphics
                     eventMode="none"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                    draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('rgba(0, 0, 0, 0.3)'); }}
+                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('rgba(0, 0, 0, 0.3)'); }}
                 />
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingRight: ICON_SPACING }}>
                     <pixiGraphics
                         eventMode="none"
                         layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
+                        draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#525252'); }}
                     />
                     {collapseLeftTexture && (
                         <pixiSprite
@@ -154,7 +154,7 @@ export const ToolbarViewPixi = () => {
                                     ref={setAvatarMaskNode}
                                     eventMode="none"
                                     layout={{ position: 'absolute', top: 0, left: 0 }}
-                                    draw={(g) => { g.clear(); g.circle(17, 17, 17).fill(0xFFFFFF); }}
+                                    draw={(g) => { g.clear().circle(17, 17, 17).fill(0xFFFFFF); }}
                                 />
                                 <pixiSprite
                                     texture={avatarTexture}
@@ -182,7 +182,7 @@ export const ToolbarViewPixi = () => {
                     <pixiGraphics
                         eventMode="none"
                         layout={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 1, height: '100%' }}
-                        draw={(g) => { g.clear(); g.rect(0, 0, 1, 1).fill('#525252'); }}
+                        draw={(g) => { g.clear().rect(0, 0, 1, 1).fill('#525252'); }}
                     />
                     <Box
                         eventMode="static"
