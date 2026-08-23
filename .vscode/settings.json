@@ -13,8 +13,12 @@
         "strings": true
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // ESLint's fixAll (via codeActionsOnSave below) fully owns formatting for these languages
+    // now (see @stylistic rules in eslint.config.js) - a second format-on-save pass here would
+    // race against it (e.g. falling back to Prettier, which strips array-bracket spacing back
+    // out right after ESLint adds it), so formatting is disabled and fixAll is the only pass.
     "[javascript,javascriptreact,typescript,typescriptreact]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.formatOnSave": false,
         "js/ts.preferences.importModuleSpecifier": "shortest"
     },
     "[json]": {
