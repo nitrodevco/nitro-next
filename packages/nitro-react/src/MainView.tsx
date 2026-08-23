@@ -1,18 +1,18 @@
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 import { InfoRetrieveComposer } from '@nitrodevco/nitro-packets';
-import { useApplication } from '@pixi/react';
+import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
 import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
+import { getRenderMode } from './theme-core';
 import { HotelView } from './views-pixi/hotel-view/HotelView';
 import { ActivityPointsViewPixi } from './views-pixi/purse/ActivityPointsViewPixi';
 import { PurseViewPixi } from './views-pixi/purse/PurseViewPixi';
 import { ToolbarViewPixi } from './views-pixi/toolbar/ToolbarViewPixi';
 
 export const MainView = () => {
-    const { app } = useApplication();
     const [ isReady, setIsReady ] = useState(false);
     const { setReady, send } = useWebSocketContext();
     const landingViewVisible = useIsLandingViewVisible();
@@ -23,10 +23,7 @@ export const MainView = () => {
     useWalletHandler();
 
     useEffect(() => {
-        if (!app) return;
-
-        // eslint-disable-next-line react-hooks/immutability
-        app.ticker.maxFPS = maxFPS;
+        GetTicker().maxFPS = maxFPS;
     }, [ maxFPS ]);
 
     useEffect(() => {
@@ -47,6 +44,34 @@ export const MainView = () => {
     }, []);
 
     if (!isReady) return null;
+
+    if (getRenderMode() === 'dom') {
+        return (
+            <>
+                <RoomWrapper />
+                {landingViewVisible && <HotelView />}
+                <div
+                    id="ui-container"
+                    className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full"
+                >
+                    <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
+                        <PurseViewPixi />
+                        <div className="flex flex-col items-end w-48">
+                            <ActivityPointsViewPixi />
+                        </div>
+                    </div>
+                    <AvatarEditorComponent />
+                    <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+                    <InventoryComponent />
+                    <FriendListWrapper />
+                    <MessengerComponent />
+                    <NavigatorWrapper />
+                    <WalletComponent />
+                    <ToolbarViewPixi />
+                </div>
+            </>
+        );
+    }
 
     return (
         <>

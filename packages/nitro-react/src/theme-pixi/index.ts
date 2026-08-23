@@ -14,7 +14,6 @@ export * from './ButtonGroupRight';
 export * from './ButtonThick';
 export * from './CheckBox';
 export * from './CloseButton';
-export * from './ContainerButton';
 export * from './ContentArea';
 export * from './dom/BackgroundLayerDom';
 export * from './dom/boxStyle';
