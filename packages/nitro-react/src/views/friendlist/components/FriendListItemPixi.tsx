@@ -74,7 +74,7 @@ export const FriendListItemPixi = ({ user, selected = false, hideAvatarElement =
                 layout={{ flex: 1 }}
                 text={user.name}
                 textStyle="text-style-regular"
-                textOptions={{ fontSize: 10.88, fill: '#000000' }}
+                textOptions={{ fill: '#000000' }}
             />
             <Box layout={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'space-around', flexShrink: 0, minWidth: 45, maxWidth: 52 }}>
                 {children}

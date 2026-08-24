@@ -19,7 +19,7 @@ export const InfoBubbleNameView = ({ nameData }: InfoBubbleNameViewProps) => {
             <ThemeText
                 text={nameData.name}
                 textStyle="text-style-u-regular"
-                textOptions={{ fontSize: 11, fill: '#ffffff' }}
+                textOptions={{ fill: '#ffffff' }}
             />
         </Bubble>
     );

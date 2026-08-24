@@ -24,7 +24,7 @@ export const AvatarEditorView = () => {
                 <ThemeText
                     text={name}
                     textStyle="text-style-headline-big"
-                    textOptions={{ fill: '#ffffff', fontSize: 28 }}
+                    textOptions={{ fill: '#ffffff' }}
                 />
             </Box>
             <TabContext>

@@ -107,7 +107,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                     layout={{ position: 'absolute', top: 116, left: 0, width: 100, height: 30 }}
                     text={interpolate(room.name)}
                     textStyle="text-style-u-bold"
-                    textOptions={{ fontSize: 10, fill: '#000000', wordWrap: true, wordWrapWidth: 94, breakWords: true }}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 94, breakWords: true }}
                 />
             </Box>
         );

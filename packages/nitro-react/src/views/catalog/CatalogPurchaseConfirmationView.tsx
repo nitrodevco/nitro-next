@@ -81,7 +81,7 @@ export const CatalogPurchaseConfirmationView = () => {
                             <ThemeText
                                 text={t('catalog.purchase.confirmation.dialog.cost')}
                                 textStyle="text-style-u-regular"
-                                textOptions={{ fontSize: 14, fill: '#000000' }}
+                                textOptions={{ fill: '#000000' }}
                             />
                             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                                 {(offer.pricingType === CatalogPricingTypeEnum.Credits || offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints) && (

@@ -58,7 +58,7 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                         layout={{ position: 'absolute', top: 5, left: 20, width: 320 }}
                         text={interpolate(title)}
                         textStyle="text-style-regular"
-                        textOptions={{ fontSize: 14, fill: '#0F557B' }}
+                        textOptions={{ fill: '#0F557B' }}
                     />
                 </Box>
                 <Box layout={{ position: 'absolute', top: 5, right: 14, flexDirection: 'row', alignItems: 'flex-start', gap: 5 }}>

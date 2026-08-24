@@ -56,7 +56,7 @@ export const ToolbarMenu: ForwardRefExoticComponent<ToolbarMenuProps & RefAttrib
                         <ThemeText
                             text={label}
                             textStyle="text-style-regular"
-                            textOptions={{ fontSize: 9.6, fill: '#ffffff' }}
+                            textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>
                 ))}

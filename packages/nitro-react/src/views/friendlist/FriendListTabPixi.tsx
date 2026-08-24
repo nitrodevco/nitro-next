@@ -47,7 +47,7 @@ export const FriendListTabPixi = ({ value, caption, tooltip = '', gradientColors
                             <ThemeText
                                 text={t(caption)}
                                 textStyle="text-style-regular"
-                                textOptions={{ fontSize: 10.88, fill: darkHeader ? '#ffffff' : '#000000' }}
+                                textOptions={{ fill: darkHeader ? '#ffffff' : '#000000' }}
                             />
                             <NitroIcon
                                 icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'}

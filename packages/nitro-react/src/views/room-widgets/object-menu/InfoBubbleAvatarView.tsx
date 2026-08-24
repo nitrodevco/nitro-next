@@ -212,7 +212,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                         <ThemeText
                             text={userData.name}
                             textStyle="text-style-u-bold"
-                            textOptions={{ fontSize: 11, fill: '#ffffff' }}
+                            textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>

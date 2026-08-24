@@ -17,8 +17,8 @@ export const FriendListGroupPixi = ({ value, caption, children, showArrows = tru
                 <>
                     <ThemeText
                         text={caption}
-                        textStyle="text-style-regular"
-                        textOptions={{ fontSize: 10.88, fill: '#000000', fontWeight: 'bold' }}
+                        textStyle="text-style-button-bold"
+                        textOptions={{ fill: '#000000' }}
                     />
                     {showArrows && (
                         <NitroIcon
