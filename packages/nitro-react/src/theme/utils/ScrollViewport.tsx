@@ -4,7 +4,7 @@ import { Container as PixiContainer, FederatedWheelEvent, Graphics as PixiGraphi
 import { ReactNode, useState } from 'react';
 
 import { BoxLayout } from '../Box';
-import { ScrollOrientation } from '../hooks/useScrollController';
+import { ScrollOrientation } from '../scroll';
 
 export interface ScrollViewportProps {
     viewportRef: (node: PixiContainer | null) => void;
