@@ -1,21 +1,43 @@
-import { Container as PixiContainer } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
 import { ReactNode, Ref } from 'react';
 
 import { GetPixelRatio } from '#base/utils';
 
 import { Box } from './Box';
-import { VariantCascadeProvider } from './cascade';
+import { VariantCascadeMap, VariantCascadeProvider } from './cascade';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
-import { BackgroundLayer, Composite, NineSlice } from './layer';
+import { BackgroundLayer, BackgroundLayerConfig, Composite, NineSlice } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants, ThemeViewOverride } from './utils';
+
+/**
+ * What a variant's `view` override receives - everything Frame's own default render (below)
+ * already has in scope once theme resolution and drag/resize wiring are done, so the override
+ * can reuse Header/ContentArea/Scaler/BackgroundLayer itself (just recomposed, or with extra
+ * nodes alongside them) instead of rebuilding Frame's chrome from scratch. Deliberately doesn't
+ * include the drag/resize/shadow wiring the outer Box already applies - `view` replaces what's
+ * *inside* the frame, not the frame's own positioning behavior.
+ */
+export interface FrameViewProps {
+    resolvedLayer: BackgroundLayerConfig | undefined;
+    resolvedOverlay: BackgroundLayerConfig | undefined;
+    resolvedTint: string | undefined;
+    ownCascade: VariantCascadeMap | undefined;
+    caption?: string;
+    onClose?: () => void;
+    onHeaderPointerDown: (event: FederatedPointerEvent) => void;
+    resizeDirection: ScalerDirection;
+    onScalerPointerDown: (event: FederatedPointerEvent) => void;
+    children?: ReactNode;
+}
 
 type FrameVariant = ThemeVariant & {
     minWidth: number;
     minHeight: number;
+    view?: ThemeViewOverride<FrameViewProps>;
 };
 
 const BLUE_FRAME_SHINE = Composite([
@@ -109,26 +131,34 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            <BackgroundLayer
-                layer={resolvedLayer}
-                tintColor={resolvedTint}
-            />
-            <BackgroundLayer layer={resolvedOverlay} />
-            <VariantCascadeProvider map={ownCascade}>
-                <Header
-                    caption={caption}
-                    tintColor={resolvedTint}
-                    onClose={onClose}
-                    onPointerDown={onHeaderPointerDown}
-                />
-                <ContentArea>
-                    {children}
-                </ContentArea>
-                <Scaler
-                    direction={resizeDirection}
-                    onPointerDown={onScalerPointerDown}
-                />
-            </VariantCascadeProvider>
+            {config.view
+                ? config.view({
+                        resolvedLayer, resolvedOverlay, resolvedTint, ownCascade, caption, onClose, onHeaderPointerDown, resizeDirection, onScalerPointerDown, children,
+                    })
+                : (
+                        <>
+                            <BackgroundLayer
+                                layer={resolvedLayer}
+                                tintColor={resolvedTint}
+                            />
+                            <BackgroundLayer layer={resolvedOverlay} />
+                            <VariantCascadeProvider map={ownCascade}>
+                                <Header
+                                    caption={caption}
+                                    tintColor={resolvedTint}
+                                    onClose={onClose}
+                                    onPointerDown={onHeaderPointerDown}
+                                />
+                                <ContentArea>
+                                    {children}
+                                </ContentArea>
+                                <Scaler
+                                    direction={resizeDirection}
+                                    onPointerDown={onScalerPointerDown}
+                                />
+                            </VariantCascadeProvider>
+                        </>
+                    )}
         </Box>
     );
 };
