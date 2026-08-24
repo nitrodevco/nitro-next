@@ -43,8 +43,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     <Box layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}>
                         <ThemeText
                             text={furniData.name}
-                            textStyle="text-style-regular"
-                            textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
+                            textStyle="text-style-button-bold"
                         />
                     </Box>
                     <CloseButton
@@ -68,14 +67,12 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                 <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
                     <ThemeText
                         text={t('furni.owner', '', { name: furniData.ownerName })}
-                        textStyle="text-style-regular"
-                        textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
+                        textStyle="text-style-button-bold"
                     />
                     {canSeeFurniId && (
                         <ThemeText
                             text={`ID: ${furniData.id}`}
-                            textStyle="text-style-regular"
-                            textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
+                            textStyle="text-style-button-bold"
                         />
                     )}
                 </Box>

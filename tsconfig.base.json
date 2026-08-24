@@ -15,6 +15,7 @@
         "esModuleInterop": true,
         "allowJs": true,
         "composite": true,
+        "outDir": "dist",
         "noImplicitOverride": true,
         "types": [
             "node"

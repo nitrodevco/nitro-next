@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useConfigValue, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
-import { Border, Box, CloseButton, ColorLayer, NitroIcon, ThemeText, TextInput, useAvatarImageTexture } from '#base/theme';
+import { Border, Box, CloseButton, ColorLayer, NitroIcon, TextInput, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 export interface InfostandUserViewProps {
     objectData: ISimpleRoomObjectData;
@@ -52,8 +52,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         />
                         <ThemeText
                             text={userData.name}
-                            textStyle="text-style-regular"
-                            textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
+                            textStyle="text-style-button-bold"
                         />
                     </Box>
                     <CloseButton
@@ -165,8 +164,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                 <Box layout={{ flexDirection: 'row', width: '100%' }}>
                     <ThemeText
                         text={`${t('infostand.text.achievement_score')}\n${userData.achievementScore}`}
-                        textStyle="text-style-regular"
-                        textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#ffffff' }}
+                        textStyle="text-style-frame-title"
                     />
                 </Box>
             </Border>

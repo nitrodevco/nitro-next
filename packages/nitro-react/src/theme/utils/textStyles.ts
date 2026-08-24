@@ -26,6 +26,7 @@ export const TEXT_STYLES = {
     'text-style-regular': { fontFamily: 'Goldfish', fontSize: 10 },
     'text-style-headline-big': { fontFamily: 'UbuntuBold', fontSize: 18, habboKey: 'u_headline_big' },
     'text-style-headline-small': { fontFamily: 'UbuntuBold', fontSize: 14, habboKey: 'u_headline_small' },
+    'text-style-headline-medium': { fontFamily: 'UbuntuBold', fontSize: 16, habboKey: 'u_headline_medium' },
     'text-style-u-regular': { fontFamily: 'Ubuntu', fontSize: 12, habboKey: 'u_regular' },
     'text-style-u-small': { fontFamily: 'Ubuntu', fontSize: 10, habboKey: 'u_small' },
     'text-style-u-bold': { fontFamily: 'UbuntuBold', fontSize: 12, habboKey: 'u_bold' },
