@@ -8,6 +8,13 @@ import { useEffect, useState } from 'react';
  * lookup or a word-wrap decision can never disagree between the two targets.
  */
 
+/** `x`/`y`/`width`/`height` describe the glyph's crop within the atlas PNG at its
+ *  *physical* (baked) resolution - see `atlasScale` on `ManifestFontEntry`/`BitmapFont`.
+ *  `xOffset`/`yOffset`/`xAdvance` are logical-pixel placement metrics, already divided
+ *  back down by `atlasScale` (by `build-text-atlas.ts`) - every render-agnostic consumer
+ *  here (`layoutBitmapText`) and `BitmapTextDom` work in these logical units directly;
+ *  only `BitmapTextPixi` needs to re-expand them, to match how Pixi's own bitmap-text
+ *  renderer scales a font's physical data down by a single uniform factor. */
 export interface BitmapGlyph {
     x: number;
     y: number;
@@ -25,6 +32,8 @@ interface ManifestFontEntry {
     italic: boolean;
     lineHeight: number;
     baseLineOffset: number;
+    /** How many physical atlas pixels back one logical pixel (see `BitmapGlyph`'s docblock). */
+    atlasScale: number;
     defaultTint: string | null;
     underline: boolean;
     file: string;

@@ -42,6 +42,25 @@ const FONT_FILES: Record<HabboTextStyleDef['fontFamily'], { file: string; bold: 
     ],
 };
 
+/**
+ * Glyphs are rasterized at `ATLAS_SCALE`x the nominal font size and packed into the
+ * atlas at that physical resolution, then displayed back down at the nominal
+ * (logical) size at runtime - the same reason `ThemeText.tsx`'s native fallback
+ * rasterizes Pixi's canvas-based `pixiText` at `GetPixelRatio()` instead of 1x:
+ * baking at a fixed 1x and letting a retina display (`devicePixelRatio: 2`, the
+ * common case) stretch it up loses real antialiasing detail and looks soft/blocky
+ * compared to Flash's actual output. 2x covers standard retina exactly (no
+ * resampling at all when the runtime's pixel ratio also happens to be 2) and
+ * downsamples cleanly on 1x displays - the metrics this script writes to the
+ * manifest (`xOffset`/`yOffset`/`xAdvance`/`lineHeight`/`baseLineOffset`) are
+ * divided back down to logical units so every other consumer (`layoutBitmapText`,
+ * `BitmapTextDom`) keeps working in logical pixels unchanged; only the atlas PNG
+ * itself, and the `width`/`height` crop rect naming its region, stay physical -
+ * `BitmapTextPixi.tsx` is the one place that re-expands the logical metrics back
+ * to physical units for Pixi's own (physical-then-uniformly-scaled) renderer.
+ */
+const ATLAS_SCALE = 2;
+
 const range = (start: number, end: number): number[] => {
     const out: number[] = [];
     for (let i = start; i <= end; i++) out.push(i);
@@ -83,7 +102,9 @@ const parseEtching = (argb: string, position: HabboTextStyleDef['etchingPosition
     alpha: parseInt(argb.slice(1, 3), 16) / 255,
     color: parseInt(argb.slice(3), 16),
     x: 0,
-    y: position === 'bottom' ? 1 : -1,
+    // A physical-pixel displacement, like everything else rendered at ATLAS_SCALE - scaled
+    // up so it still reads as a 1-logical-pixel offset once the atlas is displayed back down.
+    y: (position === 'bottom' ? 1 : -1) * ATLAS_SCALE,
 });
 
 /** Renders one glyph in isolation (not as part of a shared string) so neighboring
@@ -110,7 +131,7 @@ const renderGlyph = (style: object, char: string): GlyphPixels => {
         }
     }
 
-    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance, pixels: null };
+    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance: xAdvance / ATLAS_SCALE, pixels: null };
 
     const w = maxX - minX + 1;
     const h = maxY - minY + 1;
@@ -122,7 +143,9 @@ const renderGlyph = (style: object, char: string): GlyphPixels => {
         pixels.set(buffer.data.subarray(srcStart, srcStart + w * 4), y * w * 4);
     }
 
-    return { char, w, h, xOffset: minX - originX, yOffset: minY - originY, xAdvance, pixels };
+    // w/h (the atlas crop) stay physical; xOffset/yOffset/xAdvance are placement
+    // metrics other logical-pixel consumers read, so they're brought back down here.
+    return { char, w, h, xOffset: (minX - originX) / ATLAS_SCALE, yOffset: (minY - originY) / ATLAS_SCALE, xAdvance: xAdvance / ATLAS_SCALE, pixels };
 };
 
 const pack = (glyphs: GlyphPixels[]): { placed: PackedGlyph[]; width: number; height: number } => {
@@ -172,7 +195,7 @@ for (const [ key, def ] of Object.entries(HABBO_TEXT_STYLES)) {
 
     const style = truffle.resolveStyle({
         fontFamily: def.fontFamily,
-        fontSize: def.fontSize,
+        fontSize: def.fontSize * ATLAS_SCALE,
         bold: !!def.bold,
         italic: !!def.italic,
         kerning: !!def.kerning,
@@ -197,13 +220,17 @@ for (const [ key, def ] of Object.entries(HABBO_TEXT_STYLES)) {
         chars[g.char] = { x: g.x, y: g.y, width: g.w, height: g.h, xOffset: g.xOffset, yOffset: g.yOffset, xAdvance: g.xAdvance };
     }
 
+    // metrics.height/.ascent are physical (rendered at ATLAS_SCALE); back to logical
+    // for lineHeight/baseLineOffset, matching xOffset/yOffset/xAdvance above.
+
     manifestFonts[key] = {
         fontFamily: def.fontFamily,
         fontSize: def.fontSize,
         bold: !!def.bold,
         italic: !!def.italic,
-        lineHeight: metrics.height,
-        baseLineOffset: metrics.ascent,
+        lineHeight: metrics.height / ATLAS_SCALE,
+        baseLineOffset: metrics.ascent / ATLAS_SCALE,
+        atlasScale: ATLAS_SCALE,
         defaultTint: def.color ?? null,
         underline: !!def.underline,
         file,

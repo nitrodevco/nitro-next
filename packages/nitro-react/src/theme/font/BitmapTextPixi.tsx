@@ -22,6 +22,18 @@ const ensureInstalled = (font: BitmapFont): string => {
 
     if (installedFontKeys.has(cacheKey)) return cacheKey;
 
+    // Pixi's bitmap-text renderer draws each glyph's texture at its stored width/height
+    // (physical, unscaled here - see `textAtlas.ts`'s `BitmapGlyph` docblock on
+    // `atlasScale`) positioned by `baseLineOffset + yOffset`, all inside one uniform
+    // `context.scale(style.fontSize / data.fontSize, ...)` transform - so xOffset/
+    // yOffset/xAdvance/lineHeight/baseLineOffset must share the SAME (physical) unit
+    // space as width/height for that single scale factor to shrink everything back to
+    // the right logical size together. `textAtlas.ts`'s manifest keeps those logical
+    // (what `layoutBitmapText`/`BitmapTextDom` want), so this is the one place they get
+    // re-expanded to physical - by setting `data.fontSize` to the atlas's own physical
+    // size (`font.fontSize * font.atlasScale`) while `style.fontSize` below stays
+    // logical, Pixi's own `scale = style.fontSize / data.fontSize` comes out to
+    // `1 / atlasScale`, exactly undoing the expansion uniformly.
     const chars: Record<string, {
         id: number; page: number; letter: string; kerning: Record<string, number>;
         x: number; y: number; width: number; height: number; xOffset: number; yOffset: number; xAdvance: number;
@@ -30,15 +42,14 @@ const ensureInstalled = (font: BitmapFont): string => {
     for (const [ ch, g ] of Object.entries(font.chars)) {
         chars[ch] = {
             id: ch.codePointAt(0) ?? 0, page: 0, letter: ch, kerning: {},
-            x: g.x, y: g.y, width: g.width, height: g.height, xOffset: g.xOffset,
+            x: g.x, y: g.y, width: g.width, height: g.height,
+            xOffset: g.xOffset * font.atlasScale,
             // Pixi's own renderer positions each glyph at `baseLineOffset + yOffset` (see
             // AbstractBitmapTextPipe._updateContext, `currentY = bitmapFont.baseLineOffset`
-            // for the first line) - i.e. it expects yOffset relative to the *baseline*.
-            // `textAtlas.ts`'s manifest stores yOffset relative to the *line top* instead
-            // (what `BitmapTextDom`'s canvas blit already uses correctly), so this is the
-            // one place that gets converted to Pixi's convention.
-            yOffset: g.yOffset - font.baseLineOffset,
-            xAdvance: g.xAdvance,
+            // for the first line) - i.e. it expects yOffset relative to the *baseline*,
+            // unlike the manifest's line-top-relative convention - converted here too.
+            yOffset: (g.yOffset - font.baseLineOffset) * font.atlasScale,
+            xAdvance: g.xAdvance * font.atlasScale,
         };
     }
 
@@ -46,9 +57,9 @@ const ensureInstalled = (font: BitmapFont): string => {
         data: {
             pages: [ { id: 0, file: font.file } ],
             chars,
-            fontSize: font.fontSize,
-            lineHeight: font.lineHeight,
-            baseLineOffset: font.baseLineOffset,
+            fontSize: font.fontSize * font.atlasScale,
+            lineHeight: font.lineHeight * font.atlasScale,
+            baseLineOffset: font.baseLineOffset * font.atlasScale,
             fontFamily: cacheKey,
             distanceField: { type: 'none', range: 0 },
         },

@@ -26,6 +26,10 @@ export interface BitmapTextDomProps {
     breakWords?: boolean;
 }
 
+/** Source rect (`glyph.x/y/width/height`) is physical - the atlas is baked at
+ *  `font.atlasScale`x for retina crispness (see `build-text-atlas.ts`'s docblock on
+ *  `ATLAS_SCALE`); the destination size divides that back down to logical pixels,
+ *  matching `xOffset`/`yOffset`/`xAdvance`/`lineHeight`, which are already logical. */
 const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { text: string }[]): void => {
     let y = 0;
 
@@ -36,7 +40,17 @@ const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { tex
             const glyph = font.chars[ch];
 
             if (glyph && glyph.width > 0 && glyph.height > 0) {
-                ctx.drawImage(font.image, glyph.x, glyph.y, glyph.width, glyph.height, x + glyph.xOffset, y + glyph.yOffset, glyph.width, glyph.height);
+                ctx.drawImage(
+                    font.image,
+                    glyph.x,
+                    glyph.y,
+                    glyph.width,
+                    glyph.height,
+                    x + glyph.xOffset,
+                    y + glyph.yOffset,
+                    glyph.width / font.atlasScale,
+                    glyph.height / font.atlasScale,
+                );
             }
 
             x += glyph?.xAdvance ?? font.chars[' ']?.xAdvance ?? 0;
@@ -56,22 +70,27 @@ const tint = (ctx: CanvasRenderingContext2D, color: string, width: number, heigh
     ctx.globalCompositeOperation = 'source-over';
 };
 
-/** Renders the glyph run onto its own logical-size (not device-pixel) canvas and tints
- *  it - used once for a plain draw, and twice (shadow color/alpha, then real color) when
- *  a drop shadow is requested, since two differently-tinted passes can't share one target
- *  without the second `source-in` fill wiping out the first pass's pixels. */
-const renderTintedPass = (font: BitmapFont, lines: { text: string }[], width: number, height: number, color: string): HTMLCanvasElement => {
+/** Renders the glyph run onto its own device-pixel-resolution canvas and tints it -
+ *  used once for a plain draw, and twice (shadow color/alpha, then real color) when a
+ *  drop shadow is requested, since two differently-tinted passes can't share one target
+ *  without the second `source-in` fill wiping out the first pass's pixels. Sized and
+ *  scaled by `dpr` (not left at logical size) so the atlas's own physical resolution
+ *  survives all the way to the final canvas - drawing this pass onto a plain
+ *  logical-size intermediate first, then upscaling *that* to device pixels on
+ *  composite, would throw the retina baking away in this exact step. */
+const renderTintedPass = (font: BitmapFont, lines: { text: string }[], width: number, height: number, dpr: number, color: string): HTMLCanvasElement => {
     const canvas = document.createElement('canvas');
 
-    canvas.width = Math.max(1, Math.ceil(width));
-    canvas.height = Math.max(1, Math.ceil(height));
+    canvas.width = Math.max(1, Math.ceil(width * dpr));
+    canvas.height = Math.max(1, Math.ceil(height * dpr));
 
     const ctx = canvas.getContext('2d');
 
     if (ctx) {
         ctx.imageSmoothingEnabled = false;
+        ctx.scale(dpr, dpr);
         drawLines(ctx, font, lines);
-        tint(ctx, color, canvas.width, canvas.height);
+        tint(ctx, color, width, height);
     }
 
     return canvas;
@@ -105,27 +124,30 @@ export const BitmapTextDom = ({ font, text, color, dropShadow, layout, wordWrap,
 
         if (!ctx) return;
 
+        // Everything below composites in device-pixel space directly (no ctx transform) -
+        // renderTintedPass's own canvases are already device-pixel resolution, so a 1:1
+        // (or, for the shadow offset, dpr-scaled) drawImage here is a straight copy, not
+        // a resample - that's what keeps the atlas's retina baking intact end to end.
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(dpr, dpr);
 
         if (dropShadow) {
-            const shadowPass = renderTintedPass(font, lines, w, h, new Color(dropShadow.color).toHex());
-            const dx = Math.cos(dropShadow.angle) * dropShadow.distance;
-            const dy = Math.sin(dropShadow.angle) * dropShadow.distance;
+            const shadowPass = renderTintedPass(font, lines, w, h, dpr, new Color(dropShadow.color).toHex());
+            const dx = Math.cos(dropShadow.angle) * dropShadow.distance * dpr;
+            const dy = Math.sin(dropShadow.angle) * dropShadow.distance * dpr;
 
             ctx.globalAlpha = dropShadow.alpha;
             ctx.drawImage(shadowPass, dx, dy);
             ctx.globalAlpha = 1;
         }
 
-        const mainPass = renderTintedPass(font, lines, w, h, color);
+        const mainPass = renderTintedPass(font, lines, w, h, dpr, color);
 
         ctx.drawImage(mainPass, 0, 0);
 
         if (font.underline) {
             ctx.fillStyle = color;
-            lines.forEach((line, i) => ctx.fillRect(0, (i + 1) * font.lineHeight - 1, line.width, 1));
+            lines.forEach((line, i) => ctx.fillRect(0, ((i + 1) * font.lineHeight - 1) * dpr, line.width * dpr, dpr));
         }
     }, [ font, lines, width, height, color, dropShadow ]);
 
