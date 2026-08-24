@@ -124,6 +124,17 @@ const loadAtlasImage = (file: string): Promise<ImageBitmap | undefined> => {
     return promise;
 };
 
+/** Fully-resolved fonts, synchronously readable - lets `useBitmapFont` return the
+ *  right font on a component's very *first* render for anything already warmed
+ *  (see `preloadBitmapFonts` below), instead of always starting at `undefined` and
+ *  flipping a moment later. That flip is more than a visual flash: switching from
+ *  the native-fallback element to `pixiBitmapText`/`<canvas>` after Yoga has
+ *  already committed a layout pass around the native element's size can leave a
+ *  parent (a Button sized to fit its label, say) stuck too small for the bitmap
+ *  glyphs that actually get drawn into it - this cache is what avoids that swap
+ *  ever happening for a font the app already knows it uses. */
+const resolvedFonts = new Map<string, BitmapFont>();
+
 const loadBitmapFont = async (habboKey: string): Promise<BitmapFont | undefined> => {
     const meta = (await loadManifest())?.fonts[habboKey];
 
@@ -131,7 +142,24 @@ const loadBitmapFont = async (habboKey: string): Promise<BitmapFont | undefined>
 
     const image = await loadAtlasImage(meta.file);
 
-    return image ? { key: habboKey, ...meta, image } : undefined;
+    if (!image) return undefined;
+
+    const font: BitmapFont = { key: habboKey, ...meta, image };
+
+    resolvedFonts.set(habboKey, font);
+
+    return font;
+};
+
+/** Eagerly loads and decodes a fixed, known set of fonts (every `habboKey` currently
+ *  wired into `TEXT_STYLES` - see `theme/utils/textStyles.ts`'s `WIRED_HABBO_KEYS`)
+ *  before the app mounts, alongside `preloadTextAtlas()`/`loadThemeFonts()` in
+ *  `index.tsx`. Small and bounded (today's baked webfonts are tens of KB each), and
+ *  is what makes `useBitmapFont` synchronously correct on first render for all of
+ *  them - anything outside this known set still lazy-loads normally, with the one
+ *  brief native-then-bitmap flip that implies. */
+export const preloadBitmapFonts = async (habboKeys: readonly string[]): Promise<void> => {
+    await Promise.all(habboKeys.map(loadBitmapFont));
 };
 
 /** Resolves a `TEXT_STYLES` entry's `habboKey` to its decoded bitmap font, retrying
@@ -139,12 +167,20 @@ const loadBitmapFont = async (habboKey: string): Promise<BitmapFont | undefined>
  *  (and stays `undefined`) for any key nothing was baked for - callers fall back to
  *  today's native text rendering in that case, unchanged. */
 export const useBitmapFont = (habboKey: string | undefined): BitmapFont | undefined => {
-    const [ font, setFont ] = useState<BitmapFont | undefined>(undefined);
+    const [ font, setFont ] = useState<BitmapFont | undefined>(() => (habboKey ? resolvedFonts.get(habboKey) : undefined));
 
     useEffect(() => {
         if (!habboKey) {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setFont(undefined);
+
+            return;
+        }
+
+        const warm = resolvedFonts.get(habboKey);
+
+        if (warm) {
+            setFont(warm);
 
             return;
         }

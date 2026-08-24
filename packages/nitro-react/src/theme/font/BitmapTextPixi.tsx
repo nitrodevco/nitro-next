@@ -30,7 +30,15 @@ const ensureInstalled = (font: BitmapFont): string => {
     for (const [ ch, g ] of Object.entries(font.chars)) {
         chars[ch] = {
             id: ch.codePointAt(0) ?? 0, page: 0, letter: ch, kerning: {},
-            x: g.x, y: g.y, width: g.width, height: g.height, xOffset: g.xOffset, yOffset: g.yOffset, xAdvance: g.xAdvance,
+            x: g.x, y: g.y, width: g.width, height: g.height, xOffset: g.xOffset,
+            // Pixi's own renderer positions each glyph at `baseLineOffset + yOffset` (see
+            // AbstractBitmapTextPipe._updateContext, `currentY = bitmapFont.baseLineOffset`
+            // for the first line) - i.e. it expects yOffset relative to the *baseline*.
+            // `textAtlas.ts`'s manifest stores yOffset relative to the *line top* instead
+            // (what `BitmapTextDom`'s canvas blit already uses correctly), so this is the
+            // one place that gets converted to Pixi's convention.
+            yOffset: g.yOffset - font.baseLineOffset,
+            xAdvance: g.xAdvance,
         };
     }
 
@@ -98,7 +106,6 @@ export const BitmapTextPixi = ({ font, text, color, dropShadow, layout, wordWrap
             style={{ fontFamily: cacheKey, fontSize: font.fontSize }}
             tint={color}
             filters={underlines.length ? undefined : filters}
-            resolution={GetPixelRatio()}
             layout={underlines.length
                 ? { position: 'absolute', top: 0, left: 0 }
                 : {

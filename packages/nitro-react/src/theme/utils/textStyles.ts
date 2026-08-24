@@ -53,6 +53,14 @@ export type TextStyleKey = keyof typeof TEXT_STYLES;
 export const getHabboKey = (key: TextStyleKey): HabboStyleKey | undefined =>
     (TEXT_STYLES[key] as { habboKey?: HabboStyleKey }).habboKey;
 
+/** Every `habboKey` currently wired into `TEXT_STYLES` - passed to `preloadBitmapFonts`
+ *  at boot so all of them are already warm before anything first renders (see that
+ *  function's own docblock for why the alternative - loading on first use - risks a
+ *  layout desync, not just a visual flash). */
+export const WIRED_HABBO_KEYS: HabboStyleKey[] = Object.values(TEXT_STYLES)
+    .map(style => (style as { habboKey?: HabboStyleKey }).habboKey)
+    .filter((key): key is HabboStyleKey => !!key);
+
 const cache = new Map<TextStyleKey, TextStyle>();
 
 export const getPixiTextStyle = (key: TextStyleKey, overrides?: TextStyleOptions): TextStyle => {
