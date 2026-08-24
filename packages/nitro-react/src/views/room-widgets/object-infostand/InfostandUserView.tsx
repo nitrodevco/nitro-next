@@ -121,7 +121,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                             layout={{ flex: 1 }}
                             text={motto.length === 0 ? t('infostand.motto.change') : motto}
                             textStyle="text-style-regular"
-                            textOptions={{ fontSize: 9, fill: '#ffffff' }}
+                            textOptions={{ fill: '#ffffff' }}
                         />
                     )}
                     {userData.isOwnUser && (
@@ -142,7 +142,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                                     layout={{ flex: 1 }}
                                     text={motto}
                                     textStyle="text-style-regular"
-                                    textOptions={{ fontSize: 9, fill: '#ffffff' }}
+                                    textOptions={{ fill: '#ffffff' }}
                                 />
                             )}
                             {isEditingMotto && (

@@ -23,7 +23,7 @@ type HabboStyleKey = keyof typeof HABBO_TEXT_STYLES;
 /** Exported (not module-private) so `theme/dom/textStyleDom.ts` can translate the same
  *  font/size/color/drop-shadow data to CSS instead of duplicating this table. */
 export const TEXT_STYLES = {
-    'text-style-regular': { fontFamily: 'Goldfish', fontSize: 10 },
+    'text-style-regular': { fontFamily: 'Goldfish', fontSize: 9, habboKey: 'regular' },
     'text-style-headline-big': { fontFamily: 'UbuntuBold', fontSize: 18, habboKey: 'u_headline_big' },
     'text-style-headline-small': { fontFamily: 'UbuntuBold', fontSize: 14, habboKey: 'u_headline_small' },
     'text-style-headline-medium': { fontFamily: 'UbuntuBold', fontSize: 16, habboKey: 'u_headline_medium' },
