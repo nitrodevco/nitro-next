@@ -1,6 +1,6 @@
 import { useCatalogSelectors } from '#base/context';
 
-import { CatalogLayoutDefaultViewPixi } from './layouts/CatalogLayoutDefaultViewPixi';
+import { CatalogLayoutDefaultView } from './layouts/CatalogLayoutDefaultView';
 
 /** Pixi port of views/catalog/page/CatalogActivePage.tsx. */
 export const CatalogActivePagePixi = () => {
@@ -10,7 +10,7 @@ export const CatalogActivePagePixi = () => {
 
     switch (activePage.layoutCode) {
         case 'default_3x3': {
-            return <CatalogLayoutDefaultViewPixi />;
+            return <CatalogLayoutDefaultView />;
         }
     }
 

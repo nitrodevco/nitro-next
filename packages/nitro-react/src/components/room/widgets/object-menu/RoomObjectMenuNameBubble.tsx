@@ -1,7 +1,7 @@
 import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 
 import { useRoomObjectName } from '#base/hooks';
-import { InfoBubbleNameViewPixi } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleNameViewPixi';
+import { InfoBubbleNameView } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleNameView';
 
 import { RoomObjectMenuBubblePixi } from './RoomObjectMenuBubblePixi';
 
@@ -21,7 +21,7 @@ export const RoomObjectMenuNameBubble = (props: RoomObjectInfoNameBubbleProps) =
             userType={nameData.userType}
             fades={true}
         >
-            <InfoBubbleNameViewPixi nameData={nameData} />
+            <InfoBubbleNameView nameData={nameData} />
         </RoomObjectMenuBubblePixi>
     );
 };

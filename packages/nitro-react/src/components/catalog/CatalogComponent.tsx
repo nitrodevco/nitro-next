@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useCatalogSelectors, useIsWindowVisible, useWebSocketContext } from '#base/context';
 import { useCatalogMessages, useCatalogPageRequest } from '#base/hooks';
-import { CatalogViewPixi } from '#base/views-pixi/catalog/CatalogViewPixi';
+import { CatalogView } from '#base/views-pixi/catalog/CatalogView';
 
 export const CatalogComponent = () => {
     const isVisible = useIsWindowVisible('catalog');
@@ -21,5 +21,5 @@ export const CatalogComponent = () => {
 
     if (!isVisible) return null;
 
-    return <CatalogViewPixi />;
+    return <CatalogView />;
 };

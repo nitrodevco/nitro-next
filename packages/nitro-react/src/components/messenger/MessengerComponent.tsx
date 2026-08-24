@@ -1,10 +1,10 @@
 import { useIsWindowVisible } from '#base/context';
-import { MessengerViewPixi } from '#base/views-pixi/messenger/MessengerViewPixi';
+import { MessengerView } from '#base/views-pixi/messenger/MessengerView';
 
 export const MessengerComponent = () => {
     const isVisible = useIsWindowVisible('messenger');
 
     if (!isVisible) return null;
 
-    return <MessengerViewPixi />;
+    return <MessengerView />;
 };

@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 import { useOwnRoomObjectId, useRoomSelector } from '#base/context';
 import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from '#base/hooks';
-import { InfoBubbleAvatarViewPixi } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarViewPixi';
-import { InfoBubbleOwnAvatarViewPixi } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarViewPixi';
+import { InfoBubbleAvatarView } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarView';
+import { InfoBubbleOwnAvatarView } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarView';
 
 import { RoomObjectMenuBubblePixi } from './RoomObjectMenuBubblePixi';
 import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
@@ -78,13 +78,13 @@ export const RoomObjectMenuWidget = () => {
                             userType={userType}
                         >
                             {selectedData.objectId === ownRoomObjectId && (
-                                <InfoBubbleOwnAvatarViewPixi
+                                <InfoBubbleOwnAvatarView
                                     objectData={selectedData}
                                     onClose={onClose}
                                 />
                             )}
                             {selectedData.objectId !== ownRoomObjectId && (
-                                <InfoBubbleAvatarViewPixi
+                                <InfoBubbleAvatarView
                                     objectData={selectedData}
                                     onClose={onClose}
                                 />

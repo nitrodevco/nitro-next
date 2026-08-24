@@ -2,7 +2,7 @@ import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, R
 
 import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useSystemActions } from '#base/context';
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from '#base/hooks';
-import { InfostandFurniViewPixi } from '#base/views-pixi/room-widgets/object-infostand/InfostandFurniViewPixi';
+import { InfostandFurniView } from '#base/views-pixi/room-widgets/object-infostand/InfostandFurniView';
 
 type InfostandFurniViewProps = {
     objectData: ISimpleRoomObjectData;
@@ -75,7 +75,7 @@ export const InfostandFurni = (props: InfostandFurniViewProps) => {
     };
 
     return (
-        <InfostandFurniViewPixi
+        <InfostandFurniView
             furniData={furniData}
             canMove={canMove}
             canRotate={canRotate}

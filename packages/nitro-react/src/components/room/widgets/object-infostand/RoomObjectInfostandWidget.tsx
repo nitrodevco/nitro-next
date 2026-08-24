@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 import { useRoomSelector } from '#base/context';
 import { useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
-import { InfostandPetViewPixi } from '#base/views-pixi/room-widgets/object-infostand/InfostandPetViewPixi';
-import { InfostandUserViewPixi } from '#base/views-pixi/room-widgets/object-infostand/InfostandUserViewPixi';
+import { InfostandPetView } from '#base/views-pixi/room-widgets/object-infostand/InfostandPetView';
+import { InfostandUserView } from '#base/views-pixi/room-widgets/object-infostand/InfostandUserView';
 
 import { InfostandFurni } from './InfostandFurni';
 
@@ -51,7 +51,7 @@ export const RoomObjectInfostandWidget = () => {
             switch (userType) {
                 case RoomObjectUserType.Pet: {
                     return (
-                        <InfostandPetViewPixi
+                        <InfostandPetView
                             objectData={selectedData}
                             onClose={onClose}
                         />
@@ -59,7 +59,7 @@ export const RoomObjectInfostandWidget = () => {
                 }
                 case RoomObjectUserType.User: {
                     return (
-                        <InfostandUserViewPixi
+                        <InfostandUserView
                             objectData={selectedData}
                             onClose={onClose}
                         />
@@ -67,7 +67,7 @@ export const RoomObjectInfostandWidget = () => {
                 }
                 case RoomObjectUserType.Bot: {
                     return (
-                        <InfostandUserViewPixi
+                        <InfostandUserView
                             objectData={selectedData}
                             onClose={onClose}
                         />
@@ -75,7 +75,7 @@ export const RoomObjectInfostandWidget = () => {
                 }
                 case RoomObjectUserType.RentableBot: {
                     return (
-                        <InfostandUserViewPixi
+                        <InfostandUserView
                             objectData={selectedData}
                             onClose={onClose}
                         />

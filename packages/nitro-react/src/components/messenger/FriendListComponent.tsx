@@ -2,9 +2,9 @@ import { FriendListUpdateComposer, MessengerInitComposer } from '@nitrodevco/nit
 import { useEffect } from 'react';
 
 import { useIsWindowVisible, useWebSocketContext } from '#base/context';
-import { FriendListRemoveConfirmationViewPixi } from '#base/views-pixi/friendlist/dialogs/FriendListRemoveConfirmationViewPixi';
-import { FriendListRoomInviteViewPixi } from '#base/views-pixi/friendlist/dialogs/FriendListRoomInviteViewPixi';
-import { FriendListViewPixi } from '#base/views-pixi/friendlist/FriendListViewPixi';
+import { FriendListRemoveConfirmationView } from '#base/views-pixi/friendlist/dialogs/FriendListRemoveConfirmationView';
+import { FriendListRoomInviteView } from '#base/views-pixi/friendlist/dialogs/FriendListRoomInviteView';
+import { FriendListView } from '#base/views-pixi/friendlist/FriendListView';
 
 export const FriendListComponent = () => {
     const isVisible = useIsWindowVisible('friendlist');
@@ -24,9 +24,9 @@ export const FriendListComponent = () => {
 
     return (
         <>
-            <FriendListViewPixi />
-            <FriendListRoomInviteViewPixi />
-            <FriendListRemoveConfirmationViewPixi />
+            <FriendListView />
+            <FriendListRoomInviteView />
+            <FriendListRemoveConfirmationView />
         </>
     );
 };

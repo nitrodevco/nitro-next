@@ -8,9 +8,9 @@ import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
 import { getRenderMode } from './theme-core';
 import { HotelView } from './views-pixi/hotel-view/HotelView';
-import { ActivityPointsViewPixi } from './views-pixi/purse/ActivityPointsViewPixi';
-import { PurseViewPixi } from './views-pixi/purse/PurseViewPixi';
-import { ToolbarViewPixi } from './views-pixi/toolbar/ToolbarViewPixi';
+import { ActivityPointsView } from './views-pixi/purse/ActivityPointsView';
+import { PurseView } from './views-pixi/purse/PurseView';
+import { ToolbarView } from './views-pixi/toolbar/ToolbarView';
 
 export const MainView = () => {
     const [ isReady, setIsReady ] = useState(false);
@@ -55,9 +55,9 @@ export const MainView = () => {
                     className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full"
                 >
                     <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
-                        <PurseViewPixi />
+                        <PurseView />
                         <div className="flex flex-col items-end w-48">
-                            <ActivityPointsViewPixi />
+                            <ActivityPointsView />
                         </div>
                     </div>
                     <AvatarEditorComponent />
@@ -67,7 +67,7 @@ export const MainView = () => {
                     <MessengerComponent />
                     <NavigatorWrapper />
                     <WalletComponent />
-                    <ToolbarViewPixi />
+                    <ToolbarView />
                 </div>
             </>
         );
@@ -84,9 +84,9 @@ export const MainView = () => {
             <MessengerComponent />
             <NavigatorWrapper />
             <WalletComponent />
-            <PurseViewPixi />
-            <ActivityPointsViewPixi layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
-            <ToolbarViewPixi />
+            <PurseView />
+            <ActivityPointsView layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
+            <ToolbarView />
         </>
     );
 };

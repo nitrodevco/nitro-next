@@ -124,7 +124,7 @@ export const useDomScrollController = ({
         if (!viewportNode) return;
 
         // Matches the codebase's existing measure-on-mount idiom (usePixiTexture.ts,
-        // InventoryFurniViewPixi.tsx): sizes/scroll position must be read as soon as the real
+        // InventoryFurniView.tsx): sizes/scroll position must be read as soon as the real
         // nodes exist, not deferred another render behind a state flag, so the scrollbar isn't
         // visibly stale (wrong thumb size/hidden-when-scrollable) for one frame after mount.
         // eslint-disable-next-line react-hooks/set-state-in-effect
