@@ -42,7 +42,8 @@
     ],
     "include": [
         "src/**/*",
-        "themes/**/*"
+        "themes/**/*",
+        "scripts/habbo-text-styles.ts"
     ],
     "exclude": [
         "dist",

@@ -1037,6 +1037,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:6.0.3"
     autoprefixer: "npm:^10.5.2"
     babel-plugin-react-compiler: "npm:^1.0.0"
+    canvas: "npm:^3.2.3"
     dompurify: "npm:^3.4.5"
     eslint: "npm:^10.6.0"
     eslint-plugin-import: "npm:^2.32.0"
@@ -1054,6 +1055,7 @@ __metadata:
     react-icons: "npm:^5.6.0"
     rolldown: "npm:^1.1.3"
     tailwindcss: "npm:^4.3.2"
+    truffle-text: "npm:^2.0.0"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.21.1"
     vite: "npm:^8.1.2"
@@ -1959,6 +1961,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zkl2333/freetype-wasm@npm:2.14.3":
+  version: 2.14.3
+  resolution: "@zkl2333/freetype-wasm@npm:2.14.3"
+  checksum: 10c0/d46ba193dff860762bb9ced3a8229b3a6c8259f6347fe27081f216629d826edf6ac0af1e783d856bcf2ee9309fb4001e4f4460420ed3adb3085bc51d38c4d381
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -2206,6 +2215,15 @@ __metadata:
   bin:
     baseline-browser-mapping: dist/cli.cjs
   checksum: 10c0/44bbea61ec54df6845f5f6f149c99057370081f1041d6e8dbc92835630ce37da9adc102528ebebd37f563342da2a5eea525d24698ced6674cdcfadb2ed613136
+  languageName: node
+  linkType: hard
+
+"bidi-js@npm:1.0.3":
+  version: 1.0.3
+  resolution: "bidi-js@npm:1.0.3"
+  dependencies:
+    require-from-string: "npm:^2.0.2"
+  checksum: 10c0/fdddea4aa4120a34285486f2267526cd9298b6e8b773ad25e765d4f104b6d7437ab4ba542e6939e3ac834a7570bcf121ee2cf6d3ae7cd7082c4b5bedc8f271e1
   languageName: node
   linkType: hard
 
@@ -3578,6 +3596,13 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
+  languageName: node
+  linkType: hard
+
+"harfbuzzjs@npm:1.4.0":
+  version: 1.4.0
+  resolution: "harfbuzzjs@npm:1.4.0"
+  checksum: 10c0/967856f72bacd66049d4b9cf9575af7fe94d2d40d9c0dc63854b3ad7a12ee23a00159943bc54752f07a17877039fee2187ea9fb2007ec3daf1951cdcfc09c336
   languageName: node
   linkType: hard
 
@@ -5286,6 +5311,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"require-from-string@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "require-from-string@npm:2.0.2"
+  checksum: 10c0/aaa267e0c5b022fc5fd4eef49d8285086b15f2a1c54b28240fdf03599cbd9c26049fee3eab894f2e1f6ca65e513b030a7c264201e3f005601e80c49fb2937ce2
+  languageName: node
+  linkType: hard
+
 "resolve@npm:^2.0.0-next.6":
   version: 2.0.0-next.7
   resolution: "resolve@npm:2.0.0-next.7"
@@ -5950,6 +5982,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"truffle-text@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "truffle-text@npm:2.0.0"
+  dependencies:
+    "@zkl2333/freetype-wasm": "npm:2.14.3"
+    bidi-js: "npm:1.0.3"
+    harfbuzzjs: "npm:1.4.0"
+    unicode-segmenter: "npm:0.15.0"
+  peerDependencies:
+    react: ">=18"
+  peerDependenciesMeta:
+    react:
+      optional: true
+  bin:
+    truffle-setup: bin/setup.mjs
+  checksum: 10c0/577c5e5aa883f0d1121b9f2122a243009957fbdcf479171c980066739b176ad1d2b11a1bf23d24e29d02ca69a5e2431dc6a026eb75e023b5ad4999f9b3624d6e
+  languageName: node
+  linkType: hard
+
 "ts-api-utils@npm:^2.5.0":
   version: 2.5.0
   resolution: "ts-api-utils@npm:2.5.0"
@@ -6122,6 +6173,13 @@ __metadata:
   version: 6.25.0
   resolution: "undici@npm:6.25.0"
   checksum: 10c0/2597cc6689bdb02c210c557b1f85febbfda65becae6e6fc1061508e2f33734d25207f81cd8af56ada9956329eb3a7bd7431e87dcfeceba20ee87059b57dcf985
+  languageName: node
+  linkType: hard
+
+"unicode-segmenter@npm:0.15.0":
+  version: 0.15.0
+  resolution: "unicode-segmenter@npm:0.15.0"
+  checksum: 10c0/d0dde9ee45c502e1ad91ba04594e2a31eb46ad67fa63807b20ee18ea801fc0064af810d30df41cff1b9d86910ec082ea28771ef1ff214687b2df393253090bb7
   languageName: node
   linkType: hard
 

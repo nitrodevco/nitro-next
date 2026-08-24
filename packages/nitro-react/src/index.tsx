@@ -2,12 +2,12 @@ import './index.css';
 import '@pixi/layout';
 
 import { extend } from '@pixi/react';
-import { Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
+import { BitmapText, Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
 import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
 import { Nitro } from './Nitro';
-import { loadThemeFonts, setRenderMode } from './theme';
+import { loadThemeFonts, preloadTextAtlas, setRenderMode } from './theme';
 
 // NitroLogger.LOG_ERROR = import.meta.env.DEV;
 // NitroLogger.LOG_WARN = import.meta.env.DEV;
@@ -16,6 +16,7 @@ import { loadThemeFonts, setRenderMode } from './theme';
 if (new URLSearchParams(window.location.search).get('renderer') === 'dom') setRenderMode('dom');
 else {
     extend({
+        BitmapText,
         Container,
         Graphics,
         NineSliceSprite,
@@ -38,7 +39,7 @@ window.NitroConfig = window.NitroConfig || {};
 
 const element = document.getElementById('root');
 
-void Promise.all([ document.fonts.ready, loadThemeFonts() ]).then(() => {
+void Promise.all([ document.fonts.ready, loadThemeFonts(), preloadTextAtlas() ]).then(() => {
     if (!element) return;
 
     createRoot(element).render(

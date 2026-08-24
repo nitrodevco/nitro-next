@@ -1,17 +1,39 @@
-import { CanvasTextMetrics, TextStyleOptions } from 'pixi.js';
+import { CanvasTextMetrics, TextDropShadow, TextStyleOptions } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
-import { boxLayoutToStyle, getDomTextStyle } from './dom';
-import { getPixiTextStyle, getRenderMode, TextStyleKey } from './utils';
+import { BitmapTextDom, boxLayoutToStyle, getDomTextStyle } from './dom';
+import { useBitmapFont } from './font';
+import { BitmapTextPixi } from './font/BitmapTextPixi';
+import { getHabboKey, getPixiTextStyle, getRenderMode, TEXT_DROP_SHADOW, TextStyleKey } from './utils';
 
 export type TextConfig = {
     text: string;
     textStyle?: TextStyleKey;
     textOptions?: TextStyleOptions;
     layout?: BoxLayout;
+};
+
+/** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
+ *  named style's own baked combo - falls straight through to native rendering, same as a
+ *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES` and
+ *  `scripts/habbo-text-styles.ts`). */
+const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
+    if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
+
+    return getHabboKey(textStyle ?? 'text-style-regular');
+};
+
+/** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
+ *  `pixiText` fills in its defaults internally) - the bitmap renderers need a complete config
+ *  up front, so `true` resolves to `TEXT_DROP_SHADOW`'s defaults and a partial config is
+ *  layered on top of them. */
+const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDropShadow | undefined => {
+    if (!dropShadow) return undefined;
+
+    return dropShadow === true ? TEXT_DROP_SHADOW : { ...TEXT_DROP_SHADOW, ...dropShadow };
 };
 
 /**
@@ -46,7 +68,7 @@ export type TextConfig = {
  * natural size on both axes is what makes it overflow a too-small container instead - matching
  * a `<span>`'s real floor, and matching what the DOM target already does with no extra code.
  */
-const TextPixi = ({ text, textStyle, textOptions, layout, ...props }: TextConfig) => {
+const TextPixiNative = ({ text, textStyle, textOptions, layout, ...props }: TextConfig) => {
     const style = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
 
@@ -69,10 +91,35 @@ const TextPixi = ({ text, textStyle, textOptions, layout, ...props }: TextConfig
     );
 };
 
+/** Prefers the pixel-perfect baked bitmap font for this style/size combo (see `theme/font/`);
+ *  falls back to `TextPixiNative`'s native canvas text - unchanged from before the bitmap atlas
+ *  existed - for anything not baked, so no call site can ever go blank because of this. */
+const TextPixi = (props: TextConfig) => {
+    const { text, textStyle, textOptions, layout } = props;
+    const bitmapFont = useBitmapFont(resolveHabboKey(textStyle, textOptions));
+
+    if (bitmapFont) {
+        return (
+            <BitmapTextPixi
+                font={bitmapFont}
+                text={text}
+                color={typeof textOptions?.fill === 'string' ? textOptions.fill : bitmapFont.defaultTint ?? '#000000'}
+                dropShadow={resolveDropShadow(textOptions?.dropShadow)}
+                layout={layout}
+                wordWrap={textOptions?.wordWrap}
+                wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
+                breakWords={textOptions?.breakWords}
+            />
+        );
+    }
+
+    return <TextPixiNative {...props} />;
+};
+
 /** `textOptions` is Pixi's own `TextStyleOptions` - only the handful of fields views actually
  *  pass (`fill`, `fontSize`, and the word-wrap trio) are translated; anything else Pixi-specific
  *  in there has no DOM equivalent and is left unused. */
-const TextDom = ({ text, textStyle, textOptions, layout }: TextConfig) => {
+const TextDomNative = ({ text, textStyle, textOptions, layout }: TextConfig) => {
     const fill = typeof textOptions?.fill === 'string' ? textOptions.fill : undefined;
     const fontSize = typeof textOptions?.fontSize === 'number' ? textOptions.fontSize : undefined;
 
@@ -90,6 +137,28 @@ const TextDom = ({ text, textStyle, textOptions, layout }: TextConfig) => {
     }
 
     return <span style={style}>{text}</span>;
+};
+
+const TextDom = (props: TextConfig) => {
+    const { text, textStyle, textOptions, layout } = props;
+    const bitmapFont = useBitmapFont(resolveHabboKey(textStyle, textOptions));
+
+    if (bitmapFont) {
+        return (
+            <BitmapTextDom
+                font={bitmapFont}
+                text={text}
+                color={typeof textOptions?.fill === 'string' ? textOptions.fill : bitmapFont.defaultTint ?? '#000000'}
+                dropShadow={resolveDropShadow(textOptions?.dropShadow)}
+                layout={layout}
+                wordWrap={textOptions?.wordWrap}
+                wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
+                breakWords={textOptions?.breakWords}
+            />
+        );
+    }
+
+    return <TextDomNative {...props} />;
 };
 
 export const ThemeText = (props: TextConfig) => getRenderMode() === 'dom' ? <TextDom {...props} /> : <TextPixi {...props} />;
