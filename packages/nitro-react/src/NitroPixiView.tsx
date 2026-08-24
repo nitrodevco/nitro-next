@@ -11,7 +11,7 @@ import { PixiApplicationRoot } from '#base/theme-pixi';
 
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
-import { LoadingScreenView } from './views-pixi/loading-screen/LoadingScreenView';
+import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const NitroPixiView = () => {
     const [ isRendererReady, setIsRendererReady ] = useState(false);

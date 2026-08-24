@@ -7,10 +7,10 @@ import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComp
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
 import { getRenderMode } from './theme-core';
-import { HotelView } from './views-pixi/hotel-view/HotelView';
-import { ActivityPointsView } from './views-pixi/purse/ActivityPointsView';
-import { PurseView } from './views-pixi/purse/PurseView';
-import { ToolbarView } from './views-pixi/toolbar/ToolbarView';
+import { HotelView } from './views/hotel-view/HotelView';
+import { ActivityPointsView } from './views/purse/ActivityPointsView';
+import { PurseView } from './views/purse/PurseView';
+import { ToolbarView } from './views/toolbar/ToolbarView';
 
 export const MainView = () => {
     const [ isReady, setIsReady ] = useState(false);

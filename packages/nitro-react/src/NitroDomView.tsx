@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
 import { GetPixelRatio } from './utils';
-import { LoadingScreenView } from './views-pixi/loading-screen/LoadingScreenView';
+import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const NitroDomView = () => {
     const [ isEngineReady, setIsEngineReady ] = useState(false);

@@ -6,7 +6,7 @@ import { getRenderMode } from '#base/theme-core';
 import { useAvatarLoader } from './hooks/logic';
 import { NitroDomView } from './NitroDomView';
 import { NitroPixiView } from './NitroPixiView';
-import { LoadingScreenView } from './views-pixi/loading-screen/LoadingScreenView';
+import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const Nitro: FC = () => {
     const { isConfigReady } = useConfigLoader();

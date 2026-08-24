@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useCatalogSelectors, useIsWindowVisible, useWebSocketContext } from '#base/context';
 import { useCatalogMessages, useCatalogPageRequest } from '#base/hooks';
-import { CatalogView } from '#base/views-pixi/catalog/CatalogView';
+import { CatalogView } from '#base/views/catalog/CatalogView';
 
 export const CatalogComponent = () => {
     const isVisible = useIsWindowVisible('catalog');

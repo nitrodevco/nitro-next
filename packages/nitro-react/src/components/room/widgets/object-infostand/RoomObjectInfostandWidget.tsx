@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 import { useRoomSelector } from '#base/context';
 import { useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
-import { InfostandPetView } from '#base/views-pixi/room-widgets/object-infostand/InfostandPetView';
-import { InfostandUserView } from '#base/views-pixi/room-widgets/object-infostand/InfostandUserView';
+import { InfostandPetView } from '#base/views/room-widgets/object-infostand/InfostandPetView';
+import { InfostandUserView } from '#base/views/room-widgets/object-infostand/InfostandUserView';
 
 import { InfostandFurni } from './InfostandFurni';
 

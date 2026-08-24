@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 import { useOwnRoomObjectId, useRoomSelector } from '#base/context';
 import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from '#base/hooks';
-import { InfoBubbleAvatarView } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleAvatarView';
-import { InfoBubbleOwnAvatarView } from '#base/views-pixi/room-widgets/object-menu/InfoBubbleOwnAvatarView';
+import { InfoBubbleAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleAvatarView';
+import { InfoBubbleOwnAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView';
 
 import { RoomObjectMenuBubblePixi } from './RoomObjectMenuBubblePixi';
 import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
