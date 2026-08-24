@@ -1,7 +1,7 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context';
-import { Box, NitroIcon } from '#base/theme-pixi';
+import { Box, NitroIcon } from '#base/theme';
 
 import { FriendListItemPixi } from '../components/FriendListItemPixi';
 

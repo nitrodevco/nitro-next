@@ -2,7 +2,7 @@ import { NavigatorDeleteSavedSearchComposer, NewNavigatorSearchComposer } from '
 import { useState } from 'react';
 
 import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, ColorLayer, NitroIcon, ScrollArea, Text } from '#base/theme-pixi';
+import { Border, Box, ColorLayer, NitroIcon, ScrollArea, ThemeText } from '#base/theme';
 
 /** Pixi port of views/navigator/NavigatorQuickLinksView.tsx. */
 export const NavigatorQuickLinksView = () => {
@@ -32,7 +32,7 @@ export const NavigatorQuickLinksView = () => {
                     icon="icon-nav-quicklink-add"
                     layout={{}}
                 />
-                <Text
+                <ThemeText
                     layout={{ flex: 1 }}
                     text={t('navigator.quick.links.title')}
                     textStyle="text-style-u-bold"
@@ -51,7 +51,7 @@ export const NavigatorQuickLinksView = () => {
                         layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: 4, minHeight: 17, maxHeight: 17 }}
                     >
                         {hoveredId === link.id && <ColorLayer color="#82d1ed" />}
-                        <Text
+                        <ThemeText
                             layout={{ flex: 1 }}
                             text={interpolate(link.localization)}
                             textStyle="text-style-u-regular"

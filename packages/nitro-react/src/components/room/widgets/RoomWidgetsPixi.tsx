@@ -2,7 +2,7 @@ import { RoomEngineEvent } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { useRoomEventDispatcher } from '#base/hooks';
-import { Box } from '#base/theme-pixi';
+import { Box } from '#base/theme';
 
 import { RoomObjectInfostandWidget } from './object-infostand';
 import { RoomObjectMenuWidget } from './object-menu';

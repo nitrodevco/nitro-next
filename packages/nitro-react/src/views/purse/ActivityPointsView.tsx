@@ -1,5 +1,5 @@
 import { useTranslation, useWallet } from '#base/context';
-import { Border, Box, BoxLayout, Text } from '#base/theme-pixi';
+import { Border, Box, BoxLayout, ThemeText } from '#base/theme';
 
 export interface ActivityPointsViewProps {
     layout?: BoxLayout;
@@ -35,12 +35,12 @@ export const ActivityPointsView = ({ layout }: ActivityPointsViewProps) => {
                     layout={{ height: 29, marginTop: 3, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}
                 >
                     <Box layout={{ flex: 1, flexDirection: 'row', paddingLeft: 7, paddingRight: 16, justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text
+                        <ThemeText
                             text={name}
                             textStyle="text-style-button-bold"
                             textOptions={{ fill: color, fontSize: 11 }}
                         />
-                        <Text
+                        <ThemeText
                             text={amount > 0 ? String(amount) : t('purse.shells.zero.amount.text')}
                             textStyle="text-style-button-bold"
                             textOptions={{ fill: '#ffffff', fontSize: 11 }}

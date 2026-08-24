@@ -2,7 +2,7 @@ import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { useCatalogSelectors } from '#base/context';
 import { useCatalogNavigation, useCatalogOfferProduct, useProductIconUrl } from '#base/hooks';
-import { Box, Image } from '#base/theme-pixi';
+import { Box, ThemeImage } from '#base/theme';
 
 import { CatalogItemGridWidgetItemPriceView } from './CatalogItemGridWidgetItemPriceView';
 import { CatalogItemGridWidgetItemSelectedView } from './CatalogItemGridWidgetItemSelectedView';
@@ -28,7 +28,7 @@ export const CatalogItemGridWidgetItemView = ({ offer }: CatalogItemGridWidgetIt
                 onPointerTap={() => selectOffer(offer)}
                 layout={{ width: '100%', height: '100%', flexDirection: 'column', alignItems: 'center', gap: 3, paddingTop: 3, paddingBottom: 3 }}
             >
-                <Image
+                <ThemeImage
                     src={iconUrl}
                     showLoadingPlaceholder
                     layout={{ minWidth: 32, minHeight: 32, maxWidth: 32, maxHeight: 32 }}

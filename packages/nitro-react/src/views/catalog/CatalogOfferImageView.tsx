@@ -1,4 +1,4 @@
-import '#base/theme-pixi/utils/pixiElements';
+import '#base/theme/utils/pixiElements';
 
 import { IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 

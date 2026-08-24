@@ -2,7 +2,7 @@ import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useConfigValue } from '#base/context';
 import { useCatalogNavigation } from '#base/hooks';
-import { Box, ColorLayer, Image, NitroIcon, Text } from '#base/theme-pixi';
+import { Box, ColorLayer, ThemeImage, NitroIcon, ThemeText } from '#base/theme';
 
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 
@@ -28,13 +28,13 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', flex: 1, minHeight: 16 }}>
                     {node.isActive && <ColorLayer color="#63c5e9" />}
                     <Box layout={{ width: 20, justifyContent: 'center', alignItems: 'center' }}>
-                        <Image
+                        <ThemeImage
                             src={iconUrl}
                             layout={{}}
                         />
                     </Box>
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', flex: 1, paddingLeft: 10, paddingRight: 10, justifyContent: 'space-between' }}>
-                        <Text
+                        <ThemeText
                             text={node.localization}
                             textStyle="text-style-u-bold"
                             textOptions={{ fill: node.isActive ? '#ffffff' : '#666666' }}

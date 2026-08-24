@@ -1,7 +1,7 @@
 import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { useCatalogSelectors } from '#base/context';
-import { Border, InfiniteGrid } from '#base/theme-pixi';
+import { Border, InfiniteGrid } from '#base/theme';
 
 import { CatalogItemGridWidgetItemView } from './CatalogItemGridWidgetItemView';
 

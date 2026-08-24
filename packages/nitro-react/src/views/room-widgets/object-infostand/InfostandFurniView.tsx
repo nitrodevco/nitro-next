@@ -1,7 +1,7 @@
 import { FurniturePickupMode, IFurniData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, CloseButton, Text } from '#base/theme-pixi';
+import { Border, Box, Button, CloseButton, ThemeText } from '#base/theme';
 
 import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
 
@@ -41,7 +41,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
             >
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <Box layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}>
-                        <Text
+                        <ThemeText
                             text={furniData.name}
                             textStyle="text-style-regular"
                             textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
@@ -66,13 +66,13 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                 </Box>
                 <Box layout={{ width: '100%', height: 1 }} />
                 <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
-                    <Text
+                    <ThemeText
                         text={t('furni.owner', '', { name: furniData.ownerName })}
                         textStyle="text-style-regular"
                         textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
                     />
                     {canSeeFurniId && (
-                        <Text
+                        <ThemeText
                             text={`ID: ${furniData.id}`}
                             textStyle="text-style-regular"
                             textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}

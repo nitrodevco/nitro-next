@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCatalogActions, useCatalogSelectors, useTranslation } from '#base/context';
-import { Border, Box, Text, TextInput } from '#base/theme-pixi';
+import { Border, Box, ThemeText, TextInput } from '#base/theme';
 
 const MIN_VALUE = 1;
 const MAX_VALUE = 100;
@@ -30,7 +30,7 @@ export const CatalogSpinnerWidgetView = () => {
 
     return (
         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}>
-            <Text
+            <ThemeText
                 text={t('catalog.bundlewidget.quantity')}
                 textStyle="text-style-u-regular"
                 textOptions={{ fill: '#666666' }}

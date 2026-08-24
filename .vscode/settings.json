@@ -18,7 +18,7 @@
     // out right after ESLint adds it), so formatting is disabled and fixAll is the only pass.
     "[javascript,javascriptreact,typescript,typescriptreact]": {
         "editor.formatOnSave": false,
-        "js/ts.preferences.importModuleSpecifier": "shortest"
+        "js/ts.preferences.importModuleSpecifier": "non-relative"
     },
     "[json]": {
         "editor.tabSize": 4

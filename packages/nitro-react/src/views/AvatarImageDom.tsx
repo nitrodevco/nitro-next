@@ -2,7 +2,7 @@ import { AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/ni
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
-import { Image } from '#base/theme-pixi';
+import { ThemeImage } from '#base/theme';
 
 type AvatarImageDomProps = {
     figure: string;
@@ -63,7 +63,7 @@ export const AvatarImageDom = (props: AvatarImageDomProps) => {
     }, []);
 
     return (
-        <Image
+        <ThemeImage
             src={imageData.url}
             width={imageData.width}
             height={imageData.height}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useCatalogActions, useCatalogSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useCatalogOfferActions, useMessageListener } from '#base/hooks';
-import { Border, Box, Button, ButtonThick, Frame, NitroCurrencyIcon, Text } from '#base/theme-pixi';
+import { Border, Box, Button, ButtonThick, Frame, NitroCurrencyIcon, ThemeText } from '#base/theme';
 
 import { CatalogOfferImageView } from './CatalogOfferImageView';
 
@@ -65,20 +65,20 @@ export const CatalogPurchaseConfirmationView = () => {
                         <CatalogOfferImageView offer={offer} />
                     </Border>
                     <Box layout={{ flexDirection: 'column', flexGrow: 1, height: '100%', justifyContent: 'center', gap: 4 }}>
-                        <Text
+                        <ThemeText
                             text={product.productData?.name ?? t(offer.localizationId)}
                             textStyle="text-style-u-bold"
                             textOptions={{ fontSize: 14, fill: '#000000' }}
                         />
                         {quantity > 1 && (
-                            <Text
+                            <ThemeText
                                 text={`X ${quantity}`}
                                 textStyle="text-style-u-bold"
                                 textOptions={{ fontSize: 14, fill: '#000000' }}
                             />
                         )}
                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}>
-                            <Text
+                            <ThemeText
                                 text={t('catalog.purchase.confirmation.dialog.cost')}
                                 textStyle="text-style-u-regular"
                                 textOptions={{ fontSize: 14, fill: '#000000' }}
@@ -86,7 +86,7 @@ export const CatalogPurchaseConfirmationView = () => {
                             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                                 {(offer.pricingType === CatalogPricingTypeEnum.Credits || offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints) && (
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
-                                        <Text
+                                        <ThemeText
                                             text={String(offer.priceInCredits)}
                                             textStyle="text-style-u-bold"
                                             textOptions={{ fontSize: 14, fill: '#000000' }}
@@ -99,13 +99,13 @@ export const CatalogPurchaseConfirmationView = () => {
                                 )}
                                 {offer.pricingType === CatalogPricingTypeEnum.CreditsActivityPoints && (
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
-                                        <Text
+                                        <ThemeText
                                             text="+"
                                             textStyle="text-style-u-bold"
                                             textOptions={{ fontSize: 14, fill: '#000000' }}
                                         />
                                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                            <Text
+                                            <ThemeText
                                                 text={String(offer.priceInActivityPoints)}
                                                 textStyle="text-style-u-bold"
                                                 textOptions={{ fontSize: 14, fill: '#000000' }}

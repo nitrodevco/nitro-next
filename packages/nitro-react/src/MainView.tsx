@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
-import { getRenderMode } from './theme-core';
+import { getRenderMode } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';

@@ -2,7 +2,7 @@ import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { ReactNode } from 'react';
 
 import { useFriendsActions } from '#base/context';
-import { Box, ColorLayer, NitroIcon, Text, useAvatarImageTexture } from '#base/theme-pixi';
+import { Box, ColorLayer, NitroIcon, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 interface FriendListItemPixiUser {
     readonly name: string;
@@ -70,7 +70,7 @@ export const FriendListItemPixi = ({ user, selected = false, hideAvatarElement =
                     />
                 </Box>
             </Box>
-            <Text
+            <ThemeText
                 layout={{ flex: 1 }}
                 text={user.name}
                 textStyle="text-style-regular"

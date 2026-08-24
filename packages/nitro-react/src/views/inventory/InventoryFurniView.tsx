@@ -2,10 +2,10 @@ import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, Dropmenu, ScrollableItemGridVertical, ScrollbarVertical, Text } from '#base/theme-pixi';
-import { ScrollViewport } from '#base/theme-pixi/utils/ScrollViewport';
-import { useRowVirtualizer } from '#base/theme-pixi/utils/useRowVirtualizer';
-import { useScrollController } from '#base/theme-pixi/utils/useScrollController';
+import { Border, Box, Button, Dropmenu, ScrollableItemGridVertical, ScrollbarVertical, ThemeText } from '#base/theme';
+import { useRowVirtualizer } from '#base/theme/hooks/useRowVirtualizer';
+import { useScrollController } from '#base/theme/hooks/useScrollController';
+import { ScrollViewport } from '#base/theme/utils/ScrollViewport';
 
 const PAGE_SIZE = 24;
 const MAX_ITEMS = 200;
@@ -18,7 +18,7 @@ const ROW_GAP = 4;
  * row virtualizer (fixed 4 columns, not theme/InfiniteGrid.tsx's auto-column-count one) over a
  * placeholder item list (no real furni data source, no search/filter behavior behind its two
  * empty Dropmenus or its text input) - ported at that same fidelity, using
- * `useRowVirtualizer`/`useScrollController` (the same primitives theme-pixi's own InfiniteGrid
+ * `useRowVirtualizer`/`useScrollController` (the same primitives theme's own InfiniteGrid
  * is built on) directly with a fixed column count instead of reusing InfiniteGrid itself, to
  * match DOM's actual fixed-4-column behavior rather than InfiniteGrid's viewport-width-driven
  * one. DOM's `<input type="text w-full overflow-hidden px-2">` is itself malformed (Tailwind
@@ -137,7 +137,7 @@ export const InventoryFurniView = ({ scrollVariant }: { scrollVariant: string })
                 </Box>
                 <Box layout={{ flexDirection: 'column', width: 180, flexShrink: 0 }}>
                     <Box layout={{ flex: 1 }}>
-                        <Text
+                        <ThemeText
                             text="preview"
                             textStyle="text-style-regular"
                             textOptions={{}}

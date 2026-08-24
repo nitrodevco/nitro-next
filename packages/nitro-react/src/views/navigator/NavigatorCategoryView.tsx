@@ -1,7 +1,7 @@
 import { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate, useNavigatorSelectors } from '#base/context';
-import { Box, ColorLayer, NitroIcon, Text } from '#base/theme-pixi';
+import { Box, ColorLayer, NitroIcon, ThemeText } from '#base/theme';
 
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomEntryView } from './NavigatorRoomEntryView';
@@ -54,7 +54,7 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             layout={{ position: 'absolute', left: 5, top: isCollapsed ? 4 : 7 }}
                         />
                     )}
-                    <Text
+                    <ThemeText
                         layout={{ position: 'absolute', top: 5, left: 20, width: 320 }}
                         text={interpolate(title)}
                         textStyle="text-style-regular"

@@ -2,7 +2,7 @@ import { IMessengerFriend } from '@nitrodevco/nitro-packets';
 
 import { useFriendsSelectors, useTranslation } from '#base/context';
 import { useOfflineFriendsSelector, useOnlineFriendsSelector } from '#base/context/user';
-import { Accordion, ScrollArea } from '#base/theme-pixi';
+import { Accordion, ScrollArea } from '#base/theme';
 
 import { FriendListGroupPixi } from './components/FriendListGroupPixi';
 import { FriendListFriendsFooterPixi } from './footers/FriendListFriendsFooterPixi';

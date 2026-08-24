@@ -1,5 +1,5 @@
 import { useFriendRequestsSelector } from '#base/context/user';
-import { ScrollArea } from '#base/theme-pixi';
+import { ScrollArea } from '#base/theme';
 
 import { FriendListRequestsFooterPixi } from './footers/FriendListRequestsFooterPixi';
 import { FriendListTabPixi } from './FriendListTabPixi';

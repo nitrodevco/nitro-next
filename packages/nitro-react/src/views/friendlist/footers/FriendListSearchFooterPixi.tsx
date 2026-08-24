@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, NitroIcon, Text, TextInput } from '#base/theme-pixi';
+import { Border, Box, Button, NitroIcon, ThemeText, TextInput } from '#base/theme';
 
 /** Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. */
 export const FriendListSearchFooterPixi = () => {
@@ -28,7 +28,7 @@ export const FriendListSearchFooterPixi = () => {
                         icon="icon-search-outline"
                         layout={{}}
                     />
-                    <Text
+                    <ThemeText
                         text={t('generic.search')}
                         textStyle="text-style-regular"
                         textOptions={{ fill: '#000000' }}

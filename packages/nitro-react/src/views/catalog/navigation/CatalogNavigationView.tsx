@@ -1,7 +1,7 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useCatalogSelectors } from '#base/context';
-import { Border, ScrollArea } from '#base/theme-pixi';
+import { Border, ScrollArea } from '#base/theme';
 
 import { CatalogNavigationSetItemView } from './CatalogNavigationSetItemView';
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';

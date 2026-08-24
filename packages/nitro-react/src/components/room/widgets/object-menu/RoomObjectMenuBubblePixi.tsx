@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useRef } from 'react';
 
 import { useRoomSelector } from '#base/context';
 import { useRoomEventDispatcher } from '#base/hooks';
-import { Box } from '#base/theme-pixi';
+import { Box } from '#base/theme';
 import { FixedSizeStack } from '#base/utils';
 
 const LOCATION_STACK_SIZE: number = 25;
@@ -30,7 +30,7 @@ type RoomObjectInfoBubblePixiProps = {
  * directly on every RoomRenderedEvent tick for perf (bypassing React re-renders); this does the
  * same thing to a Pixi container ref's `.x`/`.y`/`.alpha`/`.visible`, following the same
  * imperative-ref-driven-by-external-event-source pattern established by
- * theme-pixi/utils/useFrameDrag.ts/useFrameResize.ts. `room.getRoomObjectScreenLocation()`/
+ * theme/utils/useFrameDrag.ts/useFrameResize.ts. `room.getRoomObjectScreenLocation()`/
  * `getRoomObjectBoundingRectangle()` already return coordinates in the shared renderer's own
  * canvas-pixel space (see RoomSpriteCanvas's screen-point math), the same space
  * Container.x/y/getGlobalPosition() operate in for a top-level child of app.stage - so, exactly

@@ -1,7 +1,7 @@
 import { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
-import { Border, Box, Image, NitroIcon, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Border, Box, ThemeImage, NitroIcon, ThemeText, useTextureFromUrl } from '#base/theme';
 
 import { RESULTS_MODE_TILES } from './NavigatorCategoryView';
 import { getUserCountColor } from './NavigatorRoomEntryUtils';
@@ -47,7 +47,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                 icon="icon-nav-usercount"
                 layout={{}}
             />
-            <Text
+            <ThemeText
                 text={String(room.population)}
                 textStyle="text-style-u-bold"
                 textOptions={{ fill: '#ffffff' }}
@@ -71,7 +71,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                 <Box layout={{ position: 'absolute', top: 6, left: 7, width: 108, height: 109, justifyContent: 'center', alignItems: 'center' }}>
                     {roomPicTexture
                         ? (
-                                <Image
+                                <ThemeImage
                                     src={roomPicUrl}
                                     width={106}
                                     height={106}
@@ -103,7 +103,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                         layout={{}}
                     />
                 </Box>
-                <Text
+                <ThemeText
                     layout={{ position: 'absolute', top: 116, left: 0, width: 100, height: 30 }}
                     text={interpolate(room.name)}
                     textStyle="text-style-u-bold"
@@ -126,7 +126,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center' }}
             >
                 {userCount}
-                <Text
+                <ThemeText
                     layout={{ flex: 1, paddingLeft: 4 }}
                     text={interpolate(room.name)}
                     textStyle="text-style-u-regular"

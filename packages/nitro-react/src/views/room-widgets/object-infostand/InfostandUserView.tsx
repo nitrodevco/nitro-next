@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useConfigValue, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
-import { Border, Box, CloseButton, ColorLayer, NitroIcon, Text, TextInput, useAvatarImageTexture } from '#base/theme-pixi';
+import { Border, Box, CloseButton, ColorLayer, NitroIcon, ThemeText, TextInput, useAvatarImageTexture } from '#base/theme';
 
 export interface InfostandUserViewProps {
     objectData: ISimpleRoomObjectData;
@@ -50,7 +50,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                             icon="icon-profile-house"
                             layout={{}}
                         />
-                        <Text
+                        <ThemeText
                             text={userData.name}
                             textStyle="text-style-regular"
                             textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#000000' }}
@@ -118,7 +118,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                     layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%', minHeight: 25, paddingLeft: 8, paddingRight: 8, paddingTop: 2, paddingBottom: 2 }}
                 >
                     {!userData.isOwnUser && (
-                        <Text
+                        <ThemeText
                             layout={{ flex: 1 }}
                             text={motto.length === 0 ? t('infostand.motto.change') : motto}
                             textStyle="text-style-regular"
@@ -139,7 +139,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                                 />
                             </Box>
                             {!isEditingMotto && (
-                                <Text
+                                <ThemeText
                                     layout={{ flex: 1 }}
                                     text={motto}
                                     textStyle="text-style-regular"
@@ -163,7 +163,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                 </Border>
                 <Box layout={{ width: '100%', height: 1 }} />
                 <Box layout={{ flexDirection: 'row', width: '100%' }}>
-                    <Text
+                    <ThemeText
                         text={`${t('infostand.text.achievement_score')}\n${userData.achievementScore}`}
                         textStyle="text-style-regular"
                         textOptions={{ fontFamily: 'GoldfishBold', fontSize: 9, fill: '#ffffff' }}

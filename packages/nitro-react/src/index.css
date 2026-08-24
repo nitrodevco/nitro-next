@@ -2,7 +2,7 @@
 @source "**/*.{ts,tsx,css}";
 @source inline("grid-cols-{1..12}");
 
-@import './theme-core/fonts.css';
+@import './theme/font/fonts.css';
 @import './base.css';
 
 @theme static {

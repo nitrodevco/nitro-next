@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from '#base/context';
 import { useRoomCamera } from '#base/hooks';
-import { getRenderMode } from '#base/theme-core';
+import { getRenderMode } from '#base/theme';
 
 type MouseData = {
     mouseXY: { x: number; y: number };

@@ -2,7 +2,7 @@ import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { NavigatorFilterType, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, Text, TextInput } from '#base/theme-pixi';
+import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, ThemeText, TextInput } from '#base/theme';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
     { type: 'anything', prefix: '' },
@@ -49,7 +49,7 @@ export const NavigatorSearchView = () => {
                     onPress={() => setFilterOpen(prev => !prev)}
                     layout={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 4, width: 116, height: 24 }}
                 >
-                    <Text
+                    <ThemeText
                         text={t(`navigator.filter.${filterType}`)}
                         textStyle="text-style-u-regular"
                         textOptions={{ fill: '#000000' }}

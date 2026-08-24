@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { useCatalogSelectors, useOwnUserLook, useTranslation } from '#base/context';
 import { useCatalogOfferActions } from '#base/hooks';
-import { Box, ColorLayer, Text } from '#base/theme-pixi';
+import { Box, ColorLayer, ThemeText } from '#base/theme';
 
 import { useRoomPreviewerPixi } from '../../useRoomPreviewerPixi';
 
@@ -96,7 +96,7 @@ export const CatalogProductViewWidgetView = () => {
             )}
             {activeOffer && product && (
                 <Box layout={{ position: 'absolute', top: 22, left: 5, width: 175, flexDirection: 'column', gap: 4 }}>
-                    <Text
+                    <ThemeText
                         text={product.productData?.name ?? t(activeOffer.localizationId)}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#ffffff' }}

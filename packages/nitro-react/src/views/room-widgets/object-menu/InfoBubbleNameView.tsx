@@ -1,6 +1,6 @@
 import { IRoomObjectNameData } from '@nitrodevco/nitro-api';
 
-import { Bubble, Text } from '#base/theme-pixi';
+import { Bubble, ThemeText } from '#base/theme';
 
 export interface InfoBubbleNameViewProps {
     nameData: IRoomObjectNameData;
@@ -16,7 +16,7 @@ export const InfoBubbleNameView = ({ nameData }: InfoBubbleNameViewProps) => {
             tintColor="#3d3d3d"
             layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minWidth: 70, paddingTop: 6, paddingBottom: 6 }}
         >
-            <Text
+            <ThemeText
                 text={nameData.name}
                 textStyle="text-style-u-regular"
                 textOptions={{ fontSize: 11, fill: '#ffffff' }}

@@ -1,6 +1,6 @@
 import { useCatalogSelectors, useTranslation } from '#base/context';
 import { useCatalogNavigation, useCatalogVisibility } from '#base/hooks';
-import { Box, Frame, TabButton, TabContent, TabContext } from '#base/theme-pixi';
+import { Box, Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
 import { CatalogHeaderView } from './CatalogHeaderView';
 import { CatalogPurchaseConfirmationView } from './CatalogPurchaseConfirmationView';

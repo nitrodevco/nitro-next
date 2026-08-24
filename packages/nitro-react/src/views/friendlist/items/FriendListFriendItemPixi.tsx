@@ -3,7 +3,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { memo, useRef } from 'react';
 
 import { useFriendsActions, useFriendsSelectors } from '#base/context';
-import { Border, Box, NitroIcon, useOutsideClick } from '#base/theme-pixi';
+import { Border, Box, NitroIcon, useOutsideClick } from '#base/theme';
 
 import { FriendListItemPixi } from '../components/FriendListItemPixi';
 

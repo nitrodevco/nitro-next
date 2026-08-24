@@ -2,7 +2,7 @@ import { SendRoomInviteComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Button, Frame, Text, TextInput } from '#base/theme-pixi';
+import { Border, Box, Button, Frame, ThemeText, TextInput } from '#base/theme';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRoomInviteView.tsx. */
 export const FriendListRoomInviteView = () => {
@@ -34,7 +34,7 @@ export const FriendListRoomInviteView = () => {
             onClose={() => toggleWindow('friendlist_invite')}
         >
             <Border layout={{ height: 116, flexDirection: 'column', paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
-                <Text
+                <ThemeText
                     text={t('friendlist.invite.summary', '', { count: selectedFriendIds.length.toString() })}
                     textStyle="text-style-regular"
                     textOptions={{ fontSize: 9.8, fill: '#000000' }}
@@ -47,7 +47,7 @@ export const FriendListRoomInviteView = () => {
                     fontSize={9.12}
                     layout={{ width: '100%', height: 70, marginTop: 2 }}
                 />
-                <Text
+                <ThemeText
                     layout={{ marginTop: 1 }}
                     text={t('friendlist.invite.note')}
                     textStyle="text-style-regular"

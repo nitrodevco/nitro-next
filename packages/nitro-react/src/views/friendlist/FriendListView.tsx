@@ -1,6 +1,6 @@
 import { useFriendsSelectors, useTranslation } from '#base/context';
 import { useSystemActions, useWindowParams } from '#base/context/system';
-import { Accordion, Box, ColorLayer, Frame, Text } from '#base/theme-pixi';
+import { Accordion, Box, ColorLayer, Frame, ThemeText } from '#base/theme';
 
 import { FriendListFriendsPixi } from './FriendListFriendsPixi';
 import { FriendListRequestsPixi } from './FriendListRequestsPixi';
@@ -60,7 +60,7 @@ export const FriendListView = () => {
                 <FriendListSearchPixi value="search" />
             </Accordion>
             <Box layout={{ width: '100%', height: 20, flexShrink: 0, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingTop: 8, paddingRight: 32 }}>
-                <Text
+                <ThemeText
                     text={t(tooltip)}
                     textStyle="text-style-regular"
                     textOptions={{ fontSize: 8.75, fill: '#ffffff' }}

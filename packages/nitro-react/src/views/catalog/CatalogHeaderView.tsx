@@ -1,5 +1,5 @@
 import { useCatalogSelectors, useConfigValue } from '#base/context';
-import { Box, ColorLayer, Image, Text, useTextureFromUrl } from '#base/theme-pixi';
+import { Box, ColorLayer, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
 
 /** Pixi port of views/catalog/CatalogHeaderView.tsx. */
 export const CatalogHeaderView = () => {
@@ -22,7 +22,7 @@ export const CatalogHeaderView = () => {
 
     return (
         <Box layout={{ position: 'relative', width: '100%', height: 90, flexShrink: 0 }}>
-            <Image
+            <ThemeImage
                 src={headerImageUrl}
                 alpha={0.1}
                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
@@ -30,14 +30,14 @@ export const CatalogHeaderView = () => {
             <ColorLayer color="#0e3f52" />
             <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 20, paddingRight: 20 }}>
                 {iconTexture && (
-                    <Image
+                    <ThemeImage
                         src={iconUrl}
                         width={iconTexture.width * 2}
                         height={iconTexture.height * 2}
                         layout={{}}
                     />
                 )}
-                <Text
+                <ThemeText
                     text={activeNode?.localization ?? ''}
                     textStyle="text-style-headline-big"
                     textOptions={{ fill: '#ffffff' }}

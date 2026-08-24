@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Box, ColorLayer, Image, NitroIcon } from '#base/theme-pixi';
+import { Box, ColorLayer, ThemeImage, NitroIcon } from '#base/theme';
 
 import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
@@ -62,7 +62,7 @@ export const ToolbarView = () => {
                         color="#525252"
                         layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
                     />
-                    <Image
+                    <ThemeImage
                         src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
                         width={14}
                         height={43}
@@ -182,7 +182,7 @@ export const ToolbarView = () => {
                             layout={{}}
                         />
                     </Box>
-                    <Image
+                    <ThemeImage
                         src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
                         width={14}
                         height={43}

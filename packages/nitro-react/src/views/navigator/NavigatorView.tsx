@@ -2,7 +2,7 @@ import { ForwardToARandomPromotedRoomComposer, IRoomInfo, NavigatorAddCollapsedC
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useNavigatorVisibility } from '#base/hooks';
-import { Border, Box, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, Text } from '#base/theme-pixi';
+import { Border, Box, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, ThemeText } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
 import { NavigatorQuickLinksView } from './NavigatorQuickLinksView';
@@ -137,7 +137,7 @@ export const NavigatorView = () => {
                         >
                             {isSearching && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <Text
+                                    <ThemeText
                                         text={t('navigator.searching')}
                                         textStyle="text-style-u-regular"
                                         textOptions={{ fill: '#000000' }}
@@ -146,7 +146,7 @@ export const NavigatorView = () => {
                             )}
                             {!isSearching && !searchResult?.blocks.length && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <Text
+                                    <ThemeText
                                         text={t('navigator.search.returned.no.results')}
                                         textStyle="text-style-headline-small"
                                         textOptions={{ fontSize: 16, fill: '#000000' }}
@@ -183,7 +183,7 @@ export const NavigatorView = () => {
                                     layout={{}}
                                 />
                             </Box>
-                            <Text
+                            <ThemeText
                                 layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                 text={t('navigator.create.room')}
                                 textStyle="text-style-u-bold"
@@ -207,7 +207,7 @@ export const NavigatorView = () => {
                                                 layout={{}}
                                             />
                                         </Box>
-                                        <Text
+                                        <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                             text={t('navigator.promote.room')}
                                             textStyle="text-style-u-bold"
@@ -235,7 +235,7 @@ export const NavigatorView = () => {
                                                 layout={{}}
                                             />
                                         </Box>
-                                        <Text
+                                        <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                             text={t('navigator.random.room')}
                                             textStyle="text-style-u-bold"

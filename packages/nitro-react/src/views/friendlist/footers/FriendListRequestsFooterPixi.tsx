@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, NitroIcon, Text } from '#base/theme-pixi';
+import { Border, Box, Button, NitroIcon, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/footers/FriendListRequestsFooter.tsx. */
 export const FriendListRequestsFooterPixi = () => {
@@ -16,7 +16,7 @@ export const FriendListRequestsFooterPixi = () => {
                         icon="icon-accept-check"
                         layout={{}}
                     />
-                    <Text
+                    <ThemeText
                         text={t('friendlist.requests.acceptall')}
                         textStyle="text-style-regular"
                         textOptions={{ fill: '#000000' }}
@@ -27,7 +27,7 @@ export const FriendListRequestsFooterPixi = () => {
                         icon="icon-decline-x"
                         layout={{}}
                     />
-                    <Text
+                    <ThemeText
                         text={t('friendlist.requests.dismissall')}
                         textStyle="text-style-regular"
                         textOptions={{ fill: '#000000' }}

@@ -1,5 +1,5 @@
 import { useOwnUserInfo, useTranslation } from '#base/context';
-import { Box, ColorLayer, Frame, TabButton, TabContext, Text } from '#base/theme-pixi';
+import { Box, ColorLayer, Frame, TabButton, TabContext, ThemeText } from '#base/theme';
 
 /**
  * Pixi port of theme/AvatarEditorView.tsx. DOM's own source is itself a stub (a static
@@ -21,7 +21,7 @@ export const AvatarEditorView = () => {
         >
             <Box layout={{ position: 'relative', width: '100%', height: 110, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <ColorLayer color="#0e3f52" />
-                <Text
+                <ThemeText
                     text={name}
                     textStyle="text-style-headline-big"
                     textOptions={{ fill: '#ffffff', fontSize: 28 }}

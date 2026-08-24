@@ -1,0 +1,35 @@
+import { CSSProperties } from 'react';
+
+import { TEXT_STYLES, TextStyleKey } from '../utils';
+
+export interface DomTextStyleOptions {
+    fill?: string;
+    fontSize?: number;
+}
+
+export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptions): CSSProperties => {
+    const { fontFamily, fontSize, color, dropShadow } = TEXT_STYLES[key] as {
+        fontFamily: string;
+        fontSize: number;
+        color?: string;
+        dropShadow?: { alpha: number; angle: number; distance: number; color: number };
+    };
+
+    const style: CSSProperties = {
+        fontFamily,
+        fontSize: overrides?.fontSize ?? fontSize,
+        color: overrides?.fill ?? color,
+        margin: 0,
+        whiteSpace: 'pre',
+    };
+
+    if (dropShadow) {
+        const dx = Math.cos(dropShadow.angle) * dropShadow.distance;
+        const dy = Math.sin(dropShadow.angle) * dropShadow.distance;
+        const [ r, g, b ] = [ 16, 8, 0 ].map(shift => (dropShadow.color >> shift) & 0xFF);
+
+        style.textShadow = `${dx}px ${dy}px 0 rgba(${r}, ${g}, ${b}, ${dropShadow.alpha})`;
+    }
+
+    return style;
+};

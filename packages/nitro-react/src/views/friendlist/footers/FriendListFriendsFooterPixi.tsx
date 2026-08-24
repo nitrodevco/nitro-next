@@ -1,5 +1,5 @@
 import { useFriendsActions, useFriendsSelectors, useSystemActions } from '#base/context';
-import { Border, Box, Button, NitroIcon, TextInput } from '#base/theme-pixi';
+import { Border, Box, Button, NitroIcon, TextInput } from '#base/theme';
 
 const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 };
 

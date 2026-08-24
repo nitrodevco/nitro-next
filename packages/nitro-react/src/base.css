@@ -18,7 +18,7 @@
         outline: none;
     }
 
-    /* DOM render mode's scroll viewports (theme-pixi/dom/useDomScrollController.ts) use real
+    /* DOM render mode's scroll viewports (theme/dom/useDomScrollController.ts) use real
      * native scroll so their own custom-skinned ScrollbarVertical/Horizontal can drive it, not
      * the browser's own scrollbar chrome - this hides the native one without disabling scroll
      * itself. `-ms-overflow-style`/`scrollbar-width` cover Firefox/legacy Edge; WebKit/Blink

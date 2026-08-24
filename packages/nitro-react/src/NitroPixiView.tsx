@@ -7,7 +7,7 @@ import {
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
-import { PixiApplicationRoot } from '#base/theme-pixi';
+import { PixiApplicationRoot } from '#base/theme';
 
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';

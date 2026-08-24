@@ -1,7 +1,7 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
 import { useFriendsSelector, useTranslation } from '#base/context';
-import { Accordion, ScrollArea } from '#base/theme-pixi';
+import { Accordion, ScrollArea } from '#base/theme';
 
 import { FriendListGroupPixi } from './components/FriendListGroupPixi';
 import { FriendListSearchFooterPixi } from './footers/FriendListSearchFooterPixi';

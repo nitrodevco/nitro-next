@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
-import { getRenderMode } from '#base/theme-core';
+import { getRenderMode } from '#base/theme';
 
 import { useAvatarLoader } from './hooks/logic';
 import { NitroDomView } from './NitroDomView';

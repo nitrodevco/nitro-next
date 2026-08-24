@@ -1,6 +1,6 @@
 import { useTranslation } from '#base/context';
 import { useSystemActions } from '#base/context/system';
-import { Frame } from '#base/theme-pixi';
+import { Frame } from '#base/theme';
 
 /**
  * Pixi port of theme/MessengerView.tsx. DOM's own source is itself a stub (static "chats"

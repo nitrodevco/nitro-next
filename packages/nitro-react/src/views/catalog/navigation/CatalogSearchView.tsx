@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { useCatalogActions, useCatalogSelectors, useFurnitureDataSelector } from '#base/context';
 import { useCatalogNavigation, useCatalogOfferActions } from '#base/hooks';
-import { Border, Box, NitroIcon, TextInput } from '#base/theme-pixi';
+import { Border, Box, NitroIcon, TextInput } from '#base/theme';
 
 /**
  * Pixi port of views/catalog/navigation/CatalogSearchView.tsx. DOM's `placeholder`/`title`

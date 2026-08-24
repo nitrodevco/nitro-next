@@ -1,4 +1,4 @@
-import { Border, Dropmenu } from '#base/theme-pixi';
+import { Border, Dropmenu } from '#base/theme';
 
 /**
  * Shared shape behind theme/InventoryPetsView.tsx, InventoryBotsView.tsx and

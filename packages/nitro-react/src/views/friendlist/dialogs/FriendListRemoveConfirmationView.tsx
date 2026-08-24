@@ -1,7 +1,7 @@
 import { RemoveFriendComposer } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions, useFriendsSelector, useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Button, Frame, Text } from '#base/theme-pixi';
+import { Border, Box, Button, Frame, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRemoveConfirmationView.tsx. */
 export const FriendListRemoveConfirmationView = () => {
@@ -40,7 +40,7 @@ export const FriendListRemoveConfirmationView = () => {
             onClose={() => toggleWindow('friendlist_remove_confirmation')}
         >
             <Border layout={{ height: 116, paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
-                <Text
+                <ThemeText
                     layout={{ flex: 1 }}
                     text={t('friendlist.removefriendconfirm.userlist', '', { user_names: usernames })}
                     textStyle="text-style-regular"

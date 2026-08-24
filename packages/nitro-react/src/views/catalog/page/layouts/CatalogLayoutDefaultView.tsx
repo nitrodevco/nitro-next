@@ -1,4 +1,4 @@
-import { Box } from '#base/theme-pixi';
+import { Box } from '#base/theme';
 
 import { CatalogItemGridWidgetView } from '../widgets/CatalogItemGridWidgetView';
 import { CatalogProductViewWidgetView } from '../widgets/CatalogProductViewWidgetView';

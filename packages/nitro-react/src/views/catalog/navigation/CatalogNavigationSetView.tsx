@@ -1,6 +1,6 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { Box } from '#base/theme-pixi';
+import { Box } from '#base/theme';
 
 import { CatalogNavigationSetItemView } from './CatalogNavigationSetItemView';
 

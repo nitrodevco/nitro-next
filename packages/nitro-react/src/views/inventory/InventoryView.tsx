@@ -1,5 +1,5 @@
 import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
-import { Frame, TabButton, TabContent, TabContext } from '#base/theme-pixi';
+import { Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
 import { InventoryBadgesView } from './InventoryBadgesView';
 import { InventoryBotsView } from './InventoryBotsView';

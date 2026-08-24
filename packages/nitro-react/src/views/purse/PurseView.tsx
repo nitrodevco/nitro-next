@@ -1,5 +1,5 @@
 import { useTranslation, useWallet } from '#base/context';
-import { Border, Box, Button, NitroCurrencyIcon, NitroIcon, Text } from '#base/theme-pixi';
+import { Border, Box, Button, NitroCurrencyIcon, NitroIcon, ThemeText } from '#base/theme';
 
 export const PurseView = () => {
     const currency = useWallet();
@@ -40,7 +40,7 @@ export const PurseView = () => {
                         key={name}
                         layout={{ height: 19, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 2 }}
                     >
-                        <Text
+                        <ThemeText
                             text={String(amount)}
                             textStyle="text-style-u-bold"
                             textOptions={{ fill: color }}
@@ -59,7 +59,7 @@ export const PurseView = () => {
                     layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4 }}
                 >
                     <NitroIcon icon="icon-hc-small" />
-                    <Text
+                    <ThemeText
                         text={t('purse.clubdays.zero.amount.text')}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#00C1C4' }}
@@ -71,7 +71,7 @@ export const PurseView = () => {
                     layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4 }}
                 >
                     <NitroIcon icon="icon-earnings-small" />
-                    <Text
+                    <ThemeText
                         text={t('earnings.title')}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#00C1C4' }}
