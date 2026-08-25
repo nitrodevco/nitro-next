@@ -19,16 +19,20 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
 }) => {
     if (!layer) return null;
 
+    // A `tile` layer with an explicit `width` (set by `Tiled(...)`, e.g. `ScrollbarSliderBarVertical`'s
+    // grip overlay) positions itself from its own `left`/`top`/`bottom`/`width` inset fields as a
+    // fixed-width strip, on both backends - the `layout` prop passed to this component is for the
+    // other layer kinds (and for a widthless tile), which fill it directly. A `tile` layer with no
+    // `width` (e.g. `Header`'s full-bleed background/shine, built as a raw `{ kind: 'tile', textureKey }`
+    // literal, not through `Tiled(...)`) means "fill the box" - forcing it through the same inset
+    // math would default `width` to `0` and collapse it to nothing.
+    const tileInsetLayout = layer.kind === 'tile' && layer.width !== undefined
+        ? { position: 'absolute' as const, left: layer.left ?? 0, top: layer.top ?? 0, bottom: layer.bottom ?? 0, width: layer.width }
+        : undefined;
+
     if (getRenderMode() === 'dom') {
-        // `tile` layers position themselves from their own `left`/`top`/`bottom`/`width` inset
-        // fields (set by `Tiled(...)`), the same way the Pixi switch below does below in its own
-        // `case 'tile'` - the `layout` prop passed to this component is for the other layer kinds,
-        // which fill it directly, and is not consulted here. Skipping this mirrors the bug that
-        // let a caller like `ScrollbarSliderBarVertical`'s overlay (which never passes a `layout`
-        // prop for its `Tiled(...)` overlay) fall back to `FILL_STYLE` and cover its entire parent
-        // box edge-to-edge instead of the intended inset strip.
         const domStyle = layer.kind === 'tile'
-            ? boxLayoutToStyle({ position: 'absolute', left: layer.left ?? 0, top: layer.top ?? 0, bottom: layer.bottom ?? 0, width: layer.width ?? 0 })
+            ? (tileInsetLayout ? boxLayoutToStyle(tileInsetLayout) : (layout ? boxLayoutToStyle(layout) : undefined))
             : (layout ? boxLayoutToStyle(layout) : undefined);
 
         return (
@@ -58,13 +62,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
             <TileLayer
                 textureKey={layer.textureKey}
                 tintColor={tintColor}
-                layout={{
-                    position: 'absolute',
-                    left: layer.left ?? 0,
-                    top: layer.top ?? 0,
-                    bottom: layer.bottom ?? 0,
-                    width: layer.width ?? 0,
-                }}
+                layout={tileInsetLayout ?? layout}
             />
         );
         case 'nineSlice': return (
