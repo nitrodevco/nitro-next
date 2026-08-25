@@ -20,11 +20,22 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
     if (!layer) return null;
 
     if (getRenderMode() === 'dom') {
+        // `tile` layers position themselves from their own `left`/`top`/`bottom`/`width` inset
+        // fields (set by `Tiled(...)`), the same way the Pixi switch below does below in its own
+        // `case 'tile'` - the `layout` prop passed to this component is for the other layer kinds,
+        // which fill it directly, and is not consulted here. Skipping this mirrors the bug that
+        // let a caller like `ScrollbarSliderBarVertical`'s overlay (which never passes a `layout`
+        // prop for its `Tiled(...)` overlay) fall back to `FILL_STYLE` and cover its entire parent
+        // box edge-to-edge instead of the intended inset strip.
+        const domStyle = layer.kind === 'tile'
+            ? boxLayoutToStyle({ position: 'absolute', left: layer.left ?? 0, top: layer.top ?? 0, bottom: layer.bottom ?? 0, width: layer.width ?? 0 })
+            : (layout ? boxLayoutToStyle(layout) : undefined);
+
         return (
             <BackgroundLayerDom
                 layer={layer}
                 tintColor={tintColor}
-                style={layout ? boxLayoutToStyle(layout) : undefined}
+                style={domStyle}
             />
         );
     }

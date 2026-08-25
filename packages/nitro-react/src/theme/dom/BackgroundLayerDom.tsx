@@ -45,7 +45,8 @@ const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintCo
  * - `stretch`/`sprite` -> `background-image` sized to fill (both kinds already render
  *   identically on the Pixi side today - see `SpriteLayer.tsx`, which every `BackgroundLayer`
  *   call for either kind defaults to `FillLayout` for - so this mirrors that, not a new choice).
- * - `tile` -> `background-image` with `repeat`, matching `TilingSprite`'s natural-size tiling.
+ * - `tile` -> `background-image` with `repeat-y`, matching `TilingSprite`'s natural-size tiling
+ *   along the vertical axis (the only axis every current `Tiled(...)` caller tiles along).
  * - `composite` -> one absolutely-positioned child div per piece, sized exactly like
  *   `CompositePieceSprite.tsx`'s own `layout` (`top`/`left`/`right`/`bottom`/`width`/`height`).
  *
@@ -122,7 +123,7 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                 <div style={{
                     ...box,
                     backgroundImage: `url(${url})`,
-                    backgroundRepeat: 'repeat',
+                    backgroundRepeat: 'repeat-y',
                     imageRendering: 'pixelated',
                 }}
                 />
