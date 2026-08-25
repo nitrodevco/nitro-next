@@ -65,8 +65,6 @@ export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSl
             cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
         });
 
-        console.log('ya here', resolvedLayer);
-
         return (
             <Box
                 ref={ref}

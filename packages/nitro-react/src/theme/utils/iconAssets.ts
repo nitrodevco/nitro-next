@@ -1,4 +1,4 @@
-import { SpriteFrame } from './spriteFrame';
+import { SpriteFrame } from './SpriteFrame';
 
 /**
  * Discrete-PNG icon registry mirroring theme/icons.css (one image file per icon, as opposed

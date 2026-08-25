@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, BlendOverlay, Composite, NineSlice } from './layer';
+import { BackgroundLayer, Composite, NineSlice, NineSliceBlendOverlay } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 type BorderVariant = ThemeVariant;
@@ -127,7 +127,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                 {resolvedLayer && resolvedLayer.kind === 'nineSlice' && (
-                    <BlendOverlay
+                    <NineSliceBlendOverlay
                         textureKey={resolvedLayer.textureKey}
                         leftWidth={resolvedLayer.leftWidth}
                         topHeight={resolvedLayer.topHeight}

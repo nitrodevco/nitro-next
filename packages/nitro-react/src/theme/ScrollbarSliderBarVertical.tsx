@@ -1,105 +1,68 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, BoxLayout } from './Box';
-import { useInteractionState, useResolvedVariant } from './hooks';
-import { NineSliceLayer, NineSliceRepeatAxis, TileLayer } from './layer';
+import { Box } from './Box';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, NineSlice, Tiled } from './layer';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
-interface BarBorder {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
-    repeat?: NineSliceRepeatAxis;
-}
+type ScrollbarSliderBarVerticalVariant = ThemeWithStatesVariant;
 
-interface ScrollbarSliderBarVerticalVariant {
-    default: BarBorder;
-    hovering: BarBorder;
-    pressed: BarBorder;
-}
-
-const border = (textureKey: string, topHeight: number, bottomHeight: number, repeat?: NineSliceRepeatAxis): BarBorder => ({ textureKey, leftWidth: 0, topHeight, rightWidth: 0, bottomHeight, repeat });
-
-/**
- * Full port of theme/ScrollbarSliderBarVertical.tsx's 5-variant border half: a nine-slice
- * border-image sliced top/bottom only (`leftWidth`/`rightWidth` always 0). '0' has a distinct
- * `-pressed-src` art; '1' ("black") points its `active:` state at the same `-default-src`
- * texture as its default state (a real DOM no-visual-feedback-on-press quirk, preserved as-is,
- * not "fixed" into reusing '0's pressed art); '3' is the only variant with a distinct hover
- * art AND `pixel-art`/`border-image-repeat: stretch_repeat` (fill tiles vertically rather than
- * stretching - see `NineSliceRepeatAxis`'s docblock for how both targets reproduce this).
- * '100'/'200' have no hover/press art of their own (all three states reuse the same texture).
- */
-const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: Record<string, ScrollbarSliderBarVerticalVariant> = {
+const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVerticalVariant> = {
     0: {
-        default: border('scrollbarsliderbarvertical-0-default-src', 2, 2),
-        hovering: border('scrollbarsliderbarvertical-0-default-src', 2, 2),
-        pressed: border('scrollbarsliderbarvertical-0-pressed-src', 2, 2),
+        states: {
+            default: NineSlice('scrollbarsliderbarvertical-0-default-src', 0, 2, 0, 2),
+            hovering: NineSlice('scrollbarsliderbarvertical-0-default-src', 0, 2, 0, 2),
+            pressed: NineSlice('scrollbarsliderbarvertical-0-pressed-src', 0, 2, 0, 2),
+        },
+        overlays: {
+            default: Tiled('scrollbarsliderbarvertical-0-default-grd-src'),
+            pressed: Tiled('scrollbarsliderbarvertical-0-pressed-grd-src'),
+        },
     },
     1: {
-        default: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
-        hovering: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
-        pressed: border('scrollbarsliderbarvertical-1-default-src', 2, 2),
+        states: {
+            default: NineSlice('scrollbarsliderbarvertical-1-default-src', 0, 2, 0, 2),
+            hovering: NineSlice('scrollbarsliderbarvertical-1-default-src', 0, 2, 0, 2),
+            pressed: NineSlice('scrollbarsliderbarvertical-1-default-src', 0, 2, 0, 2),
+        },
+        overlays: {
+            default: Tiled('scrollbarsliderbarvertical-1-default-grd-src'),
+            pressed: Tiled('scrollbarsliderbarvertical-1-pressed-grd-src'),
+        },
     },
     3: {
-        default: border('scrollbarsliderbarvertical-3-default-src', 5, 5, 'y'),
-        hovering: border('scrollbarsliderbarvertical-3-hovering-src', 5, 5, 'y'),
-        pressed: border('scrollbarsliderbarvertical-3-pressed-src', 5, 5, 'y'),
+        states: {
+            default: NineSlice('scrollbarsliderbarvertical-3-default-src', 0, 5, 0, 5, undefined, 'y'),
+            hovering: NineSlice('scrollbarsliderbarvertical-3-hovering-src', 0, 5, 0, 5, undefined, 'y'),
+            pressed: NineSlice('scrollbarsliderbarvertical-3-pressed-src', 0, 5, 0, 5, undefined, 'y'),
+        },
     },
     100: {
-        default: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
-        hovering: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
-        pressed: border('scrollbarsliderbarvertical-100-default-src', 4, 4),
+        states: {
+            default: NineSlice('scrollbarsliderbarvertical-100-default-src', 0, 4, 0, 4),
+            hovering: NineSlice('scrollbarsliderbarvertical-100-default-src', 0, 4, 0, 4),
+            pressed: NineSlice('scrollbarsliderbarvertical-100-default-src', 0, 4, 0, 4),
+        },
     },
     200: {
-        default: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
-        hovering: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
-        pressed: border('scrollbarsliderbarvertical-200-default-src', 4, 4),
+        states: {
+            default: NineSlice('scrollbarsliderbarvertical-200-default-src', 0, 4, 0, 4),
+            hovering: NineSlice('scrollbarsliderbarvertical-200-default-src', 0, 4, 0, 4),
+            pressed: NineSlice('scrollbarsliderbarvertical-200-default-src', 0, 4, 0, 4),
+        },
     },
 };
 
-interface BarOverlay {
-    defaultTextureKey: string;
-    pressedTextureKey: string;
-    insetTop: number;
-    insetBottom: number;
-}
-
-/**
- * Overlay gradient half - only '0'/'1' have one (`3`/`100`/`200` have an empty overlay
- * classname in DOM, i.e. no overlay at all). DOM positions it via
- * `bg-position-[left_5px_top_0px] bg-size-[7px_10px] bg-repeat-y`, tiling vertically inside a
- * wrapper inset by `top-1 bottom-1` (4px, not 1px - this project's Tailwind spacing unit is
- * 4px, confirmed from `min-w-4.25` elsewhere in the same source resolving to 17px). Both the
- * default AND pressed states tile vertically (DOM's `active:` rule never overrides
- * `background-repeat`, so it inherits the base `bg-repeat-y`) - unlike
- * ScrollbarSliderBarHorizontal.tsx, whose default state is a single static (non-repeating)
- * sprite and only the pressed state tiles, a genuine asymmetry preserved from DOM.
- */
-const SCROLLBAR_SLIDER_BAR_VERTICAL_OVERLAY: Partial<Record<string, BarOverlay>> = {
-    0: { defaultTextureKey: 'scrollbarsliderbarvertical-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-0-pressed-grd-src', insetTop: 4, insetBottom: 4 },
-    1: { defaultTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarvertical-1-default-grd-src', insetTop: 4, insetBottom: 4 },
-};
-
-export interface ScrollbarSliderBarVerticalProps {
-    variant?: string;
-    defaultVariant?: string;
-    tintColor?: string;
-    layout?: BoxLayout;
+export interface ScrollbarSliderBarVerticalProps extends ThemeProps<ScrollbarSliderBarVerticalVariant> {
     onPointerDown?: (event: FederatedPointerEvent) => void;
 }
 
-/** Pixi port of theme/ScrollbarSliderBarVertical.tsx - the draggable scroll thumb. */
 export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSliderBarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarVerticalProps>(
-    ({ variant, defaultVariant, tintColor, layout, onPointerDown }, ref) => {
-        const { resolvedVariant } = useResolvedVariant('scrollbarSliderBarVertical', variant, defaultVariant);
-        const config = SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS['0'];
-        const overlay = SCROLLBAR_SLIDER_BAR_VERTICAL_OVERLAY[resolvedVariant];
-        const { state, handlers } = useInteractionState();
-        const isPressed = state === 'pressed';
-        const layer = isPressed ? config.pressed : state === 'hovering' ? config.hovering : config.default;
+    ({ variant, defaultVariant, layout, tintColor, onPointerDown }, ref) => {
+        const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
+        });
 
         const handlePointerDown = (event: FederatedPointerEvent) => {
             handlers.onPointerDown?.();
@@ -110,30 +73,21 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
             <Box
                 ref={ref}
                 eventMode="static"
-                cursor={isPressed ? 'grabbing' : 'grab'}
-                layout={{ position: 'absolute', ...layout }}
+                cursor={state === 'pressed' ? 'grabbing' : 'grab'}
+                layout={{ position: 'absolute', ...config.layout, ...layout }}
                 onPointerOver={handlers.onPointerOver}
                 onPointerOut={handlers.onPointerOut}
                 onPointerDown={handlePointerDown}
                 onPointerUp={handlers.onPointerUp}
                 onPointerUpOutside={handlers.onPointerUpOutside}
             >
-                <NineSliceLayer
-                    textureKey={layer.textureKey}
-                    leftWidth={layer.leftWidth}
-                    topHeight={layer.topHeight}
-                    rightWidth={layer.rightWidth}
-                    bottomHeight={layer.bottomHeight}
-                    tintColor={tintColor}
-                    repeat={layer.repeat}
-                />
-                {overlay && (
-                    <TileLayer
-                        textureKey={isPressed ? overlay.pressedTextureKey : overlay.defaultTextureKey}
-                        tintColor={tintColor}
-                        layout={{ position: 'absolute', left: 5, top: overlay.insetTop, bottom: overlay.insetBottom, width: 7 }}
+                { resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
                     />
-                )}
+                ) }
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
             </Box>
         );
     },

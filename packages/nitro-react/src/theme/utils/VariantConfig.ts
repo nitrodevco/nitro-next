@@ -1,4 +1,4 @@
-import { VariantCascadeMap } from '../cascade/VariantCascadeMap';
+import { VariantCascadeMap } from '../cascade';
 
 export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<string, VariantCascadeMap>>>> = {
     frame: {

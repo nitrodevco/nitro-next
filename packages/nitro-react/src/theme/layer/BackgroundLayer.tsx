@@ -1,18 +1,22 @@
-import { BackgroundLayerConfig, BackgroundLayerDom, BoxLayout, boxLayoutToStyle, CompositeLayer, getRenderMode, NineSliceLayer, SpriteLayer, TileLayer } from '#base/theme';
+import { BoxLayout } from '../Box';
+import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
+import { getRenderMode } from '../utils';
+import { CompositeLayer, CompositePiece } from './CompositeLayer';
+import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
+import { SpriteLayer } from './SpriteLayer';
+import { TileLayer } from './TileLayer';
 
-export interface BackgroundLayerProps {
+export type BackgroundLayerConfig
+    = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
+        | { kind: 'sprite'; textureKey: string }
+        | { kind: 'tile'; textureKey: string }
+        | { kind: 'composite'; pieces: CompositePiece[] };
+
+export const BackgroundLayer = ({ layer, tintColor, layout }: {
     layer: BackgroundLayerConfig | undefined;
     tintColor?: string;
     layout?: BoxLayout;
-}
-
-/**
- * Dual-target dispatcher: every caller (Border, Bubble, Header, Frame, TabContext,
- * TabContent, Droplist, ...) renders through this one component regardless of target, so none
- * of them need their own render-mode branch - `BackgroundLayerDom` (see theme/dom) mirrors
- * this same `layer.kind` switch in CSS.
- */
-export const BackgroundLayer = ({ layer, tintColor, layout }: BackgroundLayerProps) => {
+}) => {
     if (!layer) return null;
 
     if (getRenderMode() === 'dom') {
@@ -32,7 +36,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: BackgroundLayerPro
                 tintColor={tintColor}
             />
         );
-        case 'stretch': return (
+        case 'sprite': return (
             <SpriteLayer
                 textureKey={layer.textureKey}
                 tintColor={tintColor}
@@ -53,17 +57,11 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: BackgroundLayerPro
                 topHeight={layer.topHeight}
                 rightWidth={layer.rightWidth}
                 bottomHeight={layer.bottomHeight}
+                repeat={layer.repeat}
                 tintColor={tintColor}
                 layout={layout}
             />
         );
-        case 'sprite': return (
-            <SpriteLayer
-                textureKey={layer.textureKey}
-                tintColor={tintColor}
-            />
-        );
+        default: return null;
     }
-
-    return null;
 };

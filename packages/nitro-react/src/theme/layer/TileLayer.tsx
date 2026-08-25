@@ -1,10 +1,8 @@
-import { getRenderMode } from '#base/theme';
-
 import { BoxLayout } from '../Box';
-import { BackgroundLayerDom } from '../dom/BackgroundLayerDom';
-import { boxLayoutToStyle } from '../dom/boxStyle';
-import { FillLayout } from '../utils/FillLayout';
-import { usePixiTexture } from '../hooks/usePixiTexture';
+import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
+import { usePixiTexture } from '../hooks';
+import { FillLayout, getRenderMode } from '../utils';
+import { BackgroundLayerConfig } from './BackgroundLayer';
 
 export interface TileLayerProps {
     textureKey: string | undefined;
@@ -39,7 +37,10 @@ const TileLayerDom = ({ textureKey, tintColor, layout }: TileLayerProps) => {
     );
 };
 
-/** See NineSliceLayer.tsx's docblock - same reasoning, a repeating texture instead of a 9-slice. */
-export const TileLayer = (props: TileLayerProps) => getRenderMode() === 'dom'
+const Tiled = (textureKey: string): BackgroundLayerConfig => ({ kind: 'tile', textureKey });
+
+const TileLayer = (props: TileLayerProps) => getRenderMode() === 'dom'
     ? <TileLayerDom {...props} />
     : <TileLayerPixi {...props} />;
+
+export { Tiled, TileLayer };

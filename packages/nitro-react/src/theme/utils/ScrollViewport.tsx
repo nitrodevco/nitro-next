@@ -1,5 +1,3 @@
-import './pixiElements';
-
 import { Container as PixiContainer, FederatedWheelEvent, Graphics as PixiGraphics } from 'pixi.js';
 import { ReactNode, useState } from 'react';
 

@@ -7,20 +7,11 @@ import { THEME_URLS } from '../utils';
 export interface BackgroundLayerDomProps {
     layer: BackgroundLayerConfig | undefined;
     tintColor?: string;
-    /** Positioning/sizing override for the rendered layer div - defaults to absolute-fill,
-     *  matching every Pixi leaf layer's own `layout ?? FillLayout` default. */
     style?: CSSProperties;
 }
 
 const FILL_STYLE: CSSProperties = { position: 'absolute', inset: 0 };
 
-/**
- * One `composite` piece, as its own component rather than inlined in the `.map()` below - a
- * dual-target `BackgroundLayerConfig` piece can have any number of pieces, and `useTintedImageUrl`
- * needs one unconditional hook call per piece, which only works if each piece is a real
- * component instance (its own consistent per-render hook call), not a hook called from inside
- * a loop within a single component.
- */
 const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintColor?: string }) => {
     const url = THEME_URLS[piece.textureKey];
     const tintedUrl = useTintedImageUrl(tintColor ? url : undefined, tintColor);
@@ -109,7 +100,6 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             );
         }
 
-        case 'stretch':
         case 'sprite': {
             if (!url) return null;
 

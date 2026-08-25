@@ -1,5 +1,3 @@
-import './pixiElements';
-
 import { Children, ReactNode } from 'react';
 
 import { ThemeText } from '../ThemeText';

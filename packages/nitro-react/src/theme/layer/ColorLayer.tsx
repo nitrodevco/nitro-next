@@ -1,15 +1,11 @@
-import { getRenderMode } from '#base/theme';
-
 import { BoxLayout } from '../Box';
-import { boxLayoutToStyle } from '../dom/boxStyle';
-import { FillLayout } from '../utils/FillLayout';
+import { boxLayoutToStyle } from '../dom';
+import { FillLayout, getRenderMode } from '../utils';
 
-export interface ColorLayerProps {
+export const ColorLayer = ({ color, layout }: {
     color: string | undefined;
     layout?: BoxLayout;
-}
-
-export const ColorLayer = ({ color, layout }: ColorLayerProps) => {
+}) => {
     if (!color) return null;
 
     if (getRenderMode() === 'dom') {

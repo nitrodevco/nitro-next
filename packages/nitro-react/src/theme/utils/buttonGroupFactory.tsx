@@ -1,15 +1,12 @@
-import './pixiElements';
-
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
-import { VariantCascadeProvider } from '#base/theme';
-
 import { Box } from '../Box';
+import { VariantCascadeProvider } from '../cascade';
+import { useThemeVariant } from '../hooks';
 import { BackgroundLayer } from '../layer';
 import { ThemeText } from '../ThemeText';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from '../variant';
-import { useThemeVariant } from '../hooks/useThemeVariant';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './ThemeVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
 export type ButtonGroupVariant = ThemeWithStatesVariant;

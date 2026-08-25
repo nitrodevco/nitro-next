@@ -1,10 +1,8 @@
-import { getRenderMode } from '#base/theme';
-
 import { BoxLayout } from '../Box';
-import { BackgroundLayerDom } from '../dom/BackgroundLayerDom';
-import { boxLayoutToStyle } from '../dom/boxStyle';
-import { FillLayout } from '../utils/FillLayout';
-import { usePixiTexture } from '../hooks/usePixiTexture';
+import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
+import { usePixiTexture } from '../hooks';
+import { FillLayout, getRenderMode } from '../utils';
+import { BackgroundLayerConfig } from './BackgroundLayer';
 
 export interface SpriteLayerProps {
     textureKey: string | undefined;
@@ -39,7 +37,10 @@ const SpriteLayerDom = ({ textureKey, tintColor, layout }: SpriteLayerProps) => 
     );
 };
 
-/** See NineSliceLayer.tsx's docblock - same reasoning, one texture instead of a 9-slice. */
-export const SpriteLayer = (props: SpriteLayerProps) => getRenderMode() === 'dom'
+const Stretch = (textureKey: string): BackgroundLayerConfig => ({ kind: 'sprite', textureKey });
+
+const SpriteLayer = (props: SpriteLayerProps) => getRenderMode() === 'dom'
     ? <SpriteLayerDom {...props} />
     : <SpriteLayerPixi {...props} />;
+
+export { SpriteLayer, Stretch };

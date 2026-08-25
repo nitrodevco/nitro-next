@@ -1,14 +1,20 @@
-import { Rectangle, Texture } from 'pixi.js';
-import { useMemo } from 'react';
-
-import { getRenderMode } from '#base/theme';
+import { NineSliceSprite, Rectangle, Texture } from 'pixi.js';
+import { useMemo, useState } from 'react';
 
 import { BoxLayout } from '../Box';
-import { BackgroundLayerDom } from '../dom/BackgroundLayerDom';
-import { boxLayoutToStyle } from '../dom/boxStyle';
-import { FillLayout } from '../utils/FillLayout';
-import { usePixiTexture } from '../hooks/usePixiTexture';
-import { NineSliceRepeatAxis } from './BackgroundLayerConfig';
+import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
+import { usePixiTexture } from '../hooks';
+import { FillLayout, getRenderMode } from '../utils';
+import { BackgroundLayerConfig } from './BackgroundLayer';
+
+export type NineSliceRepeatAxis = 'x' | 'y';
+
+export interface NineSliceBorderWidth {
+    top?: number;
+    right?: number;
+    bottom?: number;
+    left?: number;
+}
 
 export interface NineSliceLayerProps {
     textureKey: string | undefined;
@@ -18,22 +24,11 @@ export interface NineSliceLayerProps {
     bottomHeight: number;
     tintColor?: string;
     layout?: BoxLayout;
-    /** See `NineSliceRepeatAxis`'s docblock (BackgroundLayerConfig.ts) - only handles the
-     *  3-slice case (this axis's caps, the other axis's width/height both 0), which is what
-     *  both real callers (ScrollbarSliderBarVertical/Horizontal) pass. */
     repeat?: NineSliceRepeatAxis;
 }
 
 const cropTexture = (base: Texture, x: number, y: number, w: number, h: number): Texture => new Texture({ source: base.source, frame: new Rectangle(x, y, Math.max(1, w), Math.max(1, h)) });
 
-/**
- * The tiling counterpart to the plain `pixiNineSliceSprite` below - Pixi's `NineSliceSprite`
- * only stretches its fill/edge regions, with no tiling mode (confirmed absent from its options),
- * so a genuinely tiling nine-slice has to be hand-built from three pieces: two fixed-size end
- * caps cropped from the source's leading/trailing strip, and a `pixiTilingSprite` for the
- * fill region cropped from the middle - at its own native texture scale (`pixiTilingSprite`'s
- * default `tileScale`), the same way `border-image-repeat: repeat` tiles a CSS fill region.
- */
 const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomHeight, repeat, tintColor }: { texture: Texture; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat: NineSliceRepeatAxis; tintColor?: string }) => {
     const { width, height } = texture;
 
@@ -53,13 +48,6 @@ const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomH
         };
     }, [ texture, width, height, leftWidth, topHeight, rightWidth, bottomHeight, repeat ]);
 
-    // Normal-flow flex children (fixed-size caps, `flex: 1` middle) rather than absolutely
-    // positioned ones inset from both sides - confirmed empirically that a `pixiTilingSprite`
-    // sizes reliably from Yoga's flex-grow distribution but NOT from a pair of opposite
-    // absolute insets (`left`+`right` with no explicit `width`) the way a plain `pixiSprite`
-    // does elsewhere in this codebase (see FillLayout.tsx) - it fell back to the cropped
-    // texture's own native size instead of stretching, only on the axis without an explicit
-    // dimension, which a flex `flex: 1` child doesn't have room to do.
     if (repeat === 'y') {
         return (
             <pixiContainer layout={{ flexDirection: 'column', width: '100%', height: '100%' }}>
@@ -156,14 +144,52 @@ const NineSliceLayerDom = ({ textureKey, leftWidth, topHeight, rightWidth, botto
     );
 };
 
-/**
- * Callers reaching for a single nine-slice piece directly (ScrollbarSliderTrackVertical/
- * Horizontal, ScrollbarSliderBarVertical/Horizontal, DroplistItem, DropmenuItem,
- * FramePointerDown) rather than going through `BackgroundLayer`'s own `layer.kind` switch still
- * need the same dual-target dispatch that switch already gets - routing the DOM branch through
- * `BackgroundLayerDom` with a one-off `nineSlice` config reuses that exact CSS technique instead
- * of a second implementation.
- */
-export const NineSliceLayer = (props: NineSliceLayerProps) => getRenderMode() === 'dom'
+const NineSliceBlendOverlay = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, blend, layout }: {
+    textureKey: string | undefined;
+    leftWidth: number;
+    topHeight: number;
+    rightWidth: number;
+    bottomHeight: number;
+    blend: number | undefined;
+    layout?: BoxLayout;
+}) => {
+    const texture = usePixiTexture(textureKey);
+    const [ maskNode, setMaskNode ] = useState<NineSliceSprite | null>(null);
+
+    if (getRenderMode() === 'dom' || !texture || !blend || blend <= 0) return null;
+
+    return (
+        <>
+            <pixiNineSliceSprite
+                ref={setMaskNode}
+                texture={texture}
+                leftWidth={leftWidth}
+                topHeight={topHeight}
+                rightWidth={rightWidth}
+                bottomHeight={bottomHeight}
+                renderable={false}
+                eventMode="none"
+                layout={layout ?? FillLayout}
+            />
+            {maskNode && (
+                <pixiGraphics
+                    mask={maskNode}
+                    alpha={blend}
+                    eventMode="none"
+                    layout={layout ?? FillLayout}
+                    draw={(g) => { g.clear().rect(0, 0, 1, 1).fill(0xFFFFFF); }}
+                />
+            )}
+        </>
+    );
+};
+
+const NineSlice = (textureKey: string, leftWidth: number, topHeight: number, rightWidth: number, bottomHeight: number, borderWidth?: NineSliceBorderWidth, repeat?: NineSliceRepeatAxis): BackgroundLayerConfig => (
+    { kind: 'nineSlice', textureKey, leftWidth, topHeight, rightWidth, bottomHeight, borderWidth, repeat }
+);
+
+const NineSliceLayer = (props: NineSliceLayerProps) => getRenderMode() === 'dom'
     ? <NineSliceLayerDom {...props} />
     : <NineSliceLayerPixi {...props} />;
+
+export { NineSlice, NineSliceBlendOverlay, NineSliceLayer };
