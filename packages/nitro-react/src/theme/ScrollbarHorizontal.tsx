@@ -77,7 +77,7 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                         <ScrollbarSliderBarHorizontal
                             defaultVariant={resolvedVariant}
                             tintColor={tintColor}
-                            layout={{ left: thumbOffset, width: thumbSize }}
+                            layout={{ top: 0, height: '100%', left: thumbOffset, width: thumbSize }}
                             onPointerDown={onThumbPointerDown}
                         />
                     </ScrollbarSliderTrackHorizontal>
