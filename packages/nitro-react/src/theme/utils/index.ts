@@ -5,7 +5,7 @@ export * from './getGlobalRect';
 export * from './iconAssets';
 export * from './renderMode';
 export * from './ScrollViewport';
-export * from './SpriteFrame';
+export * from './spriteFrame';
 export * from './textStyles';
 export * from './themeUrls';
 export * from './ThemeVariant';

@@ -86,7 +86,7 @@ export * from './utils/getGlobalRect';
 export * from './utils/iconAssets';
 export * from './utils/renderMode';
 export * from './utils/ScrollViewport';
-export * from './utils/SpriteFrame';
+export * from './utils/spriteFrame';
 export * from './utils/textStyles';
 export * from './utils/themeUrls';
 export * from './utils/ThemeVariant';
