@@ -110,18 +110,27 @@ const parseEtching = (argb: string, position: HabboTextStyleDef['etchingPosition
     y: (position === 'bottom' ? 1 : -1) * ATLAS_SCALE,
 });
 
-/** truffle's kerning-aware layout measures a character's advance width differently
- *  depending on whether it's shaped in isolation or as part of a real string — an
- *  isolated single-char render (as `renderGlyph` below still does, for ink cropping)
- *  comes out systematically *narrower* than the same character's advance when laid
- *  out next to real neighbors, for every style with `kerning: true` (i.e. every
- *  Ubuntu-family style). The gap is small per character (well under a physical
- *  pixel) but compounds across a line, and reads exactly like "letters crunched
- *  together" once summed over a sentence. Rendering the whole charset as one string
- *  and reading consecutive `charBounds[i].x` deltas gives the real, kerning-context
- *  advance for every character in a single call — used for `xAdvance` only; ink
- *  cropping stays on the isolated per-glyph render below, which is still needed to
- *  guarantee one glyph's ink can never bleed into a neighbor's cropped bitmap. */
+/** Measures each character's real, kerning-context advance by laying out the whole
+ *  charset as one string and reading consecutive `charBounds[i].x` deltas (an
+ *  isolated single-char render, as `renderGlyph` below still does for ink cropping,
+ *  comes out systematically narrower — no shared context to kern against).
+ *
+ *  Critically, this must be called with a style whose `gridFitType` is `'none'`
+ *  (or `'subpixel'`), never `'pixel'` — confirmed empirically (see git history/
+ *  session notes) that `gridFitType: 'pixel'` hints each glyph's *position*, not
+ *  just its shape, snapping it to the nearest whole pixel based on its cumulative
+ *  x so far. That makes the very same character measure a *different* advance
+ *  depending on what precedes it (up to ~1px off between "rendered as part of the
+ *  A-Z charset in codepoint order" and "rendered in a real sentence") — a single
+ *  baked-per-character number can never be right for both contexts at once, and
+ *  the error compounds across a line into exactly the "letters cut off / wrong
+ *  spacing" symptom (a too-small advance draws the next glyph's bitmap over the
+ *  tail of the previous one). `gridFitType: 'none'` measures the font's true,
+ *  position-independent design metrics instead (confirmed via diagnostics:
+ *  max deviation 0.000 across render contexts, vs 0.95px for `'pixel'`) — the
+ *  caller then rounds this to a whole pixel itself (see `renderGlyph`), which is
+ *  what makes both this and the *bitmap shape* land on the pixel grid, without
+ *  reintroducing `'pixel'`'s context-dependence. */
 const measureTrueAdvances = (style: object, charset: string[]): Map<string, number> => {
     const buffer = truffle.renderToBuffer(charset.join(''), style, { color: 0xffffff });
     const bounds = buffer.layout.charBounds;
@@ -145,7 +154,21 @@ const measureTrueAdvances = (style: object, charset: string[]): Map<string, numb
  *  specific pairs is intentionally not baked in; the runtime layout only ever
  *  sums each glyph's own advance (see `layoutBitmapText`), taken from
  *  `measureTrueAdvances` rather than this isolated render's own (too-narrow)
- *  `charBounds[0].width` — see that function's docblock. */
+ *  `charBounds[0].width` — see that function's docblock.
+ *
+ *  `xAdvance` is rounded to a whole (logical) pixel here — not because the true
+ *  design metric is itself a whole number, but because BOTH runtime consumers
+ *  (`BitmapTextDom.tsx`'s `x +=` accumulator and Pixi's own internal
+ *  glyph-to-glyph summation inside `pixiBitmapText`, which has no per-glyph
+ *  rounding hook of its own) sum `xAdvance` across a line one glyph at a time.
+ *  If every term in that sum is already a whole pixel, the running total can
+ *  only ever land on a whole pixel too, in both renderers, independently of
+ *  each other and of the starting position — which is what keeps Pixi's glyphs
+ *  (only its overall block origin is pixel-rounded, via `roundPixels`) as
+ *  crisply on-grid as DOM's (which pixel-snaps every glyph's destination rect
+ *  explicitly). A fractional per-glyph advance would leave both renderers
+ *  correct only in aggregate, drifting in and out of grid alignment with each
+ *  other glyph by glyph. */
 const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels => {
     const buffer = truffle.renderToBuffer(char, style, { color: 0xffffff });
     const bounds = buffer.layout.charBounds[0];
@@ -165,7 +188,7 @@ const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels
         }
     }
 
-    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance: xAdvance / ATLAS_SCALE, pixels: null };
+    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance: Math.round(xAdvance / ATLAS_SCALE), pixels: null };
 
     const w = maxX - minX + 1;
     const h = maxY - minY + 1;
@@ -179,7 +202,7 @@ const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels
 
     // w/h (the atlas crop) stay physical; xOffset/yOffset/xAdvance are placement
     // metrics other logical-pixel consumers read, so they're brought back down here.
-    return { char, w, h, xOffset: (minX - originX) / ATLAS_SCALE, yOffset: (minY - originY) / ATLAS_SCALE, xAdvance: xAdvance / ATLAS_SCALE, pixels };
+    return { char, w, h, xOffset: (minX - originX) / ATLAS_SCALE, yOffset: (minY - originY) / ATLAS_SCALE, xAdvance: Math.round(xAdvance / ATLAS_SCALE), pixels };
 };
 
 const pack = (glyphs: GlyphPixels[]): { placed: PackedGlyph[]; width: number; height: number } => {
@@ -241,7 +264,24 @@ for (const [ key, def ] of Object.entries(HABBO_TEXT_STYLES)) {
         etching: def.etchingColor ? parseEtching(def.etchingColor, def.etchingPosition) : null,
     });
 
-    const trueAdvances = measureTrueAdvances(style, CHARSET);
+    // A second, measurement-only style — identical except for `gridFitType` — see
+    // `measureTrueAdvances`'s docblock for why advances must never be measured with
+    // `'pixel'` grid-fitting despite glyphs being *rendered* with it.
+    const measureStyle = truffle.resolveStyle({
+        fontFamily: def.fontFamily,
+        fontSize: def.fontSize * ATLAS_SCALE,
+        bold: !!def.bold,
+        italic: !!def.italic,
+        kerning: !!def.kerning,
+        antiAliasType: def.antiAliasType,
+        gridFitType: 'none',
+        sharpness: def.sharpness ?? 0,
+        thickness: def.thickness ?? 0,
+        engineMode: 'air-generative',
+        etching: def.etchingColor ? parseEtching(def.etchingColor, def.etchingPosition) : null,
+    });
+
+    const trueAdvances = measureTrueAdvances(measureStyle, CHARSET);
     const glyphs = CHARSET.map(char => renderGlyph(style, char, trueAdvances.get(char) ?? 0));
     const { placed, width, height } = pack(glyphs);
     const file = `${key}.png`;
