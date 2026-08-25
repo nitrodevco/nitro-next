@@ -34,14 +34,26 @@ export interface BitmapTextDomProps {
  *  truffle's "advanced" engine bakes sub-pixel-precise metrics (most `xOffset`/
  *  `yOffset`/`xAdvance` values in the manifest aren't whole numbers) - `x`/`y` keep
  *  accumulating those exact fractional advances so error doesn't compound line to
- *  line, but each glyph's *destination* rect is rounded right before the draw call.
+ *  line, but each glyph's *destination* rect is snapped right before the draw call.
  *  With `imageSmoothingEnabled = false` (nearest-neighbor), an unrounded fractional
  *  destination gets silently snapped by the browser's own rasterizer instead - not
  *  wrong exactly, but not *consistent* either, and two glyphs on the same baseline
  *  landing on different sides of that snap is exactly what reads as neighboring
- *  letters sitting one physical pixel higher or lower than each other. Rounding
- *  here ourselves makes that snap deterministic and shared by both renderers. */
-const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { text: string }[]): void => {
+ *  letters sitting one pixel higher/lower, or one advance-width off, from each other.
+ *  Snapping here ourselves makes that snap deterministic and shared by both renderers.
+ *
+ *  This context is already `ctx.scale(dpr, dpr)`d (see `renderTintedPass`), so it
+ *  draws in logical coordinates that land on physical (device) pixels only when
+ *  multiplied by `dpr` first - snapping with a plain `Math.round(logicalValue)`
+ *  only hits the physical grid on every `dpr`th step (e.g. only even physical pixels
+ *  at `dpr: 2`), silently discarding up to `(dpr-1)/dpr` logical pixels of precision
+ *  on every single glyph. Rounding to the nearest *physical* pixel instead - scale up
+ *  by `dpr`, round, scale back down - is what actually keeps this pass pixel-perfect
+ *  at retina resolutions instead of visibly misplacing glyphs relative to Pixi's own
+ *  (GPU, sub-pixel-accurate-until-final-device-snap) `roundPixels` placement. */
+const snapToDevicePixel = (value: number, dpr: number): number => Math.round(value * dpr) / dpr;
+
+const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { text: string }[], dpr: number): void => {
     let y = 0;
 
     for (const line of lines) {
@@ -57,10 +69,10 @@ const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { tex
                     glyph.y,
                     glyph.width,
                     glyph.height,
-                    Math.round(x + glyph.xOffset),
-                    Math.round(y + glyph.yOffset),
-                    Math.round(glyph.width / font.atlasScale),
-                    Math.round(glyph.height / font.atlasScale),
+                    snapToDevicePixel(x + glyph.xOffset, dpr),
+                    snapToDevicePixel(y + glyph.yOffset, dpr),
+                    snapToDevicePixel(glyph.width / font.atlasScale, dpr),
+                    snapToDevicePixel(glyph.height / font.atlasScale, dpr),
                 );
             }
 
@@ -100,7 +112,7 @@ const renderTintedPass = (font: BitmapFont, lines: { text: string }[], width: nu
     if (ctx) {
         ctx.imageSmoothingEnabled = false;
         ctx.scale(dpr, dpr);
-        drawLines(ctx, font, lines);
+        drawLines(ctx, font, lines, dpr);
         tint(ctx, color, width, height);
     }
 

@@ -67,6 +67,19 @@ const ensureInstalled = (font: BitmapFont): string => {
         };
     }
 
+    // Pixi's default `scaleMode` is `'linear'` (see `TextureStyle`'s own default options) -
+    // fine for photographic art, but every glyph in a `pixiBitmapText` run gets positioned at
+    // its own exact (generally fractional) `xAdvance`-summed world position, not snapped to
+    // whole pixels individually (only the block's overall origin is, via `roundPixels`).
+    // Linear-sampling a glyph placed at a fractional coordinate blends it with the atlas pixels
+    // on either side of it - including its neighbor glyph's pixels, just across the 1px packing
+    // gutter - which reads as soft, unevenly "bleeding" letters rather than the crisp
+    // hard-edged look this bitmap font is meant to have (and that DOM's `imageSmoothingEnabled
+    // = false` already gives its own canvas-blitted glyphs).
+    const texture = Texture.from(font.image);
+
+    texture.source.scaleMode = 'nearest';
+
     const pixiFont = new PixiBitmapFont({
         data: {
             pages: [ { id: 0, file: font.file } ],
@@ -77,7 +90,7 @@ const ensureInstalled = (font: BitmapFont): string => {
             fontFamily: cacheKey,
             distanceField: { type: 'none', range: 0 },
         },
-        textures: [ Texture.from(font.image) ],
+        textures: [ texture ],
     });
 
     Cache.set(`${cacheKey}-bitmap`, pixiFont);

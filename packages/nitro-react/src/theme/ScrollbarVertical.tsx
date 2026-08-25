@@ -84,7 +84,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                         <ScrollbarSliderBarVertical
                             defaultVariant={resolvedVariant}
                             tintColor={tintColor}
-                            layout={{ left: 0, width: '100%', top: thumbOffset, height: thumbSize }}
+                            layout={{ top: thumbOffset, height: thumbSize }}
                             onPointerDown={onThumbPointerDown}
                         />
                     </ScrollbarSliderTrackVertical>

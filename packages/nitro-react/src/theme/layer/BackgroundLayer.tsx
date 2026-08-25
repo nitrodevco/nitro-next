@@ -26,8 +26,29 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
     // `width` (e.g. `Header`'s full-bleed background/shine, built as a raw `{ kind: 'tile', textureKey }`
     // literal, not through `Tiled(...)`) means "fill the box" - forcing it through the same inset
     // math would default `width` to `0` and collapse it to nothing.
+    //
+    // The un-declared axis (`height`, here - `Tiled(...)` never takes one) is NOT safe to leave
+    // for Yoga to infer from the opposing `top`/`bottom` insets on the Pixi side: `@pixi/layout`'s
+    // `Layout.defaultStyle` defaults a leaf node's `height` to `"intrinsic"` (its texture's own
+    // natural size) whenever it isn't explicitly set - there's no CSS-style "both offsets set,
+    // height auto -> height = container - top - bottom" behavior for a `pixiTilingSprite`. DOM's
+    // `position: absolute` genuinely does compute that from CSS alone, so this only ever silently
+    // broke Pixi - the grip overlay collapsed to ~10px (the grd texture's own native height)
+    // instead of spanning the thumb, tall thumbs included. Computing it explicitly here (from the
+    // caller's own `layout.height`, when it's a plain number - the caller is the one component
+    // that actually knows the real container size) sidesteps the Yoga default entirely, on both
+    // backends, rather than depending on it.
+    const containerHeight = typeof layout?.height === 'number' ? layout.height : undefined;
     const tileInsetLayout = layer.kind === 'tile' && layer.width !== undefined
-        ? { position: 'absolute' as const, left: layer.left ?? 0, top: layer.top ?? 0, bottom: layer.bottom ?? 0, width: layer.width }
+        ? {
+                position: 'absolute' as const,
+                left: layer.left ?? 0,
+                top: layer.top ?? 0,
+                width: layer.width,
+                ...(containerHeight !== undefined
+                    ? { height: containerHeight - (layer.top ?? 0) - (layer.bottom ?? 0) }
+                    : { bottom: layer.bottom ?? 0 }),
+            }
         : undefined;
 
     if (getRenderMode() === 'dom') {

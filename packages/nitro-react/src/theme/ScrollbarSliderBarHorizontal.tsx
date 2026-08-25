@@ -105,11 +105,29 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
             onPointerDown?.(event);
         };
 
+        // A variant with a grip overlay ('0'/'1') is a fixed 7px-thick bar centered in the
+        // wider (17px) track - matching insetLeft/insetRight's own `5px`-from-edge asset math
+        // (5 + 7 + 5 = 17) - same as ScrollbarSliderBarVertical.tsx's identical fix, rotated.
+        // A variant with no overlay ('3'/'100'/'200') keeps filling the track's full thickness,
+        // its previous (and still correct, for those) behavior.
+        const crossAxisLayout: BoxLayout = overlay ? { top: 5, height: 7 } : { top: 0, height: '100%' };
+        const mergedLayout = { position: 'absolute' as const, ...crossAxisLayout, ...layout };
+
+        // The pressed overlay positions itself from `left`/`right` (no `width`) - same
+        // Yoga-defaults-a-leaf's-unspecified-axis-to-its-texture's-own-intrinsic-size trap
+        // `BackgroundLayer.tsx`'s `containerHeight` docblock explains for the vertical bar's
+        // `top`/`bottom`-only overlay, just rotated onto the width axis here. Computed from the
+        // real bar width (`mergedLayout.width`, the one thing that knows it) instead of trusting
+        // Yoga to infer it from the insets.
+        const overlayWidth = overlay && typeof mergedLayout.width === 'number'
+            ? mergedLayout.width - overlay.insetLeft - overlay.insetRight
+            : undefined;
+
         return (
             <Box
                 ref={ref}
                 eventMode="static"
-                layout={{ position: 'absolute', ...layout }}
+                layout={mergedLayout}
                 onPointerOver={handlers.onPointerOver}
                 onPointerOut={handlers.onPointerOut}
                 onPointerDown={handlePointerDown}
@@ -131,14 +149,16 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
                                 <TileLayer
                                     textureKey={overlay.pressedTextureKey}
                                     tintColor={tintColor}
-                                    layout={{ position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }}
+                                    layout={overlayWidth !== undefined
+                                        ? { position: 'absolute', left: overlay.insetLeft, top: 0, width: overlayWidth, height: 7 }
+                                        : { position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 0, height: 7 }}
                                 />
                             )
                         : (
                                 <SpriteLayer
                                     textureKey={overlay.defaultTextureKey}
                                     tintColor={tintColor}
-                                    layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }}
+                                    layout={{ position: 'absolute', left: overlay.insetLeft, top: 0, width: 10, height: 7 }}
                                 />
                             )
                 )}
