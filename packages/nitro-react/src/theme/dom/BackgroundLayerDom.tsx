@@ -45,8 +45,14 @@ const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintCo
  * - `stretch`/`sprite` -> `background-image` sized to fill (both kinds already render
  *   identically on the Pixi side today - see `SpriteLayer.tsx`, which every `BackgroundLayer`
  *   call for either kind defaults to `FillLayout` for - so this mirrors that, not a new choice).
- * - `tile` -> `background-image` with `repeat-y`, matching `TilingSprite`'s natural-size tiling
- *   along the vertical axis (the only axis every current `Tiled(...)` caller tiles along).
+ * - `tile` -> `background-image` with `repeat` (both axes), matching `TilingSprite`'s own
+ *   behavior: it tiles the texture at its native size along whichever axis the assigned box
+ *   exceeds that size, on both axes at once if both do - there's no single fixed tiling axis
+ *   across callers (`Header`'s full-bleed background/shine tiles horizontally; `Scrollbar
+ *   SliderBarVertical`'s grip tiles vertically; `ScrollbarSliderBarHorizontal`'s pressed overlay
+ *   tiles horizontally). `repeat-repeat` mirrors that unconditionally - on whichever axis the
+ *   box happens to match the texture's native size exactly, tiling there is a visual no-op
+ *   (one repetition), so it's safe for every caller without needing to know which axis it is.
  * - `composite` -> one absolutely-positioned child div per piece, sized exactly like
  *   `CompositePieceSprite.tsx`'s own `layout` (`top`/`left`/`right`/`bottom`/`width`/`height`).
  *
@@ -123,7 +129,7 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
                 <div style={{
                     ...box,
                     backgroundImage: `url(${url})`,
-                    backgroundRepeat: 'repeat-y',
+                    backgroundRepeat: 'repeat',
                     imageRendering: 'pixelated',
                 }}
                 />
