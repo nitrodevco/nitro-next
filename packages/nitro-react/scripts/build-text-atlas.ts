@@ -43,23 +43,26 @@ const FONT_FILES: Record<HabboTextStyleDef['fontFamily'], { file: string; bold: 
 };
 
 /**
- * Glyphs are rasterized at `ATLAS_SCALE`x the nominal font size and packed into the
- * atlas at that physical resolution, then displayed back down at the nominal
- * (logical) size at runtime - the same reason `ThemeText.tsx`'s native fallback
- * rasterizes Pixi's canvas-based `pixiText` at `GetPixelRatio()` instead of 1x:
- * baking at a fixed 1x and letting a retina display (`devicePixelRatio: 2`, the
- * common case) stretch it up loses real antialiasing detail and looks soft/blocky
- * compared to Flash's actual output. 2x covers standard retina exactly (no
- * resampling at all when the runtime's pixel ratio also happens to be 2) and
- * downsamples cleanly on 1x displays - the metrics this script writes to the
- * manifest (`xOffset`/`yOffset`/`xAdvance`/`lineHeight`/`baseLineOffset`) are
- * divided back down to logical units so every other consumer (`layoutBitmapText`,
- * `BitmapTextDom`) keeps working in logical pixels unchanged; only the atlas PNG
- * itself, and the `width`/`height` crop rect naming its region, stay physical -
- * `BitmapTextPixi.tsx` is the one place that re-expands the logical metrics back
- * to physical units for Pixi's own (physical-then-uniformly-scaled) renderer.
+ * Glyphs are rasterized at `ATLAS_SCALE`x the nominal font size. This MUST be `1` -
+ * baking at a higher scale and downsampling at runtime was tried (retina crispness
+ * was the goal) and is what caused "some letters look thicker than others": Flash's
+ * `antiAliasType: 'advanced'` with `gridFitType: 'pixel'` is a *hinting* engine - it
+ * snaps each glyph's stems/counters to whole physical pixels for the size it's
+ * asked to render at. Baking at `fontSize * 2` makes it hint stems to whole pixels
+ * at the 2x grid; a stem hinted to an even width (e.g. 8px) halves cleanly back to
+ * logical size (4px), but one hinted to an odd width (e.g. 9px) does not (4.5px) -
+ * different glyphs land on different sides of that coin essentially at random
+ * (confirmed empirically: ~half the glyphs in a baked style have odd physical
+ * widths), so their stroke weight is inconsistent with their neighbors' once
+ * displayed back down. Baking at the *true* nominal size instead means truffle's
+ * hinter snaps every glyph to the actual pixel grid it will be shown on - the same
+ * grid Flash itself hinted for - so every glyph's stroke width is a whole pixel at
+ * *this* size, not a fraction of one. Retina sharpness is handled separately, and
+ * safely, by nearest-neighbor-upscaling the whole rendered line by the runtime's
+ * own (always-integer, via `GetPixelRatio()`) device pixel ratio - an exact integer
+ * multiply has no fractional-pixel case to get inconsistent about.
  */
-const ATLAS_SCALE = 2;
+const ATLAS_SCALE = 1;
 
 const range = (start: number, end: number): number[] => {
     const out: number[] = [];
