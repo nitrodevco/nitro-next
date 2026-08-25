@@ -107,14 +107,45 @@ const parseEtching = (argb: string, position: HabboTextStyleDef['etchingPosition
     y: (position === 'bottom' ? 1 : -1) * ATLAS_SCALE,
 });
 
+/** truffle's kerning-aware layout measures a character's advance width differently
+ *  depending on whether it's shaped in isolation or as part of a real string — an
+ *  isolated single-char render (as `renderGlyph` below still does, for ink cropping)
+ *  comes out systematically *narrower* than the same character's advance when laid
+ *  out next to real neighbors, for every style with `kerning: true` (i.e. every
+ *  Ubuntu-family style). The gap is small per character (well under a physical
+ *  pixel) but compounds across a line, and reads exactly like "letters crunched
+ *  together" once summed over a sentence. Rendering the whole charset as one string
+ *  and reading consecutive `charBounds[i].x` deltas gives the real, kerning-context
+ *  advance for every character in a single call — used for `xAdvance` only; ink
+ *  cropping stays on the isolated per-glyph render below, which is still needed to
+ *  guarantee one glyph's ink can never bleed into a neighbor's cropped bitmap. */
+const measureTrueAdvances = (style: object, charset: string[]): Map<string, number> => {
+    const buffer = truffle.renderToBuffer(charset.join(''), style, { color: 0xffffff });
+    const bounds = buffer.layout.charBounds;
+    const advances = new Map<string, number>();
+
+    for (let i = 0; i < charset.length; i++) {
+        const current = bounds[i];
+
+        if (!current) continue;
+
+        const next = bounds[i + 1];
+
+        advances.set(charset[i], next ? next.x - current.x : current.width);
+    }
+
+    return advances;
+};
+
 /** Renders one glyph in isolation (not as part of a shared string) so neighboring
  *  glyphs' ink can never bleed into this one's cropped bitmap — kerning between
  *  specific pairs is intentionally not baked in; the runtime layout only ever
- *  sums each glyph's own isolated advance (see `layoutBitmapText`). */
-const renderGlyph = (style: object, char: string): GlyphPixels => {
+ *  sums each glyph's own advance (see `layoutBitmapText`), taken from
+ *  `measureTrueAdvances` rather than this isolated render's own (too-narrow)
+ *  `charBounds[0].width` — see that function's docblock. */
+const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels => {
     const buffer = truffle.renderToBuffer(char, style, { color: 0xffffff });
     const bounds = buffer.layout.charBounds[0];
-    const xAdvance = bounds ? bounds.width : buffer.width;
     const originX = bounds ? bounds.x : 0;
     const originY = bounds ? bounds.y : 0;
 
@@ -207,7 +238,8 @@ for (const [ key, def ] of Object.entries(HABBO_TEXT_STYLES)) {
         etching: def.etchingColor ? parseEtching(def.etchingColor, def.etchingPosition) : null,
     });
 
-    const glyphs = CHARSET.map(char => renderGlyph(style, char));
+    const trueAdvances = measureTrueAdvances(style, CHARSET);
+    const glyphs = CHARSET.map(char => renderGlyph(style, char, trueAdvances.get(char) ?? 0));
     const { placed, width, height } = pack(glyphs);
     const file = `${key}.png`;
 
