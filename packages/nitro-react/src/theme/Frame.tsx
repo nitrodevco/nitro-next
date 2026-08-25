@@ -1,44 +1,19 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
 import { ReactNode, Ref } from 'react';
 
 import { GetPixelRatio } from '#base/utils';
 
 import { Box } from './Box';
-import { VariantCascadeMap, VariantCascadeProvider } from './cascade';
+import { VariantCascadeProvider } from './cascade';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
-import { BackgroundLayer, BackgroundLayerConfig, Composite, NineSlice } from './layer';
+import { BackgroundLayer, Composite, NineSlice } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { ThemeProps, ThemeVariant, ThemeVariants, ThemeViewOverride } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
-/**
- * What a variant's `view` override receives - everything Frame's own default render (below)
- * already has in scope once theme resolution and drag/resize wiring are done, so the override
- * can reuse Header/ContentArea/Scaler/BackgroundLayer itself (just recomposed, or with extra
- * nodes alongside them) instead of rebuilding Frame's chrome from scratch. Deliberately doesn't
- * include the drag/resize/shadow wiring the outer Box already applies - `view` replaces what's
- * *inside* the frame, not the frame's own positioning behavior.
- */
-export interface FrameViewProps {
-    resolvedLayer: BackgroundLayerConfig | undefined;
-    resolvedOverlay: BackgroundLayerConfig | undefined;
-    resolvedTint: string | undefined;
-    ownCascade: VariantCascadeMap | undefined;
-    caption?: string;
-    onClose?: () => void;
-    onHeaderPointerDown: (event: FederatedPointerEvent) => void;
-    resizeDirection: ScalerDirection;
-    onScalerPointerDown: (event: FederatedPointerEvent) => void;
-    children?: ReactNode;
-}
-
-type FrameVariant = ThemeVariant & {
-    minWidth: number;
-    minHeight: number;
-    view?: ThemeViewOverride<FrameViewProps>;
-};
+type FrameVariant = ThemeVariant;
 
 const BLUE_FRAME_SHINE = Composite([
     { textureKey: 'frame-0-default-shine-top-left-src', left: 1, top: 1, width: 7, height: 7 },
@@ -53,25 +28,13 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
-// Frame's own decorative border (BackgroundLayer below) is a purely visual absolute-fill
-// overlay, not a real CSS/Yoga border reserving box-model space the way the legacy DOM port's
-// `border-image` on Frame's own root element did (see theme/Frame.tsx, deleted -
-// `border-image-width: 33px 10px 10px 10px` for variant 3, which is what pushed its children
-// into the remaining content-box automatically). Without an equivalent here, Header/ContentArea
-// rendered full-bleed to Frame's own outer edge, painting straight over the left/right/bottom
-// portions of the border art underneath instead of leaving it visible as a frame around the
-// content - each variant's own leftWidth/rightWidth/bottomHeight (the same numbers already
-// driving that variant's NineSlice border) is repeated here as Frame's own left/right/bottom
-// padding to reproduce that inset. topHeight is deliberately NOT repeated: Header's own
-// minHeight is already sized to occupy exactly that region (see Header.tsx's variant table),
-// so padding it again would double-reserve the same space.
 const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
-    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#418db0' },
-    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#4c4c4c' },
-    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, minWidth: 40, minHeight: 40, tintColor: '#fac200' },
-    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#418db0' },
-    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 64, tintColor: '#67a3bf' },
-    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, minWidth: 64, minHeight: 73 },
+    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 50, paddingTop: 2, paddingBottom: 2 }, tintColor: '#418db0' },
+    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#4c4c4c' },
+    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#fac200' },
+    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#418db0' },
+    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#67a3bf' },
+    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 73 } },
     100: {
         layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
@@ -83,10 +46,10 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
             { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
             { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
-        ]), minWidth: 50, minHeight: 50,
+        ]), layout: { minWidth: 50, minHeight: 50 },
     },
-    101: { minWidth: 50, minHeight: 80 },
-    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), minWidth: 50, minHeight: 50 },
+    101: { layout: { minWidth: 50, minHeight: 80 } },
+    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), layout: { minWidth: 50, minHeight: 50 } },
 };
 
 export interface FrameProps extends ThemeProps<FrameVariant> {
@@ -104,15 +67,12 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
         cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor,
     });
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
-    const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: config.minWidth, height: config.minHeight });
+    const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
+    const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
+    const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: minWidth as number, height: minHeight as number });
 
     return (
         <Box
-            // frameRef is PixiContainer | HTMLElement (see useFrameDrag/getGlobalRect - it
-            // reads whichever Box actually attached at runtime, Container in Pixi mode or a
-            // plain div in DOM mode), wider than Box's own always-Container-typed ref contract
-            // (see Box.tsx's own docblock on that choice) - safe to redirect here since Box
-            // itself is what produces the HTMLElement value this ref receives in DOM mode.
             ref={frameRef as Ref<PixiContainer>}
             x={offset.dx}
             y={offset.dy}
@@ -122,43 +82,37 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
             onPointerDown={onPointerDown}
             layout={{
                 flexDirection: 'column',
-                minWidth: config.minWidth,
-                minHeight: config.minHeight,
-                width: config.minWidth,
-                height: config.minHeight,
+                minWidth,
+                minHeight,
+                width: minWidth,
+                height: minHeight,
                 ...config.layout,
                 ...layout,
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            {config.view
-                ? config.view({
-                        resolvedLayer, resolvedOverlay, resolvedTint, ownCascade, caption, onClose, onHeaderPointerDown, resizeDirection, onScalerPointerDown, children,
-                    })
-                : (
-                        <>
-                            <BackgroundLayer
-                                layer={resolvedLayer}
-                                tintColor={resolvedTint}
-                            />
-                            <BackgroundLayer layer={resolvedOverlay} />
-                            <VariantCascadeProvider map={ownCascade}>
-                                <Header
-                                    caption={caption}
-                                    tintColor={resolvedTint}
-                                    onClose={onClose}
-                                    onPointerDown={onHeaderPointerDown}
-                                />
-                                <ContentArea>
-                                    {children}
-                                </ContentArea>
-                                <Scaler
-                                    direction={resizeDirection}
-                                    onPointerDown={onScalerPointerDown}
-                                />
-                            </VariantCascadeProvider>
-                        </>
-                    )}
+            { resolvedLayer && (
+                <BackgroundLayer
+                    layer={resolvedLayer}
+                    tintColor={resolvedTint}
+                />
+            ) }
+            { resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} /> }
+            <VariantCascadeProvider map={ownCascade}>
+                <Header
+                    caption={caption}
+                    tintColor={resolvedTint}
+                    onClose={onClose}
+                    onPointerDown={onHeaderPointerDown}
+                />
+                <ContentArea>
+                    {children}
+                </ContentArea>
+                <Scaler
+                    direction={resizeDirection}
+                    onPointerDown={onScalerPointerDown}
+                />
+            </VariantCascadeProvider>
         </Box>
     );
 };

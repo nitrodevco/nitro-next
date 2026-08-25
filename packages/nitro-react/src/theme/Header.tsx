@@ -49,7 +49,6 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
             <Box
                 ref={ref}
                 eventMode="static"
-                cursor="grab"
                 onPointerDown={onPointerDown}
                 layout={{
                     flexDirection: 'row',

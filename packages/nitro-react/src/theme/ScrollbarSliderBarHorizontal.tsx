@@ -109,7 +109,6 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
             <Box
                 ref={ref}
                 eventMode="static"
-                cursor={isPressed ? 'grabbing' : 'grab'}
                 layout={{ position: 'absolute', ...layout }}
                 onPointerOver={handlers.onPointerOver}
                 onPointerOut={handlers.onPointerOut}

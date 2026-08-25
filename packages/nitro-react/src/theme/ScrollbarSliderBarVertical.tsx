@@ -16,8 +16,8 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVe
             pressed: NineSlice('scrollbarsliderbarvertical-0-pressed-src', 0, 2, 0, 2),
         },
         overlays: {
-            default: Tiled('scrollbarsliderbarvertical-0-default-grd-src'),
-            pressed: Tiled('scrollbarsliderbarvertical-0-pressed-grd-src'),
+            default: Tiled('scrollbarsliderbarvertical-0-default-grd-src', 5, 4, 4, 7),
+            pressed: Tiled('scrollbarsliderbarvertical-0-pressed-grd-src', 5, 4, 4, 7),
         },
     },
     1: {
@@ -27,8 +27,8 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVe
             pressed: NineSlice('scrollbarsliderbarvertical-1-default-src', 0, 2, 0, 2),
         },
         overlays: {
-            default: Tiled('scrollbarsliderbarvertical-1-default-grd-src'),
-            pressed: Tiled('scrollbarsliderbarvertical-1-pressed-grd-src'),
+            default: Tiled('scrollbarsliderbarvertical-1-default-grd-src', 5, 4, 4, 7),
+            pressed: Tiled('scrollbarsliderbarvertical-1-pressed-grd-src', 5, 4, 4, 7),
         },
     },
     3: {

@@ -9,7 +9,7 @@ import { TileLayer } from './TileLayer';
 export type BackgroundLayerConfig
     = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
         | { kind: 'sprite'; textureKey: string }
-        | { kind: 'tile'; textureKey: string }
+        | { kind: 'tile'; textureKey: string; left?: number; top?: number; bottom?: number; width?: number }
         | { kind: 'composite'; pieces: CompositePiece[] };
 
 export const BackgroundLayer = ({ layer, tintColor, layout }: {
@@ -47,7 +47,13 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
             <TileLayer
                 textureKey={layer.textureKey}
                 tintColor={tintColor}
-                layout={layout}
+                layout={{
+                    position: 'absolute',
+                    left: layer.left ?? 0,
+                    top: layer.top ?? 0,
+                    bottom: layer.bottom ?? 0,
+                    width: layer.width ?? 0,
+                }}
             />
         );
         case 'nineSlice': return (

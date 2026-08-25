@@ -37,7 +37,7 @@ const TileLayerDom = ({ textureKey, tintColor, layout }: TileLayerProps) => {
     );
 };
 
-const Tiled = (textureKey: string): BackgroundLayerConfig => ({ kind: 'tile', textureKey });
+const Tiled = (textureKey: string, left?: number, top?: number, bottom?: number, width?: number): BackgroundLayerConfig => ({ kind: 'tile', textureKey, left, top, bottom, width });
 
 const TileLayer = (props: TileLayerProps) => getRenderMode() === 'dom'
     ? <TileLayerDom {...props} />

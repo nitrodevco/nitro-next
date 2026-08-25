@@ -23,7 +23,7 @@ export const CatalogNavigationView = ({ node }: CatalogNavigationViewProps) => {
             layout={{ width: '100%', height: '100%', padding: 4 }}
         >
             <ScrollArea
-                variant="3"
+                variant="0"
                 layout={{ flex: 1 }}
             >
                 {searchResult && searchResult.nodes.length > 0 && searchResult.nodes.map(x => (
