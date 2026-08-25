@@ -39,7 +39,7 @@ export const PixiApplicationRoot = ({ onReady, children }: PixiApplicationRootPr
 
     return (
         <Application
-            className="fixed inset-0 z-0 size-full [image-rendering:pixelated]"
+            className="fixed inset-0 z-0 size-full"
             onInit={handleInit}
             resizeTo={window}
             resolution={GetPixelRatio()}
