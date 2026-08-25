@@ -39,16 +39,30 @@ const ensureInstalled = (font: BitmapFont): string => {
         x: number; y: number; width: number; height: number; xOffset: number; yOffset: number; xAdvance: number;
     }> = {};
 
+    // truffle's "advanced" engine bakes sub-pixel-precise metrics (most manifest
+    // xOffset/yOffset values aren't whole numbers) - rounded to the nearest physical
+    // pixel here, the same reasoning `BitmapTextDom.tsx`'s `drawLines` rounds its own
+    // destination rect: leaving a glyph's vertex offset at an arbitrary fractional
+    // position is what two glyphs on the same baseline landing at inconsistent
+    // sub-pixel offsets from each other reads as visually - one glyph sampled a
+    // half-pixel off from its neighbor, not obviously "wrong" on its own but
+    // blurrier or shifted relative to it. `xAdvance` is deliberately NOT rounded -
+    // Pixi's own bitmap-text pipe sums it glyph-to-glyph internally (no hook to
+    // round only the final per-glyph position the way `drawLines`'s explicit
+    // `x`/`y` accumulator does), so rounding each one here would compound into
+    // real cumulative width drift over a line - and would drift Pixi's rendered
+    // width away from `layoutBitmapText`'s (unrounded) measurement, which both
+    // renderers otherwise agree on exactly.
     for (const [ ch, g ] of Object.entries(font.chars)) {
         chars[ch] = {
             id: ch.codePointAt(0) ?? 0, page: 0, letter: ch, kerning: {},
             x: g.x, y: g.y, width: g.width, height: g.height,
-            xOffset: g.xOffset * font.atlasScale,
+            xOffset: Math.round(g.xOffset * font.atlasScale),
             // Pixi's own renderer positions each glyph at `baseLineOffset + yOffset` (see
             // AbstractBitmapTextPipe._updateContext, `currentY = bitmapFont.baseLineOffset`
             // for the first line) - i.e. it expects yOffset relative to the *baseline*,
             // unlike the manifest's line-top-relative convention - converted here too.
-            yOffset: (g.yOffset - font.baseLineOffset) * font.atlasScale,
+            yOffset: Math.round((g.yOffset - font.baseLineOffset) * font.atlasScale),
             xAdvance: g.xAdvance * font.atlasScale,
         };
     }
@@ -116,6 +130,7 @@ export const BitmapTextPixi = ({ font, text, color, dropShadow, layout, wordWrap
             text={composedText}
             style={{ fontFamily: cacheKey, fontSize: font.fontSize }}
             tint={color}
+            roundPixels
             filters={underlines.length ? undefined : filters}
             layout={underlines.length
                 ? { position: 'absolute', top: 0, left: 0 }
@@ -145,6 +160,7 @@ export const BitmapTextPixi = ({ font, text, color, dropShadow, layout, wordWrap
             {bitmapText}
             <pixiGraphics
                 tint={color}
+                roundPixels
                 layout={{ position: 'absolute', top: 0, left: 0 }}
                 draw={(g) => {
                     g.clear();

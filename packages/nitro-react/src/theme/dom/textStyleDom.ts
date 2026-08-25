@@ -8,10 +8,11 @@ export interface DomTextStyleOptions {
 }
 
 export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptions): CSSProperties => {
-    const { fontFamily, fontSize, color, dropShadow } = TEXT_STYLES[key] as {
+    const { fontFamily, fontSize, color, fontStyle, dropShadow } = TEXT_STYLES[key] as {
         fontFamily: string;
         fontSize: number;
         color?: string;
+        fontStyle?: string;
         dropShadow?: { alpha: number; angle: number; distance: number; color: number };
     };
 
@@ -19,6 +20,7 @@ export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptio
         fontFamily,
         fontSize: overrides?.fontSize ?? fontSize,
         color: overrides?.fill ?? color,
+        fontStyle,
         margin: 0,
         whiteSpace: 'pre',
     };

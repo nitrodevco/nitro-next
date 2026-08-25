@@ -29,7 +29,18 @@ export interface BitmapTextDomProps {
 /** Source rect (`glyph.x/y/width/height`) is physical - the atlas is baked at
  *  `font.atlasScale`x for retina crispness (see `build-text-atlas.ts`'s docblock on
  *  `ATLAS_SCALE`); the destination size divides that back down to logical pixels,
- *  matching `xOffset`/`yOffset`/`xAdvance`/`lineHeight`, which are already logical. */
+ *  matching `xOffset`/`yOffset`/`xAdvance`/`lineHeight`, which are already logical.
+ *
+ *  truffle's "advanced" engine bakes sub-pixel-precise metrics (most `xOffset`/
+ *  `yOffset`/`xAdvance` values in the manifest aren't whole numbers) - `x`/`y` keep
+ *  accumulating those exact fractional advances so error doesn't compound line to
+ *  line, but each glyph's *destination* rect is rounded right before the draw call.
+ *  With `imageSmoothingEnabled = false` (nearest-neighbor), an unrounded fractional
+ *  destination gets silently snapped by the browser's own rasterizer instead - not
+ *  wrong exactly, but not *consistent* either, and two glyphs on the same baseline
+ *  landing on different sides of that snap is exactly what reads as neighboring
+ *  letters sitting one physical pixel higher or lower than each other. Rounding
+ *  here ourselves makes that snap deterministic and shared by both renderers. */
 const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { text: string }[]): void => {
     let y = 0;
 
@@ -46,10 +57,10 @@ const drawLines = (ctx: CanvasRenderingContext2D, font: BitmapFont, lines: { tex
                     glyph.y,
                     glyph.width,
                     glyph.height,
-                    x + glyph.xOffset,
-                    y + glyph.yOffset,
-                    glyph.width / font.atlasScale,
-                    glyph.height / font.atlasScale,
+                    Math.round(x + glyph.xOffset),
+                    Math.round(y + glyph.yOffset),
+                    Math.round(glyph.width / font.atlasScale),
+                    Math.round(glyph.height / font.atlasScale),
                 );
             }
 
