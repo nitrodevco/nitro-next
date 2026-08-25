@@ -161,4 +161,8 @@ const TextDom = (props: TextConfig) => {
     return <TextDomNative {...props} />;
 };
 
-export const ThemeText = (props: TextConfig) => getRenderMode() === 'dom' ? <TextDom {...props} /> : <TextPixi {...props} />;
+export const ThemeText = (props: TextConfig) => {
+    if (!props.text?.length) return null;
+
+    return getRenderMode() === 'dom' ? <TextDom {...props} /> : <TextPixi {...props} />;
+};
