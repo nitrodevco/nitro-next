@@ -67,13 +67,13 @@ export const CatalogPurchaseConfirmationView = () => {
                     <Box layout={{ flexDirection: 'column', flexGrow: 1, height: '100%', justifyContent: 'center', gap: 4 }}>
                         <ThemeText
                             text={product.productData?.name ?? t(offer.localizationId)}
-                            textStyle="text-style-headline-small"
+                            textStyle="text-style-u-headline-small"
                             textOptions={{ fill: '#000000' }}
                         />
                         {quantity > 1 && (
                             <ThemeText
                                 text={`X ${quantity}`}
-                                textStyle="text-style-headline-small"
+                                textStyle="text-style-u-headline-small"
                                 textOptions={{ fill: '#000000' }}
                             />
                         )}
@@ -88,7 +88,7 @@ export const CatalogPurchaseConfirmationView = () => {
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                                         <ThemeText
                                             text={String(offer.priceInCredits)}
-                                            textStyle="text-style-headline-small"
+                                            textStyle="text-style-u-headline-small"
                                             textOptions={{ fill: '#000000' }}
                                         />
                                         <NitroCurrencyIcon
@@ -101,13 +101,13 @@ export const CatalogPurchaseConfirmationView = () => {
                                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                                         <ThemeText
                                             text="+"
-                                            textStyle="text-style-headline-small"
+                                            textStyle="text-style-u-headline-small"
                                             textOptions={{ fill: '#000000' }}
                                         />
                                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                                             <ThemeText
                                                 text={String(offer.priceInActivityPoints)}
-                                                textStyle="text-style-headline-small"
+                                                textStyle="text-style-u-headline-small"
                                                 textOptions={{ fill: '#000000' }}
                                             />
                                             <NitroCurrencyIcon

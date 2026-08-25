@@ -148,7 +148,7 @@ export const NavigatorView = () => {
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
                                     <ThemeText
                                         text={t('navigator.search.returned.no.results')}
-                                        textStyle="text-style-headline-medium"
+                                        textStyle="text-style-u-headline-medium"
                                         textOptions={{ fill: '#000000' }}
                                     />
                                 </Box>

@@ -22,7 +22,7 @@ export const CatalogTotalPriceWidgetView = () => {
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                         <ThemeText
                             text={String(activeOffer.priceInCredits)}
-                            textStyle="text-style-headline-small"
+                            textStyle="text-style-u-headline-small"
                             textOptions={{ fill: '#000000' }}
                         />
                         <NitroCurrencyIcon
@@ -35,13 +35,13 @@ export const CatalogTotalPriceWidgetView = () => {
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                         <ThemeText
                             text="+"
-                            textStyle="text-style-headline-small"
+                            textStyle="text-style-u-headline-small"
                             textOptions={{ fill: '#000000' }}
                         />
                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                             <ThemeText
                                 text={String(activeOffer.priceInActivityPoints)}
-                                textStyle="text-style-headline-small"
+                                textStyle="text-style-u-headline-small"
                                 textOptions={{ fill: '#000000' }}
                             />
                             <NitroCurrencyIcon

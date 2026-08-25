@@ -23,7 +23,7 @@ export const AvatarEditorView = () => {
                 <ColorLayer color="#0e3f52" />
                 <ThemeText
                     text={name}
-                    textStyle="text-style-headline-big"
+                    textStyle="text-style-u-headline-big"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Box>
