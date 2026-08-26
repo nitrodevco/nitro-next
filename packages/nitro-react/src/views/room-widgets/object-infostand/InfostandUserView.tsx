@@ -57,7 +57,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                     </Box>
                     <CloseButton
                         variant="1"
-                        onClose={onClose}
+                        onPointerTap={onClose}
                         layout={{ flexShrink: 0 }}
                     />
                 </Box>

@@ -18,6 +18,7 @@ export interface InteractionStates<T> {
 
 export interface UseInteractionStateOptions extends PointerHandlerProps {
     disabled?: boolean;
+    stopsPropagation?: boolean;
 }
 
 /**
@@ -38,25 +39,26 @@ export interface UseInteractionStateOptions extends PointerHandlerProps {
  * see - a component with no real interactivity stays `passive`, exactly like a plain `<Box>`.
  */
 export const useInteractionState = ({
-    disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    disabled, stopsPropagation = false, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: UseInteractionStateOptions = {}): { state: InteractionState; handlers: InteractionHandlers } => {
     const [ state, setState ] = useState<InteractionState>('default');
     const isInteractive = hasAnyPointerHandler({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     const handlers = useMemo<InteractionHandlers>(() => {
         if (disabled) return { eventMode: 'none' };
+
         if (!isInteractive) return {};
 
         return {
             eventMode: 'static',
             onPointerOver: compose(() => setState('hovering'), onPointerOver),
             onPointerOut: compose(() => setState('default'), onPointerOut),
-            onPointerDown: compose(() => setState('pressed'), onPointerDown),
+            onPointerDown: stopsPropagation ? compose(compose(() => setState('pressed'), onPointerDown), e => e.stopImmediatePropagation()) : compose(() => setState('pressed'), onPointerDown),
             onPointerUp: compose(() => setState('hovering'), onPointerUp),
             onPointerUpOutside: compose(() => setState('default'), onPointerUpOutside),
             onPointerTap,
         };
-    }, [ disabled, isInteractive, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap ]);
+    }, [ disabled, stopsPropagation, isInteractive, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap ]);
 
     return { state: disabled ? 'disabled' : state, handlers };
 };

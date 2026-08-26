@@ -153,7 +153,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                         </Box>
                         <Box layout={{ position: 'absolute', right: 0, paddingLeft: 2, flexDirection: 'row', alignItems: 'center' }}>
                             { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
-                            <CloseButton onClose={onClose} />
+                            <CloseButton onPointerTap={onClose} />
                         </Box>
                     </VariantCascadeProvider>
                 </Box>

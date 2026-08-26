@@ -10,6 +10,7 @@ import { EventMode, FederatedPointerEvent } from 'pixi.js';
 export type PointerHandler = (event: FederatedPointerEvent) => void;
 
 export interface PointerHandlerProps {
+    stopsPropagation?: boolean;
     onPointerOver?: PointerHandler;
     onPointerOut?: PointerHandler;
     onPointerDown?: PointerHandler;
@@ -95,8 +96,7 @@ export const resolveEventMode = (explicit: EventMode | undefined, handlers: Poin
  * everywhere else - matching Pixi's own passive-by-default behavior on both targets.
  */
 export const pointerEventsFromEventMode = (eventMode: EventMode | undefined): 'auto' | 'none' | undefined => {
-    if (eventMode === 'none') return 'none';
     if (eventMode === 'static' || eventMode === 'dynamic') return 'auto';
 
-    return undefined;
+    return 'none';
 };

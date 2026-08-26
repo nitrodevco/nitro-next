@@ -48,7 +48,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     </Box>
                     <CloseButton
                         variant="1"
-                        onClose={onClose}
+                        onPointerTap={onClose}
                         layout={{ flexShrink: 0 }}
                     />
                 </Box>

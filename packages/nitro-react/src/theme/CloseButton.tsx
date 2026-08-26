@@ -1,112 +1,89 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { forwardRef, ForwardRefExoticComponent, PointerEvent as ReactPointerEvent, RefAttributes } from 'react';
+import { Container as PixiContainer } from 'pixi.js';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { BoxLayout } from './Box';
-import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
-import { ThemeImage } from './ThemeImage';
-import { compose, PointerHandlerProps, SpriteFrame, THEME_URLS } from './utils';
+import { Box } from './Box';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
-interface CloseButtonVariant {
-    textureKey: string;
-    frames: { default: SpriteFrame; hovering: SpriteFrame; pressed: SpriteFrame };
-}
+type CloseButtonVariant = ThemeWithStatesVariant;
 
-const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
+const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
     0: {
-        textureKey: 'closebutton-src',
-        frames: {
-            default: { x: 114, y: 0, width: 15, height: 15 },
-            hovering: { x: 129, y: 0, width: 15, height: 15 },
-            pressed: { x: 144, y: 0, width: 15, height: 15 },
+        states: {
+            default: Stretch('closebutton-src', { x: 114, y: 0, width: 15, height: 15 }),
+            hovering: Stretch('closebutton-src', { x: 129, y: 0, width: 15, height: 15 }),
+            pressed: Stretch('closebutton-src', { x: 144, y: 0, width: 15, height: 15 }),
         },
     },
-    // DOM has no hover: rule and sets active: to the same background-position as the base -
-    // model as static, repeating the default frame for hovering/pressed.
     1: {
-        textureKey: 'closebutton-src',
-        frames: {
-            default: { x: 159, y: 0, width: 15, height: 15 },
-            hovering: { x: 159, y: 0, width: 15, height: 15 },
-            pressed: { x: 159, y: 0, width: 15, height: 15 },
+        states: {
+            default: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
+            hovering: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
+            pressed: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
         },
     },
     2: {
-        textureKey: 'closebutton-src',
-        frames: {
-            default: { x: 174, y: 0, width: 15, height: 15 },
-            hovering: { x: 174, y: 0, width: 15, height: 15 },
-            pressed: { x: 174, y: 0, width: 15, height: 15 },
+        states: {
+            default: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
+            hovering: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
+            pressed: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
         },
     },
     3: {
-        textureKey: 'closebutton-src',
-        frames: {
-            default: { x: 0, y: 0, width: 19, height: 20 },
-            hovering: { x: 19, y: 0, width: 19, height: 20 },
-            pressed: { x: 38, y: 0, width: 19, height: 20 },
+        states: {
+            default: Stretch('closebutton-src', { x: 0, y: 0, width: 19, height: 20 }),
+            hovering: Stretch('closebutton-src', { x: 19, y: 0, width: 19, height: 20 }),
+            pressed: Stretch('closebutton-src', { x: 38, y: 0, width: 19, height: 20 }),
         },
     },
     4: {
-        textureKey: 'closebutton-src',
-        frames: {
-            default: { x: 57, y: 0, width: 19, height: 20 },
-            hovering: { x: 76, y: 0, width: 19, height: 20 },
-            pressed: { x: 95, y: 0, width: 19, height: 20 },
+        states: {
+            default: Stretch('closebutton-src', { x: 57, y: 0, width: 19, height: 20 }),
+            hovering: Stretch('closebutton-src', { x: 76, y: 0, width: 19, height: 20 }),
+            pressed: Stretch('closebutton-src', { x: 95, y: 0, width: 19, height: 20 }),
         },
     },
     // Separate, smaller texture - the whole texture is the frame, no hover/press states.
     100: {
-        textureKey: 'closebutton-100-src',
-        frames: {
-            default: { x: 0, y: 0, width: 20, height: 20 },
-            hovering: { x: 0, y: 0, width: 20, height: 20 },
-            pressed: { x: 0, y: 0, width: 20, height: 20 },
+        states: {
+            default: Stretch('closebutton-100-src'),
+            hovering: Stretch('closebutton-100-src'),
+            pressed: Stretch('closebutton-100-src'),
         },
     },
 };
 
-export interface CloseButtonProps extends PointerHandlerProps {
-    variant?: string;
-    defaultVariant?: string;
-    layout?: BoxLayout;
-    onClose?: () => void;
-}
+export type CloseButtonProps = ThemeProps<CloseButtonVariant>;
 
 export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CloseButtonProps>(
     ({
-        variant, defaultVariant, layout, onClose,
-        onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
-        const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
-
-        // Stops the click from also being seen by Header's onHeaderPointerDown (drag), same
-        // effect as the DOM version's data-no-drag attribute. `.stopPropagation()` exists on
-        // both Pixi's FederatedPointerEvent and DOM's PointerEvent, so one handler covers both.
-        // Passed into useInteractionState below rather than wrapping its own onPointerDown
-        // afterward, so this composes with (rather than replaces) the hover/press tracking it
-        // already owns.
-        const stopPropagation = (event: FederatedPointerEvent | ReactPointerEvent) => event.stopPropagation();
-
-        const { state, handlers } = useInteractionState({
-            onPointerOver, onPointerOut, onPointerUp, onPointerUpOutside,
-            onPointerDown: compose(stopPropagation, onPointerDownProp),
-            onPointerTap: compose(onClose, onPointerTap),
+        const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'closeButton', variants: CLOSE_BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, stopsPropagation: false, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
-        if (!config) return null;
-
-        const frame = resolveByState(config.frames, state);
-
         return (
-            <ThemeImage
+            <Box
                 ref={ref}
-                src={THEME_URLS[config.textureKey]}
-                frame={frame}
-                cursor="pointer"
+                layout={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    ...config.layout,
+                    ...layout,
+                }}
                 {...handlers}
-                layout={{ width: frame.width, height: frame.height, ...layout }}
-            />
+            >
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+            </Box>
         );
     },
 );
