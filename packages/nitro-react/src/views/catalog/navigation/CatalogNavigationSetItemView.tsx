@@ -2,7 +2,7 @@ import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useConfigValue } from '#base/context';
 import { useCatalogNavigation } from '#base/hooks';
-import { Box, ColorLayer, ThemeImage, NitroIcon, ThemeText } from '#base/theme';
+import { Box, ColorLayer, NitroIcon, ThemeImage, ThemeText } from '#base/theme';
 
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 
@@ -10,7 +10,6 @@ export interface CatalogNavigationSetItemViewProps {
     node: ICatalogNode;
 }
 
-/** Pixi port of views/catalog/navigation/CatalogNavigationSetItemView.tsx. */
 export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemViewProps) => {
     const { activateNode } = useCatalogNavigation();
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';

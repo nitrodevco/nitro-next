@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, CompositeLayer, NineSlice } from './layer';
+import { BackgroundLayer, NineSlice, Stretch } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 type DroplistVariant = ThemeVariant & {
@@ -41,7 +41,17 @@ export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<P
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                {config.arrowTextureKey && <CompositeLayer pieces={[ { textureKey: config.arrowTextureKey, right: config.arrowRight, top: config.arrowTop, width: 16, height: 16 } ]} />}
+                {config.arrowTextureKey && (
+                    <BackgroundLayer
+                        layer={Stretch(config.arrowTextureKey)}
+                        layout={{
+                            right: config.arrowRight,
+                            top: config.arrowTop,
+                            width: 16,
+                            height: 16,
+                        }}
+                    />
+                )}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>

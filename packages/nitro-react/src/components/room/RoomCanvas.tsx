@@ -199,8 +199,8 @@ export const RoomCanvas = () => {
             if (!mouseData.isDragged) updateRoomCamera(time);
 
             if (mouseData.wasDragged) {
-                const offsetX = ~~(canvas.screenOffsetX || 0);
-                const offsetY = ~~(canvas.screenOffsetY || 0);
+                const offsetX = canvas.screenOffsetX || 0;
+                const offsetY = canvas.screenOffsetY || 0;
 
                 room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
 

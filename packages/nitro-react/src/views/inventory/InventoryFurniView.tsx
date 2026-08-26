@@ -2,10 +2,9 @@ import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, Dropmenu, ScrollableItemGridVertical, ScrollbarVertical, ThemeText } from '#base/theme';
+import { Border, Box, Button, Dropmenu, ThemeText } from '#base/theme';
 import { useRowVirtualizer } from '#base/theme/hooks/useRowVirtualizer';
 import { useScrollController } from '#base/theme/hooks/useScrollController';
-import { ScrollViewport } from '#base/theme/utils/ScrollViewport';
 
 const PAGE_SIZE = 24;
 const MAX_ITEMS = 200;
@@ -94,46 +93,7 @@ export const InventoryFurniView = ({ scrollVariant }: { scrollVariant: string })
             </Border>
             <Box layout={{ flexDirection: 'row', flex: 1, gap: 4 }}>
                 <Box layout={{ flexDirection: 'row', flex: 1, gap: 2 }}>
-                    <ScrollViewport
-                        viewportRef={(node) => { scroll.viewportRef(node); setViewportNode(node); }}
-                        contentRef={node => scroll.contentRef(node)}
-                        onWheel={scroll.onWheel}
-                        scrollOffset={scroll.scrollOffset}
-                        orientation="vertical"
-                        layout={{ flex: 1, height: '100%', padding: 4 }}
-                        contentLayout={{ position: 'relative', width: '100%', height: totalSize }}
-                    >
-                        {virtualItems.map((row) => {
-                            const rowStart = row.index * COLUMNS;
-                            const rowItemCount = Math.min(COLUMNS, itemCount - rowStart);
-
-                            return (
-                                <Box
-                                    key={row.index}
-                                    ref={node => measureRow(row.index, node)}
-                                    layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 4 }}
-                                >
-                                    {Array.from({ length: rowItemCount }, (_, i) => (
-                                        <ScrollableItemGridVertical
-                                            key={rowStart + i}
-                                            variant="3"
-                                        />
-                                    ))}
-                                </Box>
-                            );
-                        })}
-                    </ScrollViewport>
-                    <ScrollbarVertical
-                        trackRef={node => scroll.trackRef(node)}
-                        thumbSize={scroll.thumbSize}
-                        thumbOffset={scroll.thumbOffset}
-                        scrollable={scroll.scrollable}
-                        onTrackPointerDown={scroll.onTrackPointerDown}
-                        onThumbPointerDown={scroll.onThumbPointerDown}
-                        stepBackward={scroll.stepBackward}
-                        stepForward={scroll.stepForward}
-                        variant={scrollVariant}
-                    />
+                    items will render here...
                 </Box>
                 <Box layout={{ flexDirection: 'column', width: 180, flexShrink: 0 }}>
                     <Box layout={{ flex: 1 }}>

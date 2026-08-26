@@ -94,11 +94,13 @@ export const useFrameDrag = (id: string | undefined) => {
 
             if (!dragState || moveEvent.pointerId !== dragState.pointerId) return;
 
-            const dx = moveEvent.clientX - dragState.startX;
-            const dy = moveEvent.clientY - dragState.startY;
+            const dx = Math.floor(moveEvent.clientX - dragState.startX);
+            const dy = Math.floor(moveEvent.clientY - dragState.startY);
 
-            const newLeft = clamp(dragState.startGlobalX + dx, MIN_VISIBLE - dragState.width, window.innerWidth - MIN_VISIBLE);
-            const newTop = clamp(dragState.startGlobalY + dy, 0, window.innerHeight - MIN_VISIBLE);
+            const newLeft = Math.floor(clamp(dragState.startGlobalX + dx, MIN_VISIBLE - dragState.width, window.innerWidth - MIN_VISIBLE));
+            const newTop = Math.floor(clamp(dragState.startGlobalY + dy, 0, window.innerHeight - MIN_VISIBLE));
+
+            console.log(dx, dy, newLeft, newTop);
 
             setOffset({
                 dx: dragState.origDx + (newLeft - dragState.startGlobalX),

@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, CompositeLayer, NineSlice, Stretch } from './layer';
+import { BackgroundLayer, NineSlice, Stretch } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
@@ -41,7 +41,7 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
         return (
             <Box
                 ref={ref}
-                layout={{ paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
+                layout={{ position: 'relative', paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
                 {...handlers}
                 eventMode={onPress ? 'static' : undefined}
                 cursor={onPress ? 'pointer' : undefined}
@@ -53,8 +53,13 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                         tintColor={resolvedTint}
                     />
                 )}
+                {config.arrowTextureKey && (
+                    <BackgroundLayer
+                        layer={Stretch(config.arrowTextureKey)}
+                        layout={{ position: 'absolute', right: 5, top: 2, width: 16, height: 16 }}
+                    />
+                )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                {config.arrowTextureKey && <CompositeLayer pieces={[ { textureKey: config.arrowTextureKey, right: 5, top: 2, width: 16, height: 16 } ]} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>
