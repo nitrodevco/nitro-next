@@ -21,7 +21,7 @@ export const PixiApplicationRoot = ({ onReady, children }: PixiApplicationRootPr
         SetRenderer(app.renderer);
 
         app.stage.addChild(GetRoomStage());
-        app.stage.sortableChildren = true;
+        app.stage.sortableChildren = false;
 
         const applyScreenLayout = () => {
             app.stage.layout = {

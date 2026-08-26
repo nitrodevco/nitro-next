@@ -32,7 +32,7 @@ export const PurseView = () => {
     return (
         <Border
             variant="9"
-            layout={{ position: 'absolute', top: -6, right: 3, width: 230, height: 77, flexDirection: 'row', padding: 6, gap: 6 }}
+            layout={{ top: -6, width: '100%', height: 77, flexDirection: 'row', padding: 6, gap: 6 }}
         >
             <Box layout={{ flexDirection: 'column', justifyContent: 'center', width: 52 }}>
                 {kinds.map(({ type, amount, color, name }) => (
