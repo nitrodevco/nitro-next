@@ -6,7 +6,8 @@ import { VARIANT_CASCADE_CONFIG } from './VariantConfig';
 const tooltipVariantsConfig = {
     variant: {
         // default
-        '0': '[border-image-source:var(--tooltip-0-default-src)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px_6px_6px_6px] nine-slice-border min-w-5 min-h-5.5 pl-1.5 pt-0 pr-1.5 pb-0 text-[#000000] text-style-u-tool-tip',
+        // habbo_window_layout_tooltip: 20x22 minimum, 6px side margins, u_tool_tip text (white)
+        '0': '[border-image-source:var(--tooltip-0-default-src)] [border-image-slice:6_6_6_6_fill] [border-image-width:6px_6px_6px_6px] nine-slice-border min-w-5 min-h-5.5 pl-1.5 pt-0 pr-1.5 pb-0 text-style-u-tool-tip',
     },
 } as const;
 

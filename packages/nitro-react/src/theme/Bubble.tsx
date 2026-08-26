@@ -8,8 +8,8 @@ const bubbleVariantsConfig = {
     variant: {
         // default
         '0': '[border-image-source:var(--bubble-0-default-src)] [border-image-slice:5_5_6_5_fill] [border-image-width:5px_5px_6px_5px] nine-slice-border min-w-5.25 min-h-5.25 text-[#000000]',
-        // default
-        '7': 'sprite min-w-6.75 min-h-9.5 bg-(image:--bubble-7-default-src) bg-size-[100%_100%] text-[#000000]',
+        // habbo_skin_bubble_7 — nine-slice from habbo_skin_ubuntu_png, 7px corners, 8px bottom
+        '7': '[border-image-source:var(--bubble-7-default-src)] [border-image-slice:7_7_8_7_fill] [border-image-width:7px_7px_8px_7px] nine-slice-border min-w-5.25 min-h-5.5 text-[#000000]',
     },
 } as const;
 

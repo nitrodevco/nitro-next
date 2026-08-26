@@ -24,7 +24,7 @@
             &::after {
                 @apply absolute inset-0 pointer-events-none content-[''];
 
-                background: url('../../assets/flash/toolbar/icons/me_circle.png');
+                background: url('/assets/flash/toolbar/icons/me_circle.png');
             }
         }
 
@@ -52,10 +52,10 @@
         @apply border-r pr-[--spacing(var(--toolbar-icons-spacing))];
 
         .toolbar-collapse {
-            background: url('../../assets/flash/toolbar/collapse_left.png');
+            background: url('/assets/flash/toolbar/collapse_left.png');
 
             &.active {
-                background: url('../../assets/flash/toolbar/collapse_left_active.png');
+                background: url('/assets/flash/toolbar/collapse_left_active.png');
             }
         }
 
@@ -98,10 +98,10 @@
         @apply border-l pl-[--spacing(var(--toolbar-icons-spacing))];
 
         .toolbar-collapse {
-            background: url('../../assets/flash/toolbar/collapse_right.png');
+            background: url('/assets/flash/toolbar/collapse_right.png');
 
             &.active {
-                background: url('../../assets/flash/toolbar/collapse_right_active.png');
+                background: url('/assets/flash/toolbar/collapse_right_active.png');
             }
         }
     }

@@ -14,6 +14,8 @@ export * from './logic/useConfigLoader';
 export * from './logic/useFurnitureDataLoader';
 export * from './logic/useLocalizationLoader';
 export * from './logic/useProductDataLoader';
+export * from './navigator/useNavigatorSearch';
+export * from './useLinkEventTracker';
 export * from './navigator/useNavigatorVisibility';
 export * from './room/useRoomCamera';
 export * from './room/useRoomCursorUpdate';

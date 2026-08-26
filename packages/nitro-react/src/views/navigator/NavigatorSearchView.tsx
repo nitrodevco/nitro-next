@@ -1,88 +1,82 @@
-import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
-import { useState } from 'react';
-
-import type { NavigatorFilterType } from '#base/context';
-import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Dropmenu, DropmenuItem, NitroIcon } from '#base/theme';
-
-/**
- * SearchView.FILTER_SELECTOR_INDEX_TO_MODE = [5,2,1,3,4] indexing
- * FILTER_PREFIX = ["", "owner:", "roomname:", "tag:", "group:", ""]
- */
-const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
-    { type: 'anything', prefix: '' },
-    { type: 'room.name', prefix: 'roomname:' },
-    { type: 'owner', prefix: 'owner:' },
-    { type: 'tag', prefix: 'tag:' },
-    { type: 'group', prefix: 'group:' }
-];
+import { NAVIGATOR_FILTER_TYPES, useNavigatorActions, useNavigatorSelectors, useTranslation } from '#base/context';
+import { useNavigatorSearch } from '#base/hooks';
+import { Border, Button, DropmenuSelect, NitroIcon, useTooltip } from '#base/theme';
 
 /**
  * search_tools — 408x36, holding filter_type_drop_menu (116x24 style=4),
- * a bordered input (235x24 style=4) with clear_search_button (common_small_pen),
- * and refreshButtonContainer which the layout marks visible="false".
+ * a bordered input (235x24 style=4) with clear_search_button, and
+ * refreshButtonContainer (25x25 button style=5 at x=375) which SearchView shows
+ * whenever the input holds text.
+ *
+ * SearchView semantics: changing the dropdown does NOT search (the selection is
+ * only read on Enter); the clear button only clears and refocuses; Enter
+ * re-searches the current result's searchCodeOriginal with prefix + input.
+ * Placeholder/carried text renders italic in 0x9F9F9F and turns black on focus.
  */
 export const NavigatorSearchView = () => {
-    const [isFilterOpen, setFilterOpen] = useState(false);
-    const { topLevelContext, searchFilter, filterType } = useNavigatorSelectors();
-    const { setSearchFilter, setFilterType, setIsSearching } = useNavigatorActions();
-    const { send } = useWebSocketContext();
+    const { searchResult, filterType, searchText, searchTextCarry } = useNavigatorSelectors();
+    const { setFilterType, setSearchText, clearSearchTextCarry } = useNavigatorActions();
+    const { performSearch, performLastSearch } = useNavigatorSearch();
     const t = useTranslation();
+    const tooltip = useTooltip();
 
-    const search = (filter: string, type: NavigatorFilterType = filterType) => {
-        if (!topLevelContext) return;
+    /* keyUpHandler — performSearch(currentResults.searchCodeOriginal, getFilterParameter()) */
+    const search = () => {
+        if (!searchResult) return;
 
-        setIsSearching(true);
+        const prefix = NAVIGATOR_FILTER_TYPES.find(x => x.type === filterType)?.prefix ?? '';
 
-        // SearchView.getFilterParameter(): FILTER_PREFIX[mode] + input
-        const prefix = FILTER_TYPES.find(x => x.type === type)?.prefix ?? '';
-
-        send(new NewNavigatorSearchComposer({
-            searchCodeOriginal: topLevelContext.searchCode,
-            filteringData: prefix + filter
-        }));
+        performSearch(searchResult.searchCodeOriginal, prefix + searchText);
     };
 
     return (
         <div className="flex items-center shrink-0 gap-1 h-9 px-1">
-            {/* filter_type_drop_menu — 116x24 at x=4 */}
-            <div className="relative shrink-0">
-                <Dropmenu
-                    className="flex items-center px-1 w-29 h-6 cursor-pointer"
-                    title={t('navigator.tooltip.filter.type')}
-                    variant="100"
-                    onClick={() => setFilterOpen(prev => !prev)}>
-                    <span className="truncate text-style-u-regular">{t(`navigator.filter.${filterType}`)}</span>
-                </Dropmenu>
-                {isFilterOpen && (
-                    <div className="absolute top-6 left-0 z-10 w-29">
-                        {FILTER_TYPES.map(({ type }) => (
-                            <DropmenuItem
-                                key={type}
-                                className="px-1 cursor-pointer text-style-u-regular"
-                                onClick={() => { setFilterType(type); setFilterOpen(false); search(searchFilter, type); }}>
-                                {t(`navigator.filter.${type}`)}
-                            </DropmenuItem>
-                        ))}
-                    </div>
-                )}
-            </div>
+            {/* filter_type_drop_menu — 116x24 at x=4, style="4" (unregistered, falls back to 0) */}
+            <DropmenuSelect
+                className="shrink-0 w-29 h-6"
+                rowClassName="h-6 px-1.75"
+                options={NAVIGATOR_FILTER_TYPES.map(({ type }) => t(`navigator.filter.${type}`))}
+                selectedIndex={NAVIGATOR_FILTER_TYPES.findIndex(x => x.type === filterType)}
+                variant="4"
+                {...tooltip(t('navigator.tooltip.filter.type'))}
+                onSelect={index => setFilterType(NAVIGATOR_FILTER_TYPES[index].type)} />
             {/* search_input inside its own border — 235x24 at x=133 */}
             <Border className="flex items-center gap-1 px-1.5 w-58.75 h-6" variant="4">
+                {/* text fields without an explicit text_style fall back to "regular"
+                    (Volter 9); the XML gives the input tool_tip_delay 2000 */}
                 <input
-                    className="flex-1 min-w-0 text-style-u-regular text-[#666666]"
+                    className={`flex-1 min-w-0 text-style-regular placeholder:italic placeholder:text-[#9F9F9F] ${searchTextCarry ? 'italic text-[#9F9F9F]' : 'text-black'}`}
                     placeholder={t('navigator.filter.input.placeholder')}
-                    title={t('navigator.tooltip.filter.input')}
+                    {...tooltip(t('navigator.tooltip.filter.input'), 2000)}
                     type="text"
-                    value={searchFilter}
-                    onChange={event => setSearchFilter(event.target.value)}
-                    onKeyDown={event => { if (event.key === 'Enter') search(searchFilter); }} />
-                {/* clear_search_button — common_small_pen, 20x20 */}
+                    value={searchText}
+                    onChange={event => setSearchText(event.target.value)}
+                    onFocus={clearSearchTextCarry}
+                    onKeyDown={event => { if (event.key === 'Enter') search(); }} />
+                {/* clear_search_button — onClearSearch only refocuses and clears;
+                    the icon is the grey icons_close X, common_small_pen when empty */}
                 <NitroIcon
                     className="shrink-0 cursor-pointer"
-                    icon={searchFilter.length > 0 ? 'icon-nav-close' : 'icon-nav-small-pen'}
-                    onClick={() => { if (searchFilter.length > 0) { setSearchFilter(''); search(''); } }} />
+                    icon={searchText.length > 0 ? 'icon-nav-clear-search' : 'icon-nav-small-pen'}
+                    onClick={event => {
+                        setSearchText('');
+                        (event.currentTarget.previousElementSibling as HTMLInputElement | null)?.focus();
+                    }} />
             </Border>
+            {/* refreshButtonContainer at x=375 (border ends at 368 — 7px gap):
+                25x23 button style 5 tinted 0x7cc561 with the white refresh glyph on
+                top; the variant's min-h-7 and pl/pr-2.5 must not survive, so the
+                geometry is forced inline (cn does not resolve class conflicts) */}
+            {searchText.length > 0 && (
+                <Button
+                    className="shrink-0 ml-0.75 flex items-center justify-center"
+                    style={{ width: 25, height: 23, minWidth: 0, minHeight: 0, padding: 0 }}
+                    tintColor="#7CC561"
+                    variant="5"
+                    onClick={performLastSearch}>
+                    <NitroIcon icon="icon-nav-refresh-search" />
+                </Button>
+            )}
         </div>
     );
 }

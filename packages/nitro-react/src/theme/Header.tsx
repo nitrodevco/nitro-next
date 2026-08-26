@@ -13,7 +13,7 @@ const headerVariantsConfig = {
         // yellow
         '2': 'sprite min-w-6 min-h-3.75 bg-(image:--header-0-default-src) bg-size-[6px_15px] bg-repeat-x m-1.5 text-[#000000] text-style-frame-title font-aa',
         // default sprite bg-(image:--header-3-default-src) bg-size-[100%_100%] // bg-(image:--header-3-default-src) bg-size-[6px_20px] bg-repeat-x
-        '3': 'sprite min-h-8.25 max-h-8.25 text-[#ffffff] text-style-u-frame-title px-1.5',
+        '3': 'sprite h-8.25 min-h-8.25 max-h-8.25 text-[#ffffff] text-style-u-frame-title px-1.5',
         // light
         '4': 'sprite min-w-1.5 min-h-5 bg-(image:--header-3-default-src) bg-size-[100%_100%] pl-2 pt-px pr-2 pb-px text-[#ffffff] text-style-u-frame-title',
         // bubble — graphics asset has no usable "default" state
@@ -92,7 +92,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
                         <div className="flex flex-1 items-center justify-center z-20 w-full">
                             <span className="text-center leading-3.75 px-2" style={{ backgroundColor: resolvedTint }}>{caption}</span>
                         </div>
-                        <div className="flex shrink-0 items-center justify-center z-20 absolute right-0" style={{ backgroundColor: resolvedTint }}>
+                        <div className="flex shrink-0 items-center justify-center z-20 absolute right-0 top-1/2 -translate-y-1/2" style={{ backgroundColor: resolvedTint }}>
                             <CloseButton className="" onClick={onClose} data-no-drag />
                         </div>
                     </div>

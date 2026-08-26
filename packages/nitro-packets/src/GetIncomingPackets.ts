@@ -301,8 +301,7 @@ import {
     YouAreSpectatorMessage,
     YoutubeControlVideoMessage,
     YoutubeDisplayPlaylistsMessage,
-    YoutubeDisplayVideoMessage
-} from './incoming';
+    YoutubeDisplayVideoMessage, NoOwnedRoomsAlertMessage, RoomSettingsDataEventMessage, RoomSettingsSavedEventMessage, RoomSettingsSaveErrorEventMessage, FlatControllersEventMessage, FlatControllerAddedEventMessage, FlatControllerRemovedEventMessage, BannedUsersFromRoomEventMessage, UserUnbannedFromRoomEventMessage, MuteAllInRoomEventMessage, ShowEnforceRoomCategoryDialogEventMessage } from './incoming';
 import { IncomingHeader } from './IncomingHeader';
 
 export const GetIncomingPackets = () => {
@@ -468,6 +467,17 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.GetGuestRoomResultMessage]: GetGuestRoomResultMessage,
         [IncomingHeader.GuestRoomSearchResultMessage]: GuestRoomSearchResultMessage,
         [IncomingHeader.NavigatorSettingsMessage]: NavigatorSettingsMessage,
+        [IncomingHeader.ShowEnforceRoomCategoryDialogMessage]: ShowEnforceRoomCategoryDialogEventMessage,
+        [IncomingHeader.MuteAllInRoomMessage]: MuteAllInRoomEventMessage,
+        [IncomingHeader.RoomSettingsDataMessage]: RoomSettingsDataEventMessage,
+        [IncomingHeader.RoomSettingsSavedMessage]: RoomSettingsSavedEventMessage,
+        [IncomingHeader.RoomSettingsSaveErrorMessage]: RoomSettingsSaveErrorEventMessage,
+        [IncomingHeader.FlatControllersMessage]: FlatControllersEventMessage,
+        [IncomingHeader.FlatControllerAddedMessage]: FlatControllerAddedEventMessage,
+        [IncomingHeader.FlatControllerRemovedMessage]: FlatControllerRemovedEventMessage,
+        [IncomingHeader.BannedUsersFromRoomMessage]: BannedUsersFromRoomEventMessage,
+        [IncomingHeader.UserUnbannedFromRoomMessage]: UserUnbannedFromRoomEventMessage,
+        [IncomingHeader.NoOwnedRoomsAlertMessage]: NoOwnedRoomsAlertMessage,
         [IncomingHeader.OfficialRoomsMessage]: OfficialRoomsMessage,
         [IncomingHeader.PopularRoomTagsResultMessage]: PopularRoomTagsResultMessage,
         [IncomingHeader.RoomEventCancelMessage]: RoomEventCancelMessage,

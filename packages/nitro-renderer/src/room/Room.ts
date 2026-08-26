@@ -39,7 +39,7 @@ import {
     RoomToObjectOwnAvatarMoveEvent,
     Vector3d
 } from '@nitrodevco/nitro-api';
-import { ImageLike, type PointData, Rectangle, Sprite } from 'pixi.js';
+import { ImageLike, Point, type PointData, Rectangle, Sprite } from 'pixi.js';
 import { Container, Texture } from 'pixi.js';
 
 import { PetFigureData } from '../session';
@@ -199,6 +199,22 @@ export class Room implements IRoom {
         this._canvas.initialize(width, height);
 
         if (this._canvas.geometry) this._canvas.geometry.scale = scale;
+    }
+
+    public setRoomCanvasScale(scale: number, point: Point | undefined = undefined, offsetPoint: Point | undefined = undefined, exact: boolean = false): void {
+        if (!(GetConfigValue<boolean>('zoom.enabled') ?? false)) return;
+
+        if (!this._canvas || isNaN(scale)) return;
+
+        if (!exact) scale = scale < 1 ? 0.5 : Math.floor(scale);
+
+        this._canvas.setScale(scale, point, offsetPoint);
+
+        this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.ROOM_ZOOMED, this._roomId));
+    }
+
+    public getRoomCanvasScale(): number {
+        return this._canvas?.scale ?? 1;
     }
 
     public applyRoomMap(roomMap: IRoomMapData): void {
@@ -395,13 +411,10 @@ export class Room implements IRoom {
     public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
         if (!this._canvas || !point) return false;
 
-        const x = ~~(point.x);
-        const y = ~~(point.y);
+        if ((this._canvas.screenOffsetX === point.x) && (this._canvas.screenOffsetY === point.y)) return false;
 
-        if ((this._canvas.screenOffsetX === x) && (this._canvas.screenOffsetY === y)) return false;
-
-        this._canvas.screenOffsetX = x;
-        this._canvas.screenOffsetY = y;
+        this._canvas.screenOffsetX = point.x;
+        this._canvas.screenOffsetY = point.y;
 
         return true;
     }

@@ -1,18 +1,29 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type FlatControllersEventMessageType = {
-  // no fields
-
+export type IFlatControllerData = {
+    userId: number;
+    userName: string;
 };
 
-export class FlatControllersEventMessage implements IIncomingPacket<FlatControllersEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FlatControllersEventMessageType
-  {
+/* FlatControllersParser (§_-94§/§_-h1Y§) — roomId + FlatControllerData list */
+export type FlatControllersEventMessageType = {
+    roomId: number;
+    controllers: IFlatControllerData[];
+};
 
-    const packet: FlatControllersEventMessageType = {
-    };
+export class FlatControllersEventMessage implements IIncomingPacket<FlatControllersEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FlatControllersEventMessageType {
+        const roomId = wrapper.readInt();
+        const controllers: IFlatControllerData[] = [];
 
-    return packet;
-  }
+        let count = wrapper.readInt();
+
+        while (count > 0) {
+            controllers.push({ userId: wrapper.readInt(), userName: wrapper.readString() });
+
+            count--;
+        }
+
+        return { roomId, controllers };
+    }
 }

@@ -1,18 +1,16 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
+/* UserUnbannedFromRoomParser (§_-94§/§_-Ym§) — roomId, userId */
 export type UserUnbannedFromRoomEventMessageType = {
-  // no fields
-
+    roomId: number;
+    userId: number;
 };
 
-export class UserUnbannedFromRoomEventMessage implements IIncomingPacket<UserUnbannedFromRoomEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserUnbannedFromRoomEventMessageType
-  {
-
-    const packet: UserUnbannedFromRoomEventMessageType = {
-    };
-
-    return packet;
-  }
+export class UserUnbannedFromRoomEventMessage implements IIncomingPacket<UserUnbannedFromRoomEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserUnbannedFromRoomEventMessageType {
+        return {
+            roomId: wrapper.readInt(),
+            userId: wrapper.readInt(),
+        };
+    }
 }

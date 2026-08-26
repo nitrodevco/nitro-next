@@ -1,4 +1,4 @@
-import type { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
+import type { Container, ImageLike, Point, PointData, Rectangle } from 'pixi.js';
 
 import type { IEventDispatcher, INitroEvent } from '../events';
 import type { IPetCustomPart } from '../session';
@@ -23,6 +23,8 @@ export interface IRoom {
     dispose(): void;
     getRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas;
     resizeRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): void;
+    setRoomCanvasScale(scale: number, point?: Point, offsetPoint?: Point, exact?: boolean): void;
+    getRoomCanvasScale(): number;
     applyRoomMap(roomMap: IRoomMapData): void;
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;

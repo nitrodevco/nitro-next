@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useNavigatorContext } from "../useNavigatorContext";
+import { useNavigatorContext } from '#base/context';
 
 export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => ({
     topLevelContexts: x.topLevelContexts,
@@ -12,12 +12,42 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     eventCategories: x.eventCategories,
     searchResult: x.searchResult,
     collapsedCategories: x.collapsedCategories,
-    expandedCategories: x.expandedCategories,
+    expandOverrides: x.expandOverrides,
     viewModes: x.viewModes,
-    searchFilter: x.searchFilter,
     filterType: x.filterType,
+    searchText: x.searchText,
+    searchTextCarry: x.searchTextCarry,
     leftPaneHidden: x.leftPaneHidden,
     isSearching: x.isSearching,
     currentRoom: x.currentRoom,
-    currentRoomIsOwner: x.currentRoomIsOwner
+    currentRoomIsOwner: x.currentRoomIsOwner,
+    currentRoomStaffPick: x.currentRoomStaffPick,
+    currentRoomCanMute: x.currentRoomCanMute,
+    currentRoomAllMuted: x.currentRoomAllMuted,
+    currentRoomRating: x.currentRoomRating,
+    currentRoomCanRate: x.currentRoomCanRate,
+    favouritesLimit: x.favouritesLimit,
+    securityLevel: x.securityLevel,
+    roomControllerLevel: x.roomControllerLevel,
+    roomIsOwn: x.roomIsOwn,
+    roomInfoWindowOpen: x.roomInfoWindowOpen,
+    roomFilterOpen: x.roomFilterOpen,
+    roomFilterWords: x.roomFilterWords,
+    roomEventData: x.roomEventData,
+    roomEventInfoExpanded: x.roomEventInfoExpanded,
+    roomEventEditorOpen: x.roomEventEditorOpen,
+    roomAdError: x.roomAdError,
+    favoriteRoomIds: x.favoriteRoomIds,
+    homeRoomId: x.homeRoomId,
+    groupDetails: x.groupDetails,
+    roomInfoPopup: x.roomInfoPopup,
+    createRoomOpen: x.createRoomOpen,
+    alert: x.alert,
+    enforceCategory: x.enforceCategory,
+    groupRoomInfoExpanded: x.groupRoomInfoExpanded,
+    doorbell: x.doorbell,
+    passwordPrompt: x.passwordPrompt,
+    forwardConfirm: x.forwardConfirm,
+    roomSettings: x.roomSettings,
+    roomSettingsSaveError: x.roomSettingsSaveError
 })));

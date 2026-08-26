@@ -21,3 +21,13 @@ export const FlatCategoryParser = (wrapper: IMessageDataWrapper): IFlatCategory 
         staffOnly: wrapper.readBoolean()
     };
 }
+
+/**
+ * FlatCategory.visibleName in the SWF:
+ *   globalCategoryKey == "" ? nodeName : "${navigator.flatcategory.global." + globalCategoryKey + "}"
+ * The wire never carries the display string — the client builds it.
+ */
+export const getFlatCategoryVisibleName = (category: IFlatCategory) =>
+    category.globalCategoryKey === ''
+        ? category.nodeName
+        : `\${navigator.flatcategory.global.${category.globalCategoryKey}}`;

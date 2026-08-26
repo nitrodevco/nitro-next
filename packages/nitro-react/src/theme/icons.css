@@ -544,15 +544,15 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 11px;
-    height: 19px;
+    height: 11px;
 }
 
 .icon-nav-minus {
     background-image: url('/assets/flash/navigator/minus.png');
     background-repeat: no-repeat;
     background-position: center;
-    width: 11px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
 }
 
 .icon-nav-inline {
@@ -1187,6 +1187,70 @@
     height: 18px;
 }
 
+.icon-nav-fav-yes {
+    background-image: url('/assets/flash/navigator/icon_fav_yes.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-fav-no {
+    background-image: url('/assets/flash/navigator/icon_fav_no.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-home-yes {
+    background-image: url('/assets/flash/navigator/icon_home_yes.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-home-no {
+    background-image: url('/assets/flash/navigator/icon_home_no.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 12px;
+}
+
+.icon-nav-room-settings {
+    background-image: url('/assets/flash/navigator/room_settings.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13px;
+    height: 14px;
+}
+
+.icon-nav-report-room {
+    background-image: url('/assets/flash/navigator/report_room.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 17px;
+    height: 16px;
+}
+
+.icon-nav-event {
+    background-image: url('/assets/flash/navigator/event_icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 38px;
+    height: 38px;
+}
+
+.icon-nav-owner-eye {
+    background-image: url('/assets/flash/navigator/owner_eye.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 21px;
+    height: 21px;
+}
+
 .icon-nav-category-show-more {
     background-image: url('/assets/flash/navigator/category_show_more.png');
     background-repeat: no-repeat;
@@ -1293,12 +1357,141 @@
     height: 11px;
 }
 
-/* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text */
-.icon-nav-close {
-    background-image: url('/assets/flash/icons/close.png');
+/* room_owner_region — friend_bar_friendlist_eye scaled into its 15x13 slot */
+.icon-nav-friendlist-eye {
+    background-image: url('/assets/flash/navigator/friendlist_eye.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20px 20px;
-    width: 20px;
+    background-size: contain;
+    width: 15px;
+    height: 13px;
+}
+
+/* RoomInfoPopup group_mode_admin — newnavigator_icon_group_owner / _admin crowns */
+.icon-nav-group-owner {
+    background-image: url('/assets/flash/navigator/icon_group_owner.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 13px;
+}
+
+.icon-nav-group-admin {
+    background-image: url('/assets/flash/navigator/icon_group_admin.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 13px;
+}
+
+/* SearchView swaps clear.icon to asset_uri "icons_close" once the input has text —
+   the small grey X glyph, not the red frame close button */
+.icon-nav-clear-search {
+    background-image: url('/assets/flash/navigator/clear_search_x.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 12px;
+}
+
+/* nav_error_popup popup_arrow_down, and roc_room_thumbnail tile icons / select arrow */
+.icon-nav-popup-arrow-down {
+    background-image: url('/assets/flash/navigator/popup_arrow_down.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 11px;
+    height: 11px;
+}
+
+.icon-nav-tile-black {
+    background-image: url('/assets/flash/navigator/tile_icon_black.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 10px;
+}
+
+.icon-nav-tile-white {
+    background-image: url('/assets/flash/navigator/tile_icon_white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 10px;
+}
+
+.icon-nav-select-arrow {
+    background-image: url('/assets/flash/navigator/select_arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
     height: 20px;
 }
+
+/* habbo_element_description: icon style 11 "Club icon small", style 12 "VIP icon small" */
+.icon-club-small {
+    background-image: url('/assets/flash/icons/icon_club_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 16px;
+    height: 10px;
+}
+
+.icon-vip-small {
+    background-image: url('/assets/flash/icons/icon_vip_small.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 19px;
+    height: 10px;
+}
+
+/*
+ * RoomCreateViewCtrl.updateArrowPos: a 100ms timer walks select_arrow's y between
+ * 0 and 15 and reverses at each end — 1-2px per tick, so ~1.5s for a full cycle.
+ */
+@keyframes nav-select-arrow-bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(15px); }
+}
+
+.nav-select-arrow-bounce {
+    animation: nav-select-arrow-bounce 1.5s ease-in-out infinite alternate;
+}
+
+/* room_tools_toolbar — RoomToolsToolbarCtrl assets */
+.icon-roomtools-zoom-in { background: url('/assets/flash/roomtools/zoom_in.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-zoom-out { background: url('/assets/flash/roomtools/zoom_out.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-gear { background: url('/assets/flash/roomtools/gear.png') no-repeat center; width: 21px; height: 21px; }
+.icon-roomtools-chat-history { background: url('/assets/flash/roomtools/chat_history.png') no-repeat center; width: 17px; height: 21px; }
+.icon-roomtools-like { background: url('/assets/flash/roomtools/like.png') no-repeat center; width: 18px; height: 18px; }
+.icon-roomtools-weblink { background: url('/assets/flash/roomtools/icon_weblink.png') no-repeat center; width: 17px; height: 15px; }
+.icon-roomtools-history-back { background: url('/assets/flash/roomtools/history_back_icon.png') no-repeat center; width: 6px; height: 11px; }
+.icon-roomtools-history-forward { background: url('/assets/flash/roomtools/history_forward_icon.png') no-repeat center; width: 6px; height: 11px; }
+.icon-roomtools-history-open { background: url('/assets/flash/roomtools/history_open_icon.png') no-repeat center; width: 17px; height: 16px; }
+.icon-roomtools-history-open-bg { background: url('/assets/flash/roomtools/history_open_bg.png') no-repeat center; width: 33px; height: 35px; }
+.icon-roomtools-history-nav-bg { background: url('/assets/flash/roomtools/history_forward_bg.png') no-repeat center; width: 34px; height: 31px; }
+
+/* history buttons — forward_bg / open_bg multiplied by color 0x44a88d, per the XML tint */
+.icon-roomtools-history-nav-bg-teal { background: url('/assets/flash/roomtools/history_nav_bg_teal.png') no-repeat center; width: 34px; height: 31px; }
+.icon-roomtools-history-open-bg-teal { background: url('/assets/flash/roomtools/history_open_bg_teal.png') no-repeat center; width: 33px; height: 35px; }
+
+/* room tools side strips — the same collapse arrows the toolbar uses */
+.icon-tools-collapse-left {
+    background: url('/assets/flash/toolbar/collapse_left.png') no-repeat center;
+    width: 14px;
+    height: 43px;
+}
+.icon-tools-collapse-right {
+    background: url('/assets/flash/toolbar/collapse_right.png') no-repeat center;
+    width: 14px;
+    height: 43px;
+}
+
+/* iro_room_details_framed — the roominfo window's own icon set */
+.icon-roominfo-make-home { background: url('/assets/flash/navigator/roominfo_make_home.png') no-repeat center; width: 19px; height: 14px; }
+.icon-roominfo-home { background: url('/assets/flash/navigator/roominfo_home.png') no-repeat center; width: 19px; height: 14px; }
+.icon-roominfo-favourite { background: url('/assets/flash/navigator/roominfo_favourite.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-make-favourite { background: url('/assets/flash/navigator/roominfo_make_favourite.png') no-repeat center; width: 18px; height: 16px; }
+.icon-roominfo-remove-rights { background: url('/assets/flash/navigator/roominfo_remove_rights.png') no-repeat center; width: 17px; height: 22px; }
+.icon-roominfo-thumb-up { background: url('/assets/flash/navigator/roominfo_thumb_up.png') no-repeat center; width: 12px; height: 15px; }
+.icon-roominfo-panic { background: url('/assets/flash/navigator/roominfo_panic.png') no-repeat center; width: 23px; height: 22px; }
+.icon-roominfo-camera { background: url('/assets/flash/navigator/roominfo_camera.png') no-repeat center; width: 28px; height: 22px; }

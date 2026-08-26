@@ -46,23 +46,29 @@ export const ScrollbarVertical = forwardRef<HTMLDivElement, ScrollbarVerticalPro
             }
         }
 
+        /*
+         * The illumina scrollbar layout (illumina_light_scrollbar_vertical_xml) holds
+         * only the track and the lift — no up/down buttons.
+         */
+        const hasButtons = resolvedVariant !== '100';
+
         return (
             /*
-             * ScrollBarController: when visibleRegion / scrollableRegion >= 1 the lift is
-             * sized to the full track and disable() is called, cascading to every
-             * _INTERNAL child. The scrollbar stays visible in its disabled skin — it is
-             * never hidden or collapsed.
+             * ScrollBarController disables itself when visibleRegion / scrollableRegion
+             * >= 1, and ScrollableItemListWindow reacts to WE_DISABLED / WE_ENABLED by
+             * toggling the scrollbar's visibility and handing its width back to the
+             * item list — so an unscrollable scrollbar is hidden, not shown disabled.
              */
-            <div ref={ref} aria-disabled={!controller.scrollable} className={cn('flex w-fit flex-col items-stretch', className)} {...props}>
+            <div ref={ref} aria-disabled={!controller.scrollable} className={cn('flex w-fit flex-col items-stretch', !controller.scrollable && 'hidden', className)} {...props}>
                 <VariantCascadeProvider map={ownCascade}>
-                    <ScrollbarSliderButtonUp
+                    {hasButtons && <ScrollbarSliderButtonUp
                         defaultVariant={resolvedVariant}
                         role="button"
                         aria-label="Scroll up"
                         aria-disabled={!controller.scrollable}
                         className="shrink-0 cursor-pointer touch-none select-none"
                         {...holdUp}
-                    />
+                    />}
                     <ScrollbarSliderTrackVertical
                         ref={controller.trackRef}
                         defaultVariant={resolvedVariant}
@@ -90,14 +96,14 @@ export const ScrollbarVertical = forwardRef<HTMLDivElement, ScrollbarVerticalPro
                             onKeyDown={onThumbKeyDown}
                         />}
                     </ScrollbarSliderTrackVertical>
-                    <ScrollbarSliderButtonDown
+                    {hasButtons && <ScrollbarSliderButtonDown
                         defaultVariant={resolvedVariant}
                         role="button"
                         aria-label="Scroll down"
                         aria-disabled={!controller.scrollable}
                         className="shrink-0 cursor-pointer touch-none select-none"
                         {...holdDown}
-                    />
+                    />}
                 </VariantCascadeProvider>
             </div>
         );

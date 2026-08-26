@@ -47,7 +47,8 @@ export const ScrollbarHorizontal = forwardRef<HTMLDivElement, ScrollbarHorizonta
         }
 
         return (
-            <div ref={ref} className={cn('flex flex-row items-stretch', className)} {...props}>
+            /* ScrollableItemListWindow hides an unscrollable scrollbar — see ScrollbarVertical */
+            <div ref={ref} className={cn('flex flex-row items-stretch', !controller.scrollable && 'hidden', className)} {...props}>
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonLeft
                         defaultVariant={resolvedVariant}

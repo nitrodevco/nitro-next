@@ -7,6 +7,7 @@ import { CatalogWrapper } from "./components/catalog/CatalogWrapper";
 import { FriendListWrapper } from "./components/messenger";
 import { useWebSocketContext } from "./context";
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
+import { TooltipProvider } from "./theme";
 import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
 import { ActivityPointsView } from "./views/purse/ActivityPointsView";
 import { PurseView } from "./views/purse/PurseView";
@@ -41,7 +42,7 @@ export const MainView = () => {
     if (!isReady) return null;
 
     return (
-        <>
+        <TooltipProvider>
             <RoomWrapper />
             <div
                 id="ui-container"
@@ -52,6 +53,9 @@ export const MainView = () => {
                         <ActivityPointsView />
                         <NotificationCenterView />
                     </div>
+                    {/* ExtensionView — the toolbar's docked-panel strip (room event info,
+                        group info, quest tracker...) stacks top-right under the purse */}
+                    <div className="flex flex-col items-end gap-1 mt-1 pointer-events-none" id="toolbar-extensions" />
                 </div>
                 <AvatarEditorComponent />
                 <FriendListWrapper />
@@ -61,6 +65,6 @@ export const MainView = () => {
                 <InventoryComponent />
                 <WalletComponent />
             </div>
-        </>
+        </TooltipProvider>
     );
 }

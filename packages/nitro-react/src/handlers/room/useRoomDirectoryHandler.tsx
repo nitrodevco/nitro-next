@@ -1,4 +1,4 @@
-import { CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
+import { CantConnectMessage, CloseConnectionMessage, OpenConnectionMessage, RoomReadyMessage, UserObjectMessage } from "@nitrodevco/nitro-packets";
 import { GetRoomEngine } from "@nitrodevco/nitro-renderer";
 import { useRef } from "react";
 
@@ -15,14 +15,16 @@ export const useRoomDirectoryHandler = () => {
     });
 
     /*
-     * Flash enters a room from two places, both guarded the same way:
+     * Flash enters a room from two places:
      *   RoomEngine.onRoomSessionEvent "RSE_STARTED" -> setCurrentRoom(session.roomId)
      *   RoomMessageHandler.onRoomReady -> if (currentRoomId != roomId) setCurrentRoom(roomId)
-     * and setCurrentRoom disposes the previous room before adopting the new id. The guard
-     * makes whichever arrives first win and the other a no-op.
+     * RoomSessionManager.createSession disposes an existing session EVEN FOR THE SAME
+     * ROOM ID (re-entering rebuilds the room — the server resends the full state), so
+     * the session start recreates unconditionally; only RoomReady keeps the same-id
+     * guard so the normal two-packet entry does not build the room twice.
      */
-    const enterRoom = (roomId: number) => {
-        if (currentRoomIdRef.current === roomId) return;
+    const enterRoom = (roomId: number, force: boolean) => {
+        if (!force && currentRoomIdRef.current === roomId) return;
 
         if (currentRoomIdRef.current !== 0) GetRoomEngine().disposeRoom(currentRoomIdRef.current);
 
@@ -32,9 +34,9 @@ export const useRoomDirectoryHandler = () => {
         setRoom(GetRoomEngine().createRoom(roomId));
     };
 
-    useMessageListener(OpenConnectionMessage, data => enterRoom(data.roomId));
+    useMessageListener(OpenConnectionMessage, data => enterRoom(data.roomId, true));
 
-    useMessageListener(CloseConnectionMessage, () => {
+    const leaveRoom = () => {
         // RSE_ENDED: resetCurrentRoom(); disposeRoom(session.roomId)
         if (currentRoomIdRef.current !== 0) {
             GetRoomEngine().disposeRoom(currentRoomIdRef.current);
@@ -44,7 +46,16 @@ export const useRoomDirectoryHandler = () => {
 
         setRoom(undefined);
         setLandingViewVisible(true);
-    });
+    };
 
-    useMessageListener(RoomReadyMessage, data => enterRoom(data.roomId));
+    useMessageListener(CloseConnectionMessage, leaveRoom);
+
+    /*
+     * IncomingMessages.onCantConnect dispatches HTIE_ICON_RECEPTION — a failed entry
+     * always lands on hotel view, and the server has already removed us from the
+     * previous room without sending CloseConnection.
+     */
+    useMessageListener(CantConnectMessage, leaveRoom);
+
+    useMessageListener(RoomReadyMessage, data => enterRoom(data.roomId, false));
 }

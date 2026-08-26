@@ -1,13 +1,14 @@
 import type { IRoomInfo } from '@nitrodevco/nitro-packets';
-import { ForwardToARandomPromotedRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, OpenFlatConnectionComposer,SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
+import { GetGuestRoomComposer, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, SetNewNavigatorWindowPreferencesComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { useNavigatorVisibility } from '#base/hooks';
-import { Border, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext } from '#base/theme';
+import { createLinkEvent, useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
+import { Border, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, useTooltip } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
 import { NavigatorQuickLinksView } from './NavigatorQuickLinksView';
+import { NavigatorRoomInfoPopupView } from './NavigatorRoomInfoPopupView';
 import { NavigatorSearchView } from './NavigatorSearchView';
 
 export type NavigatorViewWindowParams = { searchCode?: string };
@@ -41,13 +42,27 @@ const PROMOTE_SEARCH_CODES = ['roomads_view', 'myworld_view'];
  * height_min 500. Holds top_view_select_tab_context, left_pane and right_pane.
  */
 export const NavigatorView = () => {
-    const { topLevelContexts, topLevelContext, searchResult, isSearching, leftPaneHidden, collapsedCategories, preferences } = useNavigatorSelectors();
-    const { setTopLevelContext, setIsSearching, setLeftPaneHidden, toggleCollapsedCategory, setViewMode } = useNavigatorActions();
+    const { topLevelContexts, topLevelContext, searchResult, searchText, isSearching, leftPaneHidden, preferences, roomInfoPopup } = useNavigatorSelectors();
+    const { setTopLevelContext, setLeftPaneHidden, setCategoryCollapsed, setBlockExpanded, setViewMode, popPreviousSearchContext, showRoomInfoPopup, hideRoomInfoPopup, showCreateRoom } = useNavigatorActions();
     const { hideNavigator } = useNavigatorVisibility();
+    const { performSearch, performLastSearch } = useNavigatorSearch();
     const { send } = useWebSocketContext();
     const t = useTranslation();
+    const tooltip = useTooltip();
     const frameRef = useRef<HTMLDivElement>(null);
     const lastSentRef = useRef<{ x: number; y: number; height: number; paneVisible: boolean; at: number } | null>(null);
+
+    /*
+     * HabboNewNavigator.toggle() on opening: the visible setter falls back to
+     * performSearch("official_view") when no results exist, then performLastSearch()
+     * refetches the last search past the cache (a no-op before the first search).
+     */
+    useEffect(() => {
+        if (!searchResult && !isSearching) performSearch('official_view');
+
+        performLastSearch();
+        // mount only — this is the window-open path
+    }, []);
 
     /*
      * NavigatorView.update(): when windowPreferencesChanged and more than 5000ms have
@@ -69,10 +84,22 @@ export const NavigatorView = () => {
             const height = Math.round(rect.height);
             const paneVisible = !leftPaneHidden;
             const last = lastSentRef.current;
-            const changed = !last || last.x !== x || last.y !== y || last.height !== height || last.paneVisible !== paneVisible;
+
+            /*
+             * The SWF only sends when the values differ from the LAST SENT ones, and it
+             * never sends on open — so the first tick just records the baseline instead
+             * of clobbering the server-stored preferences with the default position.
+             */
+            if (!last) {
+                lastSentRef.current = { x, y, height, paneVisible, at: 0 };
+
+                return;
+            }
+
+            const changed = last.x !== x || last.y !== y || last.height !== height || last.paneVisible !== paneVisible;
 
             if (!changed) return;
-            if (last && (Date.now() - last.at) <= 5000) return;
+            if ((Date.now() - last.at) <= 5000) return;
 
             send(new SetNewNavigatorWindowPreferencesComposer({
                 x,
@@ -87,48 +114,86 @@ export const NavigatorView = () => {
         }, 1000);
 
         return () => window.clearInterval(timer);
-    }, [leftPaneHidden, send]);
+        // send is intentionally omitted (unstable identity), matching the other handlers
+    }, [leftPaneHidden]);
 
+    /*
+     * TopViewSelector click — performSearch(searchCode, "", currentFilterText()):
+     * the search itself is unfiltered but the input text is carried across the tab
+     */
     const selectContext = (searchCode: string) => {
         const next = topLevelContexts.find(x => x.searchCode === searchCode);
 
         if (!next) return;
 
         setTopLevelContext(next);
-        setIsSearching(true);
 
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: '' }));
+        performSearch(searchCode, '', searchText);
     };
 
     const enterRoom = (room: IRoomInfo) => {
-        // the SWF enters a room with OpenFlatConnectionMessageComposer(roomId, password)
-        // — see RoomSession.sendVisitFlatMessage
-        send(new OpenFlatConnectionComposer({ roomId: room.roomId, password: '', unknown1: -1 }));
+        /*
+         * goToRoom(flatId) — entry always starts with GetGuestRoom(roomForward); the
+         * GetGuestRoomResult handler decides between opening the connection and the
+         * doorbell/password dialogs
+         */
+        send(new GetGuestRoomComposer({ roomId: room.roomId, enterRoom: false, roomForward: true }));
 
         hideNavigator();
     };
 
-    /* BlockResultsView.onCategoryAddQuickLinkClicked -> addSavedSearch(searchCode, currentResults.filteringData) */
-    const addQuickLink = (searchCode: string) => {
-        send(new NavigatorAddSavedSearchComposer({ searchCode, filter: searchResult?.filteringData ?? '' }));
+    /*
+     * BlockResultsView.onMouseClicked -> showRoomInfoBubbleAt(room, rect.right, rect
+     * vertical centre); when the popup is already open, a click just closes it
+     */
+    const showRoomInfo = (room: IRoomInfo, target: HTMLElement) => {
+        if (roomInfoPopup) {
+            hideRoomInfoPopup();
+
+            return;
+        }
+
+        const rect = target.getBoundingClientRect();
+
+        showRoomInfoPopup(room, rect.right, rect.top + rect.height / 2);
     };
 
-    /* onCategoryCollapseClicked / onCategoryExpandClicked persist to the server */
-    const collapseCategory = (searchCode: string) => {
-        const isCollapsed = collapsedCategories.includes(searchCode);
+    /*
+     * addSavedSearch — only sends while results exist, and always force-shows the
+     * left pane (setLeftPaneVisibility(true))
+     */
+    const addQuickLink = (searchCode: string) => {
+        if (searchResult) send(new NavigatorAddSavedSearchComposer({ searchCode, filter: searchResult.filteringData }));
 
+        setLeftPaneHidden(false);
+    };
+
+    /*
+     * onCategoryCollapseClicked / onCategoryExpandClicked persist to the server and
+     * re-render the block via replaceBlock(id, open) — unconditionally, so the user's
+     * click overrides a block that arrived with forceClosed set. The composer choice
+     * follows the VISIBLE state (the AS3 binds collapse to open blocks and expand to
+     * collapsed ones), not collapsedCategories membership.
+     */
+    const collapseCategory = (searchCode: string, isCollapsed: boolean) => {
         send(isCollapsed
             ? new NavigatorRemoveCollapsedCategoryComposer({ categoryName: searchCode })
             : new NavigatorAddCollapsedCategoryComposer({ categoryName: searchCode }));
 
-        toggleCollapsedCategory(searchCode);
+        setCategoryCollapsed(searchCode, !isCollapsed);
+        setBlockExpanded(searchCode, isCollapsed);
     };
 
     /* onCategoryShowMoreClicked -> performSearch(searchCode, currentResults.filteringData) */
-    const showMore = (searchCode: string) => {
-        setIsSearching(true);
+    const showMore = (searchCode: string) => performSearch(searchCode, searchResult?.filteringData ?? '');
 
-        send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: searchResult?.filteringData ?? '' }));
+    /* HabboNewNavigator.goBack — re-run the previous search from the context history */
+    const goBack = () => {
+        const previous = popPreviousSearchContext();
+
+        if (!previous) return;
+
+        performSearch(previous.searchCode, previous.filter);
     };
 
     /*
@@ -141,11 +206,20 @@ export const NavigatorView = () => {
         setViewMode(searchCode, viewMode);
     };
 
+    /*
+     * ViewMode.getViewMode: roomads_view -> 3, new_ads / eventcategory__* -> 4;
+     * isEventViewMode(3|4) makes the entries show roomAdName instead of roomName
+     */
+    const searchCodeOriginal = searchResult?.searchCodeOriginal ?? '';
+    const eventViewMode = searchCodeOriginal === 'roomads_view' || searchCodeOriginal === 'new_ads' || searchCodeOriginal.startsWith('eventcategory__');
+
     return (
         <Frame
             ref={frameRef}
-            caption={t('navigator.title')}
-            className={`${leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED} h-157`}
+            /* NavigatorView.set isBusy — the caption swaps while a search is running */
+            caption={isSearching ? t('navigator.title.is.busy') : t('navigator.title')}
+            /* height_min="500" — useFrameResize clamps the drag to the computed min-height */
+            className={`${leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED} h-157 min-h-125`}
             id="navigator"
             /* setInitialWindowDimensions applies windowHeight; windowX/windowY are desktop
                coordinates and this Frame positions by translate() offset, so they are not
@@ -154,13 +228,14 @@ export const NavigatorView = () => {
             resizeDirection="y"
             variant="3"
             onClose={hideNavigator}>
-            {/* temp_back (28x25 at 4,2) toggles the left pane, then
+            {/* white_background — a 576x33 pure-white strip behind the tab row.
+                temp_back (28x25 at 4,2) toggles the left pane, then
                 top_view_select_tab_context starts at x=115 with 88px tabs */}
-            <div className="flex items-center shrink-0">
+            <div className="flex items-end shrink-0 h-8.25 -mx-0.75 px-0.75 bg-white">
                 <NitroIcon
-                    className="shrink-0 ml-1 cursor-pointer"
+                    className="shrink-0 self-center ml-1 cursor-pointer"
                     icon="icon-nav-quicklink-add"
-                    title={t('navigator.tooltip.left.show.hide')}
+                    {...tooltip(t('navigator.tooltip.left.show.hide'))}
                     onClick={() => setLeftPaneHidden(!leftPaneHidden)} />
                 <TabContext className={leftPaneHidden ? TAB_OFFSET_COLLAPSED : TAB_OFFSET_EXPANDED} data-name="tabs">
                     {topLevelContexts.map(context => (
@@ -168,6 +243,7 @@ export const NavigatorView = () => {
                             key={context.searchCode}
                             aria-selected={topLevelContext?.searchCode === context.searchCode}
                             className="w-22"
+                            {...tooltip(t('navigator.tooltip.select.tab'))}
                             onClick={() => selectContext(context.searchCode)}>
                             {t(`navigator.toplevelview.${context.searchCode}`)}
                         </TabButton>
@@ -179,33 +255,36 @@ export const NavigatorView = () => {
                 {/* right_pane — 410x548 */}
                 <div className="flex flex-col flex-1 min-w-0 h-full">
                     <NavigatorSearchView />
-                    {/* block_results — 407x423, spacing 5 */}
-                    <Border className="flex-1 min-h-0 p-1" blend={0.5} variant="6">
+                    {/* block_results — a bare scrollable_itemlist_vertical style="3", 407x423, spacing 5 */}
+                    <div className="relative flex flex-col flex-1 min-h-0">
                         <ScrollArea className="flex-1 min-h-0" contentClassName="flex flex-col gap-1.25" variant="3">
-                            {isSearching && (
-                                <div className="flex items-center justify-center h-13.25 text-style-u-regular">
-                                    {t('navigator.searching')}
-                                </div>
-                            )}
                             {/* no_results_container — 388x53 */}
                             {!isSearching && !searchResult?.blocks.length && (
                                 <div className="flex items-center justify-center h-13.25 font-ubuntu-bold text-[16px]">
                                     {t('navigator.search.returned.no.results')}
                                 </div>
                             )}
-                            {!isSearching && searchResult?.blocks.map(block => (
+                            {searchResult?.blocks.map(block => (
                                 <NavigatorCategoryView
                                     key={block.searchCode}
                                     block={block}
+                                    eventViewMode={eventViewMode}
                                     onAddQuickLink={addQuickLink}
-                                    onBack={() => undefined}
+                                    onBack={goBack}
                                     onCollapse={collapseCategory}
                                     onEnter={enterRoom}
+                                    onShowInfo={showRoomInfo}
                                     onShowMore={showMore}
                                     onToggleMode={toggleMode} />
                             ))}
                         </ScrollArea>
-                    </Border>
+                        {/*
+                          * search_waiting_for_results_mask — container color="0x6f6feceae0"
+                          * background="true", toggled by NavigatorView.searchWaiting; the AS3
+                          * uint wraps to AARRGGBB 0x6feceae0 = #eceae0 at alpha 0x6f/255
+                          */}
+                        {isSearching && <div className="absolute inset-0 z-10 bg-[rgba(236,234,224,0.435)]" />}
+                    </div>
                     {/*
                       * create_room_border  border style=4, 189x60 at x=0,   y=488
                       * random_room_border  border style=5, 189x60 at x=205, y=488
@@ -223,7 +302,9 @@ export const NavigatorView = () => {
                       * the Frame content div (pb-1) already contribute 6px, so 10px more.
                       */}
                     <div className="flex shrink-0 gap-4 pt-5 pb-2.5">
-                        <Border className="relative w-47.25 h-15 cursor-pointer" title={t('navigator.tooltip.create.room')} variant="4">
+                        {/* createRoomProcedure -> HabboNewNavigator.createRoom() -> roomCreateViewCtrl.show();
+                            every button procedure also closes an open room-info popup */}
+                        <Border className="relative w-47.25 h-15 cursor-pointer" {...tooltip(t('navigator.tooltip.create.room'))} variant="4" onClick={() => { showCreateRoom(); hideRoomInfoPopup(); }}>
                             <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-create-room" /></div>
                             <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.create.room')}</span>
                         </Border>
@@ -238,17 +319,24 @@ export const NavigatorView = () => {
                           */}
                         {PROMOTE_SEARCH_CODES.includes(searchResult?.searchCodeOriginal ?? '')
                             ? (
-                                <Border className="relative w-47.25 h-15 cursor-pointer" title={t('navigator.tooltip.promote.room')} variant="5">
+                                /* promoteRoomProcedure — createLinkEvent("catalog/open/room_ad") */
+                                <Border
+                                    className="relative w-47.25 h-15 cursor-pointer"
+                                    {...tooltip(t('navigator.tooltip.promote.room'))}
+                                    variant="5"
+                                    onClick={() => { createLinkEvent('catalog/open/room_ad'); hideRoomInfoPopup(); }}>
                                     <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-promote-room" /></div>
                                     <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.promote.room')}</span>
                                 </Border>
                             )
                             : (
+                                /* randomRoomProcedure — createLinkEvent("navigator/goto/random_friending_room")
+                                   then hides the navigator */
                                 <Border
                                     className="relative w-47.25 h-15 cursor-pointer"
-                                    title={t('navigator.tooltip.random.room')}
+                                    {...tooltip(t('navigator.tooltip.random.room'))}
                                     variant="5"
-                                    onClick={() => { send(new ForwardToARandomPromotedRoomComposer({ category: '' })); hideNavigator(); }}>
+                                    onClick={() => { createLinkEvent('navigator/goto/random_friending_room'); hideRoomInfoPopup(); hideNavigator(); }}>
                                     <div className="absolute top-0.5 left-0.5 w-46.25 h-14 overflow-hidden"><NitroIcon icon="icon-nav-random-room" /></div>
                                     <span className={NAV_BUTTON_TEXT} style={NAV_BUTTON_ETCHING}>{t('navigator.random.room')}</span>
                                 </Border>
@@ -256,6 +344,7 @@ export const NavigatorView = () => {
                     </div>
                 </div>
             </TabContent>
+            <NavigatorRoomInfoPopupView />
         </Frame>
     );
 }
