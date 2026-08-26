@@ -53,7 +53,7 @@ export const useInteractionState = ({
             eventMode: 'static',
             onPointerOver: compose(() => setState('hovering'), onPointerOver),
             onPointerOut: compose(() => setState('default'), onPointerOut),
-            onPointerDown: stopsPropagation ? compose(compose(() => setState('pressed'), onPointerDown), e => e.stopImmediatePropagation()) : compose(() => setState('pressed'), onPointerDown),
+            onPointerDown: stopsPropagation ? compose(compose(() => setState('pressed'), onPointerDown), e => e.stopPropagation()) : compose(() => setState('pressed'), onPointerDown),
             onPointerUp: compose(() => setState('hovering'), onPointerUp),
             onPointerUpOutside: compose(() => setState('default'), onPointerUpOutside),
             onPointerTap,
