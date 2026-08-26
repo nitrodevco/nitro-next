@@ -1,4 +1,5 @@
 export * from './navigator/useNavigatorHandler';
+export * from './quests/useAchievementsHandler';
 export * from './room/useRoomChatHandler';
 export * from './room/useRoomDataHandler';
 export * from './room/useRoomDirectoryHandler';

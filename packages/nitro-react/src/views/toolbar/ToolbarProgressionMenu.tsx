@@ -1,10 +1,20 @@
 import { forwardRef } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useSystemActions, useTranslation } from '#base/context';
 import { NitroIcon } from '#base/theme';
 
-export const ToolbarProgressionMenu = forwardRef<HTMLDivElement>((props, ref) => {
+type ToolbarProgressionMenuProps = {
+    onClicked: () => void;
+}
+
+export const ToolbarProgressionMenu = forwardRef<HTMLDivElement, ToolbarProgressionMenuProps>(({ onClicked }, ref) => {
     const t = useTranslation();
+    const { toggleWindow } = useSystemActions();
+
+    const openWindow = (windowName: string) => {
+        toggleWindow(windowName);
+        onClicked();
+    }
 
     return (
         <div className="toolbar-menu" ref={ref}>
@@ -16,7 +26,7 @@ export const ToolbarProgressionMenu = forwardRef<HTMLDivElement>((props, ref) =>
                 <NitroIcon icon="icon-progression-tasks" />
                 <span>{t('widget.progmenu.quests')}</span>
             </div>
-            <div className="toolbar-menu-button">
+            <div className="toolbar-menu-button" onClick={ () => openWindow('achievements') }>
                 <NitroIcon icon="icon-progression-achievements" />
                 <span>{t('widget.progmenu.achievements')}</span>
             </div>
