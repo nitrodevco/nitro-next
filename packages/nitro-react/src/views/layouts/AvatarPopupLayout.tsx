@@ -1,0 +1,84 @@
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+
+/** Generated from `1491_avatar_popup_xml` (layout "avatar_popup", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface AvatarPopupLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const AvatarPopupLayout = ({ layout }: AvatarPopupLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
+            <Border
+                variant="0"
+                name="avatar_popup"
+                layout={{ position: 'absolute', left: 0, width: 203, top: 0, height: 90 }}
+            >
+                <ThemeImage
+                    name="face"
+                    params={17}
+                    src={undefined}
+                    layout={{ position: 'absolute', left: 11, width: 32, top: 5, height: 72 }}
+                />
+                <Region
+                    name="name_text_online"
+                    params={4325392}
+                    layout={{ position: 'absolute', left: 40, width: 95, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text="PH Avatar Name"
+                        textOptions={{ fill: '#000000' }}
+                    />
+                </Region>
+                <Region
+                    name="name_text_offline"
+                    params={16}
+                    layout={{ position: 'absolute', left: 60, width: 140, top: 9, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text="PH Avatar Name"
+                        textOptions={{ fill: '#000000' }}
+                    />
+                </Region>
+                <Region
+                    name="motto_text"
+                    params={16}
+                    layout={{ position: 'absolute', left: 40, width: 150, top: 20, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text="PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 150 }}
+                    />
+                </Region>
+                <Region
+                    name="online_text"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 66, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('friendlist.avatarpopup.online')}
+                        textOptions={{ fill: '#000000' }}
+                    />
+                </Region>
+                <ThemeImage
+                    name="offline"
+                    params={17}
+                    src={undefined}
+                    layout={{ position: 'absolute', left: 10, width: 30, top: 8, height: 10 }}
+                />
+                <Region
+                    name="last_access_text"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 27, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('friendlist.avatarpopup.lastaccess')}
+                        textOptions={{ fill: '#000000' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};

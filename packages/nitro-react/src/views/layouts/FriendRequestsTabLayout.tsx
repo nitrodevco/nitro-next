@@ -1,0 +1,212 @@
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, Bubble, Button, ButtonThick, CloseButton, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+
+import { layoutImage } from './layoutAssets';
+
+/** Generated from `7_friend_requests_tab_xml` (layout "friendRequestsTab", 127x36) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface FriendRequestsTabLayoutProps {
+    layout?: BoxLayout;
+    onButtonAccept?: () => void;
+    onButtonAcceptAll?: () => void;
+    onButtonClose?: () => void;
+}
+
+export const FriendRequestsTabLayout = ({ layout, onButtonAccept, onButtonAcceptAll, onButtonClose }: FriendRequestsTabLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 127, height: 36, ...layout }}>
+            <Border
+                variant="6"
+                name="frame"
+                params={1}
+                tintColor="#fac919"
+                layout={{ position: 'absolute', left: 39, width: 127, top: 292, height: 36 }}
+            >
+                <Region
+                    name="tab_content"
+                    params={8388752}
+                    layout={{ position: 'absolute', left: 7, width: 116, top: 3, height: 40, minHeight: 40, flexDirection: 'column' }}
+                >
+                    <Region
+                        name="header"
+                        params={145}
+                        layout={{ width: 112, height: 31, flexShrink: 0 }}
+                    >
+                        <ThemeImage
+                            name="icon"
+                            params={1310720}
+                            src={layoutImage('add_friends_icon.png')}
+                            layout={{ position: 'absolute', left: -2, width: 31, top: -5, height: 34 }}
+                        />
+                        <Region
+                            name="label"
+                            tags={[ 'label' ]}
+                            params={3148816}
+                            layout={{ position: 'absolute', left: 29, width: 77, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={t('friendbar.requests.title')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
+                            />
+                        </Region>
+                    </Region>
+                </Region>
+                <Bubble
+                    variant="0"
+                    name="bubble"
+                    params={1048577}
+                    tintColor="#fac919"
+                    layout={{ position: 'absolute', left: -45, width: 222, top: -298, height: 304 }}
+                >
+                    <Region
+                        name="title"
+                        params={16}
+                        layout={{ position: 'absolute', left: 0, width: 204, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={t('friendbar.requests.title')}
+                            textStyle="text-style-u-frame-title"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <CloseButton
+                        variant="3"
+                        name="button_close"
+                        params={17}
+                        onPointerTap={onButtonClose}
+                        layout={{ position: 'absolute', left: 184, width: 19, top: 3, height: 20 }}
+                    />
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 4, width: 196, top: 27, height: 220, maxHeight: 220 }}
+                    >
+                        <Region
+                            name="request_entity_list"
+                            params={8388624}
+                            layout={{ flexDirection: 'column', width: '100%' }}
+                        >
+                            <Region
+                                name="request_entity"
+                                params={16}
+                                backgroundColor="#ab8710"
+                                layout={{ width: 196, height: 50, flexShrink: 0 }}
+                            >
+                                <Region
+                                    name="region_profile"
+                                    params={145}
+                                    layout={{ position: 'absolute', left: 1, width: 39, top: 3, height: 44 }}
+                                >
+                                    <ThemeImage
+                                        name="canvas"
+                                        params={16}
+                                        src={undefined}
+                                        layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 44 }}
+                                    />
+                                </Region>
+                                <Region
+                                    name="region_profile_name"
+                                    params={145}
+                                    layout={{ position: 'absolute', left: 43, width: 138, top: 6, height: 17 }}
+                                >
+                                    <Region
+                                        name="name"
+                                        params={16}
+                                        layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    >
+                                        <ThemeText
+                                            text="Name"
+                                            textStyle="text-style-u-bold"
+                                            textOptions={{ fill: '#ffffff' }}
+                                        />
+                                    </Region>
+                                </Region>
+                                <Region
+                                    name="click_area_discard"
+                                    params={17}
+                                    layout={{ position: 'absolute', left: 42, width: 119, top: 25, height: 18 }}
+                                >
+                                    <Region
+                                        name="text_discard"
+                                        params={4194320}
+                                        layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    >
+                                        <ThemeText
+                                            text={t('friendbar.request.decline')}
+                                            textStyle="text-style-u-regular"
+                                            textOptions={{ fill: '#ffffff' }}
+                                        />
+                                    </Region>
+                                </Region>
+                                <Button
+                                    variant="3"
+                                    name="button_accept"
+                                    params={393233}
+                                    onPointerTap={onButtonAccept}
+                                    layout={{ position: 'absolute', left: 93, width: 80, top: 22, height: 22, maxWidth: 80 }}
+                                >
+                                    {t('friendbar.request.accept')}
+                                </Button>
+                            </Region>
+                        </Region>
+                    </ScrollArea>
+                    <Region
+                        name="click_area_discard_all"
+                        params={1041}
+                        layout={{ position: 'absolute', left: 11, width: 143, top: 258, height: 16 }}
+                    >
+                        <Region
+                            params={4194320}
+                            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={t('friendbar.requests.discard')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff' }}
+                            />
+                        </Region>
+                    </Region>
+                    <Region
+                        params={16}
+                        backgroundColor="#564620"
+                        layout={{ position: 'absolute', left: 4, width: 184, top: 27, height: 1 }}
+                    />
+                    <Region
+                        params={1040}
+                        backgroundColor="#564620"
+                        layout={{ position: 'absolute', left: 4, width: 184, top: 246, height: 1 }}
+                    />
+                    <ButtonThick
+                        variant="5"
+                        name="button_accept_all"
+                        params={394321}
+                        tintColor="#77bf43"
+                        onPointerTap={onButtonAcceptAll}
+                        layout={{ position: 'absolute', left: 28, width: 171, top: 254, height: 28 }}
+                    >
+                        {t('friendbar.requests.accept')}
+                    </ButtonThick>
+                </Bubble>
+                <Border
+                    variant="7"
+                    params={409600}
+                    tintColor="#de4537"
+                    layout={{ position: 'absolute', left: 99, width: 18, top: -8, height: 20 }}
+                >
+                    <Region
+                        name="badge_counter"
+                        params={16}
+                        layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text="0"
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Border>
+            </Border>
+        </Region>
+    );
+};

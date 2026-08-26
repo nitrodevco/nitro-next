@@ -1,0 +1,202 @@
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
+
+import { layoutImage } from './layoutAssets';
+
+/** Generated from `27_level_up_xml` (layout "level_up", 430x362) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface LevelUpLayoutProps {
+    layout?: BoxLayout;
+    onClose?: () => void;
+    onCloseButton?: () => void;
+    onTalentButton?: () => void;
+}
+
+export const LevelUpLayout = ({ layout, onClose, onCloseButton, onTalentButton }: LevelUpLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Frame
+            variant="100"
+            params={1}
+            caption={t('talent.track.common.levelup.caption')}
+            onClose={onClose}
+            layout={{ width: 430, height: 362, ...layout }}
+        >
+            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                <Region
+                    params={8536080}
+                    layout={{ position: 'absolute', left: 10, width: 408, top: 10, height: 306, flexDirection: 'column' }}
+                >
+                    <Region
+                        params={16}
+                        layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('talent.track.common.levelup.title')}
+                            textStyle="text-style-il-heading-title"
+                        />
+                    </Region>
+                    <Region
+                        name="level_up_message"
+                        params={16}
+                        layout={{ width: 410, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('talent.track.helper.levelup.message')}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 410 }}
+                        />
+                    </Region>
+                    <Border
+                        variant="102"
+                        params={147472}
+                        layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}
+                    >
+                        <Region
+                            name="level_up_layout"
+                            params={147472}
+                            layout={{ position: 'absolute', left: 14, width: 378, top: 12, height: 164, flexDirection: 'column', gap: 1 }}
+                        >
+                            <Region
+                                name="level_title"
+                                params={16}
+                                layout={{ width: 340, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text="Frank's Little Helper"
+                                    textStyle="text-style-il-heading-2"
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 340 }}
+                                />
+                            </Region>
+                            <Region
+                                name="level_description"
+                                params={16}
+                                layout={{ width: 309, height: 65, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text="Now that you know your  Now that you know way around  Now that you knowthe hotel, it's... Now that you know your way around the hotel, it's... Now that you know your way around the hotel, it's..."
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
+                                />
+                            </Region>
+                            <Region
+                                name="level_rewards"
+                                params={16}
+                                layout={{ width: 378, height: 80, flexShrink: 0 }}
+                            >
+                                <ThemeImage
+                                    params={16}
+                                    src={layoutImage('illumina_horizontal_separator.png')}
+                                    layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 2 }}
+                                />
+                                <Region
+                                    params={16}
+                                    layout={{ position: 'absolute', left: 4, width: 185, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                >
+                                    <ThemeText
+                                        text={t('talent.track.common.levelup.rewards')}
+                                        textStyle="text-style-il-border"
+                                        textOptions={{ fill: '#333333' }}
+                                    />
+                                </Region>
+                                <Region
+                                    name="reward_list"
+                                    params={16}
+                                    layout={{ position: 'absolute', left: 4, width: 370, top: 34, height: 35, flexDirection: 'row' }}
+                                >
+                                    <Region
+                                        name="reward_vip_template"
+                                        params={147472}
+                                        layout={{ width: 93, height: 33, flexShrink: 0 }}
+                                    >
+                                        <ThemeImage
+                                            params={16}
+                                            src={layoutImage('talent_vip_reward.png')}
+                                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 33 }}
+                                        />
+                                        <Region
+                                            name="vip_length"
+                                            params={3088}
+                                            layout={{ position: 'absolute', left: 37, width: 56, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                        >
+                                            <ThemeText
+                                                text="x 10 days"
+                                                textStyle="text-style-il-heading-2"
+                                                textOptions={{ fill: '#222222' }}
+                                            />
+                                        </Region>
+                                    </Region>
+                                    <ThemeImage
+                                        name="reward_product_template"
+                                        params={16}
+                                        src={undefined}
+                                        layout={{ width: 35, height: 35, flexShrink: 0 }}
+                                    />
+                                    <Region
+                                        name="reward_perk_template"
+                                        params={147472}
+                                        layout={{ width: 99, height: 35, flexShrink: 0 }}
+                                    >
+                                        <WidgetSlot
+                                            widgetType="badge_image"
+                                            name="perk_image"
+                                            params={16}
+                                            options={{ 'badge_image:type': 'perk', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                                            layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
+                                        />
+                                        <Region
+                                            name="perk_name"
+                                            params={3088}
+                                            layout={{ position: 'absolute', left: 37, width: 62, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                        >
+                                            <ThemeText
+                                                text="perk name"
+                                                textStyle="text-style-il-heading-2"
+                                                textOptions={{ fill: '#222222' }}
+                                            />
+                                        </Region>
+                                    </Region>
+                                    <Region
+                                        name="plus_template"
+                                        params={3088}
+                                        layout={{ width: 22, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    >
+                                        <ThemeText
+                                            text=" "
+                                            textStyle="text-style-il-heading-1"
+                                            textOptions={{ fill: '#222222' }}
+                                        />
+                                    </Region>
+                                </Region>
+                            </Region>
+                        </Region>
+                    </Border>
+                    <Button
+                        variant="101"
+                        name="talent_button"
+                        params={131281}
+                        tintColor="#bbbbbb"
+                        onPointerTap={onTalentButton}
+                        layout={{ width: 221, height: 53, flexShrink: 0 }}
+                    >
+                        {t('talent.track.common.levelup.check')}
+                    </Button>
+                    <Region
+                        name="close_button"
+                        params={193}
+                        layout={{ width: 94, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        onPointerTap={onCloseButton}
+                        cursor="pointer"
+                    >
+                        <ThemeText text={t('alert.close.button')} />
+                    </Region>
+                </Region>
+                <ThemeImage
+                    name="level_decoration"
+                    params={1024}
+                    src={undefined}
+                    layout={{ position: 'absolute', left: 280, width: 260, top: 89, height: 260 }}
+                />
+            </Region>
+        </Frame>
+    );
+};

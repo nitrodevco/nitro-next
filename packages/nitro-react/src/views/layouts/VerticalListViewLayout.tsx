@@ -1,0 +1,18 @@
+import { BoxLayout, Region } from '#base/theme';
+
+/** Generated from `1145_vertical_list_view_xml` (layout "vertical_list_view", 1000x0) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface VerticalListViewLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const VerticalListViewLayout = ({ layout }: VerticalListViewLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 1000, height: 0, ...layout }}>
+            <Region
+                name="vertical_list_view"
+                params={147472}
+                layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 0, flexDirection: 'column' }}
+            />
+        </Region>
+    );
+};

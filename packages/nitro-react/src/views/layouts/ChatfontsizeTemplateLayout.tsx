@@ -1,0 +1,35 @@
+import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
+
+/** Generated from `881_chatfontsize_template_xml` (layout "chatfontsize_template", 18x18) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface ChatfontsizeTemplateLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const ChatfontsizeTemplateLayout = ({ layout }: ChatfontsizeTemplateLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 18, height: 18, ...layout }}>
+            <Region
+                name="chatfontsize_region"
+                params={17}
+                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+            >
+                <Border
+                    variant="2"
+                    name="background_color"
+                    params={144}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+                />
+                <Region
+                    name="label"
+                    params={4194320}
+                    layout={{ position: 'absolute', left: 4, width: 9, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text="S"
+                        textOptions={{ fill: '#333333' }}
+                    />
+                </Region>
+            </Region>
+        </Region>
+    );
+};

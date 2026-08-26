@@ -1,0 +1,26 @@
+import { BoxLayout, Region, ThemeImage } from '#base/theme';
+
+import { layoutImage } from './layoutAssets';
+
+/** Generated from `9_new_search_friends_tab_xml` (layout "new_search_friends_tab", 30x30) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface NewSearchFriendsTabLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const NewSearchFriendsTabLayout = ({ layout }: NewSearchFriendsTabLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
+            <Region
+                name="container"
+                params={17}
+                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('friend_bar_search_habbos.png')}
+                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                />
+            </Region>
+        </Region>
+    );
+};

@@ -1,0 +1,22 @@
+import { BoxLayout, Region, ThemeImage } from '#base/theme';
+
+import { layoutImage } from './layoutAssets';
+
+/** Generated from `286_counter_xml` (layout "counter", 164x164) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface CounterLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const CounterLayout = ({ layout }: CounterLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 164, height: 164, ...layout }}>
+            <ThemeImage
+                name="counterBitmap"
+                tags={[ 'bitmap' ]}
+                params={3264}
+                src={layoutImage('explosion001.png')}
+                layout={{ position: 'absolute', left: 171, width: 164, top: 131, height: 164, minWidth: 164, minHeight: 164 }}
+            />
+        </Region>
+    );
+};

@@ -1,0 +1,374 @@
+import { useTranslation } from '#base/context';
+import { BoxLayout, ContainerButton, Frame, RadioButton, Region, ThemeText, WidgetSlot } from '#base/theme';
+
+/** Generated from `68_forum_settings_xml` (layout "forum_permissions", 350x545) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface ForumSettingsLayoutProps {
+    layout?: BoxLayout;
+    on_0?: () => void;
+    on_02?: () => void;
+    on_03?: () => void;
+    on_1?: () => void;
+    on_12?: () => void;
+    on_13?: () => void;
+    on_2?: () => void;
+    on_22?: () => void;
+    on_23?: () => void;
+    on_24?: () => void;
+    on_3?: () => void;
+    on_32?: () => void;
+    on_33?: () => void;
+    onCancelBtn?: () => void;
+    onClose?: () => void;
+    onOkBtn?: () => void;
+}
+
+export const ForumSettingsLayout = ({ layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn }: ForumSettingsLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Frame
+            variant="3"
+            params={98337}
+            caption={t('groupforum.settings.window_title')}
+            tintColor="#418db0"
+            onClose={onClose}
+            layout={{ width: 350, height: 545, ...layout }}
+        >
+            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                <Region
+                    name="top_part"
+                    params={129}
+                    backgroundColor="#0e3f52"
+                    layout={{ position: 'absolute', left: -5, width: 348, top: 8, height: 80 }}
+                >
+                    <Region
+                        name="top_click_area"
+                        params={145}
+                        layout={{ position: 'absolute', left: 0, width: 348, top: 0, height: 80 }}
+                    />
+                    <Region
+                        name="icon_background"
+                        params={16}
+                        backgroundColor="#000000"
+                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                    >
+                        <WidgetSlot
+                            widgetType="badge_image"
+                            name="group_icon"
+                            params={16}
+                            layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
+                        />
+                    </Region>
+                    <Region
+                        name="top_header_text"
+                        params={16}
+                        layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text="Super-duper long group title"
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                    <Region
+                        name="top_text"
+                        params={144}
+                        layout={{ position: 'absolute', left: 90, width: 254, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text="Super-duper long goup description, maybe even multiline, but takes a few lines anyway"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 254 }}
+                        />
+                    </Region>
+                </Region>
+                <ContainerButton
+                    variant="3"
+                    name="cancel_btn"
+                    params={1041}
+                    tintColor="#dddddd"
+                    onPointerTap={onCancelBtn}
+                    layout={{ position: 'absolute', left: 25, width: 120, top: 478, height: 30, minWidth: 120 }}
+                >
+                    <Region
+                        params={3935440}
+                        layout={{ position: 'absolute', left: 0, width: 160, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('groupforum.settings.cancel')}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                </ContainerButton>
+                <ContainerButton
+                    variant="3"
+                    name="ok_btn"
+                    params={263249}
+                    tintColor="#0a9bc5"
+                    onPointerTap={onOkBtn}
+                    layout={{ position: 'absolute', left: 190, width: 120, top: 478, height: 30, minWidth: 120 }}
+                >
+                    <Region
+                        params={3935440}
+                        layout={{ position: 'absolute', left: 0, width: 137, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('groupforum.settings.ok')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </ContainerButton>
+                <Region
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 444, top: 100, height: 80 }}
+                >
+                    <Region
+                        params={144}
+                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.read_label')} />
+                    </Region>
+                    <Region
+                        name="label0"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_all')} />
+                    </Region>
+                    <Region
+                        name="label1"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_members')} />
+                    </Region>
+                    <Region
+                        name="label2"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_admins')} />
+                    </Region>
+                    <Region
+                        name="read_selector"
+                        params={17}
+                        layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 60 }}
+                    >
+                        <RadioButton
+                            variant="3"
+                            name="0"
+                            params={17}
+                            onPointerTap={on_0}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="1"
+                            params={17}
+                            onPointerTap={on_1}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="2"
+                            params={17}
+                            onPointerTap={on_2}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 444, top: 190, height: 100 }}
+                >
+                    <Region
+                        params={144}
+                        layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.post_message_label')} />
+                    </Region>
+                    <Region
+                        name="label0"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_all')} />
+                    </Region>
+                    <Region
+                        name="label1"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_members')} />
+                    </Region>
+                    <Region
+                        name="label2"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_admins')} />
+                    </Region>
+                    <Region
+                        name="label3"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_owner')} />
+                    </Region>
+                    <Region
+                        name="post_message_selector"
+                        params={17}
+                        layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80 }}
+                    >
+                        <RadioButton
+                            variant="3"
+                            name="0"
+                            params={17}
+                            onPointerTap={on_02}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="1"
+                            params={17}
+                            onPointerTap={on_12}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="2"
+                            params={17}
+                            onPointerTap={on_22}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="3"
+                            params={17}
+                            onPointerTap={on_3}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 444, top: 300, height: 100 }}
+                >
+                    <Region
+                        params={144}
+                        layout={{ position: 'absolute', left: 0, width: 243, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.post_thread_label')} />
+                    </Region>
+                    <Region
+                        name="label0"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 384, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_all')} />
+                    </Region>
+                    <Region
+                        name="label1"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_members')} />
+                    </Region>
+                    <Region
+                        name="label2"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_admins')} />
+                    </Region>
+                    <Region
+                        name="label3"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_owner')} />
+                    </Region>
+                    <Region
+                        name="post_thread_selector"
+                        params={17}
+                        layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80 }}
+                    >
+                        <RadioButton
+                            variant="3"
+                            name="0"
+                            params={17}
+                            onPointerTap={on_03}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="1"
+                            params={17}
+                            onPointerTap={on_13}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="2"
+                            params={17}
+                            onPointerTap={on_23}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="3"
+                            params={17}
+                            onPointerTap={on_32}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 444, top: 410, height: 60 }}
+                >
+                    <Region
+                        params={144}
+                        layout={{ position: 'absolute', left: 0, width: 232, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.moderate_label')} />
+                    </Region>
+                    <Region
+                        name="label2"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_group_admins')} />
+                    </Region>
+                    <Region
+                        name="label3"
+                        params={16}
+                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={t('groupforum.permissions.option_owner')} />
+                    </Region>
+                    <Region
+                        name="moderate_selector"
+                        params={17}
+                        layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 40 }}
+                    >
+                        <RadioButton
+                            variant="3"
+                            name="2"
+                            params={17}
+                            onPointerTap={on_24}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="3"
+                            name="3"
+                            params={17}
+                            onPointerTap={on_33}
+                            layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
+        </Frame>
+    );
+};

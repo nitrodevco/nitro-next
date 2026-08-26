@@ -1,0 +1,12 @@
+import { BoxLayout, Region } from '#base/theme';
+
+/** Generated from `2626_illumina_light_scrollbar_horizontal_xml` (layout "illumina_light_window_layout_scrollbar_horizontal", 9x9) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface IlluminaLightScrollbarHorizontalLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const IlluminaLightScrollbarHorizontalLayout = ({ layout }: IlluminaLightScrollbarHorizontalLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 9, height: 9, ...layout }} />
+    );
+};

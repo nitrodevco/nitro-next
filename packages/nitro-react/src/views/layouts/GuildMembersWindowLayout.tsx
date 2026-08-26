@@ -1,0 +1,140 @@
+import { useState } from 'react';
+
+import { useTranslation } from '#base/context';
+import { BoxLayout, ContainerButton, Dropmenu, Frame, Icon, Region, TextInput, ThemeText, WidgetSlot } from '#base/theme';
+
+/** Generated from `1189_guild_members_window_xml` (layout "Group info window", 352x431) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface GuildMembersWindowLayoutProps {
+    layout?: BoxLayout;
+    onClose?: () => void;
+    onNextPageButton?: () => void;
+    onPreviousPageButton?: () => void;
+    onTypeDropMenu?: () => void;
+}
+
+export const GuildMembersWindowLayout = ({ layout, onClose, onNextPageButton, onPreviousPageButton, onTypeDropMenu }: GuildMembersWindowLayoutProps) => {
+    const t = useTranslation();
+    const [ filterMembersInputValue, setFilterMembersInputValue ] = useState('');
+    const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
+
+    return (
+        <Frame
+            variant="3"
+            id="groups_info_window"
+            name="groups_info_window"
+            params={32769}
+            caption={t('group.members.title')}
+            tintColor="#418db0"
+            onClose={onClose}
+            layout={{ width: 352, height: 431, ...layout }}
+        >
+            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                <Region
+                    name="header_cont"
+                    params={144}
+                    layout={{ position: 'absolute', left: 10, width: 333, top: 0, height: 77 }}
+                >
+                    <WidgetSlot
+                        widgetType="badge_image"
+                        name="group_logo"
+                        params={16}
+                        options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                        layout={{ position: 'absolute', left: 17, width: 39, top: 22, height: 39 }}
+                    />
+                    <Dropmenu
+                        variant="3"
+                        name="type_drop_menu"
+                        params={145}
+                        onPointerTap={onTypeDropMenu}
+                        layout={{ position: 'absolute', left: 78, width: 243, top: 48, height: 25 }}
+                    />
+                    <TextInput
+                        value={filterMembersInputValue}
+                        onChange={setFilterMembersInputValue}
+                        layout={{ position: 'absolute', left: 78, width: 214, top: 14, height: 25 }}
+                    />
+                    <Icon
+                        variant="23"
+                        name="searching_icon"
+                        params={16}
+                        layout={{ position: 'absolute', left: 300, width: 15, top: 18, height: 15 }}
+                    />
+                </Region>
+                <Region
+                    name="members_cont"
+                    params={2192}
+                    layout={{ position: 'absolute', left: 10, width: 333, top: 82, height: 277 }}
+                />
+                <Region
+                    name="footer_cont"
+                    params={1168}
+                    layout={{ position: 'absolute', left: 10, width: 333, top: 363, height: 25 }}
+                >
+                    <ContainerButton
+                        variant="3"
+                        name="previous_page_button"
+                        params={131089}
+                        onPointerTap={onPreviousPageButton}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
+                    >
+                        <Icon
+                            variant="4"
+                            params={16}
+                            tintColor="#000000"
+                            layout={{ position: 'absolute', left: 21, width: 16, top: 7, height: 16 }}
+                        />
+                    </ContainerButton>
+                    <ContainerButton
+                        variant="3"
+                        name="next_page_button"
+                        params={131153}
+                        onPointerTap={onNextPageButton}
+                        layout={{ position: 'absolute', left: 283, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
+                    >
+                        <Icon
+                            variant="5"
+                            params={16}
+                            tintColor="#000000"
+                            layout={{ position: 'absolute', left: 24, width: 17, top: 7, height: 16 }}
+                        />
+                    </ContainerButton>
+                    <Region
+                        name="footer_info_txt"
+                        params={786448}
+                        visible={false}
+                        layout={{ position: 'absolute', left: 98, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('group.members.pageinfo')}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                    <Region
+                        params={786640}
+                        layout={{ position: 'absolute', left: 77, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                    >
+                        <Region
+                            name="pagina_text_start"
+                            params={16}
+                            layout={{ width: 135, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text="X matching users. Page " />
+                        </Region>
+                        <TextInput
+                            value={paginaNumberInputValue}
+                            onChange={setPaginaNumberInputValue}
+                            layout={{ width: 21, height: 17, flexShrink: 0 }}
+                        />
+                        <Region
+                            name="pagina_text_end"
+                            params={16}
+                            layout={{ width: 18, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text="/ Y" />
+                        </Region>
+                    </Region>
+                </Region>
+            </Region>
+        </Frame>
+    );
+};

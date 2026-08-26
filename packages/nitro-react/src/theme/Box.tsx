@@ -88,7 +88,7 @@ BoxPixi.displayName = 'BoxPixi';
  * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
  */
 const BoxDom = forwardRef<Container, BoxProps>(
-    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, visible, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const style = boxLayoutToStyle(layout as BoxLayout | undefined);
         const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
@@ -101,6 +101,7 @@ const BoxDom = forwardRef<Container, BoxProps>(
         if (typeof cursor === 'string') style.cursor = cursor;
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
+        if (visible === false) style.display = 'none';
         if (x || y) {
             style.transform = `translate(${x}px, ${y}px)`;
             style.transformOrigin = 'top left';

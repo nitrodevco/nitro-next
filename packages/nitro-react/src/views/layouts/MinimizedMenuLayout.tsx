@@ -1,0 +1,32 @@
+import { BoxLayout, Bubble, Icon, Region } from '#base/theme';
+
+/** Generated from `990_minimized_menu_xml` (layout "minimized_menu", 45x35) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface MinimizedMenuLayoutProps {
+    layout?: BoxLayout;
+}
+
+export const MinimizedMenuLayout = ({ layout }: MinimizedMenuLayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 45, height: 35, ...layout }}>
+            <Bubble
+                variant="0"
+                params={1048865}
+                tintColor="#6e6b67"
+                layout={{ position: 'absolute', left: 0, width: 45, top: 1, height: 35 }}
+            >
+                <Region
+                    name="minimize"
+                    params={17}
+                    layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 30 }}
+                >
+                    <Icon
+                        variant="6"
+                        name="icon"
+                        params={16}
+                        layout={{ position: 'absolute', left: 14, width: 15, top: 11, height: 15 }}
+                    />
+                </Region>
+            </Bubble>
+        </Region>
+    );
+};

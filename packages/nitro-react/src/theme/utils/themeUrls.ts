@@ -246,4 +246,5 @@ export const THEME_URLS: Record<string, string> = {
     'scrollbarsliderbarvertical-100-default-src': './assets/images/scrollbarsliderbarvertical/100-default.png',
     'scrollbarsliderbarvertical-200-default-src': './assets/images/scrollbarsliderbarvertical/200-default.png',
     'framepointerdown-src': './assets/images/framepointerdown.png',
+    'icon-set-src': './assets/images/icon-set.png',
 };

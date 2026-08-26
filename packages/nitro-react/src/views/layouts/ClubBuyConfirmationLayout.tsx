@@ -1,0 +1,137 @@
+import { useTranslation } from '#base/context';
+import { BoxLayout, Button, ButtonThick, CheckBox, Frame, Icon, Region, ThemeText } from '#base/theme';
+
+/** Generated from `1708_club_buy_confirmation_xml` (layout "purchase_confirmation", 369x210) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface ClubBuyConfirmationLayoutProps {
+    layout?: BoxLayout;
+    onCancelButton?: () => void;
+    onClose?: () => void;
+    onSelectButton?: () => void;
+    onSpendingDisclaimer?: () => void;
+}
+
+export const ClubBuyConfirmationLayout = ({ layout, onCancelButton, onClose, onSelectButton, onSpendingDisclaimer }: ClubBuyConfirmationLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Frame
+            variant="3"
+            params={33025}
+            caption={t('catalog.club.buy.confirm')}
+            tintColor="#418db0"
+            onClose={onClose}
+            layout={{ width: 369, height: 210, ...layout }}
+        >
+            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                <Region
+                    params={8536080}
+                    layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 161, flexDirection: 'column', gap: 10 }}
+                >
+                    <Region
+                        params={147472}
+                        layout={{ width: 354, height: 97, flexShrink: 0 }}
+                    >
+                        <Icon
+                            variant="18"
+                            name="icon"
+                            params={16}
+                            layout={{ position: 'absolute', left: 12, width: 85, top: 20, height: 40 }}
+                        />
+                        <Region
+                            params={147472}
+                            layout={{ position: 'absolute', left: 109, width: 245, top: 10, height: 87, flexDirection: 'column', gap: 3 }}
+                        >
+                            <Region
+                                name="subscription_name"
+                                params={8388624}
+                                layout={{ width: 245, height: 39, flexShrink: 0, minWidth: 245, maxWidth: 245, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={t('catalog.vip.buy.confirm.product')}
+                                    textStyle="text-style-u-regular"
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
+                                />
+                            </Region>
+                            <Region
+                                name="end_date"
+                                params={16}
+                                layout={{ width: 207, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={t('catalog.vip.buy.confirm.end_date')}
+                                    textStyle="text-style-u-regular"
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 207 }}
+                                />
+                            </Region>
+                            <Region
+                                params={147472}
+                                layout={{ width: 288, height: 22, flexShrink: 0, flexDirection: 'row' }}
+                            >
+                                <Region
+                                    params={16}
+                                    layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                >
+                                    <ThemeText
+                                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                                        textStyle="text-style-u-regular"
+                                    />
+                                </Region>
+                                <Region
+                                    name="purchase_cost_box"
+                                    params={147472}
+                                    layout={{ width: 20, height: 22, flexShrink: 0 }}
+                                />
+                            </Region>
+                        </Region>
+                    </Region>
+                    <Region
+                        name="disclaimer"
+                        params={147472}
+                        layout={{ width: 353, height: 17, flexShrink: 0 }}
+                    >
+                        <Region
+                            params={16}
+                            layout={{ position: 'absolute', left: 31, width: 322, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={t('disclaimer.credit_spending')}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 322 }}
+                            />
+                        </Region>
+                        <CheckBox
+                            variant="3"
+                            name="spending_disclaimer"
+                            params={17}
+                            onPointerTap={onSpendingDisclaimer}
+                            layout={{ position: 'absolute', left: 11, width: 342, top: 0, height: 16 }}
+                        />
+                    </Region>
+                    <Region
+                        params={147472}
+                        layout={{ width: 355, height: 27, flexShrink: 0 }}
+                    >
+                        <Button
+                            variant="3"
+                            name="cancel_button"
+                            params={132113}
+                            onPointerTap={onCancelButton}
+                            layout={{ position: 'absolute', left: 9, width: 120, top: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
+                        >
+                            {t('cancel')}
+                        </Button>
+                        <ButtonThick
+                            variant="5"
+                            name="select_button"
+                            params={132177}
+                            tintColor="#00aa00"
+                            onPointerTap={onSelectButton}
+                            layout={{ position: 'absolute', left: 235, width: 120, top: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
+                        >
+                            {t('catalog.club.buy.subscribe')}
+                        </ButtonThick>
+                    </Region>
+                </Region>
+            </Region>
+        </Frame>
+    );
+};

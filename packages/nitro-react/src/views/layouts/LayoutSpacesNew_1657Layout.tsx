@@ -1,0 +1,115 @@
+import { useTranslation } from '#base/context';
+import { BoxLayout, ButtonGroupCenter, ButtonGroupLeft, ButtonGroupRight, Region, ScrollArea, ThemeImage } from '#base/theme';
+
+/** Generated from `1657_layout_spaces_new_xml` (layout "ctlg_spaces_new", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface LayoutSpacesNew_1657LayoutProps {
+    layout?: BoxLayout;
+    onGroupFloors?: () => void;
+    onGroupViews?: () => void;
+    onGroupWalls?: () => void;
+}
+
+export const LayoutSpacesNew_1657Layout = ({ layout, onGroupFloors, onGroupViews, onGroupWalls }: LayoutSpacesNew_1657LayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
+            <Region
+                name="ctlg_spaces_new"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+            >
+                <Region
+                    name="productViewWidget"
+                    tags={[ 'NO_ROOM_CANVAS' ]}
+                    params={16}
+                    layout={{ position: 'absolute', left: 180, width: 170, top: 150, height: 245 }}
+                />
+                <Region
+                    name="roomPreviewWidget"
+                    params={16}
+                    layout={{ position: 'absolute', left: 180, width: 180, top: 150, height: 275 }}
+                >
+                    <ThemeImage
+                        name="catalog_floor_preview_example"
+                        params={16}
+                        src={undefined}
+                        layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 277 }}
+                    />
+                    <ThemeImage
+                        name="catalog_wall_preview_b_right"
+                        params={16}
+                        src={undefined}
+                        layout={{ position: 'absolute', left: 29, width: 288, top: 151, height: 147 }}
+                    />
+                    <ThemeImage
+                        name="catalog_space_preview_window"
+                        params={16}
+                        src={undefined}
+                        layout={{ position: 'absolute', left: 118, width: 120, top: 151, height: 118 }}
+                    />
+                </Region>
+                <Region
+                    name="purchaseWidget"
+                    params={16}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                />
+                <Region
+                    name="spacesNewWidget"
+                    tags={[ 'EMBEDDED', 'FIXED' ]}
+                    params={16}
+                    layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 292 }}
+                >
+                    <Region
+                        name="groups"
+                        params={17}
+                        layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 22 }}
+                    >
+                        <ButtonGroupLeft
+                            variant="100"
+                            name="group.walls"
+                            params={131089}
+                            onPointerTap={onGroupWalls}
+                            layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 21, minWidth: 50 }}
+                        >
+                            {t('catalog.spaces.tab.walls')}
+                        </ButtonGroupLeft>
+                        <ButtonGroupCenter
+                            variant="100"
+                            name="group.floors"
+                            params={131089}
+                            onPointerTap={onGroupFloors}
+                            layout={{ position: 'absolute', left: 50, width: 152, top: 0, height: 21, minWidth: 50 }}
+                        >
+                            {t('catalog.spaces.tab.floors')}
+                        </ButtonGroupCenter>
+                        <ButtonGroupRight
+                            variant="100"
+                            name="group.views"
+                            params={131089}
+                            onPointerTap={onGroupViews}
+                            layout={{ position: 'absolute', left: 100, width: 150, top: 0, height: 21, minWidth: 50 }}
+                        >
+                            {t('catalog.spaces.tab.views')}
+                        </ButtonGroupRight>
+                    </Region>
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 0, width: 170, top: 28, height: 239 }}
+                    >
+                        <Region
+                            name="itemGrid"
+                            params={16}
+                            layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
+                        />
+                    </ScrollArea>
+                </Region>
+                <Region
+                    name="activityPointDisplayWidget"
+                    params={16}
+                    layout={{ position: 'absolute', left: 180, width: 175, top: 125, height: 28 }}
+                />
+            </Region>
+        </Region>
+    );
+};

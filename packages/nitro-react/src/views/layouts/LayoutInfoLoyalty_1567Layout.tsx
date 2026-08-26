@@ -1,0 +1,38 @@
+import { useTranslation } from '#base/context';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+
+/** Generated from `1567_layout_info_loyalty_xml` (layout "ctlg_info_loyalty", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface LayoutInfoLoyalty_1567LayoutProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutInfoLoyalty_1567Layout = ({ layout }: LayoutInfoLoyalty_1567LayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
+            <Region
+                name="ctlg_info_loyalty"
+                params={2064}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+            >
+                <Region
+                    name="ctlg_description"
+                    params={1}
+                    layout={{ position: 'absolute', left: 24, width: 226, top: 19, height: 322, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('loremipsum.html')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 226 }}
+                    />
+                </Region>
+                <ThemeImage
+                    name="loyalty_info_illustration"
+                    tags={[ 'S' ]}
+                    src="${image.library.url}catalogue/diamond_info_illustration.gif"
+                    layout={{ position: 'absolute', left: 237, width: 123, top: 39, height: 350 }}
+                />
+            </Region>
+        </Region>
+    );
+};
