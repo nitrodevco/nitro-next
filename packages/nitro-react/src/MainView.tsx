@@ -1,8 +1,7 @@
 import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
-import { RoomWrapper, AvatarEditorComponent, FriendListWrapper, CatalogWrapper, NavigatorWrapper, InventoryComponent, WalletComponent } from "./components";
-import { AchievementsWrapper } from "./components/achievements/AchievementsWrapper";
+import { RoomWrapper, AvatarEditorComponent, FriendListWrapper, CatalogWrapper, NavigatorWrapper, InventoryComponent, AchievementsWrapper, WalletComponent } from "./components";
 import { useWebSocketContext } from "./context";
 import { useUserInfoHandler, useMessengerHandler, useWalletHandler, useDialogsHandler } from "./handlers";
 import { TooltipProvider } from "./theme";
