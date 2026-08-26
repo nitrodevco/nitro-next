@@ -24,7 +24,7 @@ export interface DroplistProps extends ThemeProps<DroplistVariant> {
 
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'droplist', variants: DROPLIST_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
@@ -32,7 +32,6 @@ export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<P
             <Box
                 ref={ref}
                 layout={{ minWidth: 40, minHeight: 22, paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
-                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

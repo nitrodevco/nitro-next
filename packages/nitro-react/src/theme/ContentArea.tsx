@@ -20,7 +20,7 @@ export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
 
 export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContentAreaProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'contentArea', variants: CONTENT_AREA_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
         });
 
@@ -36,7 +36,6 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
                     ...config.layout,
                     ...layout,
                 }}
-                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer
