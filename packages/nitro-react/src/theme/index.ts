@@ -28,7 +28,7 @@ export * from './DroplistItem';
 export * from './Dropmenu';
 export * from './DropmenuItem';
 export * from './font/fonts';
-export * from './font/textAtlas';
+export * from './font/truffle';
 export * from './Frame';
 export * from './FramePointerDown';
 export * from './Header';

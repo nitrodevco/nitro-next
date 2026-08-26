@@ -1,0 +1,266 @@
+{
+ "format": "truffle-dist",
+ "version": 1,
+ "generated": "2026-08-01T14:31:44.138Z",
+ "raster": {
+  "Ubuntu|true|false|24|16777215|advanced|pixel|0|0": {
+   "file": "raster/00-ubuntu_true_false_24_16777215_advanced_pixel_0_0.tfc",
+   "bytes": 2132927,
+   "chars": 180
+  },
+  "UbuntuCondensed|true|false|12|16777215|advanced|pixel|80|-15": {
+   "file": "raster/01-ubuntucondensed_true_false_12_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 480716,
+   "chars": 180
+  },
+  "Ubuntu|true|false|14|16777215|advanced|pixel|80|-15": {
+   "file": "raster/02-ubuntu_true_false_14_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 786678,
+   "chars": 180
+  },
+  "Ubuntu|true|false|12|16777215|advanced|pixel|80|-15": {
+   "file": "raster/03-ubuntu_true_false_12_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 621615,
+   "chars": 180
+  },
+  "Ubuntu|true|false|10|16777215|advanced|pixel|80|-15": {
+   "file": "raster/04-ubuntu_true_false_10_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 504265,
+   "chars": 180
+  },
+  "Ubuntu|true|false|18|16777215|advanced|pixel|80|-15": {
+   "file": "raster/05-ubuntu_true_false_18_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 1180777,
+   "chars": 180
+  },
+  "Ubuntu|true|false|10|15658734|advanced|pixel|80|-15": {
+   "file": "raster/06-ubuntu_true_false_10_15658734_advanced_pixel_80_15.tfc",
+   "bytes": 504265,
+   "chars": 180
+  },
+  "Ubuntu|true|false|24|16777215|advanced|pixel|80|-15": {
+   "file": "raster/07-ubuntu_true_false_24_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 1970900,
+   "chars": 180
+  },
+  "Ubuntu|false|false|11|16777215|advanced|pixel|80|-15": {
+   "file": "raster/08-ubuntu_false_false_11_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 528064,
+   "chars": 180
+  },
+  "Ubuntu|false|false|9|16777215|advanced|pixel|80|-15": {
+   "file": "raster/09-ubuntu_false_false_9_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 456757,
+   "chars": 180
+  },
+  "UbuntuCondensed|false|false|11|16777215|advanced|pixel|80|-15": {
+   "file": "raster/10-ubuntucondensed_false_false_11_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 431971,
+   "chars": 180
+  },
+  "UbuntuCondensed|false|false|18|16777215|advanced|pixel|80|200": {
+   "file": "raster/11-ubuntucondensed_false_false_18_16777215_advanced_pixel_80_200.tfc",
+   "bytes": 2370699,
+   "chars": 180
+  },
+  "Ubuntu|true|false|12|0|advanced|pixel|80|-15": {
+   "file": "raster/12-ubuntu_true_false_12_0_advanced_pixel_80_15.tfc",
+   "bytes": 643302,
+   "chars": 180
+  },
+  "Ubuntu|true|true|12|0|advanced|pixel|80|-15": {
+   "file": "raster/13-ubuntu_true_true_12_0_advanced_pixel_80_15.tfc",
+   "bytes": 1827223,
+   "chars": 180
+  },
+  "Ubuntu|false|false|12|0|advanced|pixel|80|-15": {
+   "file": "raster/14-ubuntu_false_false_12_0_advanced_pixel_80_15.tfc",
+   "bytes": 550224,
+   "chars": 180
+  },
+  "Ubuntu|false|true|12|0|advanced|pixel|80|-15": {
+   "file": "raster/15-ubuntu_false_true_12_0_advanced_pixel_80_15.tfc",
+   "bytes": 1804068,
+   "chars": 180
+  },
+  "Ubuntu|true|false|18|0|advanced|pixel|80|-15": {
+   "file": "raster/16-ubuntu_true_false_18_0_advanced_pixel_80_15.tfc",
+   "bytes": 1144725,
+   "chars": 180
+  },
+  "Ubuntu|true|false|16|0|advanced|pixel|0|0": {
+   "file": "raster/17-ubuntu_true_false_16_0_advanced_pixel_0_0.tfc",
+   "bytes": 978472,
+   "chars": 180
+  },
+  "Ubuntu|true|false|14|0|advanced|pixel|0|0": {
+   "file": "raster/18-ubuntu_true_false_14_0_advanced_pixel_0_0.tfc",
+   "bytes": 798290,
+   "chars": 180
+  },
+  "Ubuntu|false|false|10|0|advanced|pixel|80|-15": {
+   "file": "raster/19-ubuntu_false_false_10_0_advanced_pixel_80_15.tfc",
+   "bytes": 351365,
+   "chars": 180
+  },
+  "Ubuntu|false|true|10|0|advanced|pixel|0|0": {
+   "file": "raster/20-ubuntu_false_true_10_0_advanced_pixel_0_0.tfc",
+   "bytes": 1463243,
+   "chars": 180
+  },
+  "Ubuntu|false|false|11|16777215|advanced|pixel|0|0": {
+   "file": "raster/21-ubuntu_false_false_11_16777215_advanced_pixel_0_0.tfc",
+   "bytes": 563796,
+   "chars": 180
+  },
+  "Ubuntu|true|false|10|0|advanced|pixel|80|-15": {
+   "file": "raster/22-ubuntu_true_false_10_0_advanced_pixel_80_15.tfc",
+   "bytes": 407118,
+   "chars": 180
+  },
+  "Ubuntu|true|false|11|0|advanced|pixel|80|-15": {
+   "file": "raster/23-ubuntu_true_false_11_0_advanced_pixel_80_15.tfc",
+   "bytes": 479736,
+   "chars": 180
+  },
+  "Ubuntu|true|false|11|16777215|advanced|pixel|80|-15": {
+   "file": "raster/24-ubuntu_true_false_11_16777215_advanced_pixel_80_15.tfc",
+   "bytes": 182942,
+   "chars": 180
+  },
+  "Ubuntu|true|false|14|0|advanced|pixel|80|-15": {
+   "file": "raster/25-ubuntu_true_false_14_0_advanced_pixel_80_15.tfc",
+   "bytes": 755660,
+   "chars": 180
+  },
+  "Ubuntu|false|false|11|0|advanced|pixel|80|-15": {
+   "file": "raster/26-ubuntu_false_false_11_0_advanced_pixel_80_15.tfc",
+   "bytes": 442182,
+   "chars": 180
+  },
+  "Ubuntu|false|false|9|0|advanced|pixel|80|-15": {
+   "file": "raster/27-ubuntu_false_false_9_0_advanced_pixel_80_15.tfc",
+   "bytes": 318107,
+   "chars": 180
+  },
+  "Volter Bold|true|false|9|0|normal|none|0|0": {
+   "file": "raster/28-volter_bold_true_false_9_0_normal_none_0_0.tfc",
+   "bytes": 493896,
+   "chars": 170
+  },
+  "Volter Bold|true|true|9|0|normal|none|0|0": {
+   "file": "raster/29-volter_bold_true_true_9_0_normal_none_0_0.tfc",
+   "bytes": 8314946,
+   "chars": 170
+  },
+  "Volter Bold|true|false|9|16777215|normal|none|0|0": {
+   "file": "raster/30-volter_bold_true_false_9_16777215_normal_none_0_0.tfc",
+   "bytes": 493904,
+   "chars": 170
+  },
+  "Volter Bold|true|false|18|0|normal|none|0|0": {
+   "file": "raster/31-volter_bold_true_false_18_0_normal_none_0_0.tfc",
+   "bytes": 1541186,
+   "chars": 170
+  },
+  "Volter|false|true|9|0|normal|none|0|0": {
+   "file": "raster/32-volter_false_true_9_0_normal_none_0_0.tfc",
+   "bytes": 8092563,
+   "chars": 180
+  },
+  "Volter|false|false|9|0|normal|none|0|0": {
+   "file": "raster/33-volter_false_false_9_0_normal_none_0_0.tfc",
+   "bytes": 442187,
+   "chars": 180
+  },
+  "Volter|false|false|9|16777215|normal|none|0|0": {
+   "file": "raster/34-volter_false_false_9_16777215_normal_none_0_0.tfc",
+   "bytes": 442195,
+   "chars": 180
+  },
+  "Volter Bold|true|false|9|0|advanced|pixel|0|0": {
+   "file": "raster/35-volter_bold_true_false_9_0_advanced_pixel_0_0.tfc",
+   "bytes": 210741,
+   "chars": 84
+  },
+  "Volter Bold|true|true|9|0|advanced|pixel|0|0": {
+   "file": "raster/36-volter_bold_true_true_9_0_advanced_pixel_0_0.tfc",
+   "bytes": 545659,
+   "chars": 84
+  },
+  "Volter Bold|true|false|9|16777215|advanced|pixel|0|0": {
+   "file": "raster/37-volter_bold_true_false_9_16777215_advanced_pixel_0_0.tfc",
+   "bytes": 368427,
+   "chars": 84
+  },
+  "Volter Bold|true|false|18|0|advanced|pixel|0|0": {
+   "file": "raster/38-volter_bold_true_false_18_0_advanced_pixel_0_0.tfc",
+   "bytes": 719788,
+   "chars": 84
+  },
+  "Volter|false|true|9|0|advanced|pixel|0|0": {
+   "file": "raster/39-volter_false_true_9_0_advanced_pixel_0_0.tfc",
+   "bytes": 482228,
+   "chars": 84
+  },
+  "Volter|false|false|9|0|advanced|pixel|0|0": {
+   "file": "raster/40-volter_false_false_9_0_advanced_pixel_0_0.tfc",
+   "bytes": 174506,
+   "chars": 84
+  },
+  "Volter|false|false|9|16777215|advanced|pixel|0|0": {
+   "file": "raster/41-volter_false_false_9_16777215_advanced_pixel_0_0.tfc",
+   "bytes": 308380,
+   "chars": 84
+  },
+  "Ubuntu|false|true|11|0|advanced|pixel|80|-15": {
+   "file": "raster/42-ubuntu_false_true_11_0_advanced_pixel_80_15.tfc",
+   "bytes": 1355606,
+   "chars": 180
+  }
+ },
+ "data": {
+  "calibration": {
+   "file": "data/calibration.json",
+   "bytes": 10104507
+  },
+  "color-calibration": {
+   "file": "data/color-calibration.json",
+   "bytes": 14573250
+  },
+  "composite-calibration": {
+   "file": "data/composite-calibration.json",
+   "bytes": 27311806
+  }
+ },
+ "fonts": [
+  {
+   "file": "fonts/Ubuntu-R.ttf",
+   "bytes": 153208
+  },
+  {
+   "file": "fonts/Ubuntu-B.ttf",
+   "bytes": 149372
+  },
+  {
+   "file": "fonts/Ubuntu-I.ttf",
+   "bytes": 158300
+  },
+  {
+   "file": "fonts/Ubuntu-BI.ttf",
+   "bytes": 145972
+  },
+  {
+   "file": "fonts/Ubuntu-C.ttf",
+   "bytes": 143288
+  },
+  {
+   "file": "fonts/Volter.ttf",
+   "bytes": 75160
+  },
+  {
+   "file": "fonts/Volter-Bold.ttf",
+   "bytes": 55680
+  }
+ ]
+}

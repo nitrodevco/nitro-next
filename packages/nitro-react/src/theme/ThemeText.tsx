@@ -4,9 +4,8 @@ import { useMemo } from 'react';
 import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
-import { BitmapTextDom, boxLayoutToStyle, getDomTextStyle } from './dom';
-import { useBitmapFont } from './font';
-import { BitmapTextPixi } from './font/BitmapTextPixi';
+import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
+import { TruffleTextPixi } from './font/TruffleTextPixi';
 import { getHabboKey, getPixiTextStyle, getRenderMode, TEXT_DROP_SHADOW, TextStyleKey } from './utils';
 
 export type TextConfig = {
@@ -17,9 +16,8 @@ export type TextConfig = {
 };
 
 /** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
- *  named style's own baked combo - falls straight through to native rendering, same as a
- *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES` and
- *  `scripts/habbo-text-styles.ts`). */
+ *  named style's own truffle preset - falls straight through to native rendering, same as a
+ *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES`). */
 const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
     if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
 
@@ -27,7 +25,7 @@ const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextS
 };
 
 /** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
- *  `pixiText` fills in its defaults internally) - the bitmap renderers need a complete config
+ *  `pixiText` fills in its defaults internally) - the truffle renderers need a complete config
  *  up front, so `true` resolves to `TEXT_DROP_SHADOW`'s defaults and a partial config is
  *  layered on top of them. */
 const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDropShadow | undefined => {
@@ -91,24 +89,24 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, ...props }: Text
     );
 };
 
-/** Prefers the pixel-perfect baked bitmap font for this style/size combo (see `theme/font/`);
- *  falls back to `TextPixiNative`'s native canvas text - unchanged from before the bitmap atlas
- *  existed - for anything not baked, so no call site can ever go blank because of this. */
+/** Prefers truffle's pixel-perfect rendering for this named style (see `theme/font/truffle.ts`);
+ *  falls back to `TextPixiNative`'s native canvas text - unchanged from before truffle was
+ *  wired in - for a raw `fontFamily`/`fontSize` override, so no call site can ever go blank
+ *  because of this. */
 const TextPixi = (props: TextConfig) => {
     const { text, textStyle, textOptions, layout } = props;
-    const bitmapFont = useBitmapFont(resolveHabboKey(textStyle, textOptions));
+    const habboKey = resolveHabboKey(textStyle, textOptions);
 
-    if (bitmapFont) {
+    if (habboKey) {
         return (
-            <BitmapTextPixi
-                font={bitmapFont}
+            <TruffleTextPixi
+                habboKey={habboKey}
                 text={text}
-                color={typeof textOptions?.fill === 'string' ? textOptions.fill : bitmapFont.defaultTint ?? '#000000'}
+                color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 layout={layout}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
-                breakWords={textOptions?.breakWords}
             />
         );
     }
@@ -141,19 +139,18 @@ const TextDomNative = ({ text, textStyle, textOptions, layout }: TextConfig) => 
 
 const TextDom = (props: TextConfig) => {
     const { text, textStyle, textOptions, layout } = props;
-    const bitmapFont = useBitmapFont(resolveHabboKey(textStyle, textOptions));
+    const habboKey = resolveHabboKey(textStyle, textOptions);
 
-    if (bitmapFont) {
+    if (habboKey) {
         return (
-            <BitmapTextDom
-                font={bitmapFont}
+            <TruffleTextDom
+                habboKey={habboKey}
                 text={text}
-                color={typeof textOptions?.fill === 'string' ? textOptions.fill : bitmapFont.defaultTint ?? '#000000'}
+                color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 layout={layout}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
-                breakWords={textOptions?.breakWords}
             />
         );
     }

@@ -1,2 +1,2 @@
 export * from './fonts';
-export * from './textAtlas';
+export * from './truffle';

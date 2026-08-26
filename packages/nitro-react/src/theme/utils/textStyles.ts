@@ -1,6 +1,8 @@
 import { TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
 
-import type { HABBO_TEXT_STYLES } from '../../../scripts/habbo-text-styles';
+import type { HabboStyleKey } from '../font/truffle';
+
+export type { HabboStyleKey };
 
 /** Default drop-shadow shape a bare `dropShadow: true` (no explicit config) resolves to -
  *  see `ThemeText.tsx`'s `resolveDropShadow`. */
@@ -11,14 +13,6 @@ export const TEXT_DROP_SHADOW: TextDropShadow = {
     color: 0x000000,
     distance: 1,
 };
-
-/** A key into the baked bitmap atlas (`scripts/habbo-text-styles.ts` /
- *  `public/assets/webfonts/atlas/manifest.json`). Type-only import - erased at
- *  compile time, so this costs nothing at runtime; it just keeps `habboKey`
- *  typo-proof against the real catalog. Omitted on an entry whose family/size/
- *  weight doesn't exactly match a baked combo - `ThemeText` falls back to
- *  today's native rendering for those, unchanged. */
-type HabboStyleKey = keyof typeof HABBO_TEXT_STYLES;
 
 /** Exported (not module-private) so `theme/dom/textStyleDom.ts` can translate the same
  *  font/size/color/drop-shadow data to CSS instead of duplicating this table. */
