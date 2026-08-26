@@ -5,6 +5,7 @@ import { useDialog } from "#base/context/dialog";
 import { AlertDialogView } from "./types/AlertDialogView";
 import { AlertLinkDialogView } from "./types/AlertLinkDialogView";
 import { ConfirmDialogView } from "./types/ConfirmDialogView";
+import { NotificationPopupDialogView } from "./types/NotificationPopupDialogView";
 import { SimpleAlertDialogView } from "./types/SimpleAlertDialogView";
 
 type DialogLayoutViewProps = {
@@ -23,6 +24,8 @@ export const DialogLayoutView = ({ id }: DialogLayoutViewProps) => {
             return <AlertLinkDialogView dialog={ dialog } />;
         case DialogKindEnum.SimpleAlert:
             return <SimpleAlertDialogView dialog={ dialog } />;
+        case DialogKindEnum.NotificationPopup:
+            return <NotificationPopupDialogView dialog={ dialog } />;
         default:
             return <AlertDialogView dialog={ dialog } />;
     }

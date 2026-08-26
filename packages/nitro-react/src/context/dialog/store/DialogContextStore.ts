@@ -13,6 +13,7 @@ type Actions = {
     confirm: (title: string, summary: string, flags: number, callback: DialogCallback | null) => IAlertDialogHandle;
     confirmWithModal: (title: string, summary: string, flags: number, callback: DialogCallback | null) => IAlertDialogHandle;
     simpleAlert: (title: string, subtitle: string, message: string, options?: IDialogSimpleOptions) => IDialogHandle;
+    notificationPopup: (title: string, message: string, options?: IDialogSimpleOptions) => IDialogHandle;
     closeDialog: (id: number) => void;
     dispatchDialogEvent: (id: number, button: DialogButtonEnum) => void;
 }
@@ -23,6 +24,8 @@ type DialogParts = {
     linkUrl?: string;
     imageUrl?: string;
 }
+
+const isModalAlert = (kind: DialogKindEnum) => kind === DialogKindEnum.SimpleAlert || kind === DialogKindEnum.NotificationPopup;
 
 const initialState: State = {
     dialogs: []
@@ -65,12 +68,10 @@ export const createDialogContextStore = () => {
                 kind,
                 type: modal ? DialogTypeEnum.Modal : DialogTypeEnum.Default,
                 modal,
-                flags: kind === DialogKindEnum.SimpleAlert ? flags : DialogUtilities.resolveFlags(flags),
+                flags: isModalAlert(kind) ? flags : DialogUtilities.resolveFlags(flags),
                 title,
                 subtitle: parts?.subtitle ?? '',
                 summary,
-                titleBarColor: null,
-                captions: {},
                 linkTitle: parts?.linkTitle ?? '',
                 linkUrl: parts?.linkUrl ?? '',
                 imageUrl: parts?.imageUrl ?? ''
@@ -83,7 +84,7 @@ export const createDialogContextStore = () => {
             return createHandle(dialog);
         };
 
-        const dispatchSimpleAlertEvent = (dialog: IDialogData, button: DialogButtonEnum) => {
+        const dispatchModalAlertEvent = (dialog: IDialogData, button: DialogButtonEnum) => {
             if (button !== DialogButtonEnum.Link) {
                 get().closeDialog(dialog.id);
 
@@ -114,6 +115,11 @@ export const createDialogContextStore = () => {
             alertWithLink: (title: string, summary: string, linkTitle: string, linkUrl: string, flags: number, callback: DialogCallback | null) => openDialog(DialogKindEnum.AlertLink, false, title, summary, flags, callback, { linkTitle, linkUrl }),
             confirm: (title: string, summary: string, flags: number, callback: DialogCallback | null) => openDialog(DialogKindEnum.Confirm, false, title, summary, flags, callback),
             confirmWithModal: (title: string, summary: string, flags: number, callback: DialogCallback | null) => openDialog(DialogKindEnum.Confirm, true, title, summary, flags, callback),
+            notificationPopup: (title: string, message: string, options: IDialogSimpleOptions = {}) => openDialog(DialogKindEnum.NotificationPopup, true, title, message, DialogFlagEnum.Null, null, {
+                linkTitle: options.linkUrl?.length ? options.linkTitle : '',
+                linkUrl: options.linkUrl,
+                imageUrl: options.imageUrl
+            }),
             simpleAlert: (title: string, subtitle: string, message: string, options: IDialogSimpleOptions = {}) => {
                 const hasLink = !!options.linkTitle?.length && (!!options.linkUrl?.length || !!options.onLink);
 
@@ -145,8 +151,8 @@ export const createDialogContextStore = () => {
 
                 if (!dialog) return;
 
-                if (dialog.kind === DialogKindEnum.SimpleAlert) {
-                    dispatchSimpleAlertEvent(dialog, button);
+                if (isModalAlert(dialog.kind)) {
+                    dispatchModalAlertEvent(dialog, button);
 
                     return;
                 }

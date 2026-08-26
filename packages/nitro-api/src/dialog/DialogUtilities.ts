@@ -15,6 +15,12 @@ export class DialogUtilities {
         return (flags & flag) !== 0;
     }
 
+    public static resolveText(value: string, localize: (key: string, defaultValue: string) => string) {
+        const key = DialogUtilities.unwrapLocalizationKey(value);
+
+        return localize(key, key);
+    }
+
     public static unwrapLocalizationKey(value: string) {
         if (!value) return "";
 

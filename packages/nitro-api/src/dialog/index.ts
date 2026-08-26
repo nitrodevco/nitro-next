@@ -4,7 +4,6 @@ export * from './DialogFlagEnum';
 export * from './DialogKindEnum';
 export * from './DialogTypeEnum';
 export * from './DialogUtilities';
-export * from './IDialogCaption';
 export * from './IDialogData';
 export * from './IDialogHandle';
 export * from './IDialogSimpleOptions';

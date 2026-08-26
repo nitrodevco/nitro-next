@@ -15,12 +15,12 @@ export const AlertLinkDialogView = ({ dialog }: AlertLinkDialogViewProps) => {
 
     const t = useTranslation();
 
-    const linkKey = DialogUtilities.unwrapLocalizationKey(dialog.linkTitle);
+    const linkTitle = DialogUtilities.resolveText(dialog.linkTitle, t);
 
     return (
         <AlertDialogView dialog={ dialog }>
             <ButtonThick variant="3" className="h-6 min-w-12.5 px-3" onClick={ () => dispatchDialogEvent(dialog.id, DialogButtonEnum.Link) }>
-                { t(linkKey, linkKey) }
+                { linkTitle }
             </ButtonThick>
         </AlertDialogView>
     );

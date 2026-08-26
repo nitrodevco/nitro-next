@@ -7,23 +7,19 @@ export type NotificationDialogMessageType = {
 
 export class NotificationDialogMessage implements IIncomingPacket<NotificationDialogMessageType> {
     public parse(wrapper: IMessageDataWrapper): NotificationDialogMessageType {
-        const type = wrapper.readString();
-        const parameters: Record<string, string> = {};
-
-        let totalParameters = wrapper.readInt();
-
-        while (totalParameters > 0) {
-            const key = wrapper.readString();
-
-            parameters[key] = wrapper.readString();
-
-            totalParameters--;
-        }
-
         const packet: NotificationDialogMessageType = {
-            type,
-            parameters
+            type: '',
+            parameters: {},
         };
+
+        packet.type = wrapper.readString();
+        let v1 = wrapper.readInt();
+        while (v1 > 0) {
+            let v2 = wrapper.readString();
+            let v3 = wrapper.readString();
+            packet.parameters[v2] = v3;
+            v1--;
+        }
 
         return packet;
     }

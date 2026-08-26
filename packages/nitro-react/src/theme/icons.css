@@ -266,6 +266,18 @@
     height: 15px;
 }
 
+.mysterybox-key-base {
+    background-image: url('/assets/flash/mysterybox/mystery_box_key.png');
+    width: 39px;
+    height: 39px;
+}
+
+.mysterybox-key-overlay {
+    background-image: url('/assets/flash/mysterybox/key_overlay.png');
+    width: 39px;
+    height: 39px;
+}
+
 .modtool-key-icon {
     background-image: url('/assets/flash/modtool/key.gif');
     width: 20px;

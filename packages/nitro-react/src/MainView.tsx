@@ -3,13 +3,13 @@ import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
 import { RoomWrapper, AvatarEditorComponent, FriendListWrapper, CatalogWrapper, NavigatorWrapper, InventoryComponent, AchievementsWrapper, WalletComponent } from "./components";
 import { useWebSocketContext } from "./context";
-import { useUserInfoHandler, useMessengerHandler, useWalletHandler, useDialogsHandler } from "./handlers";
+import { useUserInfoHandler, useMessengerHandler, useWalletHandler, useDialogsHandler, useNotificationsHandler, useNewFeatureHandler } from "./handlers";
 import { TooltipProvider } from "./theme";
+import { NotificationExtensionsView } from "./views/notification-center/extensions/NotificationExtensionsView";
 import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
 import { ActivityPointsView } from "./views/purse/ActivityPointsView";
 import { PurseView } from "./views/purse/PurseView";
 import { ToolbarView } from "./views/toolbar/ToolbarView";
-
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
@@ -19,6 +19,8 @@ export const MainView = () => {
     useMessengerHandler();
     useWalletHandler();
     useDialogsHandler();
+    useNotificationsHandler();
+    useNewFeatureHandler();
 
     useEffect(() => {
         if (!isReady) return;
@@ -50,6 +52,7 @@ export const MainView = () => {
                     <PurseView />
                     <div className="flex flex-col items-end w-48">
                         <ActivityPointsView />
+                        <NotificationExtensionsView />
                         <NotificationCenterView />
                     </div>
                     {/* ExtensionView — the toolbar's docked-panel strip (room event info,
@@ -65,6 +68,6 @@ export const MainView = () => {
                 <AchievementsWrapper />
                 <WalletComponent />
             </div>
-        </TooltipProvider>
+        </TooltipProvider >
     );
 }

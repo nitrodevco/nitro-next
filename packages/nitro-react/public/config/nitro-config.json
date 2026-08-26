@@ -21,6 +21,21 @@
     "socket.url": "ws://localhost:9001",
     "motto.max.length": 38,
     "achievements.new": "RewardTracksCompleted,HabbiconUsed,HabbiconCollectionComp,HabbiconCollected,TraderPass",
+    "notification.new_feature": [
+        {
+            "name": "rewardtrack_intro",
+            "color": "#42f59b",
+            "image": "reward_track_small_icon",
+            "internal.link": "reward_track/open/introduction",
+            "type": "promo"
+        },
+        {
+            "name": "new_achievements",
+            "color": "#6283bd",
+            "image": "icons_toolbar_achievements_normal",
+            "internal.link": "questengine/achievements/new"
+        }
+    ],
     "renderer.petTypes": [
         "dog",
         "cat",

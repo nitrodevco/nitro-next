@@ -18,11 +18,7 @@ export const SimpleAlertDialogView = ({ dialog }: SimpleAlertDialogViewProps) =>
 
     const t = useTranslation();
 
-    const resolve = (value: string) => {
-        const key = DialogUtilities.unwrapLocalizationKey(value);
-
-        return t(key, key);
-    }
+    const resolve = (value: string) => DialogUtilities.resolveText(value, t);
 
     const message = DOMPurify.sanitize(resolve(summary).replace(/\r\n|\r|\n/g, '<br />'));
 
@@ -34,7 +30,7 @@ export const SimpleAlertDialogView = ({ dialog }: SimpleAlertDialogViewProps) =>
                 { !!imageUrl.length && <img src={ imageUrl } alt="" className="shrink-0 self-start pixel-art" /> }
                 <div className="flex flex-col gap-0.5 w-72.75">
                     { !!subtitle.length && <div className="text-style-headline-small text-[#c30000]">{ resolve(subtitle) }</div> }
-                    <div className="text-style-il-regular" dangerouslySetInnerHTML={ { __html: message } } />
+                    <div className="text-style-il-regular wrap-break-word" dangerouslySetInnerHTML={ { __html: message } } />
                 </div>
             </div>
             <div className="flex flex-col items-center gap-1.25 mt-0.75 pt-3 border-t border-black/15">

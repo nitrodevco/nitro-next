@@ -8,7 +8,7 @@ type DialogLinkButtonViewProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const DialogLinkButtonView = ({ className, children, ...props }: DialogLinkButtonViewProps) => {
     return (
-        <button type="button" className={ cn('cursor-pointer underline text-center text-style-u-regular', className) } { ...props }>
+        <button type="button" className={ cn('cursor-pointer underline text-center', className) } { ...props }>
             { children }
         </button>
     );

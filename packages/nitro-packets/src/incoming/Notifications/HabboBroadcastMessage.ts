@@ -7,7 +7,7 @@ export type HabboBroadcastMessageType = {
 export class HabboBroadcastMessage implements IIncomingPacket<HabboBroadcastMessageType> {
     public parse(wrapper: IMessageDataWrapper): HabboBroadcastMessageType {
         const packet: HabboBroadcastMessageType = {
-            message: wrapper.readString()
+            message: wrapper.readString(),
         };
 
         return packet;

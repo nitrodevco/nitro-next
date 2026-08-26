@@ -10,4 +10,5 @@ export const useDialogActions = () => useDialogContext(useShallow(x => ({
     confirm: x.confirm,
     confirmWithModal: x.confirmWithModal,
     simpleAlert: x.simpleAlert,
+    notificationPopup: x.notificationPopup,
 })));
