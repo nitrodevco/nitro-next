@@ -81,12 +81,22 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                         defaultVariant={resolvedVariant}
                         onPointerDown={onTrackPointerDown}
                     >
-                        <ScrollbarSliderBarVertical
-                            defaultVariant={resolvedVariant}
-                            tintColor={tintColor}
-                            layout={{ left: 0, width: '100%', top: thumbOffset, height: thumbSize }}
-                            onPointerDown={onThumbPointerDown}
-                        />
+                        {/* `thumbSize` can briefly read 0 on the very first measure tick after
+                            becoming scrollable - the track's own yoga layout (which `thumbSize`
+                            is computed against) settles a tick after the viewport/content sizes
+                            that make `scrollable` true. Skipping that one degenerate render
+                            avoids ever mounting the thumb's `NineSliceSprite` at zero size -
+                            confirmed directly, one that starts at zero size never recovers once
+                            resized on the following tick, unlike one that simply mounts fresh
+                            once a real size is already known. */}
+                        {thumbSize > 0 && (
+                            <ScrollbarSliderBarVertical
+                                defaultVariant={resolvedVariant}
+                                tintColor={tintColor}
+                                layout={{ left: 0, width: '100%', top: thumbOffset, height: thumbSize }}
+                                onPointerDown={onThumbPointerDown}
+                            />
+                        )}
                     </ScrollbarSliderTrackVertical>
                     <ScrollbarSliderButtonDown
                         defaultVariant={resolvedVariant}
