@@ -1,2 +1,2 @@
-export * from './fonts';
 export * from './truffle';
+export * from './TruffleTextPixi';
