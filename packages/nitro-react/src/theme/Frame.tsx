@@ -11,7 +11,7 @@ import { Header } from './Header';
 import { useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
 import { BackgroundLayer, Composite, NineSlice } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { compose, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 type FrameVariant = ThemeVariant;
 
@@ -62,10 +62,14 @@ export interface FrameProps extends ThemeProps<FrameVariant> {
 
 const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
 
-export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
+export const Frame = ({
+    id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children,
+    onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+}: FrameProps) => {
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
     const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
+        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor,
+        onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
     });
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;

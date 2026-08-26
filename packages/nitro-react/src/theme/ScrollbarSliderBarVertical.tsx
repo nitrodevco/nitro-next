@@ -1,4 +1,4 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
@@ -59,14 +59,16 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVe
     },
 };
 
-export interface ScrollbarSliderBarVerticalProps extends ThemeProps<ScrollbarSliderBarVerticalVariant> {
-    onPointerDown?: (event: FederatedPointerEvent) => void;
-}
+export type ScrollbarSliderBarVerticalProps = ThemeProps<ScrollbarSliderBarVerticalVariant>;
 
 export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSliderBarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarVerticalProps>(
-    ({ variant, defaultVariant, layout, tintColor, onPointerDown }, ref) => {
+    ({
+        variant, defaultVariant, layout, tintColor,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
+            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         const mergedLayout = { position: 'absolute' as const, ...config.layout, ...layout };

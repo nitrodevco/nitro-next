@@ -30,7 +30,7 @@ export type ThemeVariants<T extends AnyThemeVariant> = Record<string, T>;
 export type ThemeProps<T extends AnyThemeVariant> = {
     variant?: keyof ThemeVariants<T>;
     defaultVariant?: keyof ThemeVariants<T>;
-} & ThemeBase;
+} & ThemeBase & PointerHandlerProps;
 
 export type ThemeOptions<T extends AnyThemeVariant = AnyThemeVariant> = {
     cascadeKey: string;

@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { compose, ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
     arrowTextureKey?: string;
@@ -33,9 +33,13 @@ export interface DropmenuProps extends ThemeProps<DropmenuVariant> {
 }
 
 export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, onPress, children }, ref) => {
+    ({
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, onPress, children,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'dropmenu', variants: DROPMENU_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerTap: onPress,
+            cascadeKey: 'dropmenu', variants: DROPMENU_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
         });
 
         return (
@@ -43,7 +47,7 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                 ref={ref}
                 layout={{ position: 'relative', paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
                 {...handlers}
-                cursor={onPress ? 'pointer' : undefined}
+                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

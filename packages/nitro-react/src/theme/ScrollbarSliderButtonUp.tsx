@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { BoxLayout } from './Box';
 import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
-import { SpriteFrame, THEME_URLS } from './utils';
+import { PointerHandlerProps, SpriteFrame, THEME_URLS } from './utils';
 
 interface ScrollbarSliderButtonUpVariant {
     textureKey: string;
@@ -48,16 +48,13 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: Partial<Record<string, ScrollbarSlide
     },
 };
 
-export interface ScrollbarSliderButtonUpProps {
+export interface ScrollbarSliderButtonUpProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     /** Pixi equivalent of the DOM `aria-disabled` state - callers wire this from their own
      *  scroll controller (e.g. `!scroll.scrollable`), matching ScrollbarVertical/Horizontal. */
     disabled?: boolean;
     layout?: BoxLayout;
-    onPointerDown?: () => void;
-    onPointerUp?: () => void;
-    onPointerUpOutside?: () => void;
 }
 
 /**
@@ -66,10 +63,10 @@ export interface ScrollbarSliderButtonUpProps {
  * (see ScrollbarVertical.tsx), spread in as `onPointerDown`/`onPointerUp`/`onPointerUpOutside`.
  */
 export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderButtonUpProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonUpProps>(
-    ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
+    ({ variant, defaultVariant, disabled, layout, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonUp', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState({ disabled, onPointerDown, onPointerUp, onPointerUpOutside });
+        const { state, handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const frame = resolveByState(config.frames, state);
 
         return (

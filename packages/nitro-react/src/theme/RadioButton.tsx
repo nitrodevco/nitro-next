@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
 import { ThemeText } from './ThemeText';
-import { SpriteFrame, TextStyleKey, THEME_URLS, wrapTextChildren } from './utils';
+import { PointerHandlerProps, SpriteFrame, TextStyleKey, THEME_URLS, wrapTextChildren } from './utils';
 
 interface RadioButtonVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared
@@ -69,7 +69,7 @@ const RADIO_BUTTON_VARIANTS: Partial<Record<string, RadioButtonVariant>> = {
     },
 };
 
-export interface RadioButtonProps {
+export interface RadioButtonProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     layout?: BoxLayout;
@@ -84,10 +84,10 @@ export interface RadioButtonProps {
 }
 
 export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RadioButtonProps>(
-    ({ variant, defaultVariant, layout, selected, disabled, children }, ref) => {
+    ({ variant, defaultVariant, layout, selected, disabled, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('radioButton', variant, defaultVariant);
         const config = RADIO_BUTTON_VARIANTS[resolvedVariant] ?? RADIO_BUTTON_VARIANTS['0']!;
-        const { handlers } = useInteractionState({ disabled });
+        const { handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const activeTextureKey = selected ? config.selectedTextureKey : config.defaultTextureKey;
         const activeFrame = selected ? config.selectedFrame : config.defaultFrame;
 

@@ -6,6 +6,7 @@ import { VariantCascadeProvider } from '../cascade';
 import { useThemeVariant } from '../hooks';
 import { BackgroundLayer } from '../layer';
 import { ThemeText } from '../ThemeText';
+import { compose } from './interaction';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './ThemeVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
@@ -24,9 +25,13 @@ export const createButtonGroupComponent = (
     variants: ThemeVariants<ButtonGroupVariant>,
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
-        ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
+        ({
+            variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        }, ref) => {
             const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected, onPointerTap: onPress,
+                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected,
+                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
             });
 
             return (

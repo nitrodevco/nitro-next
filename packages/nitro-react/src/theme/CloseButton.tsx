@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, PointerEvent as ReactPointerEven
 import { BoxLayout } from './Box';
 import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
-import { SpriteFrame, THEME_URLS } from './utils';
+import { compose, PointerHandlerProps, SpriteFrame, THEME_URLS } from './utils';
 
 interface CloseButtonVariant {
     textureKey: string;
@@ -65,7 +65,7 @@ const CLOSE_BUTTON_VARIANTS: Partial<Record<string, CloseButtonVariant>> = {
     },
 };
 
-export interface CloseButtonProps {
+export interface CloseButtonProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     layout?: BoxLayout;
@@ -73,7 +73,10 @@ export interface CloseButtonProps {
 }
 
 export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CloseButtonProps>(
-    ({ variant, defaultVariant, layout, onClose }, ref) => {
+    ({
+        variant, defaultVariant, layout, onClose,
+        onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
         const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
 
@@ -85,7 +88,11 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
         // already owns.
         const stopPropagation = (event: FederatedPointerEvent | ReactPointerEvent) => event.stopPropagation();
 
-        const { state, handlers } = useInteractionState({ onPointerDown: stopPropagation, onPointerTap: onClose });
+        const { state, handlers } = useInteractionState({
+            onPointerOver, onPointerOut, onPointerUp, onPointerUpOutside,
+            onPointerDown: compose(stopPropagation, onPointerDownProp),
+            onPointerTap: compose(onClose, onPointerTap),
+        });
 
         if (!config) return null;
 

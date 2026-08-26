@@ -19,6 +19,35 @@ export interface PointerHandlerProps {
 }
 
 /**
+ * True once at least one real pointer handler is present. Shared by `useInteractionState`
+ * (skip creating hover/press-tracking handlers and forcing `eventMode` when a component has
+ * neither an internal need nor a caller-supplied handler for any of the six events) and by
+ * components that need to know "is this actually interactive" before deciding other props
+ * (e.g. a `cursor` value).
+ */
+export const hasAnyPointerHandler = (handlers: PointerHandlerProps): boolean => !!(
+    handlers.onPointerOver || handlers.onPointerOut || handlers.onPointerDown
+    || handlers.onPointerUp || handlers.onPointerUpOutside || handlers.onPointerTap
+);
+
+/**
+ * Merges two handlers for the same event so both fire - the one place this package combines a
+ * component's own internal need (Frame's activate-on-click, CloseButton's
+ * stop-drag-propagation, a hook's hover/press state tracking, ...) with whatever the caller
+ * additionally supplied for that same event, instead of the caller's handler silently
+ * replacing the internal one or vice versa.
+ */
+export const compose = (a: PointerHandler | undefined, b: PointerHandler | undefined): PointerHandler | undefined => {
+    if (!a) return b;
+    if (!b) return a;
+
+    return (event) => {
+        a(event);
+        b(event);
+    };
+};
+
+/**
  * Detection-only shape for `resolveEventMode`'s incoming handlers - deliberately looser than
  * `PointerHandlerProps` (any single-argument function, plus `null`) because `<Box>`/
  * `<ThemeImage>` feed it straight from Pixi's own generated JSX prop types for

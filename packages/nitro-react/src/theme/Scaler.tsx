@@ -1,4 +1,4 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
@@ -38,7 +38,6 @@ export type ScalerDirection = 'x' | 'y' | 'all' | 'none';
 
 export interface ScalerProps extends ThemeProps<ScalerVariant> {
     direction?: ScalerDirection;
-    onPointerDown?: (event: FederatedPointerEvent) => void;
 }
 
 const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
@@ -49,9 +48,13 @@ const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
 };
 
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, direction = 'all', onPointerDown }, ref) => {
+    ({
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, direction = 'all',
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerDown,
+            cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         if (!config || direction === 'none') return null;

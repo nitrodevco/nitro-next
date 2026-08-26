@@ -1,9 +1,10 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { NineSliceLayer, NineSliceRepeatAxis, SpriteLayer, TileLayer } from './layer';
+import { PointerHandlerProps } from './utils';
 
 interface BarBorder {
     textureKey: string;
@@ -82,21 +83,20 @@ const SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY: Partial<Record<string, BarOverlay
     1: { defaultTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', insetLeft: 0, insetRight: 0 },
 };
 
-export interface ScrollbarSliderBarHorizontalProps {
+export interface ScrollbarSliderBarHorizontalProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     tintColor?: string;
     layout?: BoxLayout;
-    onPointerDown?: (event: FederatedPointerEvent) => void;
 }
 
 /** Pixi port of theme/ScrollbarSliderBarHorizontal.tsx - the draggable scroll thumb. */
 export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSliderBarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarHorizontalProps>(
-    ({ variant, defaultVariant, tintColor, layout, onPointerDown }, ref) => {
+    ({ variant, defaultVariant, tintColor, layout, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderBarHorizontal', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS['0'];
         const overlay = SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY[resolvedVariant];
-        const { state, handlers } = useInteractionState({ onPointerDown });
+        const { state, handlers } = useInteractionState({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const isPressed = state === 'pressed';
         const layer = isPressed ? config.pressed : state === 'hovering' ? config.hovering : config.default;
 

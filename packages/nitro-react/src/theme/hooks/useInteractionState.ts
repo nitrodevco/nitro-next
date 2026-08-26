@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { PointerHandler, PointerHandlerProps } from '../utils/interaction';
+import { compose, hasAnyPointerHandler, PointerHandlerProps } from '../utils/interaction';
 
 export type InteractionState = 'default' | 'hovering' | 'pressed' | 'disabled';
 
@@ -20,16 +20,6 @@ export interface UseInteractionStateOptions extends PointerHandlerProps {
     disabled?: boolean;
 }
 
-const compose = (a: PointerHandler | undefined, b: PointerHandler | undefined): PointerHandler | undefined => {
-    if (!a) return b;
-    if (!b) return a;
-
-    return (event) => {
-        a(event);
-        b(event);
-    };
-};
-
 /**
  * The single place that turns a themed component's hover/press/disabled *state* into the
  * pointer handlers/eventMode its `<Box>` renders with - composing in whatever pointer handlers
@@ -43,15 +33,19 @@ const compose = (a: PointerHandler | undefined, b: PointerHandler | undefined): 
  * (`{...handlers}`) - callers never need to also pass `eventMode="static"` themselves, since
  * this hook is always the one deciding it (`'static'` while interactive, `'none'` while
  * `disabled`, matching `Box`'s own auto-detection for everything that doesn't go through this
- * hook at all - see `utils/interaction.ts`).
+ * hook at all - see `utils/interaction.ts`). With neither a caller handler nor `disabled` set,
+ * this returns `{}` rather than fabricating hover/press-tracking closures nothing would ever
+ * see - a component with no real interactivity stays `passive`, exactly like a plain `<Box>`.
  */
 export const useInteractionState = ({
     disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: UseInteractionStateOptions = {}): { state: InteractionState; handlers: InteractionHandlers } => {
     const [ state, setState ] = useState<InteractionState>('default');
+    const isInteractive = hasAnyPointerHandler({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     const handlers = useMemo<InteractionHandlers>(() => {
         if (disabled) return { eventMode: 'none' };
+        if (!isInteractive) return {};
 
         return {
             eventMode: 'static',
@@ -62,7 +56,7 @@ export const useInteractionState = ({
             onPointerUpOutside: compose(() => setState('default'), onPointerUpOutside),
             onPointerTap,
         };
-    }, [ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap ]);
+    }, [ disabled, isInteractive, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap ]);
 
     return { state: disabled ? 'disabled' : state, handlers };
 };

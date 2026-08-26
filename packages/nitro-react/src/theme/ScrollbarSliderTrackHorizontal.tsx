@@ -1,9 +1,10 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { NineSliceLayer, SpriteLayer } from './layer';
+import { PointerHandlerProps } from './utils';
 
 type TrackLayer
     = | { kind: 'sprite'; textureKey: string; disabledTextureKey?: string }
@@ -32,27 +33,26 @@ const SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS: Record<string, ScrollbarSlider
     200: { layer: { kind: 'nineSlice', textureKey: 'scrollbarslidertrackhorizontal-200-default-src', leftWidth: 2, topHeight: 0, rightWidth: 2, bottomHeight: 0 } },
 };
 
-export interface ScrollbarSliderTrackHorizontalProps {
+export interface ScrollbarSliderTrackHorizontalProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     disabled?: boolean;
     layout?: BoxLayout;
-    onPointerDown?: (event: FederatedPointerEvent) => void;
     children?: ReactNode;
 }
 
 /** Pixi port of theme/ScrollbarSliderTrackHorizontal.tsx - the clickable track behind the thumb. */
 export const ScrollbarSliderTrackHorizontal: ForwardRefExoticComponent<ScrollbarSliderTrackHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackHorizontalProps>(
-    ({ variant, defaultVariant, disabled, layout, onPointerDown, children }, ref) => {
+    ({ variant, defaultVariant, disabled, layout, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderTrackHorizontal', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS['0'];
         const { layer } = config;
-        const { handlers } = useInteractionState({ disabled, onPointerDown });
+        const { handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
         return (
             <Box
                 ref={ref}
-                cursor={disabled ? undefined : 'pointer'}
+                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
                 layout={{ flex: 1, minWidth: config.minWidth, minHeight: config.minHeight, ...layout }}
                 {...handlers}
             >

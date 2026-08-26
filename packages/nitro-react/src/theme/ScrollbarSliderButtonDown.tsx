@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { BoxLayout } from './Box';
 import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
-import { SpriteFrame, THEME_URLS } from './utils';
+import { PointerHandlerProps, SpriteFrame, THEME_URLS } from './utils';
 
 interface ScrollbarSliderButtonDownVariant {
     textureKey: string;
@@ -47,14 +47,11 @@ const SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS: Partial<Record<string, ScrollbarSli
     },
 };
 
-export interface ScrollbarSliderButtonDownProps {
+export interface ScrollbarSliderButtonDownProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     disabled?: boolean;
     layout?: BoxLayout;
-    onPointerDown?: () => void;
-    onPointerUp?: () => void;
-    onPointerUpOutside?: () => void;
 }
 
 /**
@@ -63,10 +60,10 @@ export interface ScrollbarSliderButtonDownProps {
  * (see ScrollbarVertical.tsx), spread in as `onPointerDown`/`onPointerUp`/`onPointerUpOutside`.
  */
 export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSliderButtonDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonDownProps>(
-    ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
+    ({ variant, defaultVariant, disabled, layout, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonDown', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState({ disabled, onPointerDown, onPointerUp, onPointerUpOutside });
+        const { state, handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const frame = resolveByState(config.frames, state);
 
         return (

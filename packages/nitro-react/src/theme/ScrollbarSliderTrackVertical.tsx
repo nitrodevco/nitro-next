@@ -1,4 +1,4 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box } from './Box';
@@ -55,20 +55,23 @@ const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTra
 
 export interface ScrollbarSliderTrackVerticalProps extends ThemeProps<ScrollbarSliderTrackVerticalVariant> {
     disabled?: boolean;
-    onPointerDown?: (event: FederatedPointerEvent) => void;
     children?: ReactNode;
 }
 
 export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSliderTrackVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackVerticalProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, onPointerDown, children }, ref) => {
+    ({
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, children,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, onPointerDown,
+            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
             <Box
                 ref={ref}
-                cursor={disabled ? undefined : 'pointer'}
+                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
                 layout={{ flex: 1, ...config.layout, ...layout }}
                 {...handlers}
             >

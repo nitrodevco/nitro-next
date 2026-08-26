@@ -1,4 +1,4 @@
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
@@ -36,13 +36,16 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
 export interface HeaderProps extends ThemeProps<HeaderVariant> {
     caption?: string;
     onClose?: () => void;
-    onPointerDown?: (event: FederatedPointerEvent) => void;
 }
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
-    ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
+    ({
+        variant, defaultVariant, caption, tintColor, layout, onClose,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
+            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (

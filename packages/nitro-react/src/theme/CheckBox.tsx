@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
 import { ThemeText } from './ThemeText';
-import { SpriteFrame, TextStyleKey, THEME_URLS, wrapTextChildren } from './utils';
+import { PointerHandlerProps, SpriteFrame, TextStyleKey, THEME_URLS, wrapTextChildren } from './utils';
 
 interface CheckBoxVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared
@@ -79,7 +79,7 @@ const CHECK_BOX_VARIANTS: Partial<Record<string, CheckBoxVariant>> = {
     },
 };
 
-export interface CheckBoxProps {
+export interface CheckBoxProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     layout?: BoxLayout;
@@ -94,10 +94,10 @@ export interface CheckBoxProps {
 }
 
 export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CheckBoxProps>(
-    ({ variant, defaultVariant, layout, selected, disabled, children }, ref) => {
+    ({ variant, defaultVariant, layout, selected, disabled, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('checkBox', variant, defaultVariant);
         const config = CHECK_BOX_VARIANTS[resolvedVariant] ?? CHECK_BOX_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState({ disabled });
+        const { state, handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const showSelected = !!selected && state !== 'pressed';
         const activeTextureKey = showSelected ? config.selectedTextureKey : config.defaultTextureKey;
         const activeFrame = showSelected ? config.selectedFrame : config.defaultFrame;

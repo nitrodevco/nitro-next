@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { SpriteLayer } from './layer';
 import { ThemeText } from './ThemeText';
-import { TextStyleKey, wrapTextChildren } from './utils';
+import { compose, PointerHandlerProps, TextStyleKey, wrapTextChildren } from './utils';
 
 interface DropmenuItemVariant {
     defaultTextureKey: string;
@@ -34,7 +34,7 @@ const DROPMENU_ITEM_VARIANTS: Record<string, DropmenuItemVariant> = {
     100: { defaultTextureKey: 'dropmenuitem-0-default-src', hoveringTextureKey: 'dropmenuitem-0-hovering-src', selectedTextureKey: 'dropmenuitem-0-selected-src', paddingLeft: 4, paddingTop: 1, paddingRight: 4, paddingBottom: 2, textStyleKey: 'text-style-il-regular', color: '#000000' },
 };
 
-export interface DropmenuItemProps {
+export interface DropmenuItemProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     selected?: boolean;
@@ -44,10 +44,16 @@ export interface DropmenuItemProps {
 }
 
 export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuItemProps>(
-    ({ variant, defaultVariant, selected, onPress, layout, children }, ref) => {
+    ({
+        variant, defaultVariant, selected, onPress, layout, children,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenuItem', variant, defaultVariant);
         const config = DROPMENU_ITEM_VARIANTS[resolvedVariant] ?? DROPMENU_ITEM_VARIANTS['0'];
-        const { state, handlers } = useInteractionState({ onPointerTap: onPress });
+        const { state, handlers } = useInteractionState({
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside,
+            onPointerTap: compose(onPress, onPointerTap),
+        });
         const textureKey = (selected || state === 'pressed')
             ? config.selectedTextureKey
             : (state === 'hovering' ? config.hoveringTextureKey : config.defaultTextureKey);
@@ -57,7 +63,7 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
                 ref={ref}
                 layout={{ minWidth: 5, minHeight: 19, paddingLeft: config.paddingLeft, paddingTop: config.paddingTop, paddingRight: config.paddingRight, paddingBottom: config.paddingBottom, ...layout }}
                 {...handlers}
-                cursor={onPress ? 'pointer' : undefined}
+                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
             >
                 <SpriteLayer textureKey={textureKey} />
                 <VariantCascadeProvider map={ownCascade}>

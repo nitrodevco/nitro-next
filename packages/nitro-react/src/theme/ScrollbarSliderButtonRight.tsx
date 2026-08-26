@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { BoxLayout } from './Box';
 import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
-import { SpriteFrame, THEME_URLS } from './utils';
+import { PointerHandlerProps, SpriteFrame, THEME_URLS } from './utils';
 
 interface ScrollbarSliderButtonRightVariant {
     textureKey: string;
@@ -48,14 +48,11 @@ const SCROLLBAR_SLIDER_BUTTON_RIGHT_VARIANTS: Partial<Record<string, ScrollbarSl
     },
 };
 
-export interface ScrollbarSliderButtonRightProps {
+export interface ScrollbarSliderButtonRightProps extends PointerHandlerProps {
     variant?: string;
     defaultVariant?: string;
     disabled?: boolean;
     layout?: BoxLayout;
-    onPointerDown?: () => void;
-    onPointerUp?: () => void;
-    onPointerUpOutside?: () => void;
 }
 
 /**
@@ -64,10 +61,10 @@ export interface ScrollbarSliderButtonRightProps {
  * (see ScrollbarHorizontal.tsx), spread in as `onPointerDown`/`onPointerUp`/`onPointerUpOutside`.
  */
 export const ScrollbarSliderButtonRight: ForwardRefExoticComponent<ScrollbarSliderButtonRightProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonRightProps>(
-    ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
+    ({ variant, defaultVariant, disabled, layout, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonRight', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BUTTON_RIGHT_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_RIGHT_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState({ disabled, onPointerDown, onPointerUp, onPointerUpOutside });
+        const { state, handlers } = useInteractionState({ disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
         const frame = resolveByState(config.frames, state);
 
         return (
