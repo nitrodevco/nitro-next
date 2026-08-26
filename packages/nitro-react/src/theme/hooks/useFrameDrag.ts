@@ -72,6 +72,20 @@ export const useFrameDrag = (id: string | undefined) => {
     const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0) return;
 
+        // Pixi's `onPointerDown` JSX prop maps straight onto the legacy `on<type>` property
+        // idiom (see `EventBoundary.notifyTarget` in pixi.js), which fires for every ancestor
+        // along the hit-tested path unconditionally during the capturing sweep - BEFORE the
+        // actual target's own handler ever runs. That means a nested interactive descendant
+        // (CloseButton, with `stopsPropagation`) calling `stopPropagation()` can never
+        // retroactively stop this handler, since it already ran by the time the descendant's own
+        // handler executes. Checking that this container is itself the real hit target is what
+        // correctly excludes a press that landed on such a descendant instead. DOM's real
+        // synthetic-event bubbling doesn't share this ordering quirk - a descendant's
+        // `stopPropagation()` already prevents this handler from running at all there - and
+        // DOM's `target` is the deepest DOM node regardless of interactivity, so this check
+        // would incorrectly reject legitimate header clicks in DOM mode.
+        if (event instanceof FederatedPointerEvent && event.target !== event.currentTarget) return;
+
         const node = frameRef.current;
 
         if (!node) return;

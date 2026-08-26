@@ -106,8 +106,6 @@ const BoxDom = forwardRef<Container, BoxProps>(
             style.transformOrigin = 'top left';
         }
 
-        console.log(resolvedEventMode, pointerEventsFromEventMode(resolvedEventMode));
-
         return (
             <div
                 // DOM mode never runs the Pixi-specific ref consumers a caller might be holding
