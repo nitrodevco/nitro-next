@@ -58,7 +58,6 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
     if (mode === RESULTS_MODE_TILES) {
         return (
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerTap={() => onEnter(room)}
                 layout={{ position: 'relative', flexShrink: 0, width: 122, height: 146 }}
@@ -93,7 +92,6 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                     />
                 )}
                 <Box
-                    eventMode="static"
                     cursor="pointer"
                     onPointerTap={(event) => { event.stopPropagation(); onShowInfo?.(room); }}
                     layout={{ position: 'absolute', top: 120, left: 98 }}
@@ -115,7 +113,6 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
 
     return (
         <Box
-            eventMode="static"
             cursor="pointer"
             onPointerTap={() => onEnter(room)}
             layout={{ position: 'relative', flexShrink: 0, width: '100%', height: 20 }}
@@ -146,7 +143,6 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                         />
                     )}
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={(event) => { event.stopPropagation(); onShowInfo?.(room); }}
                         layout={{}}

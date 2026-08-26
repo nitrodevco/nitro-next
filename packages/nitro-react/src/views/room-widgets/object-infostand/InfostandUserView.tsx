@@ -127,7 +127,6 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                     {userData.isOwnUser && (
                         <>
                             <Box
-                                eventMode="static"
                                 cursor="pointer"
                                 onPointerTap={() => setIsEditingMotto(true)}
                                 layout={{ flexShrink: 0 }}

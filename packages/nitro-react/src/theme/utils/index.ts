@@ -3,6 +3,7 @@ export * from './buttonOverlayPieces';
 export * from './FillLayout';
 export * from './getGlobalRect';
 export * from './iconAssets';
+export * from './interaction';
 export * from './renderMode';
 export * from './ScrollViewport';
 export * from './spriteFrame';

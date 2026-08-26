@@ -61,17 +61,16 @@ export interface ScrollbarSliderTrackVerticalProps extends ThemeProps<ScrollbarS
 
 export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSliderTrackVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackVerticalProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, onPointerDown, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, onPointerDown,
         });
 
         return (
             <Box
                 ref={ref}
-                eventMode={disabled ? 'none' : 'static'}
                 cursor={disabled ? undefined : 'pointer'}
-                onPointerDown={disabled ? undefined : onPointerDown}
                 layout={{ flex: 1, ...config.layout, ...layout }}
+                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

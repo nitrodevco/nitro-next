@@ -2,6 +2,7 @@ import { BoxLayout } from '../Box';
 import { VariantCascadeMap } from '../cascade';
 import { InteractionHandlers, InteractionState, InteractionStates } from '../hooks';
 import { BackgroundLayerConfig } from '../layer';
+import { PointerHandlerProps } from './interaction';
 import { TextStyleKey } from './textStyles';
 
 export type ThemeBase = {
@@ -41,7 +42,7 @@ export type ThemeOptions<T extends AnyThemeVariant = AnyThemeVariant> = {
     textColor?: string;
     disabled?: boolean;
     selected?: boolean;
-};
+} & PointerHandlerProps;
 
 export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     resolvedVariant: string;

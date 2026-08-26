@@ -26,7 +26,7 @@ export const createButtonGroupComponent = (
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({ variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children }, ref) => {
             const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected,
+                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected, onPointerTap: onPress,
             });
 
             return (
@@ -37,7 +37,6 @@ export const createButtonGroupComponent = (
                         ...layout,
                     }}
                     {...handlers}
-                    onPointerTap={disabled ? undefined : onPress}
                 >
                     <BackgroundLayer
                         layer={resolvedLayer}

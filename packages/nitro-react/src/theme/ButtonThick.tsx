@@ -98,7 +98,7 @@ export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected, onPointerTap: onPress,
         });
 
         return (
@@ -112,7 +112,6 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                     ...layout,
                 }}
                 {...handlers}
-                onPointerTap={disabled ? undefined : onPress}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

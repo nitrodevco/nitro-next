@@ -63,10 +63,10 @@ export interface FrameProps extends ThemeProps<FrameVariant> {
 const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
 
 export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children }: FrameProps) => {
-    const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor,
-    });
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
+    const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
+    });
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
     const { size, onScalerPointerDown } = useFrameResize(id, frameRef, resizeDirection, { width: minWidth as number, height: minHeight as number });
@@ -77,9 +77,8 @@ export const Frame = ({ id, variant, defaultVariant, caption, tintColor, layout,
             x={offset.dx}
             y={offset.dy}
             zIndex={zIndex}
-            eventMode="static"
             filters={[ dropShadow ]}
-            onPointerDown={onPointerDown}
+            {...handlers}
             layout={{
                 flexDirection: 'column',
                 minWidth,

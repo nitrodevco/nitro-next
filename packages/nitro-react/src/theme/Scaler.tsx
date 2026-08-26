@@ -50,8 +50,8 @@ const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
 
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, direction = 'all', onPointerDown }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerDown,
         });
 
         if (!config || direction === 'none') return null;
@@ -66,7 +66,7 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                     ...config.layout,
                     ...layout,
                 }}
-                onPointerDown={onPointerDown}
+                {...handlers}
                 cursor={CURSOR_BY_DIRECTION[direction]}
             >
                 {resolvedLayer && (

@@ -41,15 +41,14 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({ variant, defaultVariant, caption, tintColor, layout, onClose, onPointerDown }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor,
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
         });
 
         return (
             <Box
                 ref={ref}
-                eventMode="static"
-                onPointerDown={onPointerDown}
+                {...handlers}
                 layout={{
                     flexDirection: 'row',
                     alignItems: 'center',

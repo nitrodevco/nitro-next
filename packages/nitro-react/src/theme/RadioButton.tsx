@@ -87,7 +87,7 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
     ({ variant, defaultVariant, layout, selected, disabled, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('radioButton', variant, defaultVariant);
         const config = RADIO_BUTTON_VARIANTS[resolvedVariant] ?? RADIO_BUTTON_VARIANTS['0']!;
-        const { handlers } = useInteractionState(disabled);
+        const { handlers } = useInteractionState({ disabled });
         const activeTextureKey = selected ? config.selectedTextureKey : config.defaultTextureKey;
         const activeFrame = selected ? config.selectedFrame : config.defaultFrame;
 

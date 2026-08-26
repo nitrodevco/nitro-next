@@ -2,7 +2,7 @@ import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box, BoxLayout } from './Box';
-import { useResolvedVariant } from './hooks';
+import { useInteractionState, useResolvedVariant } from './hooks';
 import { NineSliceLayer, SpriteLayer } from './layer';
 
 type TrackLayer
@@ -47,14 +47,14 @@ export const ScrollbarSliderTrackHorizontal: ForwardRefExoticComponent<Scrollbar
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderTrackHorizontal', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS['0'];
         const { layer } = config;
+        const { handlers } = useInteractionState({ disabled, onPointerDown });
 
         return (
             <Box
                 ref={ref}
-                eventMode={disabled ? 'none' : 'static'}
                 cursor={disabled ? undefined : 'pointer'}
-                onPointerDown={disabled ? undefined : onPointerDown}
                 layout={{ flex: 1, minWidth: config.minWidth, minHeight: config.minHeight, ...layout }}
+                {...handlers}
             >
                 {layer.kind === 'sprite'
                     ? <SpriteLayer textureKey={disabled && layer.disabledTextureKey ? layer.disabledTextureKey : layer.textureKey} />

@@ -23,7 +23,6 @@ export const CatalogItemGridWidgetItemView = ({ offer }: CatalogItemGridWidgetIt
     return (
         <Box layout={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', padding: 2 }}>
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerTap={() => selectOffer(offer)}
                 layout={{ width: '100%', height: '100%', flexDirection: 'column', alignItems: 'center', gap: 3, paddingTop: 3, paddingBottom: 3 }}

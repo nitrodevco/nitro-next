@@ -52,7 +52,6 @@ export const FriendListFriendsFooterPixi = () => {
                     <Box
                         onPointerOver={searchHover.onMouseEnter}
                         onPointerOut={searchHover.onMouseLeave}
-                        eventMode="static"
                         layout={{ position: 'relative' }}
                     >
                         {showListSearchInput
@@ -66,7 +65,6 @@ export const FriendListFriendsFooterPixi = () => {
                                             layout={{ width: 108, height: 20 }}
                                         />
                                         <Box
-                                            eventMode="static"
                                             cursor="pointer"
                                             onPointerTap={() => toggleListSearchInput(false)}
                                             layout={{ position: 'absolute', right: 4, top: 6 }}

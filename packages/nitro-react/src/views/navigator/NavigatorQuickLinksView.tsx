@@ -43,7 +43,6 @@ export const NavigatorQuickLinksView = () => {
                 {savedSearches.map(link => (
                     <Box
                         key={link.id}
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => runSearch(link.searchCode, link.filter)}
                         onPointerOver={() => setHoveredId(link.id)}
@@ -59,7 +58,6 @@ export const NavigatorQuickLinksView = () => {
                         />
                         {hoveredId === link.id && (
                             <Box
-                                eventMode="static"
                                 cursor="pointer"
                                 onPointerTap={(event) => { event.stopPropagation(); send(new NavigatorDeleteSavedSearchComposer({ searchId: link.id })); }}
                                 layout={{ flexShrink: 0 }}

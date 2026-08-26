@@ -76,15 +76,16 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
     ({ variant, defaultVariant, layout, onClose }, ref) => {
         const { resolvedVariant } = useResolvedVariant('closeButton', variant, defaultVariant);
         const config = CLOSE_BUTTON_VARIANTS[resolvedVariant];
-        const { state, handlers } = useInteractionState();
 
         // Stops the click from also being seen by Header's onHeaderPointerDown (drag), same
         // effect as the DOM version's data-no-drag attribute. `.stopPropagation()` exists on
         // both Pixi's FederatedPointerEvent and DOM's PointerEvent, so one handler covers both.
-        const handlePointerDown = (event: FederatedPointerEvent | ReactPointerEvent) => {
-            event.stopPropagation();
-            handlers.onPointerDown?.();
-        };
+        // Passed into useInteractionState below rather than wrapping its own onPointerDown
+        // afterward, so this composes with (rather than replaces) the hover/press tracking it
+        // already owns.
+        const stopPropagation = (event: FederatedPointerEvent | ReactPointerEvent) => event.stopPropagation();
+
+        const { state, handlers } = useInteractionState({ onPointerDown: stopPropagation, onPointerTap: onClose });
 
         if (!config) return null;
 
@@ -95,14 +96,8 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
                 ref={ref}
                 src={THEME_URLS[config.textureKey]}
                 frame={frame}
-                eventMode="static"
                 cursor="pointer"
-                onPointerOver={handlers.onPointerOver}
-                onPointerOut={handlers.onPointerOut}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlers.onPointerUp}
-                onPointerUpOutside={handlers.onPointerUpOutside}
-                onPointerTap={onClose}
+                {...handlers}
                 layout={{ width: frame.width, height: frame.height, ...layout }}
             />
         );

@@ -96,14 +96,9 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderBarHorizontal', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS['0'];
         const overlay = SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY[resolvedVariant];
-        const { state, handlers } = useInteractionState();
+        const { state, handlers } = useInteractionState({ onPointerDown });
         const isPressed = state === 'pressed';
         const layer = isPressed ? config.pressed : state === 'hovering' ? config.hovering : config.default;
-
-        const handlePointerDown = (event: FederatedPointerEvent) => {
-            handlers.onPointerDown?.();
-            onPointerDown?.(event);
-        };
 
         const mergedLayout = { position: 'absolute' as const, ...layout };
 
@@ -122,13 +117,8 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
         return (
             <Box
                 ref={ref}
-                eventMode="static"
                 layout={mergedLayout}
-                onPointerOver={handlers.onPointerOver}
-                onPointerOut={handlers.onPointerOut}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlers.onPointerUp}
-                onPointerUpOutside={handlers.onPointerUpOutside}
+                {...handlers}
             >
                 <NineSliceLayer
                     textureKey={layer.textureKey}

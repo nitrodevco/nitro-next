@@ -5,7 +5,7 @@ import { useConfigValue } from '#base/context';
 
 import { Box, BoxLayout } from './Box';
 import { useTextureFromUrl } from './hooks';
-import { getRenderMode, SpriteFrame } from './utils';
+import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, SpriteFrame } from './utils';
 
 export interface ImageProps {
     src: string | undefined;
@@ -81,6 +81,7 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
     }, [ resolvedBaseTexture, frame?.x, frame?.y, frame?.width, frame?.height ]);
 
     const resolvedTexture = frame ? croppedTexture : resolvedBaseTexture;
+    const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     if (!resolvedTexture) return null;
 
@@ -95,7 +96,7 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
                 height={height ?? resolvedTexture.height}
                 tint={tint}
                 alpha={alpha}
-                eventMode={eventMode}
+                eventMode={resolvedEventMode}
                 cursor={cursor}
                 onPointerOver={onPointerOver}
                 onPointerOut={onPointerOut}
@@ -121,20 +122,21 @@ ImagePixi.displayName = 'ImagePixi';
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     src, frame, width, height, tint, alpha, eventMode, cursor,
-    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap,
+    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     layout,
 }, ref) => {
     if (!src) return null;
 
     const resolvedWidth = frame?.width ?? width;
     const resolvedHeight = frame?.height ?? height;
+    const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     // See Box.tsx's BoxDom for why 'static'/'dynamic' need an explicit 'auto' here (CSS
     // pointer-events is inherited, and #ui-container sets it to 'none' at its root).
     const sharedStyle: CSSProperties = {
         cursor,
         opacity: alpha,
-        pointerEvents: eventMode === 'none' ? 'none' : (eventMode === 'static' || eventMode === 'dynamic') ? 'auto' : undefined,
+        pointerEvents: pointerEventsFromEventMode(resolvedEventMode),
     };
     const sharedHandlers = {
         onPointerEnter: onPointerOver as unknown as PointerEventHandler,

@@ -4,10 +4,13 @@ import { useResolvedVariant } from './useResolvedVariant';
 
 export const useThemeVariant = <T extends AnyThemeVariant>({
     cascadeKey, variants, variant, defaultVariant = '0', tintColor, textStyle, textColor, disabled, selected,
+    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: ThemeOptions<T>): ThemeResult<T> => {
     const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
     const config = variants[resolvedVariant];
-    const { state, handlers } = useInteractionState(disabled);
+    const { state, handlers } = useInteractionState({
+        disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    });
 
     const statesConfig = config as ThemeWithStatesVariant;
     const layerConfig = config as ThemeVariant;

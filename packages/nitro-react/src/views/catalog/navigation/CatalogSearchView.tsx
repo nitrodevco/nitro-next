@@ -142,7 +142,6 @@ export const CatalogSearchView = () => {
                 layout={{ flex: 1, height: 22 }}
             />
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerTap={onIconPress}
                 layout={{ flexShrink: 0 }}

@@ -203,7 +203,6 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                 </Box>
             )}
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerTap={() => setCollapsed(!collapsed)}
                 layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}

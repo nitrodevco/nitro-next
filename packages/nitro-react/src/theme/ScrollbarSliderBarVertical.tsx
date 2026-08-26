@@ -66,27 +66,17 @@ export interface ScrollbarSliderBarVerticalProps extends ThemeProps<ScrollbarSli
 export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSliderBarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarVerticalProps>(
     ({ variant, defaultVariant, layout, tintColor, onPointerDown }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
+            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, onPointerDown,
         });
-
-        const handlePointerDown = (event: FederatedPointerEvent) => {
-            handlers.onPointerDown?.();
-            onPointerDown?.(event);
-        };
 
         const mergedLayout = { position: 'absolute' as const, ...config.layout, ...layout };
 
         return (
             <Box
                 ref={ref}
-                eventMode="static"
                 cursor={state === 'pressed' ? 'grabbing' : 'grab'}
                 layout={mergedLayout}
-                onPointerOver={handlers.onPointerOver}
-                onPointerOut={handlers.onPointerOut}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlers.onPointerUp}
-                onPointerUpOutside={handlers.onPointerUpOutside}
+                {...handlers}
             >
                 { resolvedLayer && (
                     <BackgroundLayer

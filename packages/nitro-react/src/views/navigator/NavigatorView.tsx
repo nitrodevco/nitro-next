@@ -88,7 +88,6 @@ export const NavigatorView = () => {
         >
             <Box layout={{ flexDirection: 'row', alignItems: 'center', flexShrink: 0 }}>
                 <Box
-                    eventMode="static"
                     cursor="pointer"
                     onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)}
                     layout={{ flexShrink: 0, marginLeft: 4 }}
@@ -217,7 +216,6 @@ export const NavigatorView = () => {
                                 )
                             : (
                                     <Box
-                                        eventMode="static"
                                         cursor="pointer"
                                         onPointerTap={() => {
                                             send(new ForwardToARandomPromotedRoomComposer({ category: '' }));

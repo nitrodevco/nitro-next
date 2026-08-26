@@ -43,7 +43,6 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
             <ColorLayer color="#ffffff" />
             <Box layout={{ position: 'relative', height: isCollapsed ? 26 : 30 }}>
                 <Box
-                    eventMode="static"
                     cursor="pointer"
                     onPointerTap={() => onCollapse(block.searchCode)}
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
@@ -64,7 +63,6 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                 <Box layout={{ position: 'absolute', top: 5, right: 14, flexDirection: 'row', alignItems: 'flex-start', gap: 5 }}>
                     {!isCollapsed && canToggleView && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => onToggleMode(block.searchCode, mode === RESULTS_MODE_ROWS ? RESULTS_MODE_TILES : RESULTS_MODE_ROWS)}
                             layout={{}}
@@ -77,7 +75,6 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     )}
                     {block.actionAllowed === 1 && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => onShowMore(block.searchCode)}
                             layout={{}}
@@ -90,7 +87,6 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     )}
                     {!isCollapsed && block.actionAllowed === 2 && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={onBack}
                             layout={{}}
@@ -103,7 +99,6 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     )}
                     {!isOfficialView && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => onAddQuickLink(block.searchCode)}
                             layout={{}}

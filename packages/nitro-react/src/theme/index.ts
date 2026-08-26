@@ -21,7 +21,6 @@ export * from './CloseButton';
 export * from './ContentArea';
 export * from './dom/BackgroundLayerDom';
 export * from './dom/boxStyle';
-export * from './dom/interactionDom';
 export * from './dom/textStyleDom';
 export * from './dom/TruffleTextDom';
 export * from './Droplist';

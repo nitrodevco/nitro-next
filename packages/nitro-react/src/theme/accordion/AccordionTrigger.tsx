@@ -48,7 +48,7 @@ export const AccordionTrigger: ForwardRefExoticComponent<AccordionTriggerProps &
             <Box
                 ref={ref}
                 layout={layout}
-                eventMode={alwaysOpen ? 'none' : 'static'}
+                eventMode={alwaysOpen ? 'none' : undefined}
                 cursor={alwaysOpen ? undefined : 'pointer'}
                 onPointerTap={alwaysOpen ? undefined : toggle}
                 onPointerOver={alwaysOpen ? undefined : onPointerOver}

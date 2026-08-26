@@ -2,7 +2,7 @@ import { Container } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback } from 'react';
 
 import { boxLayoutToStyle } from './dom';
-import { getRenderMode, wrapTextChildren } from './utils';
+import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
 
 /**
  * The flex/positioning primitive: a thin typed wrapper around pixiContainer + @pixi/layout's
@@ -49,7 +49,7 @@ const attachDefaultHitArea = (node: Container) => {
 };
 
 const BoxPixi = forwardRef<Container, BoxProps>(
-    ({ children, ...props }, ref) => {
+    ({ children, eventMode, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, ...props }, ref) => {
         const setRef = useCallback((node: Container | null) => {
             if (node) attachDefaultHitArea(node);
 
@@ -57,9 +57,18 @@ const BoxPixi = forwardRef<Container, BoxProps>(
             else if (ref) ref.current = node;
         }, [ ref ]);
 
+        const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
+
         return (
             <pixiContainer
                 ref={setRef}
+                eventMode={resolvedEventMode}
+                onPointerOver={onPointerOver}
+                onPointerOut={onPointerOut}
+                onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
+                onPointerUpOutside={onPointerUpOutside}
+                onPointerTap={onPointerTap}
                 {...props}
             >
                 {wrapTextChildren(children as ReactNode)}
@@ -73,22 +82,22 @@ BoxPixi.displayName = 'BoxPixi';
 /**
  * `BoxProps` is `JSX.IntrinsicElements['pixiContainer']` - the full Pixi Container prop
  * surface (filters, mask, hitArea, blendMode, ...). Only the subset actually exercised by the
- * dual-target components (layout, eventMode, cursor, the plain zero-arg pointer handlers
- * `useInteractionState` produces, x/y, zIndex, alpha) is translated to CSS/DOM event props
- * here; anything else (Frame's drop-shadow `filters`, `mask`, a custom `hitArea`) is a
+ * dual-target components (layout, eventMode, cursor, the pointer handlers `useInteractionState`
+ * produces or a caller attaches directly, x/y, zIndex, alpha) is translated to CSS/DOM event
+ * props here; anything else (Frame's drop-shadow `filters`, `mask`, a custom `hitArea`) is a
  * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
  */
 const BoxDom = forwardRef<Container, BoxProps>(
-    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerTap }, ref) => {
+    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const style = boxLayoutToStyle(layout as BoxLayout | undefined);
+        const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
         // `#ui-container` (MainView.tsx) sets `pointer-events: none` at its root so clicks
         // pass through to the room canvas beneath everywhere except an actual interactive
         // element - every interactive Box needs to explicitly opt back in with `auto` (CSS
         // `pointer-events` is inherited, so without this every button under that root would
         // silently inherit `none` and never receive a click).
-        if (eventMode === 'none') style.pointerEvents = 'none';
-        else if (eventMode === 'static' || eventMode === 'dynamic') style.pointerEvents = 'auto';
+        style.pointerEvents = pointerEventsFromEventMode(resolvedEventMode);
         if (typeof cursor === 'string') style.cursor = cursor;
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;

@@ -37,7 +37,6 @@ export const FriendListItemPixi = ({ user, selected = false, hideAvatarElement =
 
     return (
         <Box
-            eventMode={onPress ? 'static' : 'none'}
             cursor={onPress ? 'pointer' : undefined}
             onPointerTap={onPress}
             layout={{ position: 'relative', flexDirection: 'row', gap: 6, alignItems: 'center', height: 20, paddingLeft: 2, paddingRight: 2 }}
@@ -58,7 +57,6 @@ export const FriendListItemPixi = ({ user, selected = false, hideAvatarElement =
                     </Box>
                 )}
                 <Box
-                    eventMode="static"
                     cursor="pointer"
                     onPointerOver={profileHover.onMouseEnter}
                     onPointerOut={profileHover.onMouseLeave}

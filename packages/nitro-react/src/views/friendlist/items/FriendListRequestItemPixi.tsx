@@ -23,7 +23,6 @@ export const FriendListRequestItemPixi = ({ request, zebraColor }: FriendListReq
             zebraColor={zebraColor}
         >
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerOver={acceptHover.onMouseEnter}
                 onPointerOut={acceptHover.onMouseLeave}
@@ -35,7 +34,6 @@ export const FriendListRequestItemPixi = ({ request, zebraColor }: FriendListReq
                 />
             </Box>
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerOver={declineHover.onMouseEnter}
                 onPointerOut={declineHover.onMouseLeave}

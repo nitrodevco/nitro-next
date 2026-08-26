@@ -47,7 +47,7 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
     ({ variant, defaultVariant, selected, onPress, layout, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('dropmenuItem', variant, defaultVariant);
         const config = DROPMENU_ITEM_VARIANTS[resolvedVariant] ?? DROPMENU_ITEM_VARIANTS['0'];
-        const { state, handlers } = useInteractionState();
+        const { state, handlers } = useInteractionState({ onPointerTap: onPress });
         const textureKey = (selected || state === 'pressed')
             ? config.selectedTextureKey
             : (state === 'hovering' ? config.hoveringTextureKey : config.defaultTextureKey);
@@ -58,7 +58,6 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
                 layout={{ minWidth: 5, minHeight: 19, paddingLeft: config.paddingLeft, paddingTop: config.paddingTop, paddingRight: config.paddingRight, paddingBottom: config.paddingBottom, ...layout }}
                 {...handlers}
                 cursor={onPress ? 'pointer' : undefined}
-                onPointerTap={onPress}
             >
                 <SpriteLayer textureKey={textureKey} />
                 <VariantCascadeProvider map={ownCascade}>

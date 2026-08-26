@@ -110,7 +110,6 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                     if (typeof ref === 'function') ref(node);
                     else if (ref) ref.current = node;
                 }}
-                eventMode="static"
                 cursor="text"
                 onPointerTap={() => setFocused(true)}
                 layout={{ justifyContent: multiline ? 'flex-start' : 'center', paddingLeft: 2, paddingRight: 2, ...layout }}

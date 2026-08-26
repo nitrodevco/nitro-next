@@ -161,7 +161,7 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected, onPointerTap: onPress,
         });
 
         return (
@@ -175,7 +175,6 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                     ...layout,
                 }}
                 {...handlers}
-                onPointerTap={disabled ? undefined : onPress}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

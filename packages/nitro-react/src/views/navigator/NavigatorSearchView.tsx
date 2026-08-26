@@ -84,7 +84,6 @@ export const NavigatorSearchView = () => {
                     layout={{ flex: 1, height: 22 }}
                 />
                 <Box
-                    eventMode="static"
                     cursor="pointer"
                     onPointerTap={() => { if (searchFilter.length > 0) { setSearchFilter(''); search(''); } }}
                     layout={{ flexShrink: 0 }}

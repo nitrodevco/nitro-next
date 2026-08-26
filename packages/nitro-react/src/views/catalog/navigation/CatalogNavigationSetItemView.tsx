@@ -18,7 +18,6 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
     return (
         <Box layout={{ flexDirection: 'column' }}>
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerTap={() => activateNode(node)}
                 layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', paddingTop: 2, paddingBottom: 2, paddingLeft: (node.depth - 2) * 10, minHeight: 16 }}

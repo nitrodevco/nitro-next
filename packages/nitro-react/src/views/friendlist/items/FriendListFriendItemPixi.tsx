@@ -46,7 +46,6 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
                 {showRelationshipIcon && (
                     <>
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => setRelationshipDropdownId(isDropdownVisible ? 0 : friend.playerId)}
                             onPointerOver={relationshipHover.onMouseEnter}
@@ -60,7 +59,6 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
                         </Box>
                         {isDropdownVisible && (
                             <Box
-                                eventMode="static"
                                 onPointerTap={() => setRelationshipDropdownId(0)}
                                 layout={{ position: 'absolute', right: 0, top: -46, width: 30 }}
                             >
@@ -108,7 +106,6 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
             <Box layout={{ width: 16, height: 14, flexShrink: 0 }}>
                 {showFollowIcon && (
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerOver={followHover.onMouseEnter}
                         onPointerOut={followHover.onMouseLeave}
@@ -124,7 +121,6 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
             <Box layout={{ width: 16, height: 14, flexShrink: 0 }}>
                 {showMessageIcon && (
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerOver={messageHover.onMouseEnter}
                         onPointerOut={messageHover.onMouseLeave}

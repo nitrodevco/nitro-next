@@ -24,7 +24,6 @@ export const FriendListSearchItemPixi = ({ result, isFriend, showAvatarHead, zeb
             zebraColor={zebraColor}
         >
             <Box
-                eventMode="static"
                 cursor="pointer"
                 onPointerOver={hover.onMouseEnter}
                 onPointerOut={hover.onMouseLeave}

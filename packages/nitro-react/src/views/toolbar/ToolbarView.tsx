@@ -66,7 +66,6 @@ export const ToolbarView = () => {
                         src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
                         width={14}
                         height={43}
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
                     />
@@ -78,7 +77,6 @@ export const ToolbarView = () => {
                     )}
                     {!leftSideCollapsed && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => toggleWindow('navigator')}
                             layout={{}}
@@ -91,7 +89,6 @@ export const ToolbarView = () => {
                     )}
                     {!leftSideCollapsed && (
                         <Box
-                            eventMode="static"
                             cursor="pointer"
                             onPointerTap={() => toggleMenu('progression')}
                             layout={{}}
@@ -103,7 +100,6 @@ export const ToolbarView = () => {
                         </Box>
                     )}
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => toggleWindow('catalog')}
                         layout={{}}
@@ -118,7 +114,6 @@ export const ToolbarView = () => {
                         layout={{}}
                     />
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => toggleWindow('inventory')}
                         layout={{}}
@@ -129,7 +124,6 @@ export const ToolbarView = () => {
                         />
                     </Box>
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => toggleMenu('me')}
                         layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
@@ -161,7 +155,6 @@ export const ToolbarView = () => {
                         layout={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 1, height: '100%' }}
                     />
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => toggleWindow('friendlist')}
                         layout={{}}
@@ -172,7 +165,6 @@ export const ToolbarView = () => {
                         />
                     </Box>
                     <Box
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })}
                         layout={{}}
@@ -186,7 +178,6 @@ export const ToolbarView = () => {
                         src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
                         width={14}
                         height={43}
-                        eventMode="static"
                         cursor="pointer"
                         onPointerTap={() => setRightSideCollapsed(prev => !prev)}
                     />

@@ -67,34 +67,16 @@ export const ScrollbarSliderButtonLeft: ForwardRefExoticComponent<ScrollbarSlide
     ({ variant, defaultVariant, disabled, layout, onPointerDown, onPointerUp, onPointerUpOutside }, ref) => {
         const { resolvedVariant } = useResolvedVariant('scrollbarSliderButtonLeft', variant, defaultVariant);
         const config = SCROLLBAR_SLIDER_BUTTON_LEFT_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BUTTON_LEFT_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState(disabled);
+        const { state, handlers } = useInteractionState({ disabled, onPointerDown, onPointerUp, onPointerUpOutside });
         const frame = resolveByState(config.frames, state);
-
-        const handlePointerDown = () => {
-            handlers.onPointerDown?.();
-            onPointerDown?.();
-        };
-        const handlePointerUp = () => {
-            handlers.onPointerUp?.();
-            onPointerUp?.();
-        };
-        const handlePointerUpOutside = () => {
-            handlers.onPointerUpOutside?.();
-            onPointerUpOutside?.();
-        };
 
         return (
             <ThemeImage
                 ref={ref}
                 src={THEME_URLS[config.textureKey]}
                 frame={frame}
-                eventMode={handlers.eventMode}
                 cursor={disabled ? undefined : 'pointer'}
-                onPointerOver={handlers.onPointerOver}
-                onPointerOut={handlers.onPointerOut}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlePointerUp}
-                onPointerUpOutside={handlePointerUpOutside}
+                {...handlers}
                 layout={{ width: frame.width, height: frame.height, ...layout }}
             />
         );

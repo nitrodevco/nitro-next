@@ -97,7 +97,7 @@ export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<P
     ({ variant, defaultVariant, layout, selected, disabled, children }, ref) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('checkBox', variant, defaultVariant);
         const config = CHECK_BOX_VARIANTS[resolvedVariant] ?? CHECK_BOX_VARIANTS['0']!;
-        const { state, handlers } = useInteractionState(disabled);
+        const { state, handlers } = useInteractionState({ disabled });
         const showSelected = !!selected && state !== 'pressed';
         const activeTextureKey = showSelected ? config.selectedTextureKey : config.defaultTextureKey;
         const activeFrame = showSelected ? config.selectedFrame : config.defaultFrame;
