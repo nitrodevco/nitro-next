@@ -156,19 +156,24 @@ const measureTrueAdvances = (style: object, charset: string[]): Map<string, numb
  *  `measureTrueAdvances` rather than this isolated render's own (too-narrow)
  *  `charBounds[0].width` — see that function's docblock.
  *
- *  `xAdvance` is rounded to a whole (logical) pixel here — not because the true
- *  design metric is itself a whole number, but because BOTH runtime consumers
- *  (`BitmapTextDom.tsx`'s `x +=` accumulator and Pixi's own internal
- *  glyph-to-glyph summation inside `pixiBitmapText`, which has no per-glyph
- *  rounding hook of its own) sum `xAdvance` across a line one glyph at a time.
- *  If every term in that sum is already a whole pixel, the running total can
- *  only ever land on a whole pixel too, in both renderers, independently of
- *  each other and of the starting position — which is what keeps Pixi's glyphs
- *  (only its overall block origin is pixel-rounded, via `roundPixels`) as
- *  crisply on-grid as DOM's (which pixel-snaps every glyph's destination rect
- *  explicitly). A fractional per-glyph advance would leave both renderers
- *  correct only in aggregate, drifting in and out of grid alignment with each
- *  other glyph by glyph. */
+ *  `xAdvance` is kept as its true fractional value here, deliberately NOT rounded
+ *  to a whole pixel. Both runtime consumers already round only the *final* glyph
+ *  draw position, after accumulating the running (unrounded) sum of advances -
+ *  `BitmapTextDom.tsx`'s `drawLines` (`x += glyph.xAdvance`, then
+ *  `snapToDevicePixel(x + glyph.xOffset, dpr)` only at the `drawImage` call) and
+ *  Pixi's own internal bitmap-text pipe (`getBitmapTextLayout` sums `xAdvance`
+ *  unrounded into `charPositions`; `AbstractBitmapTextPipe._updateContext` does
+ *  `Math.round(line.charPositions[j] + charData.xOffset)` only when it actually
+ *  places each glyph's quad - see `node_modules/pixi.js/lib/scene/text-bitmap/
+ *  AbstractBitmapTextPipe.mjs`). This "accumulate exact, round only the final
+ *  placement" pattern error-diffuses rounding across a line (typical bitmap-font
+ *  practice) - pre-rounding `xAdvance` itself at bake time was tried and made
+ *  this *worse*: it forces the same up-to-half-pixel error onto every single
+ *  character unconditionally, rather than letting each glyph's own accumulated
+ *  position round to whichever side is actually closest, which is what reads as
+ *  visibly uneven letter-to-letter spacing (some gaps a whole pixel tighter than
+ *  others with no visual reason) rather than the smooth, imperceptible spacing
+ *  error-diffusion gives. */
 const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels => {
     const buffer = truffle.renderToBuffer(char, style, { color: 0xffffff });
     const bounds = buffer.layout.charBounds[0];
@@ -188,7 +193,7 @@ const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels
         }
     }
 
-    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance: Math.round(xAdvance / ATLAS_SCALE), pixels: null };
+    if (maxX < 0) return { char, w: 0, h: 0, xOffset: 0, yOffset: 0, xAdvance: xAdvance / ATLAS_SCALE, pixels: null };
 
     const w = maxX - minX + 1;
     const h = maxY - minY + 1;
@@ -202,7 +207,7 @@ const renderGlyph = (style: object, char: string, xAdvance: number): GlyphPixels
 
     // w/h (the atlas crop) stay physical; xOffset/yOffset/xAdvance are placement
     // metrics other logical-pixel consumers read, so they're brought back down here.
-    return { char, w, h, xOffset: (minX - originX) / ATLAS_SCALE, yOffset: (minY - originY) / ATLAS_SCALE, xAdvance: Math.round(xAdvance / ATLAS_SCALE), pixels };
+    return { char, w, h, xOffset: (minX - originX) / ATLAS_SCALE, yOffset: (minY - originY) / ATLAS_SCALE, xAdvance: xAdvance / ATLAS_SCALE, pixels };
 };
 
 const pack = (glyphs: GlyphPixels[]): { placed: PackedGlyph[]; width: number; height: number } => {
