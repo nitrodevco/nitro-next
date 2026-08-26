@@ -86,10 +86,11 @@ interface FrameProps extends HTMLAttributes<HTMLDivElement>, FrameVariantProps {
     defaultVariant?: string;
     resizeDirection?: FrameResizeDirection;
     resizable?: boolean;
+    closable?: boolean;
 }
 
 export const Frame = forwardRef<HTMLDivElement, FrameProps>(
-    ({ id, caption, onClose, className, contentClassName, variant, defaultVariant, tintColor, resizeDirection = 'all', resizable, style, children, ...props }, ref) => {
+    ({ id, caption, onClose, className, contentClassName, variant, defaultVariant, tintColor, resizeDirection = 'all', resizable, closable, style, children, ...props }, ref) => {
         const cascadedVariant = useCascadedVariant('frame');
         const resolvedVariant = (variant ?? cascadedVariant ?? defaultVariant ?? '0') as never;
         const ownCascade = VARIANT_CASCADE_CONFIG['frame']?.[resolvedVariant as string];
@@ -117,7 +118,7 @@ export const Frame = forwardRef<HTMLDivElement, FrameProps>(
             >
                 {overlayClassName && <div aria-hidden className={cn('pointer-events-none absolute inset-0', overlayClassName)} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    <Header caption={caption} onClose={onClose} onPointerDown={onHeaderPointerDown} className="cursor-grab active:cursor-grabbing" />
+                    <Header caption={caption} onClose={onClose} closable={closable} onPointerDown={onHeaderPointerDown} className="cursor-grab active:cursor-grabbing" />
                     <div className={cn('flex px-0.75 pt-px pb-1 size-full overflow-hidden', contentClassName)}>
                         <ContentArea>
                             {children}

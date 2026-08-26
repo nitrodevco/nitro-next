@@ -5,7 +5,10 @@ import.meta.glob('./views/**/*.css', { eager: true });
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { createRoot } from 'react-dom/client';
 
+import { DialogComponent } from './components';
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
+import { DialogContextProvider } from './context/dialog';
+import { NotificationContextProvider } from './context/notification';
 import { Nitro } from './Nitro';
 
 NitroLogger.LOG_ERROR = import.meta.env.DEV;
@@ -28,10 +31,15 @@ const element = document.getElementById('root');
 if (element)
     createRoot(element).render(
         <SystemContextProvider>
-            <WebSocketContextProvider>
-                <UserContextProvider>
-                    <Nitro />
-                </UserContextProvider>
-            </WebSocketContextProvider>
+            <DialogContextProvider>
+                <NotificationContextProvider>
+                    <WebSocketContextProvider>
+                        <UserContextProvider>
+                            <Nitro />
+                        </UserContextProvider>
+                    </WebSocketContextProvider>
+                    <DialogComponent />
+                </NotificationContextProvider>
+            </DialogContextProvider>
         </SystemContextProvider>,
     );

@@ -1,18 +1,17 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ModeratorMessageType = {
-  // no fields
-
+    message: string;
+    url: string;
 };
 
-export class ModeratorMessage implements IIncomingPacket<ModeratorMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ModeratorMessageType
-  {
+export class ModeratorMessage implements IIncomingPacket<ModeratorMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ModeratorMessageType {
+        const packet: ModeratorMessageType = {
+            message: wrapper.readString(),
+            url: wrapper.readString()
+        };
 
-    const packet: ModeratorMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

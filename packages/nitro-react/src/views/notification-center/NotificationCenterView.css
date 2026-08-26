@@ -1,0 +1,23 @@
+.friendonline-slide {
+    background: url('/assets/flash/notifications/friendonline/slide.png') no-repeat;
+    width: 6px;
+    height: 8px;
+}
+
+.friendonline-circle-inner {
+    background: url('/assets/flash/notifications/friendonline/circle_inner.png') no-repeat;
+    width: 53px;
+    height: 53px;
+}
+
+.friendonline-circle {
+    background: url('/assets/flash/notifications/friendonline/circle.png') no-repeat;
+    width: 53px;
+    height: 53px;
+}
+
+.wired-notification-bg {
+    background: url('/assets/flash/notifications/wired/bg_right.png') no-repeat;
+    width: 240px;
+    height: 160px;
+}

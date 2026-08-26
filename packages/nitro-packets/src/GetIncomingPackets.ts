@@ -217,6 +217,7 @@ import {
     RentableSpaceRentOkMessage,
     RentableSpaceStatusMessage,
     RequestSpamWallPostItMessage,
+    SecondsUntilMessage,
     RespectNotificationMessage,
     RestoreClientMessage,
     RoomAdErrorEventMessage,
@@ -301,7 +302,8 @@ import {
     YouAreSpectatorMessage,
     YoutubeControlVideoMessage,
     YoutubeDisplayPlaylistsMessage,
-    YoutubeDisplayVideoMessage, NoOwnedRoomsAlertMessage, RoomSettingsDataEventMessage, RoomSettingsSavedEventMessage, RoomSettingsSaveErrorEventMessage, FlatControllersEventMessage, FlatControllerAddedEventMessage, FlatControllerRemovedEventMessage, BannedUsersFromRoomEventMessage, UserUnbannedFromRoomEventMessage, MuteAllInRoomEventMessage, ShowEnforceRoomCategoryDialogEventMessage } from './incoming';
+    YoutubeDisplayVideoMessage, NoOwnedRoomsAlertMessage, RoomSettingsDataEventMessage, RoomSettingsSavedEventMessage, RoomSettingsSaveErrorEventMessage, FlatControllersEventMessage, FlatControllerAddedEventMessage, FlatControllerRemovedEventMessage, BannedUsersFromRoomEventMessage, UserUnbannedFromRoomEventMessage, MuteAllInRoomEventMessage, ShowEnforceRoomCategoryDialogEventMessage
+} from './incoming';
 import { IncomingHeader } from './IncomingHeader';
 
 export const GetIncomingPackets = () => {
@@ -500,6 +502,8 @@ export const GetIncomingPackets = () => {
         [IncomingHeader.HabboBroadcastMessage]: HabboBroadcastMessage,
         [IncomingHeader.InfoFeedEnableMessage]: InfoFeedEnableMessage,
         [IncomingHeader.MOTDNotificationMessage]: MOTDNotificationEventMessage,
+        [IncomingHeader.RespectNotificationMessage]: RespectNotificationMessage,
+        [IncomingHeader.SecondsUntilMessage]: SecondsUntilMessage,
         [IncomingHeader.NotificationDialogMessage]: NotificationDialogMessage,
         [IncomingHeader.OfferRewardDeliveredMessage]: OfferRewardDeliveredMessage,
         [IncomingHeader.PetLevelNotificationMessage]: PetLevelNotificationEventMessage,
