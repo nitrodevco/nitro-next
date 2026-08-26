@@ -51,6 +51,18 @@ export interface ScrollViewportProps {
  * making `useScrollController`'s `scrollMax` compute to 0 (confirmed empirically: `scrollable`
  * stayed `false` and the content height measured exactly equal to the viewport height until
  * this was added).
+ *
+ * `roundPixels` on both the mask and the content container matters once truffle-rendered text
+ * lives inside a scroller: `scrollOffset` accumulates from raw wheel/drag deltas and is routinely
+ * fractional, and `TruffleTextPixi`'s own sprites already round *themselves* to the nearest
+ * pixel (`roundPixels` there). Left unrounded here, the content container's fractional -y
+ * translation and the mask's own (otherwise-fixed) rect can each land on a different sub-pixel
+ * boundary than a content sprite's independently-rounded position - a mismatch too small to
+ * misplace anything by a whole pixel, but enough for the mask's clip edge to slice a hairline
+ * off whichever glyph's ink reaches closest to it (a tall ascender like a "t" or "k" first,
+ * nothing DOM ever shows here since its `overflow:hidden` clip and its content are rasterized
+ * by the very same layout/paint engine, never two independently-rounded objects). Rounding both
+ * to the same pixel grid here is what keeps the clip edge and the content it clips consistent.
  */
 export const ScrollViewport = ({ viewportRef, contentRef, onWheel, scrollOffset, orientation, layout, contentLayout, children }: ScrollViewportProps) => {
     const [ maskNode, setMaskNode ] = useState<PixiGraphics | null>(null);
@@ -67,11 +79,13 @@ export const ScrollViewport = ({ viewportRef, contentRef, onWheel, scrollOffset,
             <pixiGraphics
                 ref={setMaskNode}
                 eventMode="none"
+                roundPixels
                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                 draw={(g) => { g.clear().rect(0, 0, 1, 1).fill(0xFFFFFF); }}
             />
             <pixiContainer
                 ref={contentRef}
+                roundPixels
                 x={isVertical ? 0 : -scrollOffset}
                 y={isVertical ? -scrollOffset : 0}
                 layout={contentLayout ?? {
