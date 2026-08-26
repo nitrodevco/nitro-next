@@ -1,4 +1,5 @@
 export * from './avatar-editor/AvatarEditorComponent';
+export * from './achievements/AchievementComponent';
 export * from './AvatarImage';
 export * from './catalog/CatalogComponent';
 export * from './catalog/CatalogWrapper';

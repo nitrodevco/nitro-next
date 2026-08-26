@@ -57,7 +57,7 @@ const headerTintableVars: Partial<Record<string, string[]>> = {
     '4': ['header-3-default-src'],
 };
 
-const headerVariants = cva('relative overflow-hidden', { variants: headerVariantsConfig, defaultVariants: { variant: '0' } });
+const headerVariants = cva('relative overflow-hidden flex flex-col', { variants: headerVariantsConfig, defaultVariants: { variant: '0' } });
 const headerOverlayVariants = cva('', { variants: headerOverlayVariantsConfig, defaultVariants: { variant: '0' } });
 
 type HeaderVariantProps = VariantProps<typeof headerVariantsConfig>;
@@ -88,7 +88,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
             >
                 {overlayClassName && <div aria-hidden className={cn('pointer-events-none absolute inset-0 z-10', overlayClassName)} />}
                 <VariantCascadeProvider map={ownCascade}>
-                    <div className="relative flex items-center justify-center h-full">
+                    <div className="relative flex items-center justify-center flex-1">
                         <div className="flex flex-1 items-center justify-center z-20 w-full">
                             <span className="text-center leading-3.75 px-2" style={{ backgroundColor: resolvedTint }}>{caption}</span>
                         </div>

@@ -19,6 +19,7 @@
     "fps.limit": 60,
     "socket.url": "ws://localhost:9001",
     "motto.max.length": 38,
+    "achievements.new": "RewardTracksCompleted,HabbiconUsed,HabbiconCollectionComp,HabbiconCollected,TraderPass",
     "renderer.petTypes": [
         "dog",
         "cat",

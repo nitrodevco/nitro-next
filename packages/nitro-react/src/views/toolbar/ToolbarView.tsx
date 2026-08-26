@@ -25,8 +25,8 @@ export const ToolbarView = () => {
 
     return (
         <>
-            {isMeExpanded && <ToolbarMeMenu ref={meElementRef} />}
-            {isProgressionExpanded && <ToolbarProgressionMenu ref={progressionElementRef} />}
+            {isMeExpanded && <ToolbarMeMenu ref={meElementRef} onClicked={ () => setMeExpanded(false) } />}
+            {isProgressionExpanded && <ToolbarProgressionMenu ref={progressionElementRef} onClicked={ () => setProgressionExpanded(false) } />}
             <div className="nitro-toolbar">
                 <div className={cn('toolbar-left', leftSideCollapsed && 'collapsed')}>
                     <div className={cn('toolbar-collapse', leftSideCollapsed && 'active')} onClick={_ => setLeftSideCollapsed(prev => !prev)} />

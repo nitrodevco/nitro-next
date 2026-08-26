@@ -426,6 +426,7 @@ export * from './Game/Score/WeeklyGameRewardEventMessage';
 export * from './Game/Score/WeeklyGameRewardWinnersEventMessage';
 export * from './Inventory/Achievements/AchievementEventMessage';
 export * from './Inventory/Achievements/AchievementsEventMessage';
+export * from './Inventory/Achievements/Data/AchievementDataParser';
 export * from './Inventory/Achievements/AchievementsScoreEventMessage';
 export * from './Inventory/Avatareffect/AvatarEffectActivatedMessage';
 export * from './Inventory/Avatareffect/AvatarEffectAddedMessage';
