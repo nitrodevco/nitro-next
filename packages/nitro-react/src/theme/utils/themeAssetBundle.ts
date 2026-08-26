@@ -1,5 +1,5 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { Assets, Spritesheet, SpritesheetData, Texture } from 'pixi.js';
+import { SpritesheetData, Texture } from 'pixi.js';
 
 import { getRenderMode } from './renderMode';
 import { THEME_URLS } from './themeUrls';
@@ -44,40 +44,6 @@ const fetchManifest = async (): Promise<SpritesheetData | undefined> => {
  *  the manifest's frame keys (built straight from `public/`-relative disk paths) never had one. */
 const stripPrefix = (url: string): string => url.replace(/^\.\//, '');
 
-/**
- * Parses the manifest via Pixi's own `Spritesheet` (the same class `AssetManager.
- * processNitroBundle` already uses for room/furniture `.nitro` bundles) rather than
- * hand-building `Texture` objects - `NineSliceSprite` (every bordered chrome piece) needs the
- * `sourceSize`/`spriteSourceSize` metadata `Spritesheet.parse()` fills in to size its 9-slice
- * geometry correctly; a raw `new Texture({source, frame})` per asset renders every nine-sliced
- * border as a single stretched, un-sliced solid-color blob instead (confirmed directly - this
- * was the first approach tried). `Spritesheet.textures[name]` gives back properly-built
- * textures keyed by the manifest's own frame names (the `THEME_URLS` path strings), which then
- * just get re-keyed into `AssetManager` under the URL `usePixiTexture` actually looks up by.
- */
-const preloadForPixi = async (manifest: SpritesheetData): Promise<void> => {
-    const baseTexture = await Assets.load<Texture>(`${ATLAS_BASE}/atlas.png`);
-
-    // `GetRenderer.ts` sets `TextureSource.defaultOptions.scaleMode = 'nearest'` (pixel-art
-    // crispness, matching every other themed texture) the first time the Pixi renderer itself
-    // is created - but this preload runs at boot, before that renderer exists, so the atlas'
-    // own source is still built under Pixi's stock 'linear' default. Set it explicitly rather
-    // than relying on load order.
-    baseTexture.source.scaleMode = 'nearest';
-
-    const sheet = new Spritesheet(baseTexture, manifest);
-
-    await sheet.parse();
-
-    const assetManager = GetAssetManager();
-
-    for (const url of new Set(Object.values(THEME_URLS))) {
-        const texture = sheet.textures[stripPrefix(url)];
-
-        if (texture) assetManager.setTexture(url, texture);
-    }
-};
-
 const loadImageElement = (src: string): Promise<HTMLImageElement> => new Promise((resolve, reject) => {
     const img = new Image();
 
@@ -85,6 +51,58 @@ const loadImageElement = (src: string): Promise<HTMLImageElement> => new Promise
     img.onerror = () => reject(new Error(`Failed to load ${src}`));
     img.src = src;
 });
+
+/**
+ * Slices each asset's rect out of the decoded atlas image into its own standalone `Texture`,
+ * rather than cropping a shared view out of one atlas-wide `Texture` (the first approach tried,
+ * via Pixi's own `Spritesheet` class - the same one `AssetManager.processNitroBundle` uses for
+ * room/furniture `.nitro` bundles). That shared-crop approach renders correctly for plain
+ * sprites and nine-slices, but Pixi's `TilingSprite` (`Header`'s tiled background/shine, any
+ * repeat-mode nine-slice's stretched middle piece) silently collapses every tile-kind texture
+ * whose `frame` is smaller than its shared source into one flat, untiled sample instead of
+ * repeating the pattern - confirmed directly against a lazily-loaded, standalone-per-file bake
+ * (`TilingSpritePipe._updateCanBatch`'s `texture.textureMatrix.isSimple` check is false for any
+ * such crop, routing it through a shader path that doesn't reproduce the pattern here). A
+ * standalone per-asset texture (`frame === its own full size`, `isSimple` true) sidesteps that,
+ * exactly like the individually-loaded PNG it replaces.
+ */
+const preloadForPixi = async (manifest: SpritesheetData): Promise<void> => {
+    const image = await loadImageElement(`${ATLAS_BASE}/atlas.png`);
+    const assetManager = GetAssetManager();
+    const resolved = new Map<string, Texture>();
+
+    for (const url of new Set(Object.values(THEME_URLS))) {
+        const path = stripPrefix(url);
+        const rect = manifest.frames[path]?.frame;
+
+        if (!rect) continue;
+
+        let texture = resolved.get(path);
+
+        if (!texture) {
+            const canvas = document.createElement('canvas');
+
+            canvas.width = rect.w;
+            canvas.height = rect.h;
+
+            const ctx = canvas.getContext('2d');
+
+            if (!ctx) continue;
+
+            ctx.drawImage(image, rect.x, rect.y, rect.w, rect.h, 0, 0, rect.w, rect.h);
+            texture = Texture.from(canvas);
+            // `GetRenderer.ts` sets `TextureSource.defaultOptions.scaleMode = 'nearest'`
+            // (pixel-art crispness, matching every other themed texture) the first time the
+            // Pixi renderer itself is created - but this preload runs at boot, before that
+            // renderer exists, so a texture built here would otherwise pick up Pixi's stock
+            // 'linear' default. Set it explicitly rather than relying on load order.
+            texture.source.scaleMode = 'nearest';
+            resolved.set(path, texture);
+        }
+
+        assetManager.setTexture(url, texture);
+    }
+};
 
 /**
  * DOM has no shared texture cache to seed - `BackgroundLayerDom.tsx` and friends read

@@ -74,12 +74,18 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                         defaultVariant={resolvedVariant}
                         onPointerDown={onTrackPointerDown}
                     >
-                        <ScrollbarSliderBarHorizontal
-                            defaultVariant={resolvedVariant}
-                            tintColor={tintColor}
-                            layout={{ top: 0, height: '100%', left: thumbOffset, width: thumbSize }}
-                            onPointerDown={onThumbPointerDown}
-                        />
+                        {/* See ScrollbarVertical.tsx's identical guard - `thumbSize` can briefly
+                            read 0 on the first measure tick after becoming scrollable, and
+                            mounting the thumb's `NineSliceSprite` at zero size leaves it
+                            permanently invisible once resized on the next tick. */}
+                        {thumbSize > 0 && (
+                            <ScrollbarSliderBarHorizontal
+                                defaultVariant={resolvedVariant}
+                                tintColor={tintColor}
+                                layout={{ top: 0, height: '100%', left: thumbOffset, width: thumbSize }}
+                                onPointerDown={onThumbPointerDown}
+                            />
+                        )}
                     </ScrollbarSliderTrackHorizontal>
                     <ScrollbarSliderButtonRight
                         defaultVariant={resolvedVariant}
