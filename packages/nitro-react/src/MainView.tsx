@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
-import { getRenderMode } from './theme';
+import { Box } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';
@@ -30,11 +30,6 @@ export const MainView = () => {
         if (!isReady) return;
 
         send(new InfoRetrieveComposer({}));
-    }, [ isReady ]);
-
-    useEffect(() => {
-        if (!isReady) return;
-
         setReady();
     }, [ isReady ]);
 
@@ -45,48 +40,52 @@ export const MainView = () => {
 
     if (!isReady) return null;
 
-    if (getRenderMode() === 'dom') {
-        return (
-            <>
-                <RoomWrapper />
-                {landingViewVisible && <HotelView />}
-                <div
-                    id="ui-container"
-                    className="absolute top-0 left-0 z-10 overflow-hidden pointer-events-none size-full"
-                >
-                    <div className="flex flex-col items-end absolute right-0 -mt-1.5 min-w-57.5 max-w-57.5 mr-0.75">
-                        <PurseView />
-                        <div className="flex flex-col items-end w-48">
-                            <ActivityPointsView />
-                        </div>
-                    </div>
-                    <AvatarEditorComponent />
-                    <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
-                    <InventoryComponent />
-                    <FriendListWrapper />
-                    <MessengerComponent />
-                    <NavigatorWrapper />
-                    <WalletComponent />
-                    <ToolbarView />
-                </div>
-            </>
-        );
-    }
-
     return (
         <>
             <RoomWrapper />
             {landingViewVisible && <HotelView />}
-            <AvatarEditorComponent />
-            <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
-            <InventoryComponent />
-            <FriendListWrapper />
-            <MessengerComponent />
-            <NavigatorWrapper />
-            <WalletComponent />
-            <PurseView />
-            <ActivityPointsView layout={{ position: 'absolute', top: 71, right: 3, width: 192 }} />
-            <ToolbarView />
+            <Box
+                sortableChildren={true}
+                layout={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'hidden',
+                }}
+            >
+                <Box layout={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    marginRight: 6,
+                    width: 230,
+                    flex: 1,
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                }}
+                >
+                    <PurseView />
+                    <Box layout={{
+                        flex: 1,
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: 192,
+                    }}
+                    >
+                        <ActivityPointsView />
+                    </Box>
+                </Box>
+                <AvatarEditorComponent />
+                <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+                <InventoryComponent />
+                <FriendListWrapper />
+                <MessengerComponent />
+                <NavigatorWrapper />
+                <WalletComponent />
+                <ToolbarView />
+            </Box>
         </>
     );
 };

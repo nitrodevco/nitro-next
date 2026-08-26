@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
 import { Nitro } from './Nitro';
-import { preloadNitroTruffle, preloadThemeAssets, setRenderMode, WIRED_HABBO_KEYS } from './theme';
+import { setRenderMode } from './theme';
 
 // NitroLogger.LOG_ERROR = import.meta.env.DEV;
 // NitroLogger.LOG_WARN = import.meta.env.DEV;
@@ -38,19 +38,12 @@ window.NitroConfig = window.NitroConfig || {};
 
 const element = document.getElementById('root');
 
-void Promise.all([
-    preloadNitroTruffle(WIRED_HABBO_KEYS),
-    preloadThemeAssets(),
-]).then(() => {
-    if (!element) return;
-
-    createRoot(element).render(
-        <SystemContextProvider>
-            <WebSocketContextProvider>
-                <UserContextProvider>
-                    <Nitro />
-                </UserContextProvider>
-            </WebSocketContextProvider>
-        </SystemContextProvider>,
-    );
-});
+if (element) createRoot(element).render(
+    <SystemContextProvider>
+        <WebSocketContextProvider>
+            <UserContextProvider>
+                <Nitro />
+            </UserContextProvider>
+        </WebSocketContextProvider>
+    </SystemContextProvider>,
+);

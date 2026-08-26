@@ -40,8 +40,8 @@ export const NitroDomView = () => {
                     canvas,
                     width,
                     height,
-                    autoDensity: true,
                     resolution: GetPixelRatio(),
+                    autoDensity: true,
                     backgroundAlpha: 0,
                     roundPixels: false,
                     preference: 'webgpu',
@@ -49,13 +49,13 @@ export const NitroDomView = () => {
                     eventMode: 'static',
                 }, { destroyEvents: false });
 
-                TexturePool.startAutoCleanup();
-
                 await Promise.all([
                     preloadNitroTruffle(WIRED_HABBO_KEYS),
                     preloadThemeAssets(),
                     GetRoomEngine().init(),
                 ]);
+
+                TexturePool.startAutoCleanup();
 
                 setIsEngineReady(true);
             } catch (err) {
@@ -74,7 +74,7 @@ export const NitroDomView = () => {
         <div className="">
             <canvas
                 ref={canvasRef}
-                className="fixed inset-0 z-0 size-full"
+                className="fixed inset-0 z-0 size-full [image-rendering:pixelated]"
             />
             { !isReady && <LoadingScreenView /> }
             { isReady && <MainView /> }

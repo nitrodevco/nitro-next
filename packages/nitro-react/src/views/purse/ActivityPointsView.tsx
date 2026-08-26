@@ -27,7 +27,7 @@ export const ActivityPointsView = ({ layout }: ActivityPointsViewProps) => {
     ];
 
     return (
-        <Box layout={{ flexDirection: 'column', alignItems: 'flex-end', ...layout }}>
+        <Box layout={{ flexDirection: 'column', alignItems: 'flex-end', width: '100%', height: '100%', ...layout }}>
             {kinds.map(({ amount, color, name }) => (
                 <Border
                     key={name}

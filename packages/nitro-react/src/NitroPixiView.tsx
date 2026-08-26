@@ -27,13 +27,13 @@ export const NitroPixiView = () => {
 
         const setup = async () => {
             try {
-                TexturePool.startAutoCleanup();
-
                 await Promise.all([
                     preloadNitroTruffle(WIRED_HABBO_KEYS),
                     preloadThemeAssets(),
                     GetRoomEngine().init(),
                 ]);
+
+                TexturePool.startAutoCleanup();
 
                 setIsEngineReady(true);
             } catch (err) {
