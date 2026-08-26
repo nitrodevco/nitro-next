@@ -8,7 +8,7 @@ import { GetRoomEngine, PrepareRenderer } from '@nitrodevco/nitro-renderer';
 import { GetHono } from './GetHono';
 import { AvatarLoader } from './loaders/AvatarLoader';
 
-NitroLogger.LOG_DEBUG = true;
+NitroLogger.LOG_DEBUG = false;
 NitroLogger.LOG_ERROR = true;
 
 const init = async () => {
