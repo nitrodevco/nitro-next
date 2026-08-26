@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 
 import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
 import { Nitro } from './Nitro';
-import { loadThemeFonts, preloadNitroTruffle, setRenderMode, WIRED_HABBO_KEYS } from './theme';
+import { preloadNitroTruffle, setRenderMode, WIRED_HABBO_KEYS } from './theme';
 
 // NitroLogger.LOG_ERROR = import.meta.env.DEV;
 // NitroLogger.LOG_WARN = import.meta.env.DEV;
@@ -39,8 +39,6 @@ window.NitroConfig = window.NitroConfig || {};
 const element = document.getElementById('root');
 
 void Promise.all([
-    document.fonts.ready,
-    loadThemeFonts(),
     preloadNitroTruffle(WIRED_HABBO_KEYS),
 ]).then(() => {
     if (!element) return;

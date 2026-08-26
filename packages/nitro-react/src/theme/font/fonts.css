@@ -1,39 +1,29 @@
 @font-face {
     font-family: Ubuntu;
-    src: url('/assets/webfonts/Ubuntu.ttf');
-}
-
-@font-face {
-    font-family: GameUbuntu;
-    src: url('/assets/webfonts/Ubuntu-C.ttf');
-}
-
-@font-face {
-    font-family: Goldfish;
-    src: url('/assets/webfonts/Volter_Goldfish.ttf');
-}
-
-@font-face {
-    font-family: GoldfishBold;
-    src: url('/assets/webfonts/Volter_Bold.ttf');
-}
-
-@font-face {
-    font-family: UbuntuItalics;
-    src: url('/assets/webfonts/Ubuntu-i.ttf');
-}
-
-@font-face {
-    font-family: UbuntuItalicsBold;
-    src: url('/assets/webfonts/Ubuntu-ib.ttf');
+    src: url('/assets/truffle/fonts/Ubuntu-C.ttf');
 }
 
 @font-face {
     font-family: UbuntuBold;
-    src: url('/assets/webfonts/Ubuntu-b.ttf');
+    src: url('/assets/truffle/fonts/Ubuntu-B.ttf');
 }
 
 @font-face {
-    font-family: UbuntuMedium;
-    src: url('/assets/webfonts/Ubuntu-m.ttf');
+    font-family: UbuntuBoldItalics;
+    src: url('/assets/truffle/fonts/Ubuntu-BI.ttf');
+}
+
+@font-face {
+    font-family: UbuntuItalics;
+    src: url('/assets/truffle/fonts/Ubuntu-I.ttf');
+}
+
+@font-face {
+    font-family: VolterBold;
+    src: url('/assets/truffle/fonts/Volter-Bold.ttf');
+}
+
+@font-face {
+    font-family: Volter;
+    src: url('/assets/truffle/fonts/Volter.ttf');
 }
