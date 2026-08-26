@@ -50,11 +50,11 @@ const config = [
             '**/eslint.config.js',
             '**/postcss.config.js',
             '**/vite.config.*',
-            // Standalone Node build tool, deliberately excluded from the app's own
-            // tsconfig (needs `.ts`-extension imports for plain `node` execution,
-            // which the app's tsc project disallows) - no tsconfig covers it for
+            // Standalone Node build tools, deliberately excluded from the app's own
+            // tsconfig (they need `.ts`-extension imports for plain `node` execution,
+            // which the app's tsc project disallows) - no tsconfig covers them for
             // typescript-eslint's type-aware rules to run against.
-            '**/scripts/build-text-atlas.ts',
+            '**/scripts/build-theme-atlas.ts',
         ],
     },
     js.configs.recommended,

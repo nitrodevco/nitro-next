@@ -91,6 +91,7 @@ export * from './utils/renderMode';
 export * from './utils/ScrollViewport';
 export * from './utils/spriteFrame';
 export * from './utils/textStyles';
+export * from './utils/themeAssetBundle';
 export * from './utils/themeUrls';
 export * from './utils/ThemeVariant';
 export * from './utils/VariantConfig';
