@@ -1,18 +1,15 @@
 import { CatalogTypeEnum } from "@nitrodevco/nitro-api";
 import { InfoRetrieveComposer } from "@nitrodevco/nitro-packets";
 import { useEffect, useState } from "react";
-
-import { AchievementsWrapper } from "./components/achievements/AchievementsWrapper";
-import { CatalogWrapper } from "./components/catalog/CatalogWrapper";
-import { FriendListWrapper } from "./components/messenger";
+import { RoomWrapper, AvatarEditorComponent, FriendListWrapper, CatalogWrapper, NavigatorWrapper, InventoryComponent, AchievementsWrapper, WalletComponent } from "./components";
 import { useWebSocketContext } from "./context";
-import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from "./handlers";
+import { useUserInfoHandler, useMessengerHandler, useWalletHandler, useDialogsHandler } from "./handlers";
 import { TooltipProvider } from "./theme";
 import { NotificationCenterView } from "./views/notification-center/NotificationCenterView";
 import { ActivityPointsView } from "./views/purse/ActivityPointsView";
 import { PurseView } from "./views/purse/PurseView";
 import { ToolbarView } from "./views/toolbar/ToolbarView";
-import { RoomWrapper, AvatarEditorComponent, NavigatorWrapper, InventoryComponent, WalletComponent } from "./components";
+
 
 export const MainView = () => {
     const [isReady, setIsReady] = useState(false);
@@ -21,6 +18,7 @@ export const MainView = () => {
     useUserInfoHandler();
     useMessengerHandler();
     useWalletHandler();
+    useDialogsHandler();
 
     useEffect(() => {
         if (!isReady) return;

@@ -1,3 +1,4 @@
+export * from './dialogs/useDialogsHandler';
 export * from './navigator/useNavigatorHandler';
 export * from './quests/useAchievementsHandler';
 export * from './room/useRoomChatHandler';
