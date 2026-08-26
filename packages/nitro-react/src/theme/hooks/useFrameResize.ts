@@ -1,5 +1,5 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 import { clearStoredFrameSize, FrameSize, getStoredFrameSize, setStoredFrameSize } from '#base/utils';
 
@@ -64,7 +64,7 @@ export const useFrameResize = (
 
     const [ size, setSize ] = useState<FrameSize | null>(() => (id && getStoredFrameSize(id)) || null);
 
-    const stopResizing = () => {
+    const stopResizing = useCallback(() => {
         const listeners = activeListenersRef.current;
 
         if (listeners) {
@@ -74,7 +74,7 @@ export const useFrameResize = (
         }
 
         resizeStateRef.current = null;
-    };
+    }, []);
 
     useEffect(() => stopResizing, [ stopResizing ]);
 

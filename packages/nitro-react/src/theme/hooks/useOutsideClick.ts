@@ -1,6 +1,6 @@
 import { GetRenderer } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer } from 'pixi.js';
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 /**
  * Pixi port of hooks/ui/useOutsideClick.ts. DOM's version hit-tests via `element.contains(
@@ -16,6 +16,16 @@ import { RefObject, useEffect } from 'react';
  * checked against the target container's own `getBounds()`.
  */
 export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null>, callback: () => void, enabled: boolean = true) => {
+    // `callback` is almost always an inline arrow at the call site, so a ref keeps the listener
+    // itself stable across re-renders instead of tearing down/re-adding the window listener (and
+    // dropping it during any render that happens between pointerdown and its own effect re-run)
+    // every time the caller re-renders.
+    const callbackRef = useRef(callback);
+
+    useEffect(() => {
+        callbackRef.current = callback;
+    }, [ callback ]);
+
     useEffect(() => {
         if (!enabled) return;
 
@@ -31,11 +41,11 @@ export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null
 
             if (container.getBounds().containsPoint(localX, localY)) return;
 
-            callback();
+            callbackRef.current();
         };
 
         window.addEventListener('pointerdown', onPointerDown);
 
         return () => window.removeEventListener('pointerdown', onPointerDown);
-    }, [ ref, enabled, callback ]);
+    }, [ ref, enabled ]);
 };

@@ -1,5 +1,5 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { useWindowActions, useWindowZIndex } from '#base/context';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';
@@ -55,7 +55,7 @@ export const useFrameDrag = (id: string | undefined) => {
         bringWindowToFront(stackId);
     }, [ stackId, bringWindowToFront ]);
 
-    const stopDragging = () => {
+    const stopDragging = useCallback(() => {
         const listeners = activeListenersRef.current;
 
         if (listeners) {
@@ -65,7 +65,7 @@ export const useFrameDrag = (id: string | undefined) => {
         }
 
         dragStateRef.current = null;
-    };
+    }, []);
 
     useEffect(() => stopDragging, [ stopDragging ]);
 

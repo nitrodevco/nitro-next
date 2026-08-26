@@ -61,6 +61,19 @@ export const useTextureFromUrl = (url: string | undefined): Texture | undefined 
             return;
         }
 
+        // Already resolved (either the synchronous initializer above found it at mount, or it was
+        // downloaded elsewhere since) - skip scheduling a redundant async attempt/promise entirely.
+        // Also covers `url` changing to an already-cached key: without this, that case would
+        // otherwise fall through to the async path below and flash blank for a frame while its
+        // promise resolves, even though the texture is already available synchronously.
+        const cachedTexture = GetAssetManager().getTexture(url);
+
+        if (cachedTexture) {
+            setTexture(cachedTexture);
+
+            return;
+        }
+
         let cancelled = false;
         let timeoutId: ReturnType<typeof setTimeout>;
 
