@@ -1,6 +1,6 @@
 import { BoxLayout } from '../Box';
 import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
-import { getRenderMode } from '../utils';
+import { getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
 import { CompositeLayer, CompositePiece } from './CompositeLayer';
 import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
 import { SpriteLayer } from './SpriteLayer';
@@ -8,7 +8,7 @@ import { TileLayer } from './TileLayer';
 
 export type BackgroundLayerConfig
     = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
-        | { kind: 'sprite'; textureKey: string }
+        | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
         | { kind: 'tile'; textureKey: string; left?: number; top?: number; bottom?: number; width?: number }
         | { kind: 'composite'; pieces: CompositePiece[] };
 
@@ -52,9 +52,17 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
         : undefined;
 
     if (getRenderMode() === 'dom') {
+        // Bypasses `SpriteLayer.tsx`'s own `SpriteLayerDom` entirely (goes straight to the
+        // shared `BackgroundLayerDom`, same as every other kind here) - `spriteLayoutFromFrame`
+        // is the one piece of that component's logic this still needs: without it, a `frame`'d
+        // sprite with no caller `layout` would fall through to `BackgroundLayerDom`'s own
+        // stretch-to-fill default instead of sizing to its native crop dimensions.
+        const spriteLayout = layer.kind === 'sprite' ? spriteLayoutFromFrame(layer.frame, layout) : undefined;
         const domStyle = layer.kind === 'tile'
             ? (tileInsetLayout ? boxLayoutToStyle(tileInsetLayout) : (layout ? boxLayoutToStyle(layout) : undefined))
-            : (layout ? boxLayoutToStyle(layout) : undefined);
+            : layer.kind === 'sprite'
+                ? (spriteLayout ? boxLayoutToStyle(spriteLayout) : undefined)
+                : (layout ? boxLayoutToStyle(layout) : undefined);
 
         return (
             <BackgroundLayerDom
@@ -75,6 +83,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
         case 'sprite': return (
             <SpriteLayer
                 textureKey={layer.textureKey}
+                frame={layer.frame}
                 tintColor={tintColor}
                 layout={layout}
             />

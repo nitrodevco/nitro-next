@@ -110,11 +110,16 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
         case 'sprite': {
             if (!url) return null;
 
+            // A `frame` crops a sub-region out of a shared spritesheet via `background-position`
+            // - same technique `ThemeImage.tsx`'s `ImageDom` already uses - rather than stretching
+            // the whole source image to fill the box, so `backgroundSize` is deliberately left
+            // unset (defaults to the image's own native resolution) instead of `100% 100%`.
             return (
                 <div style={{
                     ...box,
                     backgroundImage: `url(${url})`,
-                    backgroundSize: '100% 100%',
+                    backgroundPosition: layer.frame ? `-${layer.frame.x}px -${layer.frame.y}px` : undefined,
+                    backgroundSize: layer.frame ? undefined : '100% 100%',
                     backgroundRepeat: 'no-repeat',
                     imageRendering: 'pixelated',
                 }}
