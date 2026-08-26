@@ -108,15 +108,16 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 }
 
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, blend, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, blend, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
             <Box
                 ref={ref}
                 layout={{ ...config.layout, ...layout }}
+                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

@@ -38,7 +38,7 @@ export const CatalogView = () => {
                                 <TabButton
                                     key={x.pageId}
                                     selected={x.isActive}
-                                    onPress={() => activateNode(x)}
+                                    onPointerTap={() => activateNode(x)}
                                     layout={{ width: '100%' }}
                                 >
                                     {x.localization.length ? x.localization : x.pageName}

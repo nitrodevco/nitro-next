@@ -105,7 +105,7 @@ export const NavigatorView = () => {
                         <TabButton
                             key={context.searchCode}
                             selected={topLevelContext?.searchCode === context.searchCode}
-                            onPress={() => selectContext(context.searchCode)}
+                            onPointerTap={() => selectContext(context.searchCode)}
                             layout={{ width: 88 }}
                         >
                             {t(`navigator.toplevelview.${context.searchCode}`)}

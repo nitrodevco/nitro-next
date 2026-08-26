@@ -50,13 +50,13 @@ export const FriendListRemoveConfirmationView = () => {
             <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                 <Button
                     layout={{ height: 22 }}
-                    onPress={removeFriends}
+                    onPointerTap={removeFriends}
                 >
                     {t('generic.ok')}
                 </Button>
                 <Button
                     layout={{ height: 22 }}
-                    onPress={() => toggleWindow('friendlist_remove_confirmation')}
+                    onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
                 >
                     {t('generic.cancel')}
                 </Button>

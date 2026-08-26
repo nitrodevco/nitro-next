@@ -2,7 +2,7 @@ import { SendRoomInviteComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Button, Frame, ThemeText, TextInput } from '#base/theme';
+import { Border, Box, Button, Frame, TextInput, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRoomInviteView.tsx. */
 export const FriendListRoomInviteView = () => {
@@ -57,13 +57,13 @@ export const FriendListRoomInviteView = () => {
             <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                 <Button
                     layout={{ height: 22 }}
-                    onPress={sendRoomInvite}
+                    onPointerTap={sendRoomInvite}
                 >
                     {t('friendlist.invite.send')}
                 </Button>
                 <Button
                     layout={{ height: 22 }}
-                    onPress={() => toggleWindow('friendlist_invite')}
+                    onPointerTap={() => toggleWindow('friendlist_invite')}
                 >
                     {t('generic.cancel')}
                 </Button>

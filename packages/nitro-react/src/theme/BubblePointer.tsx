@@ -1,97 +1,100 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { BoxLayout } from './Box';
-import { useResolvedVariant } from './hooks';
-import { ThemeImage } from './ThemeImage';
-import { SpriteFrame, THEME_URLS } from './utils';
+import { Box } from './Box';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 
+type BubblePointerVariant = ThemeVariant;
+
 interface DirectionConfig {
     cascadeKey: string;
-    textureKey: string;
-    /** theme/BubblePointer.tsx's small negative margin (e.g. `-mr-0.5` for `left`) pulling the
-     *  pointer flush against the Bubble body it's stacked next to. */
-    margin: Pick<BoxLayout, 'marginLeft' | 'marginRight' | 'marginTop' | 'marginBottom'>;
-    /** Each frame's width/height doubles as the DOM variant's `min-w`/`min-h` - the CSS
-     *  `background-position` crop rect and the box's own min size always agree exactly. */
-    frames: Record<string, SpriteFrame>;
+    variants?: ThemeVariants<BubblePointerVariant>;
 }
 
 const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
     left: {
         cascadeKey: 'bubblePointerLeft',
-        textureKey: 'bubblepointerleft-src',
-        margin: { marginRight: -2 },
-        frames: {
-            // default
-            0: { x: 11, y: 0, width: 8, height: 13 },
-            // ubuntu
-            7: { x: 0, y: 0, width: 11, height: 18 },
+        variants: {
+            0: {
+                layer: Stretch('bubblepointerleft-src', { x: 11, y: 0, width: 8, height: 13 }),
+                layout: { marginRight: -2 },
+            },
+            7: {
+                layer: Stretch('bubblepointerleft-src', { x: 0, y: 0, width: 11, height: 18 }),
+                layout: { marginRight: -2 },
+            },
         },
     },
     right: {
         cascadeKey: 'bubblePointerRight',
-        textureKey: 'bubblepointerright-src',
-        margin: { marginLeft: -2 },
-        frames: {
-            // default
-            0: { x: 11, y: 0, width: 8, height: 13 },
-            // ubuntu
-            7: { x: 0, y: 0, width: 11, height: 18 },
+        variants: {
+            0: {
+                layer: Stretch('bubblepointerright-src', { x: 11, y: 0, width: 8, height: 13 }),
+                layout: { marginLeft: -2 },
+            },
+            7: {
+                layer: Stretch('bubblepointerright-src', { x: 0, y: 0, width: 11, height: 18 }),
+                layout: { marginLeft: -2 },
+            },
         },
     },
     up: {
         cascadeKey: 'bubblePointerUp',
-        textureKey: 'bubblepointerup-src',
-        margin: { marginBottom: -3 },
-        frames: {
-            // default
-            0: { x: 16, y: 0, width: 13, height: 9 },
-            // ubuntu
-            7: { x: 0, y: 0, width: 16, height: 10 },
+        variants: {
+            0: {
+                layer: Stretch('bubblepointerup-src', { x: 16, y: 0, width: 13, height: 9 }),
+                layout: { marginBottom: -3 },
+            },
+            7: {
+                layer: Stretch('bubblepointerup-src', { x: 0, y: 0, width: 16, height: 10 }),
+                layout: { marginBottom: -3 },
+            },
         },
     },
     down: {
         cascadeKey: 'bubblePointerDown',
-        textureKey: 'bubblepointerdown-src',
-        margin: { marginTop: -3 },
-        frames: {
-            // default
-            0: { x: 16, y: 0, width: 13, height: 9 },
-            // ubuntu
-            7: { x: 0, y: 0, width: 16, height: 11 },
+        variants: {
+            0: {
+                layer: Stretch('bubblepointerdown-src', { x: 16, y: 0, width: 13, height: 9 }),
+                layout: { marginTop: -3 },
+            },
+            7: {
+                layer: Stretch('bubblepointerdown-src', { x: 0, y: 0, width: 16, height: 11 }),
+                layout: { marginTop: -3 },
+            },
         },
     },
 };
 
-export interface BubblePointerProps {
+export interface BubblePointerProps extends ThemeProps<BubblePointerVariant> {
     direction: Direction;
-    variant?: string;
-    defaultVariant?: string;
-    tintColor?: string;
-    layout?: BoxLayout;
 }
 
 export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubblePointerProps>(
-    ({ direction, variant, defaultVariant, tintColor, layout }, ref) => {
-        const config = DIRECTION_CONFIG[direction];
-        const { resolvedVariant } = useResolvedVariant(config.cascadeKey, variant, defaultVariant);
-        // theme/BubblePointer.tsx defines no default tintColors for any direction/variant -
-        // resolvedTint only ever comes from the caller-supplied tintColor prop, so it is used
-        // (via the tintColor param above) with no per-variant fallback table needed here.
-        const frame = config.frames[resolvedVariant] ?? config.frames['0'];
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, direction, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { cascadeKey, variants = {} } = DIRECTION_CONFIG[direction];
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey, variants, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        });
 
         return (
-            <ThemeImage
+            <Box
                 ref={ref}
-                src={THEME_URLS[config.textureKey]}
-                frame={frame}
-                tint={tintColor}
-                eventMode="none"
-                layout={{ width: frame.width, height: frame.height, ...config.margin, ...layout }}
-            />
+                layout={{ ...config.layout, ...layout }}
+                {...handlers}
+            >
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+            </Box>
         );
     },
 );

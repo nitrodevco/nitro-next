@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { compose, ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
     arrowTextureKey?: string;
@@ -28,18 +28,17 @@ const DROPMENU_VARIANTS: ThemeVariants<DropmenuVariant> = {
 };
 
 export interface DropmenuProps extends ThemeProps<DropmenuVariant> {
-    onPress?: () => void;
     children?: ReactNode;
 }
 
 export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, onPress, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'dropmenu', variants: DROPMENU_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (

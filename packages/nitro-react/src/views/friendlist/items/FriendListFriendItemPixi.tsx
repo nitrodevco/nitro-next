@@ -37,7 +37,7 @@ export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = t
             selected={isSelected}
             showAvatarHead={friend.isOnline}
             zebraColor={zebraColor}
-            onPress={() => toggleSelectedFriendId(friend.playerId)}
+            onPointerTap={() => toggleSelectedFriendId(friend.playerId)}
         >
             <Box
                 ref={dropdownRef}

@@ -39,7 +39,7 @@ export const CatalogPurchaseWidgetView = () => {
                         variant="3"
                         tintColor="#00aa00"
                         textColor="#ffffff"
-                        onPress={purchase}
+                        onPointerTap={purchase}
                         layout={{ width: '100%' }}
                     >
                         {t('catalog.purchase_confirmation.buy')}

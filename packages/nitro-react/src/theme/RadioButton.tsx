@@ -6,7 +6,9 @@ import { VariantCascadeProvider } from './cascade';
 import { useInteractionState, useResolvedVariant } from './hooks';
 import { ThemeImage } from './ThemeImage';
 import { ThemeText } from './ThemeText';
-import { PointerHandlerProps, SpriteFrame, TextStyleKey, THEME_URLS, wrapTextChildren } from './utils';
+import { PointerHandlerProps, SpriteFrame, TextStyleKey, THEME_URLS, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+
+type RadioButtonVariant = ThemeWithStatesVariant;
 
 interface RadioButtonVariant {
     /** Sheet variants (0/1/2) point default/selected at two frames of ONE shared

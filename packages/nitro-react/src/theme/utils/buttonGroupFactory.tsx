@@ -5,8 +5,6 @@ import { Box } from '../Box';
 import { VariantCascadeProvider } from '../cascade';
 import { useThemeVariant } from '../hooks';
 import { BackgroundLayer } from '../layer';
-import { ThemeText } from '../ThemeText';
-import { compose } from './interaction';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './ThemeVariant';
 import { wrapTextChildren } from './wrapTextChildren';
 
@@ -15,7 +13,6 @@ export type ButtonGroupVariant = ThemeWithStatesVariant;
 export interface ButtonGroupComponentProps extends ThemeProps<ButtonGroupVariant> {
     selected?: boolean;
     disabled?: boolean;
-    onPress?: () => void;
     children?: ReactNode;
 }
 
@@ -26,12 +23,12 @@ export const createButtonGroupComponent = (
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({
-            variant, defaultVariant, tintColor, selected, disabled, layout, onPress, children,
+            variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         }, ref) => {
-            const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-                cascadeKey, variants, variant, defaultVariant, tintColor, disabled, selected,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
+            const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+                cascadeKey, variants, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
             });
 
             return (
@@ -43,21 +40,15 @@ export const createButtonGroupComponent = (
                     }}
                     {...handlers}
                 >
-                    <BackgroundLayer
-                        layer={resolvedLayer}
-                        tintColor={resolvedTint}
-                    />
+                    {resolvedLayer && (
+                        <BackgroundLayer
+                            layer={resolvedLayer}
+                            tintColor={resolvedTint}
+                        />
+                    )}
                     {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
                     <VariantCascadeProvider map={ownCascade}>
-                        {typeof children === 'string'
-                            ? (
-                                    <ThemeText
-                                        text={children}
-                                        textStyle={config.textStyle}
-                                        textOptions={{ fill: config.textColor }}
-                                    />
-                                )
-                            : wrapTextChildren(children)}
+                        {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                     </VariantCascadeProvider>
                 </Box>
             );

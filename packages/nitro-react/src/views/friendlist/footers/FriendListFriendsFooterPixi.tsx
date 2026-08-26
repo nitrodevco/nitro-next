@@ -30,7 +30,7 @@ export const FriendListFriendsFooterPixi = () => {
                 <Box layout={{ flexDirection: 'row', gap: 4 }}>
                     <Button
                         disabled={selectedFriendIds.length < 1}
-                        onPress={() => toggleWindow('friendlist_invite')}
+                        onPointerTap={() => toggleWindow('friendlist_invite')}
                         layout={BUTTON_LAYOUT}
                     >
                         <NitroIcon
@@ -78,7 +78,7 @@ export const FriendListFriendsFooterPixi = () => {
                                 )
                             : (
                                     <Button
-                                        onPress={() => toggleListSearchInput(true)}
+                                        onPointerTap={() => toggleListSearchInput(true)}
                                         layout={BUTTON_LAYOUT}
                                     >
                                         <NitroIcon
@@ -90,7 +90,7 @@ export const FriendListFriendsFooterPixi = () => {
                     </Box>
                     <Button
                         disabled={selectedFriendIds.length < 1}
-                        onPress={() => toggleWindow('friendlist_remove_confirmation')}
+                        onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
                         layout={BUTTON_LAYOUT}
                     >
                         <NitroIcon

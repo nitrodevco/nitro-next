@@ -166,7 +166,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                                                 variant="300"
                                                 tintColor="#2d2a27"
                                                 textColor="#ffffff"
-                                                onPress={() => processAction(action)}
+                                                onPointerTap={() => processAction(action)}
                                                 layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
                                             >
                                                 {icon
@@ -191,7 +191,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                                             variant="300"
                                             tintColor="#2d2a27"
                                             textColor="#ffffff"
-                                            onPress={action}
+                                            onPointerTap={action}
                                             layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
                                         >
                                             {t(caption)}

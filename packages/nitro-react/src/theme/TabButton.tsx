@@ -5,19 +5,10 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { compose, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 type TabButtonVariant = ThemeWithStatesVariant;
 
-// Variants 0/1's bottomHeight is 2, not 0 - the legacy DOM port (theme/TabButton.tsx, deleted)
-// sliced these at `border-image-slice: 5 5 2 5 fill` / `border-image-width: 5px 5px 0px 5px`.
-// Both `tabbutton-0-*`/`tabbutton-1-*` textures have two fully-transparent padding rows at the
-// very bottom (confirmed by inspecting the PNGs directly): the nonzero slice trims those rows
-// out of the nine-slice's stretched "fill" region (so the fill doesn't fade to transparent
-// right at the button's bottom edge, the bug bottomHeight:0 caused), while the zero
-// `borderWidth.bottom` override means that trimmed band is never itself drawn as a visible
-// border strip - DOM-only, see BackgroundLayerConfig.ts's `NineSliceBorderWidth` docblock for
-// why Pixi can't replicate the same slice-without-a-visible-band trick.
 const TRIM_BOTTOM_BORDER = { bottom: 0 };
 
 const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
@@ -81,18 +72,17 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
 
 export interface TabButtonProps extends ThemeProps<TabButtonVariant> {
     selected?: boolean;
-    onPress?: () => void;
     children?: ReactNode;
 }
 
 export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, selected, onPress, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'tabButton', variants: TAB_BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled: false, selected,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (

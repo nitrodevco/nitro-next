@@ -32,13 +32,16 @@ export interface BubbleProps extends ThemeProps<BubbleVariant> {
 }
 
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
-    ({ variant, defaultVariant, tintColor, textStyle, textColor, usePointer = true, pointer = 'down', layout, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
-            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, usePointer = true, pointer = 'down', children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
+            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
-            <Box layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center' }}>
+            <Box
+                layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center' }}
+                {...handlers}
+            >
                 <Box
                     ref={ref}
                     layout={{ ...config.layout, ...layout }}

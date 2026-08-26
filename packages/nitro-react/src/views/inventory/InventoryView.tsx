@@ -29,25 +29,25 @@ export const InventoryView = () => {
         >
             <TabContext>
                 <TabButton
-                    onPress={() => setActiveTab('furni')}
+                    onPointerTap={() => setActiveTab('furni')}
                     selected={activeTab === 'furni'}
                 >
                     {t('inventory.furni')}
                 </TabButton>
                 <TabButton
-                    onPress={() => setActiveTab('pets')}
+                    onPointerTap={() => setActiveTab('pets')}
                     selected={activeTab === 'pets'}
                 >
                     {t('inventory.furni.tab.pets')}
                 </TabButton>
                 <TabButton
-                    onPress={() => setActiveTab('bots')}
+                    onPointerTap={() => setActiveTab('bots')}
                     selected={activeTab === 'bots'}
                 >
                     {t('inventory.bots')}
                 </TabButton>
                 <TabButton
-                    onPress={() => setActiveTab('badges')}
+                    onPointerTap={() => setActiveTab('badges')}
                     selected={activeTab === 'badges'}
                 >
                     {t('inventory.badges')}

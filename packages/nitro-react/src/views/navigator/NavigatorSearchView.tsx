@@ -2,7 +2,7 @@ import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { NavigatorFilterType, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, ThemeText, TextInput } from '#base/theme';
+import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, TextInput, ThemeText } from '#base/theme';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
     { type: 'anything', prefix: '' },
@@ -46,7 +46,7 @@ export const NavigatorSearchView = () => {
             <Box layout={{ position: 'relative', flexShrink: 0 }}>
                 <Dropmenu
                     variant="100"
-                    onPress={() => setFilterOpen(prev => !prev)}
+                    onPointerTap={() => setFilterOpen(prev => !prev)}
                     layout={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 4, width: 116, height: 24 }}
                 >
                     <ThemeText
@@ -63,7 +63,7 @@ export const NavigatorSearchView = () => {
                         {FILTER_TYPES.map(({ type }) => (
                             <DropmenuItem
                                 key={type}
-                                onPress={() => { setFilterType(type); setFilterOpen(false); search(searchFilter, type); }}
+                                onPointerTap={() => { setFilterType(type); setFilterOpen(false); search(searchFilter, type); }}
                                 layout={{ width: '100%' }}
                             >
                                 {t(`navigator.filter.${type}`)}

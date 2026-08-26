@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { compose, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 type ButtonThickVariant = ThemeWithStatesVariant;
 
@@ -91,18 +91,17 @@ const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
 export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
     disabled?: boolean;
     selected?: boolean;
-    onPress?: () => void;
     children?: ReactNode;
 }
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, onPress, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap: compose(onPress, onPointerTap),
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (

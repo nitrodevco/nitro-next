@@ -78,7 +78,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                 </Box>
                 <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
                     <Button
-                        onPress={() => processAction('buy')}
+                        onPointerTap={() => processAction('buy')}
                         layout={{}}
                     >
                         {t('infostand.button.buy')}
@@ -90,7 +90,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     {canMove && (
                         <Button
                             variant="1"
-                            onPress={() => processAction('move')}
+                            onPointerTap={() => processAction('move')}
                             layout={{}}
                         >
                             {t('infostand.button.move')}
@@ -99,7 +99,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     {canRotate && (
                         <Button
                             variant="1"
-                            onPress={() => processAction('rotate')}
+                            onPointerTap={() => processAction('rotate')}
                             layout={{}}
                         >
                             {t('infostand.button.rotate')}
@@ -108,7 +108,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     {pickupMode === FurniturePickupMode.Eject && (
                         <Button
                             variant="1"
-                            onPress={() => processAction('eject')}
+                            onPointerTap={() => processAction('eject')}
                             layout={{}}
                         >
                             {t('infostand.button.eject')}
@@ -116,7 +116,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     )}
                     {pickupMode === FurniturePickupMode.Full && (
                         <Button
-                            onPress={() => processAction('pickup')}
+                            onPointerTap={() => processAction('pickup')}
                             layout={{}}
                         >
                             {t('infostand.button.pickup')}
@@ -125,7 +125,7 @@ export const InfostandFurniView = ({ furniData, canMove, canRotate, canUse, pick
                     {canUse && (
                         <Button
                             variant="1"
-                            onPress={() => processAction('use')}
+                            onPointerTap={() => processAction('use')}
                             layout={{}}
                         >
                             {t('infostand.button.use')}

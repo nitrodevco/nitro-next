@@ -19,9 +19,9 @@ export interface TabContextProps extends ThemeProps<TabContextVariant> {
 }
 
 export const TabContext: ForwardRefExoticComponent<TabContextProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabContextProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'tabContext', variants: TAB_CONTEXT_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'tabContext', variants: TAB_CONTEXT_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
@@ -38,6 +38,7 @@ export const TabContext: ForwardRefExoticComponent<TabContextProps & RefAttribut
                     ...config.layout,
                     ...layout,
                 }}
+                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

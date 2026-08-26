@@ -124,7 +124,7 @@ export const CatalogPurchaseConfirmationView = () => {
                 <Box layout={{ flexDirection: 'row', gap: 8, width: '100%', height: '100%' }}>
                     <Button
                         variant="3"
-                        onPress={cancelPurchase}
+                        onPointerTap={cancelPurchase}
                         layout={{ width: '100%' }}
                     >
                         {t('catalog.purchase_confirmation.cancel')}
@@ -133,7 +133,7 @@ export const CatalogPurchaseConfirmationView = () => {
                         variant="3"
                         tintColor="#00aa00"
                         textColor="#ffffff"
-                        onPress={purchase}
+                        onPointerTap={purchase}
                         disabled={purchaseState === 'busy'}
                         layout={{ width: '100%' }}
                     >

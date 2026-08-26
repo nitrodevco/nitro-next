@@ -22,15 +22,16 @@ export interface TooltipProps extends ThemeProps<TooltipVariant> {
 }
 
 export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TooltipProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children }, ref) => {
-        const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'tooltip', variants: TOOLTIP_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'tooltip', variants: TOOLTIP_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
             <Box
                 ref={ref}
                 layout={{ ...config.layout, ...layout }}
+                {...handlers}
             >
                 {resolvedLayer && (
                     <BackgroundLayer
