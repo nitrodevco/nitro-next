@@ -774,6 +774,7 @@ export * from './incoming/Game/Score/WeeklyGameRewardWinnersEventMessage';
 export * from './incoming/Landingview/Votes/CommunityVoteReceivedEventMessage';
 export * from './incoming/Inventory/Achievements/AchievementEventMessage';
 export * from './incoming/Inventory/Achievements/AchievementsEventMessage';
+export * from './incoming/Inventory/Achievements/Data/AchievementDataParser';
 export * from './incoming/Inventory/Achievements/AchievementsScoreEventMessage';
 export * from './incoming/Inventory/Avatareffect/AvatarEffectActivatedMessage';
 export * from './incoming/Inventory/Avatareffect/AvatarEffectAddedMessage';

@@ -16,9 +16,11 @@
     "catalog.icons.url": "https://assets.nitrodev.co/images/catalog-icons/icon_%name%.png",
     "loading.icon.url": "/assets/icons/loading_icon.png",
     "currency.icon.url": "/assets/currency/%type%_%size%.png",
+    "notification.image.url": "/assets/flash/notifications/%image%.gif",
     "fps.limit": 60,
     "socket.url": "ws://localhost:9001",
     "motto.max.length": 38,
+    "achievements.new": "RewardTracksCompleted,HabbiconUsed,HabbiconCollectionComp,HabbiconCollected,TraderPass",
     "renderer.petTypes": [
         "dog",
         "cat",

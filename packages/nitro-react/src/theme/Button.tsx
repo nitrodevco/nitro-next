@@ -31,6 +31,8 @@ const buttonVariantsConfig = {
         '200': '[border-image-source:var(--button-200-default-src)] [border-image-slice:4_4_5_4_fill] [border-image-width:4px_4px_5px_4px] nine-slice-border min-w-7 min-h-7 pl-3.25 pt-0.75 pr-3.25 pb-0.75 text-[#000000] text-style-id-button',
         // borderless
         '300': '[border-image-source:var(--button-300-default-src)] [border-image-slice:3_3_3_3_fill] [border-image-width:3px_3px_3px_3px] nine-slice-border hover:[border-image-source:var(--button-300-hovering-src)] hover:[border-image-slice:3_3_3_3_fill] hover:[border-image-width:3px_3px_3px_3px] active:[border-image-source:var(--button-300-pressed-src)] active:[border-image-slice:3_3_3_3_fill] active:[border-image-width:3px_3px_3px_3px]  aria-disabled:[border-image-source:var(--button-300-disabled-src)] aria-disabled:[border-image-slice:3_3_3_3_fill] aria-disabled:[border-image-width:3px_3px_3px_3px] aria-disabled:[border-image-repeat:stretch] min-w-5 min-h-5.5 pl-2 pt-0.5 pr-2 pb-0.75 text-[#000000] text-style-button-shiny-regular',
+        // two-tone
+        '400': 'rounded-[3px] border border-[#000000] [background-image:linear-gradient(to_bottom,#ffffff_50%,#ededed_50%)] shadow-[inset_-1px_-1px_0_0_#cccccc] hover:-translate-x-px hover:-translate-y-px hover:shadow-[inset_-2px_-2px_0_0_rgba(0,0,0,0.15)] aria-disabled:opacity-60 px-2 py-2 text-[#000000] text-style-button-regular',
     },
 } as const;
 
@@ -61,7 +63,9 @@ const buttonOverlayVariantsConfig = {
         // default
         '200': '',
         //borderless
-        '300': ''
+        '300': '',
+        // two-tone
+        '400': ''
     },
 } as const;
 

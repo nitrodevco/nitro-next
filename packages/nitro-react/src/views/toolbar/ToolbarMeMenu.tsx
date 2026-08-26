@@ -1,10 +1,20 @@
 import { forwardRef } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useSystemActions, useTranslation } from '#base/context';
 import { NitroIcon } from '#base/theme';
 
-export const ToolbarMeMenu = forwardRef<HTMLDivElement>((props, ref) => {
+type ToolbarMeMenuProps = {
+    onClicked: () => void;
+}
+
+export const ToolbarMeMenu = forwardRef<HTMLDivElement, ToolbarMeMenuProps>(({ onClicked }, ref) => {
     const t = useTranslation();
+    const { toggleWindow } = useSystemActions();
+
+    const openWindow = (windowName: string) => {
+        toggleWindow(windowName);
+        onClicked();
+    }
 
     return (
         <div className="toolbar-menu" ref={ref}>
