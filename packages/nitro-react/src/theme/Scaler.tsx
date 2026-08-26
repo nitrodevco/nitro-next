@@ -34,12 +34,6 @@ const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
     },
 };
 
-export type ScalerDirection = 'x' | 'y' | 'all' | 'none';
-
-export interface ScalerProps extends ThemeProps<ScalerVariant> {
-    direction?: ScalerDirection;
-}
-
 const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
     x: 'ew-resize',
     y: 'ns-resize',
@@ -47,12 +41,18 @@ const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
     none: 'default',
 };
 
+export type ScalerDirection = 'x' | 'y' | 'all' | 'none';
+
+export interface ScalerProps extends ThemeProps<ScalerVariant> {
+    direction?: ScalerDirection;
+}
+
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
     ({
         variant, defaultVariant, layout, tintColor, textStyle, textColor, direction = 'all',
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+        const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
             cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });

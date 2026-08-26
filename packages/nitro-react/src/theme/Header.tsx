@@ -145,8 +145,8 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                                     { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
                                     <ThemeText
                                         text={caption}
-                                        textStyle={config.textStyle}
-                                        textOptions={{ fill: config.textColor }}
+                                        textStyle={resolvedTextStyle}
+                                        textOptions={{ fill: resolvedTextColor }}
                                     />
                                 </Box>
                             )}

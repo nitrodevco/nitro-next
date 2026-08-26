@@ -1,40 +1,39 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, BoxLayout } from './Box';
-import { useResolvedVariant } from './hooks';
-import { SpriteLayer } from './layer';
+import { Box } from './Box';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
-interface FramePointerDownVariant {
-    textureKey: string;
-    width: number;
-    height: number;
-}
+type FramePointerDownVariant = ThemeVariant;
 
-/** Full port of theme/FramePointerDown.tsx's single-variant table - DOM defines only '7'
- *  ("bubble"), no other variants, a fixed-size sprite with no interaction states, no tint,
- *  no overlay. */
-const FRAME_POINTER_DOWN_VARIANTS: Record<string, FramePointerDownVariant> = {
-    7: { textureKey: 'framepointerdown-src', width: 16, height: 12 },
+const FRAME_POINTER_DOWN_VARIANTS: ThemeVariants<FramePointerDownVariant> = {
+    7: { layer: Stretch('framepointerdown-src'), layout: { width: 16, height: 12 } },
 };
 
-export interface FramePointerDownProps {
-    variant?: string;
-    defaultVariant?: string;
-    layout?: BoxLayout;
-}
+export type FramePointerDownProps = ThemeProps<FramePointerDownVariant>;
 
 export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, FramePointerDownProps>(
-    ({ variant, defaultVariant, layout }, ref) => {
-        const { resolvedVariant } = useResolvedVariant('framePointerDown', variant, defaultVariant ?? '7');
-        const config = FRAME_POINTER_DOWN_VARIANTS[resolvedVariant] ?? FRAME_POINTER_DOWN_VARIANTS['7'];
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'framePointerDown', variants: FRAME_POINTER_DOWN_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        });
 
         return (
             <Box
                 ref={ref}
-                layout={{ width: config.width, height: config.height, ...layout }}
+                layout={{ ...config.layout, ...layout }}
+                {...handlers}
             >
-                <SpriteLayer textureKey={config.textureKey} />
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
             </Box>
         );
     },

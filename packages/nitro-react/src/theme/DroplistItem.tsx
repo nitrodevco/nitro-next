@@ -1,42 +1,59 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
-import { Box, BoxLayout } from './Box';
+import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
-import { resolveByState, useInteractionState, useResolvedVariant } from './hooks';
-import { SpriteLayer } from './layer';
-import { wrapTextChildren } from './utils';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
-/**
- * Static-skinning port of theme/DroplistItem.tsx. Both DOM variants ('0'/'1') are
- * byte-identical, reusing DropmenuItem's own `dropmenuitem-0-*` assets, and (unlike
- * DropmenuItem) define no padding/text-style classes at all - text is entirely
- * unstyled/inherited in DOM, reproduced here by not applying any text style either.
- */
-const DROPLIST_ITEM_TEXTURE_KEYS = { default: 'dropmenuitem-0-default-src', hovering: 'dropmenuitem-0-hovering-src', selected: 'dropmenuitem-0-selected-src' };
+type DroplistItemVariant = ThemeWithStatesVariant;
 
-export interface DroplistItemProps {
-    variant?: string;
-    defaultVariant?: string;
+const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = {
+    0: {
+        states: {
+            default: Stretch('dropmenuitem-0-default-src'),
+            hovering: Stretch('dropmenuitem-0-hovering-src'),
+            selected: Stretch('dropmenuitem-0-selected-src'),
+        },
+        layout: {
+            minWidth: 5,
+            minHeight: 19,
+        },
+    },
+};
+
+export interface DroplistItemProps extends ThemeProps<DroplistItemVariant> {
     selected?: boolean;
-    layout?: BoxLayout;
     children?: ReactNode;
 }
 
 export const DroplistItem: ForwardRefExoticComponent<DroplistItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistItemProps>(
-    ({ variant, defaultVariant, selected, layout, children }, ref) => {
-        const { ownCascade } = useResolvedVariant('droplistItem', variant, defaultVariant);
-        const { state, handlers } = useInteractionState();
-        const textureKey = resolveByState(DROPLIST_ITEM_TEXTURE_KEYS, state, selected);
+    ({
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, selected, children,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
+        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'droplistItem', variants: DROPLIST_ITEM_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, selected,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        });
 
         return (
             <Box
                 ref={ref}
-                layout={{ minWidth: 5, minHeight: 19, ...layout }}
+                layout={{ ...config.layout, ...layout }}
                 {...handlers}
             >
-                <SpriteLayer textureKey={textureKey} />
-                <VariantCascadeProvider map={ownCascade}>{wrapTextChildren(children)}</VariantCascadeProvider>
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+                <VariantCascadeProvider map={ownCascade}>
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                </VariantCascadeProvider>
             </Box>
         );
     },
