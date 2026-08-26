@@ -77,7 +77,7 @@ export interface BubblePointerProps extends ThemeProps<BubblePointerVariant> {
 export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubblePointerProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, direction, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { cascadeKey, variants = {} } = DIRECTION_CONFIG[direction];
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+        const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
             cascadeKey, variants, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
