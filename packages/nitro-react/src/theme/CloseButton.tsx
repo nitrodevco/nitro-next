@@ -74,6 +74,7 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
                     ...config.layout,
                     ...layout,
                 }}
+                cursor="pointer"
                 {...handlers}
             >
                 {resolvedLayer && (

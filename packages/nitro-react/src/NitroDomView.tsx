@@ -71,10 +71,10 @@ export const NitroDomView = () => {
     }, [ ]);
 
     return (
-        <div className="">
+        <div className="pointer-events-none">
             <canvas
                 ref={canvasRef}
-                className="fixed inset-0 z-0 size-full [image-rendering:pixelated]"
+                className="fixed inset-0 z-0 size-full [image-rendering:pixelated] pointer-events-auto"
             />
             { !isReady && <LoadingScreenView /> }
             { isReady && <MainView /> }
