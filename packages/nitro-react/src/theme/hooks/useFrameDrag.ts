@@ -100,8 +100,6 @@ export const useFrameDrag = (id: string | undefined) => {
             const newLeft = Math.floor(clamp(dragState.startGlobalX + dx, MIN_VISIBLE - dragState.width, window.innerWidth - MIN_VISIBLE));
             const newTop = Math.floor(clamp(dragState.startGlobalY + dy, 0, window.innerHeight - MIN_VISIBLE));
 
-            console.log(dx, dy, newLeft, newTop);
-
             setOffset({
                 dx: dragState.origDx + (newLeft - dragState.startGlobalX),
                 dy: dragState.origDy + (newTop - dragState.startGlobalY),

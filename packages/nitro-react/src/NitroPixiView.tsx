@@ -1,13 +1,11 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import {
-    GetRoomContentLoader,
     GetRoomEngine,
-    RoomContentLoader,
     TexturePool,
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
-import { PixiApplicationRoot } from '#base/theme';
+import { PixiApplicationRoot, preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from '#base/theme';
 
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
@@ -31,13 +29,11 @@ export const NitroPixiView = () => {
             try {
                 TexturePool.startAutoCleanup();
 
-                await GetRoomEngine().init();
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
+                await Promise.all([
+                    preloadNitroTruffle(WIRED_HABBO_KEYS),
+                    preloadThemeAssets(),
+                    GetRoomEngine().init(),
+                ]);
 
                 setIsEngineReady(true);
             } catch (err) {

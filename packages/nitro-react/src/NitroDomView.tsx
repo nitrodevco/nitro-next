@@ -1,16 +1,15 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import {
     GetRenderer,
-    GetRoomContentLoader,
     GetRoomEngine,
     PrepareRenderer,
-    RoomContentLoader,
     TexturePool,
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
 import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
+import { preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from './theme';
 import { GetPixelRatio } from './utils';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
@@ -52,13 +51,11 @@ export const NitroDomView = () => {
 
                 TexturePool.startAutoCleanup();
 
-                await GetRoomEngine().init();
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
-                await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
+                await Promise.all([
+                    preloadNitroTruffle(WIRED_HABBO_KEYS),
+                    preloadThemeAssets(),
+                    GetRoomEngine().init(),
+                ]);
 
                 setIsEngineReady(true);
             } catch (err) {

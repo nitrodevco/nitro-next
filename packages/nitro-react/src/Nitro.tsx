@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
-import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
+import { useAvatarLoader, useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 import { getRenderMode } from '#base/theme';
 
-import { useAvatarLoader } from './hooks/logic';
 import { NitroDomView } from './NitroDomView';
 import { NitroPixiView } from './NitroPixiView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';

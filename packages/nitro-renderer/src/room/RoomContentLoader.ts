@@ -26,6 +26,14 @@ export class RoomContentLoader implements IRoomContentLoader {
     public static PLACE_HOLDER_WALL: string = 'wall_place_holder' as const;
     public static PLACE_HOLDER_PET: string = 'pet_place_holder' as const;
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
+    public static MANDATORY_LIBRARIES: string[] = [
+        RoomContentLoader.ROOM_CONTENT,
+        RoomContentLoader.TILE_CURSOR,
+        RoomContentLoader.SELECTION_ARROW,
+        RoomContentLoader.PLACE_HOLDER,
+        RoomContentLoader.PLACE_HOLDER_WALL,
+        RoomContentLoader.PLACE_HOLDER_PET,
+    ];
 
     private _iconListener: IRoomContentListener;
     private _images: Map<string, HTMLImageElement> = new Map();
@@ -51,9 +59,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         if (petTypes) for (const [ index, name ] of petTypes.entries()) this._pets[name] = index;
 
-        // await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
-
-        return Promise.resolve();
+        await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAssetAsync(value)));
     }
 
     public processFurnitureData(furnitureData: IFurnitureData[]): void {
