@@ -51,7 +51,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                     <Border
                         variant="102"
                         params={16}
-                        layout={{ width: 295, height: 88, flexShrink: 0 }}
+                        layout={{ width: 295, height: 88, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Region
                             params={16}
@@ -88,7 +88,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                             name="user_avatar"
                             params={3932176}
                             options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -134.5, width: 18, top: '50%', marginTop: -10, height: 19 }}
+                            layout={{ position: 'absolute', marginLeft: -125.5, marginRight: 125.5, width: 18, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 19 }}
                         />
                         <WidgetSlot
                             widgetType="updating_timestamp"
@@ -99,7 +99,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                     </Border>
                     <Region
                         params={16}
-                        layout={{ width: 370, height: 52, flexShrink: 0 }}
+                        layout={{ width: 370, height: 52, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Button
                             variant="101"
@@ -107,7 +107,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>

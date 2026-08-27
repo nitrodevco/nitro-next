@@ -49,7 +49,7 @@ export const NewBarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRight
                         params={17}
                         onPointerTap={onCollapseLeft}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 135, width: 15, top: 0, height: 46 }}
+                        layout={{ position: 'absolute', left: 135, width: 15, top: 0, height: 46, justifyContent: 'center' }}
                     >
                         <Border
                             variant="2"
@@ -62,7 +62,7 @@ export const NewBarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRight
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                         />
                     </Region>
                     <Region
@@ -184,7 +184,7 @@ export const NewBarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRight
                     params={17}
                     onPointerTap={onCollapseRight}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 282, width: 15, top: 2, height: 46 }}
+                    layout={{ position: 'absolute', left: 282, width: 15, top: 2, height: 46, justifyContent: 'center' }}
                 >
                     <Border
                         variant="2"
@@ -197,7 +197,7 @@ export const NewBarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRight
                         tags={[ 'ICON_BMP', '#icon' ]}
                         params={208}
                         src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
+                        layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                     />
                 </Region>
             </Region>

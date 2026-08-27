@@ -63,7 +63,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                 <Region
                     name="content_list"
                     params={3293200}
-                    layout={{ position: 'absolute', left: 200, top: '50%', marginTop: -90, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 200, alignSelf: 'center', flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContentList ?? (
                         <>

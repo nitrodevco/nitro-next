@@ -14,14 +14,14 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
             <Region
                 params={2196}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="bitmap"
                     tags={[ 'BITMAP' ]}
                     params={3932176}
                     src={srcBitmap}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -23, width: 46, top: '50%', marginTop: -20, height: 40, minWidth: 46, maxWidth: 46 }}
+                    layout={{ position: 'absolute', width: 46, alignSelf: 'center', height: 40, minWidth: 46, maxWidth: 46 }}
                 />
                 <WidgetSlot
                     widgetType="badge_image"
@@ -29,17 +29,17 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
                     params={1077674000}
                     visible={false}
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
                 />
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -9, width: 18, top: '50%', marginTop: -9, height: 18 }}
+                    layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="unknown_image"
                         params={3932176}
                         src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -9, width: 18, top: '50%', marginTop: -9, height: 18 }}
+                        layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18 }}
                     />
                 </Region>
                 <WidgetSlot
@@ -48,11 +48,11 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
                     params={1077674000}
                     visible={false}
                     options={{ 'pet_image:direction': 'south', 'pet_image:shrink_on_overflow': 'true' }}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: '50%', marginTop: -22, height: 44, minWidth: 48, maxWidth: 48, minHeight: 48, maxHeight: 48, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 44, minWidth: 48, maxWidth: 48, minHeight: 48, maxHeight: 48, overflow: 'hidden' }}
                 />
                 <Region
                     visible={visibleIcon ?? false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40 }}
+                    layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
                 >
                     <Icon
                         variant="41"

@@ -594,14 +594,14 @@ export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore }
         <Region
             name="add_more_container"
             params={16}
-            layout={{ width: 26, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 26, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="add_more"
                 params={3281}
                 onPointerTap={onAddMore}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -11, width: 23, top: '50%', marginTop: -11, height: 22 }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 23, alignSelf: 'center', height: 22 }}
             />
         </Region>
     );

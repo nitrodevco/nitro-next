@@ -26,12 +26,12 @@ export const PackagecardInfoLayout = ({ itemsElementList, layout, onClose }: Pac
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={147472}
-                    layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380 }}
+                    layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}
                 >
                     <Region
                         name="element_list"
                         params={13516817}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -168, top: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10 }}
+                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, top: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10 }}
                     >
                         {itemsElementList ?? (
                             <>
@@ -76,7 +76,7 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ captionMessageFrom,
             <Region
                 name="avatar_image_container"
                 params={16}
-                layout={{ position: 'absolute', left: 15, width: 60, top: 5, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149 }}
+                layout={{ position: 'absolute', left: 15, width: 60, top: 5, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center' }}
             >
                 <Region
                     name="avatar_image_region"
@@ -84,7 +84,7 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ captionMessageFrom,
                     params={3935441}
                     onPointerTap={onAvatarImageRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -74.5, height: 149 }}
+                    layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149 }}
                 >
                     <ThemeImage
                         name="avatar_image"

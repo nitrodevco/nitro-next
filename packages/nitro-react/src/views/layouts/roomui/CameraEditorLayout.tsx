@@ -118,7 +118,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                     params={17}
                     onPointerTap={onSliderContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 249, width: 320, top: 271, height: 59 }}
+                    layout={{ position: 'absolute', left: 249, width: 320, top: 271, height: 59, justifyContent: 'center' }}
                 >
                     <Border
                         variant="3"
@@ -164,7 +164,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                     <Region
                         name="slider_effect_info"
                         params={934096}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 110, top: 8, height: 18, maxWidth: 320, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 110, top: 8, height: 18, maxWidth: 320, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSliderEffectInfo ?? 'default filter 50%'}
@@ -178,7 +178,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onZoomButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 450, width: 120, top: 333, height: 24 }}
+                    layout={{ position: 'absolute', left: 450, width: 120, top: 333, height: 24, justifyContent: 'center' }}
                 >
                     <Border
                         variant="2"
@@ -192,7 +192,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                         name="centerizer"
                         params={935938}
                         tintColor="#c7c6bf"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 106, top: 0, bottom: 1 }}
+                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 106, top: 0, bottom: 1 }}
                     >
                         <ThemeImage
                             name="magnifier"
@@ -218,7 +218,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onSaveButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 326, width: 120, top: 333, height: 24 }}
+                    layout={{ position: 'absolute', left: 326, width: 120, top: 333, height: 24, justifyContent: 'center' }}
                 >
                     <Border
                         variant="2"
@@ -232,7 +232,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                         name="centerizer"
                         params={935938}
                         tintColor="#c7c6bf"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -56, width: 109, top: 0, bottom: 4 }}
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 109, top: 0, bottom: 4 }}
                     >
                         <ThemeImage
                             name="download_image"

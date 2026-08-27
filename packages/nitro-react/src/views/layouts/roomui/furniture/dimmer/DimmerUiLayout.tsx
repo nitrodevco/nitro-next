@@ -120,13 +120,13 @@ export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeT
                         <Region
                             name="brightness_container"
                             params={16}
-                            layout={{ position: 'absolute', left: 4, width: 206, top: 35, height: 18 }}
+                            layout={{ position: 'absolute', left: 4, width: 206, top: 35, height: 18, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="slider_base"
                                 params={3932176}
                                 src={srcSliderBase}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -101, width: 201, top: '50%', marginTop: -9, height: 12 }}
+                                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
                             />
                             <Region
                                 name="slider_movement_area"

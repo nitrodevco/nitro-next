@@ -9,13 +9,13 @@ export interface CounterLayoutProps {
 
 export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 164, height: 164, ...layout }}>
+        <Region layout={{ position: 'relative', width: 164, height: 164, justifyContent: 'center', ...layout }}>
             <ThemeImage
                 name="counterBitmap"
                 tags={[ 'bitmap' ]}
                 params={3264}
                 src={srcCounterBitmap ?? layoutImage('explosion001.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: 89, width: 164, top: '50%', marginTop: 49, height: 164, minWidth: 164, minHeight: 164 }}
+                layout={{ position: 'absolute', marginLeft: 171, marginRight: -171, width: 164, alignSelf: 'center', marginTop: 131, marginBottom: -131, height: 164, minWidth: 164, minHeight: 164 }}
             />
         </Region>
     );

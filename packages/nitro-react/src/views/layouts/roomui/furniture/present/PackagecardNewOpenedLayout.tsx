@@ -253,7 +253,7 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
             backgroundColor="#96a4a5"
             onPointerTap={onGiveContainer}
             cursor="pointer"
-            layout={{ width: 336, height: 70, flexShrink: 0, minWidth: 336, maxWidth: 336, ...layout }}
+            layout={{ width: 336, height: 70, flexShrink: 0, minWidth: 336, maxWidth: 336, justifyContent: 'center', ...layout }}
         >
             <ButtonThick
                 variant="5"
@@ -261,14 +261,14 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
                 params={16649425}
                 tintColor="#00aa00"
                 onPointerTap={onGiveGiftButton}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -168, width: 246, top: '50%', marginTop: -35, height: 28, minWidth: 246, maxWidth: 330 }}
+                layout={{ position: 'absolute', marginLeft: -45, marginRight: 45, width: 246, alignSelf: 'center', marginTop: -21, marginBottom: 21, height: 28, minWidth: 246, maxWidth: 330 }}
             >
                 {t('widget.furni.present.give_gift')}
             </ButtonThick>
             <Region
                 name="avatar_image_container"
                 params={3407888}
-                layout={{ position: 'absolute', right: 1, width: 45, top: '50%', marginTop: -22, height: 45 }}
+                layout={{ position: 'absolute', right: 1, width: 45, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 45, justifyContent: 'center' }}
             >
                 <Region
                     name="avatar_image_region"
@@ -276,7 +276,7 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
                     params={3935441}
                     onPointerTap={onAvatarImageRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 45, top: '50%', marginTop: -22.5, height: 45 }}
+                    layout={{ position: 'absolute', width: 45, alignSelf: 'center', height: 45 }}
                 >
                     <ThemeImage
                         name="avatar_image"

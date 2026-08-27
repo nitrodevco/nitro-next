@@ -35,7 +35,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
             onClose={onClose}
             layout={{ width: 575, height: 430, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Border
                     variant="3"
                     params={16}
@@ -72,12 +72,12 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                 />
                 <Region
                     params={16}
-                    layout={{ position: 'absolute', left: 247, width: 122, top: 194, height: 134 }}
+                    layout={{ position: 'absolute', left: 247, width: 122, top: 194, height: 134, justifyContent: 'center' }}
                 >
                     <Region
                         name="txt_price_label"
                         params={935952}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51, width: 97, top: 10, bottom: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 97, top: 10, bottom: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPriceLabel ?? 'Price:'}
@@ -119,7 +119,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="txt_plus_character"
                         params={935952}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -66, width: 41, top: 62, bottom: 41, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: -45.5, marginRight: 45.5, width: 41, top: 62, bottom: 41, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPlusCharacter ?? ' '}
@@ -135,7 +135,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                 />
                 <Region
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -272.5, width: 540, top: 316, height: 70 }}
+                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 540, top: 316, height: 70, justifyContent: 'center' }}
                 >
                     <Region
                         name="txt_status"
@@ -151,7 +151,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="itemlist_buttonbar"
                         params={934096}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -240, top: 38, flexDirection: 'row', gap: 10 }}
+                        layout={{ position: 'absolute', top: 38, flexDirection: 'row', gap: 10 }}
                     >
                         {itemsItemlistButtonbar ?? (
                             <>
@@ -171,11 +171,11 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                 >
                     <Region
                         params={16}
-                        layout={{ position: 'absolute', left: 5, width: 569, top: 7, height: 30 }}
+                        layout={{ position: 'absolute', left: 5, width: 569, top: 7, height: 30, justifyContent: 'center' }}
                     >
                         <Region
                             params={933936}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -62.5, top: 0, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', top: 0, flexDirection: 'row' }}
                         >
                             <Region
                                 name="txt_time_left_label_1"

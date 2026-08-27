@@ -49,12 +49,12 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
                         params={17}
                         tintColor="#00aa00"
                         onPointerTap={onBuyButton}
-                        layout={{ position: 'absolute', left: 185, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24 }}
+                        layout={{ position: 'absolute', left: 185, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
                     >
                         <Region
                             name="purchase_label"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}

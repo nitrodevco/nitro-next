@@ -21,17 +21,17 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
             <Bubble
                 variant="100"
                 params={1}
-                layout={{ position: 'absolute', left: 0, width: 275, top: 0, height: 341 }}
+                layout={{ position: 'absolute', left: 0, width: 275, top: 0, height: 341, justifyContent: 'center' }}
             >
                 <Region
                     name="title"
                     params={16}
                     backgroundColor="#3f3f3f"
-                    layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20 }}
+                    layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center' }}
                 >
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -75, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('high.score.display.caption')}
@@ -82,7 +82,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                 <Region
                     name="footer"
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -117.5, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionFooter ?? t('high.score.display.congratulations.footer')}

@@ -78,13 +78,13 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                     name="pet_img_bg_box"
                     params={16}
                     tintColor="#f0f0f0"
-                    layout={{ position: 'absolute', left: 11, width: 64, top: 11, height: 64 }}
+                    layout={{ position: 'absolute', left: 11, width: 64, top: 11, height: 64, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="pet_image"
                         params={3932176}
                         src={srcPetImage}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -30, height: 60, minWidth: 60, maxWidth: 60, minHeight: 60, maxHeight: 60 }}
+                        layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 60, minWidth: 60, maxWidth: 60, minHeight: 60, maxHeight: 60 }}
                     />
                 </Border>
             </Border>

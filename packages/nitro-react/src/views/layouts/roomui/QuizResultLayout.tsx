@@ -30,7 +30,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                         <Region
                             params={131073}
                             dynamicStyle="brightness_and_shadow_under"
-                            layout={{ width: 32, height: 32, flexShrink: 0 }}
+                            layout={{ width: 32, height: 32, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Border
                                 variant="2"
@@ -41,7 +41,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                             <Region
                                 name="lbl_dislike_count"
                                 params={933904}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -7, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionLblDislikeCount ?? '0'}
@@ -64,7 +64,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                         <Region
                             params={131073}
                             dynamicStyle="brightness_and_shadow_under"
-                            layout={{ width: 40, height: 34, flexShrink: 0 }}
+                            layout={{ width: 40, height: 34, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Border
                                 variant="2"
@@ -75,7 +75,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                             <Region
                                 name="lbl_like_count"
                                 params={933904}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -11, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionLblLikeCount ?? '0'}

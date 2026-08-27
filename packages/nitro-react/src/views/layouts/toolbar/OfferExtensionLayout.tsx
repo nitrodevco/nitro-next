@@ -101,11 +101,11 @@ export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, v
             visible={visibleCheckRewards ?? false}
             onPointerTap={onCheckRewards}
             cursor="pointer"
-            layout={{ width: 180, height: 19, flexShrink: 0, ...layout }}
+            layout={{ width: 180, height: 19, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -83, width: 167, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 167, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={t('offers.extension.check_rewards')}

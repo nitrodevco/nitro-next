@@ -174,7 +174,7 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
                 name="label"
                 tags={[ 'label' ]}
                 params={3148816}
-                layout={{ position: 'absolute', left: 29, width: 77, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 29, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionLabel ?? t('friendbar.requests.title')}

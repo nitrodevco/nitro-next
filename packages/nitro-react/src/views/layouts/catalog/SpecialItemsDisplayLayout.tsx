@@ -38,7 +38,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
             onClose={onClose}
             layout={{ width: 420, height: 495, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="background_container"
                     params={2192}
@@ -182,12 +182,12 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                     <Region
                         name="page_container"
                         params={16}
-                        layout={{ position: 'absolute', left: 39, width: 342, top: 207, height: 11 }}
+                        layout={{ position: 'absolute', left: 39, width: 342, top: 207, height: 11, justifyContent: 'center' }}
                     >
                         <Region
                             name="page_list"
                             params={934096}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -22, top: 0, flexDirection: 'row', gap: 7 }}
+                            layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 7 }}
                         >
                             {itemsPageList ?? (
                                 <>
@@ -206,7 +206,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                 />
                 <Region
                     visible={visibleClaimContainer ?? false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -155, width: 310, top: 115, height: 40 }}
+                    layout={{ position: 'absolute', width: 310, top: 115, height: 40 }}
                 >
                     <Border
                         variant="2"

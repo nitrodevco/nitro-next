@@ -30,7 +30,7 @@ export const VaultViewLayout = ({ itemsScrollingEarningsList, layout, onClaimAll
                 <Region
                     name="earningsContentArea"
                     params={8390672}
-                    layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45 }}
+                    layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center' }}
                 >
                     <Region
                         name="scrolling_earnings_list"
@@ -59,7 +59,7 @@ export const VaultViewLayout = ({ itemsScrollingEarningsList, layout, onClaimAll
                         name="claim_all_btn"
                         params={918545}
                         onPointerTap={onClaimAllBtn}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -46, width: 73, bottom: 4, height: 30 }}
+                        layout={{ position: 'absolute', marginLeft: -9.5, marginRight: 9.5, width: 73, bottom: 4, height: 30 }}
                     >
                         {t('earning.claim_all')}
                     </ButtonThick>

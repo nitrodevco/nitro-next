@@ -43,12 +43,12 @@ export const TableViewLayout = ({ captionNothingToDisplayText, itemsTableContent
                     <Region
                         name="empty_container"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, justifyContent: 'center' }}
                     >
                         <Region
                             name="nothing_to_display_text"
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 107, top: '50%', marginTop: -9, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
@@ -153,7 +153,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
             params={17}
             onPointerTap={onTableElement}
             cursor="pointer"
-            layout={{ width: 101, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, ...layout }}
+            layout={{ width: 101, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, justifyContent: 'center', ...layout }}
         >
             <Region
                 visible={visibleHighlightBorder ?? false}
@@ -186,7 +186,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 visible={visibleLinkContainer ?? false}
                 onPointerTap={onLinkContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17 }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17 }}
             >
                 <Region
                     name="element_link"

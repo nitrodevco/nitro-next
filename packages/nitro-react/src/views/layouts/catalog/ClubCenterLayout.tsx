@@ -100,13 +100,13 @@ export const ClubCenterLayout = ({ captionGeneralInfo, captionGeneralInfolink, c
                         <Region
                             name="hc_badge_container"
                             params={16}
-                            layout={{ position: 'absolute', left: 19, width: 50, top: 11, height: 50 }}
+                            layout={{ position: 'absolute', left: 19, width: 50, top: 11, height: 50, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="hc_badge"
                                 params={3935440}
                                 src={srcHcBadge}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 50, top: '50%', marginTop: -25, height: 50 }}
+                                layout={{ position: 'absolute', width: 50, alignSelf: 'center', height: 50 }}
                             />
                         </Region>
                         <Region
@@ -220,7 +220,7 @@ export const ClubCenterLayout = ({ captionGeneralInfo, captionGeneralInfolink, c
                                 tintColor="#3399cc"
                                 onPointerTap={onBtnGift}
                                 textStyle="text-style-button-shiny-bold"
-                                layout={{ position: 'absolute', right: 25, width: 154, top: '50%', marginTop: -15, height: 33 }}
+                                layout={{ position: 'absolute', right: 25, width: 154, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 33 }}
                             >
                                 {t('hccenter.btn.gifts.view')}
                             </ButtonThick>

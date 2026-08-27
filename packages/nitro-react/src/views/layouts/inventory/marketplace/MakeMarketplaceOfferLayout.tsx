@@ -191,7 +191,7 @@ export const MakeMarketplaceOfferLayout = ({ captionAmountRequest, captionAverag
                             <Region
                                 name="final_price"
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 6, width: 257, top: '50%', marginTop: -16, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, width: 257, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionFinalPrice ?? t('inventory.marketplace.make_offer.final_price')}

@@ -28,7 +28,7 @@ export const GuildSelectorWidgetLayout = ({ layout, onFindGroupsButton }: GuildS
                     name="members_only"
                     params={16}
                     tintColor="#5ea1ab"
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 85 }}
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 85, justifyContent: 'center' }}
                 >
                     <Region
                         params={16}
@@ -44,7 +44,7 @@ export const GuildSelectorWidgetLayout = ({ layout, onFindGroupsButton }: GuildS
                         name="find_groups_button"
                         params={917521}
                         onPointerTap={onFindGroupsButton}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -108, width: 210, top: 55, height: 25 }}
+                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 210, top: 55, height: 25 }}
                     >
                         {t('catalog.guild_selector.find_groups')}
                     </Button>

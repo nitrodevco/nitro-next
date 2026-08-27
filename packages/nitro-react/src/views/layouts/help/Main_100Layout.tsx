@@ -88,7 +88,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             tags={[ 'RECOLORABLE_LIGHT' ]}
                             params={2064}
                             tintColor="#ddebf9"
-                            layout={{ position: 'absolute', left: 0, width: 264, top: 0, bottom: 0 }}
+                            layout={{ position: 'absolute', left: 0, width: 264, top: 0, bottom: 0, justifyContent: 'center' }}
                         >
                             <WidgetSlot
                                 widgetType="avatar_image"
@@ -103,7 +103,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 <Region
                                     name="track_info"
                                     params={3148816}
-                                    layout={{ position: 'absolute', left: 0, width: 160, top: '50%', marginTop: -36, height: 73, flexDirection: 'column', gap: 1 }}
+                                    layout={{ position: 'absolute', left: 0, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 73, flexDirection: 'column', gap: 1 }}
                                 >
                                     {itemsTrackInfo ?? (
                                         <>
@@ -121,11 +121,11 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 tags={[ 'RECOLORABLE_MEDIUM' ]}
                                 params={786640}
                                 tintColor="#cfe2f9"
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -89, width: 179, top: 122, height: 62 }}
+                                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, top: 122, height: 62, justifyContent: 'center' }}
                             >
                                 <Region
                                     params={786640}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -36.5, width: 72, top: 11, height: 20, minHeight: 24, maxHeight: 24, flexDirection: 'row', gap: 4 }}
+                                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 72, top: 11, height: 20, minHeight: 24, maxHeight: 24, flexDirection: 'row', gap: 4 }}
                                 >
                                     <ThemeImage
                                         params={16}
@@ -160,7 +160,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 247, top: 204, height: 30, flexDirection: 'row', gap: 6 }}
+                                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, top: 204, height: 30, flexDirection: 'row', gap: 6 }}
                             >
                                 <ThemeImage
                                     params={16}
@@ -351,13 +351,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ '#icon' ]}
                                         params={2176}
                                         tintColor="#f9efe0"
-                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
                                     >
                                         <WidgetSlot
                                             widgetType="product_icon"
                                             name="product_icon"
                                             params={3280}
-                                            layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40 }}
+                                            layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
                                         />
                                         <Shape
                                             name="quantity_container"
@@ -367,7 +367,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                             strokeColor="#000000"
                                             strokeThickness={1}
                                             radius={5}
-                                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, bottom: 5, height: 14 }}
+                                            layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
                                         />
                                     </Border>
                                 </Region>
@@ -415,13 +415,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ '#icon' ]}
                                         params={2176}
                                         tintColor="#f1def7"
-                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
                                     >
                                         <WidgetSlot
                                             widgetType="product_icon"
                                             name="product_icon"
                                             params={3280}
-                                            layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40 }}
+                                            layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
                                         />
                                         <Shape
                                             name="quantity_container"
@@ -431,7 +431,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                             strokeColor="#000000"
                                             strokeThickness={1}
                                             radius={5}
-                                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, bottom: 5, height: 14 }}
+                                            layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
                                         />
                                     </Border>
                                 </Region>
@@ -779,7 +779,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 57, width: 265, top: '50%', marginTop: -15, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 57, width: 265, alignSelf: 'center', height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('reward_track.tasks.tip')}
@@ -806,7 +806,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 57, width: 227, top: '50%', marginTop: -15, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 57, width: 227, alignSelf: 'center', height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('reward_track.tasks.tip_upgrade')}
@@ -1083,7 +1083,7 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
             params={17}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
-            layout={{ width: 88, height: 29, flexShrink: 0, ...layout }}
+            layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Button
                 variant="3"
@@ -1109,7 +1109,7 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.all_tasks')}
@@ -1138,7 +1138,7 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
             params={17}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
-            layout={{ width: 88, height: 29, flexShrink: 0, ...layout }}
+            layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 visible={visibleSelectedView ?? false}
@@ -1168,7 +1168,7 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.in_progress')}
@@ -1197,7 +1197,7 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
             params={17}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
-            layout={{ width: 88, height: 29, flexShrink: 0, ...layout }}
+            layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 visible={visibleSelectedView ?? false}
@@ -1227,7 +1227,7 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.completed')}

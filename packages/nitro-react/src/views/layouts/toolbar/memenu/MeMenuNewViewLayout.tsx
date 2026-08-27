@@ -64,7 +64,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onGuide}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 12, width: 50, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 12, width: 50, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="guide_icon_color"
@@ -75,7 +75,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText ?? t('widget.memenu.guide')}
@@ -95,7 +95,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onTalents}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 70, width: 50, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 70, width: 50, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="talents_icon_color"
@@ -106,7 +106,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText2 ?? t('widget.memenu.talents')}
@@ -126,7 +126,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onMinimail}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 128, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 128, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="minimail_icon_color"
@@ -137,7 +137,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText3 ?? t('widget.memenu.minimail')}
@@ -157,7 +157,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onProfile}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 196, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 196, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="profile_icon_color"
@@ -168,7 +168,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText4 ?? t('widget.memenu.profile')}
@@ -188,7 +188,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onRooms}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 264, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 264, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="rooms_icon_color"
@@ -199,7 +199,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText5 ?? t('widget.memenu.myrooms')}
@@ -219,7 +219,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onClothes}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 332, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 332, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="clothes_icon_color"
@@ -230,7 +230,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText6 ?? t('widget.memenu.editavatar')}
@@ -250,7 +250,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onForums}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 400, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 400, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="forums_icon_color"
@@ -261,7 +261,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText7 ?? t('widget.memenu.forums')}
@@ -281,7 +281,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             params={17}
                             onPointerTap={onCollectibles}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 468, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 468, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="collectibles_icon_color"
@@ -292,7 +292,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText8 ?? t('memenu.collectibles')}

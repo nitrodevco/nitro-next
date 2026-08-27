@@ -22,7 +22,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
             onClose={onClose}
             layout={{ width: 148, height: 217, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     params={16}
                     backgroundColor="#000000"
@@ -37,7 +37,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
                 </Region>
                 <Region
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}
+                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}
                 >
                     <ButtonThick
                         variant="6"

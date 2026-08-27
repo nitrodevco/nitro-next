@@ -75,7 +75,7 @@ export const SnowwarLobbyPlayerTeam2Layout = ({ captionPlayerHits, captionPlayer
                 <Region
                     name="playerDataContainer"
                     params={16}
-                    layout={{ width: 162, height: 62, flexShrink: 0 }}
+                    layout={{ width: 162, height: 62, flexShrink: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="playerDataBackground"
@@ -88,7 +88,7 @@ export const SnowwarLobbyPlayerTeam2Layout = ({ captionPlayerHits, captionPlayer
                         name="playerName_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerNameStroke ?? 'Painimies'}
@@ -98,7 +98,7 @@ export const SnowwarLobbyPlayerTeam2Layout = ({ captionPlayerHits, captionPlayer
                     <Region
                         name="playerName"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerName ?? 'Painimies'}

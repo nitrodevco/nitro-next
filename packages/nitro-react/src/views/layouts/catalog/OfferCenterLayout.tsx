@@ -22,10 +22,10 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
             onClose={onClose}
             layout={{ width: 377, height: 412, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('offers.center.rewards.label')}

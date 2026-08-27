@@ -38,7 +38,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
             onClose={onClose}
             layout={{ width: 437, height: 511, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
                     name="background"
                     tags={[ 'bitmap' ]}
@@ -101,21 +101,21 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <Region
                     name="borderContainer"
                     params={3145744}
-                    layout={{ position: 'absolute', left: 40, width: 350, top: '50%', marginTop: -225.5, height: 389 }}
+                    layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -31, marginBottom: 31, height: 389, justifyContent: 'center' }}
                 >
                     <Border
                         variant="0"
                         name="listBorder"
                         params={8388816}
                         blend={0.5}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -175, width: 350, top: 28, height: 336 }}
+                        layout={{ position: 'absolute', width: 350, top: 28, height: 336 }}
                     />
                     <Region
                         name="scrollUp"
                         params={209}
                         onPointerTap={onScrollUp}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -29, width: 58, top: 1, height: 28 }}
+                        layout={{ position: 'absolute', width: 58, top: 1, height: 28 }}
                     >
                         <ThemeImage
                             params={16}
@@ -128,7 +128,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                         params={1233}
                         onPointerTap={onScrollDown}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -29, width: 58, bottom: 0, height: 28 }}
+                        layout={{ position: 'absolute', width: 58, bottom: 0, height: 28 }}
                     >
                         <ThemeImage
                             params={16}
@@ -152,7 +152,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <Region
                     name="list"
                     params={3145920}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -181.5, width: 356, top: '50%', marginTop: -197.5, height: 336, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column' }}
                 />
                 <Region
                     name="previousWeek"

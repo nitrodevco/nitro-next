@@ -70,14 +70,14 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, itemsPu
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onHcJoinButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 64, width: 101, top: 8, height: 26 }}
+                    layout={{ position: 'absolute', left: 64, width: 101, top: 8, height: 26, justifyContent: 'center' }}
                 >
                     <Region
                         name="join"
                         tags={[ '#icon' ]}
                         params={786640}
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -12.5, width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionJoin ?? 'join'}
@@ -167,12 +167,12 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, itemsPu
                         params={129}
                         tintColor="#217bb5"
                         onPointerTap={onHelpButton}
-                        layout={{ width: 50, height: 19, flexShrink: 0, minWidth: 50, maxWidth: 50 }}
+                        layout={{ width: 50, height: 19, flexShrink: 0, minWidth: 50, maxWidth: 50, justifyContent: 'center' }}
                     >
                         {t('toolbar.help')}
                         <Region
                             params={1838288}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 71, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: 10.5, marginRight: -10.5, width: 71, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('toolbar.help')}

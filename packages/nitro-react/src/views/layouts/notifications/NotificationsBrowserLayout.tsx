@@ -12,12 +12,12 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout }: Notificatio
             <Border
                 variant="1"
                 tintColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 331 }}
+                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 331, justifyContent: 'center' }}
             >
                 <Region
                     name="title"
                     params={3145936}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 120, top: '50%', marginTop: -158.5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', width: 120, alignSelf: 'center', marginTop: -152, marginBottom: 152, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTitle ?? 'Notification history'}

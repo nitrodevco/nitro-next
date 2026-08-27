@@ -52,7 +52,7 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                 params={33025}
                 onPointerTap={onBgBorder}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536 }}
+                layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536, justifyContent: 'center' }}
             >
                 <Region
                     visible={visibleSlotContainer ?? false}
@@ -242,7 +242,7 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                     dynamicStyle="brightness_and_shadow_under"
                     tintColor="#009e00"
                     onPointerTap={onButtonEditor}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -78, width: 157, top: 308, height: 40 }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 157, top: 308, height: 40 }}
                 >
                     {t('camera.editor.button.text')}
                 </ButtonThick>

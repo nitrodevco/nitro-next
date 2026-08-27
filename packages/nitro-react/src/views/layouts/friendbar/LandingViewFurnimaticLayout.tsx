@@ -20,13 +20,13 @@ export const LandingViewFurnimaticLayout = ({ layout, srcBackgroundHorizon, srcB
                     name="content_background"
                     params={2192}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="background_horizon"
                         params={3932176}
                         src={srcBackgroundHorizon ?? '${image.library.url}reception/furnimatic_backdrop_bg.png'}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -591, width: 1019, top: '50%', marginTop: -411, height: 852 }}
+                        layout={{ position: 'absolute', marginLeft: -81.5, marginRight: 81.5, width: 1019, alignSelf: 'center', marginTop: 15, marginBottom: -15, height: 852 }}
                     />
                     <Region
                         name="moving_objects_container"

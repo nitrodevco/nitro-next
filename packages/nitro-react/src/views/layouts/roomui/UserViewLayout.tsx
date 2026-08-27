@@ -153,7 +153,7 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImag
                 params={17}
                 onPointerTap={onAvatarImageProfileLink}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127 }}
+                layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center' }}
             >
                 <WidgetSlot
                     widgetType="avatar_image"
@@ -161,7 +161,7 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImag
                     params={3282}
                     visible={false}
                     options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 34, top: '50%', marginTop: -42.5, height: 84 }}
+                    layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
                 />
             </Region>
             <WidgetSlot
@@ -247,7 +247,7 @@ export const UserViewLayoutMottoContainerItem = ({ layout, srcChangemottoImage }
                 name="changemotto.image"
                 params={3088}
                 src={srcChangemottoImage ?? layoutImage('common_small_pen.png')}
-                layout={{ position: 'absolute', left: 3, width: 17, top: '50%', marginTop: -9.5, height: 18 }}
+                layout={{ position: 'absolute', left: 3, width: 17, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 18 }}
             />
             <TextInput
                 value={mottoTextValue}

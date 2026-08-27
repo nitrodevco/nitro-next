@@ -21,7 +21,7 @@ export const TabEntryLayout = ({ layout, onTab, srcFace, srcNext, srcPrev, srcTa
                 params={17}
                 onPointerTap={onTab}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="tab_bg_sel"
@@ -51,13 +51,13 @@ export const TabEntryLayout = ({ layout, onTab, srcFace, srcNext, srcPrev, srcTa
                     name="prev"
                     params={208}
                     src={srcPrev}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -4, width: 10, top: 7, height: 10 }}
+                    layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 10, top: 7, height: 10 }}
                 />
                 <ThemeImage
                     name="next"
                     params={208}
                     src={srcNext}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -4, width: 10, top: 7, height: 10 }}
+                    layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 10, top: 7, height: 10 }}
                 />
                 <ThemeImage
                     name="face"

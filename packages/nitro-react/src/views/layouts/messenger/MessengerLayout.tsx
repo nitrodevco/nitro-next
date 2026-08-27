@@ -118,7 +118,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                             <Region
                                 name="separator_label"
                                 params={3088}
-                                layout={{ position: 'absolute', left: 0, width: 157, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionSeparatorLabel ?? t('messenger.window.separator')}
@@ -314,7 +314,7 @@ export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout }: M
             <Region
                 name="content"
                 params={3088}
-                layout={{ position: 'absolute', left: 50, width: 205, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? ''}
@@ -348,7 +348,7 @@ export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout }: Mes
             <Region
                 name="content"
                 params={3088}
-                layout={{ position: 'absolute', left: 50, width: 205, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? ''}

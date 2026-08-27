@@ -42,12 +42,12 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
                     name="content_cont"
                     params={2176}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         name="quest_header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -43.5, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -10, marginRight: 10, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionQuestHeaderTxt ?? 'Caption PH'}
@@ -67,7 +67,7 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
                     <Region
                         name="more_info_txt"
                         params={209}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -69.5, width: 139, top: 89, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 139, top: 89, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}

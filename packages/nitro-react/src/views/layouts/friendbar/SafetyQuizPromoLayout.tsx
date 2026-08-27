@@ -12,13 +12,13 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
     const t = useTranslation();
 
     return (
-        <Region layout={{ position: 'relative', width: 577, height: 57, ...layout }}>
+        <Region layout={{ position: 'relative', width: 577, height: 57, justifyContent: 'center', ...layout }}>
             <Border
                 variant="2"
                 name="safety_quiz_overlay"
                 params={192}
                 tintColor="#9b0000"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -102.5, width: 577, top: 0, height: 57 }}
+                layout={{ position: 'absolute', marginLeft: 186, marginRight: -186, width: 577, top: 0, height: 57 }}
             >
                 <Border
                     variant="106"
@@ -46,7 +46,7 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
                     name="safety_quiz_button"
                     params={396305}
                     onPointerTap={onSafetyQuizButton}
-                    layout={{ position: 'absolute', right: 3, width: 188, top: '50%', marginTop: -25.5, height: 51 }}
+                    layout={{ position: 'absolute', right: 3, width: 188, alignSelf: 'center', height: 51 }}
                 >
                     {t('safety.promo.widget.button')}
                 </Button>

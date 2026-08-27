@@ -21,7 +21,7 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
                 <Region
                     name="border"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76 }}
+                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center' }}
                 >
                     <Region
                         params={144}
@@ -31,7 +31,7 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <OwnAvatarDecoratingLayoutDecorateItem />

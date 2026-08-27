@@ -79,7 +79,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                 <Region
                     name="playerDataContainer"
                     params={16}
-                    layout={{ width: 162, height: 62, flexShrink: 0 }}
+                    layout={{ width: 162, height: 62, flexShrink: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="playerDataBackground"
@@ -92,7 +92,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                         name="playerName_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerNameStroke ?? 'Painimies'}
@@ -102,7 +102,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                     <Region
                         name="playerName"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerName ?? 'Painimies'}
@@ -273,7 +273,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                 <Region
                     name="playerScoreContainer"
                     params={16}
-                    layout={{ width: 61, height: 62, flexShrink: 0 }}
+                    layout={{ width: 61, height: 62, flexShrink: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="playerScoreBackground"
@@ -312,14 +312,14 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                     </Region>
                     <Region
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 5, height: 50 }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="loadingIcon"
                             tags={[ 'bitmap' ]}
                             params={208}
                             src={srcLoadingIcon}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 5, height: 50 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
                         />
                     </Region>
                 </Region>

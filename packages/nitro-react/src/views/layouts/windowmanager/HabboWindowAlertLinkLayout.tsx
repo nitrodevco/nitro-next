@@ -25,7 +25,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
             onClose={onClose}
             layout={{ width: 278, height: 181, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="_alert_description"
                     tags={[ 'DESCRIPTION' ]}
@@ -44,7 +44,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     tags={[ 'LINK' ]}
                     params={918545}
                     onPointerTap={onAlertButtonLink}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: 18, width: 81, bottom: 39, height: 24, minWidth: 50 }}
+                    layout={{ position: 'absolute', marginLeft: 58.5, marginRight: -58.5, width: 81, bottom: 39, height: 24, minWidth: 50 }}
                 >
                     Open URL
                 </ButtonThick>
@@ -52,7 +52,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     name="_alert_button_ok"
                     tags={[ 'OK' ]}
                     params={918529}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -118, width: 82, bottom: 43, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -77, marginRight: 77, width: 82, bottom: 43, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onAlertButtonOk}
                     cursor="pointer"
                 >

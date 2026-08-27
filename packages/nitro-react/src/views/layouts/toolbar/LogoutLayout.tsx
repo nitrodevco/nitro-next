@@ -36,13 +36,13 @@ export const LogoutLayout = ({ captionHelpText, captionLogoutText, layout, onHel
                             params={16}
                             tintColor="#201e19"
                             blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 89, top: 3, height: 21 }}
+                            layout={{ position: 'absolute', left: 3, width: 89, top: 3, height: 21, justifyContent: 'center' }}
                         >
                             <Region
                                 name="help_text"
                                 tags={[ 'TEXT' ]}
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -32.5, width: 67, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 67, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionHelpText ?? t('toolbar.help')}
@@ -73,13 +73,13 @@ export const LogoutLayout = ({ captionHelpText, captionLogoutText, layout, onHel
                             params={16}
                             tintColor="#201e19"
                             blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 89, top: 3, height: 21 }}
+                            layout={{ position: 'absolute', left: 3, width: 89, top: 3, height: 21, justifyContent: 'center' }}
                         >
                             <Region
                                 name="logout_text"
                                 tags={[ 'TEXT' ]}
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -39.5, width: 77, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 77, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionLogoutText ?? t('toolbar.logout')}

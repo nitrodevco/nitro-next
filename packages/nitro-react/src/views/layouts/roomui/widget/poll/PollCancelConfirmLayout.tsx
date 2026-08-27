@@ -23,7 +23,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
             onClose={onClose}
             layout={{ width: 221, height: 153, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     params={144}
                     layout={{ position: 'absolute', left: 5, right: 18, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -44,7 +44,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
                 </Region>
                 <Region
                     params={1232}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -106.5, width: 201, bottom: 37, height: 22 }}
+                    layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 201, bottom: 37, height: 22 }}
                 >
                     <Button
                         variant="0"

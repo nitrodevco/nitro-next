@@ -35,10 +35,10 @@ export const SafetyBookletLayout = ({ captionDescription, captionTitle, layout, 
                     onClose={onFrameClose}
                     layout={{ position: 'absolute', left: 0, width: 500, top: 10, height: 530 }}
                 >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                    <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                         <Region
                             params={147664}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -61, top: 5, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', top: 5, flexDirection: 'row', gap: 2 }}
                         >
                             <WidgetSlot
                                 widgetType="progress_indicator"

@@ -21,12 +21,12 @@ export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContai
             <Region
                 name="coins_chest"
                 params={16}
-                layout={{ position: 'absolute', left: 0, width: 413, top: 0, height: 263 }}
+                layout={{ position: 'absolute', left: 0, width: 413, top: 0, height: 263, justifyContent: 'center' }}
             >
                 <Region
                     name="moving_container"
                     params={3280}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -162.5, width: 324, top: '50%', marginTop: -107.5, height: 228 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 324, alignSelf: 'center', marginTop: 6.5, marginBottom: -6.5, height: 228 }}
                 >
                     <ThemeImage
                         name="bg_img"
@@ -37,19 +37,19 @@ export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContai
                     <Region
                         name="balance_cont"
                         params={16}
-                        layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47 }}
+                        layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center' }}
                     >
                         <Region
                             name="balance_txt"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
                         </Region>
                         <Region
                             name="balance_container"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -12, width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
+                            layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
                         >
                             {itemsBalanceContainer ?? (
                                 <>

@@ -310,12 +310,12 @@ export const FloorPlanEditorBcLayoutAddTileItem = ({ layout, onAddTile }: FloorP
             name="add_tile"
             params={17}
             onPointerTap={onAddTile}
-            layout={{ width: 51, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_add_tile.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, top: '50%', marginTop: -21, height: 40 }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 40 }}
             />
         </ContainerButton>
     );
@@ -334,12 +334,12 @@ export const FloorPlanEditorBcLayoutRemoveTileItem = ({ layout, onRemoveTile }: 
             name="remove_tile"
             params={17}
             onPointerTap={onRemoveTile}
-            layout={{ width: 51, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 params={1835024}
                 src={layoutImage('floor_plan_editor_remove_tile.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, bottom: 1, height: 40 }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, bottom: 1, height: 40 }}
             />
         </ContainerButton>
     );
@@ -358,12 +358,12 @@ export const FloorPlanEditorBcLayoutIncreaseHeightItem = ({ layout, onIncreaseHe
             name="increase_height"
             params={17}
             onPointerTap={onIncreaseHeight}
-            layout={{ width: 51, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_raise_tile.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 40, top: '50%', marginTop: -20, height: 40 }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 40, alignSelf: 'center', height: 40 }}
             />
         </ContainerButton>
     );
@@ -382,12 +382,12 @@ export const FloorPlanEditorBcLayoutDecreaseHeightItem = ({ layout, onDecreaseHe
             name="decrease_height"
             params={17}
             onPointerTap={onDecreaseHeight}
-            layout={{ width: 51, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_sink_tile.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 40, top: '50%', marginTop: -17, height: 40 }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 40, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 40 }}
             />
         </ContainerButton>
     );
@@ -406,12 +406,12 @@ export const FloorPlanEditorBcLayoutSetEnterTileItem = ({ layout, onSetEnterTile
             name="set_enter_tile"
             params={17}
             onPointerTap={onSetEnterTile}
-            layout={{ width: 51, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_enter_tile.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, top: '50%', marginTop: -20, height: 40 }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, alignSelf: 'center', height: 40 }}
             />
         </ContainerButton>
     );

@@ -73,14 +73,14 @@ export const FurniViewLayout = ({ captionName, itemsButtonList, itemsInfostandEl
                         variant="3"
                         params={8388624}
                         tintColor="#333333"
-                        layout={{ position: 'absolute', left: 3, width: 184, top: 3, height: 56 }}
+                        layout={{ position: 'absolute', left: 3, width: 184, top: 3, height: 56, justifyContent: 'center' }}
                     >
                         <Button
                             variant="3"
                             name="set_values"
                             params={131281}
                             onPointerTap={onSetValues}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -37, width: 75, top: 4, height: 24 }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 75, top: 4, height: 24 }}
                         >
                             Set values
                         </Button>
@@ -421,7 +421,7 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
             params={17}
             onPointerTap={onOwnerRegion}
             cursor="pointer"
-            layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
+            layout={{ width: 170, height: 17, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Icon
                 variant="21"
@@ -452,13 +452,13 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
             </Region>
             <Region
                 visible={false}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 15, top: '50%', marginTop: -8.5, height: 15 }}
+                layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="temp_icon"
                     params={3932176}
                     src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 15, top: '50%', marginTop: -8.5, height: 15 }}
+                    layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
                 />
             </Region>
         </Region>

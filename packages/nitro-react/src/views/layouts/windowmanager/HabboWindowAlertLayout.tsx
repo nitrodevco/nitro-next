@@ -22,7 +22,7 @@ export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonLi
             onClose={onClose}
             layout={{ width: 278, height: 141, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="_alert_summary"
                     tags={[ 'DESCRIPTION' ]}
@@ -38,7 +38,7 @@ export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonLi
                 <Region
                     name="_alert_button_list"
                     params={787664}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -113, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32 }}
+                    layout={{ position: 'absolute', marginLeft: -5.5, marginRight: 5.5, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32 }}
                 >
                     {itemsAlertButtonList ?? (
                         <>

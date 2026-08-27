@@ -64,7 +64,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                             >
                                 <Region
                                     params={3148800}
-                                    layout={{ position: 'absolute', left: 0, width: 132, top: '50%', marginTop: -17.5, height: 35, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, width: 132, alignSelf: 'center', height: 35, flexDirection: 'column' }}
                                 >
                                     <Region
                                         params={16}

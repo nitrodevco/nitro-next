@@ -83,12 +83,12 @@ export const EffectboxLayout = ({ captionCancel, captionEffectboxHeaderDescripti
                         params={1041}
                         onPointerTap={onCancel}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32 }}
+                        layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center' }}
                     >
                         <Region
                             name="cancel"
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -41.5, width: 83, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionCancel ?? t('generic.cancel')}

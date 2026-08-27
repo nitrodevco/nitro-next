@@ -166,7 +166,7 @@ export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout }:
             <Region
                 name="vip_length"
                 params={3088}
-                layout={{ position: 'absolute', left: 37, width: 56, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 37, width: 56, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionVipLength ?? 'x 10 days'}
@@ -218,7 +218,7 @@ export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout }:
             <Region
                 name="perk_name"
                 params={3088}
-                layout={{ position: 'absolute', left: 37, width: 62, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 37, width: 62, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPerkName ?? 'perk name'}

@@ -16,7 +16,7 @@ export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercou
                 params={81}
                 onPointerTap={onUsercount}
                 cursor="pointer"
-                layout={{ position: 'absolute', right: 0, width: 34, top: 0, height: 13 }}
+                layout={{ position: 'absolute', right: 0, width: 34, top: 0, height: 13, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="usercount_bg"
@@ -27,7 +27,7 @@ export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercou
                 <Region
                     name="txt"
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: 3, width: 9, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: 7.5, marginRight: -7.5, width: 9, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTxt ?? '0'}

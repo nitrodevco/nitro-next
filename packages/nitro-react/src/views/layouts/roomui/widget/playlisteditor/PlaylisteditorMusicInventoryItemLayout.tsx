@@ -18,7 +18,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
         <Region layout={{ position: 'relative', width: 91, height: 104, ...layout }}>
             <Region
                 params={17}
-                layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104 }}
+                layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"
@@ -45,7 +45,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                     name="song_title_text"
                     tags={[ 'SONG_TITLE' ]}
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSongTitleText ?? ''} />
                 </Region>

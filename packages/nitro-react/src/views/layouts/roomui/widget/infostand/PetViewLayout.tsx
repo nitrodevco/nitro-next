@@ -307,12 +307,12 @@ export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatu
             <Region
                 name="level_container"
                 params={16}
-                layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78 }}
+                layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78, justifyContent: 'center' }}
             >
                 <Region
                     name="level_text"
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -23.5, width: 46, top: 10, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 46, top: 10, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLevelText ?? t('pet.level')}
@@ -322,7 +322,7 @@ export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatu
                 <Region
                     name="status_skill_text"
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, width: 117, top: 31, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 117, top: 31, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionStatusSkillText ?? t('infostand.pet.text.skill')}
@@ -333,7 +333,7 @@ export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatu
                     name="skill_level_indicator"
                     params={208}
                     src={srcSkillLevelIndicator}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -39.5, width: 78, top: 47, height: 18 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 78, top: 47, height: 18 }}
                 />
             </Region>
         </Region>
@@ -356,12 +356,12 @@ export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappine
         <Region
             name="status_happiness_container"
             params={16}
-            layout={{ width: 169, height: 34, flexShrink: 0, ...layout }}
+            layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="status_happiness_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -75.5, width: 150, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 150, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusHappinessText ?? t('infostand.pet.text.happiness')}
@@ -377,7 +377,7 @@ export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappine
             <Region
                 name="status_happiness_value_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusHappinessValueText ?? ''}
@@ -410,12 +410,12 @@ export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperi
         <Region
             name="status_experience_container"
             params={16}
-            layout={{ width: 169, height: 34, flexShrink: 0, ...layout }}
+            layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="status_experience_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -77.5, width: 155, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', width: 155, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusExperienceText ?? t('infostand.pet.text.experience')}
@@ -431,7 +431,7 @@ export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperi
             <Region
                 name="status_experience_value_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusExperienceValueText ?? ''}
@@ -464,12 +464,12 @@ export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText
         <Region
             name="status_energy_container"
             params={16}
-            layout={{ width: 169, height: 34, flexShrink: 0, ...layout }}
+            layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="status_energy_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -67.5, width: 135, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', width: 135, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusEnergyText ?? t('infostand.pet.text.energy')}
@@ -485,7 +485,7 @@ export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText
             <Region
                 name="status_energy_value_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusEnergyValueText ?? ''}
@@ -541,12 +541,12 @@ export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbei
         <Region
             name="status_wellbeing_container"
             params={16}
-            layout={{ width: 169, height: 34, flexShrink: 0, ...layout }}
+            layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="status_wellbeing_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -72.5, width: 144, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusWellbeingText ?? t('infostand.pet.text.wellbeing')}
@@ -562,7 +562,7 @@ export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbei
             <Region
                 name="status_wellbeing_value_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusWellbeingValueText ?? ''}
@@ -720,12 +720,12 @@ export const PetViewLayoutPetrespectContainerItem = ({ captionPetrespectText, la
         <Region
             name="petrespect_container"
             params={16}
-            layout={{ width: 164, height: 21, flexShrink: 0, ...layout }}
+            layout={{ width: 164, height: 21, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="petrespect_text"
                 params={208}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -68, width: 137, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 137, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPetrespectText ?? t('infostand.text.petrespect')}

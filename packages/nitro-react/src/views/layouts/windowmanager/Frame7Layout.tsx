@@ -9,7 +9,7 @@ export const Frame7Layout = ({ layout }: Frame7LayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 }}
-            layout={{ position: 'relative', width: 64, height: 73, ...layout }}
+            layout={{ position: 'relative', width: 64, height: 73, justifyContent: 'center', ...layout }}
         >
             <Header
                 name="titlebar"
@@ -33,7 +33,7 @@ export const Frame7Layout = ({ layout }: Frame7LayoutProps) => {
                 name="pointer"
                 tags={[ '_POINTER', '_INTERNAL', '_EXCLUDE' ]}
                 params={1232}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -4, width: 16, bottom: 2, height: 12 }}
+                layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 16, bottom: 2, height: 12 }}
             />
         </Region>
     );

@@ -63,7 +63,7 @@ export const SearchFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeade
                 name="title"
                 tags={[ 'label' ]}
                 params={3148816}
-                layout={{ position: 'absolute', left: 33, width: 77, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 33, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTitle ?? t('friend.bar.search.title')}

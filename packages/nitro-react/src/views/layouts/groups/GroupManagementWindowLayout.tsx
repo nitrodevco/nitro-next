@@ -351,12 +351,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         params={17}
                         onPointerTap={onStep1MembersRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18 }}
+                        layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center' }}
                     >
                         <Region
                             name="step_1_members_txt"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -37, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStep1MembersTxt ?? 'Members PH'}

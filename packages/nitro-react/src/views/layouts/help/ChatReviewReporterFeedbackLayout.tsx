@@ -28,7 +28,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={16400}
-                    layout={{ position: 'absolute', left: 11, width: 345, top: 2, height: 266 }}
+                    layout={{ position: 'absolute', left: 11, width: 345, top: 2, height: 266, justifyContent: 'center' }}
                 >
                     <Region
                         name="caption_txt"
@@ -78,7 +78,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
                         params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 140, top: 216, height: 50 }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 140, top: 216, height: 50 }}
                     >
                         {t('alert.close.button')}
                     </Button>

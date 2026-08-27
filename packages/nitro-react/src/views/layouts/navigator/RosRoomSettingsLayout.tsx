@@ -321,12 +321,12 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                             params={17}
                             onPointerTap={onRemoveLinkRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 60, width: 180, top: 339, height: 18 }}
+                            layout={{ position: 'absolute', left: 60, width: 180, top: 339, height: 18, justifyContent: 'center' }}
                         >
                             <Region
                                 name="remove_link"
                                 params={4980752}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -91, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
@@ -510,7 +510,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                 <Border
                                     variant="0"
                                     name="doormode_override_info"
-                                    layout={{ width: '100%', height: '100%' }}
+                                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                                 >
                                     <Region
                                         params={16}
@@ -535,7 +535,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                         name="builders_faq_button"
                                         params={131281}
                                         onPointerTap={onBuildersFaqButton}
-                                        layout={{ position: 'absolute', left: '50%', marginLeft: -143, width: 287, top: 122, height: 30 }}
+                                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
                                     >
                                         {t('notification.builders_club.room_locked.linkTitle')}
                                     </Button>
@@ -591,7 +591,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                         <Region
                             name="normal_rights_container"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367, justifyContent: 'center' }}
                         >
                             <Border
                                 variant="0"
@@ -619,7 +619,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                             <Region
                                 name="users_with_rights_txt"
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -163.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: -88.5, marginRight: 88.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
@@ -630,7 +630,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                             <Region
                                 name="friends_txt"
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: 11.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: 86.5, marginRight: -86.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}

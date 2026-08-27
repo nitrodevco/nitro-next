@@ -56,7 +56,7 @@ export const ReportWindowLayout = ({ captionUrgentHelpLink, itemsList, layout, o
                         variant="104"
                         params={16}
                         tintColor="#ac1d19"
-                        layout={{ width: 270, height: 108, flexShrink: 0 }}
+                        layout={{ width: 270, height: 108, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Region
                             params={16}
@@ -88,7 +88,7 @@ export const ReportWindowLayout = ({ captionUrgentHelpLink, itemsList, layout, o
                             params={147665}
                             tintColor="#bbbbbb"
                             onPointerTap={onSubmitButton}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -75, width: 136, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
+                            layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 136, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
                         >
                             {t('guide.help.request.user.create.input.button')}
                         </Button>

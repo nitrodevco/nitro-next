@@ -24,19 +24,19 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                 <Region
                     name="border"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292 }}
+                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center' }}
                 >
                     <Region
                         name="profile_link"
                         params={1}
                         onPointerTap={onProfileLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16 }}
+                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
                     >
                         <Region
                             name="name"
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'my_name_here'}
@@ -53,7 +53,7 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -52.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>

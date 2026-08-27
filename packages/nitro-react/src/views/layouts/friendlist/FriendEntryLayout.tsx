@@ -33,7 +33,7 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                 backgroundColor="#ffffcc"
                 onPointerTap={onBg}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, justifyContent: 'center' }}
             >
                 <Region
                     name="name"
@@ -109,7 +109,7 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                     name="face"
                     params={3932176}
                     src={srcFace}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 20, top: '50%', marginTop: -10, height: 20 }}
+                    layout={{ position: 'absolute', marginLeft: -43, marginRight: 43, width: 20, alignSelf: 'center', height: 20 }}
                 />
                 <ThemeImage
                     name="arrow_down_black"

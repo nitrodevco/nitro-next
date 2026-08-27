@@ -15,7 +15,7 @@ export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, 
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
             <Region
                 params={17}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}
             >
                 <Region
                     visible={false}
@@ -33,7 +33,7 @@ export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, 
                     tags={[ 'BITMAP' ]}
                     params={3935440}
                     src={srcBitmap}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40, maxWidth: 50, maxHeight: 50 }}
+                    layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40, maxWidth: 50, maxHeight: 50 }}
                 />
                 <Region
                     name="effect_amount_bg1"

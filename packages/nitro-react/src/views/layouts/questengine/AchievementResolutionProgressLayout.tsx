@@ -45,12 +45,12 @@ export const AchievementResolutionProgressLayout = ({ captionAchievementDesc, ca
                         >
                             <Region
                                 params={147472}
-                                layout={{ width: 82, height: 90, flexShrink: 0 }}
+                                layout={{ width: 82, height: 90, flexShrink: 0, justifyContent: 'center' }}
                             >
                                 <ThemeImage
                                     params={786448}
                                     src={layoutImage('icons_hilighter_yellow.png')}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -41, width: 82, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
+                                    layout={{ position: 'absolute', width: 82, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
                                 />
                                 <WidgetSlot
                                     widgetType="badge_image"

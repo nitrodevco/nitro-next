@@ -24,7 +24,7 @@ export const LayoutLoyaltyVipBuy_1714Layout = ({ captionVipInfo, captionVipLink,
                 <Region
                     name="loyaltyVipBuyWidget"
                     params={16}
-                    layout={{ position: 'absolute', left: 13, width: 320, top: 67, height: 345 }}
+                    layout={{ position: 'absolute', left: 13, width: 320, top: 67, height: 345, justifyContent: 'center' }}
                 >
                     <Region
                         tags={[ 'own_items_grid' ]}
@@ -61,7 +61,7 @@ export const LayoutLoyaltyVipBuy_1714Layout = ({ captionVipInfo, captionVipLink,
                     <Region
                         name="vip_link"
                         params={786449}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -141, width: 286, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionVipLink ?? t('catalog.vip.buy.link')}

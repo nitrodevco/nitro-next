@@ -28,7 +28,7 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                 <Region
                     name="_border"
                     params={8390800}
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
                 >
                     <Region
                         name="_strip_description"
@@ -57,7 +57,7 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                         tags={[ 'OK' ]}
                         params={918545}
                         onPointerTap={onStripButtonOk}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -115, width: 78, bottom: 7, height: 22, minWidth: 50 }}
+                        layout={{ position: 'absolute', marginLeft: -76, marginRight: 76, width: 78, bottom: 7, height: 22, minWidth: 50 }}
                     >
                         {t('generic.ok')}
                     </Button>

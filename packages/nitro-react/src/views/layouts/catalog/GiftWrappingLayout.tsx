@@ -114,13 +114,13 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                     <Region
                         name="avatar_image_container"
                         params={16}
-                        layout={{ position: 'absolute', left: 15, width: 60, top: 51, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149 }}
+                        layout={{ position: 'absolute', left: 15, width: 60, top: 51, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="avatar_image"
                             params={3935440}
                             src={srcAvatarImage}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -74.5, height: 149 }}
+                            layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149 }}
                         />
                     </Region>
                     <TextInput
@@ -291,12 +291,12 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                     <Region
                         name="color_picker_container"
                         params={16}
-                        layout={{ position: 'absolute', left: 20, width: 308, top: 360, height: 30 }}
+                        layout={{ position: 'absolute', left: 20, width: 308, top: 360, height: 30, justifyContent: 'center' }}
                     >
                         <Region
                             name="color_grid"
                             params={786449}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -153, width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                            layout={{ position: 'absolute', width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                         />
                     </Region>
                     <ButtonThick

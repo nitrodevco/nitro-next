@@ -23,46 +23,46 @@ export const AchievementCategoryLayout = ({ captionCompletionTxt, captionHeaderT
             >
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 112, top: '50%', marginTop: -52.5, height: 105 }}
+                    layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                 >
                     <ThemeImage
                         name="category_bg_act"
                         params={3089}
                         src={srcCategoryBgAct ?? '${image.library.questing.url}achievement_background_active_1.png'}
-                        layout={{ position: 'absolute', left: 0, width: 112, top: '50%', marginTop: -52.5, height: 105 }}
+                        layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                     />
                 </Region>
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 112, top: '50%', marginTop: -52.5, height: 105 }}
+                    layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                 >
                     <ThemeImage
                         name="category_bg_act_hover"
                         params={3089}
                         src={srcCategoryBgActHover ?? '${image.library.questing.url}achievement_background_active_2.png'}
-                        layout={{ position: 'absolute', left: 0, width: 112, top: '50%', marginTop: -52.5, height: 105 }}
+                        layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                     />
                 </Region>
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 110, top: '50%', marginTop: -51.5, height: 103 }}
+                    layout={{ position: 'absolute', left: 0, width: 110, alignSelf: 'center', height: 103 }}
                 >
                     <ThemeImage
                         name="category_bg_inact"
                         params={3088}
                         src={srcCategoryBgInact ?? '${image.library.questing.url}achievement_category_bkg_empty_3.png'}
-                        layout={{ position: 'absolute', left: 0, width: 110, top: '50%', marginTop: -51.5, height: 103 }}
+                        layout={{ position: 'absolute', left: 0, width: 110, alignSelf: 'center', height: 103 }}
                     />
                 </Region>
                 <Region
                     name="hover_container"
                     params={16}
-                    layout={{ position: 'absolute', left: 1, width: 115, top: 1, height: 104 }}
+                    layout={{ position: 'absolute', left: 1, width: 115, top: 1, height: 104, justifyContent: 'center' }}
                 >
                     <Region
                         name="header_txt"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34.5, width: 65, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 65, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionHeaderTxt ?? 'Decoration'} />
                     </Region>
@@ -75,7 +75,7 @@ export const AchievementCategoryLayout = ({ captionCompletionTxt, captionHeaderT
                     <Region
                         name="completion_txt"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 30, top: 70, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 30, top: 70, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCompletionTxt ?? '1/10'}

@@ -51,12 +51,12 @@ export const BarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRightPag
                     params={145}
                     onPointerTap={onContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 330, right: 10, top: 5, height: 42 }}
+                    layout={{ position: 'absolute', left: 330, right: 10, top: 5, height: 42, justifyContent: 'center' }}
                 >
                     <Region
                         name="wrapper"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: 0, height: 38 }}
+                        layout={{ position: 'absolute', width: 48, top: 0, height: 38 }}
                     >
                         <Region
                             name="list"

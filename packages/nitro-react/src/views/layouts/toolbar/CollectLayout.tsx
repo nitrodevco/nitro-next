@@ -42,14 +42,14 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                         layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 194 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 400 }}>
+                <Region layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 400, justifyContent: 'center' }}>
                     <ButtonThick
                         variant="5"
                         name="ok_button"
                         params={917505}
                         tintColor="#4faf4f"
                         onPointerTap={onOkButton}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -108.5, width: 219, top: 266, height: 38, minWidth: 219, maxWidth: 219 }}
+                        layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 219, top: 266, height: 38, minWidth: 219, maxWidth: 219 }}
                     >
                         {t('phone.number.collect.send.button')}
                     </ButtonThick>
@@ -132,7 +132,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                 <Region
                     name="user_input_buttons_container"
                     params={144}
-                    layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87 }}
+                    layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center' }}
                 >
                     <Border
                         variant="3"
@@ -142,12 +142,12 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                     <Region
                         name="user_input_buttons"
                         params={933904}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -229, width: 460, top: 15, height: 64 }}
+                        layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 460, top: 15, height: 64, justifyContent: 'center' }}
                     >
                         <Region
                             name="skip_link"
                             params={786433}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -230, width: 460, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 460, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onSkipLink}
                             cursor="pointer"
                         >
@@ -159,7 +159,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                         <Region
                             name="never_link"
                             params={786433}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -230, width: 460, top: 34, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 460, top: 34, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onNeverLink}
                             cursor="pointer"
                         >

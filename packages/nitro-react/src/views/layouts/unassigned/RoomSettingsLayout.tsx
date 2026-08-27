@@ -124,7 +124,7 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
         <Region
             name="tab_container_1"
             params={16}
-            layout={{ width: 321, height: 360, flexShrink: 0, ...layout }}
+            layout={{ width: 321, height: 360, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="room_name_label"
@@ -265,7 +265,7 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
                 params={147665}
                 onPointerTap={onRemoveLinkRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 189, top: 334, height: 22 }}
+                layout={{ position: 'absolute', width: 189, top: 334, height: 22 }}
             >
                 <Region
                     name="remove_link"
@@ -594,7 +594,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
                         variant="0"
                         name="doormode_override_info"
                         params={16}
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                     >
                         <Region
                             params={16}
@@ -620,7 +620,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
                             params={131281}
                             onPointerTap={onBuildersFaqButton}
                             textStyle="text-style-button-shiny-regular"
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -143, width: 287, top: 122, height: 30 }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
                         >
                             {t('notification.builders_club.room_locked.linkTitle')}
                         </Button>
@@ -695,7 +695,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
             <Region
                 name="normal_rights_container"
                 params={144}
-                layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 367 }}
+                layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 367, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"
@@ -723,7 +723,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                 <Region
                     name="users_with_rights_txt"
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -196, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -121, marginRight: 121, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
@@ -735,7 +735,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                     name="friends_txt"
                     params={786448}
                     visible={false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: 54, marginRight: -54, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}

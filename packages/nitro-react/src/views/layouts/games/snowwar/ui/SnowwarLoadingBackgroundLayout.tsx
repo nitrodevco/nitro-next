@@ -17,7 +17,7 @@ export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, sr
             <Region
                 params={2176}
                 backgroundColor="#eefafc"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="sky"
@@ -31,7 +31,7 @@ export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, sr
                     tags={[ 'bitmap' ]}
                     params={208}
                     src={srcSunshine ?? layoutImage('bg_sunshine.png')}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -284.5, width: 569, top: 0, height: 144 }}
+                    layout={{ position: 'absolute', width: 569, top: 0, height: 144 }}
                 />
                 <ThemeImage
                     name="vista_1"

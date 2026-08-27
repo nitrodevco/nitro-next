@@ -43,7 +43,7 @@ export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsConte
                     )}
                     <Region
                         params={16}
-                        layout={{ width: 320, height: 320, flexShrink: 0 }}
+                        layout={{ width: 320, height: 320, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Region
                             name="image_bg"
@@ -54,7 +54,7 @@ export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsConte
                         <Region
                             name="loadingText"
                             params={786640}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -127, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionLoadingText ?? t('camera.loading')}

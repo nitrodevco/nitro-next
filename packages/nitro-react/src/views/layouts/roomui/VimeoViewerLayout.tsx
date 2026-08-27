@@ -30,12 +30,12 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visib
                     name="video_background"
                     params={18576}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48 }}
+                    layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48, justifyContent: 'center' }}
                 >
                     <Region
                         name="no_videos_label"
                         params={3280}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -93.5, width: 187, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}

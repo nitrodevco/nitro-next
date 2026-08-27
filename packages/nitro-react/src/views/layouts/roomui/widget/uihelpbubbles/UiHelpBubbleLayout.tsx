@@ -25,7 +25,7 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
                         variant="7"
                         name="bubble"
                         params={2433}
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                     >
                         <Region
                             name="profile_region"
@@ -52,7 +52,7 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
                             params={917713}
                             tintColor="#33cc33"
                             onPointerTap={onHelpBubbleBtnOk}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -31, width: 41, top: 441, height: 28 }}
+                            layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 41, top: 441, height: 28 }}
                         >
                             OK
                         </Button>

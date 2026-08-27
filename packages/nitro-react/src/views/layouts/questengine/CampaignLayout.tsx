@@ -17,7 +17,7 @@ export const CampaignLayout = ({ captionCampaignHeaderTxt, captionCompletionTxt,
             <Region
                 name="campaign_container"
                 params={16}
-                layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 114 }}
+                layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 114, justifyContent: 'center' }}
             >
                 <Region
                     name="bg"
@@ -40,7 +40,7 @@ export const CampaignLayout = ({ captionCampaignHeaderTxt, captionCompletionTxt,
                 <Region
                     name="campaign_header_txt"
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, width: 95, top: 12, height: 17, maxWidth: 95, maxHeight: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', width: 95, top: 12, height: 17, maxWidth: 95, maxHeight: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionCampaignHeaderTxt ?? 'Decoration'}
@@ -51,30 +51,30 @@ export const CampaignLayout = ({ captionCampaignHeaderTxt, captionCompletionTxt,
                     name="campaign_pic_bitmap"
                     params={3088}
                     src={srcCampaignPicBitmap}
-                    layout={{ position: 'absolute', left: 11, width: 84, top: '50%', marginTop: -36, height: 72 }}
+                    layout={{ position: 'absolute', left: 11, width: 84, alignSelf: 'center', height: 72 }}
                 />
                 <ThemeImage
                     name="completion_bg_red_bitmap"
                     params={1232}
                     src={srcCompletionBgRedBitmap ?? '${image.library.questing.url}quest_counterbkg_disabled.png'}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 49, bottom: 10, height: 20 }}
+                    layout={{ position: 'absolute', width: 49, bottom: 10, height: 20 }}
                 />
                 <ThemeImage
                     name="completion_bg_blue_bitmap"
                     params={1232}
                     src={srcCompletionBgBlueBitmap ?? '${image.library.questing.url}quest_counterbkg_active.png'}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 49, bottom: 10, height: 20 }}
+                    layout={{ position: 'absolute', width: 49, bottom: 10, height: 20 }}
                 />
                 <ThemeImage
                     name="completion_bg_green_bitmap"
                     params={1232}
                     src={srcCompletionBgGreenBitmap ?? '${image.library.questing.url}quest_counterbkg_completed.png'}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 49, bottom: 10, height: 20 }}
+                    layout={{ position: 'absolute', width: 49, bottom: 10, height: 20 }}
                 />
                 <Region
                     name="completion_txt"
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -15.5, width: 30, top: 84, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 30, top: 84, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCompletionTxt ?? '1/10'}

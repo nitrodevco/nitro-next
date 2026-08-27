@@ -30,7 +30,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
             onClose={onClose}
             layout={{ width: 195, height: 462, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="image_container"
                     params={17}
@@ -70,7 +70,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     params={787473}
                     onPointerTap={onStatusSkillContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -92.5, width: 169, bottom: 42, height: 20 }}
+                    layout={{ position: 'absolute', marginLeft: -8, marginRight: 8, width: 169, bottom: 42, height: 20, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="status_skill_bitmap"
@@ -81,7 +81,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     <Region
                         name="status_skill_value_text"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionStatusSkillValueText ?? ''} />
                     </Region>
@@ -95,7 +95,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         name="status_skill_text"
                         params={208}
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -77.5, width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionStatusSkillText ?? t('infostand.pet.text.skill.next')} />
                     </Region>

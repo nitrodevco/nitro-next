@@ -250,7 +250,7 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                         params={17}
                         onPointerTap={onRareTeaserCont}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 395, width: 235, top: 1, height: 97 }}
+                        layout={{ position: 'absolute', left: 395, width: 235, top: 1, height: 97, justifyContent: 'center' }}
                     >
                         <Region
                             name="bg"
@@ -387,7 +387,7 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                         <Region
                             name="teaser_header"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -117.5, width: 230, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 230, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionTeaserHeader ?? t('quests.seasonalcalendar.rareteaser.header')}
@@ -397,7 +397,7 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                         <Region
                             name="teaser_info"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -106.5, width: 212, top: 71, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 212, top: 71, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionTeaserInfo ?? t('quests.seasonalcalendar.rareteaser.info')}

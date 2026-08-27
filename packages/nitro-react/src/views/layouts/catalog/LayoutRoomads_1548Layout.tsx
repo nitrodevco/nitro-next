@@ -37,7 +37,7 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                 <Region
                     name="roomAdsCatalogWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         name="ctlg_text_1"
@@ -118,7 +118,7 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                     <Region
                         name="price_container"
                         params={148688}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -22, width: 44, bottom: 58, height: 18 }}
+                        layout={{ position: 'absolute', width: 44, bottom: 58, height: 18 }}
                     />
                     <Region
                         name="purchaseWidget"

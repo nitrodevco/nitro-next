@@ -95,7 +95,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                         name="preview"
                         params={16}
                         tintColor="#dadada"
-                        layout={{ position: 'absolute', left: 0, width: 94, top: 20, height: 94 }}
+                        layout={{ position: 'absolute', left: 0, width: 94, top: 20, height: 94, justifyContent: 'center' }}
                     >
                         <Region
                             name="avatar_preview_region"
@@ -111,7 +111,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                             params={3932176}
                             visible={false}
                             options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -19, width: 33, top: '50%', marginTop: -17, height: 34 }}
+                            layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 33, alignSelf: 'center', height: 34 }}
                         />
                         <WidgetSlot
                             widgetType="pet_image"

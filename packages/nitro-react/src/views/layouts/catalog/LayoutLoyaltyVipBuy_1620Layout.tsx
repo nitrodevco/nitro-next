@@ -25,7 +25,7 @@ export const LayoutLoyaltyVipBuy_1620Layout = ({ captionVipInfo, captionVipLink,
                     name="loyaltyVipBuyWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         tags={[ 'own_items_grid' ]}
@@ -67,7 +67,7 @@ export const LayoutLoyaltyVipBuy_1620Layout = ({ captionVipInfo, captionVipLink,
                     <Region
                         name="vip_link"
                         params={787473}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -141, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionVipLink ?? t('catalog.vip.buy.link')}

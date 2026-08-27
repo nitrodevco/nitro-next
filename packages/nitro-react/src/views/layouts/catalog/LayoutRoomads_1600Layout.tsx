@@ -111,12 +111,12 @@ export const LayoutRoomads_1600Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                         variant="0"
                         name="totalprice_widget_border"
                         params={16400}
-                        layout={{ position: 'absolute', left: 10, width: 131, top: 396, height: 26 }}
+                        layout={{ position: 'absolute', left: 10, width: 131, top: 396, height: 26, justifyContent: 'center' }}
                     >
                         <Region
                             name="price_container"
                             params={131280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 44, top: 3, height: 18 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 3, height: 18 }}
                         />
                     </Border>
                     <Region

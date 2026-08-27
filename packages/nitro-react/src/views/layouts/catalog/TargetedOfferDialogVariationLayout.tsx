@@ -26,7 +26,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
             onClose={onClose}
             layout={{ width: 640, height: 480, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
                     name="bmp_illustration"
                     params={16}
@@ -35,7 +35,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                 />
                 <Region
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -265, width: 540, top: 366, height: 70 }}
+                    layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 540, top: 366, height: 70, justifyContent: 'center' }}
                 >
                     <Region
                         name="txt_status"
@@ -51,7 +51,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                     <Region
                         name="itemlist_buttonbar"
                         params={934096}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -240, top: 38, flexDirection: 'row', gap: 10 }}
+                        layout={{ position: 'absolute', top: 38, flexDirection: 'row', gap: 10 }}
                     >
                         {itemsItemlistButtonbar ?? (
                             <>
@@ -71,11 +71,11 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                 >
                     <Region
                         params={16}
-                        layout={{ position: 'absolute', left: 5, width: 631, top: 7, height: 30 }}
+                        layout={{ position: 'absolute', left: 5, width: 631, top: 7, height: 30, justifyContent: 'center' }}
                     >
                         <Region
                             params={933936}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, top: 0, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', top: 0, flexDirection: 'row' }}
                         >
                             <Region
                                 name="txt_time_left_label_1"

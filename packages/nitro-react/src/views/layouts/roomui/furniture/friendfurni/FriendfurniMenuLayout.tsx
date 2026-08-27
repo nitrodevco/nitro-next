@@ -24,15 +24,15 @@ export const FriendfurniMenuLayout = ({ itemsButtons, layout, onMinimize }: Frie
                 <Region
                     name="border"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76 }}
+                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center' }}
                 >
                     <Region
                         params={17}
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16 }}
+                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
                     >
                         <Region
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -53.5, width: 130, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: 11.5, marginRight: -11.5, width: 130, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('friendfurni.context.title')}
@@ -49,7 +49,7 @@ export const FriendfurniMenuLayout = ({ itemsButtons, layout, onMinimize }: Frie
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <FriendfurniMenuLayoutUseItem />

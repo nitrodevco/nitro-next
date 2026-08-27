@@ -108,11 +108,11 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     params={1041}
                     tintColor="#dddddd"
                     onPointerTap={onCancelBtn}
-                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 160, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 20, marginRight: -20, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('groupforum.settings.cancel')}
@@ -126,11 +126,11 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     params={263249}
                     tintColor="#0a9bc5"
                     onPointerTap={onOkBtn}
-                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 137, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 8.5, marginRight: -8.5, width: 137, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('groupforum.settings.ok')}

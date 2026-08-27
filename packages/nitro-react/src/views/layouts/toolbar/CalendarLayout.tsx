@@ -197,7 +197,7 @@ export const CalendarLayoutBtnSlotItem = ({ layout, onBtnSlot, srcBitmapBg, srcB
             params={21}
             onPointerTap={onBtnSlot}
             cursor="pointer"
-            layout={{ width: 202, height: 447, flexShrink: 0, ...layout }}
+            layout={{ width: 202, height: 447, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="bitmap_item"
@@ -208,43 +208,43 @@ export const CalendarLayoutBtnSlotItem = ({ layout, onBtnSlot, srcBitmapBg, srcB
             <Region
                 name="btn_present"
                 params={16}
-                layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192 }}
+                layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="bitmap_bg"
                     params={4079635}
                     src={srcBitmapBg}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
                 />
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="bitmap_opened_bg"
                         params={4079635}
                         src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
+                        layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
                     />
                 </Region>
                 <ThemeImage
                     name="bitmap_icon2"
                     params={4079635}
                     src={srcBitmapIcon2}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
                 />
                 <ThemeImage
                     name="bitmap_icon"
                     params={4079635}
                     src={srcBitmapIcon}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
                 />
             </Region>
             <ThemeImage
                 name="bitmap_lock"
                 params={4079635}
                 src={srcBitmapLock ?? layoutImage('campaign_calendar_generic_lock.png')}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -101, width: 47, top: '50%', marginTop: -223.5, height: 51 }}
+                layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 47, alignSelf: 'center', marginTop: -198, marginBottom: 198, height: 51 }}
             />
         </Region>
     );

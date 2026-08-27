@@ -53,12 +53,12 @@ export const GroupRoomInfoLayout = ({ captionGroupNameTxt, captionHeaderTxt, lay
                 <Region
                     name="content_cont"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 119 }}
+                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 119, justifyContent: 'center' }}
                 >
                     <Region
                         name="header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -82.5, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderTxt ?? t('group.homeroominfo.title')}

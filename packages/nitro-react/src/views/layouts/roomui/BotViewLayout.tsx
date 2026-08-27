@@ -109,14 +109,14 @@ export const BotViewLayoutImageAndBadgesContainerItem = ({ layout }: BotViewLayo
                 name="grey_bg"
                 params={16}
                 tintColor="#666666"
-                layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130 }}
+                layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130, justifyContent: 'center' }}
             >
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image"
                     params={3282}
                     options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 34, top: '50%', marginTop: -42, height: 84 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 34, alignSelf: 'center', height: 84 }}
                 />
             </Border>
             <WidgetSlot

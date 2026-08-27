@@ -28,7 +28,7 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
                 <Region
                     name="contents"
                     params={147600}
-                    layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: 100, minHeight: 100 }}
+                    layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: 100, minHeight: 100, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="type_icon"
@@ -39,7 +39,7 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
                     <Region
                         name="error_name"
                         params={3932176}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51, width: 101, top: '50%', marginTop: -39, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 101, alignSelf: 'center', marginTop: -30.5, marginBottom: 30.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionErrorName ?? 'EXECUTION_CAP'} />
                     </Region>

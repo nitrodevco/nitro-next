@@ -145,7 +145,7 @@ export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layo
         <Region
             name="hue_container"
             params={16}
-            layout={{ width: 251, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="parameter"
@@ -161,7 +161,7 @@ export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layo
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
+                layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
             <Region
                 name="slider_movement_area"
@@ -194,7 +194,7 @@ export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParamete
         <Region
             name="saturation_container"
             params={16}
-            layout={{ width: 251, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="parameter"
@@ -210,7 +210,7 @@ export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParamete
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
+                layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
             <Region
                 name="slider_movement_area"
@@ -243,7 +243,7 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
         <Region
             name="lightness_container"
             params={16}
-            layout={{ width: 251, height: 42, flexShrink: 0, ...layout }}
+            layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="parameter"
@@ -259,7 +259,7 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
+                layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
             <Region
                 name="slider_movement_area"

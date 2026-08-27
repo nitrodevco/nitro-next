@@ -124,7 +124,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                             tags={[ '#icon' ]}
                             params={3145744}
                             src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 9, width: 6, top: '50%', marginTop: 13, height: 8 }}
+                            layout={{ position: 'absolute', left: 9, width: 6, alignSelf: 'center', marginTop: 17, marginBottom: -17, height: 8 }}
                         />
                     </Region>
                 </Border>
@@ -146,7 +146,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                             name="arrow_expand"
                             params={3145744}
                             src={srcArrowExpand ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 11, width: 6, top: '50%', marginTop: -4, height: 8 }}
+                            layout={{ position: 'absolute', left: 11, width: 6, alignSelf: 'center', height: 8 }}
                         />
                     </Region>
                 </Border>

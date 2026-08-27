@@ -45,17 +45,17 @@ export const AchievementResolutionCompletedLayout = ({ layout, onCancelButton, o
                     </Region>
                     <Region
                         params={147472}
-                        layout={{ width: 125, height: 120, flexShrink: 0 }}
+                        layout={{ width: 125, height: 120, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             params={786448}
                             src={layoutImage('common_hilight_big.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -57.5, width: 120, top: 0, height: 120, minHeight: 120, maxHeight: 120 }}
+                            layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 120, top: 0, height: 120, minHeight: 120, maxHeight: 120 }}
                         />
                         <ThemeImage
                             params={786448}
                             src={layoutImage('icons_hilighter_yellow.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -38.5, width: 81, top: 20, height: 90, minHeight: 90, maxHeight: 90 }}
+                            layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 81, top: 20, height: 90, minHeight: 90, maxHeight: 90 }}
                         />
                         <WidgetSlot
                             widgetType="badge_image"

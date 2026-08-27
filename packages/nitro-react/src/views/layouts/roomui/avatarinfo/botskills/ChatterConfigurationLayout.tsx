@@ -25,11 +25,11 @@ export const ChatterConfigurationLayout = ({ itemsConfigurationItems, layout, on
                 <Region
                     params={144}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20 }}
+                    layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20, justifyContent: 'center' }}
                 >
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -99, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('bot.skill.chatter.configuration.title')}

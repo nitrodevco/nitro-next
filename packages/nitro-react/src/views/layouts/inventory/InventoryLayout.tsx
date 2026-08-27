@@ -200,7 +200,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                         name="empty_container"
                         params={2064}
                         visible={visibleEmptyContainer ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 478, top: 20, bottom: 3 }}
+                        layout={{ position: 'absolute', left: 0, width: 478, top: 20, bottom: 3, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="image"
@@ -242,7 +242,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             params={918545}
                             onPointerTap={onOpenCatalogBtn}
                             textStyle="text-style-button-shiny-regular"
-                            layout={{ position: 'absolute', left: '50%', marginLeft: 2, width: 149, bottom: 2, height: 51 }}
+                            layout={{ position: 'absolute', marginLeft: 76.5, marginRight: -76.5, width: 149, bottom: 2, height: 51 }}
                         >
                             {t('inventory.open.catalog')}
                         </Button>
@@ -701,7 +701,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="preview_container"
                                 params={2128}
-                                layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0 }}
+                                layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0, justifyContent: 'center' }}
                             >
                                 <Region
                                     name="preview_text"
@@ -733,7 +733,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     name="preview_info"
                                     params={788496}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 154, top: 200, bottom: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', marginLeft: -13, marginRight: 13, width: 154, top: 200, bottom: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewInfo ?? '...'}
@@ -783,7 +783,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 <Region
                                     name="bot_name"
                                     params={3145744}
-                                    layout={{ position: 'absolute', left: 0, width: 67, top: '50%', marginTop: -130.5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 0, width: 67, alignSelf: 'center', marginTop: -121, marginBottom: 121, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionBotName ?? 'bot name'}
@@ -1037,7 +1037,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     <Region
                                         name="score_description_text"
                                         params={3932240}
-                                        layout={{ position: 'absolute', right: 0, width: 468, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                        layout={{ position: 'absolute', right: 0, width: 468, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                     >
                                         <ThemeText
                                             text={captionScoreDescriptionText ?? t('achievements_score_description')}
