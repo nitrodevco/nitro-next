@@ -32,7 +32,18 @@ export default defineConfig({
         emptyOutDir: true,
         rollupOptions: {
             output: {
-                manualChunks: id => {
+                manualChunks: (id, meta) => {
+                    // A module that something `import()`s has to keep a chunk of its own. Folding
+                    // it into the chunk that imports it turns that `import()` into a self-import -
+                    // a promise that only settles once the importing chunk has finished evaluating -
+                    // so any top-level await on it deadlocks: the chunk never finishes, nothing
+                    // downstream of it ever evaluates, and the browser reports nothing at all.
+                    // `truffle-text` top-level awaits `initFreeType()`, which `import()`s the
+                    // FreeType Emscripten module, and the blanket `node_modules -> vendor` rule
+                    // below used to put both sides in `vendor`. That deadlock is what left the
+                    // production build a silent black screen while dev (unbundled) was fine.
+                    if (meta.getModuleInfo(id)?.dynamicImporters?.length) return;
+
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }
