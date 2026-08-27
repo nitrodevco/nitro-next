@@ -15,6 +15,9 @@ export type WindowRegistry = {
     inventory: InventoryViewWindowParams;
 
     navigator: NavigatorViewWindowParams;
+
+    /** Dev tool: browse/open any of the generated Flash layout ports (views/layouts). */
+    layout_browser: NoWindowParams;
 };
 
 export type NoWindowParams = Record<string, unknown>;

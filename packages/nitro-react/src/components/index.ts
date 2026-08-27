@@ -4,6 +4,7 @@ export * from './catalog/CatalogComponent';
 export * from './catalog/CatalogWrapper';
 export * from './FurnitureImage';
 export * from './inventory/InventoryComponent';
+export * from './layout-browser/LayoutBrowserComponent';
 export * from './messenger/FriendListComponent';
 export * from './messenger/FriendListWrapper';
 export * from './messenger/MessengerComponent';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Box, ColorLayer, ThemeImage, NitroIcon } from '#base/theme';
+import { Box, ColorLayer, Icon, NitroIcon, ThemeImage } from '#base/theme';
 
 import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
@@ -45,7 +45,7 @@ export const ToolbarView = () => {
 
     return (
         <>
-            {isMeExpanded && <ToolbarMeMenuPixi />}
+            {isMeExpanded && <ToolbarMeMenuPixi onSelect={() => setMeExpanded(false)} />}
             {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
             <Box layout={{
                 position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', height: 54,
@@ -148,6 +148,13 @@ export const ToolbarView = () => {
                         icon="icon-camera"
                         layout={{}}
                     />
+                    <Box
+                        cursor="pointer"
+                        onPointerTap={() => toggleWindow('layout_browser')}
+                        layout={{}}
+                    >
+                        <Icon variant="30" />
+                    </Box>
                 </Box>
                 <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingLeft: ICON_SPACING }}>
                     <ColorLayer

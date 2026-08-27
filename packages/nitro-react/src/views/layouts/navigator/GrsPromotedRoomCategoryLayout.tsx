@@ -1,0 +1,140 @@
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, ContainerButton, Icon, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
+
+/** Generated from `3061_grs_promoted_room_category_xml` (layout "hells", 270x90) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface GrsPromotedRoomCategoryLayoutProps {
+    captionCategoryNameTxt?: string;
+    captionCloseTxt?: string;
+    captionLeaderNameCaptionTxt?: string;
+    captionLeaderNameTxt?: string;
+    captionOpenTxt?: string;
+    captionRoomNameTxt?: string;
+    layout?: BoxLayout;
+    onEnterRoomButton?: () => void;
+    onLeaderRegion?: () => void;
+    onToggleOpenRegion?: () => void;
+    srcNaviRoomIcon?: string;
+}
+
+export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionCloseTxt, captionLeaderNameCaptionTxt, captionLeaderNameTxt, captionOpenTxt, captionRoomNameTxt, layout, onEnterRoomButton, onLeaderRegion, onToggleOpenRegion, srcNaviRoomIcon }: GrsPromotedRoomCategoryLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 270, height: 90, ...layout }}>
+            <Region
+                name="row"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 90 }}
+            >
+                <Border
+                    variant="3"
+                    name="category_header"
+                    params={145}
+                    tintColor="#999999"
+                    layout={{ position: 'absolute', left: 1, width: 126, top: 0, height: 22 }}
+                >
+                    <Region
+                        name="category_name_txt"
+                        params={16}
+                        layout={{ position: 'absolute', left: 7, width: 59, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionCategoryNameTxt ?? 'Dippa daa'}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Border>
+                <ContainerButton
+                    variant="3"
+                    name="enter_room_button"
+                    params={145}
+                    onPointerTap={onEnterRoomButton}
+                    layout={{ position: 'absolute', left: 1, width: 269, top: 19, height: 53 }}
+                >
+                    <WidgetSlot
+                        widgetType="avatar_image"
+                        name="avatar_image_widget"
+                        params={16}
+                        layout={{ position: 'absolute', left: -13, width: 90, top: -26, height: 130 }}
+                    />
+                    <Region
+                        name="leader_region"
+                        params={1041}
+                        onPointerTap={onLeaderRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 61, width: 201, top: 28, height: 19 }}
+                    >
+                        <Region
+                            name="leader_name_caption_txt"
+                            params={16}
+                            layout={{ position: 'absolute', left: 0, width: 166, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionLeaderNameCaptionTxt ?? t('navigator.promotedrooms.owner')} />
+                        </Region>
+                        <Region
+                            name="leader_name_txt"
+                            params={16}
+                            layout={{ position: 'absolute', left: 49, width: 71, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionLeaderNameTxt ?? 'WillyWallyWolly'} />
+                        </Region>
+                    </Region>
+                    <Region
+                        name="room_name_txt"
+                        params={16}
+                        layout={{ position: 'absolute', left: 60, width: 147, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionRoomNameTxt ?? 'Dippa daa'} />
+                    </Region>
+                    <ThemeImage
+                        name="navi_room_icon"
+                        params={80}
+                        src={srcNaviRoomIcon}
+                        layout={{ position: 'absolute', left: 212, width: 44, top: 3, height: 30 }}
+                    />
+                </ContainerButton>
+                <Region
+                    name="toggle_open_region"
+                    params={17}
+                    onPointerTap={onToggleOpenRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 4, width: 263, top: 74, height: 17 }}
+                >
+                    <Region
+                        name="open_txt"
+                        params={16}
+                        layout={{ position: 'absolute', left: -1, width: 191, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionOpenTxt ?? t('navigator.promotedrooms.viewtopten')} />
+                    </Region>
+                    <Region
+                        name="close_txt"
+                        params={16}
+                        layout={{ position: 'absolute', left: -1, width: 189, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionCloseTxt ?? t('navigator.promotedrooms.hidetopten')} />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="arrow_right_icon"
+                        params={16}
+                        tintColor="#000000"
+                        layout={{ position: 'absolute', left: 252, width: 12, top: 5, height: 18 }}
+                    />
+                    <Icon
+                        variant="7"
+                        name="arrow_down_icon"
+                        params={16}
+                        tintColor="#000000"
+                        layout={{ position: 'absolute', left: 249, width: 12, top: 7, height: 18 }}
+                    />
+                </Region>
+                <Region
+                    name="item_list"
+                    params={2193}
+                    layout={{ position: 'absolute', left: 3, width: 264, top: 97, height: 216, flexDirection: 'column' }}
+                />
+            </Region>
+        </Region>
+    );
+};

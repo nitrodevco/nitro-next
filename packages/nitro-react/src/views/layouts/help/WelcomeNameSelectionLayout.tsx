@@ -1,0 +1,99 @@
+import { useState } from 'react';
+
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, Button, Region, TextInput, ThemeText } from '#base/theme';
+
+/** Generated from `2885_welcome_name_selection_xml` (layout "newuser_change_name", 303x193) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface WelcomeNameSelectionLayoutProps {
+    captionInfoText?: string;
+    captionStaticInfoText?: string;
+    layout?: BoxLayout;
+    onCancelSelectionButton?: () => void;
+    onCheckNameButton?: () => void;
+    onSelectNameButton?: () => void;
+}
+
+export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton }: WelcomeNameSelectionLayoutProps) => {
+    const t = useTranslation();
+    const [ inputValue, setInputValue ] = useState('');
+
+    return (
+        <Region layout={{ position: 'relative', width: 303, height: 193, ...layout }}>
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 193 }}
+            >
+                <Region
+                    name="static_info_text"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionStaticInfoText ?? t('tutorial.name_change.info.select')}
+                        textStyle="text-style-il-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 284 }}
+                    />
+                </Region>
+                <Border
+                    variant="105"
+                    name="input_border"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 167, top: 45, height: 25 }}
+                >
+                    <TextInput
+                        value={inputValue}
+                        onChange={setInputValue}
+                        maxLength={15}
+                        layout={{ position: 'absolute', left: 8, width: 154, top: 5, height: 17 }}
+                    />
+                </Border>
+                <Button
+                    variant="3"
+                    name="check_name_button"
+                    params={131089}
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCheckNameButton}
+                    layout={{ position: 'absolute', left: 185, width: 108, top: 41, height: 32, maxWidth: 108 }}
+                >
+                    {t('tutorial.name_change.check')}
+                </Button>
+                <Region
+                    name="info_text"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 280, top: 76, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText ?? ''}
+                        textStyle="text-style-il-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
+                    />
+                </Region>
+                <Region
+                    name="suggestions"
+                    params={131089}
+                    layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31 }}
+                />
+                <Button
+                    variant="3"
+                    name="select_name_button"
+                    params={131089}
+                    tintColor="#bbbbbb"
+                    onPointerTap={onSelectNameButton}
+                    layout={{ position: 'absolute', left: 10, width: 166, top: 152, height: 33 }}
+                >
+                    {t('tutorial.name_change.pick')}
+                </Button>
+                <Button
+                    variant="3"
+                    name="cancel_selection_button"
+                    params={393233}
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCancelSelectionButton}
+                    layout={{ position: 'absolute', left: 194, width: 99, top: 152, height: 33 }}
+                >
+                    {t('generic.cancel')}
+                </Button>
+            </Region>
+        </Region>
+    );
+};

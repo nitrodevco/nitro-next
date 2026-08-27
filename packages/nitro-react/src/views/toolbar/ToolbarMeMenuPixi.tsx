@@ -1,25 +1,58 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useSystemActions } from '#base/context';
+import { Border } from '#base/theme';
+import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { MemenuMainSimpleLayout } from '#base/views/layouts/roomui/MemenuMainSimpleLayout';
 
-import { ToolbarMenu } from './ToolbarMenu';
+export interface ToolbarMeMenuPixiProps {
+    /** Fired after any tile is chosen - the Flash menu hid itself (`hide()`) on every click. */
+    onSelect?: () => void;
+}
 
-/** Pixi port of theme/ToolbarMeMenu.tsx. */
-export const ToolbarMeMenuPixi: ForwardRefExoticComponent<RefAttributes<PixiContainer>> = forwardRef<PixiContainer>((_, ref) => {
-    const t = useTranslation();
+/**
+ * The me menu, driven by the `memenu_main_simple` layout port (the `simple.memenu.enabled`
+ * variant com/sulake/habbo/ui/widget/memenu/MeMenuMainView.as builds). Tile icons come from
+ * that class's `_icons` table (`<name>_white` at rest, `<name>_color` on hover - only the rest
+ * state is shown here), and the click handlers follow its `onButtonClicked` switch: `rooms`
+ * opened the user's own rooms (the navigator here), the rest reach features this client doesn't
+ * have windows for yet (profile, minimail, settings, achievements, talent track, guide tool)
+ * and only close the menu.
+ */
+export const ToolbarMeMenuPixi: ForwardRefExoticComponent<ToolbarMeMenuPixiProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ToolbarMeMenuPixiProps>(({ onSelect }, ref) => {
+    const { showWindow } = useSystemActions();
+    const icon = (name: string) => layoutImage(`${name}_white.png`);
+
+    const choose = (action?: () => void) => () => {
+        action?.();
+        onSelect?.();
+    };
 
     return (
-        <ToolbarMenu
+        <Border
             ref={ref}
-            items={[
-                { icon: 'icon-me-profile', label: t('widget.memenu.profile') },
-                { icon: 'icon-me-rooms', label: t('widget.memenu.myrooms') },
-                { icon: 'icon-me-clothing', label: t('widget.memenu.myclothes') },
-                { icon: 'icon-me-forums', label: t('widget.memenu.forums') },
-                { icon: 'icon-me-collectibles', label: t('memenu.collectibles') },
-            ]}
-        />
+            variant="3"
+            tintColor="#2e2d2c"
+            layout={{ position: 'absolute', left: 4, bottom: 58, padding: 6 }}
+        >
+            <MemenuMainSimpleLayout
+                srcProfileIcon={icon('profile')}
+                srcMinimailIcon={icon('minimail')}
+                srcRoomsIcon={icon('gohome')}
+                srcSettingsIcon={icon('settings')}
+                srcAchievementsIcon={icon('achievements')}
+                srcTalentsIcon={icon('compass')}
+                srcGuideIcon={icon('lighthouse')}
+                onRooms={choose(() => showWindow('navigator'))}
+                onProfile={choose()}
+                onMinimail={choose()}
+                onSettings={choose()}
+                onAchievements={choose()}
+                onTalents={choose()}
+                onGuide={choose()}
+            />
+        </Border>
     );
 });
 

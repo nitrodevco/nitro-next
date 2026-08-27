@@ -205,6 +205,15 @@ for (const file of readdirSync(IMAGE_DIR)) {
 const copiedImages = new Map<string, string>();
 const unresolvedImages = new Set<string>();
 
+/**
+ * Bitmaps no layout names statically but the client assigned at runtime - MeMenuMainView.as's
+ * `_icons` table (`<name>_white` default / `<name>_color` hover per me-menu tile). Copied so the
+ * wired views can reference them through `layoutImage()` like everything else.
+ */
+const RUNTIME_IMAGES = [
+    'gohome', 'dance', 'clothes', 'effects', 'badges', 'wave', 'settings', 'credits', 'minimail', 'profile', 'achievements', 'compass', 'lighthouse',
+].flatMap(name => [ `${name}_white`, `${name}_color` ]);
+
 const resolveImage = (name: string): string | undefined => {
     const file = imageFiles.get(name) ?? imageFiles.get(`${name}_png`);
 
@@ -229,7 +238,19 @@ const resolveImage = (name: string): string | undefined => {
 // Emitter
 // ---------------------------------------------------------------------------------------------
 
+/** State shared by every component emitted into one file (the layout plus its list-row sub-components). */
+interface FileContext {
+    componentName: string;
+    imports: Set<string>;
+    scrollTargets: Map<string, 'vertical' | 'horizontal'>;
+    warnings: string[];
+    /** Source of the row-template sub-components, appended after the main component. */
+    subComponents: string[];
+    subComponentNames: string[];
+}
+
 interface EmitContext {
+    file: FileContext;
     imports: Set<string>;
     usesTranslation: boolean;
     props: Map<string, string>;
@@ -239,11 +260,17 @@ interface EmitContext {
     warnings: string[];
 }
 
+const createEmitContext = (file: FileContext): EmitContext => ({
+    file, imports: file.imports, usesTranslation: false, props: new Map(), states: [], propCounts: new Map(), scrollTargets: file.scrollTargets, warnings: file.warnings,
+});
+
 interface ParentBox {
     width: number;
     height: number;
     /** Children of an item list flow in a flex row/column instead of being absolutely placed. */
     flow: boolean;
+    /** The root of a row-template sub-component also merges the caller's own `layout` prop. */
+    spreadLayout?: boolean;
 }
 
 const INDENT = '    ';
@@ -345,7 +372,20 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     if (el.attrs.height_min) fields.minHeight = num(el.attrs.height_min);
     if (el.attrs.height_max) fields.maxHeight = num(el.attrs.height_max);
 
-    return layoutLiteral({ ...fields, ...extra });
+    const literal = layoutLiteral({ ...fields, ...extra });
+
+    return parent.spreadLayout ? literal.replace(/ \}$/, ', ...layout }') : literal;
+};
+
+/** A named element's value can be overridden through a prop (`captionTitle`, `srcIcon`, ...). */
+const overrideProp = (ctx: EmitContext, el: Element, prefix: string, type: string): string | undefined => {
+    if (!el.attrs.name) return undefined;
+
+    const name = uniqueProp(ctx, `${prefix}${pascal(el.attrs.name)}`);
+
+    ctx.props.set(name, type);
+
+    return name;
 };
 
 /** The `ThemeLayoutMeta` props shared by every themed component. */
@@ -428,12 +468,17 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
     const textProps: string[] = [];
+    const override = overrideProp(ctx, el, 'caption', 'string');
+    const hasText = !!(caption || override);
 
-    if (caption) textProps.push(`text=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
+    if (override && caption) textProps.push(`text={${override} ?? ${caption}}`);
+    else if (override) textProps.push(`text={${override} ?? ''}`);
+    else if (caption) textProps.push(`text=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
+
     if (textStyle) textProps.push(`textStyle="${textStyle}"`);
     if (Object.values(textOptions).some(value => value !== undefined)) textProps.push(`textOptions={${layoutLiteral(textOptions)}}`);
 
-    if (caption) ctx.imports.add('ThemeText');
+    if (hasText) ctx.imports.add('ThemeText');
     ctx.imports.add('Region');
 
     const regionProps = [
@@ -448,7 +493,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     if (el.attrs.background === 'true' && hexColor(el.attrs.color)) regionProps.push(`backgroundColor=${quote(hexColor(el.attrs.color)!)}`);
 
-    return wrap('Region', regionProps, indent, caption ? openTag('ThemeText', textProps, indent + INDENT, true) : []);
+    return wrap('Region', regionProps, indent, hasText ? openTag('ThemeText', textProps, indent + INDENT, true) : []);
 };
 
 const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -472,7 +517,10 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
         }
     }
 
-    props.push(`src={${src ?? 'undefined'}}`);
+    const override = overrideProp(ctx, el, 'src', 'string');
+
+    if (override && src) props.push(`src={${override} ?? ${src}}`);
+    else props.push(`src={${override ?? src ?? 'undefined'}}`);
 
     if (bool(el.vars.stretched_x) || bool(el.vars.fit_size_to_contents) === false) props.push(`width={${num(el.attrs.width)}}`);
     if (bool(el.vars.stretched_y) || bool(el.vars.fit_size_to_contents) === false) props.push(`height={${num(el.attrs.height)}}`);
@@ -508,9 +556,11 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const innerParent = selfBox(el, true);
     const meta = metaProps(ctx, el);
     const background = el.attrs.background === 'true' && hexColor(el.attrs.color) ? [ `backgroundColor="${hexColor(el.attrs.color)!}"` ] : [];
+    const contentIndent = scroll ? indent + INDENT : indent;
+    const children = emitListChildren(ctx, el, innerParent, contentIndent + INDENT);
 
     if (!scroll) {
-        return wrap('Region', [ ...meta, ...background, `layout={${boxLayout(el, parent, flowLayout)}}` ], indent, emitChildren(ctx, el, innerParent, indent + INDENT));
+        return wrap('Region', [ ...meta, ...background, `layout={${boxLayout(el, parent, flowLayout)}}` ], indent, children);
     }
 
     ctx.imports.add('ScrollArea');
@@ -518,11 +568,34 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const content = wrap(
         'Region',
         [ ...meta, ...background, `layout={${layoutLiteral({ ...flowLayout, width: '\'100%\'' })}}` ],
-        indent + INDENT,
-        emitChildren(ctx, el, innerParent, indent + INDENT + INDENT),
+        contentIndent,
+        children,
     );
 
     return wrap('ScrollArea', [ `orientation="${scroll}"`, `layout={${boxLayout(el, parent)}}` ], indent, content);
+};
+
+/**
+ * A list's *named* children are the row templates the Flash code cloned per data item
+ * (`removeListItemAt(0)` then `clone()` per entry - see e.g. FriendRequestsTab.as). Each becomes
+ * its own exported sub-component, and the list gets an `items<ListName>` slot that replaces the
+ * template rows with real data; unnamed children stay inline as plain static content.
+ */
+const emitListChildren = (ctx: EmitContext, list: Element, parent: ParentBox, indent: string): string[] => {
+    const named = list.children.filter(child => child.attrs.name && !SKIPPED_TAGS.has(child.tag));
+
+    if (!named.length || !list.attrs.name) return emitChildren(ctx, list, parent, indent);
+
+    const slot = uniqueProp(ctx, `items${pascal(list.attrs.name)}`);
+
+    ctx.props.set(slot, 'ReactNode');
+    ctx.imports.add('ReactNode');
+
+    const templates = named.map(child => generateSubComponent(ctx.file, child, parent));
+    const fallback = templates.map(name => `${indent}${INDENT}<${name} />`);
+    const rest = list.children.filter(child => !named.includes(child)).flatMap(child => emit(ctx, child, parent, indent));
+
+    return [ `${indent}{${slot} ?? (`, ...(fallback.length === 1 ? fallback : [ `${indent}${INDENT}<>`, ...fallback.map(line => INDENT + line), `${indent}${INDENT}</>` ]), `${indent})}`, ...rest ];
 };
 
 const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined, indent: string): string[] => {
@@ -586,15 +659,19 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
 
     const hidden = el.attrs.visible === 'false';
     const props = [ ...variantProp(el), ...metaProps(ctx, el, false), ...tintProp(el), ...extraProps ];
+    // Elements the Flash code toggled at runtime (anything hidden by default, plus every named
+    // bubble - see FriendRequestsTab.as showing its `bubble` on select) get a `visible<Name>` prop.
+    const visibleOverride = el.attrs.name && (hidden || el.tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
 
-    if (!hidden) return wrap(component, [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, children(indent + INDENT));
+    if (!hidden && !visibleOverride) return wrap(component, [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, children(indent + INDENT));
 
-    // Components that don't forward `visible` to their Box get a hidden Region wrapper instead.
+    // Components that don't forward `visible` to their Box get a Region wrapper carrying it instead.
     ctx.imports.add('Region');
 
     const inner = wrap(component, [ ...props, 'layout={{ width: \'100%\', height: \'100%\' }}' ], indent + INDENT, children(indent + INDENT + INDENT));
+    const visible = visibleOverride ? `visible={${visibleOverride} ?? ${!hidden}}` : 'visible={false}';
 
-    return wrap('Region', [ 'visible={false}', `layout={${boxLayout(el, parent)}}` ], indent, inner);
+    return wrap('Region', [ visible, `layout={${boxLayout(el, parent)}}` ], indent, inner);
 };
 
 const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -624,10 +701,24 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
         case 'gradient': {
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el) ];
+            const props = [ ...metaProps(ctx, el, false) ];
             const color = hexColor(el.attrs.color);
 
+            if (el.attrs.visible === 'false') {
+                const visibleOverride = el.attrs.name ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+
+                props.push(visibleOverride ? `visible={${visibleOverride} ?? false}` : 'visible={false}');
+            }
+
             if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(`backgroundColor="${color}"`);
+
+            // A named `region` with the low `params` bit set is a click target in the Flash client
+            // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
+            // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
+            if (tag === 'region' && el.attrs.name && (num(el.attrs.params) & 1)) {
+                props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
+                props.push('cursor="pointer"');
+            }
 
             if (el.attrs.clipping === 'true') return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, { overflow: '\'hidden\'' })}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
 
@@ -735,62 +826,23 @@ const THEME_IMPORTS = new Set([
     'TextInput', 'ThemeImage', 'ThemeText', 'WidgetSlot',
 ]);
 
-const generateComponent = (componentName: string, sourceFile: string, root: XmlNode): { code: string; warnings: string[] } => {
-    const windows = root.children.filter(child => child.tag === 'window');
-    const elements = windows.flatMap(window => window.children.flatMap((child) => {
-        if (child.tag === 'children') return child.children.map(toElement);
-        if (child.tag === 'filters' || child.tag === 'variables' || child.tag === 'scale') return [];
+interface AssembledComponent {
+    lines: string[];
+    props: string[];
+}
 
-        return [ toElement(child) ];
-    }));
-    const ctx: EmitContext = {
-        imports: new Set(), usesTranslation: false, props: new Map(), states: [], propCounts: new Map(), scrollTargets: new Map(), warnings: [],
-    };
-
-    for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
-
-    const width = num(root.attrs.width);
-    const height = num(root.attrs.height);
-    const bodyIndent = INDENT + INDENT;
-    let body: string[];
-
-    if (elements.length === 1 && elements[0].tag === 'frame') {
-        body = emitFrame(ctx, elements[0], undefined, bodyIndent);
-    } else {
-        ctx.imports.add('Region');
-        ctx.imports.add('BoxLayout');
-        ctx.props.set('layout', 'BoxLayout');
-
-        body = wrap(
-            'Region',
-            [ `layout={{ position: 'relative', width: ${width}, height: ${height}, ...layout }}` ],
-            bodyIndent,
-            elements.flatMap(el => emit(ctx, el, { width, height, flow: false }, bodyIndent + INDENT)),
-        );
-    }
-
+/** The `export interface XProps` + `export const X = (...) => {...}` pair for one emitted body. */
+const assembleComponent = (ctx: EmitContext, componentName: string, doc: string, body: string[]): AssembledComponent => {
     // A caption may be decoded for an element that ends up not rendering it (a Border's own
     // caption, say) - only import `t` when the emitted body actually calls it.
     ctx.usesTranslation = body.some(line => line.includes('t('));
 
+    if (ctx.usesTranslation) ctx.imports.add('useTranslation');
+    if (ctx.states.length) ctx.imports.add('useState');
+
     const propsName = `${componentName}Props`;
     const propEntries = [ ...ctx.props.entries() ].sort(([ a ], [ b ]) => a.localeCompare(b));
-    const lines: string[] = [];
-
-    if (ctx.states.length) lines.push('import { useState } from \'react\';', '');
-
-    const contextImports: string[] = [];
-
-    if (ctx.usesTranslation) contextImports.push('useTranslation');
-    if (contextImports.length) lines.push(`import { ${contextImports.join(', ')} } from '#base/context';`);
-
-    const themeImports = [ ...ctx.imports ].filter(name => THEME_IMPORTS.has(name)).sort();
-
-    if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
-    if (ctx.imports.has('layoutImage')) lines.push('', 'import { layoutImage } from \'./layoutAssets\';');
-
-    lines.push('');
-    lines.push(`/** Generated from \`${sourceFile}\` (layout "${root.attrs.name ?? ''}", ${width}x${height}) by scripts/generate-layout-views.ts - do not edit by hand. */`);
+    const lines: string[] = [ doc ];
 
     if (propEntries.length) {
         lines.push(`export interface ${propsName} {`);
@@ -808,7 +860,168 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
     lines.push(`${INDENT}return (`, ...body, `${INDENT});`, '};', '');
 
-    return { code: lines.join('\n'), warnings: ctx.warnings };
+    return { lines, props: propEntries.map(([ name ]) => name) };
+};
+
+const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox): string => {
+    const base = `${file.componentName}${pascal(el.attrs.name ?? el.tag)}Item`;
+    let name = base;
+
+    for (let i = 2; file.subComponentNames.includes(name); i++) name = `${base}${i}`;
+
+    file.subComponentNames.push(name);
+
+    const ctx = createEmitContext(file);
+
+    ctx.props.set('layout', 'BoxLayout');
+    ctx.imports.add('BoxLayout');
+
+    const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT);
+    const doc = `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`;
+
+    file.subComponents.push(assembleComponent(ctx, name, doc, body).lines.join('\n'));
+
+    return name;
+};
+
+interface GeneratedComponent {
+    code: string;
+    props: string[];
+    rootIsFrame: boolean;
+    subComponents: string[];
+    warnings: string[];
+}
+
+const generateComponent = (componentName: string, sourceFile: string, root: XmlNode): GeneratedComponent => {
+    const windows = root.children.filter(child => child.tag === 'window');
+    const elements = windows.flatMap(window => window.children.flatMap((child) => {
+        if (child.tag === 'children') return child.children.map(toElement);
+        if (child.tag === 'filters' || child.tag === 'variables' || child.tag === 'scale') return [];
+
+        return [ toElement(child) ];
+    }));
+    const file: FileContext = { componentName, imports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [] };
+    const ctx = createEmitContext(file);
+
+    for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
+
+    const width = num(root.attrs.width);
+    const height = num(root.attrs.height);
+    const bodyIndent = INDENT + INDENT;
+    const rootIsFrame = elements.length === 1 && elements[0].tag === 'frame';
+    let body: string[];
+
+    if (rootIsFrame) {
+        body = emitFrame(ctx, elements[0], undefined, bodyIndent);
+    } else {
+        ctx.imports.add('Region');
+        ctx.imports.add('BoxLayout');
+        ctx.props.set('layout', 'BoxLayout');
+
+        body = wrap(
+            'Region',
+            [ `layout={{ position: 'relative', width: ${width}, height: ${height}, ...layout }}` ],
+            bodyIndent,
+            elements.flatMap(el => emit(ctx, el, { width, height, flow: false }, bodyIndent + INDENT)),
+        );
+    }
+
+    const doc = `/** Generated from \`${sourceFile}\` (layout "${root.attrs.name ?? ''}", ${width}x${height}) by scripts/generate-layout-views.ts - do not edit by hand. */`;
+    const main = assembleComponent(ctx, componentName, doc, body);
+    const lines: string[] = [];
+    const reactImports = [ 'ReactNode', 'useState' ].filter(name => file.imports.has(name));
+
+    if (reactImports.length) lines.push(`import { ${reactImports.join(', ')} } from 'react';`, '');
+    if (file.imports.has('useTranslation')) lines.push('import { useTranslation } from \'#base/context\';');
+
+    const themeImports = [ ...file.imports ].filter(name => THEME_IMPORTS.has(name)).sort();
+
+    if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
+    if (file.imports.has('layoutImage')) lines.push('import { layoutImage } from \'#base/views/layouts/layoutAssets\';');
+
+    lines.push('', ...main.lines, ...file.subComponents);
+
+    return { code: lines.join('\n'), props: main.props, rootIsFrame, subComponents: file.subComponentNames, warnings: file.warnings };
+};
+
+// ---------------------------------------------------------------------------------------------
+// AS3 cross-reference - which decompiled client classes build each layout (`buildFromXML` of a
+// `<name>_xml` asset, or `getAssetByName("<name>")`), for the registry / layout browser.
+// ---------------------------------------------------------------------------------------------
+
+const AS3_DIR = join(__dirname, 'scripts');
+
+interface As3Usage {
+    /** Root library classes (`HabboFriendBarCom`, `HabboRoomUICom`, ...) that embed the layout's XML asset. */
+    libraries: Set<string>;
+    /** `com/...` classes that build the layout (`buildFromXML` of its asset, or a direct `getAssetByName`). */
+    classes: Set<string>;
+}
+
+const collectAs3Usage = (layoutNames: Set<string>): Map<string, As3Usage> => {
+    const usage = new Map<string, As3Usage>();
+
+    if (!existsSync(AS3_DIR)) return usage;
+
+    // `friend_requests_tab_xml$<hash>` - the embedded-asset class name every library/embedding
+    // class references; `<name>_xml` / `getAssetByName("<name>")` - runtime lookups by asset name.
+    const pattern = /([A-Za-z0-9_]+)_xml(?:\$|\b)|getAssetByName\("([A-Za-z0-9_]+)"\)/g;
+    const record = (name: string): As3Usage => {
+        let entry = usage.get(name);
+
+        if (!entry) usage.set(name, entry = { libraries: new Set(), classes: new Set() });
+
+        return entry;
+    };
+    const walk = (dir: string) => {
+        for (const entry of readdirSync(dir, { withFileTypes: true })) {
+            const path = join(dir, entry.name);
+
+            if (entry.isDirectory()) {
+                if (entry.name !== '_assets') walk(path);
+
+                continue;
+            }
+
+            if (!entry.name.endsWith('.as')) continue;
+
+            const relative = path.slice(AS3_DIR.length + 1).replace(/\\/g, '/');
+            const library = /^(?:Habbo)?(\w+?)(?:Com|Lib)\.as$/.exec(relative)?.[1].toLowerCase();
+
+            if (!library && !relative.startsWith('com/')) continue;
+
+            for (const match of readFileSync(path, 'utf8').matchAll(pattern)) {
+                const name = match[1] ?? match[2];
+
+                if (!layoutNames.has(name)) continue;
+
+                if (library) record(name).libraries.add(library);
+                else record(name).classes.add(relative.slice(0, -3));
+            }
+        }
+    };
+
+    walk(AS3_DIR);
+
+    return usage;
+};
+
+/**
+ * Output folder for a layout, mirroring how the decompiled client is organised: the library
+ * that embeds it (`HabboFriendBarCom` -> `friendbar/`), then the tail of the package of the
+ * class that drives it (`com/sulake/habbo/friendbar/view/tabs/FriendRequestsTab` ->
+ * `friendbar/view/tabs/`). Layouts nothing embeds or builds directly land in `unassigned/`.
+ */
+const layoutFolder = (usage: As3Usage | undefined): string => {
+    const cls = usage?.classes.size ? [ ...usage.classes ].sort()[0] : undefined;
+    const pkg = cls ? cls.replace(/^com\/sulake\/(?:habbo|core)\//, '').split('/').slice(0, -1) : [];
+    const library = usage?.libraries.size ? [ ...usage.libraries ].sort()[0] : pkg[0];
+
+    if (!library) return 'unassigned';
+
+    const tail = pkg.filter(segment => segment !== library).slice(-2);
+
+    return [ library, ...tail ].join('/');
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -818,6 +1031,8 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 rmSync(OUT_DIR, { recursive: true, force: true });
 mkdirSync(OUT_DIR, { recursive: true });
 mkdirSync(IMAGE_OUT_DIR, { recursive: true });
+
+for (const name of RUNTIME_IMAGES) resolveImage(name);
 
 interface Source { id: number; base: string; file: string; root: XmlNode }
 
@@ -847,14 +1062,35 @@ for (const source of sources) baseCounts.set(nameKey(source), (baseCounts.get(na
 
 const exports: string[] = [];
 const warningCounts = new Map<string, number>();
+const as3Usage = collectAs3Usage(new Set(sources.map(source => source.base)));
+const registry: string[] = [];
 
 for (const source of sources) {
     const suffix = (baseCounts.get(nameKey(source)) ?? 0) > 1 ? `_${source.id}` : '';
     const componentName = `${pascal(source.base)}${suffix ? pascal(suffix) : ''}Layout`;
-    const { code, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root);
+    const { code, props, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root);
 
-    writeFileSync(join(OUT_DIR, `${componentName}.tsx`), code);
-    exports.push(componentName);
+    const usage = as3Usage.get(source.base);
+    const folder = layoutFolder(usage);
+
+    mkdirSync(join(OUT_DIR, folder), { recursive: true });
+    writeFileSync(join(OUT_DIR, folder, `${componentName}.tsx`), code);
+    exports.push(`${folder}/${componentName}`);
+
+    const as3 = [ ...(usage?.classes ?? []) ].sort();
+    const libraries = [ ...(usage?.libraries ?? []) ].sort();
+    const size = `${num(source.root.attrs.width)}x${num(source.root.attrs.height)}`;
+
+    registry.push([
+        `${INDENT}{`,
+        `${INDENT}${INDENT}name: ${quote(source.base)}, id: ${source.id}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
+        `${INDENT}${INDENT}props: [ ${props.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}subComponents: [ ${subComponents.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}folder: ${quote(folder)}, libraries: [ ${libraries.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}as3: [ ${as3.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}load: () => import(${quote(`./${folder}/${componentName}`)}).then(module => module.${componentName}),`,
+        `${INDENT}},`,
+    ].join('\n'));
 
     for (const warning of warnings) warningCounts.set(warning, (warningCounts.get(warning) ?? 0) + 1);
 }
@@ -865,7 +1101,38 @@ writeFileSync(join(OUT_DIR, 'layoutAssets.ts'), [
     '',
 ].join('\n'));
 
-writeFileSync(join(OUT_DIR, 'index.ts'), [ ...exports.map(name => `export * from './${name}';`), 'export * from \'./layoutAssets\';', '' ].join('\n'));
+writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
+    'import { ComponentType } from \'react\';',
+    '',
+    '/** One entry per generated layout - what it is, which decompiled AS3 classes drove it, and a lazy loader for the component. */',
+    'export interface LayoutRegistryEntry {',
+    `${INDENT}/** The Flash asset name (\`<name>_xml\`). */`,
+    `${INDENT}name: string;`,
+    `${INDENT}id: number;`,
+    `${INDENT}component: string;`,
+    `${INDENT}size: string;`,
+    `${INDENT}/** Whether the component renders its own \`Frame\` (window chrome) at the root. */`,
+    `${INDENT}rootIsFrame: boolean;`,
+    `${INDENT}/** The component's prop names - \`on*\` handlers, \`caption*\`/\`src*\` overrides, \`items*\` row slots, \`layout\`. */`,
+    `${INDENT}props: string[];`,
+    `${INDENT}subComponents: string[];`,
+    `${INDENT}/** Output folder under views/layouts - embedding client library + driving class package (see \`layoutFolder\` in the generator). */`,
+    `${INDENT}folder: string;`,
+    `${INDENT}/** Client libraries (\`HabboFriendBarCom\` -> \`friendbar\`) whose SWF embedded this layout's XML. */`,
+    `${INDENT}libraries: string[];`,
+    `${INDENT}/** Decompiled client classes (under scripts/scripts) that build this layout, e.g. \`com/sulake/habbo/friendbar/view/tabs/FriendRequestsTab\`. */`,
+    `${INDENT}as3: string[];`,
+    `${INDENT}// eslint-disable-next-line @typescript-eslint/no-explicit-any -- every layout has its own props interface; the browser only ever passes generic handlers.`,
+    `${INDENT}load: () => Promise<ComponentType<any>>;`,
+    '}',
+    '',
+    'export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [',
+    ...registry,
+    '];',
+    '',
+].join('\n'));
+
+writeFileSync(join(OUT_DIR, 'index.ts'), [ ...exports.sort().map(path => `export * from './${path}';`), 'export * from \'./layoutAssets\';', 'export * from \'./layoutRegistry\';', '' ].join('\n'));
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
 console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${unresolvedImages.size} referenced assets not found in scripts/images)`);
