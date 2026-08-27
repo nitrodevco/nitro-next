@@ -83,6 +83,25 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
         textStyle: 'text-style-il-frame-title',
         textColor: '#000000',
     },
+    // illumina purple - the light frame's header geometry with a white title
+    103: {
+        layout: {
+            minHeight: 30,
+            padding: 0,
+        },
+        textStyle: 'text-style-il-frame-title',
+        textColor: '#ffffff',
+    },
+    // leaderboard frames - the title sits in the frame art's own 87px top band
+    10000: {
+        layout: {
+            minHeight: 40,
+            paddingLeft: 8,
+            paddingRight: 8,
+        },
+        textStyle: 'text-style-il-frame-modal-title',
+        textColor: '#ffffff',
+    },
     200: {
         layer: NineSlice('border-200-default-src', 3, 3, 3, 3),
         layout: {

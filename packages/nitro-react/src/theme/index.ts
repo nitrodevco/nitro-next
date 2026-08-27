@@ -12,6 +12,7 @@ export * from './ButtonGroupCenter';
 export * from './ButtonGroupLeft';
 export * from './ButtonGroupRight';
 export * from './ButtonThick';
+export * from './buttonVariants';
 export * from './cascade/useCascadedVariant';
 export * from './cascade/VariantCascadeContext';
 export * from './cascade/VariantCascadeMap';

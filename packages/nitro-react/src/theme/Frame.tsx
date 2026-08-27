@@ -48,8 +48,25 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
         ]), layout: { minWidth: 50, minHeight: 50 },
     },
-    101: { layout: { minWidth: 50, minHeight: 80 } },
+    // illumina "wired" - the light frame art with the wired window layout
+    102: {
+        layer: Composite([
+            { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
+            { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
+            { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
+            { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
+            { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
+            { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
+            { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
+            { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
+            { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
+        ]), layout: { minWidth: 50, minHeight: 50 },
+    },
+    // illumina purple
+    103: { layer: NineSlice('frame-103-default-src', 4, 4, 4, 7), layout: { minWidth: 50, minHeight: 50 } },
     200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), layout: { minWidth: 50, minHeight: 50 } },
+    // leaderboard "total badges" - a huge fixed-art frame (193x130 sheet, 96/87/96/42 slices)
+    10000: { layer: NineSlice('frame-10000-default-src', 96, 87, 96, 42), layout: { minWidth: 200, minHeight: 140 } },
 };
 
 export interface FrameProps extends ThemeProps<FrameVariant> {
@@ -63,7 +80,7 @@ export interface FrameProps extends ThemeProps<FrameVariant> {
 const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
 
 export const Frame = ({
-    id, variant, defaultVariant, caption, tintColor, layout, resizeDirection = 'all', onClose, children,
+    id, variant, defaultVariant = '3', caption, tintColor, layout, resizeDirection = 'all', onClose, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);

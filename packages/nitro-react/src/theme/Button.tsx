@@ -2,40 +2,11 @@ import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box } from './Box';
+import { BUTTON_3_VARIANT, BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, ButtonVariant } from './buttonVariants';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { BUTTON_100_DEFAULT_OVERLAY, BUTTON_100_PRESSED_OVERLAY, BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-
-type ButtonVariant = ThemeWithStatesVariant;
-
-const BUTTON_3_VARIANT: ButtonVariant = {
-    states: {
-        default: NineSlice('button-3-default-src', 5, 5, 5, 5),
-        hovering: NineSlice('button-3-hovering-src', 5, 5, 5, 5),
-        pressed: NineSlice('button-3-pressed-src', 5, 5, 5, 5),
-        disabled: NineSlice('button-3-disabled-src', 5, 5, 5, 5),
-    },
-    layout: {
-        paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-        minWidth: 20, minHeight: 22,
-    },
-    textStyle: 'text-style-button-shiny-regular',
-};
-
-const BUTTON_100_VARIANT: ButtonVariant = {
-    states: {
-        default: NineSlice('button-100-default-src', 1, 1, 1, 1),
-        hovering: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-        pressed: NineSlice('button-100-hovering-src', 19, 19, 19, 19),
-    },
-    overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
-    layout: {
-        paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-        minWidth: 48, minHeight: 48,
-    },
-    textStyle: 'text-style-il-button', textColor: '#000000',
-};
+import { BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, ThemeProps, ThemeVariants, wrapTextChildren } from './utils';
 
 const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
     // habbo_skin - white
@@ -65,9 +36,27 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         textStyle: 'text-style-button-regular', textColor: '#ffffff',
     },
+    // habbo_skin - white (button_default_white)
+    2: {
+        states: {
+            default: NineSlice('button-2-default-src', 3, 3, 3, 3),
+            hovering: NineSlice('button-2-hovering-src', 3, 3, 3, 3),
+            pressed: NineSlice('button-2-pressed-src', 3, 3, 3, 3),
+            disabled: NineSlice('button-2-disabled-src', 3, 3, 3, 3),
+        },
+        layout: {
+            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
+            minWidth: 20, minHeight: 22,
+        },
+        textStyle: 'text-style-button-regular', textColor: '#000000',
+    },
     // ubuntu_skin - white
     3: {
         ...BUTTON_3_VARIANT, textColor: '#000000',
+    },
+    // ubuntu_skin - shiny art with the black window layout (white caption)
+    5: {
+        ...BUTTON_3_VARIANT, textColor: '#ffffff',
     },
     // ubuntu_skin - black
     4: {
@@ -124,6 +113,10 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         },
         textStyle: 'text-style-il-button', textColor: '#000000',
     },
+    // illumina purple window / purple plain / dark recolorable
+    104: BUTTON_104_VARIANT,
+    105: BUTTON_105_VARIANT,
+    106: BUTTON_106_VARIANT,
     // default
     200: {
         states: {

@@ -44,12 +44,44 @@ const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
             pressed: Stretch('closebutton-src', { x: 95, y: 0, width: 19, height: 20 }),
         },
     },
+    // habbo_skin "menu" (button_menu) - the hamburger-style frame button
+    5: {
+        states: {
+            default: Stretch('closebutton-5-default-src'),
+            hovering: Stretch('closebutton-5-hovering-src'),
+            pressed: Stretch('closebutton-5-pressed-src'),
+        },
+    },
     // Separate, smaller texture - the whole texture is the frame, no hover/press states.
     100: {
         states: {
             default: Stretch('closebutton-100-src'),
             hovering: Stretch('closebutton-100-src'),
             pressed: Stretch('closebutton-100-src'),
+        },
+    },
+    // illumina frame "menu" button
+    101: {
+        states: {
+            default: Stretch('closebutton-101-default-src'),
+            hovering: Stretch('closebutton-101-hovering-src'),
+            pressed: Stretch('closebutton-101-pressed-src'),
+        },
+    },
+    // illumina purple frame close
+    103: {
+        states: {
+            default: Stretch('closebutton-103-default-src'),
+            hovering: Stretch('closebutton-103-hovering-src'),
+            pressed: Stretch('closebutton-103-pressed-src'),
+        },
+    },
+    // leaderboard frames (10000-10007 all share this close button)
+    10000: {
+        states: {
+            default: Stretch('closebutton-10000-default-src'),
+            hovering: Stretch('closebutton-10000-hovering-src'),
+            pressed: Stretch('closebutton-10000-pressed-src'),
         },
     },
 };

@@ -56,6 +56,7 @@ const config = [
             // typescript-eslint's type-aware rules to run against.
             '**/scripts/build-theme-atlas.ts',
             '**/scripts/generate-layout-views.ts',
+            '**/scripts/extract-skin-assets.ts',
         ],
     },
     js.configs.recommended,

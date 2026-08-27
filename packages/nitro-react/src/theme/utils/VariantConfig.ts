@@ -9,8 +9,10 @@ export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<strin
         4: { header: '3', tabContext: '3', tabContent: '3', scaler: '3' },
         7: { header: '7', tabContext: '3', tabContent: '3', scaler: '3' },
         100: { header: '100' },
-        101: { header: '1' },
+        102: { header: '100' },
+        103: { header: '103' },
         200: { header: '200' },
+        10000: { header: '10000' },
     },
     header: {
         0: { closeButton: '0' },
@@ -20,7 +22,9 @@ export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<strin
         4: { closeButton: '0' },
         7: { closeButton: '3' },
         100: { closeButton: '100' },
+        103: { closeButton: '103' },
         200: { closeButton: '100' },
+        10000: { closeButton: '10000' },
     },
     tabContext: {
         0: {},
