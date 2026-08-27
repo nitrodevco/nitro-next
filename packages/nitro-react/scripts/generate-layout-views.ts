@@ -1356,7 +1356,12 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     '',
 ].join('\n'));
 
-writeFileSync(join(OUT_DIR, 'index.ts'), [ ...exports.sort().map(path => `export * from './${path}';`), 'export * from \'./layoutAssets\';', 'export * from \'./layoutRegistry\';', '' ].join('\n'));
+// Deliberately NO barrel index.ts: an `export *` over ~800 layout files puts every one of
+// them into the static module graph of whoever imports it - none are side-effect-free as far
+// as the bundler can prove, so tree-shaking keeps them all, and one convenience import once
+// turned the entire lazily-registered catalogue into ~800 eagerly-fetched entry chunks
+// (794 modulepreload links in the built index.html). Import a layout by its own path;
+// everything else goes through `layoutRegistry`'s per-entry dynamic `load()`.
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
 console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${unresolvedImages.size} referenced assets not found in scripts/images)`);
