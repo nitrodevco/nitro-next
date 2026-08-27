@@ -36,6 +36,7 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
                         textOptions={{ wordWrap: true, wordWrapWidth: 384 }}
                     />
                 </Region>
+                {/* <scrollbar_vertical> for content - rendered by that list's ScrollArea */}
             </Region>
         </Frame>
     );

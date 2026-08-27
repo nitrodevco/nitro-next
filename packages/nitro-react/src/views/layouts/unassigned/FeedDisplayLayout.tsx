@@ -137,6 +137,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                                     )}
                                 </Region>
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                         </Region>
                         <Region
                             name="pane_stream"
@@ -153,6 +154,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                                     layout={{ flexDirection: 'column', width: '100%' }}
                                 />
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                         </Region>
                     </Region>
                     <Region

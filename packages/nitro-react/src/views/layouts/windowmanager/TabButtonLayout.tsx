@@ -11,11 +11,13 @@ export const TabButtonLayout = ({ captionTitle, layout }: TabButtonLayoutProps) 
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
             <Region
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
+                params={16}
                 layout={{ position: 'absolute', left: 0, width: 10, top: 0, height: 22 }}
             />
             <Region
                 name="title"
                 tags={[ 'title', 'TAB_BUTTON_TITLE', '_EXCLUDE', '_INTERNAL' ]}
+                params={2147486928}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

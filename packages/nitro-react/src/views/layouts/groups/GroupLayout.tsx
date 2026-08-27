@@ -92,6 +92,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         )}
                     </Region>
                 </ScrollArea>
+                {/* <scrollbar_vertical> for group_description_item_list - rendered by that list's ScrollArea */}
                 <Region
                     name="members_region"
                     params={17}

@@ -12,6 +12,7 @@ export const IlluminaLightRadioButtonLayout = ({ captionCAPTIONTEXT, layout }: I
             <Region
                 name="_CAPTION_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
+                params={2147483664}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

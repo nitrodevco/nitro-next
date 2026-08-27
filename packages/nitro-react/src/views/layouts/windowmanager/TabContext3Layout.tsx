@@ -11,7 +11,14 @@ export const TabContext3Layout = ({ layout }: TabContext3LayoutProps) => {
             <TabContent
                 name="content"
                 tags={[ '_CONTENT', '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 0, width: 64, top: 30, height: 32 }}
+                params={2147485841}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 30, bottom: 2 }}
+            />
+            <Region
+                name="selector"
+                tags={[ '_SELECTOR', '_EXCLUDE', '_INTERNAL' ]}
+                params={145}
+                layout={{ position: 'absolute', left: 8, right: 8, top: 0, height: 32 }}
             />
         </Region>
     );

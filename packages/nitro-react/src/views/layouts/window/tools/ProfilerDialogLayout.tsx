@@ -47,6 +47,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                                 layout={{ flexDirection: 'column', width: '100%' }}
                             />
                         </ScrollArea>
+                        {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                         <Region
                             name="footer"
                             tags={[ 'footer' ]}

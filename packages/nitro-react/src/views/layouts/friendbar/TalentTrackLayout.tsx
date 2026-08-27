@@ -60,6 +60,7 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, cap
                                 )}
                             </Region>
                         </ScrollArea>
+                        {/* <scrollbar_horizontal> for panorama - rendered by that list's ScrollArea */}
                         <ThemeImage
                             name="mask_left"
                             params={16}

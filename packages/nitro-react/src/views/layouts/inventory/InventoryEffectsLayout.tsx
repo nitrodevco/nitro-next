@@ -49,6 +49,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                         )}
                     </Region>
                 </ScrollArea>
+                {/* <scrollbar_vertical> for inactive_items - rendered by that list's ScrollArea */}
                 <Region
                     name="active_items"
                     params={2128}
@@ -58,6 +59,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                         <InventoryEffectsLayoutActiveItemsImageItem />
                     )}
                 </Region>
+                {/* <scrollbar_vertical> for inactive_items - rendered by that list's ScrollArea */}
                 <Region
                     name="myEffectsTitle"
                     params={786576}

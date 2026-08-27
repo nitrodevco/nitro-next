@@ -124,6 +124,7 @@ export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButto
                                 backgroundColor="#ffffff"
                                 layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 236, flexDirection: 'column' }}
                             />
+                            {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
                         </Region>
                     </Region>
                     <Region

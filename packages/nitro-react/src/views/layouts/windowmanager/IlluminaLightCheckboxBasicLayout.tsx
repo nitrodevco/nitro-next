@@ -12,6 +12,7 @@ export const IlluminaLightCheckboxBasicLayout = ({ captionCAPTIONTEXT, layout }:
             <Region
                 name="_CAPTION_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
+                params={2147483664}
                 layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

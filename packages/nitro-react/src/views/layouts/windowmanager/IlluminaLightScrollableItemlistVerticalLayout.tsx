@@ -14,6 +14,7 @@ export const IlluminaLightScrollableItemlistVerticalLayout = ({ layout }: Illumi
                 params={2193}
                 layout={{ position: 'absolute', left: 0, width: 31, top: 0, height: 40, flexDirection: 'column' }}
             />
+            {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
         </Region>
     );
 };

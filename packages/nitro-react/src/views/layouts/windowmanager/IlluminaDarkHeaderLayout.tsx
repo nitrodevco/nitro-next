@@ -12,11 +12,13 @@ export const IlluminaDarkHeaderLayout = ({ captionHeaderTitleText, layout }: Ill
             <Region
                 name="header_container"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
+                params={2147483824}
                 layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 30 }}
             >
                 <Region
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
+                    params={2147483664}
                     layout={{ position: 'absolute', left: 20, width: 12, top: 2, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     backgroundColor="#24211c"
                 >

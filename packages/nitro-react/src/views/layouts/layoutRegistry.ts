@@ -1225,7 +1225,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'droplist', id: 1947, component: 'DroplistLayout', size: '40x22', rootIsFrame: false,
-        props: [ 'captionDROPLISTTITLETEXT', 'layout' ],
+        props: [ 'captionDROPLISTTITLETEXT', 'layout', 'onDROPLISTREGION' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -1233,7 +1233,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'dropmenu', id: 1810, component: 'DropmenuLayout', size: '40x22', rootIsFrame: false,
-        props: [ 'captionDROPLISTTITLETEXT', 'layout' ],
+        props: [ 'captionDROPLISTTITLETEXT', 'layout', 'onDROPLISTREGION' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -1241,7 +1241,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'dropmenu_3', id: 1775, component: 'Dropmenu3Layout', size: '40x20', rootIsFrame: false,
-        props: [ 'captionDROPLISTTITLETEXT', 'layout' ],
+        props: [ 'captionDROPLISTTITLETEXT', 'layout', 'onDROPLISTREGION' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -1249,7 +1249,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'dropmenu_black', id: 1893, component: 'DropmenuBlackLayout', size: '40x22', rootIsFrame: false,
-        props: [ 'captionDROPLISTTITLETEXT', 'layout' ],
+        props: [ 'captionDROPLISTTITLETEXT', 'layout', 'onDROPLISTREGION' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2449,7 +2449,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_dropmenu', id: 1732, component: 'IlluminaLightDropmenuLayout', size: '40x22', rootIsFrame: false,
-        props: [ 'captionDROPLISTTITLETEXT', 'layout' ],
+        props: [ 'captionDROPLISTTITLETEXT', 'layout', 'onDROPLISTREGION' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],

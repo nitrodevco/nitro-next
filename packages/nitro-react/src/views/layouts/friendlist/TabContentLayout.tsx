@@ -25,6 +25,7 @@ export const TabContentLayout = ({ layout }: TabContentLayoutProps) => {
                         backgroundColor="#ffffff"
                         layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 95, flexDirection: 'column' }}
                     />
+                    {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Region>

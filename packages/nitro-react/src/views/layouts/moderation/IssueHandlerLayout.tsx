@@ -165,6 +165,7 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for evidence_list - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Frame>

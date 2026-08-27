@@ -10,11 +10,13 @@ export const SimpleLayout = ({ layout }: SimpleLayoutProps) => {
         <Region layout={{ position: 'relative', width: 100, height: 100, ...layout }}>
             <Region
                 name="frame"
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 100 }}
+                params={2225}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="content_area"
-                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 90 }}
+                    params={2225}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10 }}
                 />
             </Region>
         </Region>

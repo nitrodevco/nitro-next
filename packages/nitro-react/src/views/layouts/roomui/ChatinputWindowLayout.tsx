@@ -21,6 +21,7 @@ export const ChatinputWindowLayout = ({ itemsChatInputContainer, layout }: Chati
                     name="bubblecont"
                     tags={[ 'chat_bubble' ]}
                     params={1049600}
+                    dropShadow={{ distance: 4, alpha: 0.6 }}
                     layout={{ position: 'absolute', left: 18, width: 733, top: 669, height: 117, minWidth: 90 }}
                 >
                     <Region
@@ -40,6 +41,7 @@ export const ChatinputWindowLayout = ({ itemsChatInputContainer, layout }: Chati
                 <Region
                     name="chatstyles_menu"
                     params={1180672}
+                    dropShadow={{ distance: 4, alpha: 0.6 }}
                     layout={{ position: 'absolute', left: 2, width: 160, top: 661, height: 105 }}
                 />
             </Region>

@@ -132,6 +132,7 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                             )}
                         </Region>
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for achievements_scrollarea - rendered by that list's ScrollArea */}
                 </Region>
                 <Border
                     variant="0"

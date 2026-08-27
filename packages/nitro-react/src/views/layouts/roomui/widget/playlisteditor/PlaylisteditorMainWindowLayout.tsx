@@ -42,6 +42,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                             layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for music_inventory_itemgrid - rendered by that list's ScrollArea */}
                     <Border
                         variant="2"
                         params={16}
@@ -85,6 +86,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for playlist_editor_itemlist - rendered by that list's ScrollArea */}
                     <Border
                         variant="2"
                         params={16}

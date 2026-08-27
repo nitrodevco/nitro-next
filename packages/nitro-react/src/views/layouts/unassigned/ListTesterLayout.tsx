@@ -33,6 +33,7 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
                     <Region
                         params={1168}
                         layout={{ position: 'absolute', left: 6, width: 218, top: 108, height: 100 }}
@@ -48,6 +49,7 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                                 layout={{ flexDirection: 'row', width: '100%' }}
                             />
                         </ScrollArea>
+                        {/* <scrollbar_horizontal> for _list_horizontal - rendered by that list's ScrollArea */}
                     </Region>
                 </Border>
             </Region>

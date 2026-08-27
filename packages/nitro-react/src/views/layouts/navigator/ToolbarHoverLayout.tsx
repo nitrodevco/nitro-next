@@ -11,24 +11,29 @@ export interface ToolbarHoverLayoutProps {
 export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 252, height: 36, ...layout }}>
-            <Border
-                variant="6"
-                name="toolbar_hover"
-                params={147457}
-                tintColor="#79756e"
+            <Region
+                dropShadow={{ distance: 3, alpha: 0.6 }}
                 layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 36 }}
             >
-                <Region
-                    name="item_list"
-                    tags={[ 'SIMPLE_ITEM' ]}
-                    params={8519698}
-                    layout={{ position: 'absolute', left: 7, width: 245, top: 7, height: 25, flexDirection: 'column' }}
+                <Border
+                    variant="6"
+                    name="toolbar_hover"
+                    params={147457}
+                    tintColor="#79756e"
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    {itemsItemList ?? (
-                        <ToolbarHoverLayoutItemBasicItem />
-                    )}
-                </Region>
-            </Border>
+                    <Region
+                        name="item_list"
+                        tags={[ 'SIMPLE_ITEM' ]}
+                        params={8519698}
+                        layout={{ position: 'absolute', left: 7, width: 245, top: 7, height: 25, flexDirection: 'column' }}
+                    >
+                        {itemsItemList ?? (
+                            <ToolbarHoverLayoutItemBasicItem />
+                        )}
+                    </Region>
+                </Border>
+            </Region>
         </Region>
     );
 };

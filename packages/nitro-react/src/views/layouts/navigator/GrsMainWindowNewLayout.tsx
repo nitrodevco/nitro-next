@@ -186,6 +186,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
@@ -213,6 +214,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
@@ -241,6 +243,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_tags_found"
                                     params={786449}
@@ -271,6 +274,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                         )}
                                     </Region>
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list_category - rendered by that list's ScrollArea */}
                             </Region>
                             <Region
                                 name="official_rooms"
@@ -292,6 +296,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                         )}
                                     </Region>
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list_official - rendered by that list's ScrollArea */}
                             </Region>
                         </Region>
                         <Region

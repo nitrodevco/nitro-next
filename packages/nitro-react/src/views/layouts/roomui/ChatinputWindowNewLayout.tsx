@@ -152,11 +152,13 @@ export const ChatinputWindowNewLayout = ({ captionBlockText, layout, onChatExtra
                 <Region
                     name="chatstyles_menu"
                     params={1179648}
+                    dropShadow={{ distance: 4, alpha: 0.6 }}
                     layout={{ position: 'absolute', left: 2, width: 160, top: -6, height: 60 }}
                 />
                 <Region
                     name="habbicon_menu"
                     params={1179648}
+                    dropShadow={{ distance: 4, alpha: 0.6 }}
                     layout={{ position: 'absolute', left: 2, width: 270, top: -6, height: 260 }}
                 />
             </Region>

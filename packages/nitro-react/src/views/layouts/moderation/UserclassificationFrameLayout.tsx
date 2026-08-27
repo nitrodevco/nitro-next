@@ -40,6 +40,7 @@ export const UserclassificationFrameLayout = ({ itemsUserclassificationList, lay
                             )}
                         </Region>
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for userclassification_list - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Frame>

@@ -646,6 +646,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
                                 <ButtonThick
                                     variant="3"
                                     name="remove_all_flat_ctrls"
@@ -673,6 +674,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
                             </Border>
                         </Region>
                     </Region>
@@ -1046,6 +1048,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                     layout={{ flexDirection: 'column', width: '100%' }}
                                 />
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for moderation_banned_users - rendered by that list's ScrollArea */}
                         </Border>
                         <Region
                             name="moderation_banned_users_label"

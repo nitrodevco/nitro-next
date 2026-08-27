@@ -81,6 +81,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                                 )}
                             </Region>
                         </ScrollArea>
+                        {/* <scrollbar_vertical> for request_entity_list - rendered by that list's ScrollArea */}
                         <Region
                             name="click_area_discard_all"
                             params={1041}

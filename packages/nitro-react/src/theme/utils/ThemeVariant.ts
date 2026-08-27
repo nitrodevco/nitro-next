@@ -21,6 +21,17 @@ export type ThemeLayoutMeta = {
     params?: number;
     dynamicStyle?: string;
     visible?: boolean;
+    dropShadow?: DropShadowConfig;
+};
+
+/** A layout's `<filters><DropShadowFilter .../></filters>` - Flash's own field names/units. */
+export type DropShadowConfig = {
+    distance?: number;
+    /** Degrees, Flash convention (45 = down-right). */
+    angle?: number;
+    color?: string;
+    alpha?: number;
+    blur?: number;
 };
 
 export type ThemeBase = {

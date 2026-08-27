@@ -193,6 +193,7 @@ export const BadgeEditorLayout = ({ captionGuildBadge, captionLabelBase, caption
                                     layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
                                 />
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for part_select_grid - rendered by that list's ScrollArea */}
                         </Border>
                     </Border>
                 </Region>

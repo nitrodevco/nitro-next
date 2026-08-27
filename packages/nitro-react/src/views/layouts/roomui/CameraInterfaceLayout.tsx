@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ButtonThick, Header, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `960_camera_interface_xml` (layout "camera_interface", 340x536) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -313,6 +313,13 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                         layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
                     />
                 </Region>
+                <Header
+                    variant="3"
+                    params={273}
+                    tintColor="#666666"
+                    caption="${camera.interface.title}"
+                    layout={{ position: 'absolute', left: 9, width: 323, top: 5, height: 28 }}
+                />
             </Region>
         </Region>
     );

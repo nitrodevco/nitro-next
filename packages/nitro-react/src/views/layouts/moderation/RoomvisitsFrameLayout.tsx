@@ -40,6 +40,7 @@ export const RoomvisitsFrameLayout = ({ itemsVisitsList, layout, onClose }: Room
                             )}
                         </Region>
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for visits_list - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Frame>

@@ -131,6 +131,8 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 331, top: 132, height: 304 }}
                     />
+                    {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
+                    {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
                     <Region
                         name="zoom"
                         params={1041}
@@ -248,6 +250,8 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                             )}
                         </Region>
                     </ScrollArea>
+                    {/* <scrollbar_horizontal> for preview_wrapper - rendered by that list's ScrollArea */}
+                    {/* <scrollbar_vertical> for preview_wrapper - rendered by that list's ScrollArea */}
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}

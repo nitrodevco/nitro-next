@@ -164,6 +164,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
@@ -191,6 +192,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
@@ -218,6 +220,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                         layout={{ flexDirection: 'column', width: '100%' }}
                                     />
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
                                 <Region
                                     name="no_tags_found"
                                     params={786449}
@@ -249,6 +252,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                         )}
                                     </Region>
                                 </ScrollArea>
+                                {/* <scrollbar_vertical> for item_list_official - rendered by that list's ScrollArea */}
                             </Region>
                         </Region>
                         <Region

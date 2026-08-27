@@ -46,6 +46,7 @@ export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps)
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for user_list - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Frame>

@@ -12,6 +12,7 @@ export const ButtonShinyLargeLayout = ({ captionBTNTEXT, layout }: ButtonShinyLa
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
+                params={2147486928}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -14,11 +14,13 @@ export const HeaderLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClo
             <Region
                 name="header_container"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 15 }}
+                params={2147483824}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
             >
                 <Region
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
+                    params={2147483856}
                     layout={{ position: 'absolute', left: 4, width: 12, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -30,17 +32,20 @@ export const HeaderLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClo
                     variant="5"
                     name="header_button_menu"
                     tags={[ '_EXCLUDE', '_INTERNAL', 'menu' ]}
+                    params={17}
                     onPointerTap={onHeaderButtonMenu}
                     layout={{ position: 'absolute', left: 1, width: 15, top: 0, height: 15 }}
                 />
                 <Region
                     tags={[ '_EXCLUDE', '_INTERNAL', '_COLORIZE', '_CONTROLS' ]}
+                    params={80}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 85, width: 15, top: 0, height: 15, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', right: 0, width: 15, top: 0, height: 15, flexDirection: 'row' }}
                 >
                     <CloseButton
                         name="header_button_close"
                         tags={[ '_EXCLUDE', '_INTERNAL', 'close', 'FIT:closeWindow' ]}
+                        params={17}
                         onPointerTap={onHeaderButtonClose}
                         layout={{ width: 15, height: 15, flexShrink: 0 }}
                     />

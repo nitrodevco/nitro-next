@@ -34,6 +34,7 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
                         layout={{ flexDirection: 'column', width: '100%' }}
                     />
                 </ScrollArea>
+                {/* <scrollbar_vertical> for quest_list - rendered by that list's ScrollArea */}
                 <Region
                     name="hc_info_cont"
                     params={1040}

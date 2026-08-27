@@ -38,6 +38,8 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                         layout={{ position: 'absolute', left: 0, width: 347, top: 1, height: 266 }}
                     />
                 </Border>
+                {/* <scrollbar_vertical> for data - rendered by that list's ScrollArea */}
+                {/* <scrollbar_horizontal> for data - rendered by that list's ScrollArea */}
                 <Button
                     variant="101"
                     name="revert"

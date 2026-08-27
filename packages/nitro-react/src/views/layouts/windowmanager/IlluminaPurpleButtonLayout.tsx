@@ -12,6 +12,7 @@ export const IlluminaPurpleButtonLayout = ({ captionBTNTEXT, layout }: IlluminaP
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
+                params={2147486928}
                 layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

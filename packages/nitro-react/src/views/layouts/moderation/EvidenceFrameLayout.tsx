@@ -80,6 +80,7 @@ export const EvidenceFrameLayout = ({ captionText, itemsEvidenceList, layout, on
                             </Region>
                         </Region>
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for evidence_list - rendered by that list's ScrollArea */}
                 </Region>
             </Region>
         </Frame>

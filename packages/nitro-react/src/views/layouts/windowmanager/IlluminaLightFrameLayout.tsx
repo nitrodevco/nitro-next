@@ -1,4 +1,4 @@
-import { BoxLayout, CloseButton, Region, ThemeText } from '#base/theme';
+import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 
 /** Generated from `2541_illumina_light_frame_xml` (layout "illumina_light_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightFrameLayoutProps {
@@ -9,20 +9,26 @@ export interface IlluminaLightFrameLayoutProps {
 
 export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose }: IlluminaLightFrameLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
+        <Region
+            dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
+            layout={{ position: 'relative', width: 50, height: 50, ...layout }}
+        >
             <Region
                 name="content_area"
                 tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                layout={{ position: 'absolute', left: 1, width: 48, top: 30, height: 19 }}
+                params={12585104}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
             />
             <Region
                 name="titlebar"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 30 }}
+                params={401}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
             />
             <Region
                 name="header_title_text"
                 tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
+                params={2147483664}
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -34,8 +40,15 @@ export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHea
                 variant="100"
                 name="header_button_close"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
+                params={81}
                 onPointerTap={onHeaderButtonClose}
-                layout={{ position: 'absolute', left: 22, width: 20, top: 9, height: 20 }}
+                layout={{ position: 'absolute', right: 8, width: 20, top: 9, height: 20 }}
+            />
+            <Scaler
+                name="_FRAME_SCALER"
+                tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL' ]}
+                params={1200}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
     );

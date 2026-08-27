@@ -13,37 +13,42 @@ export interface ToolbarViewLayoutProps {
 export const ToolbarViewLayout = ({ itemsToolbarItems, layout }: ToolbarViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 87, height: 875, ...layout }}>
-            <Border
-                variant="6"
-                name="main_toolbar"
-                tags={[ 'FIT:toolbar' ]}
-                params={147456}
-                tintColor="#79756e"
+            <Region
+                dropShadow={{ distance: 3, alpha: 0.6 }}
                 layout={{ position: 'absolute', left: 0, width: 87, top: 0, height: 875 }}
             >
-                <Region
-                    name="toolbar_items"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 0, width: 87, top: 5, height: 870, flexDirection: 'column' }}
+                <Border
+                    variant="6"
+                    name="main_toolbar"
+                    tags={[ 'FIT:toolbar' ]}
+                    params={147456}
+                    tintColor="#79756e"
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    {itemsToolbarItems ?? (
-                        <>
-                            <ToolbarViewLayoutRECEPTIONItem />
-                            <ToolbarViewLayoutHOMEItem />
-                            <ToolbarViewLayoutNAVIGATORItem />
-                            <ToolbarViewLayoutQUESTSItem />
-                            <ToolbarViewLayoutGAMESItem />
-                            <ToolbarViewLayoutSTORIESItem />
-                            <ToolbarViewLayoutACHIEVEMENTSItem />
-                            <ToolbarViewLayoutCATALOGUEItem />
-                            <ToolbarViewLayoutBUILDERItem />
-                            <ToolbarViewLayoutINVENTORYItem />
-                            <ToolbarViewLayoutMEMENUItem />
-                            <ToolbarViewLayoutBottomPaddingItem />
-                        </>
-                    )}
-                </Region>
-            </Border>
+                    <Region
+                        name="toolbar_items"
+                        params={8536080}
+                        layout={{ position: 'absolute', left: 0, width: 87, top: 5, height: 870, flexDirection: 'column' }}
+                    >
+                        {itemsToolbarItems ?? (
+                            <>
+                                <ToolbarViewLayoutRECEPTIONItem />
+                                <ToolbarViewLayoutHOMEItem />
+                                <ToolbarViewLayoutNAVIGATORItem />
+                                <ToolbarViewLayoutQUESTSItem />
+                                <ToolbarViewLayoutGAMESItem />
+                                <ToolbarViewLayoutSTORIESItem />
+                                <ToolbarViewLayoutACHIEVEMENTSItem />
+                                <ToolbarViewLayoutCATALOGUEItem />
+                                <ToolbarViewLayoutBUILDERItem />
+                                <ToolbarViewLayoutINVENTORYItem />
+                                <ToolbarViewLayoutMEMENUItem />
+                                <ToolbarViewLayoutBottomPaddingItem />
+                            </>
+                        )}
+                    </Region>
+                </Border>
+            </Region>
         </Region>
     );
 };

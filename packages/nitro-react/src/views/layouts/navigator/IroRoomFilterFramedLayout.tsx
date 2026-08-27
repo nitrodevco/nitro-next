@@ -55,6 +55,7 @@ export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRe
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for badwords_itemlist - rendered by that list's ScrollArea */}
                 </Border>
                 <Button
                     variant="3"

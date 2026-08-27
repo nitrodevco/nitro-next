@@ -143,6 +143,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                             layout={{ flexDirection: 'column', width: '100%' }}
                         />
                     </ScrollArea>
+                    {/* <scrollbar_vertical> for layout_item_list - rendered by that list's ScrollArea */}
                     <Region
                         name="choose_layout_caption"
                         params={17}

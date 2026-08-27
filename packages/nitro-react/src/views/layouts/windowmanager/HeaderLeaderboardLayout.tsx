@@ -13,11 +13,13 @@ export const HeaderLeaderboardLayout = ({ captionHeaderTitleText, layout, onHead
             <Region
                 name="header_container"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 32 }}
+                params={2147483824}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 32 }}
             >
                 <Region
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
+                    params={2147483856}
                     layout={{ position: 'absolute', left: 4, width: 12, top: 6, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -30,8 +32,9 @@ export const HeaderLeaderboardLayout = ({ captionHeaderTitleText, layout, onHead
                     variant="10000"
                     name="header_button_close"
                     tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
+                    params={81}
                     onPointerTap={onHeaderButtonClose}
-                    layout={{ position: 'absolute', left: 13, width: 15, top: 9, height: 16 }}
+                    layout={{ position: 'absolute', right: 13, width: 15, top: 9, height: 16 }}
                 />
             </Region>
         </Region>

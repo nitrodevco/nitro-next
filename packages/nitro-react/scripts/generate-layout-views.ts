@@ -76,13 +76,60 @@ const parseXml = (text: string): XmlNode | undefined => {
 // Layout element model
 // ---------------------------------------------------------------------------------------------
 
+interface DropShadow {
+    distance?: number;
+    angle?: number;
+    color?: string;
+    alpha?: number;
+    blur?: number;
+}
+
 interface Element {
     tag: string;
     attrs: Record<string, string>;
     vars: Record<string, string>;
     scale: { horizontal: string; vertical: string } | undefined;
+    /** The `WindowParam` bit-field - the numeric `params` attribute OR'd with any `<params><param name/></params>` names. */
+    params: number;
+    dropShadow: DropShadow | undefined;
     children: Element[];
 }
+
+/**
+ * `WindowParam` names -> bits, transcribed from the client's
+ * com/sulake/core/window/utils `fillTables()`. The hand-written skin templates (`frame_3`,
+ * `button`, `dropmenu`, ...) list params by name; the tool-exported layouts bake the sum.
+ */
+const PARAM_BITS: Record<string, number> = {
+    null: 0, bound_to_parent_rect: 32, child_window: 33, embedded_controller: 51, expand_to_accommodate_children: 131072,
+    input_event_processor: 1, internal_event_handling: 9, mouse_dragging_target: 32768, mouse_dragging_trigger: 257,
+    mouse_scaling_target: 65536, mouse_scaling_trigger: 12288, horizontal_mouse_scaling_trigger: 4096, vertical_mouse_scaling_trigger: 8192,
+    observe_parent_input_events: 5, parent_window: 1, resize_to_accommodate_children: 147456,
+    relative_horizontal_scale_center: 192, relative_horizontal_scale_fixed: 0, relative_horizontal_scale_move: 64, relative_horizontal_scale_strech: 128,
+    relative_scale_center: 3264, relative_scale_fixed: 0, relative_scale_move: 1088, relative_scale_strech: 2176,
+    relative_vertical_scale_center: 3072, relative_vertical_scale_fixed: 0, relative_vertical_scale_move: 1024, relative_vertical_scale_strech: 2048,
+    on_resize_align_left: 0, on_resize_align_right: 262144, on_resize_align_center: 786432, on_resize_align_top: 0, on_resize_align_bottom: 1048576, on_resize_align_middle: 3145728,
+    on_accommodate_align_left: 0, on_accommodate_align_right: 262144, on_accommodate_align_center: 786432, on_accommodate_align_top: 0, on_accommodate_align_bottom: 1048576, on_accommodate_align_middle: 3145728,
+    route_input_events_to_parent: 3, use_parent_graphic_context: 16, draggable_with_mouse: 33025, scalable_with_mouse: 77824,
+    reflect_horizontal_resize_to_parent: 4194304, reflect_vertical_resize_to_parent: 8388608, reflect_resize_to_parent: 12582912,
+    force_clipping: 1073741824, inherit_caption: 2147483648,
+};
+
+const parseDropShadow = (node: XmlNode | undefined): DropShadow | undefined => {
+    const filter = node?.children.find(child => child.tag === 'DropShadowFilter');
+
+    if (!filter) return undefined;
+
+    const shadow: DropShadow = {};
+
+    if (filter.attrs.distance !== undefined) shadow.distance = num(filter.attrs.distance);
+    if (filter.attrs.angle !== undefined) shadow.angle = num(filter.attrs.angle);
+    if (filter.attrs.color !== undefined) shadow.color = hexColor(filter.attrs.color);
+    if (filter.attrs.alpha !== undefined) shadow.alpha = Math.round(num(filter.attrs.alpha) * 100) / 100;
+    if (filter.attrs.blurX !== undefined) shadow.blur = num(filter.attrs.blurX);
+
+    return shadow;
+};
 
 const toElement = (node: XmlNode): Element => {
     const vars: Record<string, string> = {};
@@ -92,12 +139,24 @@ const toElement = (node: XmlNode): Element => {
 
     const scaleNode = node.children.find(child => child.tag === 'scale');
     const childrenNode = node.children.find(child => child.tag === 'children');
+    const paramsNode = node.children.find(child => child.tag === 'params');
+    let params = num(node.attrs.params) >>> 0;
+
+    for (const param of paramsNode?.children ?? []) if (param.tag === 'param' && param.attrs.name) params = (params | (PARAM_BITS[param.attrs.name] ?? 0)) >>> 0;
+
+    // The named form carries the scale anchoring in `params` rather than a `<scale>` child.
+    const scaleFromParams = (mask: number, move: number, strech: number) => ((params & mask) === strech ? 'strech' : (params & mask) === move ? 'move' : 'fixed');
+    const scale = scaleNode
+        ? { horizontal: scaleNode.attrs.horizontal ?? 'fixed', vertical: scaleNode.attrs.vertical ?? 'fixed' }
+        : paramsNode ? { horizontal: scaleFromParams(192, 64, 128), vertical: scaleFromParams(3072, 1024, 2048) } : undefined;
 
     return {
         tag: node.tag,
         attrs: node.attrs,
         vars,
-        scale: scaleNode ? { horizontal: scaleNode.attrs.horizontal ?? 'fixed', vertical: scaleNode.attrs.vertical ?? 'fixed' } : undefined,
+        scale,
+        params,
+        dropShadow: parseDropShadow(node.children.find(child => child.tag === 'filters')),
         children: (childrenNode?.children ?? []).map(toElement),
     };
 };
@@ -403,12 +462,14 @@ const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(`tooltip={${tooltip}}`);
-    if (el.attrs.params && el.attrs.params !== '0') props.push(`params={${num(el.attrs.params)}}`);
+    if (el.params) props.push(`params={${el.params}}`);
     if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
     if (includeVisible && el.attrs.visible === 'false') props.push('visible={false}');
 
     return props;
 };
+
+const dropShadowProp = (el: Element): string[] => (el.dropShadow ? [ `dropShadow={${layoutLiteral({ ...el.dropShadow, color: el.dropShadow.color ? quote(el.dropShadow.color) : undefined })}}` ] : []);
 
 const variantProp = (el: Element): string[] => (el.attrs.style !== undefined ? [ `variant="${el.attrs.style}"` ] : []);
 
@@ -430,12 +491,35 @@ const wrap = (name: string, props: string[], indent: string, children: string[])
     return [ ...openTag(name, props, indent, false), ...children, `${indent}</${name}>` ];
 };
 
-const SKIPPED_TAGS = new Set([
-    'header', 'scaler', 'bubble_pointer_up', 'bubble_pointer_down', 'bubble_pointer_left', 'bubble_pointer_right',
-    'frame_pointer_down', 'scrollbar_slider_track_horizontal', 'scrollbar_slider_bar_horizontal', 'scrollbar_slider_track_vertical',
-    'scrollbar_slider_bar_vertical', 'scrollbar_slider_button_left', 'scrollbar_slider_button_right', 'scrollbar_slider_button_up',
-    'scrollbar_slider_button_down', 'tab_selector', 'scrollbar_vertical', 'scrollbar_horizontal',
-]);
+/**
+ * `scrollbar_vertical`/`scrollbar_horizontal` aren't emitted where they stand: their
+ * `scrollable` variable names the list they drive, and that list is wrapped in a `ScrollArea`
+ * (which renders the themed scrollbar itself) - see `emitList`.
+ */
+const SKIPPED_TAGS = new Set([ 'scrollbar_vertical', 'scrollbar_horizontal' ]);
+
+/**
+ * The window chrome pieces a skin template lays out by hand (`frame_3`, `bubble_7`, the
+ * `illumina_*_scrollbar` skins, ...). Each has a themed component of the same role that draws
+ * its own art, so the element becomes that component at the template's position/size.
+ */
+const CHROME_TAGS: Record<string, { component: string; props?: string[]; meta?: boolean }> = {
+    header: { component: 'Header', meta: true },
+    scaler: { component: 'Scaler', meta: true },
+    bubble_pointer_up: { component: 'BubblePointer', props: [ 'direction="up"' ], meta: true },
+    bubble_pointer_down: { component: 'BubblePointer', props: [ 'direction="down"' ], meta: true },
+    bubble_pointer_left: { component: 'BubblePointer', props: [ 'direction="left"' ], meta: true },
+    bubble_pointer_right: { component: 'BubblePointer', props: [ 'direction="right"' ], meta: true },
+    frame_pointer_down: { component: 'FramePointerDown', meta: true },
+    scrollbar_slider_track_horizontal: { component: 'ScrollbarSliderTrackHorizontal' },
+    scrollbar_slider_bar_horizontal: { component: 'ScrollbarSliderBarHorizontal' },
+    scrollbar_slider_track_vertical: { component: 'ScrollbarSliderTrackVertical', meta: true },
+    scrollbar_slider_bar_vertical: { component: 'ScrollbarSliderBarVertical', meta: true },
+    scrollbar_slider_button_left: { component: 'ScrollbarSliderButtonLeft' },
+    scrollbar_slider_button_right: { component: 'ScrollbarSliderButtonRight' },
+    scrollbar_slider_button_up: { component: 'ScrollbarSliderButtonUp' },
+    scrollbar_slider_button_down: { component: 'ScrollbarSliderButtonDown' },
+};
 
 const TEXT_TAGS = new Set([ 'text', 'label', 'formatted_text', 'html', 'link' ]);
 const LIST_TAGS: Record<string, { direction: 'row' | 'column'; wrap?: boolean; scroll?: 'vertical' | 'horizontal' }> = {
@@ -483,6 +567,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     const regionProps = [
         ...metaProps(ctx, el),
+        ...dropShadowProp(el),
         `layout={${boxLayout(el, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] })}}`,
     ];
 
@@ -532,13 +617,14 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     ctx.imports.add('ThemeImage');
     props.push(`layout={${boxLayout(el, parent)}}`);
 
-    const image = openTag('ThemeImage', props, el.attrs.visible === 'false' ? indent + INDENT : indent, true);
+    const needsWrapper = el.attrs.visible === 'false' || !!el.dropShadow;
+    const image = openTag('ThemeImage', props, needsWrapper ? indent + INDENT : indent, true);
 
-    if (el.attrs.visible !== 'false') return image;
+    if (!needsWrapper) return image;
 
     ctx.imports.add('Region');
 
-    return wrap('Region', [ 'visible={false}', `layout={${boxLayout(el, parent)}}` ], indent, image);
+    return wrap('Region', [ ...(el.attrs.visible === 'false' ? [ 'visible={false}' ] : []), ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
 };
 
 const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -554,7 +640,7 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     ctx.imports.add('Region');
 
     const innerParent = selfBox(el, true);
-    const meta = metaProps(ctx, el);
+    const meta = [ ...metaProps(ctx, el), ...dropShadowProp(el) ];
     const background = el.attrs.background === 'true' && hexColor(el.attrs.color) ? [ `backgroundColor="${hexColor(el.attrs.color)!}"` ] : [];
     const contentIndent = scroll ? indent + INDENT : indent;
     const children = emitListChildren(ctx, el, innerParent, contentIndent + INDENT);
@@ -663,21 +749,47 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     // bubble - see FriendRequestsTab.as showing its `bubble` on select) get a `visible<Name>` prop.
     const visibleOverride = el.attrs.name && (hidden || el.tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
 
-    if (!hidden && !visibleOverride) return wrap(component, [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, children(indent + INDENT));
+    if (!hidden && !visibleOverride && !el.dropShadow) return wrap(component, [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, children(indent + INDENT));
 
-    // Components that don't forward `visible` to their Box get a Region wrapper carrying it instead.
+    // Components that don't forward `visible`/`dropShadow` to their Box get a Region wrapper carrying them instead.
     ctx.imports.add('Region');
 
     const inner = wrap(component, [ ...props, 'layout={{ width: \'100%\', height: \'100%\' }}' ], indent + INDENT, children(indent + INDENT + INDENT));
-    const visible = visibleOverride ? `visible={${visibleOverride} ?? ${!hidden}}` : 'visible={false}';
+    const wrapperProps = [ ...dropShadowProp(el) ];
 
-    return wrap('Region', [ visible, `layout={${boxLayout(el, parent)}}` ], indent, inner);
+    if (visibleOverride) wrapperProps.push(`visible={${visibleOverride} ?? ${!hidden}}`);
+    else if (hidden) wrapperProps.push('visible={false}');
+
+    return wrap('Region', [ ...wrapperProps, `layout={${boxLayout(el, parent)}}` ], indent, inner);
 };
 
 const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
     const { tag } = el;
 
-    if (SKIPPED_TAGS.has(tag)) return [];
+    if (SKIPPED_TAGS.has(tag)) return [ `${indent}{/* <${tag}> for ${el.vars.scrollable ?? '?'} - rendered by that list's ScrollArea */}` ];
+
+    if (CHROME_TAGS[tag]) {
+        const { component, props: chromeProps, meta } = CHROME_TAGS[tag];
+
+        ctx.imports.add(component);
+
+        // Not every chrome component takes the full ThemeProps surface (the horizontal slider
+        // pieces and the buttons are plain PointerHandlerProps + variant/layout) - `meta` marks
+        // the ones that do, so name/tags/params are only passed where they type-check.
+        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el, false), ...tintProp(el) ] : []), ...(chromeProps ?? []) ];
+
+        if (tag === 'header' && el.attrs.caption) props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
+
+        props.push(`layout={${boxLayout(el, parent)}}`);
+
+        return openTag(component, props, indent, true);
+    }
+
+    if (tag === 'tab_selector') {
+        ctx.imports.add('Region');
+
+        return wrap('Region', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent)}}` ], indent, emitChildren(ctx, el, selfBox(el), indent + INDENT));
+    }
     if (TEXT_TAGS.has(tag)) return emitText(ctx, el, parent, indent);
     if (tag === 'static_bitmap' || tag === 'bitmap') return emitBitmap(ctx, el, parent, indent);
     if (LIST_TAGS[tag]) return emitList(ctx, el, parent, indent);
@@ -701,7 +813,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
         case 'gradient': {
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el, false) ];
+            const props = [ ...metaProps(ctx, el, false), ...dropShadowProp(el) ];
             const color = hexColor(el.attrs.color);
 
             if (el.attrs.visible === 'false') {
@@ -715,7 +827,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
             // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
-            if (tag === 'region' && el.attrs.name && (num(el.attrs.params) & 1)) {
+            if (tag === 'region' && el.attrs.name && (el.params & 1)) {
                 props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
                 props.push('cursor="pointer"');
             }
@@ -821,8 +933,10 @@ const collectScrollTargets = (el: Element, targets: Map<string, 'vertical' | 'ho
 };
 
 const THEME_IMPORTS = new Set([
-    'Border', 'BoxLayout', 'Bubble', 'Button', 'ButtonGroupCenter', 'ButtonGroupLeft', 'ButtonGroupRight', 'ButtonThick', 'CheckBox', 'CloseButton',
-    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'Icon', 'RadioButton', 'Region', 'ScrollArea', 'Shape', 'TabButton', 'TabContent', 'TabContext',
+    'Border', 'BoxLayout', 'Bubble', 'BubblePointer', 'Button', 'ButtonGroupCenter', 'ButtonGroupLeft', 'ButtonGroupRight', 'ButtonThick', 'CheckBox', 'CloseButton',
+    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
+    'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
+    'ScrollbarSliderButtonUp', 'ScrollbarSliderTrackHorizontal', 'ScrollbarSliderTrackVertical', 'Shape', 'TabButton', 'TabContent', 'TabContext',
     'TextInput', 'ThemeImage', 'ThemeText', 'WidgetSlot',
 ]);
 
@@ -918,9 +1032,12 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
         ctx.imports.add('BoxLayout');
         ctx.props.set('layout', 'BoxLayout');
 
+        const rootShadow = parseDropShadow(root.children.find(child => child.tag === 'filters'));
+        const rootProps = rootShadow ? [ `dropShadow={${layoutLiteral({ ...rootShadow, color: rootShadow.color ? quote(rootShadow.color) : undefined })}}` ] : [];
+
         body = wrap(
             'Region',
-            [ `layout={{ position: 'relative', width: ${width}, height: ${height}, ...layout }}` ],
+            [ ...rootProps, `layout={{ position: 'relative', width: ${width}, height: ${height}, ...layout }}` ],
             bodyIndent,
             elements.flatMap(el => emit(ctx, el, { width, height, flow: false }, bodyIndent + INDENT)),
         );

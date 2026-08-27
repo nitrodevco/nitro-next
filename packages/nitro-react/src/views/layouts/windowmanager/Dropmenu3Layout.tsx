@@ -4,15 +4,17 @@ import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 export interface Dropmenu3LayoutProps {
     captionDROPLISTTITLETEXT?: string;
     layout?: BoxLayout;
+    onDROPLISTREGION?: () => void;
 }
 
-export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, layout }: Dropmenu3LayoutProps) => {
+export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, layout, onDROPLISTREGION }: Dropmenu3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 20, ...layout }}>
             <Region
                 name="_DROPLIST_TITLETEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
-                layout={{ position: 'absolute', left: 6, width: 10, top: 4, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                params={2147483792}
+                layout={{ position: 'absolute', left: 6, right: 24, top: 4, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDROPLISTTITLETEXT ?? ''}
@@ -21,18 +23,22 @@ export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, layout }: Dropmenu3L
             </Region>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 14 }}
+                layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 14 }}
             >
                 <Region
                     name="_DROPLIST_ITEMLIST"
                     tags={[ '_EXCLUDE', 'list' ]}
+                    params={131216}
                     layout={{ flexDirection: 'column', width: '100%' }}
                 />
             </ScrollArea>
             <Region
                 name="_DROPLIST_REGION"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 6, width: 28, top: 2, height: 18 }}
+                params={2147483793}
+                onPointerTap={onDROPLISTREGION}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18 }}
             />
         </Region>
     );

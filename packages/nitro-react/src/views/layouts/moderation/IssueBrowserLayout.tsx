@@ -128,6 +128,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                     )}
                                 </Region>
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for issue_list - rendered by that list's ScrollArea */}
                         </Region>
                     </Region>
                     <Region
@@ -196,6 +197,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                     )}
                                 </Region>
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for issue_list - rendered by that list's ScrollArea */}
                             <Button
                                 variant="0"
                                 name="release_all"
@@ -272,6 +274,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                     )}
                                 </Region>
                             </ScrollArea>
+                            {/* <scrollbar_vertical> for issue_list - rendered by that list's ScrollArea */}
                         </Region>
                     </Region>
                 </Region>
