@@ -61,7 +61,7 @@ export const LayoutVipBuy_1585Layout = ({ captionVipInfo, captionVipLink, captio
                     <Region
                         name="vip_link"
                         params={786449}
-                        layout={{ position: 'absolute', left: 19, width: 286, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -151, width: 286, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionVipLink ?? t('catalog.vip.buy.link')}

@@ -28,7 +28,7 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, itemsRent
                 <Region
                     name="rent_view"
                     params={8519696}
-                    layout={{ position: 'absolute', left: 2, width: 243, top: 4, height: 216, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 2, minWidth: 243, top: 4, minHeight: 216, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsRentView ?? (
                         <>
@@ -43,7 +43,7 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, itemsRent
                     name="rented_view"
                     params={8536080}
                     visible={false}
-                    layout={{ position: 'absolute', left: 2, width: 245, top: 4, height: 97, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsRentedView ?? (
                         <>
@@ -59,7 +59,7 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, itemsRent
                     name="error_view"
                     params={131088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 253, top: 0, height: 182, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column' }}
                 >
                     {itemsErrorView ?? (
                         <>
@@ -86,7 +86,7 @@ export const RentablespaceLayoutRentInstructionsItem = ({ captionRentInstruction
         <Region
             name="rent_instructions"
             params={8388624}
-            layout={{ width: 241, height: 22, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 241, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionRentInstructions ?? t('rentablespace.widget.instructions')}
@@ -117,7 +117,7 @@ export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRe
         >
             <Region
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 44, flexDirection: 'row', gap: 5 }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 5 }}
             >
                 <Region
                     name="price_label"

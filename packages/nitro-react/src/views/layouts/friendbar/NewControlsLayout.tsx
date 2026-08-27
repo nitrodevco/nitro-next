@@ -7,15 +7,18 @@ export interface NewControlsLayoutProps {
     onBtnChat?: () => void;
     onBtnVisit?: () => void;
     onButtonProfile?: () => void;
+    onControls?: () => void;
 }
 
-export const NewControlsLayout = ({ layout, onBtnChat, onBtnVisit, onButtonProfile }: NewControlsLayoutProps) => {
+export const NewControlsLayout = ({ layout, onBtnChat, onBtnVisit, onButtonProfile, onControls }: NewControlsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 85, height: 35, ...layout }}>
             <Region
                 name="controls"
                 params={145}
-                layout={{ position: 'absolute', left: 0, width: 85, top: 0, height: 35 }}
+                onPointerTap={onControls}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35 }}
             >
                 <Region
                     name="btn_chat"

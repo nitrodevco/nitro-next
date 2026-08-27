@@ -64,12 +64,12 @@ export const VipDiscountPromotionV2Layout = ({ captionTitleTxt, itemsContentItem
                     name="promo_img"
                     params={1311824}
                     src={srcPromoImg ?? '${image.library.url}talent/citizenship_vip_extend_promo.png'}
-                    layout={{ position: 'absolute', left: 94, width: 92, top: 113, height: 102 }}
+                    layout={{ position: 'absolute', right: 7, width: 92, bottom: 1, height: 102 }}
                 />
                 <Region
                     name="content_itemlist"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 188, top: 30, height: 105, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsContentItemlist ?? (
                         <>

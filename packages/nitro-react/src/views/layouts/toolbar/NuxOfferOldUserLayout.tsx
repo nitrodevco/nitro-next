@@ -28,12 +28,12 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
                 <Region
                     params={2176}
                     backgroundColor="#3d6373"
-                    layout={{ position: 'absolute', left: 0, width: 454, top: 23, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 23, bottom: 137 }}
                 >
                     <Region
                         params={2176}
                         backgroundColor="#0f4052"
-                        layout={{ position: 'absolute', left: 2, width: 450, top: 2, height: 56 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                     >
                         <Region
                             params={273}
@@ -68,12 +68,12 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
                     <Region
                         name="user_input_buttons"
                         params={1458320}
-                        layout={{ position: 'absolute', left: 138, width: 298, top: 82, height: 30 }}
+                        layout={{ position: 'absolute', left: 138, right: 10, bottom: 6, height: 30 }}
                     >
                         <Region
                             name="btnSkip"
                             params={1048577}
-                            layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 30, maxWidth: 158, minHeight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, width: 158, bottom: 0, height: 30, maxWidth: 158, minHeight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             onPointerTap={onBtnSkip}
                             cursor="pointer"
                         >

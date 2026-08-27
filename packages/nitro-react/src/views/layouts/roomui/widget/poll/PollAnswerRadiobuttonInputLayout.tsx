@@ -6,25 +6,28 @@ import { BoxLayout, RadioButton, Region, ThemeText } from '#base/theme';
 export interface PollAnswerRadiobuttonInputLayoutProps {
     itemsPollAnswerItemlist?: ReactNode;
     layout?: BoxLayout;
+    onPollAnswerContent?: () => void;
 }
 
-export const PollAnswerRadiobuttonInputLayout = ({ itemsPollAnswerItemlist, layout }: PollAnswerRadiobuttonInputLayoutProps) => {
+export const PollAnswerRadiobuttonInputLayout = ({ itemsPollAnswerItemlist, layout, onPollAnswerContent }: PollAnswerRadiobuttonInputLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 365, height: 125, ...layout }}>
             <Region
                 name="poll_answer_content"
                 params={131217}
-                layout={{ position: 'absolute', left: 0, width: 365, top: 0, height: 125 }}
+                onPointerTap={onPollAnswerContent}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125 }}
             >
                 <Region
                     name="poll_answer_selector"
                     params={131217}
-                    layout={{ position: 'absolute', left: 0, width: 365, top: 0, height: 125 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125 }}
                 >
                     <Region
                         name="poll_answer_itemlist"
                         params={131217}
-                        layout={{ position: 'absolute', left: 0, width: 365, top: 0, height: 125, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 125, flexDirection: 'column' }}
                     >
                         {itemsPollAnswerItemlist ?? (
                             <PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem />

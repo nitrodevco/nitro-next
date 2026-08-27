@@ -47,7 +47,7 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionTitle, capti
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 93, width: 126, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -63, width: 126, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.settings.title')}
@@ -58,7 +58,7 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionTitle, capti
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 10, width: 292, top: 22, height: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -146, width: 292, top: 22, height: 1 }}
                 />
                 <Border
                     variant="3"
@@ -70,7 +70,7 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionTitle, capti
                 <Region
                     name="volume_text"
                     params={786640}
-                    layout={{ position: 'absolute', left: 82, width: 148, top: 32, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -74, width: 148, top: 32, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionVolumeText ?? t('widget.memenu.settings.volume')}
@@ -310,7 +310,7 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionTitle, capti
                     name="back_btn"
                     params={1180721}
                     onPointerTap={onBackBtn}
-                    layout={{ position: 'absolute', left: 10, width: 60, top: 143, height: 22, minWidth: 60, maxWidth: 60 }}
+                    layout={{ position: 'absolute', left: 10, width: 60, bottom: 5, height: 22, minWidth: 60, maxWidth: 60 }}
                 >
                     {t('widget.memenu.back')}
                 </Button>

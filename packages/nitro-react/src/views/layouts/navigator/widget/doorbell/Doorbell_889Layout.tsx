@@ -23,7 +23,7 @@ export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps)
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={144}
-                    layout={{ position: 'absolute', left: 10, width: 215, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('widgets.doorbell.info')}

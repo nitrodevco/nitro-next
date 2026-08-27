@@ -28,7 +28,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 268, top: 0, height: 110 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Border
                         variant="0"
@@ -46,7 +46,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                         <Region
                             name="bundleCounter"
                             params={176}
-                            layout={{ position: 'absolute', left: 18, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 18, right: 26, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionBundleCounter ?? ''}
@@ -84,7 +84,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                         name="select_button"
                         params={132113}
                         onPointerTap={onSelectButton}
-                        layout={{ position: 'absolute', left: 9, width: 120, top: 77, height: 25, minWidth: 120, maxWidth: 120 }}
+                        layout={{ position: 'absolute', left: 9, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
                     >
                         {t('catalog.club_gift.select')}
                     </Button>
@@ -93,7 +93,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                         name="cancel_button"
                         params={132113}
                         onPointerTap={onCancelButton}
-                        layout={{ position: 'absolute', left: 137, width: 120, top: 77, height: 25, minWidth: 120, maxWidth: 120 }}
+                        layout={{ position: 'absolute', left: 137, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
                     >
                         {t('cancel')}
                     </Button>

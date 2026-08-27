@@ -30,7 +30,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, items
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 408, top: 10, height: 306, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}
                 >
                     <Region
                         params={16}
@@ -60,7 +60,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, items
                         <Region
                             name="level_up_layout"
                             params={147472}
-                            layout={{ position: 'absolute', left: 14, width: 378, top: 12, height: 164, flexDirection: 'column', gap: 1 }}
+                            layout={{ position: 'absolute', left: 14, top: 12, flexDirection: 'column', gap: 1 }}
                         >
                             {itemsLevelUpLayout ?? (
                                 <>
@@ -95,7 +95,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, items
                     name="level_decoration"
                     params={1024}
                     src={srcLevelDecoration}
-                    layout={{ position: 'absolute', left: 280, width: 260, top: 89, height: 260 }}
+                    layout={{ position: 'absolute', left: 280, width: 260, bottom: 13, height: 260 }}
                 />
             </Region>
         </Frame>
@@ -166,7 +166,7 @@ export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout }:
             <Region
                 name="vip_length"
                 params={3088}
-                layout={{ position: 'absolute', left: 37, width: 56, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 37, width: 56, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionVipLength ?? 'x 10 days'}
@@ -218,7 +218,7 @@ export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout }:
             <Region
                 name="perk_name"
                 params={3088}
-                layout={{ position: 'absolute', left: 37, width: 62, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 37, width: 62, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPerkName ?? 'perk name'}

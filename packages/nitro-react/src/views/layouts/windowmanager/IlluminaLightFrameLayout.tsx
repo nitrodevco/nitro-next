@@ -5,9 +5,10 @@ export interface IlluminaLightFrameLayoutProps {
     captionHeaderTitleText?: string;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
+    onTitlebar?: () => void;
 }
 
-export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose }: IlluminaLightFrameLayoutProps) => {
+export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar }: IlluminaLightFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
@@ -23,6 +24,8 @@ export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHea
                 name="titlebar"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={401}
+                onPointerTap={onTitlebar}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
             />
             <Region

@@ -33,7 +33,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                 <Region
                     name="pieces"
                     params={2192}
-                    layout={{ position: 'absolute', left: 3, width: 121, top: 7, height: 30, minHeight: 30, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column' }}
                 >
                     {itemsPieces ?? (
                         <FriendRequestTabLayoutHeaderItem />
@@ -53,7 +53,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                         <Region
                             name="message"
                             params={8388752}
-                            layout={{ position: 'absolute', left: 5, width: 93, top: 4, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionMessage ?? t('friendbar.request.title')}
@@ -66,14 +66,14 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             name="button_close"
                             params={81}
                             onPointerTap={onButtonClose}
-                            layout={{ position: 'absolute', left: 101, width: 19, top: 3, height: 20 }}
+                            layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
                         />
                         <ContainerButton
                             variant="3"
                             name="button_accept"
                             params={394449}
                             onPointerTap={onButtonAccept}
-                            layout={{ position: 'absolute', left: 13, width: 96, top: 36, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="8"
@@ -99,7 +99,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             name="button_profile"
                             params={394449}
                             onPointerTap={onButtonProfile}
-                            layout={{ position: 'absolute', left: 13, width: 96, top: 66, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="21"
@@ -125,12 +125,12 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             params={1233}
                             onPointerTap={onClickRegionReject}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 2, width: 118, top: 99, height: 15 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -67.5, width: 118, bottom: 26, height: 15 }}
                         >
                             <Region
                                 name="link_reject"
                                 params={4194320}
-                                layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionLinkReject ?? t('friendbar.request.decline')}
@@ -144,7 +144,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                 <Region
                     name="icons"
                     params={262224}
-                    layout={{ position: 'absolute', left: 117, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
                 />
             </Border>
         </Region>
@@ -186,7 +186,7 @@ export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader
                 params={145}
                 onPointerTap={onRegionProfile}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24 }}
             >
                 <Region
                     params={16}
@@ -196,7 +196,7 @@ export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader
                         name="canvas"
                         params={3932160}
                         src={srcCanvas}
-                        layout={{ position: 'absolute', left: 20, width: 10, top: 30, height: 10 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -5, width: 10, top: '50%', marginTop: -5, height: 10 }}
                     />
                 </Region>
             </Region>

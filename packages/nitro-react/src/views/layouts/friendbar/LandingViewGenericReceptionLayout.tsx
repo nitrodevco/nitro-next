@@ -32,19 +32,19 @@ export const LandingViewGenericReceptionLayout = ({ captionDailyContent, layout,
                         name="background_back"
                         params={2192}
                         src={srcBackgroundBack ?? '${image.library.url}reception/generic_reception_back.png'}
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         name="right_pane_dimmer"
                         params={2128}
                         backgroundColor="#75bfe3"
-                        layout={{ position: 'absolute', left: 883, width: 289, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', right: 0, width: 289, top: 0, bottom: 0 }}
                     />
                     <ThemeImage
                         name="reception_divider"
                         params={2128}
                         src={srcReceptionDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                        layout={{ position: 'absolute', left: 882, width: 2, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', right: 288, width: 2, top: 0, bottom: 0 }}
                     />
                     <Region
                         params={16}
@@ -76,25 +76,25 @@ export const LandingViewGenericReceptionLayout = ({ captionDailyContent, layout,
                         name="background_front"
                         params={2192}
                         src={srcBackgroundFront ?? '${image.library.url}reception/generic_reception_front.png'}
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_avatarinfo"
                         params={1024}
-                        layout={{ position: 'absolute', left: 0, width: 10, top: 443, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, width: 10, bottom: 369, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_avatarimage"
                         params={1024}
-                        layout={{ position: 'absolute', left: 154, width: 10, top: 588, height: 10 }}
+                        layout={{ position: 'absolute', left: 154, width: 10, bottom: 224, height: 10 }}
                     />
                     <ThemeImage
                         name="dive"
                         params={80}
                         src={srcDive ?? '${image.library.url}reception/generic_reception_dive.png'}
-                        layout={{ position: 'absolute', left: 600, width: 182, top: 0, height: 70 }}
+                        layout={{ position: 'absolute', right: 390, width: 182, top: 0, height: 70 }}
                     />
                 </Region>
             </Region>

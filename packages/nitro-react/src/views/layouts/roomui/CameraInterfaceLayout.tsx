@@ -7,6 +7,7 @@ export interface CameraInterfaceLayoutProps {
     captionPhotoDate?: string;
     captionPhotoRoomname?: string;
     layout?: BoxLayout;
+    onBgBorder?: () => void;
     onButtonEditor?: () => void;
     onButtonRelease?: () => void;
     onCameraButton0?: () => void;
@@ -41,7 +42,7 @@ export interface CameraInterfaceLayoutProps {
     visibleSlotContainer?: boolean;
 }
 
-export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, layout, onButtonEditor, onButtonRelease, onCameraButton0, onCameraButton1, onCameraButton2, onCameraButton3, onCameraButton4, onChooseSlotButton0, onChooseSlotButton1, onChooseSlotButton2, onChooseSlotButton3, onChooseSlotButton4, onDeletePhotoButton, srcBuyButtonBg, srcCameraCrosshair, srcCameraSlot0, srcCameraSlot1, srcCameraSlot2, srcCameraSlot3, srcCameraSlot4, srcCustomFrame, srcFlash, srcImage, srcPhotoBorder, srcReleaseBitmap, srcSlotImage0, srcSlotImage1, srcSlotImage2, srcSlotImage3, srcSlotImage4, visibleDeletePhotoButton, visibleSlotContainer }: CameraInterfaceLayoutProps) => {
+export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, layout, onBgBorder, onButtonEditor, onButtonRelease, onCameraButton0, onCameraButton1, onCameraButton2, onCameraButton3, onCameraButton4, onChooseSlotButton0, onChooseSlotButton1, onChooseSlotButton2, onChooseSlotButton3, onChooseSlotButton4, onDeletePhotoButton, srcBuyButtonBg, srcCameraCrosshair, srcCameraSlot0, srcCameraSlot1, srcCameraSlot2, srcCameraSlot3, srcCameraSlot4, srcCustomFrame, srcFlash, srcImage, srcPhotoBorder, srcReleaseBitmap, srcSlotImage0, srcSlotImage1, srcSlotImage2, srcSlotImage3, srcSlotImage4, visibleDeletePhotoButton, visibleSlotContainer }: CameraInterfaceLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -49,6 +50,8 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
             <Region
                 name="bgBorder"
                 params={33025}
+                onPointerTap={onBgBorder}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536 }}
             >
                 <Region
@@ -185,7 +188,7 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                     name="photo_date"
                     params={262160}
                     visible={false}
-                    layout={{ position: 'absolute', left: 242, width: 88, top: 55, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 10, width: 88, top: 55, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPhotoDate ?? '6/4/2014 14:02'}
@@ -196,7 +199,7 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                     name="photo_roomname"
                     params={262160}
                     visible={false}
-                    layout={{ position: 'absolute', left: 220, width: 110, top: 69, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 10, width: 110, top: 69, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPhotoRoomname ?? 'My awesome room'}
@@ -239,7 +242,7 @@ export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, 
                     dynamicStyle="brightness_and_shadow_under"
                     tintColor="#009e00"
                     onPointerTap={onButtonEditor}
-                    layout={{ position: 'absolute', left: 92, width: 157, top: 308, height: 40 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -78, width: 157, top: 308, height: 40 }}
                 >
                     {t('camera.editor.button.text')}
                 </ButtonThick>

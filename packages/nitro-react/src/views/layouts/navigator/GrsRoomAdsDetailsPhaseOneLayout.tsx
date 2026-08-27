@@ -19,7 +19,7 @@ export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetai
                 backgroundColor="#ffffff"
                 onPointerTap={onDetails}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 346, top: 0, height: 17 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17 }}
             >
                 <Region
                     name="adname"
@@ -32,19 +32,19 @@ export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetai
                     name="doormode_password_small"
                     params={80}
                     src={srcDoormodePasswordSmall}
-                    layout={{ position: 'absolute', left: 285, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_doorbell_small"
                     params={80}
                     src={srcDoormodeDoorbellSmall}
-                    layout={{ position: 'absolute', left: 285, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_invisible_small"
                     params={80}
                     src={srcDoormodeInvisibleSmall}
-                    layout={{ position: 'absolute', left: 285, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
             </Region>
         </Region>

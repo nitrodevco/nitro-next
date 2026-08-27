@@ -18,7 +18,7 @@ export const NewItemsLabelLayout = ({ captionNewTextfield, layout }: NewItemsLab
                 <Region
                     name="new_textfield"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 1, width: 22, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 1, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNewTextfield ?? 'new'}

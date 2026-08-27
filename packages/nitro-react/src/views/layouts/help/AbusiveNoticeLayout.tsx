@@ -25,7 +25,7 @@ export const AbusiveNoticeLayout = ({ layout, onClose, onCloseButton }: AbusiveN
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 291, top: 2, height: 113, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
                 >
                     <Region
                         params={16}

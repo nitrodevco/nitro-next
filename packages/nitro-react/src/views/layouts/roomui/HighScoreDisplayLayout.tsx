@@ -31,7 +31,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                 >
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: 53, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -75, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('high.score.display.caption')}
@@ -66,7 +66,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                         <Region
                             name="score_header"
                             params={262224}
-                            layout={{ position: 'absolute', left: -96, width: 161, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', right: 5, width: 161, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionScoreHeader ?? t('high.score.display.score.header')} />
                         </Region>
@@ -82,7 +82,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                 <Region
                     name="footer"
                     params={786640}
-                    layout={{ position: 'absolute', left: 20, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -117.5, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionFooter ?? t('high.score.display.congratulations.footer')}
@@ -132,7 +132,7 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
             <Region
                 name="usernames"
                 params={80}
-                layout={{ position: 'absolute', left: 2, width: 120, top: 2, height: 16, maxWidth: 180, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 136, width: 120, top: 2, height: 16, maxWidth: 180, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionUsernames ?? 'USERNAMES PH, A LIST'}
@@ -142,7 +142,7 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
             <Region
                 name="score"
                 params={262224}
-                layout={{ position: 'absolute', left: 189, width: 56, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionScore ?? 'SCORE PH'}

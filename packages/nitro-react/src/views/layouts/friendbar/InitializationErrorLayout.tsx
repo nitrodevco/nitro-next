@@ -15,12 +15,12 @@ export const InitializationErrorLayout = ({ captionError, layout, srcKittycat }:
                     name="kittycat"
                     params={1311824}
                     src={srcKittycat ?? '${image.library.url}reception/confused.png'}
-                    layout={{ position: 'absolute', left: 80, width: 78, top: 2, height: 59 }}
+                    layout={{ position: 'absolute', right: 62, width: 78, bottom: 23, height: 59 }}
                 />
                 <Region
                     name="error"
                     params={1311824}
-                    layout={{ position: 'absolute', left: 25, width: 185, top: 63, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 10, width: 185, bottom: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionError ?? 'Landing view initialization error.'}

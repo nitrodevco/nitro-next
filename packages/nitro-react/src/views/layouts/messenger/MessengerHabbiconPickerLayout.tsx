@@ -21,7 +21,7 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 variant="107"
                 name="messenger_habbicon_picker_window"
                 params={1048577}
-                layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 138 }}
+                layout={{ position: 'absolute', left: 0, width: 256, bottom: 0, height: 138 }}
             >
                 <Region
                     name="top_controls"
@@ -37,7 +37,7 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 </Region>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 6, width: 244, top: 43, height: 88 }}
+                    layout={{ position: 'absolute', left: 6, right: 6, top: 43, height: 88 }}
                 >
                     <Region
                         name="habbicon_section_list"
@@ -52,12 +52,12 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 <Region
                     name="empty_view"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 256, top: 40, height: 96 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2 }}
                 >
                     <Region
                         name="empty_text"
                         params={3935440}
-                        layout={{ position: 'absolute', left: 28, width: 200, top: 40, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -100, width: 200, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEmptyText ?? t('habbicons.no_habbicons')}
@@ -94,12 +94,12 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                 onChange={setHabbiconSearchInputValue}
                 maxLength={24}
                 textColor="#333333"
-                layout={{ position: 'absolute', left: 6, width: 111, top: 4, height: 17 }}
+                layout={{ position: 'absolute', left: 6, right: 26, top: 4, height: 17 }}
             />
             <Region
                 name="habbicon_search_placeholder"
                 params={144}
-                layout={{ position: 'absolute', left: 6, width: 111, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 6, right: 26, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
@@ -111,12 +111,12 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                 params={3153}
                 onPointerTap={onHabbiconSearchClearButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 120, width: 17, top: 4, height: 17 }}
+                layout={{ position: 'absolute', right: 6, width: 17, top: '50%', marginTop: -8, height: 17 }}
             >
                 <ThemeImage
                     params={2192}
                     src={layoutImage('common_promo_arrow_close.png')}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Border>

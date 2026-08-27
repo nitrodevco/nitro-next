@@ -27,7 +27,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 161, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10 }}
                 >
                     <Region
                         params={147472}
@@ -41,12 +41,12 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                         />
                         <Region
                             params={147472}
-                            layout={{ position: 'absolute', left: 109, width: 245, top: 10, height: 87, flexDirection: 'column', gap: 3 }}
+                            layout={{ position: 'absolute', left: 109, top: 10, flexDirection: 'column', gap: 3 }}
                         >
                             <Region
                                 name="subscription_name"
                                 params={8388624}
-                                layout={{ width: 245, height: 39, flexShrink: 0, minWidth: 245, maxWidth: 245, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ width: 245, flexShrink: 0, minWidth: 245, maxWidth: 245, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionSubscriptionName ?? t('catalog.vip.buy.confirm.product')}
@@ -67,7 +67,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                             </Region>
                             <Region
                                 params={147472}
-                                layout={{ width: 288, height: 22, flexShrink: 0, flexDirection: 'row' }}
+                                layout={{ flexShrink: 0, flexDirection: 'row' }}
                             >
                                 <Region
                                     params={16}
@@ -117,7 +117,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                             name="cancel_button"
                             params={132113}
                             onPointerTap={onCancelButton}
-                            layout={{ position: 'absolute', left: 9, width: 120, top: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
+                            layout={{ position: 'absolute', left: 9, width: 120, bottom: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
                         >
                             {t('cancel')}
                         </Button>
@@ -127,7 +127,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                             params={132177}
                             tintColor="#00aa00"
                             onPointerTap={onSelectButton}
-                            layout={{ position: 'absolute', left: 235, width: 120, top: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
+                            layout={{ position: 'absolute', right: 0, width: 120, bottom: 0, height: 27, minWidth: 120, maxWidth: 120, minHeight: 27, maxHeight: 27 }}
                         >
                             {t('catalog.club.buy.subscribe')}
                         </ButtonThick>

@@ -15,7 +15,7 @@ export const LayoutGuildCustomFurni_1680Layout = ({ captionCtlgSelectproduct, la
             <Region
                 name="ctlg_default_3x3"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_selectproduct"
@@ -33,7 +33,7 @@ export const LayoutGuildCustomFurni_1680Layout = ({ captionCtlgSelectproduct, la
                     name="itemGridWidget"
                     tags={[ 'E' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 125 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 90 }}
                 />
                 <Region
                     name="productViewWidget"
@@ -43,7 +43,7 @@ export const LayoutGuildCustomFurni_1680Layout = ({ captionCtlgSelectproduct, la
                 <Region
                     name="guildSelectorWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 90, width: 180, top: 375, height: 85 }}
+                    layout={{ position: 'absolute', left: 90, width: 180, bottom: 0, height: 85 }}
                 />
                 <Region
                     name="specialInfoWidget"
@@ -62,7 +62,7 @@ export const LayoutGuildCustomFurni_1680Layout = ({ captionCtlgSelectproduct, la
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

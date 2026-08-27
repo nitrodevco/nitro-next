@@ -28,7 +28,7 @@ export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsConte
                 <Region
                     name="contentlist"
                     params={12732432}
-                    layout={{ position: 'absolute', left: 10, width: 325, top: 39, height: 640, flexDirection: 'column', gap: 6 }}
+                    layout={{ position: 'absolute', left: 10, top: 39, bottom: 7, flexDirection: 'column', gap: 6 }}
                 >
                     {itemsContentlist ?? (
                         <>
@@ -54,7 +54,7 @@ export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsConte
                         <Region
                             name="loadingText"
                             params={786640}
-                            layout={{ position: 'absolute', left: 33, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -127, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionLoadingText ?? t('camera.loading')}
@@ -110,7 +110,7 @@ export const PhotoPurchaseConfirmationLayoutCompetitionNameItem = ({ captionComp
         <Region
             name="competition_name"
             params={8536080}
-            layout={{ width: 191, height: 19, flexShrink: 0, maxWidth: 191, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 191, flexShrink: 0, maxWidth: 191, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionCompetitionName ?? t('camera.competition.header')}
@@ -134,7 +134,7 @@ export const PhotoPurchaseConfirmationLayoutCompetitionInfoItem = ({ captionComp
         <Region
             name="competition_info"
             params={8536080}
-            layout={{ width: 190, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 190, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionCompetitionInfo ?? t('camera.competition.info')}
@@ -181,7 +181,7 @@ export const PhotoPurchaseConfirmationLayoutCompetitionWrapperItem = ({ itemsPro
                 tintColor="#00aa00"
                 onPointerTap={onCompetitionButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 199, width: 110, top: 28, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
+                layout={{ position: 'absolute', right: 7, width: 110, bottom: 7, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
             >
                 {t('generic.submit')}
             </Button>
@@ -202,7 +202,7 @@ export const PhotoPurchaseConfirmationLayoutProductNameItem = ({ captionProductN
         <Region
             name="product_name"
             params={8536080}
-            layout={{ width: 191, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 191, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionProductName ?? t('camera.purchase.header')}
@@ -225,7 +225,7 @@ export const PhotoPurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, l
             name="quantity"
             params={8536080}
             visible={false}
-            layout={{ width: 41, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 41, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionQuantity ?? 'X 123'}
@@ -343,7 +343,7 @@ export const PhotoPurchaseConfirmationLayoutPriceAreaItem = ({ itemsPriceArea, l
         <Region
             name="price_area"
             params={147472}
-            layout={{ width: 336, height: 22, flexShrink: 0, flexDirection: 'row', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsPriceArea ?? (
                 <>
@@ -437,7 +437,7 @@ export const PhotoPurchaseConfirmationLayoutInventoryLinkAreaItem = ({ itemsInve
             name="inventory_link_area"
             params={147472}
             visible={false}
-            layout={{ width: 319, height: 25, flexShrink: 0, flexDirection: 'row', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsInventoryLinkArea ?? (
                 <>
@@ -489,7 +489,7 @@ export const PhotoPurchaseConfirmationLayoutPurchaseWrapperItem = ({ itemsProper
                 tintColor="#00aa00"
                 onPointerTap={onBuyButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 199, width: 110, top: 20, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
+                layout={{ position: 'absolute', right: 7, width: 110, bottom: 8, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
             >
                 {t('catalog.purchase_confirmation.buy')}
             </Button>
@@ -510,7 +510,7 @@ export const PhotoPurchaseConfirmationLayoutPublishExplanationItem = ({ captionP
         <Region
             name="publish_explanation"
             params={8536080}
-            layout={{ width: 300, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 300, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionPublishExplanation ?? t('camera.publish.explanation')}
@@ -615,7 +615,7 @@ export const PhotoPurchaseConfirmationLayoutPublishPriceAreaItem = ({ itemsPubli
         <Region
             name="publish_price_area"
             params={147472}
-            layout={{ width: 302, height: 22, flexShrink: 0, flexDirection: 'row', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsPublishPriceArea ?? (
                 <>
@@ -663,7 +663,7 @@ export const PhotoPurchaseConfirmationLayoutPublishLinkAreaItem = ({ itemsPublis
             name="publish_link_area"
             params={147472}
             visible={false}
-            layout={{ width: 140, height: 25, flexShrink: 0, flexDirection: 'row', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsPublishLinkArea ?? (
                 <PhotoPurchaseConfirmationLayoutPublishLinkItem />
@@ -711,7 +711,7 @@ export const PhotoPurchaseConfirmationLayoutPublishWrapperItem = ({ itemsPublish
                 tintColor="#00aa00"
                 onPointerTap={onPublishButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 199, width: 110, top: 50, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
+                layout={{ position: 'absolute', left: 199, right: 7, top: 50, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
             >
                 {t('camera.publish.button.text')}
             </Button>
@@ -806,7 +806,7 @@ export const PhotoPurchaseConfirmationLayoutButtonsItem = ({ layout, onCancelBut
                 params={132113}
                 onPointerTap={onCancelButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
+                layout={{ position: 'absolute', left: 0, width: 110, bottom: 0, height: 27, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27 }}
             >
                 {t('catalog.purchase_confirmation.cancel')}
             </Button>

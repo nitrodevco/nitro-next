@@ -8,6 +8,7 @@ export interface QuestTrackerLayoutProps {
     captionQuestHeaderTxt?: string;
     layout?: BoxLayout;
     onMoreInfoRegion?: () => void;
+    onQuestTracker?: () => void;
     srcPromptPicA?: string;
     srcPromptPicB?: string;
     srcPromptPicC?: string;
@@ -22,7 +23,7 @@ export interface QuestTrackerLayoutProps {
     srcSuccessPic6?: string;
 }
 
-export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, onMoreInfoRegion, srcPromptPicA, srcPromptPicB, srcPromptPicC, srcPromptPicD, srcQuestPicBitmap, srcQuestTrackerBg, srcSuccessPic1, srcSuccessPic2, srcSuccessPic3, srcSuccessPic4, srcSuccessPic5, srcSuccessPic6 }: QuestTrackerLayoutProps) => {
+export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, onMoreInfoRegion, onQuestTracker, srcPromptPicA, srcPromptPicB, srcPromptPicC, srcPromptPicD, srcQuestPicBitmap, srcQuestTrackerBg, srcSuccessPic1, srcSuccessPic2, srcSuccessPic3, srcSuccessPic4, srcSuccessPic5, srcSuccessPic6 }: QuestTrackerLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,7 +31,9 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
             <Region
                 name="quest_tracker"
                 params={33105}
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 132 }}
+                onPointerTap={onQuestTracker}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 132 }}
             >
                 <ThemeImage
                     name="quest_tracker_bg"
@@ -41,12 +44,12 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
                     name="content_cont"
                     params={2176}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 132 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="quest_header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 25, width: 134, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -71, width: 134, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionQuestHeaderTxt ?? t('quests.tracker.caption')}
@@ -56,7 +59,7 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
                     <Region
                         name="desc_txt"
                         params={144}
-                        layout={{ position: 'absolute', left: 71, width: 115, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 71, right: 6, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
@@ -66,7 +69,7 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
                     <Region
                         name="more_info_txt"
                         params={209}
-                        layout={{ position: 'absolute', left: 27, width: 139, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 139, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}

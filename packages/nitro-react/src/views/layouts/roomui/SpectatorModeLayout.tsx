@@ -19,7 +19,7 @@ export const SpectatorModeLayout = ({ layout, srcBottomLeft, srcBottomMiddle, sr
             <Region
                 name="spectator_mode_container"
                 params={2176}
-                layout={{ position: 'absolute', left: 0, width: 183, top: 0, height: 202, minWidth: 183, minHeight: 202 }}
+                layout={{ position: 'absolute', left: 0, right: -163, top: 0, bottom: -182, minWidth: 183, minHeight: 202 }}
             >
                 <ThemeImage
                     name="top_left"
@@ -31,43 +31,43 @@ export const SpectatorModeLayout = ({ layout, srcBottomLeft, srcBottomMiddle, sr
                     name="top_middle"
                     params={144}
                     src={srcTopMiddle}
-                    layout={{ position: 'absolute', left: 91, width: 1, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', left: 91, right: 91, top: 0, height: 19 }}
                 />
                 <ThemeImage
                     name="top_right"
                     params={80}
                     src={srcTopRight}
-                    layout={{ position: 'absolute', left: 92, width: 91, top: 0, height: 91 }}
+                    layout={{ position: 'absolute', right: 0, width: 91, top: 0, height: 91 }}
                 />
                 <ThemeImage
                     name="middle_left"
                     params={2064}
                     src={srcMiddleLeft}
-                    layout={{ position: 'absolute', left: 0, width: 19, top: 91, height: 1 }}
+                    layout={{ position: 'absolute', left: 0, width: 19, top: 91, bottom: 110 }}
                 />
                 <ThemeImage
                     name="middle_right"
                     params={2128}
                     src={srcMiddleRight}
-                    layout={{ position: 'absolute', left: 164, width: 19, top: 91, height: 1 }}
+                    layout={{ position: 'absolute', right: 0, width: 19, top: 91, bottom: 110 }}
                 />
                 <ThemeImage
                     name="bottom_left"
                     params={1040}
                     src={srcBottomLeft}
-                    layout={{ position: 'absolute', left: 0, width: 91, top: 92, height: 110 }}
+                    layout={{ position: 'absolute', left: 0, width: 91, bottom: 0, height: 110 }}
                 />
                 <ThemeImage
                     name="bottom_middle"
                     params={1168}
                     src={srcBottomMiddle}
-                    layout={{ position: 'absolute', left: 91, width: 1, top: 164, height: 38 }}
+                    layout={{ position: 'absolute', left: 91, right: 91, bottom: 0, height: 38 }}
                 />
                 <ThemeImage
                     name="bottom_right"
                     params={1104}
                     src={srcBottomRight}
-                    layout={{ position: 'absolute', left: 92, width: 91, top: 92, height: 110 }}
+                    layout={{ position: 'absolute', right: 0, width: 91, bottom: 0, height: 110 }}
                 />
             </Region>
         </Region>

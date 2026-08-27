@@ -27,18 +27,18 @@ export const RunningNumberLayout = ({ captionNumberField, layout, srcLeft, srcMi
                     name="middle"
                     params={144}
                     src={srcMiddle ?? layoutImage('illumina_light_clock_background_mid.png')}
-                    layout={{ position: 'absolute', left: 3, width: 54, top: 0, height: 23 }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 0, height: 23 }}
                 />
                 <ThemeImage
                     name="right"
                     params={262224}
                     src={srcRight ?? layoutImage('illumina_light_clock_background_right.png')}
-                    layout={{ position: 'absolute', left: 57, width: 3, top: 0, height: 23 }}
+                    layout={{ position: 'absolute', right: 0, width: 3, top: 0, height: 23 }}
                 />
                 <Region
                     name="number_field"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 3, height: 4, minWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 3, height: 4, minWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNumberField ?? ''}

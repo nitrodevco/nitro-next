@@ -16,7 +16,7 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, top: 376, height: 49 }}
+                layout={{ position: 'absolute', left: 0, width: 115, bottom: -376, height: 49 }}
             >
                 <Region
                     name="border"
@@ -26,12 +26,12 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
                     <Region
                         params={144}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 7, height: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 7, height: 1 }}
                     />
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 7, height: 26, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <OwnAvatarDecoratingLayoutDecorateItem />
@@ -67,12 +67,12 @@ export const OwnAvatarDecoratingLayoutDecorateItem = ({ captionLabel, layout, on
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('widget.avatar.stop_decorating')}

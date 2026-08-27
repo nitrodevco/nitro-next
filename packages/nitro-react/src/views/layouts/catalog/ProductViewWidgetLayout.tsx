@@ -22,13 +22,13 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
             <Region
                 name="main_container"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 348 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     params={2192}
                     src={srcCtlgTeaserimg1}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 348 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Region
                     name="room_canvas_container"
@@ -36,12 +36,12 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     backgroundColor="#000000"
                     onPointerTap={onRoomCanvasContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 348 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="room_canvas"
                         params={2208}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 348 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <ContainerButton
@@ -49,7 +49,7 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     name="rotate_avatar_left"
                     params={65}
                     onPointerTap={onRotateAvatarLeft}
-                    layout={{ position: 'absolute', left: 300, width: 25, top: 8, height: 24 }}
+                    layout={{ position: 'absolute', right: 35, width: 25, top: 8, height: 24 }}
                 >
                     <Icon
                         variant="2"
@@ -63,7 +63,7 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     name="rotate_avatar_right"
                     params={65}
                     onPointerTap={onRotateAvatarRight}
-                    layout={{ position: 'absolute', left: 329, width: 25, top: 8, height: 24 }}
+                    layout={{ position: 'absolute', right: 6, width: 25, top: 8, height: 24 }}
                 >
                     <Icon
                         variant="3"
@@ -78,7 +78,7 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     dynamicStyle="button"
                     onPointerTap={onTogglePreviewZoom}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 331, width: 20, top: 37, height: 22 }}
+                    layout={{ position: 'absolute', right: 9, width: 20, top: 37, height: 22 }}
                 >
                     <ThemeImage
                         tags={[ '#icon' ]}
@@ -93,7 +93,7 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     dynamicStyle="button"
                     onPointerTap={onTogglePreviewMagic}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 331, width: 22, top: 63, height: 22 }}
+                    layout={{ position: 'absolute', right: 7, width: 22, top: 63, height: 22 }}
                 >
                     <ThemeImage
                         tags={[ '#icon' ]}
@@ -106,7 +106,7 @@ export const ProductViewWidgetLayout = ({ captionCtlgDescription, captionCtlgPro
                     widgetType="separator"
                     params={1168}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 278, height: 4 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 66, height: 4 }}
                 />
                 <ScrollArea
                     orientation="vertical"

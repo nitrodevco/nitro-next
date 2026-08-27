@@ -42,7 +42,7 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
                     name="open_catalog_button"
                     params={409617}
                     onPointerTap={onOpenCatalogButton}
-                    layout={{ position: 'absolute', left: -32, width: 216, top: 44, height: 28 }}
+                    layout={{ position: 'absolute', right: 8, width: 216, top: 44, height: 28 }}
                 >
                     {t('notifications.button.show_gift_list')}
                 </Button>

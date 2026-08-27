@@ -32,13 +32,13 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                     params={2192}
                     tintColor="#4c4c4c"
                     blend={0}
-                    layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 159 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Border
                         variant="0"
                         name="white_border"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 159 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         name="text_title"
@@ -54,7 +54,7 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                     <Region
                         name="text_description"
                         params={2192}
-                        layout={{ position: 'absolute', left: 10, width: 282, top: 35, height: 58, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, right: 11, top: 35, bottom: 66, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTextDescription ?? 'widget.notification.description'}
@@ -66,24 +66,24 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                         name="button_ok"
                         params={787665}
                         onPointerTap={onButtonOk}
-                        layout={{ position: 'absolute', left: 101, width: 100, top: 102, height: 46, minHeight: 46, maxHeight: 46 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -50.5, width: 100, bottom: 11, height: 46, minHeight: 46, maxHeight: 46 }}
                     >
                         widget.notification.header
                         <Border
                             variant="3"
                             params={144}
                             tintColor="#006d00"
-                            layout={{ position: 'absolute', left: 3, width: 94, top: 3, height: 40 }}
+                            layout={{ position: 'absolute', left: 3, right: 3, top: 3, height: 40 }}
                         />
                         <Border
                             variant="3"
                             params={144}
                             tintColor="#309d00"
-                            layout={{ position: 'absolute', left: 6, width: 88, top: 6, height: 17 }}
+                            layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17 }}
                         />
                         <Region
                             params={3932368}
-                            layout={{ position: 'absolute', left: 37, width: 25, top: 10, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -13, width: 25, top: '50%', marginTop: -13, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('ok')}

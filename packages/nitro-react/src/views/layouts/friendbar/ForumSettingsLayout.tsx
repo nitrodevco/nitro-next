@@ -36,9 +36,10 @@ export interface ForumSettingsLayoutProps {
     onClose?: () => void;
     onOkBtn?: () => void;
     onTopClickArea?: () => void;
+    onTopPart?: () => void;
 }
 
-export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, captionTopHeaderText, captionTopText, layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn, onTopClickArea }: ForumSettingsLayoutProps) => {
+export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, captionTopHeaderText, captionTopText, layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn, onTopClickArea, onTopPart }: ForumSettingsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -55,14 +56,16 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     name="top_part"
                     params={129}
                     backgroundColor="#0e3f52"
-                    layout={{ position: 'absolute', left: -5, width: 348, top: 8, height: 80 }}
+                    onPointerTap={onTopPart}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80 }}
                 >
                     <Region
                         name="top_click_area"
                         params={145}
                         onPointerTap={onTopClickArea}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 348, top: 0, height: 80 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
                     />
                     <Region
                         name="icon_background"
@@ -91,7 +94,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     <Region
                         name="top_text"
                         params={144}
-                        layout={{ position: 'absolute', left: 90, width: 254, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
@@ -105,11 +108,11 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     params={1041}
                     tintColor="#dddddd"
                     onPointerTap={onCancelBtn}
-                    layout={{ position: 'absolute', left: 25, width: 120, top: 478, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120 }}
                 >
                     <Region
                         params={3935440}
-                        layout={{ position: 'absolute', left: 0, width: 160, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 160, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('groupforum.settings.cancel')}
@@ -123,11 +126,11 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     params={263249}
                     tintColor="#0a9bc5"
                     onPointerTap={onOkBtn}
-                    layout={{ position: 'absolute', left: 190, width: 120, top: 478, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120 }}
                 >
                     <Region
                         params={3935440}
-                        layout={{ position: 'absolute', left: 0, width: 137, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 137, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('groupforum.settings.ok')}
@@ -142,7 +145,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 244, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('groupforum.permissions.read_label')} />
                     </Region>
@@ -201,7 +204,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 188, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('groupforum.permissions.post_message_label')} />
                     </Region>
@@ -274,7 +277,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 243, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 201, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('groupforum.permissions.post_thread_label')} />
                     </Region>
@@ -347,7 +350,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 232, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 212, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('groupforum.permissions.moderate_label')} />
                     </Region>

@@ -36,7 +36,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 >
                     <Region
                         params={147472}
-                        layout={{ position: 'absolute', left: 10, width: 165, top: 10, height: 40, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'row', gap: 5 }}
                     >
                         <ThemeImage
                             params={16}
@@ -85,7 +85,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 </Border>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 260, top: 75, height: 183, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 10, top: 75, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}
                 >
                     <Region
                         params={16}
@@ -131,7 +131,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                     </Region>
                     <Region
                         params={933904}
-                        layout={{ width: 134, height: 50, flexShrink: 0, flexDirection: 'row' }}
+                        layout={{ flexShrink: 0, flexDirection: 'row' }}
                     >
                         <Button
                             variant="101"

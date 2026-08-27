@@ -33,7 +33,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, itemsOfferList, lay
                         name="search_by_activity"
                         params={131217}
                         onPointerTap={onSearchByActivity}
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                        layout={{ position: 'absolute', left: 0, right: 233, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
                     >
                         {t('catalog.marketplace.search_by_activity')}
                     </ButtonGroupLeft>
@@ -42,7 +42,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, itemsOfferList, lay
                         name="search_by_value"
                         params={131217}
                         onPointerTap={onSearchByValue}
-                        layout={{ position: 'absolute', left: 107, width: 106, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
+                        layout={{ position: 'absolute', left: 107, right: 127, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
                     >
                         {t('catalog.marketplace.search_by_value')}
                     </ButtonGroupCenter>
@@ -51,7 +51,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, itemsOfferList, lay
                         name="search_advanced"
                         params={131217}
                         onPointerTap={onSearchAdvanced}
-                        layout={{ position: 'absolute', left: 213, width: 107, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                        layout={{ position: 'absolute', left: 213, right: 20, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
                     >
                         {t('catalog.marketplace.search_advanced')}
                     </ButtonGroupRight>
@@ -198,7 +198,7 @@ export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionI
                 name="buy_button"
                 params={393233}
                 onPointerTap={onBuyButton}
-                layout={{ position: 'absolute', left: 295, width: 39, top: 6, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 39, top: 6, height: 22 }}
             >
                 {t('buy')}
             </Button>
@@ -207,7 +207,7 @@ export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionI
                 name="more_button"
                 params={393233}
                 onPointerTap={onMoreButton}
-                layout={{ position: 'absolute', left: 137, width: 197, top: 31, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 197, top: 31, height: 22 }}
             >
                 {t('catalog.marketplace.view_more')}
             </Button>

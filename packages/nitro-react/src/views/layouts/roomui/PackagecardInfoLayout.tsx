@@ -31,7 +31,7 @@ export const PackagecardInfoLayout = ({ itemsElementList, layout, onClose }: Pac
                     <Region
                         name="element_list"
                         params={13516817}
-                        layout={{ position: 'absolute', left: 0, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -168, top: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10 }}
                     >
                         {itemsElementList ?? (
                             <>
@@ -84,7 +84,7 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ captionMessageFrom,
                     params={3935441}
                     onPointerTap={onAvatarImageRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 149 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -74.5, height: 149 }}
                 >
                     <ThemeImage
                         name="avatar_image"
@@ -179,7 +179,7 @@ export const PackagecardInfoLayoutButtonListItem = ({ itemsButtonList, layout }:
         <Region
             name="button_list"
             params={12730385}
-            layout={{ width: 330, height: 66, flexShrink: 0, minWidth: 330, maxWidth: 360, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 330, maxWidth: 360, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
                 <>

@@ -32,13 +32,13 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     variant="1"
                     name="dont_show_again_container"
                     params={128}
-                    layout={{ position: 'absolute', left: 0, width: 448, top: 0, height: 86 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86 }}
                 >
                     <Region
                         name="dont_show_info_txt"
                         tags={[ 'COLORABLE' ]}
                         params={786640}
-                        layout={{ position: 'absolute', left: 122, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -102, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowInfoTxt ?? 'You will see this again adad adada ad'}
@@ -50,7 +50,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                         name="dont_show_again_txt"
                         tags={[ 'COLORABLE' ]}
                         params={3145936}
-                        layout={{ position: 'absolute', left: 101, width: 247, top: 40, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 247, top: '50%', marginTop: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowAgainTxt ?? t('roomcompetition.dontshowagain.dontshow')}
@@ -63,19 +63,19 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                         params={145}
                         onPointerTap={onDontShowAgainRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 448, top: 46, height: 21 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 46, height: 21 }}
                     />
                 </Border>
                 <Border
                     variant="104"
                     name="normal_container"
                     params={128}
-                    layout={{ position: 'absolute', left: 0, width: 448, top: 0, height: 96 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 96 }}
                 >
                     <Region
                         name="caption_txt"
                         params={144}
-                        layout={{ position: 'absolute', left: 57, width: 250, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 57, right: 141, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaptionTxt ?? 'Caption txt PH'}
@@ -94,7 +94,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                             name="info_txt"
                             tags={[ 'COLORABLE' ]}
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionInfoTxt ?? 'Link text ph'}
@@ -107,7 +107,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                         name="action_button"
                         params={393297}
                         onPointerTap={onActionButton}
-                        layout={{ position: 'absolute', left: 295, width: 150, top: 24, height: 55, minWidth: 150, maxWidth: 150 }}
+                        layout={{ position: 'absolute', right: 3, width: 150, top: 24, height: 55, minWidth: 150, maxWidth: 150 }}
                     >
                         Submit Btn PH
                     </Button>
@@ -116,7 +116,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                         params={262225}
                         onPointerTap={onCloseRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 431, width: 11, top: 5, height: 12 }}
+                        layout={{ position: 'absolute', right: 6, width: 11, top: 5, height: 12 }}
                     >
                         <ThemeImage
                             name="close_icon"
@@ -140,7 +140,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     <Region
                         name="required_furnis_itemgrid"
                         params={8781904}
-                        layout={{ position: 'absolute', left: 315, width: 115, top: 32, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 5 }}
+                        layout={{ position: 'absolute', right: 18, minWidth: 115, top: 32, minHeight: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 5 }}
                     >
                         {itemsRequiredFurnisItemgrid ?? (
                             <RoomCompetitionLayoutFurniContainerItem />
@@ -149,7 +149,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     <Region
                         name="button_info_txt"
                         params={262224}
-                        layout={{ position: 'absolute', left: 294, width: 153, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', right: 1, width: 153, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionButtonInfoTxt ?? 'kjhlk jh lkj hklj'}

@@ -68,7 +68,7 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                                 name="header"
                                 tags={[ 'COLORABLE' ]}
                                 params={786640}
-                                layout={{ position: 'absolute', left: 29, width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionHeader ?? t('landing.view.bonus.rare.header')}
@@ -78,7 +78,7 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                             <Region
                                 name="progress_bar_cont"
                                 params={786512}
-                                layout={{ position: 'absolute', left: 2, width: 302, top: 30, height: 23 }}
+                                layout={{ position: 'absolute', right: 0, width: 302, top: 30, height: 23 }}
                             >
                                 <ThemeImage
                                     name="bar_l"
@@ -90,20 +90,20 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                                     name="bar_c"
                                     params={144}
                                     src={srcBarC ?? layoutImage('achievement_ach_progressbar2.png')}
-                                    layout={{ position: 'absolute', left: 4, width: 291, top: 0, height: 23 }}
+                                    layout={{ position: 'absolute', left: 4, right: 7, top: 0, height: 23 }}
                                 />
                                 <ThemeImage
                                     name="bar_r"
                                     params={262224}
                                     src={srcBarR ?? layoutImage('achievement_ach_progressbar3.png')}
-                                    layout={{ position: 'absolute', left: 295, width: 4, top: 0, height: 23 }}
+                                    layout={{ position: 'absolute', right: 3, width: 4, top: 0, height: 23 }}
                                 />
                                 <Region
                                     name="bar_a_bkg"
                                     params={144}
                                     visible={visibleBarABkg ?? false}
                                     backgroundColor="#ffff00"
-                                    layout={{ position: 'absolute', left: 4, width: 292, top: 3, height: 17 }}
+                                    layout={{ position: 'absolute', left: 4, right: 6, top: 3, height: 17 }}
                                 />
                                 <ThemeImage
                                     name="bar_a_c"
@@ -120,7 +120,7 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                                 <Region
                                     name="status"
                                     params={786513}
-                                    layout={{ position: 'absolute', left: 56, width: 178, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 68, width: 178, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionStatus ?? t('landing.view.bonus.rare.status')}
@@ -139,7 +139,7 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                                 name="buy_button"
                                 params={131153}
                                 onPointerTap={onBuyButton}
-                                layout={{ position: 'absolute', left: 0, width: 200, top: 5, height: 51, maxWidth: 200 }}
+                                layout={{ position: 'absolute', right: 0, width: 200, top: 5, height: 51, maxWidth: 200 }}
                             >
                                 {t('landing.view.bonus.rare.open.credits.page')}
                             </Button>

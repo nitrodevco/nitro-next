@@ -67,7 +67,7 @@ export const ClubDirectBuySuccessLayout = ({ layout, onButtonOk, onClose, srcTea
                     name="button_ok"
                     params={393233}
                     onPointerTap={onButtonOk}
-                    layout={{ position: 'absolute', left: 205, width: 213, top: 148, height: 29 }}
+                    layout={{ position: 'absolute', right: 10, width: 213, top: 148, height: 29 }}
                 >
                     {t('direct.club.buy.success.ok.button')}
                 </ButtonThick>

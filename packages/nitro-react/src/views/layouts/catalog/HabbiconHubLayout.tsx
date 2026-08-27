@@ -59,26 +59,26 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                     name="album_background"
                     params={2192}
                     tintColor="#d7d1be"
-                    layout={{ position: 'absolute', left: 0, width: 554, top: 0, height: 530 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}
                 />
                 <Region
                     name="album_header"
                     params={128}
                     backgroundColor="#2b7aa0"
-                    layout={{ position: 'absolute', left: -2, width: 558, top: -3, height: 110 }}
+                    layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 110 }}
                 >
                     <Border
                         variant="3"
                         name="album_header_background"
                         params={144}
                         tintColor="#1f5d78"
-                        layout={{ position: 'absolute', left: 2, width: 554, top: 2, height: 106 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 106 }}
                     >
                         <ThemeImage
                             name="album_header_pattern"
                             params={144}
                             src={srcAlbumHeaderPattern ?? layoutImage('bg_pattern_001.png')}
-                            layout={{ position: 'absolute', left: -1, width: 554, top: 2, height: 110 }}
+                            layout={{ position: 'absolute', left: -1, right: 1, top: 2, height: 110 }}
                         />
                         <ThemeImage
                             name="album_logo"
@@ -117,7 +117,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="owned_habbicons_label"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 90, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, right: 6, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionOwnedHabbiconsLabel ?? t('habbicons.owned.description')}
@@ -127,7 +127,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="owned_habbicons_value"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 90, top: 20, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, right: 6, top: 20, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionOwnedHabbiconsValue ?? '0'}
@@ -146,7 +146,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="sets_completed_label"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 90, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, right: 6, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionSetsCompletedLabel ?? t('habbicon_book.sets_completed')}
@@ -156,7 +156,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="sets_completed_value"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 90, top: 20, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, right: 6, top: 20, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionSetsCompletedValue ?? '0'}
@@ -181,12 +181,12 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                                     color="#17394d"
                                     strokeThickness={1}
                                     radius={6}
-                                    layout={{ position: 'absolute', left: 0, width: 304, top: 0, height: 18 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                                 />
                                 <Region
                                     name="progress"
                                     params={2064}
-                                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 18 }}
+                                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                                 >
                                     <Shape
                                         name="fill"
@@ -195,13 +195,13 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                                         color="#54a8e8"
                                         strokeThickness={1}
                                         radius={6}
-                                        layout={{ position: 'absolute', left: 0, width: 323, top: 0, height: 18 }}
+                                        layout={{ position: 'absolute', left: 0, right: -303, top: 0, bottom: 0 }}
                                     />
                                     <Region
                                         name="highlight"
                                         tags={[ 'BLEND_ADD' ]}
                                         params={144}
-                                        layout={{ position: 'absolute', left: 1, width: 321, top: 1, height: 6 }}
+                                        layout={{ position: 'absolute', left: 1, right: -302, top: 1, height: 6 }}
                                     />
                                 </Region>
                             </Region>
@@ -262,17 +262,17 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                 <Region
                     name="all_sets_container"
                     params={2064}
-                    layout={{ position: 'absolute', left: 7, width: 540, top: 146, height: 380 }}
+                    layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44 }}
                 >
                     <Border
                         variant="6"
                         name="set_rail_background"
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 380 }}
+                        layout={{ position: 'absolute', left: 0, width: 154, top: 0, bottom: 0 }}
                     />
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 4, width: 145, top: 4, height: 372 }}
+                        layout={{ position: 'absolute', left: 4, width: 145, top: 4, bottom: 4 }}
                     >
                         <Region
                             name="set_rail_list"
@@ -287,31 +287,31 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                     <Region
                         name="set_page_container"
                         params={2192}
-                        layout={{ position: 'absolute', left: 160, width: 380, top: 0, height: 380 }}
+                        layout={{ position: 'absolute', left: 160, right: 0, top: 0, bottom: 0 }}
                     >
                         <Border
                             variant="10"
                             name="set_page_background"
                             params={2192}
                             tintColor="#f6ebd7"
-                            layout={{ position: 'absolute', left: 0, width: 380, top: 98, height: 282 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 98, bottom: 0 }}
                         />
                         <Region
                             name="header"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 380, top: 2, height: 92 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 92 }}
                         >
                             <Border
                                 variant="10"
                                 name="bg1"
                                 params={2192}
                                 tintColor="#e0cba6"
-                                layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 91 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1 }}
                             />
                             <Region
                                 name="set_title"
                                 params={144}
-                                layout={{ position: 'absolute', left: 12, width: 230, top: 8, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 12, right: 138, top: 8, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionSetTitle ?? 'Habbicon set name'}
@@ -322,7 +322,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="set_description"
                                 params={144}
-                                layout={{ position: 'absolute', left: 13, width: 359, top: 31, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 13, right: 8, top: 31, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionSetDescription ?? 'sdfg fdgfd gfsdgdfs ggfdfg fdfgfsdg fsdgfsdgfsd gdfg sdfgfsd gfdsgfsdgfsdgdf dfg d gsfdsf'}
@@ -332,7 +332,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             <Region
                                 name="set_progress_container"
                                 params={144}
-                                layout={{ position: 'absolute', left: 14, width: 230, top: 62, height: 22 }}
+                                layout={{ position: 'absolute', left: 14, right: 136, top: 62, height: 22 }}
                             >
                                 <Region
                                     name="set_progress_bar"
@@ -345,12 +345,12 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                                         color="#4d5d66"
                                         strokeThickness={1}
                                         radius={6}
-                                        layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 16 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16 }}
                                     />
                                     <Region
                                         name="progress"
                                         params={2064}
-                                        layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 16 }}
+                                        layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
                                     >
                                         <Shape
                                             name="fill"
@@ -359,13 +359,13 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                                             color="#54a8e8"
                                             strokeThickness={1}
                                             radius={6}
-                                            layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 16 }}
+                                            layout={{ position: 'absolute', left: 0, right: -153, top: 0, height: 16 }}
                                         />
                                         <Region
                                             name="highlight"
                                             tags={[ 'BLEND_ADD' ]}
                                             params={144}
-                                            layout={{ position: 'absolute', left: 1, width: 152, top: 1, height: 5 }}
+                                            layout={{ position: 'absolute', left: 1, right: -152, top: 1, height: 5 }}
                                         />
                                     </Region>
                                 </Region>
@@ -395,7 +395,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             >
                                 <Region
                                     params={8388752}
-                                    layout={{ position: 'absolute', left: 0, width: 116, top: 9, height: 135, flexDirection: 'column', gap: 6 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 135, flexDirection: 'column', gap: 6 }}
                                 >
                                     <Region
                                         name="reward_title"
@@ -454,7 +454,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                             >
                                 <Region
                                     params={8388752}
-                                    layout={{ position: 'absolute', left: 0, width: 116, top: 9, height: 53, flexDirection: 'column', gap: 8 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 53, flexDirection: 'column', gap: 8 }}
                                 >
                                     <Region
                                         name="reward_buy_description"
@@ -503,7 +503,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                         </Region>
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 8, width: 234, top: 106, height: 266 }}
+                            layout={{ position: 'absolute', left: 8, right: 138, top: 106, bottom: 8 }}
                         >
                             <Region
                                 name="set_grid"
@@ -524,14 +524,14 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                     name="tray_container"
                     params={2064}
                     visible={visibleTrayContainer ?? false}
-                    layout={{ position: 'absolute', left: 7, width: 540, top: 146, height: 380 }}
+                    layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44 }}
                 >
                     <Border
                         variant="3"
                         name="tray_background"
                         params={2192}
                         tintColor="#f6ebd7"
-                        layout={{ position: 'absolute', left: 0, width: 540, top: 0, height: 380 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         name="tray_title"
@@ -556,7 +556,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 10, width: 526, top: 59, height: 310 }}
+                        layout={{ position: 'absolute', left: 10, width: 526, top: 59, bottom: 11 }}
                     >
                         <Region
                             name="tray_group_list"
@@ -572,7 +572,7 @@ export const HabbiconHubLayout = ({ captionAlbumProgressText, captionAlbumSubtit
                 <Region
                     name="habbicon_popup_layer"
                     params={2176}
-                    layout={{ position: 'absolute', left: 0, width: 560, top: 102, height: 428 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 102, bottom: 40 }}
                 >
                     <Region
                         name="habbicon_item_popup"
@@ -617,7 +617,7 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
                 name="set_row_background"
                 params={2192}
                 tintColor="#f8ebd6"
-                layout={{ position: 'absolute', left: 1, width: 145, top: 1, height: 49 }}
+                layout={{ position: 'absolute', left: 1, right: -1, top: 1, bottom: 0 }}
             />
             <ThemeImage
                 name="set_icon"
@@ -639,7 +639,7 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
             <Region
                 name="set_row_progress_bar"
                 params={128}
-                layout={{ position: 'absolute', left: 53, width: 69, top: 28, height: 12 }}
+                layout={{ position: 'absolute', left: 53, right: 23, top: 28, height: 12 }}
             >
                 <Shape
                     name="background"
@@ -648,12 +648,12 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
                     color="#4d5d66"
                     strokeThickness={1}
                     radius={4}
-                    layout={{ position: 'absolute', left: 0, width: 69, top: 0, height: 12 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 12 }}
                 />
                 <Region
                     name="progress"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 12 }}
+                    layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
                 >
                     <Shape
                         name="fill"
@@ -662,13 +662,13 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
                         color="#54a8e8"
                         strokeThickness={1}
                         radius={4}
-                        layout={{ position: 'absolute', left: 0, width: 69, top: 0, height: 12 }}
+                        layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 12 }}
                     />
                     <Region
                         name="highlight"
                         tags={[ 'BLEND_ADD' ]}
                         params={144}
-                        layout={{ position: 'absolute', left: 1, width: 67, top: 1, height: 4 }}
+                        layout={{ position: 'absolute', left: 1, right: -67, top: 1, height: 4 }}
                     />
                 </Region>
             </Region>
@@ -710,7 +710,7 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, onTileTemplate, srcB
                 name="tile_background"
                 params={2192}
                 backgroundColor="#f8ebd6"
-                layout={{ position: 'absolute', left: 1, width: 48, top: 1, height: 48 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
             />
             <Border
                 variant="2"
@@ -718,7 +718,7 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, onTileTemplate, srcB
                 tags={[ 'ITEM_HILIGHT' ]}
                 params={2192}
                 tintColor="#c8be8d"
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="bitmap"
@@ -732,7 +732,7 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, onTileTemplate, srcB
                 params={2192}
                 visible={visibleLockedOverlay ?? false}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Region
                 visible={false}
@@ -782,7 +782,7 @@ export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemp
                 params={2192}
                 tintColor="#c8be8d"
                 blend={0.2}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
         </Region>
     );
@@ -811,7 +811,7 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, onTrayTileTempla
                 name="tile_background"
                 params={2192}
                 backgroundColor="#f8ebd6"
-                layout={{ position: 'absolute', left: 1, width: 48, top: 1, height: 48 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
             />
             <Border
                 variant="2"
@@ -819,7 +819,7 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, onTrayTileTempla
                 tags={[ 'ITEM_HILIGHT' ]}
                 params={2192}
                 tintColor="#c8be8d"
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="bitmap"
@@ -833,7 +833,7 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, onTrayTileTempla
                 params={2192}
                 visible={visibleLockedOverlay ?? false}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Region
                 visible={false}
@@ -893,7 +893,7 @@ export const HabbiconHubLayoutTrayGroupTemplateItem = ({ captionTrayGroupTitle, 
             <Region
                 name="tray_group_grid"
                 params={8388752}
-                layout={{ position: 'absolute', left: 10, width: 486, top: 30, height: 50, flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}
+                layout={{ position: 'absolute', left: 10, right: 10, top: 30, height: 50, flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}
             >
                 {itemsTrayGroupGrid ?? (
                     <HabbiconHubLayoutTrayTileTemplateItem />
@@ -999,7 +999,7 @@ export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPop
         >
             <Region
                 params={262160}
-                layout={{ position: 'absolute', left: 77, width: 91, top: 0, height: 28, flexDirection: 'row', gap: 4 }}
+                layout={{ position: 'absolute', right: 12, width: 91, top: 0, height: 28, flexDirection: 'row', gap: 4 }}
             >
                 <Region
                     name="habbicon_popup_price"
@@ -1051,7 +1051,7 @@ export const HabbiconHubLayoutHabbiconPopupBackgroundItem = ({ itemsHabbiconPopu
             <Region
                 name="habbicon_popup_content_list"
                 params={8388752}
-                layout={{ position: 'absolute', left: 0, width: 180, top: 6, height: 108, flexDirection: 'column', gap: 5 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 6, height: 108, flexDirection: 'column', gap: 5 }}
             >
                 {itemsHabbiconPopupContentList ?? (
                     <>
@@ -1066,7 +1066,7 @@ export const HabbiconHubLayoutHabbiconPopupBackgroundItem = ({ itemsHabbiconPopu
                 name="pointer_crossover"
                 params={1024}
                 backgroundColor="#efefef"
-                layout={{ position: 'absolute', left: 84, width: 13, top: 119, height: 2 }}
+                layout={{ position: 'absolute', left: 84, width: 13, bottom: 0, height: 2 }}
             />
         </Border>
     );

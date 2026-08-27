@@ -21,14 +21,14 @@ export const AlertLayout = ({ captionAlertText, captionAlertTitle, layout, onClo
                 <Region
                     name="alert_title"
                     params={240}
-                    layout={{ position: 'absolute', left: 8, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAlertTitle ?? ''} />
                 </Region>
                 <Region
                     name="alert_text"
                     params={240}
-                    layout={{ position: 'absolute', left: 8, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAlertText ?? ''} />
                 </Region>

@@ -45,7 +45,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                     name="song_title_text"
                     tags={[ 'SONG_TITLE' ]}
                     params={786640}
-                    layout={{ position: 'absolute', left: 5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSongTitleText ?? ''} />
                 </Region>
@@ -79,7 +79,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                             name="image_button_play_pause"
                             params={3934352}
                             src={srcImageButtonPlayPause}
-                            layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
+                            layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                         />
                     </ContainerButton>
                     <ContainerButton
@@ -94,7 +94,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                             name="image_button_to_playlist"
                             params={3934352}
                             src={srcImageButtonToPlaylist}
-                            layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
+                            layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                         />
                     </ContainerButton>
                 </Region>

@@ -30,7 +30,7 @@ export const GrsGuestRoomDetailsShortLayout = ({ captionRoomname, captionRoomNum
                 backgroundColor="#ffffff"
                 onPointerTap={onDetails}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 17 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17 }}
             >
                 <Region
                     name="room_number"
@@ -53,37 +53,37 @@ export const GrsGuestRoomDetailsShortLayout = ({ captionRoomname, captionRoomNum
                     name="group_base_icon"
                     params={80}
                     src={srcGroupBaseIcon}
-                    layout={{ position: 'absolute', left: 175, width: 21, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 75, width: 21, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="group_base_icon_no_doormode"
                     params={80}
                     src={srcGroupBaseIconNoDoormode}
-                    layout={{ position: 'absolute', left: 190, width: 21, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 60, width: 21, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_password_small"
                     params={80}
                     src={srcDoormodePasswordSmall}
-                    layout={{ position: 'absolute', left: 198, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 60, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_doorbell_small"
                     params={80}
                     src={srcDoormodeDoorbellSmall}
-                    layout={{ position: 'absolute', left: 198, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 60, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_invisible_small"
                     params={80}
                     src={srcDoormodeInvisibleSmall}
-                    layout={{ position: 'absolute', left: 198, width: 13, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 60, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="home"
                     params={80}
                     src={srcHome}
-                    layout={{ position: 'absolute', left: 213, width: 18, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', right: 40, width: 18, top: 0, height: 16 }}
                 />
                 <Region
                     name="favourite"
@@ -91,7 +91,7 @@ export const GrsGuestRoomDetailsShortLayout = ({ captionRoomname, captionRoomNum
                     params={81}
                     onPointerTap={onFavourite}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 213, width: 18, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16 }}
                 >
                     <ThemeImage
                         name="favourite"
@@ -106,7 +106,7 @@ export const GrsGuestRoomDetailsShortLayout = ({ captionRoomname, captionRoomNum
                     params={81}
                     onPointerTap={onMakeFavourite}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 213, width: 18, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16 }}
                 >
                     <ThemeImage
                         name="make_favourite"

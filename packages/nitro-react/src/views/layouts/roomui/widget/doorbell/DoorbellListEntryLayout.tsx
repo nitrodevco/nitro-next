@@ -14,12 +14,12 @@ export const DoorbellListEntryLayout = ({ captionUserName, layout, onAccept, onD
             <Region
                 params={144}
                 backgroundColor="#eeeeee"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
             >
                 <Region
                     name="user_name"
                     params={3088}
-                    layout={{ position: 'absolute', left: 3, width: 58, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 3, width: 58, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionUserName ?? 'username'} />
                 </Region>

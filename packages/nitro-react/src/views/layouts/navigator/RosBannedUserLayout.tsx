@@ -33,7 +33,7 @@ export const RosBannedUserLayout = ({ captionUserNameTxt, layout, onBgRegion, on
                     params={81}
                     onPointerTap={onUserInfoRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 9, width: 15, top: 4, height: 11 }}
+                    layout={{ position: 'absolute', right: 87, width: 15, top: 4, height: 11 }}
                 >
                     <Icon
                         variant="21"

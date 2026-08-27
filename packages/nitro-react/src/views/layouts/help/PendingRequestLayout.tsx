@@ -27,7 +27,7 @@ export const PendingRequestLayout = ({ captionRequestMessage, layout, onClose, o
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 351, top: 2, height: 175, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
                 >
                     <Region
                         params={16}
@@ -99,7 +99,7 @@ export const PendingRequestLayout = ({ captionRequestMessage, layout, onClose, o
                             params={393233}
                             tintColor="#bbbbbb"
                             onPointerTap={onDiscardButton}
-                            layout={{ position: 'absolute', left: 128, width: 243, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', right: -1, width: 243, top: 0, height: 48 }}
                         >
                             {t('help.emergency.pending.button.discard')}
                         </Button>

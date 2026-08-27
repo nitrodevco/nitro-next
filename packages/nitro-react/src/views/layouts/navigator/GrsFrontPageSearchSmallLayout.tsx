@@ -4,22 +4,25 @@ import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 export interface GrsFrontPageSearchSmallLayoutProps {
     captionCaption?: string;
     layout?: BoxLayout;
+    onCont?: () => void;
     srcIcon?: string;
 }
 
-export const GrsFrontPageSearchSmallLayout = ({ captionCaption, layout, srcIcon }: GrsFrontPageSearchSmallLayoutProps) => {
+export const GrsFrontPageSearchSmallLayout = ({ captionCaption, layout, onCont, srcIcon }: GrsFrontPageSearchSmallLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
                 name="cont"
                 params={145}
-                layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 28 }}
+                onPointerTap={onCont}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: -251, top: 0, height: 28 }}
             >
                 <Border
                     variant="0"
                     name="button_area"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 22 }}
+                    layout={{ position: 'absolute', left: 0, right: 9, top: 0, height: 22 }}
                 >
                     <Region
                         name="caption"

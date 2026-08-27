@@ -25,11 +25,11 @@ export const ChatterConfigurationLayout = ({ itemsConfigurationItems, layout, on
                 <Region
                     params={144}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 1, width: 260, top: 1, height: 20 }}
+                    layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20 }}
                 >
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: 31, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -99, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('bot.skill.chatter.configuration.title')}
@@ -68,7 +68,7 @@ export const ChatterConfigurationLayout = ({ itemsConfigurationItems, layout, on
                     >
                         <Region
                             params={262224}
-                            layout={{ position: 'absolute', left: 123, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}
+                            layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}
                         >
                             <ButtonThick
                                 variant="3"

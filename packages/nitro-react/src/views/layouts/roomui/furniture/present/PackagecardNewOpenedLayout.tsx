@@ -31,7 +31,7 @@ export const PackagecardNewOpenedLayout = ({ itemsElementList, layout, onClose }
                     <Region
                         name="element_list"
                         params={4341777}
-                        layout={{ position: 'absolute', left: 0, width: 336, top: 0, height: 305, flexDirection: 'column', gap: 10 }}
+                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10 }}
                     >
                         {itemsElementList ?? (
                             <>
@@ -220,7 +220,7 @@ export const PackagecardNewOpenedLayoutButtonListItem = ({ itemsButtonList, layo
         <Region
             name="button_list"
             params={16662545}
-            layout={{ width: 336, height: 115, flexShrink: 0, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
                 <>
@@ -238,11 +238,12 @@ export const PackagecardNewOpenedLayoutButtonListItem = ({ itemsButtonList, layo
 export interface PackagecardNewOpenedLayoutGiveContainerItemProps {
     layout?: BoxLayout;
     onAvatarImageRegion?: () => void;
+    onGiveContainer?: () => void;
     onGiveGiftButton?: () => void;
     srcAvatarImage?: string;
 }
 
-export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarImageRegion, onGiveGiftButton, srcAvatarImage }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
+export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarImageRegion, onGiveContainer, onGiveGiftButton, srcAvatarImage }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -250,6 +251,8 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
             name="give_container"
             params={16401}
             backgroundColor="#96a4a5"
+            onPointerTap={onGiveContainer}
+            cursor="pointer"
             layout={{ width: 336, height: 70, flexShrink: 0, minWidth: 336, maxWidth: 336, ...layout }}
         >
             <ButtonThick
@@ -258,14 +261,14 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
                 params={16649425}
                 tintColor="#00aa00"
                 onPointerTap={onGiveGiftButton}
-                layout={{ position: 'absolute', left: 0, width: 246, top: 0, height: 28, minWidth: 246, maxWidth: 330 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -168, width: 246, top: '50%', marginTop: -35, height: 28, minWidth: 246, maxWidth: 330 }}
             >
                 {t('widget.furni.present.give_gift')}
             </ButtonThick>
             <Region
                 name="avatar_image_container"
                 params={3407888}
-                layout={{ position: 'absolute', left: 290, width: 45, top: 13, height: 45 }}
+                layout={{ position: 'absolute', right: 1, width: 45, top: '50%', marginTop: -22, height: 45 }}
             >
                 <Region
                     name="avatar_image_region"
@@ -273,7 +276,7 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
                     params={3935441}
                     onPointerTap={onAvatarImageRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 45, top: 0, height: 45 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 45, top: '50%', marginTop: -22.5, height: 45 }}
                 >
                     <ThemeImage
                         name="avatar_image"
@@ -298,7 +301,7 @@ export const PackagecardNewOpenedLayoutGiveElementListItem = ({ itemsGiveElement
         <Region
             name="give_element_list"
             params={16662545}
-            layout={{ width: 336, height: 70, flexShrink: 0, minWidth: 336, maxWidth: 336, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 336, maxWidth: 336, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsGiveElementList ?? (
                 <PackagecardNewOpenedLayoutGiveContainerItem />

@@ -10,11 +10,12 @@ export interface LayoutFrontpageFeaturedLayoutProps {
     itemsItemlistFeatured?: ReactNode;
     layout?: BoxLayout;
     onEventCatcherRegion?: () => void;
+    onFirstitem?: () => void;
     onRedeem?: () => void;
     srcItemImage?: string;
 }
 
-export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitle, itemsItemlistFeatured, layout, onEventCatcherRegion, onRedeem, srcItemImage }: LayoutFrontpageFeaturedLayoutProps) => {
+export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitle, itemsItemlistFeatured, layout, onEventCatcherRegion, onFirstitem, onRedeem, srcItemImage }: LayoutFrontpageFeaturedLayoutProps) => {
     const t = useTranslation();
     const [ voucherCodeValue, setVoucherCodeValue ] = useState('');
 
@@ -48,13 +49,15 @@ export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitl
                     <Region
                         name="firstitem"
                         params={17}
+                        onPointerTap={onFirstitem}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460 }}
                     >
                         <ThemeImage
                             name="item_image"
                             params={1073741843}
                             src={srcItemImage}
-                            layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460 }}
+                            layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460, overflow: 'hidden' }}
                         />
                         <Border
                             variant="3"
@@ -62,12 +65,12 @@ export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitl
                             params={1198099}
                             tintColor="#333333"
                             blend={0.5}
-                            layout={{ position: 'absolute', left: 5, width: 174, top: 428, height: 29, maxWidth: 174 }}
+                            layout={{ position: 'absolute', left: 5, width: 174, top: 428, bottom: 3, maxWidth: 174 }}
                         >
                             <Region
                                 name="item_title"
                                 params={8388627}
-                                layout={{ position: 'absolute', left: 5, width: 174, top: 0, height: 29, maxWidth: 174, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 5, width: 174, top: 0, maxWidth: 174, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionItemTitle ?? ''}
@@ -90,7 +93,7 @@ export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitl
                     name="bgBorder"
                     params={1040}
                     tintColor="#51bbee"
-                    layout={{ position: 'absolute', left: 200, width: 345, top: 399, height: 61 }}
+                    layout={{ position: 'absolute', left: 200, width: 345, bottom: 0, height: 61 }}
                 >
                     <Region
                         name="ctlg_txt2"
@@ -124,7 +127,7 @@ export const LayoutFrontpageFeaturedLayout = ({ captionCtlgTxt2, captionItemTitl
                             name="redeem"
                             params={393361}
                             onPointerTap={onRedeem}
-                            layout={{ position: 'absolute', left: 274, width: 62, top: 5, height: 22, maxWidth: 100 }}
+                            layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
                         >
                             {t('redeem')}
                         </Button>
@@ -162,12 +165,12 @@ export const LayoutFrontpageFeaturedLayoutFeaturedItemTemplateItem = ({ captionI
                 params={1198099}
                 tintColor="#333333"
                 blend={0.5}
-                layout={{ position: 'absolute', left: 5, width: 346, top: 93, height: 30 }}
+                layout={{ position: 'absolute', left: 5, width: 346, top: 93, bottom: 3 }}
             >
                 <Region
                     name="item_title"
                     params={8388627}
-                    layout={{ position: 'absolute', left: 5, width: 340, top: 5, height: 24, maxWidth: 340, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, width: 340, top: 5, maxWidth: 340, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionItemTitle ?? ''}

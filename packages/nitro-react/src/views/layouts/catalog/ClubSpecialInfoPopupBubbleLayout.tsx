@@ -81,7 +81,7 @@ export const ClubSpecialInfoPopupBubbleLayout = ({ caption_247BhccenterBreakdown
                         <Region
                             name="special_infolink"
                             params={262145}
-                            layout={{ position: 'absolute', left: 145, width: 190, top: 100, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                            layout={{ position: 'absolute', right: 11, width: 190, top: 100, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
                             onPointerTap={onSpecialInfolink}
                             cursor="pointer"
                         >

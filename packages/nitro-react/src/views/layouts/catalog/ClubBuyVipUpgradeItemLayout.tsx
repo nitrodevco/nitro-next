@@ -35,7 +35,7 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
                     <Region
                         name="item_header"
                         params={786448}
-                        layout={{ position: 'absolute', left: 0, width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? 'catalog.club.item.header'}
@@ -55,7 +55,7 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
                     name="item_buy"
                     params={393233}
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', left: -8, width: 151, top: 38, height: 22, minWidth: 40 }}
+                    layout={{ position: 'absolute', right: 8, width: 151, top: 38, height: 22, minWidth: 40 }}
                 >
                     {t('catalog.club.button.buy')}
                 </Button>

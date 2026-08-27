@@ -18,7 +18,7 @@ export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, cap
             >
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 35, height: 269 }}
+                    layout={{ position: 'absolute', left: 0, width: 340, top: 35, bottom: 16 }}
                 >
                     <Region
                         name="gift_list"

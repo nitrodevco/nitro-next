@@ -23,11 +23,11 @@ export const EffectSelectorLayout = ({ itemsEffectList, layout, onClose }: Effec
                 <Region
                     params={2224}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 4, width: 256, top: 17, height: 215 }}
+                    layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
                 />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 4, width: 256, top: 17, height: 215 }}
+                    layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
                 >
                     <Region
                         name="effect_list"

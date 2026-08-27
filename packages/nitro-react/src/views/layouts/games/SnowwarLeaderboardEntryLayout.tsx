@@ -48,7 +48,7 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                     name="avatarImage"
                     params={2064}
                     src={srcAvatarImage}
-                    layout={{ position: 'absolute', left: 50, width: 44, top: 1, height: 40 }}
+                    layout={{ position: 'absolute', left: 50, width: 44, top: 1, bottom: 1 }}
                 />
                 <Region
                     name="name"
@@ -63,7 +63,7 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 <Region
                     name="score"
                     params={262160}
-                    layout={{ position: 'absolute', left: 284, width: 58, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 14, width: 58, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionScore ?? '999999'}
@@ -75,7 +75,7 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                     tags={[ 'bitmap' ]}
                     params={1040}
                     src={srcDivider ?? layoutImage('leaderboard_divider.png')}
-                    layout={{ position: 'absolute', left: 0, width: 350, top: 40, height: 2 }}
+                    layout={{ position: 'absolute', left: 0, width: 350, bottom: 0, height: 2 }}
                 />
             </Region>
         </Region>

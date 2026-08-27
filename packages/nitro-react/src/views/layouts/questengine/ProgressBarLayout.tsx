@@ -18,7 +18,7 @@ export const ProgressBarLayout = ({ captionProgressTxt, layout, srcBarAC, srcBar
             <Region
                 name="progress_bar_cont"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 23 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23 }}
             >
                 <ThemeImage
                     name="bar_l"
@@ -59,7 +59,7 @@ export const ProgressBarLayout = ({ captionProgressTxt, layout, srcBarAC, srcBar
                 <Region
                     name="progress_txt"
                     params={145}
-                    layout={{ position: 'absolute', left: 7, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 7, right: 211, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionProgressTxt ?? 'Progress text'}

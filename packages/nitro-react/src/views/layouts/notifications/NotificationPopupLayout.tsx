@@ -24,7 +24,7 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={12730384}
-                    layout={{ position: 'absolute', left: 3, width: 294, top: 2, height: 46, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}
                 >
                     <ThemeImage
                         name="illustration"
@@ -34,7 +34,7 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
                     />
                     <Region
                         params={8536080}
-                        layout={{ width: 293, height: 46, flexShrink: 0, flexDirection: 'column' }}
+                        layout={{ flexShrink: 0, flexDirection: 'column' }}
                     >
                         <Region
                             name="message"

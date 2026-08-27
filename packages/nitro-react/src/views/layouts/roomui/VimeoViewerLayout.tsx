@@ -30,12 +30,12 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visib
                     name="video_background"
                     params={18576}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, height: 302 }}
+                    layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48 }}
                 >
                     <Region
                         name="no_videos_label"
                         params={3280}
-                        layout={{ position: 'absolute', left: 122, width: 187, top: 143, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -93.5, width: 187, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
@@ -46,14 +46,14 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visib
                         name="video_wrapper"
                         params={2176}
                         visible={visibleVideoWrapper ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 431, top: 0, height: 302 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Border
                     variant="3"
                     name="video_id_editor"
                     params={128}
-                    layout={{ position: 'absolute', left: 12, width: 421, top: 12, height: 19 }}
+                    layout={{ position: 'absolute', left: 12, right: 18, top: 12, height: 19 }}
                 >
                     <Region
                         params={16}
@@ -67,7 +67,7 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visib
                     <TextInput
                         value={videoIdValue}
                         onChange={setVideoIdValue}
-                        layout={{ position: 'absolute', left: 53, width: 366, top: 1, height: 17 }}
+                        layout={{ position: 'absolute', left: 53, right: 2, top: 1, height: 17 }}
                     />
                 </Border>
             </Region>

@@ -78,7 +78,7 @@ export const LayoutFrontpage_1554Layout = ({ captionCtlgTxt1, captionCtlgTxt2, l
                             name="redeem"
                             params={393361}
                             onPointerTap={onRedeem}
-                            layout={{ position: 'absolute', left: 274, width: 62, top: 5, height: 22, maxWidth: 100 }}
+                            layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
                         >
                             {t('redeem')}
                         </Button>

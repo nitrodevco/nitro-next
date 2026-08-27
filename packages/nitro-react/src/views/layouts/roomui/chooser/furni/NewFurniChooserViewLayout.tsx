@@ -48,7 +48,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                         value={textInputValue}
                         onChange={setTextInputValue}
                         textColor="#666666"
-                        layout={{ position: 'absolute', left: 6, width: 200, top: 4, height: 18 }}
+                        layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
                     />
                     <Region
                         name="clear_button"
@@ -75,12 +75,12 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                 <Region
                     name="table_container"
                     params={2064}
-                    layout={{ position: 'absolute', left: 6, width: 389, top: 53, height: 240 }}
+                    layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61 }}
                 />
                 <Region
                     name="amount_indicator"
                     params={1040}
-                    layout={{ position: 'absolute', left: 6, width: 215, top: 300, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 6, width: 215, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')} />
                 </Region>

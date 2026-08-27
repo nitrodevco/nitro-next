@@ -6,18 +6,21 @@ export interface SearchEntryLayoutProps {
     captionName?: string;
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    onEntry?: () => void;
     srcAskForFriend?: string;
     srcFace?: string;
     srcStartChat?: string;
 }
 
-export const SearchEntryLayout = ({ captionCaption, captionName, layout, onBgRegion, srcAskForFriend, srcFace, srcStartChat }: SearchEntryLayoutProps) => {
+export const SearchEntryLayout = ({ captionCaption, captionName, layout, onBgRegion, onEntry, srcAskForFriend, srcFace, srcStartChat }: SearchEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 190, height: 20, ...layout }}>
             <Region
                 name="entry"
                 params={17}
                 backgroundColor="#eeeeff"
+                onPointerTap={onEntry}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20 }}
             >
                 <Region
@@ -25,7 +28,7 @@ export const SearchEntryLayout = ({ captionCaption, captionName, layout, onBgReg
                     params={145}
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 />
                 <Region
                     name="caption"
@@ -69,13 +72,13 @@ export const SearchEntryLayout = ({ captionCaption, captionName, layout, onBgReg
                     name="ask_for_friend"
                     params={81}
                     src={srcAskForFriend}
-                    layout={{ position: 'absolute', left: 168, width: 17, top: 2, height: 16 }}
+                    layout={{ position: 'absolute', right: 5, width: 17, top: 2, height: 16 }}
                 />
                 <ThemeImage
                     name="start_chat"
                     params={81}
                     src={srcStartChat}
-                    layout={{ position: 'absolute', left: 170, width: 16, top: 3, height: 14 }}
+                    layout={{ position: 'absolute', right: 4, width: 16, top: 3, height: 14 }}
                 />
             </Region>
         </Region>

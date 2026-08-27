@@ -62,7 +62,7 @@ export const AreaHideUiLayout = ({ itemsTabContent, layout, onApplyButton, onClo
                     name="on_off_button"
                     params={393233}
                     onPointerTap={onOnOffButton}
-                    layout={{ position: 'absolute', left: 126, width: 151, top: 272, height: 24 }}
+                    layout={{ position: 'absolute', right: 15, width: 151, top: 272, height: 24 }}
                 >
                     {t('widget.areahide.button.on')}
                 </Button>

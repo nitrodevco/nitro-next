@@ -104,7 +104,7 @@ export const MakeMarketplaceOfferLayout = ({ captionAmountRequest, captionAverag
                     <Region
                         name="price_request"
                         params={262160}
-                        layout={{ position: 'absolute', left: -86, width: 295, top: 131, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                        layout={{ position: 'absolute', right: 79, width: 295, top: 131, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                     >
                         <ThemeText
                             text={captionPriceRequest ?? t('inventory.marketplace.make_offer.price_request')}
@@ -127,7 +127,7 @@ export const MakeMarketplaceOfferLayout = ({ captionAmountRequest, captionAverag
                     <Region
                         name="amount_request"
                         params={262160}
-                        layout={{ position: 'absolute', left: -86, width: 295, top: 160, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                        layout={{ position: 'absolute', right: 79, width: 295, top: 160, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                     >
                         <ThemeText
                             text={captionAmountRequest ?? t('sellinmarketplace.amount')}
@@ -191,7 +191,7 @@ export const MakeMarketplaceOfferLayout = ({ captionAmountRequest, captionAverag
                             <Region
                                 name="final_price"
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 6, width: 257, top: 11, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 6, width: 257, top: '50%', marginTop: -16, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionFinalPrice ?? t('inventory.marketplace.make_offer.final_price')}
@@ -210,7 +210,7 @@ export const MakeMarketplaceOfferLayout = ({ captionAmountRequest, captionAverag
                                 params={393233}
                                 onPointerTap={onCancelMakeOfferButton}
                                 textStyle="text-style-button-shiny-regular"
-                                layout={{ position: 'absolute', left: 138, width: 130, top: 0, height: 28, maxWidth: 130 }}
+                                layout={{ position: 'absolute', right: 2, width: 130, top: 0, height: 28, maxWidth: 130 }}
                             >
                                 {t('inventory.marketplace.make_offer.cancel')}
                             </Button>

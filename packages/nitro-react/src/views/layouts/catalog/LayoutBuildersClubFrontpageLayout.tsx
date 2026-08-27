@@ -22,7 +22,7 @@ export const LayoutBuildersClubFrontpageLayout = ({ captionCtlgDescription, layo
             <Region
                 name="ctlg_builders_club_frontpage"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 508 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"
@@ -37,7 +37,7 @@ export const LayoutBuildersClubFrontpageLayout = ({ captionCtlgDescription, layo
                 <Region
                     name="builderSubscriptionWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 408, height: 100 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 100 }}
                 >
                     <Region
                         visible={visibleSubscribeButtonBig ?? false}

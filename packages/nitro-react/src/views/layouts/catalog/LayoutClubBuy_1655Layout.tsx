@@ -19,13 +19,13 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                 name="ctlg_club_buy"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="clubBuyWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="2"
@@ -36,7 +36,7 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                         <Region
                             name="club_header"
                             params={786448}
-                            layout={{ position: 'absolute', left: 0, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -170, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionClubHeader ?? t('catalog.club.buy.header')}
@@ -50,7 +50,7 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                         name="club_remaining_bg"
                         params={1040}
                         tintColor="#dfdfdf"
-                        layout={{ position: 'absolute', left: 10, width: 340, top: 410, height: 25 }}
+                        layout={{ position: 'absolute', left: 10, width: 340, bottom: 25, height: 25 }}
                     >
                         <Region
                             name="club_remaining"
@@ -80,18 +80,18 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                         name="item_list_hc"
                         tags={[ 'own_items_grid' ]}
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 171, top: 155, height: 250, flexDirection: 'column', gap: 4 }}
+                        layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
                     />
                     <Region
                         name="item_list_vip"
                         tags={[ 'own_items_grid' ]}
                         params={2064}
-                        layout={{ position: 'absolute', left: 180, width: 171, top: 155, height: 250, flexDirection: 'column', gap: 4 }}
+                        layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
                     />
                     <Region
                         name="club_link"
                         params={787473}
-                        layout={{ position: 'absolute', left: 10, width: 340, top: 440, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -170, width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionClubLink ?? t('catalog.club.buy.link')}

@@ -28,7 +28,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={208}
-                    layout={{ position: 'absolute', left: 0, width: 308, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -124, width: 308, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('guide.bully.request.guide.results.waiting.title')}
@@ -38,7 +38,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                 </Region>
                 <Region
                     params={208}
-                    layout={{ position: 'absolute', left: 38, width: 170, top: 37, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -86, width: 170, top: 37, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={t('guide.bully.request.guide.results.waiting.description')}
@@ -64,7 +64,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                     <Region
                         name="results"
                         params={147472}
-                        layout={{ position: 'absolute', left: 0, width: 232, top: 0, height: 46, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
                     >
                         <Region
                             params={16}
@@ -73,7 +73,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                             <Region
                                 name="vote_text"
                                 params={3088}
-                                layout={{ position: 'absolute', left: 20, width: 91, top: 16, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 20, width: 91, top: '50%', marginTop: -7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionVoteText ?? 'User behaved well'}
@@ -97,11 +97,11 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                 </Border>
                 <Region
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 246, top: 150, height: 99 }}
+                    layout={{ position: 'absolute', left: 0, width: 246, bottom: 31, height: 99 }}
                 >
                     <Region
                         params={3145936}
-                        layout={{ position: 'absolute', left: 34, width: 179, top: 12, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -89, width: 179, top: '50%', marginTop: -37.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={t('guide.bully.request.guide.results.wait')}
@@ -114,7 +114,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                         params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
-                        layout={{ position: 'absolute', left: 53, width: 140, top: 41, height: 52 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 41, height: 52 }}
                     >
                         {t('alert.close.button')}
                     </Button>

@@ -62,7 +62,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         />
                         <Region
                             params={3145744}
-                            layout={{ position: 'absolute', left: 180, width: 220, top: 0, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}
+                            layout={{ position: 'absolute', left: 180, width: 220, top: '50%', marginTop: -70, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}
                         >
                             <Region
                                 params={16}
@@ -126,7 +126,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         />
                         <Region
                             params={3145744}
-                            layout={{ position: 'absolute', left: 180, width: 220, top: 0, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}
+                            layout={{ position: 'absolute', left: 180, width: 220, top: '50%', marginTop: -77.5, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}
                         >
                             <Region
                                 params={16}
@@ -181,7 +181,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     >
                         <Region
                             params={3145744}
-                            layout={{ position: 'absolute', left: 10, width: 180, top: 10, height: 60, minWidth: 180, maxWidth: 180, flexDirection: 'column', gap: 5 }}
+                            layout={{ position: 'absolute', left: 10, width: 180, top: '50%', marginTop: -25, height: 60, minWidth: 180, maxWidth: 180, flexDirection: 'column', gap: 5 }}
                         >
                             <Region
                                 name="self_help_link"
@@ -217,7 +217,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         />
                         <Region
                             params={3145744}
-                            layout={{ position: 'absolute', left: 210, width: 180, top: 16, height: 42, minWidth: 180, maxWidth: 180, flexDirection: 'column', gap: 5 }}
+                            layout={{ position: 'absolute', left: 210, width: 180, top: '50%', marginTop: -19, height: 42, minWidth: 180, maxWidth: 180, flexDirection: 'column', gap: 5 }}
                         >
                             <Region
                                 name="habboway_link"
@@ -281,7 +281,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                             name="emergency_button"
                             params={393233}
                             onPointerTap={onEmergencyButton}
-                            layout={{ position: 'absolute', left: 202, width: 196, top: -1, height: 48, minWidth: 196, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
+                            layout={{ position: 'absolute', right: 2, width: 196, top: -1, height: 48, minWidth: 196, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
                         >
                             {t('help.main2.emergency.button')}
                         </Button>

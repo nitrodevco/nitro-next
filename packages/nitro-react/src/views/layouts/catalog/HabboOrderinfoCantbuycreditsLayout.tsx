@@ -45,7 +45,7 @@ export const HabboOrderinfoCantbuycreditsLayout = ({ captionHabboMessageTextA, c
                     name="subscribe"
                     params={393361}
                     onPointerTap={onSubscribe}
-                    layout={{ position: 'absolute', left: 100, width: 33, top: 89, height: 123, maxWidth: 120 }}
+                    layout={{ position: 'absolute', left: 100, right: 151, top: 89, height: 123, maxWidth: 120 }}
                 >
                     {t('ok')}
                 </Button>
@@ -54,7 +54,7 @@ export const HabboOrderinfoCantbuycreditsLayout = ({ captionHabboMessageTextA, c
                     name="button_cancel"
                     params={393361}
                     onPointerTap={onButtonCancel}
-                    layout={{ position: 'absolute', left: 154, width: 54, top: 92, height: 22, maxWidth: 130 }}
+                    layout={{ position: 'absolute', left: 154, right: 76, top: 92, height: 22, maxWidth: 130 }}
                 >
                     {t('cancel')}
                 </Button>

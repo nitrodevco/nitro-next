@@ -45,12 +45,12 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                     <Border
                         variant="4"
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 57 }}
+                        layout={{ position: 'absolute', left: 0, width: 228, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="info_text"
                             params={2185}
-                            layout={{ position: 'absolute', left: 5, width: 218, top: 5, height: 46, minWidth: 218, maxWidth: 218, minHeight: 46, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 6, minWidth: 218, maxWidth: 218, minHeight: 46, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionInfoText ?? 'Do not use this tool for users who are currently in the room/using the changed variable in another room.'}
@@ -63,7 +63,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                         name="refresh_btn"
                         params={393297}
                         onPointerTap={onRefreshBtn}
-                        layout={{ position: 'absolute', left: 241, width: 62, top: 13, height: 30 }}
+                        layout={{ position: 'absolute', right: 0, width: 62, top: 13, height: 30 }}
                     >
                         {t('wiredmenu.list_view.refresh')}
                     </Button>
@@ -111,7 +111,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                             params={3932176}
                             visible={false}
                             options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                            layout={{ position: 'absolute', left: 28, width: 33, top: 30, height: 34 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -19, width: 33, top: '50%', marginTop: -17, height: 34 }}
                         />
                         <WidgetSlot
                             widgetType="pet_image"
@@ -130,14 +130,14 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                             value={infoBoxTextValue}
                             onChange={setInfoBoxTextValue}
                             multiline
-                            layout={{ position: 'absolute', left: 6, width: 182, top: 6, height: 80 }}
+                            layout={{ position: 'absolute', left: 6, width: 182, top: 6, bottom: 8 }}
                         />
                     </Border>
                 </Region>
                 <Region
                     name="variable_values_container"
                     params={2064}
-                    layout={{ position: 'absolute', left: 18, width: 303, top: 196, height: 265 }}
+                    layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 51 }}
                 >
                     <Region
                         name="title"
@@ -149,11 +149,11 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                     <Region
                         name="variable_values_table_container"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 303, top: 20, height: 211 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34 }}
                     />
                     <Region
                         params={1168}
-                        layout={{ position: 'absolute', left: 0, width: 303, top: 240, height: 30, flexDirection: 'row', gap: 13 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: -5, height: 30, flexDirection: 'row', gap: 13 }}
                     >
                         <Button
                             variant="3"
@@ -187,7 +187,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                             <Region
                                 name="variable_setting"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 158, top: 6, height: 42 }}
+                                layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
                             >
                                 <Region
                                     params={16}
@@ -198,13 +198,13 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                                 <Region
                                     name="var_picker_container"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 0, width: 158, top: 20, height: 22 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22 }}
                                 />
                             </Region>
                             <Region
                                 name="value_setting"
                                 params={144}
-                                layout={{ position: 'absolute', left: 6, width: 158, top: 52, height: 42 }}
+                                layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
                             >
                                 <Region
                                     params={16}
@@ -221,7 +221,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                                     <TextInput
                                         value={valueInputValue}
                                         onChange={setValueInputValue}
-                                        layout={{ position: 'absolute', left: 5, width: 71, top: 3, height: 17 }}
+                                        layout={{ position: 'absolute', left: 5, right: 4, top: 3, bottom: 2 }}
                                     />
                                 </Border>
                             </Region>
@@ -230,7 +230,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, captionTitle,
                                 name="create_var_btn"
                                 params={132241}
                                 onPointerTap={onCreateVarBtn}
-                                layout={{ position: 'absolute', left: 6, width: 158, top: 100, height: 25, minWidth: 158, maxWidth: 158 }}
+                                layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
                             >
                                 {t('wiredmenu.inspection.create')}
                             </Button>

@@ -28,7 +28,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
             <Region
                 name="event_info_window"
                 params={80}
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135 }}
+                layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 135 }}
             >
                 <ThemeImage
                     name="event_bg_visitor"
@@ -50,7 +50,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     params={2193}
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Region
                     name="content_cont"
@@ -60,7 +60,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     <Region
                         name="header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 61, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -36.5, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderTxt ?? 'Caption PH'}
@@ -70,7 +70,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     <Region
                         name="get_event"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 31, width: 126, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 31, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGetEvent ?? t('roomad.get.event')}
@@ -90,7 +90,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     <Region
                         name="in_progress_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 17, width: 156, top: 107, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -80.5, width: 156, top: 107, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInProgressTxt ?? t('navigator.eventinprogress')}
@@ -100,7 +100,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     <Region
                         name="create_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 31, width: 126, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 31, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCreateLink ?? t('navigator.createevent')}
@@ -117,7 +117,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                         <Region
                             name="modify_link"
                             params={786448}
-                            layout={{ position: 'absolute', left: 5, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionModifyLink ?? t('navigator.roominfo.editevent')}
@@ -135,7 +135,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                         <Region
                             name="modify_link"
                             params={786448}
-                            layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -44, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
                                 text={captionModifyLink2 ?? t('roomad.extend.event')}

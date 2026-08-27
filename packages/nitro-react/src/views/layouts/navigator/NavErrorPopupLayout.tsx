@@ -4,15 +4,18 @@ import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 export interface NavErrorPopupLayoutProps {
     captionErrorText?: string;
     layout?: BoxLayout;
+    onPopupContainer?: () => void;
     srcPopupArrowDown?: string;
 }
 
-export const NavErrorPopupLayout = ({ captionErrorText, layout, srcPopupArrowDown }: NavErrorPopupLayoutProps) => {
+export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer, srcPopupArrowDown }: NavErrorPopupLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
                 name="popup_container"
                 params={1}
+                onPointerTap={onPopupContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 33 }}
             >
                 <Border

@@ -20,19 +20,19 @@ export const LandingViewFurnimaticLayout = ({ layout, srcBackgroundHorizon, srcB
                     name="content_background"
                     params={2192}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 1182, top: 0, height: 822 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="background_horizon"
                         params={3932176}
                         src={srcBackgroundHorizon ?? '${image.library.url}reception/furnimatic_backdrop_bg.png'}
-                        layout={{ position: 'absolute', left: 0, width: 1019, top: 0, height: 852 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -591, width: 1019, top: '50%', marginTop: -411, height: 852 }}
                     />
                     <Region
                         name="moving_objects_container"
                         params={2192}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 1182, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Icon
                         variant="0"
@@ -44,36 +44,36 @@ export const LandingViewFurnimaticLayout = ({ layout, srcBackgroundHorizon, srcB
                         name="background_right"
                         params={1311824}
                         src={srcBackgroundRight ?? '${image.library.url}reception/furnimatic_backdrop_right.png'}
-                        layout={{ position: 'absolute', left: 751, width: 431, top: 417, height: 367 }}
+                        layout={{ position: 'absolute', right: 0, width: 431, bottom: 38, height: 367 }}
                     />
                     <ThemeImage
                         name="background_left"
                         params={3146768}
                         src={srcBackgroundLeft ?? '${image.library.url}reception/furnimatic_backdrop_left.png'}
-                        layout={{ position: 'absolute', left: 0, width: 798, top: 565, height: 219 }}
+                        layout={{ position: 'absolute', left: 0, width: 798, bottom: 38, height: 219 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_avatarimage"
                         params={1040}
-                        layout={{ position: 'absolute', left: 69, width: 10, top: 523, height: 10 }}
+                        layout={{ position: 'absolute', left: 69, width: 10, bottom: 289, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_personalmessages"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 10, top: 340, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, width: 10, bottom: 472, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_bottom_slot"
                         params={1040}
-                        layout={{ position: 'absolute', left: 120, width: 10, top: 570, height: 10 }}
+                        layout={{ position: 'absolute', left: 120, width: 10, bottom: 242, height: 10 }}
                     />
                     <Region
                         params={1168}
                         backgroundColor="#333333"
-                        layout={{ position: 'absolute', left: 0, width: 1182, top: 784, height: 38 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 38 }}
                     />
                     <ThemeImage
                         name="logo"

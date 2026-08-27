@@ -19,7 +19,7 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, top: 0, height: 600 }}
+                layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 600 }}
             >
                 <Region
                     name="border"
@@ -36,7 +36,7 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                         <Region
                             name="name"
                             params={3280}
-                            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -53.5, width: 107, top: '50%', marginTop: -14, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'Incarnatus Hairbullis'}
@@ -48,12 +48,12 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                     <Region
                         params={144}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 27, height: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
                     />
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 28, height: 540, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -84,7 +84,7 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                         params={1041}
                         onPointerTap={onMinimize}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, top: 567, height: 19 }}
+                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 19 }}
                     >
                         <Icon
                             variant="7"
@@ -123,12 +123,12 @@ export const OwnPetMenuLayoutBuySaddleItem = ({ captionLabel, layout, onButton }
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.buy_saddle')}
@@ -165,12 +165,12 @@ export const OwnPetMenuLayoutMountItem = ({ captionLabel, layout, onButton }: Ow
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mount')}
@@ -208,7 +208,7 @@ export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layou
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 46 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -2 }}
             >
                 <CheckBox
                     variant="1"
@@ -220,7 +220,7 @@ export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layou
                 <Region
                     name="label"
                     params={3088}
-                    layout={{ position: 'absolute', left: 26, width: 78, top: 3, height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 26, width: 78, top: '50%', marginTop: -20, height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
@@ -257,12 +257,12 @@ export const OwnPetMenuLayoutDismountItem = ({ captionLabel, layout, onButton }:
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.dismount')}
@@ -299,12 +299,12 @@ export const OwnPetMenuLayoutRespectItem = ({ captionLabel, layout, onButton }: 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.petrespect')}
@@ -341,7 +341,7 @@ export const OwnPetMenuLayoutTreatItem = ({ captionLabel, layout, onButton }: Ow
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
@@ -383,12 +383,12 @@ export const OwnPetMenuLayoutPassHanditemItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.give_handitem_to_pet')}
@@ -425,12 +425,12 @@ export const OwnPetMenuLayoutTrainItem = ({ captionLabel, layout, onButton }: Ow
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.train')}
@@ -467,12 +467,12 @@ export const OwnPetMenuLayoutPickUpItem = ({ captionLabel, layout, onButton }: O
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.pickup')}
@@ -509,12 +509,12 @@ export const OwnPetMenuLayoutSaddleOffItem = ({ captionLabel, layout, onButton }
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.saddleoff')}
@@ -551,12 +551,12 @@ export const OwnPetMenuLayoutGiveWaterItem = ({ captionLabel, layout, onButton }
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.givewater')}
@@ -593,12 +593,12 @@ export const OwnPetMenuLayoutGiveLightItem = ({ captionLabel, layout, onButton }
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.givelight')}
@@ -635,12 +635,12 @@ export const OwnPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton }: Ow
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.breed')}
@@ -677,12 +677,12 @@ export const OwnPetMenuLayoutHarvestItem = ({ captionLabel, layout, onButton }: 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.harvest')}
@@ -719,12 +719,12 @@ export const OwnPetMenuLayoutReviveItem = ({ captionLabel, layout, onButton }: O
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.revive')}
@@ -761,12 +761,12 @@ export const OwnPetMenuLayoutCompostItem = ({ captionLabel, layout, onButton }: 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.compost')}
@@ -803,12 +803,12 @@ export const OwnPetMenuLayoutMoreItem = ({ captionLabel, layout, onButton }: Own
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.more')}
@@ -853,7 +853,7 @@ export const OwnPetMenuLayoutToggleBreedingPermissionItem = ({ captionLabel, lay
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 46 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -2 }}
             >
                 <CheckBox
                     variant="1"
@@ -865,7 +865,7 @@ export const OwnPetMenuLayoutToggleBreedingPermissionItem = ({ captionLabel, lay
                 <Region
                     name="label"
                     params={3088}
-                    layout={{ position: 'absolute', left: 26, width: 78, top: 0, height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 26, width: 78, top: '50%', marginTop: -23, height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.toggle_breeding_permission')}
@@ -902,12 +902,12 @@ export const OwnPetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.wired_inspect')}

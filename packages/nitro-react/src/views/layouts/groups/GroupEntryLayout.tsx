@@ -56,7 +56,7 @@ export const GroupEntryLayout = ({ layout, onBgRegion, onClearFavourite, onMakeF
                     params={81}
                     onPointerTap={onClearFavourite}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16 }}
                 >
                     <ThemeImage
                         name="icon"
@@ -71,7 +71,7 @@ export const GroupEntryLayout = ({ layout, onBgRegion, onClearFavourite, onMakeF
                     params={81}
                     onPointerTap={onMakeFavourite}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 16 }}
+                    layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16 }}
                 >
                     <ThemeImage
                         name="icon"

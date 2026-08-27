@@ -25,13 +25,13 @@ export const LayoutMarketplaceOwnItems_1575Layout = ({ captionRedeemInfo, captio
                 name="ctlg_marketplace_own_items"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="marketPlaceOwnItemsWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="redeem_info"
@@ -61,7 +61,7 @@ export const LayoutMarketplaceOwnItems_1575Layout = ({ captionRedeemInfo, captio
                     <Region
                         name="status_text"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 62, top: 440, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 62, bottom: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionStatusText ?? t('lorem.title')}
@@ -75,13 +75,13 @@ export const LayoutMarketplaceOwnItems_1575Layout = ({ captionRedeemInfo, captio
                         tintColor="#e33934"
                         onPointerTap={onRecallAllButton}
                         textStyle="text-style-il-regular-white"
-                        layout={{ position: 'absolute', left: 275, width: 64, top: 434, height: 24 }}
+                        layout={{ position: 'absolute', right: 21, width: 64, bottom: 2, height: 24 }}
                     >
                         {t('shop.marketplace.recall.all.button')}
                     </Button>
                     <Region
                         visible={visibleMarkAsSeenButton ?? false}
-                        layout={{ position: 'absolute', left: 249, width: 90, top: 434, height: 24 }}
+                        layout={{ position: 'absolute', right: 21, width: 90, bottom: 2, height: 24 }}
                     >
                         <Button
                             variant="3"
@@ -96,7 +96,7 @@ export const LayoutMarketplaceOwnItems_1575Layout = ({ captionRedeemInfo, captio
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 72, height: 352 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 72, bottom: 36 }}
                     >
                         <Region
                             name="item_list"
@@ -183,7 +183,7 @@ export const LayoutMarketplaceOwnItems_1575LayoutSearchInputBorderItem = ({ capt
                 value={searchInputValue}
                 onChange={setSearchInputValue}
                 maxLength={40}
-                layout={{ position: 'absolute', left: 6, width: 151, top: 3, height: 19, minWidth: 151, maxWidth: 151 }}
+                layout={{ position: 'absolute', left: 6, right: 3, top: 3, height: 19, minWidth: 151, maxWidth: 151 }}
             />
             <Region
                 name="search_placeholder"
@@ -343,7 +343,7 @@ export const LayoutMarketplaceOwnItems_1575LayoutOngoingItemItem = ({ captionIte
                 params={393233}
                 onPointerTap={onPickButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 145, width: 189, top: 31, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 189, top: 31, height: 22 }}
             >
                 {t('catalog.marketplace.offer.pick')}
             </Button>

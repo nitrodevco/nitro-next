@@ -38,7 +38,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                         name="image"
                         params={2192}
                         src={srcImage}
-                        layout={{ position: 'absolute', left: 0, width: 160, top: 0, height: 180 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Border>
                 <Button
@@ -46,7 +46,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                     name="cancel_button"
                     params={132113}
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: 20, width: 99, top: 220, height: 30 }}
+                    layout={{ position: 'absolute', left: 20, width: 99, bottom: 50, height: 30 }}
                 >
                     {t('generic.cancel')}
                 </Button>
@@ -56,14 +56,14 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                     params={394321}
                     tintColor="#00cc00"
                     onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', left: 268, width: 82, top: 220, height: 30 }}
+                    layout={{ position: 'absolute', right: 20, width: 82, bottom: 50, height: 30 }}
                 >
                     {t('generic.ok')}
                 </ButtonThick>
                 <Region
                     name="content_list"
                     params={3293200}
-                    layout={{ position: 'absolute', left: 200, width: 150, top: 60, height: 99, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 200, top: '50%', marginTop: -90, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContentList ?? (
                         <>

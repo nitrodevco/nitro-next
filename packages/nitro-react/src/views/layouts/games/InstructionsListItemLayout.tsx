@@ -27,7 +27,7 @@ export const InstructionsListItemLayout = ({ captionNumber, captionText, layout 
                 <Region
                     name="text"
                     params={2192}
-                    layout={{ position: 'absolute', left: 15, width: 221, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 15, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionText ?? ''}

@@ -33,7 +33,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 217 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 38 }}
                 >
                     <Border
                         variant="0"
@@ -139,7 +139,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                         name="buy_button"
                         params={132113}
                         onPointerTap={onBuyButton}
-                        layout={{ position: 'absolute', left: 9, width: 120, top: 184, height: 25, minWidth: 120, maxWidth: 120 }}
+                        layout={{ position: 'absolute', left: 9, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
                     >
                         {t('catalog.purchase_confirmation.buy')}
                     </Button>
@@ -148,7 +148,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                         name="cancel_button"
                         params={132113}
                         onPointerTap={onCancelButton}
-                        layout={{ position: 'absolute', left: 147, width: 120, top: 184, height: 25, minWidth: 120, maxWidth: 120 }}
+                        layout={{ position: 'absolute', left: 147, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
                     >
                         {t('catalog.purchase_confirmation.cancel')}
                     </Button>

@@ -23,7 +23,7 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 0, width: 428, top: 8, height: 185, flexDirection: 'column', gap: 4 }}
+                    layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}
                 >
                     <Region
                         params={208}
@@ -39,13 +39,13 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
                         <ThemeImage
                             params={3280}
                             src="${image.library.url}Quests/ach_receive_star.png"
-                            layout={{ position: 'absolute', left: 0, width: 109, top: 0, height: 109 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -54.5, width: 109, top: '50%', marginTop: -54.5, height: 109 }}
                         />
                         <ThemeImage
                             name="reward_image"
                             params={3280}
                             src={srcRewardImage}
-                            layout={{ position: 'absolute', left: 54, width: 1, top: 54, height: 1 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -0.5, width: 1, top: '50%', marginTop: -0.5, height: 1 }}
                         />
                     </Region>
                     <Button

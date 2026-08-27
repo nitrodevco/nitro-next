@@ -59,17 +59,17 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 1079, top: 0, height: 243 }}
+                    layout={{ position: 'absolute', left: 0, right: 24, top: 0, height: 243 }}
                 >
                     <Region
                         name="cutout"
                         params={2048}
-                        layout={{ position: 'absolute', left: 0, width: 245, top: 0, height: 243 }}
+                        layout={{ position: 'absolute', left: 0, width: 245, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="cutout"
                             params={2112}
-                            layout={{ position: 'absolute', left: 242, width: 35, top: 2, height: 241 }}
+                            layout={{ position: 'absolute', right: -32, width: 35, top: 2, bottom: 0 }}
                         >
                             <Shape
                                 tags={[ 'RECOLORABLE_LIGHT' ]}
@@ -88,7 +88,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             tags={[ 'RECOLORABLE_LIGHT' ]}
                             params={2064}
                             tintColor="#ddebf9"
-                            layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 243 }}
+                            layout={{ position: 'absolute', left: 0, width: 264, top: 0, bottom: 0 }}
                         >
                             <WidgetSlot
                                 widgetType="avatar_image"
@@ -98,12 +98,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={2128}
-                                layout={{ position: 'absolute', left: 87, width: 175, top: -1, height: 124 }}
+                                layout={{ position: 'absolute', right: 2, width: 175, top: -1, bottom: 120 }}
                             >
                                 <Region
                                     name="track_info"
                                     params={3148816}
-                                    layout={{ position: 'absolute', left: 0, width: 160, top: 26, height: 73, flexDirection: 'column', gap: 1 }}
+                                    layout={{ position: 'absolute', left: 0, width: 160, top: '50%', marginTop: -36, height: 73, flexDirection: 'column', gap: 1 }}
                                 >
                                     {itemsTrackInfo ?? (
                                         <>
@@ -121,11 +121,11 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 tags={[ 'RECOLORABLE_MEDIUM' ]}
                                 params={786640}
                                 tintColor="#cfe2f9"
-                                layout={{ position: 'absolute', left: 43, width: 179, top: 122, height: 62 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -89, width: 179, top: 122, height: 62 }}
                             >
                                 <Region
                                     params={786640}
-                                    layout={{ position: 'absolute', left: 53, width: 72, top: 11, height: 20, minHeight: 24, maxHeight: 24, flexDirection: 'row', gap: 4 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -36.5, width: 72, top: 11, height: 20, minHeight: 24, maxHeight: 24, flexDirection: 'row', gap: 4 }}
                                 >
                                     <ThemeImage
                                         params={16}
@@ -160,7 +160,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={786448}
-                                layout={{ position: 'absolute', left: 9, width: 247, top: 204, height: 30, flexDirection: 'row', gap: 6 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 247, top: 204, height: 30, flexDirection: 'row', gap: 6 }}
                             >
                                 <ThemeImage
                                     params={16}
@@ -183,34 +183,34 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         tags={[ 'RECOLORABLE_LIGHT' ]}
                         params={2192}
                         tintColor="#ddebf9"
-                        layout={{ position: 'absolute', left: 232, width: 847, top: 0, height: 243 }}
+                        layout={{ position: 'absolute', left: 232, right: 0, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             tags={[ 'RECOLORABLE_DARK' ]}
                             params={144}
                             src={layoutImage('reward_track_prizes_background.png')}
                             tint="#3576b9"
-                            layout={{ position: 'absolute', left: 2, width: 843, top: -2, height: 243 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: -2, height: 243 }}
                         />
                         <Region
                             params={2192}
-                            layout={{ position: 'absolute', left: 2, width: 843, top: 2, height: 239 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         />
                         <ThemeImage
                             tags={[ 'B' ]}
                             params={144}
                             src={layoutImage('reward_track_prizes_background_stars.png')}
-                            layout={{ position: 'absolute', left: 1, width: 845, top: 0, height: 243 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 243 }}
                         />
                         <Region
                             name="track"
                             params={2192}
-                            layout={{ position: 'absolute', left: 165, width: 660, top: 2, height: 239 }}
+                            layout={{ position: 'absolute', left: 165, right: 22, top: 2, bottom: 2 }}
                         >
                             <Region
                                 name="loading_bar"
                                 params={128}
-                                layout={{ position: 'absolute', left: 29, width: 602, top: 92, height: 13 }}
+                                layout={{ position: 'absolute', left: 29, right: 29, top: 92, height: 13 }}
                             >
                                 <Shape
                                     name="bg"
@@ -219,17 +219,17 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                     color="#888888"
                                     strokeThickness={1}
                                     radius={6}
-                                    layout={{ position: 'absolute', left: 0, width: 602, top: 0, height: 13 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                                 />
                                 <Region
                                     name="progress"
                                     params={2064}
-                                    layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 13 }}
+                                    layout={{ position: 'absolute', left: 0, width: 300, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="loading_bar"
                                         params={2192}
-                                        layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 13 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                                     >
                                         <Shape
                                             name="shape"
@@ -238,13 +238,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                             color="#71af24"
                                             strokeThickness={1}
                                             radius={6}
-                                            layout={{ position: 'absolute', left: 0, width: 304, top: 0, height: 13 }}
+                                            layout={{ position: 'absolute', left: 0, right: -4, top: 0, bottom: 0 }}
                                         />
                                     </Region>
                                     <Region
                                         tags={[ 'BLEND_ADD' ]}
                                         params={2192}
-                                        layout={{ position: 'absolute', left: 1, width: 299, top: 1, height: 11 }}
+                                        layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: 1 }}
                                     />
                                 </Region>
                             </Region>
@@ -252,7 +252,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         <Region
                             name="points_indicator_container"
                             params={2192}
-                            layout={{ position: 'absolute', left: 2, width: 843, top: 2, height: 239 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             <Border
                                 variant="15"
@@ -260,18 +260,18 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 params={1040}
                                 tintColor="#cfe2f9"
                                 blend={0.7}
-                                layout={{ position: 'absolute', left: 6, width: 844, top: 206, height: 44 }}
+                                layout={{ position: 'absolute', left: 6, width: 844, bottom: -11, height: 44 }}
                             >
                                 <Region
                                     tags={[ 'BLEND_ADD' ]}
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 0, width: 844, top: 0, height: 44 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                                 />
                             </Border>
                             <Region
                                 name="points_indicator"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 194, width: 598, top: 0, height: 239 }}
+                                layout={{ position: 'absolute', left: 194, right: 51, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="point_indicator_template"
@@ -304,7 +304,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         params={1048592}
                                         color="#cfe2f9"
                                         strokeThickness={3}
-                                        layout={{ position: 'absolute', left: 40, width: 1, top: 113, height: 9 }}
+                                        layout={{ position: 'absolute', left: 40, width: 1, bottom: 35, height: 9 }}
                                     />
                                     <Region
                                         name="points_txt"
@@ -322,7 +322,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         <Region
                             name="prize_content"
                             params={2176}
-                            layout={{ position: 'absolute', left: 196, width: 598, top: 2, height: 239 }}
+                            layout={{ position: 'absolute', left: 196, right: 53, top: 2, bottom: 2 }}
                         >
                             <Region
                                 name="prize_template"
@@ -343,7 +343,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ 'INVIS_ON_DISABLE' ]}
                                         params={1168}
                                         blend={0.25}
-                                        layout={{ position: 'absolute', left: 0, width: 56, top: 44, height: 16 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
                                     />
                                     <Border
                                         variant="16"
@@ -351,13 +351,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ '#icon' ]}
                                         params={2176}
                                         tintColor="#f9efe0"
-                                        layout={{ position: 'absolute', left: 0, width: 56, top: 2, height: 56 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2 }}
                                     >
                                         <WidgetSlot
                                             widgetType="product_icon"
                                             name="product_icon"
                                             params={3280}
-                                            layout={{ position: 'absolute', left: 8, width: 40, top: 8, height: 40 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40 }}
                                         />
                                         <Shape
                                             name="quantity_container"
@@ -367,7 +367,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                             strokeColor="#000000"
                                             strokeThickness={1}
                                             radius={5}
-                                            layout={{ position: 'absolute', left: 18, width: 20, top: 37, height: 14 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, bottom: 5, height: 14 }}
                                         />
                                     </Border>
                                 </Region>
@@ -407,7 +407,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ 'INVIS_ON_DISABLE' ]}
                                         params={1168}
                                         blend={0.25}
-                                        layout={{ position: 'absolute', left: 0, width: 56, top: 44, height: 16 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
                                     />
                                     <Border
                                         variant="16"
@@ -415,13 +415,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         tags={[ '#icon' ]}
                                         params={2176}
                                         tintColor="#f1def7"
-                                        layout={{ position: 'absolute', left: 0, width: 56, top: 2, height: 56 }}
+                                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2 }}
                                     >
                                         <WidgetSlot
                                             widgetType="product_icon"
                                             name="product_icon"
                                             params={3280}
-                                            layout={{ position: 'absolute', left: 8, width: 40, top: 8, height: 40 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, top: '50%', marginTop: -20, height: 40 }}
                                         />
                                         <Shape
                                             name="quantity_container"
@@ -431,7 +431,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                             strokeColor="#000000"
                                             strokeThickness={1}
                                             radius={5}
-                                            layout={{ position: 'absolute', left: 18, width: 20, top: 37, height: 14 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, bottom: 5, height: 14 }}
                                         />
                                     </Border>
                                 </Region>
@@ -439,7 +439,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                     name="connector"
                                     params={1048592}
                                     backgroundColor="#000000"
-                                    layout={{ position: 'absolute', left: 39, width: 2, top: 19, height: 19 }}
+                                    layout={{ position: 'absolute', left: 39, width: 2, bottom: 66, height: 19 }}
                                 />
                                 <ThemeImage
                                     name="locked_icon"
@@ -464,12 +464,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             <Region
                                 name="information"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 80 }}
+                                layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="cut"
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 80 }}
+                                    layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0 }}
                                 >
                                     <Border
                                         variant="15"
@@ -477,13 +477,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         params={2192}
                                         tintColor="#f9efe0"
                                         blend={0.5}
-                                        layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 80 }}
+                                        layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
                                     />
                                 </Region>
                                 <Region
                                     name="splitter"
                                     params={80}
-                                    layout={{ position: 'absolute', left: 98, width: 2, top: 0, height: 80 }}
+                                    layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80 }}
                                 >
                                     <Border
                                         variant="15"
@@ -491,12 +491,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         params={2064}
                                         tintColor="#f9efe0"
                                         blend={0.5}
-                                        layout={{ position: 'absolute', left: -18, width: 20, top: -6, height: 91 }}
+                                        layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
                                     />
                                 </Region>
                                 <Region
                                     params={1048592}
-                                    layout={{ position: 'absolute', left: 0, width: 100, top: 57, height: 21, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, width: 100, bottom: 2, height: 21, flexDirection: 'column' }}
                                 >
                                     <Region
                                         name="title"
@@ -537,12 +537,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             <Region
                                 name="information"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 80 }}
+                                layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="cut"
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 80 }}
+                                    layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0 }}
                                 >
                                     <Border
                                         variant="15"
@@ -550,13 +550,13 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         params={2192}
                                         tintColor="#f1def7"
                                         blend={0.5}
-                                        layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 80 }}
+                                        layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
                                     />
                                 </Region>
                                 <Region
                                     name="splitter"
                                     params={80}
-                                    layout={{ position: 'absolute', left: 98, width: 2, top: 0, height: 80 }}
+                                    layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80 }}
                                 >
                                     <Border
                                         variant="15"
@@ -564,12 +564,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                         params={2064}
                                         tintColor="#f1def7"
                                         blend={0.5}
-                                        layout={{ position: 'absolute', left: -18, width: 20, top: -6, height: 91 }}
+                                        layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
                                     />
                                 </Region>
                                 <Region
                                     params={1048592}
-                                    layout={{ position: 'absolute', left: 0, width: 100, top: 47, height: 30, flexDirection: 'column', gap: -3 }}
+                                    layout={{ position: 'absolute', left: 0, width: 100, bottom: 3, height: 30, flexDirection: 'column', gap: -3 }}
                                 >
                                     <Region
                                         name="title"
@@ -629,7 +629,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         </Region>
                         <Region
                             visible={visiblePreviousUnclaimedIndicator ?? false}
-                            layout={{ position: 'absolute', left: 74, width: 17, top: 77, height: 18 }}
+                            layout={{ position: 'absolute', right: 756, width: 17, top: 77, height: 18 }}
                         >
                             <Border
                                 variant="7"
@@ -641,7 +641,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 <Region
                                     name="previous_unclaimed_count"
                                     params={4194320}
-                                    layout={{ position: 'absolute', left: 3, width: 9, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPreviousUnclaimedCount ?? '2'}
@@ -652,7 +652,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         </Region>
                         <Region
                             visible={visibleNextUnclaimedIndicator ?? false}
-                            layout={{ position: 'absolute', left: 827, width: 17, top: 77, height: 18 }}
+                            layout={{ position: 'absolute', right: 3, width: 17, top: 77, height: 18 }}
                         >
                             <Border
                                 variant="7"
@@ -664,7 +664,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 <Region
                                     name="next_unclaimed_count"
                                     params={4194320}
-                                    layout={{ position: 'absolute', left: 3, width: 9, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionNextUnclaimedCount ?? '2'}
@@ -678,19 +678,19 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                 <Region
                     name="body"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 1079, top: 249, height: 418 }}
+                    layout={{ position: 'absolute', left: 0, right: 24, top: 249, bottom: 55 }}
                 >
                     <Border
                         variant="15"
                         name="task_list"
                         params={2064}
                         tintColor="#f0f0f0"
-                        layout={{ position: 'absolute', left: 0, width: 444, top: 0, height: 418 }}
+                        layout={{ position: 'absolute', left: 0, width: 444, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="header"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 444, top: 0, height: 95 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 95 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -729,7 +729,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         </Region>
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 14, width: 422, top: 94, height: 259 }}
+                            layout={{ position: 'absolute', left: 14, width: 422, top: 94, bottom: 65 }}
                         >
                             <Region
                                 name="tasks"
@@ -770,7 +770,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             name="reward_info"
                             params={1168}
                             tintColor="#f5e1b9"
-                            layout={{ position: 'absolute', left: 9, width: 426, top: 361, height: 48 }}
+                            layout={{ position: 'absolute', left: 9, right: 9, bottom: 9, height: 48 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -779,7 +779,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 57, width: 265, top: 9, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 57, width: 265, top: '50%', marginTop: -15, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('reward_track.tasks.tip')}
@@ -797,7 +797,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             name="reward_info_not_premium"
                             params={1168}
                             tintColor="#f1def7"
-                            layout={{ position: 'absolute', left: 9, width: 426, top: 361, height: 48 }}
+                            layout={{ position: 'absolute', left: 9, right: 9, bottom: 9, height: 48 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -806,7 +806,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             />
                             <Region
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 57, width: 227, top: 9, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 57, width: 227, top: '50%', marginTop: -15, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('reward_track.tasks.tip_upgrade')}
@@ -820,7 +820,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 tintColor="#b265ce"
                                 onPointerTap={onGetPremiumBtn}
                                 textStyle="text-style-button-shiny-bold"
-                                layout={{ position: 'absolute', left: 323, width: 91, top: 9, height: 30 }}
+                                layout={{ position: 'absolute', right: 12, width: 91, top: 9, height: 30 }}
                             >
                                 {t('reward_track.tasks.tip_upgrade.button')}
                             </Button>
@@ -831,12 +831,12 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         name="task_info"
                         params={2192}
                         tintColor="#f0f0f0"
-                        layout={{ position: 'absolute', left: 451, width: 628, top: 0, height: 418 }}
+                        layout={{ position: 'absolute', left: 451, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="task_info_header"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 628, top: 0, height: 128 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 128 }}
                         >
                             <ThemeImage
                                 name="task_info_img"
@@ -854,7 +854,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 <Region
                                     name="task_info_name"
                                     params={12582928}
-                                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
                                 </Region>
@@ -862,7 +862,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             <Region
                                 name="task_info_description"
                                 params={144}
-                                layout={{ position: 'absolute', left: 137, width: 469, top: 59, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 137, right: 22, top: 59, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionTaskInfoDescription ?? 'Explore the hotel and visit rooms created by other players!'}
@@ -873,7 +873,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                         <Region
                             name="task_levels"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 628, top: 127, height: 200 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 127, height: 200 }}
                         >
                             <Region
                                 name="spacer"
@@ -889,7 +889,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             >
                                 <Region
                                     params={4194320}
-                                    layout={{ position: 'absolute', left: 3, width: 44, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 3, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={t('reward_track.levels.title')}
@@ -935,7 +935,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                             name="task_hint_border"
                             params={1040}
                             tintColor="#e9e9e9"
-                            layout={{ position: 'absolute', left: 16, width: 596, top: 331, height: 74 }}
+                            layout={{ position: 'absolute', left: 16, width: 596, bottom: 13, height: 74 }}
                         >
                             <Region
                                 params={16}
@@ -962,7 +962,7 @@ export const Main_100Layout = ({ captionDesc, captionDesc2, captionNextUnclaimed
                                 params={393233}
                                 onPointerTap={onHintRedirectBtn}
                                 textStyle="text-style-button-shiny-regular"
-                                layout={{ position: 'absolute', left: 471, width: 109, top: 16, height: 30 }}
+                                layout={{ position: 'absolute', right: 16, width: 109, top: 16, height: 30 }}
                             >
                                 Open Navigator
                             </Button>
@@ -998,11 +998,11 @@ export const Main_100LayoutTrackTitleRegionItem = ({ captionTrackTitleTxt, layou
             <Region
                 name="track_title_txt"
                 params={12582928}
-                layout={{ position: 'absolute', left: 0, width: 160, top: 0, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTrackTitleTxt ?? 'New player track'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
+                    textOptions={{ wordWrap: true }}
                 />
             </Region>
         </Region>
@@ -1093,7 +1093,7 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
                 tintColor="#3576b9"
                 onPointerTap={onSelectedView}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             />
             <Shape
                 name="notselected_shape"
@@ -1104,12 +1104,12 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
                 strokeColor="#b7b7b7"
                 strokeThickness={2}
                 radius={4}
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             />
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: 5, width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.all_tasks')}
@@ -1142,7 +1142,7 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
         >
             <Region
                 visible={visibleSelectedView ?? false}
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             >
                 <Button
                     variant="3"
@@ -1163,12 +1163,12 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
                 strokeColor="#b7b7b7"
                 strokeThickness={2}
                 radius={4}
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             />
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: 5, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.in_progress')}
@@ -1201,7 +1201,7 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
         >
             <Region
                 visible={visibleSelectedView ?? false}
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             >
                 <Button
                     variant="3"
@@ -1222,12 +1222,12 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
                 strokeColor="#b7b7b7"
                 strokeThickness={2}
                 radius={4}
-                layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             />
             <Region
                 name="button_text"
                 params={208}
-                layout={{ position: 'absolute', left: 5, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 78, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionButtonText ?? t('reward_track.tasks.tab.completed')}
@@ -1264,7 +1264,7 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                 name="task_border"
                 params={2192}
                 tintColor="#f0f0f0"
-                layout={{ position: 'absolute', left: 0, width: 406, top: 0, height: 61 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="task_name"
@@ -1292,7 +1292,7 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                         strokeColor="#777777"
                         strokeThickness={1}
                         radius={5}
-                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 7 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
                     />
                     <Region
                         name="progress"
@@ -1306,13 +1306,13 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                             color="#eba60c"
                             strokeThickness={1}
                             radius={5}
-                            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
                         />
                         <Region
                             name="gradient"
                             tags={[ 'BLEND_ADD' ]}
                             params={144}
-                            layout={{ position: 'absolute', left: 1, width: 138, top: 1, height: 5 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5 }}
                         />
                     </Region>
                 </Region>
@@ -1327,7 +1327,7 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                     variant="15"
                     params={262224}
                     tintColor="#f0f0f0"
-                    layout={{ position: 'absolute', left: 331, width: 62, top: 15, height: 31 }}
+                    layout={{ position: 'absolute', right: 13, width: 62, top: 15, height: 31 }}
                 >
                     <Region
                         params={4194320}
@@ -1421,7 +1421,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                 name="level_border"
                 params={2192}
                 tintColor="#e3e3e3"
-                layout={{ position: 'absolute', left: 0, width: 582, top: 0, height: 44 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="level_name"
@@ -1442,7 +1442,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                         strokeColor="#777777"
                         strokeThickness={1}
                         radius={5}
-                        layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 7 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
                     />
                     <Region
                         name="progress"
@@ -1456,13 +1456,13 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                             color="#eba60c"
                             strokeThickness={1}
                             radius={5}
-                            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
                         />
                         <Region
                             name="gradient"
                             tags={[ 'BLEND_ADD' ]}
                             params={144}
-                            layout={{ position: 'absolute', left: 1, width: 138, top: 1, height: 5 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5 }}
                         />
                     </Region>
                 </Region>
@@ -1475,7 +1475,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                 </Region>
                 <Region
                     params={262224}
-                    layout={{ position: 'absolute', left: 470, width: 94, top: 7, height: 30, flexDirection: 'row', gap: 10 }}
+                    layout={{ position: 'absolute', right: 18, width: 94, top: 7, height: 30, flexDirection: 'row', gap: 10 }}
                 >
                     <ThemeImage
                         name="completed_icon"

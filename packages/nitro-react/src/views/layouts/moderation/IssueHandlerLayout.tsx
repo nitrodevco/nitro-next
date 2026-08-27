@@ -118,7 +118,7 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
                 <Region
                     name="issue_cont"
                     params={2193}
-                    layout={{ position: 'absolute', left: 0, width: 285, top: 0, height: 624, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 0, right: 465, top: 0, bottom: 26, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsIssueCont ?? (
                         <>
@@ -153,11 +153,11 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
                     name="chat_cont"
                     params={2064}
                     backgroundColor="#418db0"
-                    layout={{ position: 'absolute', left: 290, width: 445, top: 95, height: 480 }}
+                    layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 475 }}
+                        layout={{ position: 'absolute', left: 0, width: 420, top: 0, bottom: 5 }}
                     >
                         <Region
                             name="evidence_list"
@@ -186,7 +186,7 @@ export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayou
         >
             <Region
                 params={786449}
-                layout={{ position: 'absolute', left: 0, width: 78, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -140, width: 78, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text="Reporter"
@@ -195,7 +195,7 @@ export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayou
             </Region>
             <Region
                 params={786449}
-                layout={{ position: 'absolute', left: 78, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -62, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text="Category"
@@ -204,7 +204,7 @@ export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayou
             </Region>
             <Region
                 params={786449}
-                layout={{ position: 'absolute', left: 188, width: 60, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: 48, width: 60, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text="Type"
@@ -213,7 +213,7 @@ export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayou
             </Region>
             <Region
                 params={786449}
-                layout={{ position: 'absolute', left: 248, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: 108, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text="Open"

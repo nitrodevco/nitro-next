@@ -30,7 +30,7 @@ export const ChestWiredUpgradeLayout = ({ captionFree, itemsContent, itemsProper
                 <Region
                     name="content"
                     params={8538256}
-                    layout={{ position: 'absolute', left: 0, width: 351, top: 8, height: 241, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContent ?? (
                         <>
@@ -64,7 +64,7 @@ export const ChestWiredUpgradeLayout = ({ captionFree, itemsContent, itemsProper
                         <Region
                             name="properties_itemlist"
                             params={144}
-                            layout={{ position: 'absolute', left: 143, width: 197, top: 15, height: 67, flexDirection: 'column', gap: 4 }}
+                            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4 }}
                         >
                             {itemsPropertiesItemlist ?? (
                                 <>
@@ -178,7 +178,7 @@ export const ChestWiredUpgradeLayoutButtonsItem = ({ itemsButtons, layout }: Che
         <Region
             name="buttons"
             params={131216}
-            layout={{ width: 341, height: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
+            layout={{ minWidth: 341, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
         >
             {itemsButtons ?? (
                 <>

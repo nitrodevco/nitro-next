@@ -21,12 +21,12 @@ export const TagLayout = ({ captionTagText, layout, onTagRegion }: TagLayoutProp
                     backgroundColor="#f1a700"
                     onPointerTap={onTagRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 108, width: 32, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', right: 0, width: 32, top: 0, height: 19 }}
                 >
                     <Region
                         name="tag_text"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 3, width: 25, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 3, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTagText ?? '#tag'}

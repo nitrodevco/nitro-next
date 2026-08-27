@@ -14,7 +14,7 @@ export const PriceDisplayLayout = ({ itemsPriceBox, layout }: PriceDisplayLayout
             <Region
                 name="price_box"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 21, flexDirection: 'row', gap: 1 }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 1 }}
             >
                 {itemsPriceBox ?? (
                     <>

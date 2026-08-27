@@ -26,13 +26,13 @@ export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContai
                 <Region
                     name="moving_container"
                     params={3280}
-                    layout={{ position: 'absolute', left: 44, width: 324, top: 24, height: 228 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -162.5, width: 324, top: '50%', marginTop: -107.5, height: 228 }}
                 >
                     <ThemeImage
                         name="bg_img"
                         params={12582928}
                         src={srcBgImg ?? layoutImage('wired_chests_images_light_coins_chest_balance_zero.png')}
-                        layout={{ position: 'absolute', left: 0, width: 324, top: 0, height: 228 }}
+                        layout={{ position: 'absolute', left: 0, top: 0 }}
                     />
                     <Region
                         name="balance_cont"
@@ -42,14 +42,14 @@ export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContai
                         <Region
                             name="balance_txt"
                             params={786448}
-                            layout={{ position: 'absolute', left: 2, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
                         </Region>
                         <Region
                             name="balance_container"
                             params={786448}
-                            layout={{ position: 'absolute', left: 15, width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -12, width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
                         >
                             {itemsBalanceContainer ?? (
                                 <>
@@ -62,7 +62,7 @@ export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContai
                     <Region
                         name="withdraw_cont"
                         params={934992}
-                        layout={{ position: 'absolute', left: 160, width: 105, top: 18, height: 28, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5 }}
                     >
                         {itemsWithdrawCont ?? (
                             <>

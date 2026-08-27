@@ -14,7 +14,7 @@ export const ListTesterItemLayout = ({ captionChatterTxt, captionMsgTxt, caption
             <Region
                 name="chatline"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 370, top: 0, height: 41 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 41 }}
             >
                 <Region
                     name="time_txt"

@@ -26,7 +26,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 351, top: 2, height: 165, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
                 >
                     <Region
                         params={16}
@@ -64,7 +64,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                         </Region>
                         <Region
                             params={147472}
-                            layout={{ position: 'absolute', left: 13, width: 269, top: 30, height: 31, flexDirection: 'column', gap: 3 }}
+                            layout={{ position: 'absolute', left: 13, top: 30, flexDirection: 'column', gap: 3 }}
                         >
                             <Region
                                 name="description"
@@ -98,7 +98,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: 115, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>
@@ -107,7 +107,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                 <ThemeImage
                     params={1024}
                     src={layoutImage('help_illustrations_question.png')}
-                    layout={{ position: 'absolute', left: 285, width: 90, top: 40, height: 128 }}
+                    layout={{ position: 'absolute', left: 285, width: 90, bottom: 33, height: 128 }}
                 />
             </Region>
         </Frame>

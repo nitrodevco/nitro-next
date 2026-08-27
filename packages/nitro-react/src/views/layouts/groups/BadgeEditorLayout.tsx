@@ -130,7 +130,7 @@ export const BadgeEditorLayout = ({ captionGuildBadge, captionLabelBase, caption
                     <Region
                         name="part_edit_list"
                         params={2176}
-                        layout={{ position: 'absolute', left: 0, width: 264, top: 29, height: 276, flexDirection: 'column', gap: 2 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, flexDirection: 'column', gap: 2 }}
                     >
                         <Region
                             params={16}

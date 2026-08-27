@@ -29,7 +29,7 @@ export const AchievementResolutionProgressLayout = ({ captionAchievementDesc, ca
                 <Region
                     name="element_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 430, top: 0, height: 225, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsElementList ?? (
                         <AchievementResolutionProgressLayoutProgressMainContainerItem />
@@ -41,7 +41,7 @@ export const AchievementResolutionProgressLayout = ({ captionAchievementDesc, ca
                     >
                         <Region
                             params={147472}
-                            layout={{ position: 'absolute', left: 11, width: 387, top: 10, height: 97, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', left: 11, top: 10, flexDirection: 'row', gap: 10 }}
                         >
                             <Region
                                 params={147472}
@@ -50,7 +50,7 @@ export const AchievementResolutionProgressLayout = ({ captionAchievementDesc, ca
                                 <ThemeImage
                                     params={786448}
                                     src={layoutImage('icons_hilighter_yellow.png')}
-                                    layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -41, width: 82, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
                                 />
                                 <WidgetSlot
                                     widgetType="badge_image"
@@ -62,7 +62,7 @@ export const AchievementResolutionProgressLayout = ({ captionAchievementDesc, ca
                             </Region>
                             <Region
                                 params={147472}
-                                layout={{ width: 295, height: 75, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+                                layout={{ flexShrink: 0, flexDirection: 'column', gap: 5 }}
                             >
                                 <Region
                                     name="achievement.name"

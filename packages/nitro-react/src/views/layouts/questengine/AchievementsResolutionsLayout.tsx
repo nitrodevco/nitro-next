@@ -36,7 +36,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                 <Region
                     name="element_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 310, top: 0, height: 390, maxWidth: 310, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 310, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsElementList ?? (
                         <>
@@ -46,7 +46,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                     )}
                     <Region
                         params={147472}
-                        layout={{ width: 295, height: 90, flexShrink: 0, flexDirection: 'row' }}
+                        layout={{ flexShrink: 0, flexDirection: 'row' }}
                     >
                         <Region
                             params={147472}
@@ -55,7 +55,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                             <ThemeImage
                                 params={786448}
                                 src={layoutImage('common_star.png')}
-                                layout={{ position: 'absolute', left: 0, width: 75, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -37.5, width: 75, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
                             />
                             <WidgetSlot
                                 widgetType="badge_image"
@@ -67,7 +67,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                         </Region>
                         <Region
                             params={147472}
-                            layout={{ width: 220, height: 63, flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}
+                            layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}
                         >
                             <Region
                                 name="achievement.name"
@@ -119,7 +119,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                     name="save_button"
                     params={917521}
                     onPointerTap={onSaveButton}
-                    layout={{ position: 'absolute', left: 63, width: 180, top: 395, height: 30, minWidth: 180, maxWidth: 180 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -93, width: 180, top: 395, height: 30, minWidth: 180, maxWidth: 180 }}
                 >
                     {t('resolution.button.ok')}
                 </Button>

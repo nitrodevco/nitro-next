@@ -28,7 +28,7 @@ export const RedeemItemCodeWidgetLayout = ({ captionVoucherCode, layout, onRedee
                     name="redeem"
                     params={393361}
                     onPointerTap={onRedeem}
-                    layout={{ position: 'absolute', left: 213, width: 62, top: 25, height: 22, maxWidth: 100 }}
+                    layout={{ position: 'absolute', left: 213, right: 7, top: 25, height: 22, maxWidth: 100 }}
                 >
                     {t('redeem')}
                 </Button>

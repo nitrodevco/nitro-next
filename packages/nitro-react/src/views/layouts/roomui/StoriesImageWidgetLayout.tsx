@@ -43,7 +43,7 @@ export const StoriesImageWidgetLayout = ({ captionCaptionText, captionCreationDa
             >
                 <Region
                     visible={visiblePhotoWidgetBg ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 502, top: 0, height: 455 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="2"
@@ -262,7 +262,7 @@ export const StoriesImageWidgetLayout = ({ captionCaptionText, captionCreationDa
                     <Region
                         name="senderName"
                         params={262160}
-                        layout={{ position: 'absolute', left: 0, width: 129, top: 2, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', right: 0, width: 129, top: 2, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSenderName ?? 'Sent by Joopekki-xxOO'}

@@ -33,7 +33,7 @@ export const Frame7Layout = ({ layout }: Frame7LayoutProps) => {
                 name="pointer"
                 tags={[ '_POINTER', '_INTERNAL', '_EXCLUDE' ]}
                 params={1232}
-                layout={{ position: 'absolute', left: 28, width: 16, top: 59, height: 12 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -4, width: 16, bottom: 2, height: 12 }}
             />
         </Region>
     );

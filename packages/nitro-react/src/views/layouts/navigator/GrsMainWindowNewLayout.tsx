@@ -15,9 +15,15 @@ export interface GrsMainWindowNewLayoutProps {
     itemsItemListCategory?: ReactNode;
     itemsItemListOfficial?: ReactNode;
     layout?: BoxLayout;
+    onAdCont?: () => void;
+    onAdFooter?: () => void;
     onClose?: () => void;
     onCreateRoomBut?: () => void;
+    onCustomContent?: () => void;
+    onCustomFooter?: () => void;
     onGetEventBut?: () => void;
+    onMeFooter?: () => void;
+    onMeHeader?: () => void;
     onMeSubNavi?: () => void;
     onNavigatorTab1?: () => void;
     onNavigatorTab2?: () => void;
@@ -28,9 +34,15 @@ export interface GrsMainWindowNewLayoutProps {
     onNextButton?: () => void;
     onPrevButton?: () => void;
     onRoomAdFilter?: () => void;
+    onRoomAdHeader?: () => void;
+    onRoomAdsFooter?: () => void;
+    onRoomCompetitionsHeader?: () => void;
     onRoomCtgFilter?: () => void;
+    onRoomsHeader?: () => void;
     onSearchBut?: () => void;
     onSearchType?: () => void;
+    onTabbedview?: () => void;
+    onTabContent?: () => void;
     srcCreateRoom?: string;
     visibleMeHeader?: boolean;
     visiblePopularTags?: boolean;
@@ -38,7 +50,7 @@ export interface GrsMainWindowNewLayoutProps {
     visibleRoomsHeader?: boolean;
 }
 
-export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaption, captionLoadingText, captionMoreRoomsCaption, captionNoRoomsFound, captionNoRoomsFound2, captionNoTagsFound, itemsItemListCategory, itemsItemListOfficial, layout, onClose, onCreateRoomBut, onGetEventBut, onMeSubNavi, onNavigatorTab1, onNavigatorTab2, onNavigatorTab3, onNavigatorTab4, onNavigatorTab5, onNavigatorTab6, onNextButton, onPrevButton, onRoomAdFilter, onRoomCtgFilter, onSearchBut, onSearchType, srcCreateRoom, visibleMeHeader, visiblePopularTags, visibleRoomAdHeader, visibleRoomsHeader }: GrsMainWindowNewLayoutProps) => {
+export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaption, captionLoadingText, captionMoreRoomsCaption, captionNoRoomsFound, captionNoRoomsFound2, captionNoTagsFound, itemsItemListCategory, itemsItemListOfficial, layout, onAdCont, onAdFooter, onClose, onCreateRoomBut, onCustomContent, onCustomFooter, onGetEventBut, onMeFooter, onMeHeader, onMeSubNavi, onNavigatorTab1, onNavigatorTab2, onNavigatorTab3, onNavigatorTab4, onNavigatorTab5, onNavigatorTab6, onNextButton, onPrevButton, onRoomAdFilter, onRoomAdHeader, onRoomAdsFooter, onRoomCompetitionsHeader, onRoomCtgFilter, onRoomsHeader, onSearchBut, onSearchType, onTabbedview, onTabContent, srcCreateRoom, visibleMeHeader, visiblePopularTags, visibleRoomAdHeader, visibleRoomsHeader }: GrsMainWindowNewLayoutProps) => {
     const t = useTranslation();
     const [ searchStrValue, setSearchStrValue ] = useState('');
 
@@ -58,13 +70,15 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                 <Region
                     name="tabbedview"
                     params={2065}
-                    layout={{ position: 'absolute', left: 0, width: 388, top: 0, height: 442 }}
+                    onPointerTap={onTabbedview}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 388, top: 0, bottom: 32 }}
                 >
                     <TabContext
                         variant="0"
                         name="tab_context"
                         params={2193}
-                        layout={{ position: 'absolute', left: 0, width: 388, top: 0, height: 442 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <TabButton
                             variant="0"
@@ -162,23 +176,25 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                     <Region
                         name="tab_content"
                         params={2065}
-                        layout={{ position: 'absolute', left: 10, width: 388, top: 60, height: 668 }}
+                        onPointerTap={onTabContent}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 10, width: 388, top: 60, bottom: -286 }}
                     >
                         <Region
                             name="list_content"
                             params={2048}
                             backgroundColor="#ffff00"
-                            layout={{ position: 'absolute', left: 0, width: 370, top: 0, height: 380 }}
+                            layout={{ position: 'absolute', left: 0, width: 370, top: 0, bottom: 288 }}
                         >
                             <Region
                                 name="guest_rooms"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 370, top: 0, height: 380 }}
+                                layout={{ position: 'absolute', left: 0, width: 370, top: 0, bottom: 0 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 353, top: 0, height: 380 }}
+                                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="item_list"
@@ -190,7 +206,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: 0, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -185, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
@@ -202,11 +218,11 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 name="room_ads"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, height: 380 }}
+                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, bottom: 0 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 380 }}
+                                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="item_list"
@@ -218,7 +234,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: 0, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -197.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoRoomsFound2 ?? t('navigator.noroomsfound')}
@@ -231,11 +247,11 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 params={2064}
                                 visible={visiblePopularTags ?? false}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, height: 380 }}
+                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, bottom: 0 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 380 }}
+                                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="item_list"
@@ -247,7 +263,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 <Region
                                     name="no_tags_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: 0, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -197.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoTagsFound ?? t('navigator.notagsfound')}
@@ -258,11 +274,11 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                             <Region
                                 name="categories_container"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, height: 380 }}
+                                layout={{ position: 'absolute', left: 0, width: 395, top: 0, bottom: 0 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 380 }}
+                                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="item_list_category"
@@ -280,11 +296,11 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 name="official_rooms"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 370, top: 0, height: 380 }}
+                                layout={{ position: 'absolute', left: 0, width: 370, top: 0, bottom: 0 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 353, top: 0, height: 380 }}
+                                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                                 >
                                     <Region
                                         name="item_list_official"
@@ -302,12 +318,16 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                         <Region
                             name="custom_content"
                             params={1}
+                            onPointerTap={onCustomContent}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 50 }}
                         >
                             <Region
                                 name="me_header"
                                 params={17}
                                 visible={visibleMeHeader ?? false}
+                                onPointerTap={onMeHeader}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
                             >
                                 <Dropmenu
@@ -322,6 +342,8 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 name="rooms_header"
                                 params={17}
                                 visible={visibleRoomsHeader ?? false}
+                                onPointerTap={onRoomsHeader}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
                             >
                                 <Dropmenu
@@ -336,6 +358,8 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                 name="room_ad_header"
                                 params={17}
                                 visible={visibleRoomAdHeader ?? false}
+                                onPointerTap={onRoomAdHeader}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
                             >
                                 <Dropmenu
@@ -349,11 +373,13 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                             <Region
                                 name="room_competitions_header"
                                 params={17}
+                                onPointerTap={onRoomCompetitionsHeader}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 33 }}
                             >
                                 <Region
                                     params={786449}
-                                    layout={{ position: 'absolute', left: 1, width: 370, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -190, width: 370, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={t('navigator.roomcompetitionspager')}
@@ -393,11 +419,15 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                         <Region
                             name="custom_footer"
                             params={1025}
-                            layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 0 }}
+                            onPointerTap={onCustomFooter}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 382, bottom: 668, height: 0 }}
                         >
                             <Region
                                 name="me_footer"
                                 params={17}
+                                onPointerTap={onMeFooter}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 37 }}
                             >
                                 <Border
@@ -434,6 +464,8 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                             <Region
                                 name="ad_footer"
                                 params={17}
+                                onPointerTap={onAdFooter}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 85 }}
                             >
                                 <Region
@@ -448,12 +480,16 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                                     name="ad_cont"
                                     params={17}
                                     backgroundColor="#ffffff"
+                                    onPointerTap={onAdCont}
+                                    cursor="pointer"
                                     layout={{ position: 'absolute', left: 0, width: 346, top: 16, height: 68 }}
                                 />
                             </Region>
                             <Region
                                 name="room_ads_footer"
                                 params={17}
+                                onPointerTap={onRoomAdsFooter}
+                                cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 37 }}
                             >
                                 <Border
@@ -491,7 +527,7 @@ export const GrsMainWindowNewLayout = ({ captionAdCaption, captionGetEventCaptio
                     name="loading_text"
                     params={786432}
                     visible={false}
-                    layout={{ position: 'absolute', left: 81, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -119, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionLoadingText ?? t('navigator.loading')} />
                 </Region>

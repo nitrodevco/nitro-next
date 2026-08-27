@@ -23,12 +23,12 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
             <Region
                 name="effects_content"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 247 }}
+                layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ActiveTitle"
                     params={786512}
-                    layout={{ position: 'absolute', left: 316, width: 42, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 110, width: 42, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionActiveTitle ?? 'Active:'}
@@ -37,7 +37,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                 </Region>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 10, width: 262, top: 25, height: 157 }}
+                    layout={{ position: 'absolute', left: 10, right: 196, top: 25, bottom: 65 }}
                 >
                     <Region
                         name="inactive_items"
@@ -53,7 +53,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                 <Region
                     name="active_items"
                     params={2128}
-                    layout={{ position: 'absolute', left: 310, width: 128, top: 25, height: 157, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', right: 30, width: 128, top: 25, bottom: 65, flexDirection: 'column' }}
                 >
                     {itemsActiveItems ?? (
                         <InventoryEffectsLayoutActiveItemsImageItem />
@@ -63,7 +63,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                 <Region
                     name="myEffectsTitle"
                     params={786576}
-                    layout={{ position: 'absolute', left: 6, width: 66, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 6, right: 396, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMyEffectsTitle ?? 'My Effects:'}
@@ -73,7 +73,7 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                 <Region
                     name="descriptionArea"
                     params={1168}
-                    layout={{ position: 'absolute', left: 0, width: 520, top: 192, height: 55 }}
+                    layout={{ position: 'absolute', left: 0, right: -52, bottom: 0, height: 55 }}
                 >
                     <ThemeImage
                         name="effectDescriptionImage"
@@ -86,14 +86,14 @@ export const InventoryEffectsLayout = ({ captionActiveTitle, captionEffectDescri
                         name="activateEffect_button"
                         params={131153}
                         onPointerTap={onActivateEffectButton}
-                        layout={{ position: 'absolute', left: 345, width: 66, top: 0, height: 28 }}
+                        layout={{ position: 'absolute', right: 109, width: 66, top: 0, height: 28 }}
                     >
                         Activate
                     </Button>
                     <Region
                         name="effectDescriptionText"
                         params={144}
-                        layout={{ position: 'absolute', left: 75, width: 256, top: 0, height: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 75, right: 189, top: 0, height: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionEffectDescriptionText ?? t('inventory.effects.defaultdescription')}

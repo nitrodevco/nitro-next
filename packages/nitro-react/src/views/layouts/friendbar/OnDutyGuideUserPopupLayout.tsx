@@ -20,7 +20,7 @@ export const OnDutyGuideUserPopupLayout = ({ captionRankDescTxt, captionUserName
                 <Border
                     variant="0"
                     params={18576}
-                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 49 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10 }}
                 >
                     <ThemeImage
                         params={16}
@@ -51,7 +51,7 @@ export const OnDutyGuideUserPopupLayout = ({ captionRankDescTxt, captionUserName
                 <ThemeImage
                     params={1040}
                     src="${image.library.url}reception/sakara.png"
-                    layout={{ position: 'absolute', left: 46, width: 9, top: 48, height: 6 }}
+                    layout={{ position: 'absolute', left: 46, width: 9, bottom: 5, height: 6 }}
                 />
             </Region>
         </Region>

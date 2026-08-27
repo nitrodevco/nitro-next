@@ -25,12 +25,12 @@ export const TableViewLayout = ({ captionNothingToDisplayText, itemsTableContent
                     variant="0"
                     name="table_border"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 472, top: 0, height: 177 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="table_contents"
                         params={2192}
-                        layout={{ position: 'absolute', left: 5, width: 462, top: 5, height: 167, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5, flexDirection: 'column' }}
                     >
                         {itemsTableContents ?? (
                             <>
@@ -43,12 +43,12 @@ export const TableViewLayout = ({ captionNothingToDisplayText, itemsTableContent
                     <Region
                         name="empty_container"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 472, top: 29, height: 148 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0 }}
                     >
                         <Region
                             name="nothing_to_display_text"
                             params={3280}
-                            layout={{ position: 'absolute', left: 183, width: 107, top: 65, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 107, top: '50%', marginTop: -9, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
@@ -157,7 +157,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
         >
             <Region
                 visible={visibleHighlightBorder ?? false}
-                layout={{ position: 'absolute', left: 2, width: 97, top: 1, height: 17, minHeight: 17 }}
+                layout={{ position: 'absolute', left: 2, right: 2, top: 1, height: 17, minHeight: 17 }}
             >
                 <Border
                     variant="2"
@@ -171,14 +171,14 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
             <Region
                 name="element_text"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 101, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionElementText ?? 'elem1'} />
             </Region>
             <TextInput
                 value={elementInputValue}
                 onChange={setElementInputValue}
-                layout={{ position: 'absolute', left: 5, width: 91, top: 1, height: 18, minHeight: 18 }}
+                layout={{ position: 'absolute', left: 5, right: 5, top: 1, height: 18, minHeight: 18 }}
             />
             <Region
                 name="link_container"
@@ -186,12 +186,12 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 visible={visibleLinkContainer ?? false}
                 onPointerTap={onLinkContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 48, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17 }}
             >
                 <Region
                     name="element_link"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionElementLink ?? ''}
@@ -204,7 +204,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 params={81}
                 onPointerTap={onExtraButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 78, width: 20, top: 0, height: 20 }}
+                layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
             >
                 <ThemeImage
                     name="extra_button_bitmap"

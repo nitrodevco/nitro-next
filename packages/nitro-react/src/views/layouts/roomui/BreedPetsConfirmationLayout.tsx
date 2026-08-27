@@ -26,7 +26,7 @@ export const BreedPetsConfirmationLayout = ({ itemsElementList, layout, onClose 
                 <Region
                     name="element_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 272, top: 0, height: 279, maxWidth: 272, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsElementList ?? (
                         <>
@@ -231,7 +231,7 @@ export const BreedPetsConfirmationLayoutPlant1ItemlistItem = ({ itemsPlant1Iteml
         <Region
             name="plant1_itemlist"
             params={147472}
-            layout={{ width: 122, height: 122, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlant1Itemlist ?? (
                 <>
@@ -342,7 +342,7 @@ export const BreedPetsConfirmationLayoutPlant2ItemlistItem = ({ itemsPlant2Iteml
         <Region
             name="plant2_itemlist"
             params={147472}
-            layout={{ width: 122, height: 122, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlant2Itemlist ?? (
                 <>
@@ -367,7 +367,7 @@ export const BreedPetsConfirmationLayoutPreviewListItem = ({ itemsPreviewList, l
         <Region
             name="preview_list"
             params={147472}
-            layout={{ width: 254, height: 122, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
                 <>
@@ -473,7 +473,7 @@ export const BreedPetsConfirmationLayoutButtonListItem = ({ itemsButtonList, lay
         <Region
             name="button_list"
             params={147472}
-            layout={{ width: 254, height: 30, flexShrink: 0, minWidth: 254, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 254, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
                 <>

@@ -17,7 +17,7 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
             <Border
                 variant="105"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 244, top: 0, height: 28 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 28 }}
             >
                 <Button
                     variant="101"
@@ -25,7 +25,7 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
                     params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmit}
-                    layout={{ position: 'absolute', left: 165, width: 86, top: -7, height: 42, maxHeight: 42 }}
+                    layout={{ position: 'absolute', right: -7, width: 86, bottom: -7, height: 42, maxHeight: 42 }}
                 />
                 <Region
                     name="empty_message"
@@ -40,7 +40,7 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
                 <TextInput
                     value={inputValue}
                     onChange={setInputValue}
-                    layout={{ position: 'absolute', left: 5, width: 235, top: 5, height: 17 }}
+                    layout={{ position: 'absolute', left: 5, right: 4, top: 5, bottom: 6 }}
                 />
             </Border>
         </Region>

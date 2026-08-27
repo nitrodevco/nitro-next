@@ -63,7 +63,7 @@ export const BackgroundColorUiLayout = ({ itemsTabContent, layout, onApplyButton
                     name="on_off_button"
                     params={393233}
                     onPointerTap={onOnOffButton}
-                    layout={{ position: 'absolute', left: 90, width: 189, top: 193, height: 24 }}
+                    layout={{ position: 'absolute', right: 13, width: 189, top: 193, height: 24 }}
                 >
                     {t('widget.backgroundcolor.button.on')}
                 </Button>
@@ -161,7 +161,7 @@ export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layo
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: 2, width: 201, top: 12, height: 12 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
             />
             <Region
                 name="slider_movement_area"
@@ -210,7 +210,7 @@ export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParamete
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: 2, width: 201, top: 12, height: 12 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
             />
             <Region
                 name="slider_movement_area"
@@ -259,7 +259,7 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
                 name="slider_base"
                 params={3932176}
                 src={srcSliderBase}
-                layout={{ position: 'absolute', left: 2, width: 201, top: 12, height: 12 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -123.5, width: 201, top: '50%', marginTop: -9, height: 12 }}
             />
             <Region
                 name="slider_movement_area"

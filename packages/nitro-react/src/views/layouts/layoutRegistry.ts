@@ -153,7 +153,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'avatar_editor_name_change', id: 3110, component: 'AvatarEditorNameChangeLayout', size: '350x270', rootIsFrame: true,
-        props: [ 'captionHcOnlyText', 'captionInfoText', 'captionStaticInfoText', 'layout', 'onCancelSelectionButton', 'onCheckNameButton', 'onClose', 'onSelectNameButton', 'srcHcIconImage', 'srcPenImage' ],
+        props: [ 'captionHcOnlyText', 'captionInfoText', 'captionStaticInfoText', 'layout', 'onCancelSelectionButton', 'onCheckNameButton', 'onClose', 'onSelectNameButton', 'onSuggestions', 'srcHcIconImage', 'srcPenImage' ],
         subComponents: [ ],
         folder: 'avatareditor', libraries: [ 'avatareditor' ],
         as3: [ ],
@@ -193,7 +193,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'avatar_info_widget', id: 976, component: 'AvatarInfoWidgetLayout', size: '129x39', rootIsFrame: false,
-        props: [ 'captionName', 'layout', 'srcPenIcon', 'srcRelationshipStatus', 'visibleBorder' ],
+        props: [ 'captionName', 'layout', 'onChangeNameContainer', 'srcPenIcon', 'srcRelationshipStatus', 'visibleBorder' ],
         subComponents: [ ],
         folder: 'roomui/widget/avatarinfo', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/avatarinfo/AvatarContextInfoButtonView', 'com/sulake/habbo/ui/widget/avatarinfo/AvatarContextInfoView' ],
@@ -257,7 +257,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'badge_color_item', id: 1205, component: 'BadgeColorItemLayout', size: '15x15', rootIsFrame: false,
-        props: [ 'layout', 'srcBackground', 'srcForeground', 'srcSelected' ],
+        props: [ 'layout', 'onContainer', 'srcBackground', 'srcForeground', 'srcSelected' ],
         subComponents: [ ],
         folder: 'groups', libraries: [ 'groups' ],
         as3: [ ],
@@ -305,7 +305,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'badge_part_item', id: 1207, component: 'BadgePartItemLayout', size: '41x41', rootIsFrame: false,
-        props: [ 'layout', 'srcPart', 'srcSelected' ],
+        props: [ 'layout', 'onContainer', 'srcPart', 'srcSelected' ],
         subComponents: [ ],
         folder: 'groups', libraries: [ 'groups' ],
         as3: [ ],
@@ -337,7 +337,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'bar', id: 28, component: 'BarLayout', size: '420x48', rootIsFrame: false,
-        props: [ 'layout', 'onButtonLeftPage', 'onButtonRightPage', 'onMessenger', 'srcIcon' ],
+        props: [ 'layout', 'onBorder', 'onButtonLeftPage', 'onButtonRightPage', 'onContainer', 'onMessenger', 'srcIcon' ],
         subComponents: [ ],
         folder: 'friendbar', libraries: [ 'friendbar' ],
         as3: [ ],
@@ -561,7 +561,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'camera_editor', id: 1104, component: 'CameraEditorLayout', size: '586x517', rootIsFrame: true,
-        props: [ 'captionSaveText', 'captionSliderEffectInfo', 'captionZoomText', 'layout', 'onCancelButton', 'onClose', 'onPurchaseButton', 'onSaveButton', 'onShaftClickArea', 'onZoomButton', 'srcDownloadImage', 'srcImage', 'srcMagnifier', 'srcSliderBase', 'srcSliderButton', 'visibleCaptionBg' ],
+        props: [ 'captionSaveText', 'captionSliderEffectInfo', 'captionZoomText', 'layout', 'onCancelButton', 'onClose', 'onPurchaseButton', 'onSaveButton', 'onShaftClickArea', 'onSliderContainer', 'onZoomButton', 'srcDownloadImage', 'srcImage', 'srcMagnifier', 'srcSliderBase', 'srcSliderButton', 'visibleCaptionBg' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -577,7 +577,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'camera_interface', id: 960, component: 'CameraInterfaceLayout', size: '340x536', rootIsFrame: false,
-        props: [ 'captionPhotoDate', 'captionPhotoRoomname', 'layout', 'onButtonEditor', 'onButtonRelease', 'onCameraButton0', 'onCameraButton1', 'onCameraButton2', 'onCameraButton3', 'onCameraButton4', 'onChooseSlotButton0', 'onChooseSlotButton1', 'onChooseSlotButton2', 'onChooseSlotButton3', 'onChooseSlotButton4', 'onDeletePhotoButton', 'srcBuyButtonBg', 'srcCameraCrosshair', 'srcCameraSlot0', 'srcCameraSlot1', 'srcCameraSlot2', 'srcCameraSlot3', 'srcCameraSlot4', 'srcCustomFrame', 'srcFlash', 'srcImage', 'srcPhotoBorder', 'srcReleaseBitmap', 'srcSlotImage0', 'srcSlotImage1', 'srcSlotImage2', 'srcSlotImage3', 'srcSlotImage4', 'visibleDeletePhotoButton', 'visibleSlotContainer' ],
+        props: [ 'captionPhotoDate', 'captionPhotoRoomname', 'layout', 'onBgBorder', 'onButtonEditor', 'onButtonRelease', 'onCameraButton0', 'onCameraButton1', 'onCameraButton2', 'onCameraButton3', 'onCameraButton4', 'onChooseSlotButton0', 'onChooseSlotButton1', 'onChooseSlotButton2', 'onChooseSlotButton3', 'onChooseSlotButton4', 'onDeletePhotoButton', 'srcBuyButtonBg', 'srcCameraCrosshair', 'srcCameraSlot0', 'srcCameraSlot1', 'srcCameraSlot2', 'srcCameraSlot3', 'srcCameraSlot4', 'srcCustomFrame', 'srcFlash', 'srcImage', 'srcPhotoBorder', 'srcReleaseBitmap', 'srcSlotImage0', 'srcSlotImage1', 'srcSlotImage2', 'srcSlotImage3', 'srcSlotImage4', 'visibleDeletePhotoButton', 'visibleSlotContainer' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -649,7 +649,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'catalog_volter', id: 1659, component: 'CatalogVolterLayout', size: '550x516', rootIsFrame: false,
-        props: [ 'captionCatalogHeaderDescription', 'itemsNavigationList', 'layout', 'onNavigatorMain', 'srcCatalogHeaderImage', 'srcLayoutBackground' ],
+        props: [ 'captionCatalogHeaderDescription', 'itemsNavigationList', 'layout', 'onCatalogMainContainer', 'onNavigatorMain', 'srcCatalogHeaderImage', 'srcLayoutBackground' ],
         subComponents: [ 'CatalogVolterLayoutListTemplateItem', 'CatalogVolterLayoutItemTemplateItem', 'CatalogVolterLayoutSubitemTemplateItem' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -977,7 +977,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'collectible_hub', id: 1531, component: 'CollectibleHubLayout', size: '500x600', rootIsFrame: true,
-        props: [ 'captionCaptionAllTimeHighScore', 'captionCaptionCurrentScore', 'captionCollectionName', 'captionCollectorCollectionsHeader', 'captionCollectorLevel', 'captionCollectorLevelDescription', 'captionCollectorLevelHeader', 'captionCollectorProfileDescription', 'captionCollectorProfileDescription2', 'captionCollectorProfileDescription3', 'captionCollectorProfileHeader', 'captionCurrentHiscoreKey', 'captionCurrentHiscoreValue', 'captionCurrentScoreKey', 'captionCurrentScoreValue', 'captionEmeraldCurrencyValue', 'captionInfoDesc', 'captionLevelTitle', 'captionMintingDescription', 'captionMintingHeader', 'captionMintLockText', 'captionMintTokenBalance', 'captionNoWalletText', 'captionPreviewFurniName', 'captionPreviewFurniName2', 'captionPreviewFurniName3', 'captionPreviewRewardText', 'captionPreviewScoreText', 'captionPriceText', 'captionProcuctScoreText', 'captionProgressBarText', 'captionProgressBarText2', 'captionProgressText', 'captionRewardFurniName', 'captionSearchPlaceholder', 'captionSilverCostText', 'captionSilverCurrencyValue', 'captionStampPricing', 'captionStampsHeader', 'captionStampsHeader2', 'captionTransferDesc', 'captionTransferFeeText', 'itemsItemgridCollection', 'itemsItemgridInventory', 'itemsItemgridShop', 'itemsItemlist', 'itemsMintlimitContainer', 'itemsNavigationList', 'itemsNavigationList2', 'itemsProductInfoList', 'itemsProductInfoList2', 'layout', 'onBuyButton', 'onCategoryInfoDescriptionRegion', 'onCategoryInfoHeaderRegion', 'onCategoryInfoTransferRegion', 'onCategoryMintingDescriptionRegion', 'onCategoryMintingDescriptionRegion2', 'onCategoryMintingDescriptionRegion3', 'onCategoryNameRegion', 'onCategoryNameRegion2', 'onCategoryNameRegion3', 'onClaimButton', 'onClaimButton2', 'onClose', 'onCollectButton', 'onCreateWalletButton', 'onMoreInfoButton', 'onSearchClearButton', 'onSilverBuyButton', 'onSortSelection', 'onStampsPurchaseDropdown', 'onTopViewCollectionsButton', 'onTopViewInfoButton', 'onTopViewLevelsButton', 'onTopViewMintingButton', 'onTopViewProfileButton', 'onTopViewRewardsButton', 'onTopViewShopButton', 'onTopViewTransferButton', 'onTransferButton', 'onTransferWalletSelection', 'onWalletSelection', 'srcBgStar', 'srcBgStar2', 'srcBgStar3', 'srcCollectableBgLeft', 'srcCollectableBgRight', 'srcCollectorLevelBg', 'srcCollectorLevelBg2', 'srcEmeraldCurrencyIcon', 'srcLoadingIcon', 'srcLoadingIcon2', 'srcLoadingIcon3', 'srcLoadingIcon4', 'srcLoadingIcon5', 'srcMintLockClosedIcon', 'srcMintLockOpenIcon', 'srcPlaceholderImage', 'srcPlaceholderImage2', 'srcPlaceholderImage3', 'srcProductPreview', 'srcProductPreview2', 'srcProductPreview3', 'srcSearchIcon', 'srcSilverCurrencyIcon', 'srcTransferFeeIcon', 'srcUnknownImage', 'srcUnknownImage2', 'srcUnknownImage3', 'visibleCategoryNameRegion', 'visibleCollectionProgressContainer', 'visibleCollectorProfileContainer', 'visibleInfoContainer', 'visibleLevelsContainer', 'visibleLoadedContent', 'visibleLoadingContents', 'visibleLoadingContents2', 'visibleLoadingContents3', 'visibleLoadingContents4', 'visibleLoadingContents5', 'visibleMintingContainer', 'visibleNoWalletContainer', 'visibleProductInfoContainer', 'visibleProductInfoContainer2', 'visibleProductNameContainer', 'visibleRewardsContainer', 'visibleShopContainer', 'visibleTabBg', 'visibleTopViewLevelsButton', 'visibleTopViewProfileButton', 'visibleTransferContainer' ],
+        props: [ 'captionCaptionAllTimeHighScore', 'captionCaptionCurrentScore', 'captionCollectionName', 'captionCollectorCollectionsHeader', 'captionCollectorLevel', 'captionCollectorLevelDescription', 'captionCollectorLevelHeader', 'captionCollectorProfileDescription', 'captionCollectorProfileDescription2', 'captionCollectorProfileDescription3', 'captionCollectorProfileHeader', 'captionCurrentHiscoreKey', 'captionCurrentHiscoreValue', 'captionCurrentScoreKey', 'captionCurrentScoreValue', 'captionEmeraldCurrencyValue', 'captionInfoDesc', 'captionLevelTitle', 'captionMintingDescription', 'captionMintingHeader', 'captionMintLockText', 'captionMintTokenBalance', 'captionNoWalletText', 'captionPreviewFurniName', 'captionPreviewFurniName2', 'captionPreviewFurniName3', 'captionPreviewRewardText', 'captionPreviewScoreText', 'captionPriceText', 'captionProcuctScoreText', 'captionProgressBarText', 'captionProgressBarText2', 'captionProgressText', 'captionRewardFurniName', 'captionSearchPlaceholder', 'captionSilverCostText', 'captionSilverCurrencyValue', 'captionStampPricing', 'captionStampsHeader', 'captionStampsHeader2', 'captionTransferDesc', 'captionTransferFeeText', 'itemsItemgridCollection', 'itemsItemgridInventory', 'itemsItemgridShop', 'itemsItemlist', 'itemsMintlimitContainer', 'itemsNavigationList', 'itemsNavigationList2', 'itemsProductInfoList', 'itemsProductInfoList2', 'layout', 'onBuyButton', 'onCategoryInfoDescriptionRegion', 'onCategoryInfoHeaderRegion', 'onCategoryInfoTransferRegion', 'onCategoryMintingDescriptionRegion', 'onCategoryMintingDescriptionRegion2', 'onCategoryMintingDescriptionRegion3', 'onCategoryNameRegion', 'onCategoryNameRegion2', 'onCategoryNameRegion3', 'onClaimButton', 'onClaimButton2', 'onClose', 'onCollectButton', 'onCreateWalletButton', 'onMoreInfoButton', 'onProductNameContainer', 'onProductNameContainer2', 'onProductNameContainer3', 'onSearchClearButton', 'onSilverBuyButton', 'onSortSelection', 'onStampsPurchaseDropdown', 'onTopViewCollectionsButton', 'onTopViewInfoButton', 'onTopViewLevelsButton', 'onTopViewMintingButton', 'onTopViewProfileButton', 'onTopViewRewardsButton', 'onTopViewShopButton', 'onTopViewTransferButton', 'onTransferButton', 'onTransferWalletSelection', 'onWalletSelection', 'srcBgStar', 'srcBgStar2', 'srcBgStar3', 'srcCollectableBgLeft', 'srcCollectableBgRight', 'srcCollectorLevelBg', 'srcCollectorLevelBg2', 'srcEmeraldCurrencyIcon', 'srcLoadingIcon', 'srcLoadingIcon2', 'srcLoadingIcon3', 'srcLoadingIcon4', 'srcLoadingIcon5', 'srcMintLockClosedIcon', 'srcMintLockOpenIcon', 'srcPlaceholderImage', 'srcPlaceholderImage2', 'srcPlaceholderImage3', 'srcProductPreview', 'srcProductPreview2', 'srcProductPreview3', 'srcSearchIcon', 'srcSilverCurrencyIcon', 'srcTransferFeeIcon', 'srcUnknownImage', 'srcUnknownImage2', 'srcUnknownImage3', 'visibleCategoryNameRegion', 'visibleCollectionProgressContainer', 'visibleCollectorProfileContainer', 'visibleInfoContainer', 'visibleLevelsContainer', 'visibleLoadedContent', 'visibleLoadingContents', 'visibleLoadingContents2', 'visibleLoadingContents3', 'visibleLoadingContents4', 'visibleLoadingContents5', 'visibleMintingContainer', 'visibleNoWalletContainer', 'visibleProductInfoContainer', 'visibleProductInfoContainer2', 'visibleProductNameContainer', 'visibleRewardsContainer', 'visibleShopContainer', 'visibleTabBg', 'visibleTopViewLevelsButton', 'visibleTopViewProfileButton', 'visibleTransferContainer' ],
         subComponents: [ 'CollectibleHubLayoutItemTemplateItem', 'CollectibleHubLayoutItemTemplateItem2', 'CollectibleHubLayoutProductInfoEntryTemplateItem', 'CollectibleHubLayoutItemTemplateItem3', 'CollectibleHubLayoutItemTemplateItem4', 'CollectibleHubLayoutProductInfoEntryTemplateItem2', 'CollectibleHubLayoutMintlimitTextItem', 'CollectibleHubLayoutItemTemplateItem5', 'CollectibleHubLayoutItemTemplateItem6' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -993,7 +993,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'color_chooser_cell', id: 1702, component: 'ColorChooserCellLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'layout', 'srcBorder', 'srcChosen', 'srcColor' ],
+        props: [ 'layout', 'onColorChooserCell', 'srcBorder', 'srcChosen', 'srcColor' ],
         subComponents: [ ],
         folder: 'catalog/viewer/widgets', libraries: [ 'catalog' ],
         as3: [ 'com/sulake/habbo/catalog/viewer/widgets/ColourGridCatalogWidget' ],
@@ -1033,7 +1033,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'compose_message_view', id: 90, component: 'ComposeMessageViewLayout', size: '455x470', rootIsFrame: true,
-        props: [ 'captionCancelBtnLabel', 'captionFormattingHelp', 'captionMessageTextHeader', 'captionSendMessageLabel', 'captionStatusText', 'captionThreadSubjectHeader', 'captionTopHeaderText', 'captionTopText', 'layout', 'onCancelBtn', 'onClose', 'onPostBtn', 'onTopClickArea' ],
+        props: [ 'captionCancelBtnLabel', 'captionFormattingHelp', 'captionMessageTextHeader', 'captionSendMessageLabel', 'captionStatusText', 'captionThreadSubjectHeader', 'captionTopHeaderText', 'captionTopText', 'layout', 'onCancelBtn', 'onClose', 'onMessageTextContainer', 'onPostBtn', 'onTopClickArea', 'onTopPart' ],
         subComponents: [ ],
         folder: 'friendbar', libraries: [ 'friendbar' ],
         as3: [ ],
@@ -1097,7 +1097,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'craftingwidget', id: 852, component: 'CraftingwidgetLayout', size: '543x407', rootIsFrame: true,
-        props: [ 'captionHeaderInventory', 'captionHeaderMixer', 'captionHeaderRecipes', 'captionInfoText1', 'captionInfoText2', 'captionNumber', 'layout', 'onBtnCancel', 'onBtnCraft', 'onClose', 'onTooltip', 'srcBitmap', 'srcFurnitureIcon', 'visibleNumberContainer', 'visibleProgressBar' ],
+        props: [ 'captionHeaderInventory', 'captionHeaderMixer', 'captionHeaderRecipes', 'captionInfoText1', 'captionInfoText2', 'captionNumber', 'layout', 'onBtnCancel', 'onBtnCraft', 'onClose', 'onNumberContainer', 'onProgressBar', 'onTooltip', 'srcBitmap', 'srcFurnitureIcon', 'visibleNumberContainer', 'visibleProgressBar' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -1161,7 +1161,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'dimmer_color_chooser_cell', id: 992, component: 'DimmerColorChooserCellLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'layout', 'srcBorder', 'srcChosen', 'srcColor' ],
+        props: [ 'layout', 'onColorChooserCell', 'srcBorder', 'srcChosen', 'srcColor' ],
         subComponents: [ ],
         folder: 'roomui/furniture/dimmer', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/furniture/dimmer/DimmerViewColorGrid' ],
@@ -1169,7 +1169,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'dimmer_ui', id: 848, component: 'DimmerUiLayout', size: '20x20', rootIsFrame: true,
-        props: [ 'captionDimmerInfo', 'captionOffText', 'captionTypeText', 'layout', 'onApplyButton', 'onClose', 'onOnOffButton', 'onTab1', 'onTab2', 'onTab3', 'onTypeCheckbox', 'srcOffImage', 'srcSliderBase', 'srcSliderButton' ],
+        props: [ 'captionDimmerInfo', 'captionOffText', 'captionTypeText', 'layout', 'onApplyButton', 'onClose', 'onColorGridContainer', 'onOnOffButton', 'onTab1', 'onTab2', 'onTab3', 'onTabbedview', 'onTypeCheckbox', 'srcOffImage', 'srcSliderBase', 'srcSliderButton' ],
         subComponents: [ ],
         folder: 'roomui/furniture/dimmer', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/furniture/dimmer/DimmerView' ],
@@ -1297,7 +1297,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'ecotronbox_card', id: 893, component: 'EcotronboxCardLayout', size: '257x114', rootIsFrame: false,
-        props: [ 'captionEcotronboxCardDate', 'captionEcotronboxCardMsg', 'layout', 'onEcotronboxCardBtnClose', 'onEcotronboxCardBtnOpen', 'srcEcotronboxCardBg', 'srcEcotronboxCardPreview' ],
+        props: [ 'captionEcotronboxCardDate', 'captionEcotronboxCardMsg', 'layout', 'onEcotronboxCardBtnClose', 'onEcotronboxCardBtnOpen', 'onEcotronboxContainer', 'srcEcotronboxCardBg', 'srcEcotronboxCardPreview' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -1305,7 +1305,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'ecotronbox_card_furnimatic', id: 899, component: 'EcotronboxCardFurnimaticLayout', size: '257x114', rootIsFrame: false,
-        props: [ 'captionEcotronboxCardDate', 'captionEcotronboxCardMsg', 'layout', 'onEcotronboxCardBtnClose', 'onEcotronboxCardBtnOpen', 'srcEcotronboxCardBg', 'srcEcotronboxCardPreview' ],
+        props: [ 'captionEcotronboxCardDate', 'captionEcotronboxCardMsg', 'layout', 'onEcotronboxCardBtnClose', 'onEcotronboxCardBtnOpen', 'onEcotronboxContainer', 'srcEcotronboxCardBg', 'srcEcotronboxCardPreview' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -1609,7 +1609,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'forum_settings', id: 68, component: 'ForumSettingsLayout', size: '350x545', rootIsFrame: true,
-        props: [ 'captionLabel0', 'captionLabel02', 'captionLabel03', 'captionLabel1', 'captionLabel12', 'captionLabel13', 'captionLabel2', 'captionLabel22', 'captionLabel23', 'captionLabel24', 'captionLabel3', 'captionLabel32', 'captionLabel33', 'captionTopHeaderText', 'captionTopText', 'layout', 'on_0', 'on_02', 'on_03', 'on_1', 'on_12', 'on_13', 'on_2', 'on_22', 'on_23', 'on_24', 'on_3', 'on_32', 'on_33', 'onCancelBtn', 'onClose', 'onOkBtn', 'onTopClickArea' ],
+        props: [ 'captionLabel0', 'captionLabel02', 'captionLabel03', 'captionLabel1', 'captionLabel12', 'captionLabel13', 'captionLabel2', 'captionLabel22', 'captionLabel23', 'captionLabel24', 'captionLabel3', 'captionLabel32', 'captionLabel33', 'captionTopHeaderText', 'captionTopText', 'layout', 'on_0', 'on_02', 'on_03', 'on_1', 'on_12', 'on_13', 'on_2', 'on_22', 'on_23', 'on_24', 'on_3', 'on_32', 'on_33', 'onCancelBtn', 'onClose', 'onOkBtn', 'onTopClickArea', 'onTopPart' ],
         subComponents: [ ],
         folder: 'friendbar', libraries: [ 'friendbar' ],
         as3: [ ],
@@ -1649,7 +1649,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'friend_entry', id: 1526, component: 'FriendEntryLayout', size: '102x20', rootIsFrame: false,
-        props: [ 'captionCaption', 'captionName', 'captionSelectAllText', 'layout', 'onBg', 'onFollowFriend', 'onRelationshipStatus', 'onSelectAllRegion', 'onStartChat', 'onUserInfoRegion', 'srcArrowDownBlack', 'srcArrowRightBlack', 'srcFace', 'srcFollowFriend', 'srcStartChat', 'srcStatus' ],
+        props: [ 'captionCaption', 'captionName', 'captionSelectAllText', 'layout', 'onBg', 'onFollowFriend', 'onPager', 'onRelationshipStatus', 'onSelectAllRegion', 'onStartChat', 'onUserInfoRegion', 'srcArrowDownBlack', 'srcArrowRightBlack', 'srcFace', 'srcFollowFriend', 'srcStartChat', 'srcStatus' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist' ],
         as3: [ ],
@@ -1665,7 +1665,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'friend_request_entry', id: 1509, component: 'FriendRequestEntryLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'captionInfoText', 'captionRequesterNameText', 'layout', 'onBgRegion' ],
+        props: [ 'captionInfoText', 'captionRequesterNameText', 'layout', 'onAccept', 'onBgRegion', 'onCont26981', 'onReject' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist' ],
         as3: [ ],
@@ -1769,7 +1769,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'gift_palette_item', id: 1614, component: 'GiftPaletteItemLayout', size: '27x22', rootIsFrame: false,
-        props: [ 'layout', 'srcBorder', 'srcColor', 'srcSelection' ],
+        props: [ 'layout', 'onColorContainer', 'srcBorder', 'srcColor', 'srcSelection' ],
         subComponents: [ ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -1777,7 +1777,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'gift_wrapping', id: 1602, component: 'GiftWrappingLayout', size: '342x482', rootIsFrame: true,
-        props: [ 'captionBoxColorTitle', 'captionCancelLink', 'captionMessageFrom', 'captionMessageInputHint', 'captionNameInputHint', 'captionPickBoxTitle', 'captionPickRibbonTitle', 'captionShowFaceCheckboxTitle', 'itemsPriceBoxContainer', 'layout', 'onBoxNext', 'onBoxPrev', 'onCancelLinkRegion', 'onClose', 'onGiveGiftButton', 'onRibbonNext', 'onRibbonPrev', 'onShowFaceCheckbox', 'srcAvatarImage', 'srcGiftCard', 'srcProductImage', 'srcWriteDeco', 'visibleSuggestionContainer' ],
+        props: [ 'captionBoxColorTitle', 'captionCancelLink', 'captionMessageFrom', 'captionMessageInputHint', 'captionNameInputHint', 'captionPickBoxTitle', 'captionPickRibbonTitle', 'captionShowFaceCheckboxTitle', 'itemsPriceBoxContainer', 'layout', 'onBoxNext', 'onBoxPrev', 'onCancelLinkRegion', 'onClose', 'onGiveGiftButton', 'onRibbonNext', 'onRibbonPrev', 'onShowFaceCheckbox', 'onSuggestionContainer', 'srcAvatarImage', 'srcGiftCard', 'srcProductImage', 'srcWriteDeco', 'visibleSuggestionContainer' ],
         subComponents: [ 'GiftWrappingLayoutPickBoxPriceTitleItem', 'GiftWrappingLayoutSmallCoinItem' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -1793,7 +1793,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'gridItem_with_price_multi', id: 1717, component: 'GridItemWithPriceMultiLayout', size: '53x74', rootIsFrame: false,
-        props: [ 'captionBundleCounter', 'captionMultiCounter', 'itemsTotalpriceContainer', 'itemsTotalpriceContainer2', 'layout', 'srcBadgeAddOn', 'srcImage', 'srcImageWide', 'srcUniqueItemBackgroundBitmap', 'srcUniqueItemSoldOutBitmap', 'visibleBg' ],
+        props: [ 'captionBundleCounter', 'captionMultiCounter', 'itemsTotalpriceContainer', 'itemsTotalpriceContainer2', 'layout', 'onSmallContainer', 'srcBadgeAddOn', 'srcImage', 'srcImageWide', 'srcUniqueItemBackgroundBitmap', 'srcUniqueItemSoldOutBitmap', 'visibleBg' ],
         subComponents: [ 'GridItemWithPriceMultiLayoutAmountTextLeftItem', 'GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem', 'GridItemWithPriceMultiLayoutPlusItem', 'GridItemWithPriceMultiLayoutAmountTextRightItem', 'GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -1801,7 +1801,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'gridItem_with_price_single', id: 1635, component: 'GridItemWithPriceSingleLayout', size: '53x74', rootIsFrame: false,
-        props: [ 'captionBundleCounter', 'captionMultiCounter', 'itemsTotalpriceContainer', 'layout', 'srcBadgeAddOn', 'srcImage', 'srcImageWide', 'srcUniqueItemBackgroundBitmap', 'srcUniqueItemSoldOutBitmap', 'visibleBg' ],
+        props: [ 'captionBundleCounter', 'captionMultiCounter', 'itemsTotalpriceContainer', 'layout', 'onSmallContainer', 'srcBadgeAddOn', 'srcImage', 'srcImageWide', 'srcUniqueItemBackgroundBitmap', 'srcUniqueItemSoldOutBitmap', 'visibleBg' ],
         subComponents: [ 'GridItemWithPriceSingleLayoutAmountTextRightItem', 'GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -1857,7 +1857,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'growing_container_view', id: 1159, component: 'GrowingContainerViewLayout', size: '1000x0', rootIsFrame: false,
-        props: [ 'layout' ],
+        props: [ 'layout', 'onContainer' ],
         subComponents: [ ],
         folder: 'userdefinedroomevents', libraries: [ 'userdefinedroomevents' ],
         as3: [ ],
@@ -1873,7 +1873,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'grs_front_page_search_big', id: 3043, component: 'GrsFrontPageSearchBigLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'captionCaption', 'layout', 'srcIcon' ],
+        props: [ 'captionCaption', 'layout', 'onCont', 'srcIcon' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -1881,7 +1881,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'grs_front_page_search_small', id: 3003, component: 'GrsFrontPageSearchSmallLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'captionCaption', 'layout', 'srcIcon' ],
+        props: [ 'captionCaption', 'layout', 'onCont', 'srcIcon' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -1889,7 +1889,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'grs_guest_room_details_long', id: 2997, component: 'GrsGuestRoomDetailsLongLayout', size: '253x351', rootIsFrame: false,
-        props: [ 'captionEventinfoCaption', 'captionEventinfoDesc', 'captionEventinfoExpirationtime', 'captionEventinfoName', 'captionInfotxt', 'captionInfotxt2', 'captionInfotxt3', 'captionInfotxt4', 'captionRating', 'captionRatingCaption', 'captionRoomctg', 'captionRoomctgCaption', 'captionRoomdesc', 'captionRoomname', 'captionRoomowner', 'captionRoomownerCaption', 'captionRoomsettings', 'captionStartedat', 'captionStartedatCaption', 'layout', 'onRoomownerCont', 'onRoomsettingsCont', 'srcDoormodeDoorbell', 'srcDoormodeInvisible', 'srcDoormodePassword', 'srcTradingAllowed' ],
+        props: [ 'captionEventinfoCaption', 'captionEventinfoDesc', 'captionEventinfoExpirationtime', 'captionEventinfoName', 'captionInfotxt', 'captionInfotxt2', 'captionInfotxt3', 'captionInfotxt4', 'captionRating', 'captionRatingCaption', 'captionRoomctg', 'captionRoomctgCaption', 'captionRoomdesc', 'captionRoomname', 'captionRoomowner', 'captionRoomownerCaption', 'captionRoomsettings', 'captionStartedat', 'captionStartedatCaption', 'layout', 'onDetailsContainer', 'onRoomownerCont', 'onRoomsettingsCont', 'onTags', 'srcDoormodeDoorbell', 'srcDoormodeInvisible', 'srcDoormodePassword', 'srcTradingAllowed' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -1929,7 +1929,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'grs_main_window', id: 3015, component: 'GrsMainWindowLayout', size: '325x474', rootIsFrame: true,
-        props: [ 'captionAdCaption', 'captionGetEventCaption', 'captionLoadingText', 'captionMoreRoomsCaption', 'captionNoRoomsFound', 'captionNoRoomsFound2', 'captionNoTagsFound', 'itemsItemListOfficial', 'layout', 'onClose', 'onCreateRoomBut', 'onGetEventBut', 'onMeSubNavi', 'onNavigatorTab1', 'onNavigatorTab2', 'onNavigatorTab3', 'onNavigatorTab4', 'onNavigatorTab5', 'onNextButton', 'onPrevButton', 'onRoomAdFilter', 'onRoomCtgFilter', 'onSearchBut', 'srcCreateRoom', 'visibleMeHeader', 'visibleRoomAdHeader', 'visibleRoomsHeader' ],
+        props: [ 'captionAdCaption', 'captionGetEventCaption', 'captionLoadingText', 'captionMoreRoomsCaption', 'captionNoRoomsFound', 'captionNoRoomsFound2', 'captionNoTagsFound', 'itemsItemListOfficial', 'layout', 'onAdCont', 'onAdFooter', 'onClose', 'onCreateRoomBut', 'onCustomContent', 'onCustomFooter', 'onGetEventBut', 'onMeFooter', 'onMeHeader', 'onMeSubNavi', 'onNavigatorTab1', 'onNavigatorTab2', 'onNavigatorTab3', 'onNavigatorTab4', 'onNavigatorTab5', 'onNextButton', 'onPrevButton', 'onRoomAdFilter', 'onRoomAdHeader', 'onRoomAdsFooter', 'onRoomCompetitionsHeader', 'onRoomCtgFilter', 'onRoomsHeader', 'onSearchBut', 'onTabbedview', 'onTabContent', 'srcCreateRoom', 'visibleMeHeader', 'visibleRoomAdHeader', 'visibleRoomsHeader' ],
         subComponents: [ 'GrsMainWindowLayoutPromotedRoomsItem' ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -1937,7 +1937,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'grs_main_window_new', id: 3041, component: 'GrsMainWindowNewLayout', size: '400x474', rootIsFrame: true,
-        props: [ 'captionAdCaption', 'captionGetEventCaption', 'captionLoadingText', 'captionMoreRoomsCaption', 'captionNoRoomsFound', 'captionNoRoomsFound2', 'captionNoTagsFound', 'itemsItemListCategory', 'itemsItemListOfficial', 'layout', 'onClose', 'onCreateRoomBut', 'onGetEventBut', 'onMeSubNavi', 'onNavigatorTab1', 'onNavigatorTab2', 'onNavigatorTab3', 'onNavigatorTab4', 'onNavigatorTab5', 'onNavigatorTab6', 'onNextButton', 'onPrevButton', 'onRoomAdFilter', 'onRoomCtgFilter', 'onSearchBut', 'onSearchType', 'srcCreateRoom', 'visibleMeHeader', 'visiblePopularTags', 'visibleRoomAdHeader', 'visibleRoomsHeader' ],
+        props: [ 'captionAdCaption', 'captionGetEventCaption', 'captionLoadingText', 'captionMoreRoomsCaption', 'captionNoRoomsFound', 'captionNoRoomsFound2', 'captionNoTagsFound', 'itemsItemListCategory', 'itemsItemListOfficial', 'layout', 'onAdCont', 'onAdFooter', 'onClose', 'onCreateRoomBut', 'onCustomContent', 'onCustomFooter', 'onGetEventBut', 'onMeFooter', 'onMeHeader', 'onMeSubNavi', 'onNavigatorTab1', 'onNavigatorTab2', 'onNavigatorTab3', 'onNavigatorTab4', 'onNavigatorTab5', 'onNavigatorTab6', 'onNextButton', 'onPrevButton', 'onRoomAdFilter', 'onRoomAdHeader', 'onRoomAdsFooter', 'onRoomCompetitionsHeader', 'onRoomCtgFilter', 'onRoomsHeader', 'onSearchBut', 'onSearchType', 'onTabbedview', 'onTabContent', 'srcCreateRoom', 'visibleMeHeader', 'visiblePopularTags', 'visibleRoomAdHeader', 'visibleRoomsHeader' ],
         subComponents: [ 'GrsMainWindowNewLayoutTopCategoriesItem', 'GrsMainWindowNewLayoutPromotedRoomsItem' ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -2385,7 +2385,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_dark_frame', id: 1803, component: 'IlluminaDarkFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onTitlebar' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2465,7 +2465,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame', id: 2541, component: 'IlluminaLightFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onTitlebar' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2473,7 +2473,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame_modal', id: 2792, component: 'IlluminaLightFrameModalLayout', size: '50x80', rootIsFrame: false,
-        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onTitlebar' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2481,7 +2481,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame_wired', id: 2363, component: 'IlluminaLightFrameWiredLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onHeaderButtonMenu', 'srcBannerLeft', 'srcBannerRight' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onHeaderButtonMenu', 'onTitlebar', 'srcBannerLeft', 'srcBannerRight' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2545,7 +2545,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_purple_frame', id: 2638, component: 'IlluminaPurpleFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onTitlebar' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -2561,7 +2561,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'instant_friend_request', id: 984, component: 'InstantFriendRequestLayout', size: '197x83', rootIsFrame: false,
-        props: [ 'captionText', 'layout', 'onAcceptButton', 'onCloseButton', 'onDeclineButton', 'onProfileRegion' ],
+        props: [ 'captionText', 'layout', 'onAcceptButton', 'onCloseButton', 'onDeclineButton', 'onMasterContainer', 'onProfileRegion' ],
         subComponents: [ ],
         folder: 'roomui/widget/friendrequest', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/friendrequest/FriendRequestDialog' ],
@@ -2657,7 +2657,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'iro_event_settings', id: 3055, component: 'IroEventSettingsLayout', size: '241x191', rootIsFrame: true,
-        props: [ 'captionDescLabel', 'captionNameLabel', 'layout', 'onClose' ],
+        props: [ 'captionDescLabel', 'captionNameLabel', 'layout', 'onButtons', 'onClose' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -2665,7 +2665,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'iro_room_details_framed', id: 2999, component: 'IroRoomDetailsFramedLayout', size: '236x411', rootIsFrame: true,
-        props: [ 'captionEmbedInfoTxt', 'captionOwnerCaption', 'captionOwnerName', 'captionPublicSpaceDesc', 'captionPublicSpaceName', 'captionRankingCaption', 'captionRankingTxt', 'captionRatingCaption', 'captionRatingTxt', 'captionRoomDesc', 'captionRoomName', 'layout', 'onAddThumbnailRegion', 'onClose', 'onEmbedInfoRegion', 'onFavouriteRegion', 'onFloorPlanEditorButton', 'onMakeFavouriteRegion', 'onMakeHomeRegion', 'onOwnerNameCont', 'onRatingRegion', 'onRemoveRightsRegion', 'onRoomFilterButton', 'onRoomMuteallButton', 'onRoomReportButton', 'onRoomSettingsButton', 'onStaffPickButton', 'srcFavourite', 'srcHome', 'srcIconWeblink', 'srcMakeFavourite', 'srcMakeHome', 'srcRemoveRights', 'srcThumbnailImage', 'srcThumbUp', 'visibleEmbedInfo', 'visiblePublicSpaceDetails' ],
+        props: [ 'captionEmbedInfoTxt', 'captionOwnerCaption', 'captionOwnerName', 'captionPublicSpaceDesc', 'captionPublicSpaceName', 'captionRankingCaption', 'captionRankingTxt', 'captionRatingCaption', 'captionRatingTxt', 'captionRoomDesc', 'captionRoomName', 'layout', 'onAddThumbnailRegion', 'onClose', 'onEmbedInfoRegion', 'onFavouriteRegion', 'onFloorPlanEditorButton', 'onMakeFavouriteRegion', 'onMakeHomeRegion', 'onOwnerNameCont', 'onPublicSpaceDetails', 'onRankingCont', 'onRatingCont', 'onRatingRegion', 'onRemoveRightsRegion', 'onRoomFilterButton', 'onRoomMuteallButton', 'onRoomReportButton', 'onRoomSettingsButton', 'onStaffPickButton', 'onTags', 'srcFavourite', 'srcHome', 'srcIconWeblink', 'srcMakeFavourite', 'srcMakeHome', 'srcRemoveRights', 'srcThumbnailImage', 'srcThumbUp', 'visibleEmbedInfo', 'visiblePublicSpaceDetails' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -2873,7 +2873,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'layout_frontpage_featured', id: 1660, component: 'LayoutFrontpageFeaturedLayout', size: '552x460', rootIsFrame: false,
-        props: [ 'captionCtlgTxt2', 'captionItemTitle', 'itemsItemlistFeatured', 'layout', 'onEventCatcherRegion', 'onRedeem', 'srcItemImage' ],
+        props: [ 'captionCtlgTxt2', 'captionItemTitle', 'itemsItemlistFeatured', 'layout', 'onEventCatcherRegion', 'onFirstitem', 'onRedeem', 'srcItemImage' ],
         subComponents: [ 'LayoutFrontpageFeaturedLayoutFeaturedItemTemplateItem' ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -3225,7 +3225,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'layout_vip_buy', id: 1547, component: 'LayoutVipBuy_1547Layout', size: '360x460', rootIsFrame: false,
-        props: [ 'captionHccenterLink', 'captionVipInfo', 'captionVipTitle', 'layout', 'srcCtlgTeaserimg1' ],
+        props: [ 'captionHccenterLink', 'captionVipInfo', 'captionVipTitle', 'layout', 'onHccenterLinkContainer', 'srcCtlgTeaserimg1' ],
         subComponents: [ ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -3345,7 +3345,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'main_view', id: 65, component: 'MainView_65Layout', size: '552x565', rootIsFrame: true,
-        props: [ 'captionBackButtonLabel', 'captionListHeader', 'captionPageInfo', 'captionPostButtonLabel', 'captionStatus', 'captionTopHeaderText', 'captionTopText', 'itemsShortcuts', 'layout', 'onBackButton', 'onClose', 'onPostButton', 'onShowFirst', 'onShowLast', 'onShowNext', 'onShowPrevious', 'onTopClickArea', 'srcHeaderIcon' ],
+        props: [ 'captionBackButtonLabel', 'captionListHeader', 'captionPageInfo', 'captionPostButtonLabel', 'captionStatus', 'captionTopHeaderText', 'captionTopText', 'itemsShortcuts', 'layout', 'onBackButton', 'onClose', 'onPostButton', 'onShowFirst', 'onShowLast', 'onShowNext', 'onShowPrevious', 'onTopClickArea', 'onTopPart', 'srcHeaderIcon' ],
         subComponents: [ 'MainView_65LayoutHeaderItem', 'MainView_65LayoutMyItem', 'MainView_65LayoutActiveItem', 'MainView_65LayoutPopularItem' ],
         folder: 'friendbar', libraries: [ 'friendbar', 'groups' ],
         as3: [ ],
@@ -3361,7 +3361,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'main_window', id: 1503, component: 'MainWindow_1503Layout', size: '275x105', rootIsFrame: true,
-        props: [ 'captionCaptionText', 'captionCaptionText2', 'captionCaptionText3', 'captionInfoText', 'layout', 'onClose', 'onOpenEditCtgsBut', 'srcArrowDownBlack', 'srcArrowDownBlack2', 'srcArrowDownBlack3', 'srcArrowDownWhite', 'srcArrowDownWhite2', 'srcArrowDownWhite3', 'srcArrowRightBlack', 'srcArrowRightBlack2', 'srcArrowRightBlack3', 'srcArrowRightWhite', 'srcArrowRightWhite2', 'srcArrowRightWhite3', 'srcHdrFriendRequests', 'srcHdrFriends', 'srcHdrHilite', 'srcHdrHilite2', 'srcHdrHilite3', 'srcHdrSearch', 'srcOpenEditCtgs' ],
+        props: [ 'captionCaptionText', 'captionCaptionText2', 'captionCaptionText3', 'captionInfoText', 'layout', 'onClose', 'onFlt1', 'onFlt2', 'onFlt3', 'onHeader', 'onHeader2', 'onHeader3', 'onOpenEditCtgsBut', 'srcArrowDownBlack', 'srcArrowDownBlack2', 'srcArrowDownBlack3', 'srcArrowDownWhite', 'srcArrowDownWhite2', 'srcArrowDownWhite3', 'srcArrowRightBlack', 'srcArrowRightBlack2', 'srcArrowRightBlack3', 'srcArrowRightWhite', 'srcArrowRightWhite2', 'srcArrowRightWhite3', 'srcHdrFriendRequests', 'srcHdrFriends', 'srcHdrHilite', 'srcHdrHilite2', 'srcHdrHilite3', 'srcHdrSearch', 'srcOpenEditCtgs' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist', 'messenger' ],
         as3: [ ],
@@ -3369,7 +3369,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'main_window', id: 3100, component: 'MainWindow_3100Layout', size: '20x20', rootIsFrame: true,
-        props: [ 'layout', 'onButtonExtendedProfile', 'onButtonFollowFriend', 'onButtonMinimail', 'onClose', 'srcClose', 'srcConvoBg', 'srcIcon', 'srcIcon2' ],
+        props: [ 'layout', 'onButtonExtendedProfile', 'onButtonFollowFriend', 'onButtonMinimail', 'onClose', 'onContent', 'onConversationstab', 'srcClose', 'srcConvoBg', 'srcIcon', 'srcIcon2' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist', 'messenger' ],
         as3: [ ],
@@ -3513,7 +3513,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'me_menu_sound_settings', id: 1220, component: 'MeMenuSoundSettingsLayout', size: '312x170', rootIsFrame: false,
-        props: [ 'captionSettingsTitle', 'captionTitle', 'captionTitle2', 'captionTitle3', 'captionVolumeText', 'layout', 'onBackBtn', 'onSliderButton', 'onSliderButton2', 'onSliderButton3', 'onSoundsOff', 'onSoundsOff2', 'onSoundsOff3', 'onSoundsOn', 'onSoundsOn2', 'onSoundsOn3', 'srcSliderBase', 'srcSliderBase2', 'srcSliderBase3', 'srcSliderBitmap', 'srcSliderBitmap2', 'srcSliderBitmap3', 'srcSoundsOffIcon', 'srcSoundsOffIcon2', 'srcSoundsOffIcon3', 'srcSoundsOnIcon', 'srcSoundsOnIcon2', 'srcSoundsOnIcon3', 'visibleVolumeGreyArea' ],
+        props: [ 'captionSettingsTitle', 'captionTitle', 'captionTitle2', 'captionTitle3', 'captionVolumeText', 'layout', 'onBackBtn', 'onSliderButton', 'onSliderButton2', 'onSliderButton3', 'onSoundsOff', 'onSoundsOff2', 'onSoundsOff3', 'onSoundsOn', 'onSoundsOn2', 'onSoundsOn3', 'onUiVolumeContainer', 'srcSliderBase', 'srcSliderBase2', 'srcSliderBase3', 'srcSliderBitmap', 'srcSliderBitmap2', 'srcSliderBitmap3', 'srcSoundsOffIcon', 'srcSoundsOffIcon2', 'srcSoundsOffIcon3', 'srcSoundsOnIcon', 'srcSoundsOnIcon2', 'srcSoundsOnIcon3', 'visibleVolumeGreyArea' ],
         subComponents: [ ],
         folder: 'toolbar', libraries: [ 'toolbar' ],
         as3: [ ],
@@ -3561,7 +3561,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_effect_inactive', id: 971, component: 'MemenuEffectInactiveLayout', size: '154x52', rootIsFrame: false,
-        props: [ 'captionEffectAmount', 'captionEffectName', 'layout', 'onActivateEffect', 'srcEffectIcon', 'srcEffectIconBg' ],
+        props: [ 'captionEffectAmount', 'captionEffectName', 'layout', 'onActivateEffect', 'onSelectedBorder', 'srcEffectIcon', 'srcEffectIconBg' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3569,7 +3569,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_effect_selected', id: 916, component: 'MemenuEffectSelectedLayout', size: '154x52', rootIsFrame: false,
-        props: [ 'captionEffectAmount', 'captionEffectName', 'captionTimeLeft', 'layout', 'srcEffectHilite', 'srcEffectIcon', 'srcEffectIconBg' ],
+        props: [ 'captionEffectAmount', 'captionEffectName', 'captionTimeLeft', 'layout', 'onSelectedBorder', 'srcEffectHilite', 'srcEffectIcon', 'srcEffectIconBg' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3577,7 +3577,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_effect_unselected', id: 828, component: 'MemenuEffectUnselectedLayout', size: '154x52', rootIsFrame: false,
-        props: [ 'captionEffectAmount', 'captionEffectName', 'captionTimeLeft', 'layout', 'srcEffectHilite', 'srcEffectIcon', 'srcEffectIconBg' ],
+        props: [ 'captionEffectAmount', 'captionEffectName', 'captionTimeLeft', 'layout', 'onSelectedBorder', 'srcEffectHilite', 'srcEffectIcon', 'srcEffectIconBg' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3585,7 +3585,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_effects', id: 884, component: 'MemenuEffectsLayout', size: '175x114', rootIsFrame: false,
-        props: [ 'captionInfoText', 'layout', 'onBackBtn' ],
+        props: [ 'captionInfoText', 'layout', 'onBackBtn', 'onEffectsCnvs' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3593,7 +3593,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_main', id: 1103, component: 'MemenuMainLayout', size: '245x249', rootIsFrame: false,
-        props: [ 'captionClothesText', 'captionCreditsText', 'captionDanceText', 'captionEffectsText', 'captionHcText', 'captionMinimailText', 'captionRoomsText', 'captionSettingsText', 'captionWaveText', 'layout', 'onClothes', 'onCredits', 'onDance', 'onEffects', 'onHc', 'onMinimail', 'onRooms', 'onSettings', 'onWave', 'srcClothesIcon', 'srcCreditsIcon', 'srcDanceIcon', 'srcEffectsIcon', 'srcHcIcon', 'srcMinimailIcon', 'srcRoomsIcon', 'srcSettingsIcon', 'srcWaveIcon' ],
+        props: [ 'captionClothesText', 'captionCreditsText', 'captionDanceText', 'captionEffectsText', 'captionHcText', 'captionMinimailText', 'captionRoomsText', 'captionSettingsText', 'captionWaveText', 'layout', 'onButtons', 'onClothes', 'onCredits', 'onDance', 'onEffects', 'onHc', 'onMinimail', 'onRooms', 'onSettings', 'onWave', 'srcClothesIcon', 'srcCreditsIcon', 'srcDanceIcon', 'srcEffectsIcon', 'srcHcIcon', 'srcMinimailIcon', 'srcRoomsIcon', 'srcSettingsIcon', 'srcWaveIcon' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3601,7 +3601,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'memenu_main_simple', id: 1042, component: 'MemenuMainSimpleLayout', size: '165x245', rootIsFrame: false,
-        props: [ 'captionAchievementsText', 'captionGuideText', 'captionMinimailText', 'captionProfileText', 'captionRoomsText', 'captionSettingsText', 'captionTalentsText', 'layout', 'onAchievements', 'onGuide', 'onMinimail', 'onProfile', 'onRooms', 'onSettings', 'onTalents', 'srcAchievementsIcon', 'srcGuideIcon', 'srcMinimailIcon', 'srcProfileIcon', 'srcRoomsIcon', 'srcSettingsIcon', 'srcTalentsIcon', 'visibleGuide' ],
+        props: [ 'captionAchievementsText', 'captionGuideText', 'captionMinimailText', 'captionProfileText', 'captionRoomsText', 'captionSettingsText', 'captionTalentsText', 'layout', 'onAchievements', 'onButtons', 'onGuide', 'onMinimail', 'onProfile', 'onRooms', 'onSettings', 'onTalents', 'srcAchievementsIcon', 'srcGuideIcon', 'srcMinimailIcon', 'srcProfileIcon', 'srcRoomsIcon', 'srcSettingsIcon', 'srcTalentsIcon', 'visibleGuide' ],
         subComponents: [ ],
         folder: 'roomui', libraries: [ 'roomui' ],
         as3: [ ],
@@ -3793,7 +3793,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'nav_error_popup', id: 3078, component: 'NavErrorPopupLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'captionErrorText', 'layout', 'srcPopupArrowDown' ],
+        props: [ 'captionErrorText', 'layout', 'onPopupContainer', 'srcPopupArrowDown' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -3801,7 +3801,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'nav_promo_alert', id: 2995, component: 'NavPromoAlertLayout', size: '224x182', rootIsFrame: true,
-        props: [ 'captionBodyText', 'captionPromoText', 'layout', 'onClose', 'onOk' ],
+        props: [ 'captionBodyText', 'captionPromoText', 'layout', 'onClose', 'onOk', 'onPromoContainer' ],
         subComponents: [ ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -3841,7 +3841,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'new_bar', id: 24, component: 'NewBarLayout', size: '300x48', rootIsFrame: false,
-        props: [ 'layout', 'onButtonLeftPage', 'onButtonRightPage', 'onCollapseLeft', 'onCollapseRight', 'onIconAllFriends', 'onIconFindFriends', 'onIconMessenger', 'srcIcon', 'srcIcon1', 'srcIcon2', 'srcIconsToolbarCollapseLeft', 'srcIconsToolbarCollapseRight', 'srcLine' ],
+        props: [ 'layout', 'onBorder', 'onButtonLeftPage', 'onButtonRightPage', 'onCollapseLeft', 'onCollapseRight', 'onIconAllFriends', 'onIconFindFriends', 'onIconMessenger', 'srcIcon', 'srcIcon1', 'srcIcon2', 'srcIconsToolbarCollapseLeft', 'srcIconsToolbarCollapseRight', 'srcLine' ],
         subComponents: [ ],
         folder: 'friendbar/view', libraries: [ 'friendbar' ],
         as3: [ 'com/sulake/habbo/friendbar/view/HabboFriendBarView' ],
@@ -3849,7 +3849,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'new_controls', id: 17, component: 'NewControlsLayout', size: '85x35', rootIsFrame: false,
-        props: [ 'layout', 'onBtnChat', 'onBtnVisit', 'onButtonProfile' ],
+        props: [ 'layout', 'onBtnChat', 'onBtnVisit', 'onButtonProfile', 'onControls' ],
         subComponents: [ ],
         folder: 'friendbar', libraries: [ 'friendbar' ],
         as3: [ ],
@@ -3857,7 +3857,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'new_extended_profile', id: 1194, component: 'NewExtendedProfileLayout', size: '521x537', rootIsFrame: true,
-        props: [ 'captionBlockedHtml', 'itemsBottom', 'itemsMiddle', 'itemsTop', 'layout', 'onBlockButton', 'onClose', 'srcFrankStop', 'visibleBlockedContainer' ],
+        props: [ 'captionBlockedHtml', 'itemsBottom', 'itemsMiddle', 'itemsTop', 'layout', 'onBlockButton', 'onBlockedContainer', 'onClose', 'srcFrankStop', 'visibleBlockedContainer' ],
         subComponents: [ 'NewExtendedProfileLayoutTopLeftItem', 'NewExtendedProfileLayoutUserNameItem', 'NewExtendedProfileLayoutMottoTxtItem', 'NewExtendedProfileLayoutUserCreatedItem', 'NewExtendedProfileLayoutUserActivityPointsItem', 'NewExtendedProfileLayoutUserLastLoginItem', 'NewExtendedProfileLayoutStatusItem', 'NewExtendedProfileLayoutOnlineOfflineContainerItem', 'NewExtendedProfileLayoutFriendstatusItem', 'NewExtendedProfileLayoutSpacerItem', 'NewExtendedProfileLayoutTopRightItem', 'NewExtendedProfileLayoutRelationshipHeartItem', 'NewExtendedProfileLayoutRelationshipSmileItem', 'NewExtendedProfileLayoutRelationshipBobbaItem', 'NewExtendedProfileLayoutSpacerItem2', 'NewExtendedProfileLayoutRoomsButtonItem', 'NewExtendedProfileLayoutBadgeCountRegionItem', 'NewExtendedProfileLayoutLevelRegionItem', 'NewExtendedProfileLayoutAllGroupsItem', 'NewExtendedProfileLayoutGroupDetailsItem' ],
         folder: 'groups', libraries: [ 'groups' ],
         as3: [ ],
@@ -3961,7 +3961,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'NextQuestTimer', id: 123, component: 'NextQuestTimerLayout', size: '195x116', rootIsFrame: false,
-        props: [ 'captionDescTxt', 'captionMoreInfoTxt', 'captionQuestHeaderTxt', 'layout', 'onMoreInfoRegion', 'srcQuestPicBitmap', 'srcQuestTimerContracted', 'srcQuestTimerExpanded' ],
+        props: [ 'captionDescTxt', 'captionMoreInfoTxt', 'captionQuestHeaderTxt', 'layout', 'onMoreInfoRegion', 'onNextQuestTimer', 'srcQuestPicBitmap', 'srcQuestTimerContracted', 'srcQuestTimerExpanded' ],
         subComponents: [ ],
         folder: 'questengine', libraries: [ 'questengine' ],
         as3: [ ],
@@ -4281,7 +4281,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'pet_commands', id: 907, component: 'PetCommandsLayout', size: '195x462', rootIsFrame: true,
-        props: [ 'captionPetName', 'captionStatusSkillText', 'captionStatusSkillValueText', 'layout', 'onClose', 'onPetCommandTemplate', 'srcAvatarImage', 'srcStatusSkillBitmap', 'srcStatusSkillIcon' ],
+        props: [ 'captionPetName', 'captionStatusSkillText', 'captionStatusSkillValueText', 'layout', 'onClose', 'onImageContainer', 'onPetCommandTemplate', 'onStatusSkillContainer', 'srcAvatarImage', 'srcStatusSkillBitmap', 'srcStatusSkillIcon' ],
         subComponents: [ ],
         folder: 'roomui/widget/infostand', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/infostand/PetCommandTool' ],
@@ -4441,7 +4441,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'poll_answer_checkbox_input', id: 922, component: 'PollAnswerCheckboxInputLayout', size: '372x125', rootIsFrame: false,
-        props: [ 'itemsPollAnswerItemlist', 'layout' ],
+        props: [ 'itemsPollAnswerItemlist', 'layout', 'onPollAnswerContent' ],
         subComponents: [ 'PollAnswerCheckboxInputLayoutPollAnswerEntityItem' ],
         folder: 'roomui/widget/poll', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/poll/PollContentDialog' ],
@@ -4449,7 +4449,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'poll_answer_radiobutton_input', id: 1006, component: 'PollAnswerRadiobuttonInputLayout', size: '365x125', rootIsFrame: false,
-        props: [ 'itemsPollAnswerItemlist', 'layout' ],
+        props: [ 'itemsPollAnswerItemlist', 'layout', 'onPollAnswerContent' ],
         subComponents: [ 'PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem' ],
         folder: 'roomui/widget/poll', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/poll/PollContentDialog' ],
@@ -4705,7 +4705,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'QuestHelp', id: 125, component: 'QuestHelpLayout', size: '208x365', rootIsFrame: false,
-        props: [ 'captionHelpHeaderShort', 'captionHelpHeaderTitle', 'itemsHelpContentItemlist', 'layout', 'srcHelpHeaderImg' ],
+        props: [ 'captionHelpHeaderShort', 'captionHelpHeaderTitle', 'itemsHelpContentItemlist', 'layout', 'onHelpContainer', 'srcHelpHeaderImg' ],
         subComponents: [ 'QuestHelpLayoutHelpDescriptionItem' ],
         folder: 'questengine', libraries: [ 'questengine' ],
         as3: [ ],
@@ -4721,7 +4721,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'QuestTracker', id: 111, component: 'QuestTrackerLayout', size: '192x132', rootIsFrame: false,
-        props: [ 'captionDescTxt', 'captionMoreInfoTxt', 'captionQuestHeaderTxt', 'layout', 'onMoreInfoRegion', 'srcPromptPicA', 'srcPromptPicB', 'srcPromptPicC', 'srcPromptPicD', 'srcQuestPicBitmap', 'srcQuestTrackerBg', 'srcSuccessPic1', 'srcSuccessPic2', 'srcSuccessPic3', 'srcSuccessPic4', 'srcSuccessPic5', 'srcSuccessPic6' ],
+        props: [ 'captionDescTxt', 'captionMoreInfoTxt', 'captionQuestHeaderTxt', 'layout', 'onMoreInfoRegion', 'onQuestTracker', 'srcPromptPicA', 'srcPromptPicB', 'srcPromptPicC', 'srcPromptPicD', 'srcQuestPicBitmap', 'srcQuestTrackerBg', 'srcSuccessPic1', 'srcSuccessPic2', 'srcSuccessPic3', 'srcSuccessPic4', 'srcSuccessPic5', 'srcSuccessPic6' ],
         subComponents: [ ],
         folder: 'questengine', libraries: [ 'questengine' ],
         as3: [ ],
@@ -5105,7 +5105,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'ros_room_settings', id: 3065, component: 'RosRoomSettingsLayout', size: '341x477', rootIsFrame: true,
-        props: [ 'captionCategoryLabel', 'captionChatSettingsText', 'captionDescriptionLabel', 'captionDoNotLeaveOnDoorTileText', 'captionDoormodeDoorbellLabel', 'captionDoormodeInvisibleLabel', 'captionDoormodeLabel', 'captionDoormodeOpenLabel', 'captionDoormodePasswordLabel', 'captionFriendsTxt', 'captionHideWallsText', 'captionIdleAutokickText', 'captionIdleAutokickTimeoutLabel', 'captionIdleSleepText', 'captionIdleSleepTimeoutLabel', 'captionMaxvisitorsLabel', 'captionModerationBanHeader', 'captionModerationBannedUsersLabel', 'captionModerationBanNoneLabel', 'captionModerationBanRights', 'captionModerationHeader', 'captionModerationKickAllLabel', 'captionModerationKickHeader', 'captionModerationKickNoneLabel', 'captionModerationKickRightsHeader', 'captionModerationMuteHeader', 'captionModerationMuteNoneLabel', 'captionModerationMuteRightsLabel', 'captionPasswordConfirmLabel', 'captionPasswordLabel', 'captionRemoveLink', 'captionRoomAccessTabCaption', 'captionRoomAccessTabInfo', 'captionRoomBehaviorText', 'captionRoomNameLabel', 'captionSearchTxt', 'captionTagLabel', 'captionTradesettingsLabel', 'captionUsersWithRightsTxt', 'captionVipSettingsText', 'captionVipTabCaption', 'captionVipTabInfo', 'captionWalkThroughText', 'itemsFlexibleContent', 'layout', 'onAllowWalkThroughCheckbox', 'onBuildersFaqButton', 'onCategories', 'onChatFloodSensitivity', 'onClose', 'onDoNotLeaveOnDoorTileCheckbox', 'onDoormodeDoorbell', 'onDoormodeInvisible', 'onDoormodeOpen', 'onDoormodePassword', 'onFloorThickness', 'onHideWallsCheckbox', 'onIdleAutokickCheckbox', 'onIdleSleepCheckbox', 'onMaxvisitors', 'onModerationBanDropdown', 'onModerationBanNone', 'onModerationBanRights', 'onModerationKickAll', 'onModerationKickDropdown', 'onModerationKickNone', 'onModerationKickRights', 'onModerationMuteDropdown', 'onModerationMuteNone', 'onModerationMuteRights', 'onModerationUnbanBtn', 'onRemoveAllFlatCtrls', 'onRemoveLinkRegion', 'onTab1', 'onTab2', 'onTab3', 'onTab4', 'onTab5', 'onTradesettings', 'onWallThickness', 'visibleDoormodeOverrideInfo', 'visibleGuildRightsContainer', 'visibleModerationBanSelector', 'visibleModerationKickSelector', 'visibleModerationMuteSelector', 'visibleTabContainer1', 'visibleTabContainer2', 'visibleTabContainer3', 'visibleTabContainer5' ],
+        props: [ 'captionCategoryLabel', 'captionChatSettingsText', 'captionDescriptionLabel', 'captionDoNotLeaveOnDoorTileText', 'captionDoormodeDoorbellLabel', 'captionDoormodeInvisibleLabel', 'captionDoormodeLabel', 'captionDoormodeOpenLabel', 'captionDoormodePasswordLabel', 'captionFriendsTxt', 'captionHideWallsText', 'captionIdleAutokickText', 'captionIdleAutokickTimeoutLabel', 'captionIdleSleepText', 'captionIdleSleepTimeoutLabel', 'captionMaxvisitorsLabel', 'captionModerationBanHeader', 'captionModerationBannedUsersLabel', 'captionModerationBanNoneLabel', 'captionModerationBanRights', 'captionModerationHeader', 'captionModerationKickAllLabel', 'captionModerationKickHeader', 'captionModerationKickNoneLabel', 'captionModerationKickRightsHeader', 'captionModerationMuteHeader', 'captionModerationMuteNoneLabel', 'captionModerationMuteRightsLabel', 'captionPasswordConfirmLabel', 'captionPasswordLabel', 'captionRemoveLink', 'captionRoomAccessTabCaption', 'captionRoomAccessTabInfo', 'captionRoomBehaviorText', 'captionRoomNameLabel', 'captionSearchTxt', 'captionTagLabel', 'captionTradesettingsLabel', 'captionUsersWithRightsTxt', 'captionVipSettingsText', 'captionVipTabCaption', 'captionVipTabInfo', 'captionWalkThroughText', 'itemsFlexibleContent', 'layout', 'onAllowWalkThroughCheckbox', 'onBuildersFaqButton', 'onCategories', 'onChatFloodSensitivity', 'onClose', 'onContentContainer', 'onDoNotLeaveOnDoorTileCheckbox', 'onDoormodeDoorbell', 'onDoormodeInvisible', 'onDoormodeOpen', 'onDoormodePassword', 'onFloorThickness', 'onHideWallsCheckbox', 'onIdleAutokickCheckbox', 'onIdleSleepCheckbox', 'onMaxvisitors', 'onModerationBanDropdown', 'onModerationBanNone', 'onModerationBanRights', 'onModerationKickAll', 'onModerationKickDropdown', 'onModerationKickNone', 'onModerationKickRights', 'onModerationMuteDropdown', 'onModerationMuteNone', 'onModerationMuteRights', 'onModerationUnbanBtn', 'onRemoveAllFlatCtrls', 'onRemoveLinkRegion', 'onTab1', 'onTab2', 'onTab3', 'onTab4', 'onTab5', 'onTabContainer1', 'onTabContainer2', 'onTradesettings', 'onWallThickness', 'visibleDoormodeOverrideInfo', 'visibleGuildRightsContainer', 'visibleModerationBanSelector', 'visibleModerationKickSelector', 'visibleModerationMuteSelector', 'visibleTabContainer1', 'visibleTabContainer2', 'visibleTabContainer3', 'visibleTabContainer5' ],
         subComponents: [ 'RosRoomSettingsLayoutGuildAccessDisclaimerItem', 'RosRoomSettingsLayoutAdvancedContainerItem' ],
         folder: 'navigator', libraries: [ 'navigator' ],
         as3: [ ],
@@ -5217,7 +5217,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'search_entry', id: 1525, component: 'SearchEntryLayout', size: '190x20', rootIsFrame: false,
-        props: [ 'captionCaption', 'captionName', 'layout', 'onBgRegion', 'srcAskForFriend', 'srcFace', 'srcStartChat' ],
+        props: [ 'captionCaption', 'captionName', 'layout', 'onBgRegion', 'onEntry', 'srcAskForFriend', 'srcFace', 'srcStartChat' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist' ],
         as3: [ ],
@@ -5249,7 +5249,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'SeasonalCalendar', id: 127, component: 'SeasonalCalendarLayout', size: '642x465', rootIsFrame: true,
-        props: [ 'captionEntityIndicatorText', 'captionPromoHeader', 'captionPromoInfo', 'captionTeaserHeader', 'captionTeaserInfo', 'captionYourBalanceTxt', 'layout', 'onBuyButton', 'onClickRegion', 'onClickRegion2', 'onClickRegion3', 'onClose', 'onEntityMouseRegion', 'srcBackgroundSlice', 'srcButtonLeft', 'srcButtonRight', 'srcEntityBitmap', 'srcEntityIndicatorStatus', 'srcEntityMouseover', 'srcFurniPic', 'srcFurniPic2', 'srcFurniPic3', 'srcFurniPreview', 'srcFurniPreviewBackground', 'srcStripeMaskLeft', 'srcStripeMaskRight' ],
+        props: [ 'captionEntityIndicatorText', 'captionPromoHeader', 'captionPromoInfo', 'captionTeaserHeader', 'captionTeaserInfo', 'captionYourBalanceTxt', 'layout', 'onBuyButton', 'onClickRegion', 'onClickRegion2', 'onClickRegion3', 'onClose', 'onEntityMouseRegion', 'onRareTeaserCont', 'srcBackgroundSlice', 'srcButtonLeft', 'srcButtonRight', 'srcEntityBitmap', 'srcEntityIndicatorStatus', 'srcEntityMouseover', 'srcFurniPic', 'srcFurniPic2', 'srcFurniPic3', 'srcFurniPreview', 'srcFurniPreviewBackground', 'srcStripeMaskLeft', 'srcStripeMaskRight' ],
         subComponents: [ ],
         folder: 'questengine', libraries: [ 'questengine' ],
         as3: [ ],
@@ -5297,7 +5297,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'simple', id: 1858, component: 'SimpleLayout', size: '100x100', rootIsFrame: false,
-        props: [ 'layout' ],
+        props: [ 'layout', 'onContentArea', 'onFrame' ],
         subComponents: [ ],
         folder: 'windowmanager', libraries: [ 'windowmanager' ],
         as3: [ ],
@@ -5521,7 +5521,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'stickie', id: 883, component: 'StickieLayout', size: '185x178', rootIsFrame: false,
-        props: [ 'layout', 'srcBg', 'srcClose', 'srcDelete' ],
+        props: [ 'layout', 'onBlue', 'onCyan', 'onGreen', 'onOrange', 'onPurple', 'onRed', 'onWhite', 'onYellow', 'srcBg', 'srcClose', 'srcDelete' ],
         subComponents: [ ],
         folder: 'roomui/furniture/stickie', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/furniture/stickie/StickieFurniWidget' ],
@@ -5561,7 +5561,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'suggestion_list_item', id: 1723, component: 'SuggestionListItemLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'captionNameText', 'layout' ],
+        props: [ 'captionNameText', 'layout', 'onSuggestionListItem' ],
         subComponents: [ ],
         folder: 'catalog', libraries: [ 'catalog' ],
         as3: [ ],
@@ -5601,7 +5601,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'tab_content', id: 1498, component: 'TabContentLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'layout' ],
+        props: [ 'layout', 'onTabContent' ],
         subComponents: [ ],
         folder: 'friendlist', libraries: [ 'friendlist' ],
         as3: [ ],
@@ -5625,7 +5625,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'tab_entry', id: 3098, component: 'TabEntryLayout', size: '20x20', rootIsFrame: false,
-        props: [ 'layout', 'srcFace', 'srcNext', 'srcPrev', 'srcTabBgHilite', 'srcTabBgNext', 'srcTabBgSel', 'srcTabBgUnsel' ],
+        props: [ 'layout', 'onTab', 'srcFace', 'srcNext', 'srcPrev', 'srcTabBgHilite', 'srcTabBgNext', 'srcTabBgSel', 'srcTabBgUnsel' ],
         subComponents: [ ],
         folder: 'messenger', libraries: [ 'messenger' ],
         as3: [ ],
@@ -5713,7 +5713,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'thread_list_item', id: 19, component: 'ThreadListItemLayout', size: '600x40', rootIsFrame: false,
-        props: [ 'captionDetails', 'captionHeader', 'captionMessages1', 'captionMessages2', 'itemsInfoButtons', 'itemsModButtons', 'layout', 'onHeaderRegion', 'onUnreadRegion' ],
+        props: [ 'captionDetails', 'captionHeader', 'captionMessages1', 'captionMessages2', 'itemsInfoButtons', 'itemsModButtons', 'layout', 'onButtonContainer', 'onHeaderRegion', 'onUnreadRegion' ],
         subComponents: [ 'ThreadListItemLayoutThreadLockItem', 'ThreadListItemLayoutThreadPinItem', 'ThreadListItemLayoutDeleteThreadItem', 'ThreadListItemLayoutReportThreadItem' ],
         folder: 'friendbar', libraries: [ 'friendbar' ],
         as3: [ ],
@@ -5817,7 +5817,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'trophy', id: 999, component: 'TrophyLayout', size: '340x173', rootIsFrame: false,
-        props: [ 'captionDate', 'captionGreeting', 'captionName', 'captionTitle', 'layout', 'onClose', 'srcTrophyBg' ],
+        props: [ 'captionDate', 'captionGreeting', 'captionName', 'captionTitle', 'layout', 'onClose', 'onTrophyContainer', 'srcTrophyBg' ],
         subComponents: [ ],
         folder: 'roomui/furniture/trophy', libraries: [ 'roomui' ],
         as3: [ 'com/sulake/habbo/ui/widget/furniture/trophy/TrophyView' ],
@@ -6049,7 +6049,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'user_info', id: 1122, component: 'UserInfoLayout', size: '280x194', rootIsFrame: false,
-        props: [ 'captionAbusiveCfhCountTxt', 'captionBanCountTxt', 'captionCautionCountTxt', 'captionCfhCountTxt', 'captionEmailAddressTxt', 'captionIdBansTxt', 'captionLastLoginTxt', 'captionLastPurchaseTxt', 'captionLastSanctionTimeTxt', 'captionLoadingTxt', 'captionNameTxt', 'captionOnlineTxt', 'captionRegisteredTxt', 'captionTradingLockCountTxt', 'captionTradingLockExpiryTxt', 'captionUserClassTxt', 'captionViewBanCountTxt', 'captionViewCautionCountTxt', 'captionViewIdBansTxt', 'captionViewTradingLockCountTxt', 'layout', 'onChatlogBut', 'onHabboinfotoolBut', 'onMessageBut', 'onModactionBut', 'onRoomvisitsBut' ],
+        props: [ 'captionAbusiveCfhCountTxt', 'captionBanCountTxt', 'captionCautionCountTxt', 'captionCfhCountTxt', 'captionEmailAddressTxt', 'captionIdBansTxt', 'captionLastLoginTxt', 'captionLastPurchaseTxt', 'captionLastSanctionTimeTxt', 'captionLoadingTxt', 'captionNameTxt', 'captionOnlineTxt', 'captionRegisteredTxt', 'captionTradingLockCountTxt', 'captionTradingLockExpiryTxt', 'captionUserClassTxt', 'captionViewBanCountTxt', 'captionViewCautionCountTxt', 'captionViewIdBansTxt', 'captionViewTradingLockCountTxt', 'layout', 'onButtons', 'onChatlogBut', 'onFields', 'onHabboinfotoolBut', 'onMessageBut', 'onModactionBut', 'onRoomvisitsBut' ],
         subComponents: [ ],
         folder: 'moderation', libraries: [ 'moderation' ],
         as3: [ ],
@@ -6273,7 +6273,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'welcome_name_selection', id: 2885, component: 'WelcomeNameSelectionLayout', size: '303x193', rootIsFrame: false,
-        props: [ 'captionInfoText', 'captionStaticInfoText', 'layout', 'onCancelSelectionButton', 'onCheckNameButton', 'onSelectNameButton' ],
+        props: [ 'captionInfoText', 'captionStaticInfoText', 'layout', 'onCancelSelectionButton', 'onCheckNameButton', 'onSelectNameButton', 'onSuggestions' ],
         subComponents: [ ],
         folder: 'help', libraries: [ 'help' ],
         as3: [ ],
@@ -6321,7 +6321,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'wired_menu_view', id: 1138, component: 'WiredMenuViewLayout', size: '500x500', rootIsFrame: true,
-        props: [ 'captionHeaderTitle', 'captionPreviewInstructionFurni', 'captionPreviewInstructionUser', 'captionStatisticsFloorfurniHtml', 'captionStatisticsHeavyHtml', 'captionStatisticsPermVarsFurniHtml', 'captionStatisticsPermVarsGlobalHtml', 'captionStatisticsPermVarsUserHtml', 'captionStatisticsUsageHtml', 'captionStatisticsWallfurniHtml', 'captionTitle', 'captionTitle10', 'captionTitle11', 'captionTitle12', 'captionTitle13', 'captionTitle2', 'captionTitle3', 'captionTitle4', 'captionTitle5', 'captionTitle6', 'captionTitle7', 'captionTitle8', 'captionTitle9', 'captionTitleExtra', 'itemsButtonRow', 'itemsButtons', 'itemsButtons2', 'layout', 'onAddVarBtn', 'onClearLogBtn', 'onClose', 'onCreateVarBtn', 'onDeleteVarBtn', 'onDiscordRegion', 'onHighlightWiredBtn', 'onLockAllButton', 'onLockOwnButton', 'onLogOverviewBtn', 'onModify1Checkbox', 'onModify2Checkbox', 'onModify3Checkbox', 'onPinCheckbox', 'onPreferenceAllNotificationsCheckbox', 'onPreferenceInspectButtonCheckbox', 'onPreferencePlaytestCheckbox', 'onPreferenceToolbarCheckbox', 'onRead0Checkbox', 'onRead1Checkbox', 'onRead2Checkbox', 'onRead3Checkbox', 'onReloadRoomBtn', 'onRollBackBtn', 'onTimezonePicker', 'onTopViewChestsButton', 'onTopViewInfoButton', 'onTopViewInspectionButton', 'onTopViewMonitorButton', 'onTopViewSettingsButton', 'onTopViewVariableOverviewButton', 'onUnlockOwnButton', 'onViewInDetailButton', 'onWiredStylePicker', 'srcGlobalPlaceholder', 'srcMonitorImage1', 'srcMonitorImage2', 'srcPreviewImageBitmap', 'visibleChestsContainer', 'visibleCreateVarBubble', 'visibleInfoContainer', 'visibleInspectionContainer', 'visibleLoadingView', 'visibleSettingsContainer', 'visibleVariableOverviewContainer' ],
+        props: [ 'captionHeaderTitle', 'captionPreviewInstructionFurni', 'captionPreviewInstructionUser', 'captionStatisticsFloorfurniHtml', 'captionStatisticsHeavyHtml', 'captionStatisticsPermVarsFurniHtml', 'captionStatisticsPermVarsGlobalHtml', 'captionStatisticsPermVarsUserHtml', 'captionStatisticsUsageHtml', 'captionStatisticsWallfurniHtml', 'captionTitle', 'captionTitle10', 'captionTitle11', 'captionTitle12', 'captionTitle13', 'captionTitle2', 'captionTitle3', 'captionTitle4', 'captionTitle5', 'captionTitle6', 'captionTitle7', 'captionTitle8', 'captionTitle9', 'captionTitleExtra', 'itemsButtonRow', 'itemsButtons', 'itemsButtons2', 'layout', 'onAddVarBtn', 'onClearLogBtn', 'onClose', 'onCreateVarBtn', 'onDeleteVarBtn', 'onDiscordRegion', 'onHighlightWiredBtn', 'onInspectionContainer', 'onLoadingView', 'onLockAllButton', 'onLockOwnButton', 'onLogOverviewBtn', 'onModify1Checkbox', 'onModify2Checkbox', 'onModify3Checkbox', 'onPinCheckbox', 'onPreferenceAllNotificationsCheckbox', 'onPreferenceInspectButtonCheckbox', 'onPreferencePlaytestCheckbox', 'onPreferenceToolbarCheckbox', 'onRead0Checkbox', 'onRead1Checkbox', 'onRead2Checkbox', 'onRead3Checkbox', 'onReloadRoomBtn', 'onRollBackBtn', 'onTimezonePicker', 'onTopViewChestsButton', 'onTopViewInfoButton', 'onTopViewInspectionButton', 'onTopViewMonitorButton', 'onTopViewSettingsButton', 'onTopViewVariableOverviewButton', 'onUnlockOwnButton', 'onViewInDetailButton', 'onWiredStylePicker', 'srcGlobalPlaceholder', 'srcMonitorImage1', 'srcMonitorImage2', 'srcPreviewImageBitmap', 'visibleChestsContainer', 'visibleCreateVarBubble', 'visibleInfoContainer', 'visibleInspectionContainer', 'visibleLoadingView', 'visibleSettingsContainer', 'visibleVariableOverviewContainer' ],
         subComponents: [ 'WiredMenuViewLayoutFurniOptionItem', 'WiredMenuViewLayoutUserOptionItem', 'WiredMenuViewLayoutGlobalOptionItem', 'WiredMenuViewLayoutContextOptionItem', 'WiredMenuViewLayoutHighlightHoldersButtonItem', 'WiredMenuViewLayoutManageButtonItem', 'WiredMenuViewLayoutFurniOptionItem2', 'WiredMenuViewLayoutUserOptionItem2', 'WiredMenuViewLayoutGlobalOptionItem2' ],
         folder: 'userdefinedroomevents', libraries: [ 'userdefinedroomevents' ],
         as3: [ ],

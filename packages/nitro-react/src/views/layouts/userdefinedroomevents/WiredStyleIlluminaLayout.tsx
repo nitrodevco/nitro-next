@@ -68,12 +68,12 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                     <Region
                         params={4194448}
                         backgroundColor="#aaaaaa"
-                        layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
                     />
                     <Region
                         params={4194448}
                         backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 0, width: 228, top: 1, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 1 }}
                     />
                 </Region>
                 <Region
@@ -102,7 +102,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                     name="text_html"
                     params={1073741840}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTextHtml ?? 'Use this by typing'}
@@ -123,25 +123,25 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                             value={fieldValue}
                             onChange={setFieldValue}
                             textColor="#4a4a4a"
-                            layout={{ position: 'absolute', left: 4, width: 170, top: 2, height: 16 }}
+                            layout={{ position: 'absolute', left: 4, right: 4, top: 2, bottom: 3 }}
                         />
                         <Region
                             name="char_limit_warn"
                             params={64}
                             visible={visibleCharLimitWarn ?? false}
-                            layout={{ position: 'absolute', left: 62, width: 116, top: -30, height: 50 }}
+                            layout={{ position: 'absolute', right: 0, width: 116, top: -30, height: 50 }}
                         >
                             <Border
                                 variant="2"
                                 params={262160}
                                 tintColor="#222222"
                                 blend={0.7}
-                                layout={{ position: 'absolute', left: 67, width: 49, top: 10, height: 17 }}
+                                layout={{ position: 'absolute', right: 0, width: 49, top: 10, height: 17 }}
                             >
                                 <Region
                                     name="limit_text"
                                     params={4194320}
-                                    layout={{ position: 'absolute', left: 5, width: 39, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 5, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionLimitText ?? '95/100'}
@@ -335,18 +335,18 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                             variant="11"
                             params={2192}
                             tintColor="#f2f2f2"
-                            layout={{ position: 'absolute', left: 1, width: 143, top: 1, height: 25 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
                             <Border
                                 variant="11"
                                 params={2192}
                                 tintColor="#d6d6d6"
-                                layout={{ position: 'absolute', left: 1, width: 141, top: 1, height: 23 }}
+                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             >
                                 <Region
                                     name="menu_list"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 23, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column' }}
                                 >
                                     {itemsMenuList ?? (
                                         <>
@@ -386,12 +386,12 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                         params={144}
                         src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
                         tint="#999999"
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 19 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
                     />
                     <Region
                         name="slider_movement_area"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 1, height: 17 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17 }}
                     >
                         <ThemeImage
                             name="slider_button"
@@ -438,7 +438,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                             tags={[ '#icon' ]}
                             params={12582928}
                             src={srcAsset}
-                            layout={{ position: 'absolute', left: 5, width: 15, top: 5, height: 15 }}
+                            layout={{ position: 'absolute', left: 5, top: 5 }}
                         />
                     </ContainerButton>
                 </Region>
@@ -506,7 +506,7 @@ export const WiredStyleIlluminaLayoutSpacerTemplateItem = ({ layout }: WiredStyl
             <Region
                 params={144}
                 backgroundColor="#aaaaaa"
-                layout={{ position: 'absolute', left: 6, width: 129, top: 1, height: 1 }}
+                layout={{ position: 'absolute', left: 6, right: 6, top: 1, height: 1 }}
             />
         </Region>
     );
@@ -534,7 +534,7 @@ export const WiredStyleIlluminaLayoutLeftButtonTemplateItem = ({ layout, onLeftB
                 tags={[ '#icon' ]}
                 params={4194320}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_furni.png')}
-                layout={{ position: 'absolute', left: 6, width: 7, top: 4, height: 11 }}
+                layout={{ position: 'absolute', left: 6, top: 4, height: 11 }}
             />
         </ContainerButton>
     );
@@ -588,7 +588,7 @@ export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMid
                 tags={[ '#icon' ]}
                 params={4194320}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_users.png')}
-                layout={{ position: 'absolute', left: 3, width: 8, top: 5, height: 10 }}
+                layout={{ position: 'absolute', left: 3, top: 5, height: 10 }}
             />
         </ContainerButton>
     );
@@ -642,7 +642,7 @@ export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRigh
                 tags={[ '#icon' ]}
                 params={4194320}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_global.png')}
-                layout={{ position: 'absolute', left: 4, width: 7, top: 6, height: 7 }}
+                layout={{ position: 'absolute', left: 4, top: 6, height: 7 }}
             />
         </ContainerButton>
     );

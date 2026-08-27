@@ -17,7 +17,7 @@ export const FeedEntityLayout = ({ itemsContentList, layout, srcIcon }: FeedEnti
                 name="item"
                 params={16528}
                 tintColor="#f9f9f9"
-                layout={{ position: 'absolute', left: 0, width: 229, top: 0, height: 172 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 172 }}
             >
                 <ThemeImage
                     name="icon"
@@ -28,7 +28,7 @@ export const FeedEntityLayout = ({ itemsContentList, layout, srcIcon }: FeedEnti
                 <Region
                     name="content_list"
                     params={8538256}
-                    layout={{ position: 'absolute', left: 50, width: 178, top: 4, height: 162, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 50, right: 1, top: 4, bottom: 6, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsContentList ?? (
                         <>
@@ -56,7 +56,7 @@ export const FeedEntityLayoutTitleItem = ({ captionTitle, layout }: FeedEntityLa
         <Region
             name="title"
             params={8405136}
-            layout={{ width: 170, height: 28, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 170, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionTitle ?? '001_lorem_idflgkjdl%20fkgjdf%20gdf%20gdfd%F6%20lgk%F6lkfggd%20'}
@@ -100,7 +100,7 @@ export const FeedEntityLayoutMessageItem = ({ captionMessage, layout }: FeedEnti
         <Region
             name="message"
             params={8388752}
-            layout={{ width: 168, height: 40, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 168, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionMessage ?? '_multiline message, whoop whoop whoop whoop whoop whoop dfgdfg dfgdfg dfgdf'}
@@ -123,7 +123,7 @@ export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration }: FeedEn
             name="decoration"
             params={8388624}
             src={srcDecoration}
-            layout={{ width: 178, height: 40, flexShrink: 0, ...layout }}
+            layout={{ width: 178, flexShrink: 0, ...layout }}
         />
     );
 };

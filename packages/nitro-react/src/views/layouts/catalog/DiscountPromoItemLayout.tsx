@@ -21,7 +21,7 @@ export const DiscountPromoItemLayout = ({ captionPromoText, captionPromoTextEffe
                     name="background"
                     params={128}
                     backgroundColor="#009100"
-                    layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 />
                 <ThemeImage
                     name="icon_bitmap"

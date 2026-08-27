@@ -11,7 +11,7 @@ export const ElementCaptionLayout = ({ layout }: ElementCaptionLayoutProps) => {
             <Region
                 tags={[ 'COLORABLE' ]}
                 params={8388752}
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text="Caption PH"

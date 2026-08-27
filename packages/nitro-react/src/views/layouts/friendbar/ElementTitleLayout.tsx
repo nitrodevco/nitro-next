@@ -18,7 +18,7 @@ export const ElementTitleLayout = ({ captionTitleTxt, layout, srcBorderBar, srcH
             <Region
                 params={147600}
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
             >
                 <ThemeImage
                     name="border_bar"
@@ -41,7 +41,7 @@ export const ElementTitleLayout = ({ captionTitleTxt, layout, srcBorderBar, srcH
                     name="hdr_line"
                     params={144}
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
-                    layout={{ position: 'absolute', left: 150, width: 100, top: 10, height: 4 }}
+                    layout={{ position: 'absolute', left: 150, right: 0, top: 10, height: 4 }}
                 />
             </Region>
         </Region>

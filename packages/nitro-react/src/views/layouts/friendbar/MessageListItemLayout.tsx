@@ -29,17 +29,17 @@ export const MessageListItemLayout = ({ captionAuthor, captionAuthorPostCount, c
                 <Region
                     name="msg_container"
                     params={18576}
-                    layout={{ position: 'absolute', left: 0, width: 670, top: 26, height: 100 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0 }}
                 >
                     <Region
                         name="message_text_container"
                         params={144}
-                        layout={{ position: 'absolute', left: 130, width: 540, top: 0, height: 100, minHeight: 100 }}
+                        layout={{ position: 'absolute', left: 130, right: 0, top: 0, height: 100, minHeight: 100 }}
                     >
                         <Region
                             name="message_text"
                             params={16536}
-                            layout={{ position: 'absolute', left: 6, width: 534, top: 2, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 6, right: 0, top: 2, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionMessageText ?? 'Message text'}
@@ -53,12 +53,12 @@ export const MessageListItemLayout = ({ captionAuthor, captionAuthorPostCount, c
                         backgroundColor="#c7eff8"
                         onPointerTap={onAvatarImage}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 100, minHeight: 100 }}
+                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 0, minHeight: 100 }}
                     >
                         <Region
                             name="author"
                             params={144}
-                            layout={{ position: 'absolute', left: 2, width: 126, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionAuthor ?? 'AuthorName'}
@@ -91,12 +91,12 @@ export const MessageListItemLayout = ({ captionAuthor, captionAuthorPostCount, c
                     name="texts_container"
                     params={144}
                     backgroundColor="#227aad"
-                    layout={{ position: 'absolute', left: 0, width: 670, top: 0, height: 26 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                 >
                     <Region
                         name="date"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 670, top: 4, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDate ?? '10 days ago'}
@@ -105,7 +105,7 @@ export const MessageListItemLayout = ({ captionAuthor, captionAuthorPostCount, c
                     </Region>
                     <Region
                         params={80}
-                        layout={{ position: 'absolute', left: 564, width: 106, top: 0, height: 26, flexDirection: 'row' }}
+                        layout={{ position: 'absolute', right: 0, width: 106, top: 0, height: 26, flexDirection: 'row' }}
                     >
                         <Region
                             name="reply_num"

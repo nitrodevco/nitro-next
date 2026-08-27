@@ -25,7 +25,7 @@ export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitBut
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={131088}
-                    layout={{ position: 'absolute', left: 9, width: 360, top: 8, height: 1423, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 9, minWidth: 360, top: 8, minHeight: 1423, flexDirection: 'column', gap: 8 }}
                 >
                     <Region
                         params={16}
@@ -72,7 +72,7 @@ export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitBut
                                 <Region
                                     name="chat_items"
                                     params={149648}
-                                    layout={{ position: 'absolute', left: 9, width: 307, top: 23, height: 1, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column' }}
                                 />
                             </Region>
                         </Region>
@@ -84,7 +84,7 @@ export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitBut
                     params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmitButton}
-                    layout={{ position: 'absolute', left: 122, width: 135, top: 409, height: 43 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -68, width: 135, top: 409, height: 43 }}
                 >
                     {t('help.emergency.chat_report.submit.button')}
                 </Button>

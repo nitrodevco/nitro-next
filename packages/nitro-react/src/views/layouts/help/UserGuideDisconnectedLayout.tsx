@@ -88,7 +88,7 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
                 <Region
                     name="error_list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 260, top: 69, height: 183, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 10, top: 69, flexDirection: 'column' }}
                 >
                     {itemsErrorList ?? (
                         <UserGuideDisconnectedLayoutResubmitButtonItem />

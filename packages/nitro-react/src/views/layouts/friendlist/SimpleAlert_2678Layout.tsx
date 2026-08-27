@@ -32,7 +32,7 @@ export const SimpleAlert_2678Layout = ({ itemsList, layout, onClose, srcIllustra
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 290, top: 8, height: 118, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 10, top: 8, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsList ?? (
                         <>
@@ -100,7 +100,7 @@ export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout }: Simp
         <Region
             name="list_top"
             params={147472}
-            layout={{ width: 290, height: 43, flexShrink: 0, flexDirection: 'column', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
                 <>
@@ -170,7 +170,7 @@ export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }
         <Region
             name="list_bottom"
             params={147472}
-            layout={{ width: 290, height: 72, flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsListBottom ?? (
                 <>

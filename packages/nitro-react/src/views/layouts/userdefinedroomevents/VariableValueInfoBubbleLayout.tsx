@@ -28,7 +28,7 @@ export const VariableValueInfoBubbleLayout = ({ captionValue, layout, visibleBor
                     <Region
                         name="value"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 11, width: 22, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionValue ?? '505'}

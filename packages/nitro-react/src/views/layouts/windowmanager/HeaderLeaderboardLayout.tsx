@@ -20,7 +20,7 @@ export const HeaderLeaderboardLayout = ({ captionHeaderTitleText, layout, onHead
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                     params={2147483856}
-                    layout={{ position: 'absolute', left: 4, width: 12, top: 6, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -16.5, width: 12, top: 6, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeaderTitleText ?? ''}

@@ -28,14 +28,14 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                     variant="12"
                     name="collapsed_view"
                     params={12585104}
-                    layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 22 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Icon
                         variant="7"
                         name="down_icon"
                         params={12848208}
                         tintColor="#777777"
-                        layout={{ position: 'absolute', left: 179, width: 10, top: 9, height: 5 }}
+                        layout={{ position: 'absolute', right: 8, width: 10, top: '50%', marginTop: -2, height: 5 }}
                     />
                 </Border>
                 <Region
@@ -46,12 +46,12 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                         variant="12"
                         name="expanded_view"
                         params={149521}
-                        layout={{ position: 'absolute', left: 0, width: 198, top: 0, height: 96 }}
+                        layout={{ position: 'absolute', left: 0, width: 198, top: 0, bottom: 904 }}
                     >
                         <Region
                             name="main_cont"
                             params={4327568}
-                            layout={{ position: 'absolute', left: 0, width: 198, top: 0, height: 96, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                         >
                             {itemsMainCont ?? (
                                 <>
@@ -68,14 +68,14 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                                 <Region
                                     name="search_wrapper_expanded"
                                     params={4194448}
-                                    layout={{ position: 'absolute', left: 0, width: 196, top: 0, height: 20 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                                 />
                                 <Region
                                     name="cancel_search"
                                     params={4194369}
                                     onPointerTap={onCancelSearch}
                                     cursor="pointer"
-                                    layout={{ position: 'absolute', left: 181, width: 9, top: 5, height: 9 }}
+                                    layout={{ position: 'absolute', right: 6, width: 9, top: 5, height: 9 }}
                                 >
                                     <ThemeImage
                                         params={16}
@@ -90,7 +90,7 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                 <Region
                     name="search_wrapper_collapsed"
                     params={4194448}
-                    layout={{ position: 'absolute', left: 0, width: 197, top: 1, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 20 }}
                 >
                     <Region
                         name="input_field_region"
@@ -103,19 +103,19 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                             name="input_placeholder_text"
                             tags={[ 'DO_NOT_DISABLE' ]}
                             params={12585104}
-                            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionInputPlaceholderText ?? t('wiredfurni.variable_picker.search')}
                                 textStyle="text-style-regular"
-                                textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 197 }}
+                                textOptions={{ fill: '#808080', wordWrap: true }}
                             />
                         </Region>
                         <TextInput
                             value={inputFieldValue}
                             onChange={setInputFieldValue}
                             maxLength={60}
-                            layout={{ position: 'absolute', left: 7, width: 190, top: 3, height: 17 }}
+                            layout={{ position: 'absolute', left: 7, right: 0, top: 3, bottom: 0, overflow: 'hidden' }}
                         />
                     </Region>
                 </Region>
@@ -145,20 +145,20 @@ export const SearchTreeDropdownLayoutButtonTemplateItem = ({ layout, onButtonTem
                 name="button_border"
                 params={12585104}
                 tintColor="#fafafa"
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="button_img"
                     params={12585104}
                     src={srcButtonImg}
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 18 }}
+                    layout={{ position: 'absolute', left: 0, top: 0 }}
                 />
             </Border>
             <Region
                 name="button_shadow"
                 params={12584080}
                 backgroundColor="#dddddd"
-                layout={{ position: 'absolute', left: 0, width: 30, top: 18, height: 2 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2 }}
             />
         </Region>
     );
@@ -200,7 +200,7 @@ export const SearchTreeDropdownLayoutSpacerItem = ({ layout }: SearchTreeDropdow
                 name="splitter"
                 params={4194448}
                 backgroundColor="#dddddd"
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 1 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
             />
         </Region>
     );
@@ -227,11 +227,11 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout
                 name="empty_container"
                 params={4194448}
                 visible={visibleEmptyContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 52 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52 }}
             >
                 <Region
                     params={4194448}
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={t('wiredfurni.variable_picker.empty')}
@@ -248,7 +248,7 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout
             >
                 <Region
                     params={4341904}
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 36, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column' }}
                 >
                     <Region
                         name="spacing"
@@ -285,7 +285,7 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout
                     name="right_triangle_icon"
                     params={12848208}
                     tintColor="#777777"
-                    layout={{ position: 'absolute', left: 179, width: 10, top: 5, height: 10 }}
+                    layout={{ position: 'absolute', right: 6, width: 10, top: '50%', marginTop: -5, height: 10 }}
                 />
                 <Region
                     name="node_name"

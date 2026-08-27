@@ -24,12 +24,12 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
                 <Border
                     variant="3"
                     params={2192}
-                    layout={{ position: 'absolute', left: 4, width: 390, top: 7, height: 338 }}
+                    layout={{ position: 'absolute', left: 4, right: 26, top: 7, bottom: 55 }}
                 />
                 <Region
                     name="content"
                     params={2177}
-                    layout={{ position: 'absolute', left: 7, width: 384, top: 7, height: 338, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 7, right: 29, top: 7, bottom: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionContent ?? 'Here is some mighty text describing certain Hotel feature. Let\'s see what happens when it goes over the limit.'}

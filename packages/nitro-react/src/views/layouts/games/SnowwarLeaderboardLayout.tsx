@@ -44,7 +44,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                     tags={[ 'bitmap' ]}
                     params={2192}
                     src={srcBackground ?? layoutImage('leaderboard_bg.png')}
-                    layout={{ position: 'absolute', left: 0, width: 431, top: 0, height: 472 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 39 }}
                 />
                 <Region
                     name="this_week_region"
@@ -64,7 +64,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                     <Region
                         name="this_week_text"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 119, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionThisWeekText ?? t('snowwar.leaderboard.this_week')}
@@ -90,7 +90,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                     <Region
                         name="all_time_text"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 119, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionAllTimeText ?? t('snowwar.leaderboard.all_time')}
@@ -101,21 +101,21 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <Region
                     name="borderContainer"
                     params={3145744}
-                    layout={{ position: 'absolute', left: 40, width: 350, top: 30, height: 389 }}
+                    layout={{ position: 'absolute', left: 40, width: 350, top: '50%', marginTop: -225.5, height: 389 }}
                 >
                     <Border
                         variant="0"
                         name="listBorder"
                         params={8388816}
                         blend={0.5}
-                        layout={{ position: 'absolute', left: 0, width: 350, top: 28, height: 336 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -175, width: 350, top: 28, height: 336 }}
                     />
                     <Region
                         name="scrollUp"
                         params={209}
                         onPointerTap={onScrollUp}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 146, width: 58, top: 1, height: 28 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -29, width: 58, top: 1, height: 28 }}
                     >
                         <ThemeImage
                             params={16}
@@ -128,7 +128,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                         params={1233}
                         onPointerTap={onScrollDown}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 146, width: 58, top: 361, height: 28 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -29, width: 58, bottom: 0, height: 28 }}
                     >
                         <ThemeImage
                             params={16}
@@ -152,7 +152,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <Region
                     name="list"
                     params={3145920}
-                    layout={{ position: 'absolute', left: 37, width: 356, top: 58, height: 336, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -181.5, width: 356, top: '50%', marginTop: -197.5, height: 336, flexDirection: 'column' }}
                 />
                 <Region
                     name="previousWeek"

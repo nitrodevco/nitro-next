@@ -15,7 +15,7 @@ export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) 
                 tags={[ 'bitmap' ]}
                 params={3264}
                 src={srcCounterBitmap ?? layoutImage('explosion001.png')}
-                layout={{ position: 'absolute', left: 171, width: 164, top: 131, height: 164, minWidth: 164, minHeight: 164 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: 89, width: 164, top: '50%', marginTop: 49, height: 164, minWidth: 164, minHeight: 164 }}
             />
         </Region>
     );

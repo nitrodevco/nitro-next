@@ -97,13 +97,13 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                     name="top_content"
                     tags={[ 'TOP_CONTENT' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 301 }}
+                    layout={{ position: 'absolute', left: 0, width: 478, top: 0, bottom: 41 }}
                 >
                     <TabContext
                         variant="3"
                         name="tabs"
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 301 }}
+                        layout={{ position: 'absolute', left: 0, width: 478, top: 0, bottom: 0 }}
                     >
                         <TabButton
                             variant="3"
@@ -200,7 +200,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                         name="empty_container"
                         params={2064}
                         visible={visibleEmptyContainer ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 478, top: 20, height: 278 }}
+                        layout={{ position: 'absolute', left: 0, width: 478, top: 20, bottom: 3 }}
                     >
                         <ThemeImage
                             name="image"
@@ -242,7 +242,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             params={918545}
                             onPointerTap={onOpenCatalogBtn}
                             textStyle="text-style-button-shiny-regular"
-                            layout={{ position: 'absolute', left: 241, width: 149, top: 225, height: 51 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: 2, width: 149, bottom: 2, height: 51 }}
                         >
                             {t('inventory.open.catalog')}
                         </Button>
@@ -251,7 +251,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                         name="loading_container"
                         params={2064}
                         visible={visibleLoadingContainer ?? false}
-                        layout={{ position: 'absolute', left: 6, width: 264, top: 27, height: 268 }}
+                        layout={{ position: 'absolute', left: 6, width: 264, top: 27, bottom: 6 }}
                     >
                         <ThemeImage
                             name="download_image"
@@ -263,13 +263,13 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                     <Region
                         name="contentArea"
                         params={2064}
-                        layout={{ position: 'absolute', left: 5, width: 468, top: 35, height: 261 }}
+                        layout={{ position: 'absolute', left: 5, width: 468, top: 35, bottom: 5 }}
                     >
                         <Region
                             name="furni"
                             params={2064}
                             visible={visibleFurni ?? false}
-                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 261 }}
+                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
@@ -321,11 +321,11 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="grid_container"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 284, top: 27, height: 231 }}
+                                layout={{ position: 'absolute', left: 0, width: 284, top: 27, bottom: 3 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 221 }}
+                                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, bottom: 10 }}
                                 >
                                     <Region
                                         name="item_grid"
@@ -337,7 +337,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 <Region
                                     name="item_grid_pages"
                                     params={1040}
-                                    layout={{ position: 'absolute', left: 0, width: 280, top: 220, height: 10, flexDirection: 'row', gap: 2 }}
+                                    layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2 }}
                                 >
                                     <Region
                                         params={147473}
@@ -358,7 +358,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 <Region
                                     name="items.shown"
                                     params={263184}
-                                    layout={{ position: 'absolute', left: 185, width: 98, top: 217, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 1, width: 98, bottom: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionItemsShown ?? 'Items shown: x/y'}
@@ -369,25 +369,25 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="preview_container"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 290, width: 180, top: 27, height: 237 }}
+                                layout={{ position: 'absolute', left: 290, width: 180, top: 27, bottom: -3 }}
                             >
                                 <Region
                                     name="furni_preview_region"
                                     params={18577}
                                     onPointerTap={onFurniPreviewRegion}
                                     cursor="pointer"
-                                    layout={{ position: 'absolute', left: 5, width: 170, top: 0, height: 130, minHeight: 50 }}
+                                    layout={{ position: 'absolute', left: 5, right: 5, top: 0, bottom: 107, minHeight: 50 }}
                                 />
                                 <WidgetSlot
                                     widgetType="room_previewer"
                                     name="furni_preview_widget"
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 5, width: 170, top: 0, height: 130, minHeight: 50 }}
+                                    layout={{ position: 'absolute', left: 5, right: 5, top: 0, bottom: 107, minHeight: 50 }}
                                 />
                                 <Region
                                     name="preview_element_list"
                                     params={1049728}
-                                    layout={{ position: 'absolute', left: 0, width: 180, top: -31, height: 266, flexDirection: 'column', gap: 1 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 2, height: 266, flexDirection: 'column', gap: 1 }}
                                 >
                                     {itemsPreviewElementList ?? (
                                         <>
@@ -421,13 +421,13 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     widgetType="rarity_item_overlay_preview"
                                     name="rarity_item_overlay_widget"
                                     params={64}
-                                    layout={{ position: 'absolute', left: 121, width: 36, top: 5, height: 30 }}
+                                    layout={{ position: 'absolute', right: 23, width: 36, top: 5, height: 30 }}
                                 />
                                 <WidgetSlot
                                     widgetType="limited_item_overlay_preview"
                                     name="unique_limited_item_overlay_widget"
                                     params={64}
-                                    layout={{ position: 'absolute', left: 119, width: 40, top: 4, height: 40 }}
+                                    layout={{ position: 'absolute', right: 21, width: 40, top: 4, height: 40 }}
                                 />
                                 <Button
                                     variant="3"
@@ -435,7 +435,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     params={393217}
                                     onPointerTap={onNextItemButton}
                                     textStyle="text-style-button-shiny-regular"
-                                    layout={{ position: 'absolute', left: 33, width: 131, top: 5, height: 23 }}
+                                    layout={{ position: 'absolute', right: 16, width: 131, top: 5, height: 23 }}
                                 >
                                     {t('inventory.furni.next')}
                                 </Button>
@@ -445,7 +445,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     params={393217}
                                     onPointerTap={onViewItemButton}
                                     textStyle="text-style-button-shiny-regular"
-                                    layout={{ position: 'absolute', left: 33, width: 131, top: 31, height: 23 }}
+                                    layout={{ position: 'absolute', right: 16, width: 131, top: 31, height: 23 }}
                                 >
                                     {t('inventory.furni.view')}
                                 </Button>
@@ -455,7 +455,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             name="collectibles"
                             params={2064}
                             visible={visibleCollectibles ?? false}
-                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 261 }}
+                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
@@ -500,11 +500,11 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="grid_container"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 284, top: 27, height: 231 }}
+                                layout={{ position: 'absolute', left: 0, width: 284, top: 27, bottom: 3 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 221 }}
+                                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, bottom: 10 }}
                                 >
                                     <Region
                                         name="item_grid"
@@ -516,7 +516,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 <Region
                                     name="item_grid_pages"
                                     params={1040}
-                                    layout={{ position: 'absolute', left: 0, width: 280, top: 220, height: 10, flexDirection: 'row', gap: 2 }}
+                                    layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2 }}
                                 >
                                     <Region
                                         params={147473}
@@ -538,7 +538,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     name="items.shown"
                                     params={263184}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 185, width: 98, top: 217, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 1, width: 98, bottom: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionItemsShown2 ?? 'Items shown: x/y'}
@@ -549,7 +549,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="preview_container"
                                 params={2064}
-                                layout={{ position: 'absolute', left: 290, width: 180, top: 27, height: 237 }}
+                                layout={{ position: 'absolute', left: 290, width: 180, top: 27, bottom: -3 }}
                             >
                                 <Border
                                     variant="2"
@@ -560,7 +560,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     <Region
                                         name="nft_info"
                                         params={128}
-                                        layout={{ position: 'absolute', left: 5, width: 170, top: 5, height: 35, flexDirection: 'column', gap: 1 }}
+                                        layout={{ position: 'absolute', left: 5, right: 0, top: 5, height: 35, flexDirection: 'column', gap: 1 }}
                                     >
                                         {itemsNftInfo ?? (
                                             <>
@@ -578,7 +578,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     <Region
                                         name="offer_options"
                                         params={409744}
-                                        layout={{ position: 'absolute', left: -18, width: 188, top: 160, height: 28, flexDirection: 'row', gap: 10 }}
+                                        layout={{ position: 'absolute', left: -18, right: 5, top: 160, flexDirection: 'row', gap: 10 }}
                                     >
                                         {itemsOfferOptions ?? (
                                             <>
@@ -601,18 +601,18 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     name="rarity_item_overlay_widget"
                                     params={64}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 121, width: 36, top: 5, height: 30 }}
+                                    layout={{ position: 'absolute', right: 23, width: 36, top: 5, height: 30 }}
                                 />
                                 <WidgetSlot
                                     widgetType="limited_item_overlay_preview"
                                     name="unique_limited_item_overlay_widget"
                                     params={64}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 119, width: 40, top: 4, height: 40 }}
+                                    layout={{ position: 'absolute', right: 21, width: 40, top: 4, height: 40 }}
                                 />
                                 <Region
                                     visible={visibleNextItemButton ?? false}
-                                    layout={{ position: 'absolute', left: 33, width: 131, top: 5, height: 23 }}
+                                    layout={{ position: 'absolute', right: 16, width: 131, top: 5, height: 23 }}
                                 >
                                     <Button
                                         variant="3"
@@ -627,7 +627,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 </Region>
                                 <Region
                                     visible={visibleViewItemButton ?? false}
-                                    layout={{ position: 'absolute', left: 33, width: 131, top: 31, height: 23 }}
+                                    layout={{ position: 'absolute', right: 16, width: 131, top: 31, height: 23 }}
                                 >
                                     <Button
                                         variant="3"
@@ -646,7 +646,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             name="pets"
                             params={2064}
                             visible={visiblePets ?? false}
-                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 261 }}
+                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
@@ -690,7 +690,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             </Border>
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 274, top: 27, height: 231 }}
+                                layout={{ position: 'absolute', left: 0, width: 274, top: 27, bottom: 3 }}
                             >
                                 <Region
                                     name="grid"
@@ -701,12 +701,12 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="preview_container"
                                 params={2128}
-                                layout={{ position: 'absolute', left: 280, width: 190, top: 0, height: 261 }}
+                                layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="preview_text"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 0, width: 66, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 0, right: 124, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewText ?? 'PetName'}
@@ -722,7 +722,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 <Region
                                     name="preview_description"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 4, width: 180, top: 205, height: 17, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 4, right: 6, top: 205, height: 17, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewDescription ?? 'Lorem ipsumlkj lj'}
@@ -733,7 +733,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     name="preview_info"
                                     params={788496}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 5, width: 154, top: 200, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 154, top: 200, bottom: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewInfo ?? '...'}
@@ -746,7 +746,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     params={132113}
                                     onPointerTap={onPlaceButton}
                                     textStyle="text-style-button-shiny-regular"
-                                    layout={{ position: 'absolute', left: 0, width: 158, top: 229, height: 28, minWidth: 158, maxWidth: 158 }}
+                                    layout={{ position: 'absolute', left: 0, width: 158, bottom: 4, height: 28, minWidth: 158, maxWidth: 158 }}
                                 >
                                     {t('inventory.pets.placetoroom')}
                                 </Button>
@@ -763,11 +763,11 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             name="bots"
                             params={2064}
                             visible={visibleBots ?? false}
-                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 261 }}
+                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
                         >
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 274, top: 0, height: 256 }}
+                                layout={{ position: 'absolute', left: 0, right: 194, top: 0, bottom: 5 }}
                             >
                                 <Region
                                     name="grid"
@@ -778,12 +778,12 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="preview_container"
                                 params={2128}
-                                layout={{ position: 'absolute', left: 280, width: 190, top: 0, height: 261 }}
+                                layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="bot_name"
                                     params={3145744}
-                                    layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 0, width: 67, top: '50%', marginTop: -130.5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionBotName ?? 'bot name'}
@@ -812,7 +812,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     params={132113}
                                     onPointerTap={onPlaceButton2}
                                     textStyle="text-style-button-shiny-regular"
-                                    layout={{ position: 'absolute', left: 10, width: 158, top: 225, height: 28, minWidth: 158, maxWidth: 158 }}
+                                    layout={{ position: 'absolute', left: 10, width: 158, bottom: 8, height: 28, minWidth: 158, maxWidth: 158 }}
                                 >
                                     {t('inventory.bot.placetoroom')}
                                 </Button>
@@ -821,7 +821,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                         <Region
                             name="badges"
                             params={2064}
-                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 261 }}
+                            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
@@ -871,7 +871,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             />
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 328, top: 27, height: 143 }}
+                                layout={{ position: 'absolute', left: 0, right: 140, top: 27, bottom: 91 }}
                             >
                                 <Region
                                     name="inactive_items"
@@ -883,7 +883,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="item_grid_pages"
                                 params={1040}
-                                layout={{ position: 'absolute', left: 0, width: 328, top: 170, height: 10, flexDirection: 'row', gap: 2 }}
+                                layout={{ position: 'absolute', left: 0, width: 328, bottom: 81, height: 10, flexDirection: 'row', gap: 2 }}
                             >
                                 <Region
                                     params={147473}
@@ -905,7 +905,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 name="active_items"
                                 tags={[ 'ACTIVE_BADGE_ITEM_GRID' ]}
                                 params={2129}
-                                layout={{ position: 'absolute', left: 335, width: 135, top: 58, height: 120, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                                layout={{ position: 'absolute', right: -2, width: 135, top: 58, bottom: 83, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                             />
                             <Region
                                 name="myBadgesTitle"
@@ -922,7 +922,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="wearingTitle"
                                 params={80}
-                                layout={{ position: 'absolute', left: 330, width: 134, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', right: 4, width: 134, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionWearingTitle ?? t('inventory.badges.activebadges')}
@@ -933,13 +933,13 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                             <Region
                                 name="descriptionArea"
                                 params={1168}
-                                layout={{ position: 'absolute', left: 0, width: 468, top: 184, height: 78 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, bottom: -1, height: 78 }}
                             >
                                 <Border
                                     variant="3"
                                     name="badge_desc_bg_box"
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 78 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                                 />
                                 <WidgetSlot
                                     widgetType="badge_image"
@@ -977,7 +977,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                                     name="badgeRarityBorder"
                                                     tags={[ 'BLEND_SUBTRACT' ]}
                                                     params={4194320}
-                                                    layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                                    layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                                 >
                                                     <ThemeText
                                                         text={captionBadgeRarityBorder ?? 'Unique badge'}
@@ -1016,7 +1016,7 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                     params={393297}
                                     onPointerTap={onWearBadgeButton}
                                     textStyle="text-style-button-shiny-regular"
-                                    layout={{ position: 'absolute', left: 282, width: 179, top: 40, height: 28 }}
+                                    layout={{ position: 'absolute', right: 7, width: 179, top: 40, height: 28 }}
                                 >
                                     {t('inventory.badges.wearbadge')}
                                 </Button>
@@ -1025,19 +1025,19 @@ export const InventoryLayout = ({ captionBadgeOwnerCount, captionBadgeRarity, ca
                                 name="achievements_score_container"
                                 params={1168}
                                 visible={visibleAchievementsScoreContainer ?? false}
-                                layout={{ position: 'absolute', left: 0, width: 468, top: 239, height: 24 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, bottom: -2, height: 24 }}
                             >
                                 <Border
                                     variant="3"
                                     name="score_description_border"
                                     params={144}
                                     tintColor="#428bb2"
-                                    layout={{ position: 'absolute', left: 0, width: 468, top: 4, height: 17, minWidth: 368 }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 17, minWidth: 368 }}
                                 >
                                     <Region
                                         name="score_description_text"
                                         params={3932240}
-                                        layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                        layout={{ position: 'absolute', right: 0, width: 468, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                     >
                                         <ThemeText
                                             text={captionScoreDescriptionText ?? t('achievements_score_description')}

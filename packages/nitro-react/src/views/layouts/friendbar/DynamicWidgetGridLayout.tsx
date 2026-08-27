@@ -109,7 +109,7 @@ export const DynamicWidgetGridLayoutWidgetSlotsCenterLeftItem = ({ itemsWidgetSl
         <Region
             name="widget_slots_center_left"
             params={147472}
-            layout={{ width: 500, height: 52, flexShrink: 0, maxWidth: 500, flexDirection: 'column', gap: 50, ...layout }}
+            layout={{ flexShrink: 0, maxWidth: 500, flexDirection: 'column', gap: 50, ...layout }}
         >
             {itemsWidgetSlotsCenterLeft ?? (
                 <>
@@ -187,7 +187,7 @@ export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ itemsWidgetSlotsCe
             <Region
                 name="widget_slots_center_right"
                 params={4341776}
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 52, flexDirection: 'column', gap: 50 }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 50 }}
             >
                 {itemsWidgetSlotsCenterRight ?? (
                     <>

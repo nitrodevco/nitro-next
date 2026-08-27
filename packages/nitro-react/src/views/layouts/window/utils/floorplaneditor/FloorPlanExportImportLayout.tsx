@@ -29,13 +29,13 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                     variant="105"
                     params={2193}
                     tintColor="#ffffff"
-                    layout={{ position: 'absolute', left: 8, width: 348, top: 12, height: 269 }}
+                    layout={{ position: 'absolute', left: 8, right: 23, top: 12, bottom: 93 }}
                 >
                     <TextInput
                         value={dataValue}
                         onChange={setDataValue}
                         multiline
-                        layout={{ position: 'absolute', left: 0, width: 347, top: 1, height: 266 }}
+                        layout={{ position: 'absolute', left: 0, right: 1, top: 1, bottom: 2 }}
                     />
                 </Border>
                 {/* <scrollbar_vertical> for data - rendered by that list's ScrollArea */}
@@ -46,7 +46,7 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                     params={132113}
                     tintColor="#bbbbbb"
                     onPointerTap={onRevert}
-                    layout={{ position: 'absolute', left: -3, width: 191, top: 294, height: 49, maxWidth: 191 }}
+                    layout={{ position: 'absolute', left: -3, width: 191, bottom: 31, height: 49, maxWidth: 191 }}
                 >
                     {t('floor.plan.editor.revert.to.last.received.map')}
                 </Button>
@@ -56,7 +56,7 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                     params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSave}
-                    layout={{ position: 'absolute', left: 301, width: 73, top: 294, height: 49, maxWidth: 73 }}
+                    layout={{ position: 'absolute', right: 5, width: 73, bottom: 31, height: 49, maxWidth: 73 }}
                 >
                     {t('floor.plan.editor.save')}
                 </Button>

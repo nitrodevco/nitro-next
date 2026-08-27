@@ -18,13 +18,13 @@ export const LayoutInfoPets2_1536Layout = ({ captionCtlgText1, captionCtlgText2,
             <Region
                 name="ctlg_pets2"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     params={2064}
                     tintColor="#8899a2"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 440 }}
+                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, bottom: 10 }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"

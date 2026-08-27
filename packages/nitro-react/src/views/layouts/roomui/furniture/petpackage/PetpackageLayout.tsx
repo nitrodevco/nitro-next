@@ -84,7 +84,7 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                         name="pet_image"
                         params={3932176}
                         src={srcPetImage}
-                        layout={{ position: 'absolute', left: 2, width: 60, top: 2, height: 60, minWidth: 60, maxWidth: 60, minHeight: 60, maxHeight: 60 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -30, height: 60, minWidth: 60, maxWidth: 60, minHeight: 60, maxHeight: 60 }}
                     />
                 </Border>
             </Border>

@@ -8,12 +8,13 @@ export interface NextQuestTimerLayoutProps {
     captionQuestHeaderTxt?: string;
     layout?: BoxLayout;
     onMoreInfoRegion?: () => void;
+    onNextQuestTimer?: () => void;
     srcQuestPicBitmap?: string;
     srcQuestTimerContracted?: string;
     srcQuestTimerExpanded?: string;
 }
 
-export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, onMoreInfoRegion, srcQuestPicBitmap, srcQuestTimerContracted, srcQuestTimerExpanded }: NextQuestTimerLayoutProps) => {
+export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, onMoreInfoRegion, onNextQuestTimer, srcQuestPicBitmap, srcQuestTimerContracted, srcQuestTimerExpanded }: NextQuestTimerLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,7 +22,9 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
             <Region
                 name="next_quest_timer"
                 params={33105}
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 116 }}
+                onPointerTap={onNextQuestTimer}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 116 }}
             >
                 <ThemeImage
                     name="quest_timer_expanded"
@@ -39,12 +42,12 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
                     name="content_cont"
                     params={2176}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 116 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="quest_header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 54, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -43.5, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionQuestHeaderTxt ?? 'Caption PH'}
@@ -54,7 +57,7 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
                     <Region
                         name="desc_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 71, width: 115, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 71, right: 9, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
@@ -64,7 +67,7 @@ export const NextQuestTimerLayout = ({ captionDescTxt, captionMoreInfoTxt, capti
                     <Region
                         name="more_info_txt"
                         params={209}
-                        layout={{ position: 'absolute', left: 28, width: 139, top: 89, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -69.5, width: 139, top: 89, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}

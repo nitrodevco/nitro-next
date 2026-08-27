@@ -17,7 +17,7 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, onClose }: EffectsWi
                 variant="6"
                 params={1081633}
                 tintColor="#5b5953"
-                layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 85 }}
+                layout={{ position: 'absolute', left: 0, width: 190, bottom: 0, height: 85 }}
             >
                 <Border
                     variant="3"

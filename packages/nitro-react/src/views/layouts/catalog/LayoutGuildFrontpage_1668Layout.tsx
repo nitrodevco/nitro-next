@@ -18,13 +18,13 @@ export const LayoutGuildFrontpage_1668Layout = ({ captionCtlgDescription, captio
             <Region
                 name="ctlg_guild_frontpage"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     params={1040}
                     src={srcCtlgTeaserimg1}
-                    layout={{ position: 'absolute', left: 0, width: 359, top: 288, height: 163 }}
+                    layout={{ position: 'absolute', left: 0, width: 359, bottom: 9, height: 163 }}
                 />
                 <Region
                     name="ctlg_special_txt"
@@ -49,14 +49,14 @@ export const LayoutGuildFrontpage_1668Layout = ({ captionCtlgDescription, captio
                 <Region
                     name="buyGuildWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 49, width: 267, top: 231, height: 45 }}
+                    layout={{ position: 'absolute', left: 49, width: 267, bottom: 184, height: 45 }}
                 >
                     <Button
                         variant="3"
                         name="start_guild_purchase"
                         params={933905}
                         onPointerTap={onStartGuildPurchase}
-                        layout={{ position: 'absolute', left: 19, width: 213, top: 2, height: 28, minWidth: 190, minHeight: 28, maxHeight: 50 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -114.5, width: 213, top: 2, height: 28, minWidth: 190, minHeight: 28, maxHeight: 50 }}
                     >
                         {t('catalog.start.guild.purchase.button')}
                     </Button>

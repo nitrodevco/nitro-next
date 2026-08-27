@@ -17,7 +17,7 @@ export const ClubGiftPreviewLayout = ({ layout, srcImage }: ClubGiftPreviewLayou
                     name="image"
                     params={12582928}
                     src={srcImage}
-                    layout={{ position: 'absolute', left: 20, width: 160, top: 20, height: 160 }}
+                    layout={{ position: 'absolute', left: 20, top: 20 }}
                 />
             </Border>
         </Region>

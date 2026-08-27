@@ -28,12 +28,12 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, items
                 <Region
                     params={2176}
                     backgroundColor="#3d6373"
-                    layout={{ position: 'absolute', left: -5, width: 485, top: 8, height: 60 }}
+                    layout={{ position: 'absolute', left: -5, right: 7, top: 8, bottom: 219 }}
                 >
                     <Region
                         params={2176}
                         backgroundColor="#0f4052"
-                        layout={{ position: 'absolute', left: 2, width: 481, top: 2, height: 56 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                     >
                         <Region
                             name="nux_gift_selection_choose_one"
@@ -57,7 +57,7 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, items
                 <Region
                     name="nux_gift_selection_list"
                     params={131280}
-                    layout={{ position: 'absolute', left: 50, width: 374, top: 78, height: 443, flexDirection: 'row', gap: 10 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -193.5, minWidth: 374, top: 78, minHeight: 443, flexDirection: 'row', gap: 10 }}
                 >
                     {itemsNuxGiftSelectionList ?? (
                         <>
@@ -97,7 +97,7 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem = ({ captionOptionHeading, 
                     name="option_bitmap_bg"
                     params={2176}
                     backgroundColor="#bfbfb8"
-                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="option_bitmap"
@@ -155,7 +155,7 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading,
                     name="option_bitmap_bg"
                     params={2176}
                     backgroundColor="#bfbfb8"
-                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="option_bitmap"
@@ -213,7 +213,7 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem3 = ({ captionOptionHeading,
                     name="option_bitmap_bg"
                     params={2176}
                     backgroundColor="#bfbfb8"
-                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="option_bitmap"

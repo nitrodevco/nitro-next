@@ -42,19 +42,19 @@ export const CatalogUbuntuLayout = ({ captionBuilderHeaderStatusLimit, captionBu
                     name="catalog.header.background.border"
                     params={144}
                     backgroundColor="#376275"
-                    layout={{ position: 'absolute', left: 1, width: 568, top: 0, height: 90 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 90 }}
                 >
                     <Region
                         name="catalog.header.background.body"
                         params={144}
                         backgroundColor="#0e3f52"
-                        layout={{ position: 'absolute', left: 2, width: 564, top: 2, height: 86 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 86 }}
                     />
                     <ThemeImage
                         name="catalog.header.image"
                         params={144}
                         src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}
-                        layout={{ position: 'absolute', left: 0, width: 568, top: 0, height: 90 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90 }}
                     />
                     <ThemeImage
                         name="catalog.header.icon"
@@ -167,17 +167,17 @@ export const CatalogUbuntuLayout = ({ captionBuilderHeaderStatusLimit, captionBu
                 <Region
                     name="navigationContainer"
                     params={2064}
-                    layout={{ position: 'absolute', left: 8, width: 184, top: 124, height: 473 }}
+                    layout={{ position: 'absolute', left: 8, width: 184, top: 124, bottom: 43 }}
                 >
                     <Border
                         variant="6"
                         params={2064}
                         blend={0.5}
-                        layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 473 }}
+                        layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
                     />
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 3, width: 178, top: 5, height: 463 }}
+                        layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
                     >
                         <Region
                             name="navigationList"
@@ -201,7 +201,7 @@ export const CatalogUbuntuLayout = ({ captionBuilderHeaderStatusLimit, captionBu
                     name="layoutContainer"
                     tags={[ 'UBUNTU' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 200, width: 360, top: 96, height: 500 }}
+                    layout={{ position: 'absolute', left: 200, width: 360, top: 96, bottom: 44 }}
                 />
             </Region>
         </Frame>
@@ -272,7 +272,7 @@ export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle,
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 26, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 26, right: 127, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'item'}
@@ -346,7 +346,7 @@ export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle,
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 42, width: 55, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'sub-item'}
@@ -435,7 +435,7 @@ export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItem
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 26, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 26, right: 127, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'item'}
@@ -509,7 +509,7 @@ export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItem
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 42, width: 55, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'sub-item'}

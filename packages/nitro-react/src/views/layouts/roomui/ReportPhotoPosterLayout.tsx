@@ -147,7 +147,7 @@ export const ReportPhotoPosterLayout = ({ captionPhotoCaption, layout, on_130, o
                     name="report_confirm"
                     params={393233}
                     onPointerTap={onReportConfirm}
-                    layout={{ position: 'absolute', left: 210, width: 174, top: 580, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
+                    layout={{ position: 'absolute', right: 211, width: 174, top: 580, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
                 >
                     {t('help.report.photo.button')}
                 </Button>

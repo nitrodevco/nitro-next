@@ -57,7 +57,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
                     name="ok"
                     params={917713}
                     onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 86, width: 132, top: 158, height: 32 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 132, top: 158, height: 32 }}
                 >
                     {t('enforce.category.ok')}
                 </Button>

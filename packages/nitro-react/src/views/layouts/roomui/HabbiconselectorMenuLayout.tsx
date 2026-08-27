@@ -39,7 +39,7 @@ export const HabbiconselectorMenuLayout = ({ captionEmptyText, itemsHabbiconSect
                 </Region>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 6, width: 233, top: 43, height: 88 }}
+                    layout={{ position: 'absolute', left: 6, right: 6, top: 43, height: 88 }}
                 >
                     <Region
                         name="habbicon_section_list"
@@ -54,12 +54,12 @@ export const HabbiconselectorMenuLayout = ({ captionEmptyText, itemsHabbiconSect
                 <Region
                     name="empty_view"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 245, top: 40, height: 96 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2 }}
                 >
                     <Region
                         name="empty_text"
                         params={3935440}
-                        layout={{ position: 'absolute', left: 22, width: 200, top: 40, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -100.5, width: 200, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEmptyText ?? t('habbicons.no_habbicons')}
@@ -95,12 +95,12 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
                 onChange={setHabbiconSearchInputValue}
                 maxLength={24}
                 textColor="#333333"
-                layout={{ position: 'absolute', left: 6, width: 90, top: 5, height: 18 }}
+                layout={{ position: 'absolute', left: 6, right: 26, top: '50%', marginTop: -9, height: 18 }}
             />
             <Region
                 name="habbicon_search_placeholder"
                 params={3216}
-                layout={{ position: 'absolute', left: 6, width: 90, top: 5, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 6, right: 26, top: '50%', marginTop: -9, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
@@ -113,12 +113,12 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
                 params={3153}
                 onPointerTap={onHabbiconSearchClearButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 99, width: 17, top: 6, height: 17 }}
+                layout={{ position: 'absolute', right: 6, width: 17, top: '50%', marginTop: -8, height: 17 }}
             >
                 <ThemeImage
                     params={2192}
                     src={layoutImage('common_promo_arrow_close.png')}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Border>

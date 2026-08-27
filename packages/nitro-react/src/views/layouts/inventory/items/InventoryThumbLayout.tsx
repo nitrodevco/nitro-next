@@ -103,7 +103,7 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                         params={393360}
                         visible={visibleNumberContainer ?? false}
                         backgroundColor="#2f6982"
-                        layout={{ position: 'absolute', left: 33, width: 6, top: 2, height: 15 }}
+                        layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
                     >
                         <Region
                             name="number"

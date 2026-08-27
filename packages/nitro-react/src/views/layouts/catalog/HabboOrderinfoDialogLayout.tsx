@@ -25,7 +25,7 @@ export const HabboOrderinfoDialogLayout = ({ itemsOrderItemList, layout }: Habbo
                     <Region
                         name="orderItemList"
                         params={131088}
-                        layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, minWidth: 284, top: 0, minHeight: 149, flexDirection: 'column' }}
                     >
                         {itemsOrderItemList ?? (
                             <>
@@ -115,7 +115,7 @@ export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButton
                 name="button_cancel"
                 params={393361}
                 onPointerTap={onButtonCancel}
-                layout={{ position: 'absolute', left: 151, width: 56, top: 3, height: 22, maxWidth: 130 }}
+                layout={{ position: 'absolute', left: 151, right: 74, top: 3, height: 22, maxWidth: 130 }}
             >
                 {t('generic.cancel')}
             </Button>
@@ -124,7 +124,7 @@ export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButton
                 name="button_ok"
                 params={131217}
                 onPointerTap={onButtonOk}
-                layout={{ position: 'absolute', left: 80, width: 35, top: 3, height: 22, maxWidth: 130 }}
+                layout={{ position: 'absolute', left: 80, right: 166, top: 3, height: 22, maxWidth: 130 }}
             >
                 {t('generic.ok')}
             </Button>

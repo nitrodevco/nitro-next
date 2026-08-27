@@ -53,19 +53,19 @@ export const ElementDailyquestLayout = ({ captionAcceptText, captionCancelQuestT
                         >
                             <Region
                                 params={147472}
-                                layout={{ position: 'absolute', left: 5, width: 240, top: 3, height: 36, flexDirection: 'column' }}
+                                layout={{ position: 'absolute', left: 5, top: 3, flexDirection: 'column' }}
                             >
                                 <Region
                                     name="caption_txt"
                                     params={4194320}
-                                    layout={{ width: 58, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text={captionCaptionTxt ?? 'DQ Title'} />
                                 </Region>
                                 <Region
                                     name="accept_text"
                                     params={4194320}
-                                    layout={{ width: 142, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text={captionAcceptText ?? t('landing.view.quest.accept')} />
                                 </Region>
@@ -116,7 +116,7 @@ export const ElementDailyquestLayout = ({ captionAcceptText, captionCancelQuestT
                             name="go_button"
                             params={131153}
                             onPointerTap={onGoButton}
-                            layout={{ position: 'absolute', left: 164, width: 88, top: 3, height: 50, minWidth: 88, maxWidth: 88 }}
+                            layout={{ position: 'absolute', right: -2, width: 88, top: 3, height: 50, minWidth: 88, maxWidth: 88 }}
                         >
                             {t('landing.view.quest.go')}
                         </Button>
@@ -159,7 +159,7 @@ export const ElementDailyquestLayout = ({ captionAcceptText, captionCancelQuestT
                         name="divider"
                         params={2128}
                         src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                        layout={{ position: 'absolute', left: 103, width: 2, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
                     />
                     <Region
                         name="hard_region"

@@ -41,7 +41,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     name="quest_header"
                     params={144}
                     tintColor="#8e8e8e"
-                    layout={{ position: 'absolute', left: 5, width: 351, top: 6, height: 28 }}
+                    layout={{ position: 'absolute', left: 5, right: 6, top: 6, height: 28 }}
                 >
                     <Region
                         name="quest_header_txt"
@@ -55,7 +55,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     </Region>
                     <Region
                         params={409616}
-                        layout={{ position: 'absolute', left: 285, width: 56, top: 0, height: 30, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', right: 10, top: 0, flexDirection: 'row', gap: 5 }}
                     >
                         <Region
                             name="timeleft_txt"
@@ -81,14 +81,14 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     tags={[ 'FIT:questsAcceptButton' ]}
                     params={132177}
                     onPointerTap={onAcceptButton}
-                    layout={{ position: 'absolute', left: 246, width: 108, top: 76, height: 29, minWidth: 108, maxWidth: 108 }}
+                    layout={{ position: 'absolute', right: 8, width: 108, bottom: 9, height: 29, minWidth: 108, maxWidth: 108 }}
                 >
                     {t('quests.list.accept')}
                 </ButtonThick>
                 <Region
                     name="desc_txt"
                     params={144}
-                    layout={{ position: 'absolute', left: 98, width: 255, top: 39, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 98, right: 9, top: 39, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
@@ -98,14 +98,14 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                 <Region
                     name="reward_caption_txt"
                     params={1040}
-                    layout={{ position: 'absolute', left: 99, width: 143, top: 82, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 99, width: 143, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionRewardCaptionTxt ?? t('quests.list.rewardcaption')} />
                 </Region>
                 <Region
                     name="reward_amount_txt"
                     params={1040}
-                    layout={{ position: 'absolute', left: 150, width: 23, top: 82, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 150, width: 23, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionRewardAmountTxt ?? '200'} />
                 </Region>
@@ -115,12 +115,12 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     params={132113}
                     onPointerTap={onCancelRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 271, width: 100, top: 81, height: 18 }}
+                    layout={{ position: 'absolute', left: 271, width: 100, bottom: 15, height: 18 }}
                 >
                     <Region
                         name="cancel_txt"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 94, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCancelTxt ?? t('quests.list.reject')} />
                     </Region>
@@ -135,13 +135,13 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     variant="0"
                     name="currency_icon"
                     params={1040}
-                    layout={{ position: 'absolute', left: 169, width: 22, top: 80, height: 22 }}
+                    layout={{ position: 'absolute', left: 169, width: 22, bottom: 12, height: 22 }}
                 />
                 <Region
                     name="hint_txt"
                     params={129}
                     visible={false}
-                    layout={{ position: 'absolute', left: 98, width: 255, top: 72, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 98, right: 9, top: 72, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHintTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
@@ -160,7 +160,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         name="link_catalog"
                         params={4194320}
                         visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionLinkCatalog ?? t('quests.list.opencatalog')} />
                     </Region>
@@ -168,7 +168,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         name="link_navigator"
                         params={4194320}
                         visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 144, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionLinkNavigator ?? t('quests.list.opennavigator')} />
                     </Region>
@@ -176,7 +176,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         name="link_room"
                         params={4194320}
                         visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionLinkRoom ?? t('quests.gotocampaignroom')} />
                     </Region>
@@ -185,7 +185,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     name="delay_desc_txt"
                     params={144}
                     visible={false}
-                    layout={{ position: 'absolute', left: 98, width: 255, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionDelayDescTxt ?? t('quests.list.nextquestavailable')} />
                 </Region>
@@ -193,7 +193,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     name="delay_txt"
                     params={144}
                     visible={false}
-                    layout={{ position: 'absolute', left: 98, width: 120, top: 71, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 98, right: 144, top: 71, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDelayTxt ?? '7 hours'}

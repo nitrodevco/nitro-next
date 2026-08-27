@@ -27,7 +27,7 @@ export const RosConfirmLayout = ({ captionMessage, layout, onClose, onOk }: RosC
                 <Region
                     name="message"
                     params={2177}
-                    layout={{ position: 'absolute', left: 10, width: 190, top: 7, height: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 15, top: 7, bottom: 74, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMessage ?? 'message'}
@@ -40,7 +40,7 @@ export const RosConfirmLayout = ({ captionMessage, layout, onClose, onOk }: RosC
                     params={132113}
                     tintColor="#bb2200"
                     onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 5, width: 199, top: 129, height: 29, minWidth: 199, maxWidth: 199 }}
+                    layout={{ position: 'absolute', left: 5, width: 199, bottom: 45, height: 29, minWidth: 199, maxWidth: 199 }}
                 >
                     {t('generic.ok')}
                 </ButtonThick>

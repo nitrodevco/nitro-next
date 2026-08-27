@@ -8,9 +8,10 @@ export interface NavPromoAlertLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     onOk?: () => void;
+    onPromoContainer?: () => void;
 }
 
-export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout, onClose, onOk }: NavPromoAlertLayoutProps) => {
+export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout, onClose, onOk, onPromoContainer }: NavPromoAlertLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -47,6 +48,8 @@ export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout,
                 <Region
                     name="promo_container"
                     params={17}
+                    onPointerTap={onPromoContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 7, width: 199, top: 72, height: 43 }}
                 >
                     <Icon

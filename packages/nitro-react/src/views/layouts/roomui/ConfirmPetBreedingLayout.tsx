@@ -29,7 +29,7 @@ export const ConfirmPetBreedingLayout = ({ captionInfo, captionText, itemsButton
                 <Region
                     name="element_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 318, top: 0, height: 484, maxWidth: 318, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 318, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsElementList ?? (
                         <>
@@ -88,7 +88,7 @@ export const ConfirmPetBreedingLayout = ({ captionInfo, captionText, itemsButton
                 <Region
                     name="button_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 10, width: 295, top: 524, height: 54, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 10, top: 524, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsButtonList ?? (
                         <>
@@ -224,7 +224,7 @@ export const ConfirmPetBreedingLayoutPet1ItemlistItem = ({ itemsPet1Itemlist, la
         <Region
             name="pet1_itemlist"
             params={147472}
-            layout={{ width: 140, height: 121, flexShrink: 0, minWidth: 140, maxWidth: 140, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 140, maxWidth: 140, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPet1Itemlist ?? (
                 <>
@@ -337,7 +337,7 @@ export const ConfirmPetBreedingLayoutPet2ItemlistItem = ({ itemsPet2Itemlist, la
         <Region
             name="pet2_itemlist"
             params={147472}
-            layout={{ width: 140, height: 121, flexShrink: 0, minWidth: 140, maxWidth: 140, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 140, maxWidth: 140, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPet2Itemlist ?? (
                 <>
@@ -368,7 +368,7 @@ export const ConfirmPetBreedingLayoutParentContainerItem = ({ itemsPreviewList, 
             <Region
                 name="preview_list"
                 params={147472}
-                layout={{ position: 'absolute', left: 10, width: 290, top: 7, height: 146, flexDirection: 'row', gap: 10 }}
+                layout={{ position: 'absolute', left: 10, top: 7, flexDirection: 'row', gap: 10 }}
             >
                 {itemsPreviewList ?? (
                     <>

@@ -27,7 +27,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 351, top: 2, height: 192, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
                 >
                     <Region
                         params={16}
@@ -88,7 +88,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                             name="user_avatar"
                             params={3932176}
                             options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                            layout={{ position: 'absolute', left: 13, width: 18, top: 34, height: 19 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -134.5, width: 18, top: '50%', marginTop: -10, height: 19 }}
                         />
                         <WidgetSlot
                             widgetType="updating_timestamp"
@@ -107,7 +107,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: 115, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>
@@ -116,7 +116,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                 <ThemeImage
                     params={1040}
                     src={layoutImage('help_illustrations_bully.png')}
-                    layout={{ position: 'absolute', left: 320, width: 35, top: 39, height: 120 }}
+                    layout={{ position: 'absolute', left: 320, width: 35, bottom: 69, height: 120 }}
                 />
             </Region>
         </Frame>

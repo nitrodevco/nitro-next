@@ -29,7 +29,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
                 <Region
                     name="content"
                     params={8538256}
-                    layout={{ position: 'absolute', left: 0, width: 323, top: 8, height: 294, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 37, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContent ?? (
                         <>
@@ -40,7 +40,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
                     )}
                     <Region
                         params={131088}
-                        layout={{ width: 404, height: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+                        layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
                     >
                         <Region
                             params={16}
@@ -68,7 +68,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
                             <Region
                                 name="properties_itemlist"
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 143, width: 176, top: 8, height: 116, flexDirection: 'column', gap: 7 }}
+                                layout={{ position: 'absolute', left: 143, width: 176, top: '50%', marginTop: -77.5, height: 116, flexDirection: 'column', gap: 7 }}
                             >
                                 {itemsPropertiesItemlist ?? (
                                     <>
@@ -79,7 +79,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
                                 )}
                                 <Region
                                     params={147472}
-                                    layout={{ width: 288, height: 22, flexShrink: 0, flexDirection: 'row' }}
+                                    layout={{ flexShrink: 0, flexDirection: 'row' }}
                                 >
                                     <Region
                                         params={16}
@@ -159,12 +159,12 @@ export const PurchaseConfirmationLayoutRaffleContainerItem = ({ captionRaffleTex
                 variant="4"
                 params={2192}
                 tintColor="#ebf9fc"
-                layout={{ position: 'absolute', left: 0, width: 304, top: 0, height: 49 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="raffle_text"
                     params={3145744}
-                    layout={{ position: 'absolute', left: 10, width: 233, top: 9, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, width: 233, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRaffleText ?? t('catalog.purchase.confirmation.dialog.raffling')}
@@ -237,7 +237,7 @@ export const PurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout }: 
         <Region
             name="buttons"
             params={131088}
-            layout={{ width: 315, height: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
+            layout={{ minWidth: 315, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
         >
             {itemsButtons ?? (
                 <>
@@ -260,7 +260,7 @@ export const PurchaseConfirmationLayoutProductNameItem = ({ captionProductName, 
         <Region
             name="product_name"
             params={8536080}
-            layout={{ width: 177, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 177, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionProductName ?? '001 lorem ipsum title that wraps around'}
@@ -282,7 +282,7 @@ export const PurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout
         <Region
             name="quantity"
             params={8536080}
-            layout={{ width: 41, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 41, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionQuantity ?? 'X 123'}
@@ -305,7 +305,7 @@ export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity
         <Region
             name="freeQuantity"
             params={8536080}
-            layout={{ width: 161, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 161, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionFreeQuantity ?? t('shop.bonus.items.count')}

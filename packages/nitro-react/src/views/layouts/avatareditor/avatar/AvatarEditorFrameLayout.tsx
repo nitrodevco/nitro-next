@@ -25,7 +25,7 @@ export const AvatarEditorFrameLayout = ({ layout, onClose }: AvatarEditorFrameLa
                 <Region
                     name="maincontent"
                     params={12716176}
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 33, height: 120 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 33, bottom: 2 }}
                 />
             </Region>
         </Frame>

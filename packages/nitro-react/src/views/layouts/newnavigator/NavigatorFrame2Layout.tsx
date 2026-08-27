@@ -44,19 +44,19 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     variant="3"
                     params={2192}
                     tintColor="#eceae0"
-                    layout={{ position: 'absolute', left: -3, width: 577, top: -3, height: 578 }}
+                    layout={{ position: 'absolute', left: -3, right: 4, top: -3, bottom: 53 }}
                 />
                 <Region
                     name="white_background"
                     params={128}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: -2, width: 576, top: -5, height: 33 }}
+                    layout={{ position: 'absolute', left: -2, right: 4, top: -5, height: 33 }}
                 />
                 <Border
                     variant="2"
                     name="left_pane"
                     params={2064}
-                    layout={{ position: 'absolute', left: 6, width: 141, top: 35, height: 538 }}
+                    layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 55 }}
                 >
                     <Region
                         name="left_pane_hide"
@@ -117,7 +117,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 5, width: 136, top: 25, height: 509 }}
+                        layout={{ position: 'absolute', left: 5, width: 136, top: 25, bottom: 4 }}
                     >
                         <Region
                             name="quicklinks_list"
@@ -133,13 +133,13 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                 <Region
                     name="right_pane"
                     params={2192}
-                    layout={{ position: 'absolute', left: 159, width: 410, top: 25, height: 548 }}
+                    layout={{ position: 'absolute', left: 159, right: 9, top: 25, bottom: 55 }}
                 >
                     <Border
                         variant="4"
                         name="create_room_border"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 189, top: 488, height: 60 }}
+                        layout={{ position: 'absolute', left: 0, width: 189, bottom: 0, height: 60 }}
                     >
                         <Region
                             name="create_room"
@@ -147,7 +147,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                             params={2193}
                             onPointerTap={onCreateRoom}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 56 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -170,7 +170,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                         variant="5"
                         name="random_room_border"
                         params={1040}
-                        layout={{ position: 'absolute', left: 205, width: 189, top: 488, height: 60 }}
+                        layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
                     >
                         <Region
                             name="random_room"
@@ -178,7 +178,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                             params={2193}
                             onPointerTap={onRandomRoom}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 56 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -199,7 +199,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     </Border>
                     <Region
                         visible={visiblePromoteRoomBorder ?? false}
-                        layout={{ position: 'absolute', left: 205, width: 189, top: 488, height: 60 }}
+                        layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
                     >
                         <Border
                             variant="5"
@@ -213,7 +213,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                                 params={2193}
                                 onPointerTap={onPromoteRoom}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 56 }}
+                                layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                             >
                                 <ThemeImage
                                     params={16}
@@ -236,7 +236,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     <Region
                         name="search_tools"
                         params={786448}
-                        layout={{ position: 'absolute', left: 0, width: 408, top: 3, height: 36 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -205, width: 408, top: 3, height: 36 }}
                     >
                         <Dropmenu
                             variant="4"
@@ -295,7 +295,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 1, width: 407, top: 45, height: 423 }}
+                        layout={{ position: 'absolute', left: 1, right: 2, top: 45, bottom: 80 }}
                     >
                         <Region
                             name="block_results"
@@ -317,7 +317,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                         params={2176}
                         visible={visibleSearchWaitingForResultsMask ?? false}
                         backgroundColor="#eceae0"
-                        layout={{ position: 'absolute', left: 0, width: 392, top: 42, height: 429 }}
+                        layout={{ position: 'absolute', left: 0, right: 18, top: 42, bottom: 77 }}
                     />
                 </Region>
                 <Region
@@ -336,7 +336,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                 <ThemeImage
                     params={144}
                     src={layoutImage('talent_task_progress_bg.png')}
-                    layout={{ position: 'absolute', left: -2, width: 585, top: 28, height: 1 }}
+                    layout={{ position: 'absolute', left: -2, right: -5, top: 28, height: 1 }}
                 />
                 <TabContext
                     variant="3"
@@ -651,12 +651,12 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, i
                 name="room_info_usercount_border"
                 params={1835024}
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: 40, width: 40, top: 93, height: 18 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, bottom: 35, height: 18 }}
             >
                 <Region
                     name="usercount"
                     params={786448}
-                    layout={{ position: 'absolute', left: 3, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsUsercount ?? (
                         <>
@@ -772,7 +772,7 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ captionRoo
             <Region
                 name="room_info_container"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 381, top: 1, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 18 }}
             >
                 <Border
                     variant="3"
@@ -784,7 +784,7 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ captionRoo
                     <Region
                         name="usercount"
                         params={786448}
-                        layout={{ position: 'absolute', left: 3, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                     >
                         {itemsUsercount ?? (
                             <>
@@ -797,7 +797,7 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ captionRoo
                 <Region
                     name="room_name"
                     params={144}
-                    layout={{ position: 'absolute', left: 44, width: 282, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 44, right: 55, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionRoomName ?? 'Room Name PH'} />
                 </Region>
@@ -806,7 +806,7 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ captionRoo
                     params={262161}
                     onPointerTap={onInfoPopupClickRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 359, width: 18, top: 0, height: 18 }}
+                    layout={{ position: 'absolute', right: 4, width: 18, top: 0, height: 18 }}
                 >
                     <ThemeImage
                         params={16}
@@ -869,7 +869,7 @@ export const NavigatorFrame2LayoutCategoryContainerItem = ({ captionCategoryName
                     tags={[ 'category_header' ]}
                     params={144}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 0, width: 396, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
                 >
                     <Region
                         name="category_collapse"
@@ -906,7 +906,7 @@ export const NavigatorFrame2LayoutCategoryContainerItem = ({ captionCategoryName
                     <Region
                         name="category_controls_itemlist"
                         params={262160}
-                        layout={{ position: 'absolute', left: 299, width: 83, top: 1, height: 26, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', right: 14, width: 83, top: 1, height: 26, flexDirection: 'row', gap: 5 }}
                     >
                         {itemsCategoryControlsItemlist ?? (
                             <>
@@ -922,7 +922,7 @@ export const NavigatorFrame2LayoutCategoryContainerItem = ({ captionCategoryName
                 <Region
                     name="category_content"
                     params={144}
-                    layout={{ position: 'absolute', left: 4, width: 387, top: 29, height: 171, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 4, right: 5, top: 29, height: 171, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsCategoryContent ?? (
                         <>
@@ -1014,7 +1014,7 @@ export const NavigatorFrame2LayoutCategoryContainerCollapsedItem = ({ captionCat
                 tags={[ 'category_header' ]}
                 params={144}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 387, top: 0, height: 26 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
             >
                 <Region
                     name="category_name_region"
@@ -1051,7 +1051,7 @@ export const NavigatorFrame2LayoutCategoryContainerCollapsedItem = ({ captionCat
                 <Region
                     name="category_controls_itemlist"
                     params={262160}
-                    layout={{ position: 'absolute', left: 347, width: 36, top: 1, height: 24, flexDirection: 'row', gap: 5 }}
+                    layout={{ position: 'absolute', right: 4, width: 36, top: 1, height: 24, flexDirection: 'row', gap: 5 }}
                 >
                     {itemsCategoryControlsItemlist ?? (
                         <>
@@ -1081,7 +1081,7 @@ export const NavigatorFrame2LayoutNoResultsContainerItem = ({ layout }: Navigato
         >
             <Region
                 params={3932240}
-                layout={{ position: 'absolute', left: 51, width: 286, top: 0, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 51, width: 286, top: '50%', marginTop: -26.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={t('navigator.search.returned.no.results')}

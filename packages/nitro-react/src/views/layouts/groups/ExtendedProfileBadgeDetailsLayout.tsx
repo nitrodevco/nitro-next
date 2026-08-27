@@ -102,7 +102,7 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
                     name="rarity_border"
                     tags={[ 'BLEND_SUBTRACT' ]}
                     params={4194320}
-                    layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRarityBorder ?? 'Unique badge'}

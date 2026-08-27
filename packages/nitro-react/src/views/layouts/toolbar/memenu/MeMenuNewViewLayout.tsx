@@ -75,7 +75,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText ?? t('widget.memenu.guide')}
@@ -106,7 +106,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText2 ?? t('widget.memenu.talents')}
@@ -137,7 +137,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText3 ?? t('widget.memenu.minimail')}
@@ -168,7 +168,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText4 ?? t('widget.memenu.profile')}
@@ -199,7 +199,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText5 ?? t('widget.memenu.myrooms')}
@@ -230,7 +230,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText6 ?? t('widget.memenu.editavatar')}
@@ -261,7 +261,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText7 ?? t('widget.memenu.forums')}
@@ -292,7 +292,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 6, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText8 ?? t('memenu.collectibles')}

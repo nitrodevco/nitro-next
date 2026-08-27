@@ -55,6 +55,7 @@ export interface RosRoomSettingsLayoutProps {
     onCategories?: () => void;
     onChatFloodSensitivity?: () => void;
     onClose?: () => void;
+    onContentContainer?: () => void;
     onDoNotLeaveOnDoorTileCheckbox?: () => void;
     onDoormodeDoorbell?: () => void;
     onDoormodeInvisible?: () => void;
@@ -83,6 +84,8 @@ export interface RosRoomSettingsLayoutProps {
     onTab3?: () => void;
     onTab4?: () => void;
     onTab5?: () => void;
+    onTabContainer1?: () => void;
+    onTabContainer2?: () => void;
     onTradesettings?: () => void;
     onWallThickness?: () => void;
     visibleDoormodeOverrideInfo?: boolean;
@@ -96,7 +99,7 @@ export interface RosRoomSettingsLayoutProps {
     visibleTabContainer5?: boolean;
 }
 
-export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSettingsText, captionDescriptionLabel, captionDoNotLeaveOnDoorTileText, captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, captionFriendsTxt, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionMaxvisitorsLabel, captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationBanNoneLabel, captionModerationBanRights, captionModerationHeader, captionModerationKickAllLabel, captionModerationKickHeader, captionModerationKickNoneLabel, captionModerationKickRightsHeader, captionModerationMuteHeader, captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, captionPasswordConfirmLabel, captionPasswordLabel, captionRemoveLink, captionRoomAccessTabCaption, captionRoomAccessTabInfo, captionRoomBehaviorText, captionRoomNameLabel, captionSearchTxt, captionTagLabel, captionTradesettingsLabel, captionUsersWithRightsTxt, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, captionWalkThroughText, itemsFlexibleContent, layout, onAllowWalkThroughCheckbox, onBuildersFaqButton, onCategories, onChatFloodSensitivity, onClose, onDoNotLeaveOnDoorTileCheckbox, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onMaxvisitors, onModerationBanDropdown, onModerationBanNone, onModerationBanRights, onModerationKickAll, onModerationKickDropdown, onModerationKickNone, onModerationKickRights, onModerationMuteDropdown, onModerationMuteNone, onModerationMuteRights, onModerationUnbanBtn, onRemoveAllFlatCtrls, onRemoveLinkRegion, onTab1, onTab2, onTab3, onTab4, onTab5, onTradesettings, onWallThickness, visibleDoormodeOverrideInfo, visibleGuildRightsContainer, visibleModerationBanSelector, visibleModerationKickSelector, visibleModerationMuteSelector, visibleTabContainer1, visibleTabContainer2, visibleTabContainer3, visibleTabContainer5 }: RosRoomSettingsLayoutProps) => {
+export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSettingsText, captionDescriptionLabel, captionDoNotLeaveOnDoorTileText, captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, captionFriendsTxt, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionMaxvisitorsLabel, captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationBanNoneLabel, captionModerationBanRights, captionModerationHeader, captionModerationKickAllLabel, captionModerationKickHeader, captionModerationKickNoneLabel, captionModerationKickRightsHeader, captionModerationMuteHeader, captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, captionPasswordConfirmLabel, captionPasswordLabel, captionRemoveLink, captionRoomAccessTabCaption, captionRoomAccessTabInfo, captionRoomBehaviorText, captionRoomNameLabel, captionSearchTxt, captionTagLabel, captionTradesettingsLabel, captionUsersWithRightsTxt, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, captionWalkThroughText, itemsFlexibleContent, layout, onAllowWalkThroughCheckbox, onBuildersFaqButton, onCategories, onChatFloodSensitivity, onClose, onContentContainer, onDoNotLeaveOnDoorTileCheckbox, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onMaxvisitors, onModerationBanDropdown, onModerationBanNone, onModerationBanRights, onModerationKickAll, onModerationKickDropdown, onModerationKickNone, onModerationKickRights, onModerationMuteDropdown, onModerationMuteNone, onModerationMuteRights, onModerationUnbanBtn, onRemoveAllFlatCtrls, onRemoveLinkRegion, onTab1, onTab2, onTab3, onTab4, onTab5, onTabContainer1, onTabContainer2, onTradesettings, onWallThickness, visibleDoormodeOverrideInfo, visibleGuildRightsContainer, visibleModerationBanSelector, visibleModerationKickSelector, visibleModerationMuteSelector, visibleTabContainer1, visibleTabContainer2, visibleTabContainer3, visibleTabContainer5 }: RosRoomSettingsLayoutProps) => {
     const t = useTranslation();
     const [ roomNameValue, setRoomNameValue ] = useState('');
     const [ descriptionValue, setDescriptionValue ] = useState('');
@@ -175,12 +178,16 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                 <Region
                     name="content_container"
                     params={17}
+                    onPointerTap={onContentContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 327, top: 42, height: 369 }}
                 >
                     <Region
                         name="tab_container_1"
                         params={1}
                         visible={visibleTabContainer1 ?? false}
+                        onPointerTap={onTabContainer1}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 360 }}
                     >
                         <Region
@@ -319,7 +326,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                             <Region
                                 name="remove_link"
                                 params={4980752}
-                                layout={{ position: 'absolute', left: -1, width: 174, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -91, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
@@ -340,12 +347,14 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                         name="tab_container_2"
                         params={1}
                         visible={visibleTabContainer2 ?? false}
+                        onPointerTap={onTabContainer2}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 366 }}
                     >
                         <Region
                             name="normal_access_container"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 321, top: 0, height: 354 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 354 }}
                         >
                             <Region
                                 name="room_access_tab_caption"
@@ -526,7 +535,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                         name="builders_faq_button"
                                         params={131281}
                                         onPointerTap={onBuildersFaqButton}
-                                        layout={{ position: 'absolute', left: 11, width: 287, top: 122, height: 30 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -143, width: 287, top: 122, height: 30 }}
                                     >
                                         {t('notification.builders_club.room_locked.linkTitle')}
                                     </Button>
@@ -550,13 +559,13 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                         name="tab_container_3"
                         params={144}
                         visible={visibleTabContainer3 ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 327, top: 0, height: 367 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367 }}
                     >
                         <Region
                             name="guild_rights_container"
                             params={144}
                             visible={visibleGuildRightsContainer ?? false}
-                            layout={{ position: 'absolute', left: 6, width: 315, top: 0, height: 367 }}
+                            layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 367 }}
                         >
                             <Region
                                 visible={false}
@@ -582,7 +591,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                         <Region
                             name="normal_rights_container"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 327, top: 0, height: 367 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367 }}
                         >
                             <Border
                                 variant="0"
@@ -604,13 +613,13 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                 <TextInput
                                     value={filterUsersInputValue}
                                     onChange={setFilterUsersInputValue}
-                                    layout={{ position: 'absolute', left: 97, width: 216, top: 8, height: 23 }}
+                                    layout={{ position: 'absolute', left: 97, right: 9, top: 8, height: 23 }}
                                 />
                             </Border>
                             <Region
                                 name="users_with_rights_txt"
                                 params={786448}
-                                layout={{ position: 'absolute', left: 0, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -163.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
@@ -621,7 +630,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                             <Region
                                 name="friends_txt"
                                 params={786448}
-                                layout={{ position: 'absolute', left: 175, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: 11.5, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
@@ -634,11 +643,11 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                 name="users_with_rights_cont"
                                 params={2064}
                                 tintColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 150, top: 74, height: 289 }}
+                                layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 246 }}
+                                    layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39 }}
                                 >
                                     <Region
                                         name="users_with_rights_item_list"
@@ -652,7 +661,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                     name="remove_all_flat_ctrls"
                                     params={132113}
                                     onPointerTap={onRemoveAllFlatCtrls}
-                                    layout={{ position: 'absolute', left: 4, width: 142, top: 256, height: 29, minWidth: 142, maxWidth: 142 }}
+                                    layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
                                 >
                                     {t('navigator.flatctrls.clear')}
                                 </ButtonThick>
@@ -662,11 +671,11 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                                 name="friends_cont"
                                 params={2064}
                                 tintColor="#ffffff"
-                                layout={{ position: 'absolute', left: 173, width: 150, top: 74, height: 289 }}
+                                layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
-                                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 281 }}
+                                    layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4 }}
                                 >
                                     <Region
                                         name="friends_item_list"
@@ -849,7 +858,7 @@ export const RosRoomSettingsLayout = ({ captionCategoryLabel, captionChatSetting
                         name="tab_container_5"
                         params={144}
                         visible={visibleTabContainer5 ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 331, top: 0, height: 367 }}
+                        layout={{ position: 'absolute', left: 0, right: -4, top: 0, height: 367 }}
                     >
                         <Region
                             name="moderation_header"

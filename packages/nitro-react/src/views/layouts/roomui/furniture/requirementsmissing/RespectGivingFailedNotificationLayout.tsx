@@ -55,7 +55,7 @@ export const RespectGivingFailedNotificationLayout = ({ captionBodyTxt, captionC
                     params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onClose}
-                    layout={{ position: 'absolute', left: 141, width: 140, top: 130, height: 50 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -43.5, width: 140, top: 130, height: 50 }}
                 >
                     {t('respect.giving.failed.button')}
                 </Button>

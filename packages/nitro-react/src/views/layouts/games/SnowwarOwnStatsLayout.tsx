@@ -17,7 +17,7 @@ export const SnowwarOwnStatsLayout = ({ captionPersonalScore, captionPersonalSco
         <Region layout={{ position: 'relative', width: 171, height: 73, ...layout }}>
             <Region
                 params={1024}
-                layout={{ position: 'absolute', left: 0, width: 171, top: 0, height: 73 }}
+                layout={{ position: 'absolute', left: 0, width: 171, bottom: 0, height: 73 }}
             >
                 <ThemeImage
                     name="backgroundImage"

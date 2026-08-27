@@ -123,7 +123,7 @@ export const MarketplaceOfferDetailsLayout = ({ captionAveragePrice, captionChar
                     name="buy_button"
                     params={393233}
                     onPointerTap={onBuyButton}
-                    layout={{ position: 'absolute', left: 291, width: 39, top: 35, height: 22 }}
+                    layout={{ position: 'absolute', right: 10, width: 39, top: 35, height: 22 }}
                 >
                     {t('buy')}
                 </Button>

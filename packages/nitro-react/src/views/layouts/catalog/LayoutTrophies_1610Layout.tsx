@@ -22,7 +22,7 @@ export const LayoutTrophies_1610Layout = ({ captionTrophyDescription, captionTro
             <Region
                 name="ctlg_trophies"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="trophy.description"
@@ -44,14 +44,14 @@ export const LayoutTrophies_1610Layout = ({ captionTrophyDescription, captionTro
                         name="ctlg_teaserimg_1"
                         params={2192}
                         src={srcCtlgTeaserimg1}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 135 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <ContainerButton
                         variant="3"
                         name="ctlg_prevmodel_button"
                         params={393233}
                         onPointerTap={onCtlgPrevmodelButton}
-                        layout={{ position: 'absolute', left: 115, width: 30, top: 101, height: 30, maxWidth: 100 }}
+                        layout={{ position: 'absolute', right: 215, width: 30, top: 101, height: 30, maxWidth: 100 }}
                     >
                         <Icon
                             variant="2"
@@ -66,7 +66,7 @@ export const LayoutTrophies_1610Layout = ({ captionTrophyDescription, captionTro
                         name="ctlg_nextmodel_button"
                         params={393233}
                         onPointerTap={onCtlgNextmodelButton}
-                        layout={{ position: 'absolute', left: 210, width: 30, top: 101, height: 30, maxWidth: 100 }}
+                        layout={{ position: 'absolute', right: 120, width: 30, top: 101, height: 30, maxWidth: 100 }}
                     >
                         <Icon
                             variant="3"
@@ -96,27 +96,27 @@ export const LayoutTrophies_1610Layout = ({ captionTrophyDescription, captionTro
                 <Border
                     variant="5"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 340, height: 83 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 340, bottom: 37 }}
                 >
                     <Region
                         name="textInputWidget"
                         tags={[ 'EMBEDDED' ]}
                         params={2192}
-                        layout={{ position: 'absolute', left: 6, width: 349, top: 7, height: 70 }}
+                        layout={{ position: 'absolute', left: 6, right: 5, top: 7, bottom: 6 }}
                     >
                         <TextInput
                             value={inputTextValue}
                             onChange={setInputTextValue}
                             maxLength={300}
                             multiline
-                            layout={{ position: 'absolute', left: 0, width: 349, top: 0, height: 70 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     </Region>
                 </Border>
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

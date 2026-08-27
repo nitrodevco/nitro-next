@@ -13,6 +13,7 @@ export interface MemenuMainLayoutProps {
     captionSettingsText?: string;
     captionWaveText?: string;
     layout?: BoxLayout;
+    onButtons?: () => void;
     onClothes?: () => void;
     onCredits?: () => void;
     onDance?: () => void;
@@ -33,7 +34,7 @@ export interface MemenuMainLayoutProps {
     srcWaveIcon?: string;
 }
 
-export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, captionDanceText, captionEffectsText, captionHcText, captionMinimailText, captionRoomsText, captionSettingsText, captionWaveText, layout, onClothes, onCredits, onDance, onEffects, onHc, onMinimail, onRooms, onSettings, onWave, srcClothesIcon, srcCreditsIcon, srcDanceIcon, srcEffectsIcon, srcHcIcon, srcMinimailIcon, srcRoomsIcon, srcSettingsIcon, srcWaveIcon }: MemenuMainLayoutProps) => {
+export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, captionDanceText, captionEffectsText, captionHcText, captionMinimailText, captionRoomsText, captionSettingsText, captionWaveText, layout, onButtons, onClothes, onCredits, onDance, onEffects, onHc, onMinimail, onRooms, onSettings, onWave, srcClothesIcon, srcCreditsIcon, srcDanceIcon, srcEffectsIcon, srcHcIcon, srcMinimailIcon, srcRoomsIcon, srcSettingsIcon, srcWaveIcon }: MemenuMainLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,6 +42,8 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
             <Region
                 name="buttons"
                 params={17}
+                onPointerTap={onButtons}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 245, top: 0, height: 249 }}
             >
                 <Region
@@ -59,7 +62,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="hc_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 0, width: 94, top: 61, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -39.5, width: 94, top: 61, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHcText ?? t('widget.memenu.hc')}
@@ -83,7 +86,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="rooms_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomsText ?? t('widget.memenu.myrooms')}
@@ -107,7 +110,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="clothes_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionClothesText ?? t('widget.memenu.myclothes')}
@@ -131,7 +134,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="effects_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionEffectsText ?? t('widget.memenu.effects')}
@@ -155,7 +158,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="dance_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDanceText ?? t('widget.memenu.dance')}
@@ -179,7 +182,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="wave_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionWaveText ?? t('widget.memenu.wave')}
@@ -203,7 +206,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="settings_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSettingsText ?? t('widget.memenu.settings')}
@@ -227,7 +230,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="credits_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCreditsText ?? t('widget.memenu.credits')}
@@ -251,7 +254,7 @@ export const MemenuMainLayout = ({ captionClothesText, captionCreditsText, capti
                     <Region
                         name="minimail_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMinimailText ?? t('widget.memenu.minimail')}

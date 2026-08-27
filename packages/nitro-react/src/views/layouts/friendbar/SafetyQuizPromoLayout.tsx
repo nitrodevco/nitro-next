@@ -18,12 +18,12 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
                 name="safety_quiz_overlay"
                 params={192}
                 tintColor="#9b0000"
-                layout={{ position: 'absolute', left: 186, width: 577, top: 0, height: 57 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -102.5, width: 577, top: 0, height: 57 }}
             >
                 <Border
                     variant="106"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 571, top: 3, height: 51 }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 3, height: 51 }}
                 />
                 <Region
                     params={16}
@@ -46,7 +46,7 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
                     name="safety_quiz_button"
                     params={396305}
                     onPointerTap={onSafetyQuizButton}
-                    layout={{ position: 'absolute', left: 386, width: 188, top: 3, height: 51 }}
+                    layout={{ position: 'absolute', right: 3, width: 188, top: '50%', marginTop: -25.5, height: 51 }}
                 >
                     {t('safety.promo.widget.button')}
                 </Button>

@@ -81,7 +81,7 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                         name="number_container"
                         tags={[ 'COUNT' ]}
                         params={393360}
-                        layout={{ position: 'absolute', left: 0, width: 38, top: 1, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20 }}
                     >
                         <Region
                             name="number"

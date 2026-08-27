@@ -64,12 +64,12 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                     name="promo_img"
                     params={1310736}
                     src={srcPromoImg ?? '${image.library.url}talent/citizenship_vip_quest_promo.png'}
-                    layout={{ position: 'absolute', left: 95, width: 92, top: 118, height: 97 }}
+                    layout={{ position: 'absolute', right: 6, width: 92, bottom: 1, height: 97 }}
                 />
                 <Region
                     name="content_itemlist"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 188, top: 30, height: 105, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsContentItemlist ?? (
                         <>

@@ -59,7 +59,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="profile_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 9, width: 60, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -30.5, width: 60, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionProfileText ?? t('widget.memenu.profile')}
@@ -84,7 +84,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="minimail_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 14, width: 50, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMinimailText ?? t('widget.memenu.minimail')}
@@ -109,7 +109,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="rooms_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 8, width: 62, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -31.5, width: 62, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomsText ?? t('widget.memenu.myrooms')}
@@ -134,7 +134,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="settings_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 15, width: 49, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 49, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSettingsText ?? t('widget.memenu.settings')}
@@ -159,7 +159,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="achievements_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 3, width: 83, top: 61, height: 17, maxWidth: 89, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -41.5, width: 83, top: 61, height: 17, maxWidth: 89, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAchievementsText ?? t('widget.memenu.achievements')}
@@ -184,7 +184,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="talents_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 18, width: 43, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -21.5, width: 43, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTalentsText ?? t('widget.memenu.talents')}
@@ -209,7 +209,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="guide_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 5, width: 69, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -34.5, width: 69, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGuideText ?? t('widget.memenu.guide')}
@@ -234,7 +234,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="clothes_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionClothesText ?? t('widget.memenu.editavatar')}

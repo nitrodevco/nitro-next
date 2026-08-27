@@ -53,7 +53,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                         name="music_inventory_splash_image"
                         params={128}
                         src={srcMusicInventorySplashImage}
-                        layout={{ position: 'absolute', left: 1, width: 9, top: 1, height: 100 }}
+                        layout={{ position: 'absolute', left: 1, right: 293, top: 1, height: 100 }}
                     />
                     <Region
                         params={16}

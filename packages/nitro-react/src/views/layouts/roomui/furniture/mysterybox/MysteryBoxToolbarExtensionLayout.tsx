@@ -63,7 +63,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                     </Region>
                     <Region
                         params={147664}
-                        layout={{ position: 'absolute', left: 49, width: 89, top: 72, height: 39 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -44, width: 89, top: 72, height: 39 }}
                     >
                         <Region
                             name="box_region"
@@ -121,7 +121,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                     <Region
                         name="faq_link"
                         params={193}
-                        layout={{ position: 'absolute', left: 24, width: 138, top: 112, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 138, top: 112, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         onPointerTap={onFaqLink}
                         cursor="pointer"
                     >

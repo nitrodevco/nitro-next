@@ -24,11 +24,11 @@ export const UserclassificationFrameLayout = ({ itemsUserclassificationList, lay
                     name="classifications_cont"
                     params={2192}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 192 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 263, top: 0, height: 192 }}
+                        layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="userclassification_list"
@@ -65,21 +65,21 @@ export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUser
             <Region
                 name="user_classification_txt"
                 params={80}
-                layout={{ position: 'absolute', left: 110, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 48, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionUserClassificationTxt ?? ''} />
             </Region>
             <Region
                 name="user_name_txt"
                 params={145}
-                layout={{ position: 'absolute', left: 5, width: 100, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 5, right: 158, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionUserNameTxt ?? 'whatwasit'} />
             </Region>
             <Region
                 name="visit_room_txt"
                 params={81}
-                layout={{ position: 'absolute', left: 223, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 1, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionVisitRoomTxt ?? 'Visit'} />
             </Region>

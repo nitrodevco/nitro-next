@@ -32,12 +32,12 @@ export const NewFriendEntityLayout = ({ captionBubbleCaption, captionBubbleLinkR
                 <Region
                     name="icons"
                     params={262224}
-                    layout={{ position: 'absolute', left: 117, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
                 />
                 <Region
                     name="pieces"
                     params={2192}
-                    layout={{ position: 'absolute', left: 3, width: 121, top: 7, height: 35, minHeight: 30, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -6, minHeight: 30, flexDirection: 'column' }}
                 >
                     {itemsPieces ?? (
                         <NewFriendEntityLayoutHeaderItem />
@@ -57,7 +57,7 @@ export const NewFriendEntityLayout = ({ captionBubbleCaption, captionBubbleLinkR
                         <Region
                             name="bubble_title"
                             params={8388752}
-                            layout={{ position: 'absolute', left: 5, width: 93, top: 4, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionBubbleTitle ?? t('friendbar.game_invite.title')}
@@ -68,7 +68,7 @@ export const NewFriendEntityLayout = ({ captionBubbleCaption, captionBubbleLinkR
                         <Region
                             name="bubble_message"
                             params={8388752}
-                            layout={{ position: 'absolute', left: 5, width: 110, top: 32, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 5, right: 24, top: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionBubbleMessage ?? ''}
@@ -81,14 +81,14 @@ export const NewFriendEntityLayout = ({ captionBubbleCaption, captionBubbleLinkR
                             name="bubble_button_close"
                             params={81}
                             onPointerTap={onBubbleButtonClose}
-                            layout={{ position: 'absolute', left: 101, width: 19, top: 3, height: 20 }}
+                            layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
                         />
                         <ContainerButton
                             variant="3"
                             name="bubble_button_accept"
                             params={394449}
                             onPointerTap={onBubbleButtonAccept}
-                            layout={{ position: 'absolute', left: 13, width: 96, top: 46, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="8"
@@ -114,12 +114,12 @@ export const NewFriendEntityLayout = ({ captionBubbleCaption, captionBubbleLinkR
                             params={1233}
                             onPointerTap={onBubbleClickRegionReject}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 2, width: 118, top: 79, height: 15 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -67.5, width: 118, bottom: 26, height: 15 }}
                         >
                             <Region
                                 name="bubble_link_reject"
                                 params={4194320}
-                                layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionBubbleLinkReject ?? t('friendbar.request.decline')}
@@ -170,7 +170,7 @@ export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader,
                 params={145}
                 onPointerTap={onRegionProfile}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 35 }}
+                layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 35 }}
             >
                 <Region
                     params={16}
@@ -180,7 +180,7 @@ export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader,
                         name="canvas"
                         params={3932160}
                         src={srcCanvas}
-                        layout={{ position: 'absolute', left: 19, width: 10, top: 29, height: 10 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -6, width: 10, top: '50%', marginTop: -6, height: 10 }}
                     />
                 </Region>
             </Region>

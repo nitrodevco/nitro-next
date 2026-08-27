@@ -54,7 +54,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                 >
                     <Region
                         params={3088}
-                        layout={{ position: 'absolute', left: 12, width: 112, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 12, width: 112, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('help.main2.bully.title')}
@@ -103,7 +103,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                 >
                     <Region
                         params={3088}
-                        layout={{ position: 'absolute', left: 12, width: 131, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 12, width: 131, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('help.main2.question.title')}
@@ -152,7 +152,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                 >
                     <Region
                         params={3088}
-                        layout={{ position: 'absolute', left: 12, width: 110, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 12, width: 110, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('help.main2.tour.title')}
@@ -202,7 +202,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         variant="104"
                         params={144}
                         tintColor="#bb0000"
-                        layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
                     >
                         <Region
                             params={16}
@@ -225,12 +225,12 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     </Border>
                     <Region
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 271, top: 42, height: 127 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 42, bottom: 0 }}
                     >
                         <Border
                             variant="105"
                             params={2192}
-                            layout={{ position: 'absolute', left: 0, width: 271, top: -10, height: 137 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: -10, bottom: 0 }}
                         >
                             <Region
                                 params={16}
@@ -247,7 +247,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                                 params={147665}
                                 tintColor="#dd0000"
                                 onPointerTap={onEmergencyButton}
-                                layout={{ position: 'absolute', left: 44, width: 183, top: 93, height: 34 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -91.5, width: 183, top: 93, height: 34 }}
                             >
                                 <Region
                                     params={16}
@@ -265,11 +265,11 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                 <WidgetSlot
                     widgetType="separator"
                     params={208}
-                    layout={{ position: 'absolute', left: 33, width: 574, top: 367, height: 25 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -288.5, width: 574, top: 367, height: 25 }}
                 >
                     <Region
                         params={3088}
-                        layout={{ position: 'absolute', left: 12, width: 105, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 12, width: 105, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('help.main2.self.title')}
@@ -292,7 +292,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     >
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: 10, width: 170, top: 24, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -85.5, width: 170, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={t('help.main2.self.safetypolicy')}
@@ -304,7 +304,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         widgetType="separator"
                         params={3088}
                         options={{ 'separator:vertical': 'true' }}
-                        layout={{ position: 'absolute', left: 190, width: 2, top: 10, height: 49 }}
+                        layout={{ position: 'absolute', left: 190, width: 2, top: '50%', marginTop: -24, height: 49 }}
                     />
                     <Region
                         name="habboway_link"
@@ -315,7 +315,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     >
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: 11, width: 170, top: 24, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -85.5, width: 170, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={t('help.main2.self.habboway')}
@@ -327,7 +327,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         widgetType="separator"
                         params={3088}
                         options={{ 'separator:vertical': 'true' }}
-                        layout={{ position: 'absolute', left: 384, width: 2, top: 10, height: 49 }}
+                        layout={{ position: 'absolute', left: 384, width: 2, top: '50%', marginTop: -24, height: 49 }}
                     />
                     <Region
                         name="faq_link"
@@ -338,7 +338,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     >
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: 10, width: 170, top: 24, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 170, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={t('help.main2.self.faq')}
@@ -352,11 +352,11 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     params={209}
                     onPointerTap={onPaymentLink}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 50, width: 541, top: 463, height: 23 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -271.5, width: 541, top: 463, height: 23 }}
                 >
                     <Region
                         params={3280}
-                        layout={{ position: 'absolute', left: 206, width: 129, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -64.5, width: 129, top: '50%', marginTop: -8.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('help.main2.self.payment')}

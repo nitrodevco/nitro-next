@@ -71,7 +71,7 @@ export const PlaylisteditorPlaylistItemLayout = ({ captionSongAuthorText, captio
                                 name="button_remove_from_playlist_image"
                                 params={3934352}
                                 src={srcButtonRemoveFromPlaylistImage}
-                                layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
+                                layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                             />
                         </ContainerButton>
                     </Border>

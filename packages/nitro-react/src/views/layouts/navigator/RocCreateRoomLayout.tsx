@@ -45,19 +45,19 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                     <Region
                         name="create_room_caption"
                         params={1041}
-                        layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 122, bottom: 302, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCreateRoomCaption ?? t('navigator.roomname')} />
                     </Region>
                     <TextInput
                         value={roomNameInputValue}
                         onChange={setRoomNameInputValue}
-                        layout={{ position: 'absolute', left: 0, width: 240, top: 20, height: 19 }}
+                        layout={{ position: 'absolute', left: 0, right: 15, bottom: 276, height: 19 }}
                     />
                     <Region
                         name="create_desc_caption"
                         params={1041}
-                        layout={{ position: 'absolute', left: 0, width: 120, top: 50, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 120, bottom: 252, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCreateDescCaption ?? t('navigator.roomdesc')} />
                     </Region>
@@ -65,12 +65,12 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                         value={roomDescInputValue}
                         onChange={setRoomDescInputValue}
                         multiline
-                        layout={{ position: 'absolute', left: 0, width: 240, top: 70, height: 60 }}
+                        layout={{ position: 'absolute', left: 0, right: 15, bottom: 185, height: 60 }}
                     />
                     <Region
                         name="create_category_caption"
                         params={1041}
-                        layout={{ position: 'absolute', left: 0, width: 117, top: 140, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 117, bottom: 162, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCreateCategoryCaption ?? t('navigator.category')} />
                     </Region>
@@ -84,7 +84,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                     <Region
                         name="create_visitors_caption"
                         params={1041}
-                        layout={{ position: 'absolute', left: 0, width: 132, top: 190, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 132, bottom: 112, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCreateVisitorsCaption ?? t('navigator.maxvisitors')} />
                     </Region>
@@ -98,7 +98,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                     <Region
                         name="create_trade_caption"
                         params={1041}
-                        layout={{ position: 'absolute', left: 0, width: 145, top: 240, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 145, bottom: 62, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCreateTradeCaption ?? t('navigator.tradesettings')} />
                     </Region>
@@ -114,7 +114,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                         name="create_button"
                         params={132113}
                         onPointerTap={onCreateButton}
-                        layout={{ position: 'absolute', left: 0, width: 100, top: 290, height: 21, minWidth: 100, maxWidth: 100 }}
+                        layout={{ position: 'absolute', left: 0, width: 100, bottom: 4, height: 21, minWidth: 100, maxWidth: 100 }}
                     >
                         {t('navigator.createroom.create')}
                     </ButtonThick>
@@ -123,7 +123,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                         name="back_button"
                         params={132177}
                         onPointerTap={onBackButton}
-                        layout={{ position: 'absolute', left: 140, width: 100, top: 290, height: 21, minWidth: 100, maxWidth: 100 }}
+                        layout={{ position: 'absolute', right: 15, width: 100, bottom: 4, height: 21, minWidth: 100, maxWidth: 100 }}
                     >
                         {t('generic.cancel')}
                     </Button>
@@ -135,7 +135,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, captionCreateC
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 20, height: 295 }}
+                        layout={{ position: 'absolute', left: 0, right: 10, top: 20, bottom: 0 }}
                     >
                         <Region
                             name="layout_item_list"

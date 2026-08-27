@@ -25,7 +25,7 @@ export const PendingGuideSessionLayout = ({ layout, onClose, onCloseButton }: Pe
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 351, top: 6, height: 113, flexDirection: 'column', gap: 9 }}
+                    layout={{ position: 'absolute', left: 8, top: 6, flexDirection: 'column', gap: 9 }}
                 >
                     <Region
                         params={16}
@@ -56,14 +56,14 @@ export const PendingGuideSessionLayout = ({ layout, onClose, onCloseButton }: Pe
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: 115, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>
                         <ThemeImage
                             params={1040}
                             src={layoutImage('help_illustrations_question.png')}
-                            layout={{ position: 'absolute', left: 272, width: 90, top: -80, height: 128 }}
+                            layout={{ position: 'absolute', left: 272, width: 90, bottom: 4, height: 128 }}
                         />
                     </Region>
                 </Region>

@@ -22,12 +22,12 @@ export const ChatinputWindowLayout = ({ itemsChatInputContainer, layout }: Chati
                     tags={[ 'chat_bubble' ]}
                     params={1049600}
                     dropShadow={{ distance: 4, alpha: 0.6 }}
-                    layout={{ position: 'absolute', left: 18, width: 733, top: 669, height: 117, minWidth: 90 }}
+                    layout={{ position: 'absolute', left: 18, width: 733, bottom: 238, height: 117, minWidth: 90 }}
                 >
                     <Region
                         name="chat_input_container"
                         params={4194512}
-                        layout={{ position: 'absolute', left: 124, width: 484, top: 60, height: 57, flexDirection: 'row', gap: 7 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -242.5, width: 484, top: 60, height: 57, flexDirection: 'row', gap: 7 }}
                     >
                         {itemsChatInputContainer ?? (
                             <>
@@ -42,7 +42,7 @@ export const ChatinputWindowLayout = ({ itemsChatInputContainer, layout }: Chati
                     name="chatstyles_menu"
                     params={1180672}
                     dropShadow={{ distance: 4, alpha: 0.6 }}
-                    layout={{ position: 'absolute', left: 2, width: 160, top: 661, height: 105 }}
+                    layout={{ position: 'absolute', left: 2, width: 160, bottom: 258, height: 105 }}
                 />
             </Region>
         </Region>
@@ -159,7 +159,7 @@ export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, lay
             <Region
                 name="send_button_text"
                 params={12582928}
-                layout={{ position: 'absolute', left: 20, width: 8, top: 6, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 20, top: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionSendButtonText ?? '.'} />
             </Region>

@@ -71,7 +71,7 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, cap
                             name="mask_right"
                             params={80}
                             src={srcMaskRight ?? layoutImage('talent_mask_right.png')}
-                            layout={{ position: 'absolute', left: 976, width: 24, top: 20, height: 280 }}
+                            layout={{ position: 'absolute', right: 0, width: 24, top: 20, height: 280 }}
                         />
                         <Region
                             name="progress_container"
@@ -119,7 +119,7 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, cap
                                 name="progress_needle"
                                 params={1048592}
                                 options={{ 'avatar_image:figure': 'hr-1863-45.hd-180-2.ch-210-66.lg-270-82.sh-300-91.wa-2007-.ri-1-', 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                                layout={{ position: 'absolute', left: 36, width: 33, top: 27, height: 34 }}
+                                layout={{ position: 'absolute', left: 36, width: 33, bottom: 19, height: 34 }}
                             />
                             <WidgetSlot
                                 widgetType="balloon"
@@ -236,7 +236,7 @@ export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton }
             />
             <Region
                 params={3145744}
-                layout={{ position: 'absolute', left: 124, width: 76, top: 166, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 124, width: 76, top: '50%', marginTop: 26, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={t('talent.track.helper.begin.citizenship')}
@@ -249,7 +249,7 @@ export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton }
                 name="citizenship_button"
                 params={393233}
                 onPointerTap={onCitizenshipButton}
-                layout={{ position: 'absolute', left: 54, width: 200, top: 227, height: 43 }}
+                layout={{ position: 'absolute', right: -4, width: 200, top: 227, height: 43 }}
             >
                 {t('talent.track.citizenship.button')}
             </Button>
@@ -330,7 +330,7 @@ export const TalentTrackLayoutBeginCitizenshipItem = ({ layout }: TalentTrackLay
         >
             <Region
                 params={131088}
-                layout={{ position: 'absolute', left: 20, width: 228, top: 20, height: 66, flexDirection: 'column', gap: 6 }}
+                layout={{ position: 'absolute', left: 20, minWidth: 228, top: 20, minHeight: 66, flexDirection: 'column', gap: 6 }}
             >
                 <Region
                     params={16}
@@ -427,12 +427,12 @@ export const TalentTrackLayoutRewardVipItem = ({ captionVipLength, layout }: Tal
             <ThemeImage
                 params={3120}
                 src={layoutImage('talent_vip_reward.png')}
-                layout={{ position: 'absolute', left: 14, width: 33, top: 14, height: 33 }}
+                layout={{ position: 'absolute', left: 14, width: 33, top: '50%', marginTop: -16, height: 33 }}
             />
             <Region
                 name="vip_length"
                 params={3088}
-                layout={{ position: 'absolute', left: 53, width: 16, top: 28, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 53, width: 16, top: '50%', marginTop: -2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionVipLength ?? ''}
@@ -628,7 +628,7 @@ export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, c
                 <Region
                     name="reward_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 10, width: 560, top: 80, height: 60, flexDirection: 'row', gap: 10 }}
+                    layout={{ position: 'absolute', left: 10, top: 80, flexDirection: 'row', gap: 10 }}
                 >
                     {itemsRewardList ?? (
                         <>
@@ -650,7 +650,7 @@ export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, c
                 name="achieved"
                 params={80}
                 src={srcAchieved ?? layoutImage('talent_check_mark_circle.png')}
-                layout={{ position: 'absolute', left: 320, width: 20, top: 11, height: 20 }}
+                layout={{ position: 'absolute', right: 10, width: 20, top: 11, height: 20 }}
             />
         </Region>
     );
@@ -884,7 +884,7 @@ export const TalentTrackLayoutLevelTaskItem = ({ itemsTaskListTop, layout }: Tal
             <Region
                 name="task_list_top"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 650, top: 0, height: 80, flexDirection: 'row', gap: 10 }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 10 }}
             >
                 {itemsTaskListTop ?? (
                     <>
@@ -897,7 +897,7 @@ export const TalentTrackLayoutLevelTaskItem = ({ itemsTaskListTop, layout }: Tal
             <Region
                 name="task_list_bottom"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 80, height: 80, flexDirection: 'row', gap: 10 }}
+                layout={{ position: 'absolute', left: 0, top: 80, flexDirection: 'row', gap: 10 }}
             />
         </Region>
     );
@@ -980,7 +980,7 @@ export const TalentTrackLayoutLevelPaneItem = ({ captionLevelDescription, captio
                 />
                 <Region
                     params={208}
-                    layout={{ position: 'absolute', left: 41, width: 133, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -66, width: 133, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('talent.track.action.overlay')}

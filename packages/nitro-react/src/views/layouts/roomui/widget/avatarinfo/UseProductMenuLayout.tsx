@@ -19,7 +19,7 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, top: 9, height: 302 }}
+                layout={{ position: 'absolute', left: 0, width: 115, bottom: -9, height: 302 }}
             >
                 <Region
                     name="border"
@@ -36,7 +36,7 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                         <Region
                             name="name"
                             params={208}
-                            layout={{ position: 'absolute', left: 13, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'my_name_here'}
@@ -48,12 +48,12 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                     <Region
                         params={144}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 27, height: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
                     />
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: 1, width: 104, top: 28, height: 242, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -52.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -74,7 +74,7 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                         params={1041}
                         onPointerTap={onMinimize}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 2, width: 100, top: 271, height: 18 }}
+                        layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18 }}
                     >
                         <Icon
                             variant="7"
@@ -113,12 +113,12 @@ export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.useproduct')}
@@ -155,12 +155,12 @@ export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.useproduct_shampoo')}
@@ -197,12 +197,12 @@ export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, lay
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.useproduct_custom_part')}
@@ -239,12 +239,12 @@ export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLab
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.useproduct_custom_part_shampoo')}
@@ -281,12 +281,12 @@ export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout,
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.useproduct_saddle')}
@@ -323,12 +323,12 @@ export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, lay
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.replaceproduct_saddle')}
@@ -365,12 +365,12 @@ export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layou
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.revive_monsterplant')}
@@ -407,12 +407,12 @@ export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layo
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.rebreed_monsterplant')}
@@ -449,12 +449,12 @@ export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, la
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 108, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 102, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.fertilize_monsterplant')}

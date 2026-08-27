@@ -8,10 +8,11 @@ export interface IroEventSettingsLayoutProps {
     captionDescLabel?: string;
     captionNameLabel?: string;
     layout?: BoxLayout;
+    onButtons?: () => void;
     onClose?: () => void;
 }
 
-export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, layout, onClose }: IroEventSettingsLayoutProps) => {
+export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, layout, onButtons, onClose }: IroEventSettingsLayoutProps) => {
     const t = useTranslation();
     const [ eventNameValue, setEventNameValue ] = useState('');
     const [ eventDescValue, setEventDescValue ] = useState('');
@@ -30,7 +31,7 @@ export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, lay
                 <Region
                     name="inputs_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 11, width: 218, top: 4, height: 192 }}
+                    layout={{ position: 'absolute', left: 11, right: 12, top: 4, height: 192 }}
                 >
                     <Region
                         name="name_label"
@@ -67,6 +68,8 @@ export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, lay
                 <Region
                     name="buttons"
                     params={98321}
+                    onPointerTap={onButtons}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 220, top: 200, height: 29 }}
                 />
             </Region>

@@ -24,7 +24,7 @@ export const SpecialInfoWidgetLayout = ({ captionCtlgSpecialTxt, layout, srcCtlg
                 <Region
                     name="ctlg_special_txt"
                     params={3935440}
-                    layout={{ position: 'absolute', left: 2, width: 139, top: 28, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 139, top: '50%', marginTop: -8.5, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionCtlgSpecialTxt ?? 'lorem ipsum'}

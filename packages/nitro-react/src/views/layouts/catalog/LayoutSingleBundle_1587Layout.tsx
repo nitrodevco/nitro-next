@@ -19,7 +19,7 @@ export const LayoutSingleBundle_1587Layout = ({ captionCtlgDescription, captionC
             <Region
                 name="ctlg_single_bundle"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"
@@ -46,11 +46,11 @@ export const LayoutSingleBundle_1587Layout = ({ captionCtlgDescription, captionC
                     name="bundleGridScrollWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 164, width: 186, top: 117, height: 247 }}
+                    layout={{ position: 'absolute', left: 164, width: 186, top: 117, bottom: 96 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 4, width: 178, top: 3, height: 238 }}
+                        layout={{ position: 'absolute', left: 4, width: 178, top: 3, bottom: 6 }}
                     >
                         <Region
                             name="bundleGrid"
@@ -69,7 +69,7 @@ export const LayoutSingleBundle_1587Layout = ({ captionCtlgDescription, captionC
                     variant="3"
                     params={1040}
                     tintColor="#e0e0e0"
-                    layout={{ position: 'absolute', left: 17, width: 324, top: 385, height: 40 }}
+                    layout={{ position: 'absolute', left: 17, width: 324, bottom: 35, height: 40 }}
                 >
                     <ThemeImage
                         name="ctlg_special_img"
@@ -102,7 +102,7 @@ export const LayoutSingleBundle_1587Layout = ({ captionCtlgDescription, captionC
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

@@ -28,7 +28,7 @@ export const NotificationFriendonlineLayout = ({ layout, onSlideNotificationAway
                     <ThemeImage
                         params={144}
                         src={layoutImage('notification_friendonline_middle.png')}
-                        layout={{ position: 'absolute', left: 7, width: 40, top: 0, height: 34 }}
+                        layout={{ position: 'absolute', left: 7, right: -4, top: 0, height: 34 }}
                     />
                     <Region
                         params={4194320}
@@ -59,30 +59,30 @@ export const NotificationFriendonlineLayout = ({ layout, onSlideNotificationAway
                 <ThemeImage
                     params={80}
                     src={layoutImage('notification_friendonline_circle_inner.png')}
-                    layout={{ position: 'absolute', left: 33, width: 53, top: 3, height: 53 }}
+                    layout={{ position: 'absolute', right: 0, width: 53, top: 3, height: 53 }}
                 />
                 <Region
                     name="bitmaps"
                     params={80}
-                    layout={{ position: 'absolute', left: 35, width: 50, top: 4, height: 50 }}
+                    layout={{ position: 'absolute', right: 1, width: 50, top: 4, height: 50 }}
                 >
                     <ThemeImage
                         tags={[ 'notification_icon_static' ]}
                         params={3088}
                         src={undefined}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: '50%', marginTop: -25, height: 50 }}
                     />
                     <ThemeImage
                         tags={[ 'notification_icon' ]}
                         params={3088}
                         src={undefined}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: '50%', marginTop: -25, height: 50 }}
                     />
                 </Region>
                 <ThemeImage
                     params={80}
                     src={layoutImage('notification_friendonline_circle.png')}
-                    layout={{ position: 'absolute', left: 33, width: 53, top: 3, height: 53 }}
+                    layout={{ position: 'absolute', right: 0, width: 53, top: 3, height: 53 }}
                 />
             </Region>
         </Region>

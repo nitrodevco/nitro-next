@@ -21,12 +21,12 @@ export const ChatfontsizeTemplateLayout = ({ captionLabel, layout, onChatfontsiz
                     variant="2"
                     name="background_color"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
                 />
                 <Region
                     name="label"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 4, width: 9, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 4, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLabel ?? 'S'}

@@ -21,7 +21,7 @@ export const LayoutFrontpage_1597Layout = ({ captionCtlgTxt1, captionCtlgTxt2, l
             <Region
                 name="ctlg_frontpage4"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
@@ -44,7 +44,7 @@ export const LayoutFrontpage_1597Layout = ({ captionCtlgTxt1, captionCtlgTxt2, l
                     name="bgBorder"
                     params={1040}
                     tintColor="#51bbee"
-                    layout={{ position: 'absolute', left: 8, width: 345, top: 397, height: 61 }}
+                    layout={{ position: 'absolute', left: 8, width: 345, bottom: 2, height: 61 }}
                 >
                     <Region
                         name="ctlg_txt2"
@@ -78,7 +78,7 @@ export const LayoutFrontpage_1597Layout = ({ captionCtlgTxt1, captionCtlgTxt2, l
                             name="redeem"
                             params={393361}
                             onPointerTap={onRedeem}
-                            layout={{ position: 'absolute', left: 274, width: 62, top: 5, height: 22, maxWidth: 100 }}
+                            layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
                         >
                             {t('redeem')}
                         </Button>

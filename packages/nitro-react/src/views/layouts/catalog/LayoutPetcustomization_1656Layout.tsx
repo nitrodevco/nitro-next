@@ -19,7 +19,7 @@ export const LayoutPetcustomization_1656Layout = ({ captionCtlgDescription, capt
             <Region
                 name="ctlg_petcustomization"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_selectproduct"
@@ -36,7 +36,7 @@ export const LayoutPetcustomization_1656Layout = ({ captionCtlgDescription, capt
                 <Region
                     name="itemGridWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 180 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 />
                 <Region
                     name="petPreviewWidget"
@@ -85,7 +85,7 @@ export const LayoutPetcustomization_1656Layout = ({ captionCtlgDescription, capt
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

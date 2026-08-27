@@ -10,7 +10,7 @@ export const UpdatingTimestampLayout = ({ layout }: UpdatingTimestampLayoutProps
         <Region layout={{ position: 'relative', width: 100, height: 16, ...layout }}>
             <Region
                 params={2192}
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text="Just now."

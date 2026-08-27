@@ -23,13 +23,13 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
             <Region
                 name="ctlg_badgedisplay"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_selectproduct"
                     params={1040}
                     visible={false}
-                    layout={{ position: 'absolute', left: 5, width: 107, top: 405, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, width: 107, bottom: 40, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
@@ -49,12 +49,12 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
                 <Region
                     name="itemGridWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 95, top: 245, height: 175 }}
+                    layout={{ position: 'absolute', left: 0, width: 95, top: 245, bottom: 40 }}
                 />
                 <Region
                     name="limitedItemWidget"
@@ -71,7 +71,7 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
                     name="ctlg_selectbadge"
                     params={1040}
                     visible={false}
-                    layout={{ position: 'absolute', left: 190, width: 100, top: 401, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 190, width: 100, bottom: 44, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCtlgSelectbadge ?? t('catalog_selectbadge')}
@@ -81,19 +81,19 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
                 <Region
                     name="userBadgeSelectorWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 105, width: 255, top: 245, height: 175 }}
+                    layout={{ position: 'absolute', left: 105, width: 255, top: 245, bottom: 40 }}
                 >
                     <Border
                         variant="105"
                         name="search_input_border"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 255, top: 0, height: 26 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                     >
                         <TextInput
                             value={searchInputValue}
                             onChange={setSearchInputValue}
                             maxLength={40}
-                            layout={{ position: 'absolute', left: 6, width: 171, top: 3, height: 19, minWidth: 171, maxWidth: 171 }}
+                            layout={{ position: 'absolute', left: 6, right: 78, top: 3, height: 19, minWidth: 171, maxWidth: 171 }}
                         />
                         <Region
                             name="search_placeholder"
@@ -111,7 +111,7 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
                             visible={visibleCancelSearchBtn ?? false}
                             onPointerTap={onCancelSearchBtn}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 232, width: 19, top: 3, height: 19 }}
+                            layout={{ position: 'absolute', right: 4, width: 19, top: 3, height: 19 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -122,7 +122,7 @@ export const LayoutBadgeDisplay_1669Layout = ({ captionCtlgSelectbadge, captionC
                     </Border>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 255, top: 30, height: 145 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 30, bottom: 0 }}
                     >
                         <Region
                             name="badgeGrid"

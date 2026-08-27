@@ -12,7 +12,7 @@ export const ScrollableItemgridVerticalUbuntuLayout = ({ layout }: ScrollableIte
                 name="_ITEMGRID"
                 tags={[ '_ITEMGRID', '_EXCLUDE', '_INTERNAL' ]}
                 params={2193}
-                layout={{ position: 'absolute', left: 0, width: 23, top: 0, height: 40, flexDirection: 'row', flexWrap: 'wrap' }}
+                layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, flexDirection: 'row', flexWrap: 'wrap' }}
             />
             {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
         </Region>

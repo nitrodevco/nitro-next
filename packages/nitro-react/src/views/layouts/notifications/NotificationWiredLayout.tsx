@@ -25,23 +25,23 @@ export const NotificationWiredLayout = ({ captionDescription, layout, onButton, 
                 <ThemeImage
                     params={1040}
                     src={layoutImage('illumina_wired_bg_right.png')}
-                    layout={{ position: 'absolute', left: 0, width: 240, top: -19, height: 160 }}
+                    layout={{ position: 'absolute', left: 0, width: 240, bottom: -81, height: 160 }}
                 />
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                 >
                     <Border
                         variant="2"
                         params={144}
                         tintColor="#1e3044"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                     />
                     <Region
                         params={144}
                         backgroundColor="#1e3044"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
                     <Region
                         params={16}

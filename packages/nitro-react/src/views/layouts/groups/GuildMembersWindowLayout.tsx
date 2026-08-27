@@ -35,7 +35,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                 <Region
                     name="header_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 10, width: 333, top: 0, height: 77 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 0, height: 77 }}
                 >
                     <WidgetSlot
                         widgetType="badge_image"
@@ -49,12 +49,12 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                         name="type_drop_menu"
                         params={145}
                         onPointerTap={onTypeDropMenu}
-                        layout={{ position: 'absolute', left: 78, width: 243, top: 48, height: 25 }}
+                        layout={{ position: 'absolute', left: 78, right: 12, top: 48, height: 25 }}
                     />
                     <TextInput
                         value={filterMembersInputValue}
                         onChange={setFilterMembersInputValue}
-                        layout={{ position: 'absolute', left: 78, width: 214, top: 14, height: 25 }}
+                        layout={{ position: 'absolute', left: 78, right: 41, top: 14, height: 25 }}
                     />
                     <Icon
                         variant="23"
@@ -66,12 +66,12 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                 <Region
                     name="members_cont"
                     params={2192}
-                    layout={{ position: 'absolute', left: 10, width: 333, top: 82, height: 277 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 82, bottom: 72 }}
                 />
                 <Region
                     name="footer_cont"
                     params={1168}
-                    layout={{ position: 'absolute', left: 10, width: 333, top: 363, height: 25 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 43, height: 25 }}
                 >
                     <ContainerButton
                         variant="3"
@@ -92,7 +92,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                         name="next_page_button"
                         params={131153}
                         onPointerTap={onNextPageButton}
-                        layout={{ position: 'absolute', left: 283, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
+                        layout={{ position: 'absolute', right: 0, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
                     >
                         <Icon
                             variant="5"
@@ -105,7 +105,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                         name="footer_info_txt"
                         params={786448}
                         visible={false}
-                        layout={{ position: 'absolute', left: 98, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -68.5, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionFooterInfoTxt ?? t('group.members.pageinfo')}
@@ -114,7 +114,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                     </Region>
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: 77, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -89.5, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
                     >
                         <Region
                             name="pagina_text_start"

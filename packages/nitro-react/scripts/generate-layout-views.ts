@@ -144,11 +144,9 @@ const toElement = (node: XmlNode): Element => {
 
     for (const param of paramsNode?.children ?? []) if (param.tag === 'param' && param.attrs.name) params = (params | (PARAM_BITS[param.attrs.name] ?? 0)) >>> 0;
 
-    // The named form carries the scale anchoring in `params` rather than a `<scale>` child.
-    const scaleFromParams = (mask: number, move: number, strech: number) => ((params & mask) === strech ? 'strech' : (params & mask) === move ? 'move' : 'fixed');
-    const scale = scaleNode
-        ? { horizontal: scaleNode.attrs.horizontal ?? 'fixed', vertical: scaleNode.attrs.vertical ?? 'fixed' }
-        : paramsNode ? { horizontal: scaleFromParams(192, 64, 128), vertical: scaleFromParams(3072, 1024, 2048) } : undefined;
+    // Without a `<scale>` child the anchoring comes from the `relative_*_scale_*` bits in
+    // `params` - see `anchor()`.
+    const scale = scaleNode ? { horizontal: scaleNode.attrs.horizontal ?? 'fixed', vertical: scaleNode.attrs.vertical ?? 'fixed' } : undefined;
 
     return {
         tag: node.tag,
@@ -385,44 +383,114 @@ const layoutLiteral = (fields: Record<string, string | number | undefined>): str
     return `{ ${entries.map(([ key, value ]) => `${key}: ${typeof value === 'number' ? value : value}`).join(', ')} }`;
 };
 
-/** Absolute placement from x/y/width/height + the `<scale>` anchoring, or flow sizing in a list. */
-const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string | number | undefined> = {}): string => {
+// `WindowParam` bits the port acts on (the rest - graphic context, event routing, drag/scale
+// triggers - are engine internals carried through as the `params` prop only). Values from the
+// client's com/sulake/core/window/utils `fillTables()`.
+const PARAM = {
+    INPUT: 1,
+    H_MOVE: 64, H_STRECH: 128, H_CENTER: 192, H_MASK: 192,
+    V_MOVE: 1024, V_STRECH: 2048, V_CENTER: 3072, V_MASK: 3072,
+    SHRINK_TO_CHILDREN: 16384, EXPAND_TO_CHILDREN: 131072,
+    ALIGN_RIGHT: 262144, ALIGN_H_CENTER: 786432, ALIGN_H_MASK: 786432,
+    ALIGN_BOTTOM: 1048576, ALIGN_V_MIDDLE: 3145728, ALIGN_V_MASK: 3145728,
+    REFLECT_H: 4194304, REFLECT_V: 8388608,
+    FORCE_CLIPPING: 1073741824,
+} as const;
+
+type Anchor = 'fixed' | 'move' | 'strech' | 'center';
+
+/**
+ * How an element follows its parent's resize on one axis. `<scale>` (the tool-exported form)
+ * wins where present; otherwise the `relative_*_scale_*` bits, then the `on_resize_align_*`
+ * bits (right/bottom == move, center/middle == center) - both of which the Flash window
+ * manager treated as "keep this edge/centre at the same distance".
+ */
+const anchor = (explicit: string | undefined, params: number, axis: 'h' | 'v'): Anchor => {
+    if (explicit === 'strech' || explicit === 'move' || explicit === 'center') return explicit;
+    if (explicit === 'fixed') return 'fixed';
+
+    const scale = params & (axis === 'h' ? PARAM.H_MASK : PARAM.V_MASK);
+
+    if (scale === (axis === 'h' ? PARAM.H_CENTER : PARAM.V_CENTER)) return 'center';
+    if (scale === (axis === 'h' ? PARAM.H_STRECH : PARAM.V_STRECH)) return 'strech';
+    if (scale === (axis === 'h' ? PARAM.H_MOVE : PARAM.V_MOVE)) return 'move';
+
+    const align = params & (axis === 'h' ? PARAM.ALIGN_H_MASK : PARAM.ALIGN_V_MASK);
+
+    if (align === (axis === 'h' ? PARAM.ALIGN_H_CENTER : PARAM.ALIGN_V_MIDDLE)) return 'center';
+    if (align === (axis === 'h' ? PARAM.ALIGN_RIGHT : PARAM.ALIGN_BOTTOM)) return 'move';
+
+    return 'fixed';
+};
+
+interface BoxLayoutOptions {
+    /** `reflect_*_resize_to_parent` leaf (a text or bitmap): size to content on that axis instead of the XML box. */
+    autoSize?: boolean;
+    /** The element lays its children out in flow (a list), so `expand/resize_to_accommodate_children` can be honoured. */
+    growsWithChildren?: boolean;
+}
+
+/** Absolute placement from x/y/width/height + the anchoring bits, or flow sizing in a list. */
+const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string | number | undefined> = {}, options: BoxLayoutOptions = {}): string => {
     const x = num(el.attrs.x);
     const y = num(el.attrs.y);
     const width = num(el.attrs.width);
     const height = num(el.attrs.height);
     const fields: Record<string, string | number | undefined> = {};
+    const autoWidth = !!options.autoSize && !!(el.params & PARAM.REFLECT_H);
+    const autoHeight = !!options.autoSize && !!(el.params & PARAM.REFLECT_V);
+    // `expand_to_accommodate_children` only ever grows, so the XML box becomes a minimum;
+    // `resize_to_accommodate_children` (expand + shrink) frees the size entirely. Only
+    // meaningful where children actually contribute to the flex size (a list's rows) - a box
+    // of absolutely-positioned children can't be measured, so it keeps its fixed size.
+    const expands = !!options.growsWithChildren && !!(el.params & PARAM.EXPAND_TO_CHILDREN);
+    const shrinks = expands && !!(el.params & PARAM.SHRINK_TO_CHILDREN);
+    const sizeField = (axis: 'width' | 'height', value: number, auto: boolean) => {
+        if (auto || shrinks) return;
+
+        if (expands) fields[axis === 'width' ? 'minWidth' : 'minHeight'] = value;
+        else fields[axis] = value;
+    };
 
     if (parent.flow) {
-        fields.width = width;
-        fields.height = height;
+        sizeField('width', width, autoWidth);
+        sizeField('height', height, autoHeight);
         fields.flexShrink = 0;
     } else {
         fields.position = '\'absolute\'';
 
-        const horizontal = el.scale?.horizontal ?? 'fixed';
-        const vertical = el.scale?.vertical ?? 'fixed';
+        const horizontal = anchor(el.scale?.horizontal, el.params, 'h');
+        const vertical = anchor(el.scale?.vertical, el.params, 'v');
 
-        if (horizontal === 'strech' && parent.width > 0) {
+        if (horizontal === 'strech' && parent.width > 0 && !autoWidth) {
             fields.left = x;
             fields.right = parent.width - x - width;
         } else if (horizontal === 'move' && parent.width > 0) {
             fields.right = parent.width - x - width;
-            fields.width = width;
+            sizeField('width', width, autoWidth);
+        } else if (horizontal === 'center' && parent.width > 0) {
+            // Keep the element's centre at the same offset from the parent's centre.
+            fields.left = '\'50%\'';
+            fields.marginLeft = x + width / 2 - parent.width / 2 - width / 2;
+            sizeField('width', width, autoWidth);
         } else {
             fields.left = x;
-            fields.width = width;
+            sizeField('width', width, autoWidth);
         }
 
-        if (vertical === 'strech' && parent.height > 0) {
+        if (vertical === 'strech' && parent.height > 0 && !autoHeight) {
             fields.top = y;
             fields.bottom = parent.height - y - height;
         } else if (vertical === 'move' && parent.height > 0) {
             fields.bottom = parent.height - y - height;
-            fields.height = height;
+            sizeField('height', height, autoHeight);
+        } else if (vertical === 'center' && parent.height > 0) {
+            fields.top = '\'50%\'';
+            fields.marginTop = y + height / 2 - parent.height / 2 - height / 2;
+            sizeField('height', height, autoHeight);
         } else {
             fields.top = y;
-            fields.height = height;
+            sizeField('height', height, autoHeight);
         }
     }
 
@@ -430,6 +498,7 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     if (el.attrs.width_max) fields.maxWidth = num(el.attrs.width_max);
     if (el.attrs.height_min) fields.minHeight = num(el.attrs.height_min);
     if (el.attrs.height_max) fields.maxHeight = num(el.attrs.height_max);
+    if (el.attrs.clipping === 'true' || (el.params & PARAM.FORCE_CLIPPING)) fields.overflow = '\'hidden\'';
 
     const literal = layoutLiteral({ ...fields, ...extra });
 
@@ -548,7 +617,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const textOptions: Record<string, string | number | undefined> = {
         fill: fill ? quote(fill) : undefined,
         wordWrap: wordWrap ? 'true' : undefined,
-        wordWrapWidth: wordWrap ? num(el.attrs.width) : undefined,
+        wordWrapWidth: wordWrap && !(el.params & PARAM.REFLECT_H) ? num(el.attrs.width) : undefined,
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
     const textProps: string[] = [];
@@ -568,7 +637,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const regionProps = [
         ...metaProps(ctx, el),
         ...dropShadowProp(el),
-        `layout={${boxLayout(el, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] })}}`,
+        `layout={${boxLayout(el, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] }, { autoSize: true })}}`,
     ];
 
     if (el.tag === 'link') {
@@ -615,7 +684,7 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     if (tint && tint !== '#ffffff') props.push(`tint="${tint}"`);
 
     ctx.imports.add('ThemeImage');
-    props.push(`layout={${boxLayout(el, parent)}}`);
+    props.push(`layout={${boxLayout(el, parent, {}, { autoSize: true })}}`);
 
     const needsWrapper = el.attrs.visible === 'false' || !!el.dropShadow;
     const image = openTag('ThemeImage', props, needsWrapper ? indent + INDENT : indent, true);
@@ -646,7 +715,7 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const children = emitListChildren(ctx, el, innerParent, contentIndent + INDENT);
 
     if (!scroll) {
-        return wrap('Region', [ ...meta, ...background, `layout={${boxLayout(el, parent, flowLayout)}}` ], indent, children);
+        return wrap('Region', [ ...meta, ...background, `layout={${boxLayout(el, parent, flowLayout, { growsWithChildren: true })}}` ], indent, children);
     }
 
     ctx.imports.add('ScrollArea');
@@ -827,12 +896,10 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
             // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
-            if (tag === 'region' && el.attrs.name && (el.params & 1)) {
+            if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
                 props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
                 props.push('cursor="pointer"');
             }
-
-            if (el.attrs.clipping === 'true') return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, { overflow: '\'hidden\'' })}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
 
             return wrap('Region', [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
         }

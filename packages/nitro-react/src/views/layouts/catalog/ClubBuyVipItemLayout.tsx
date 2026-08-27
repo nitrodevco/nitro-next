@@ -60,7 +60,7 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
                     name="item_buy"
                     params={393233}
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', left: -8, width: 151, top: 38, height: 22, minWidth: 40 }}
+                    layout={{ position: 'absolute', right: 8, width: 151, top: 38, height: 22, minWidth: 40 }}
                 >
                     {t('catalog.club.button.buy')}
                 </Button>

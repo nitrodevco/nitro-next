@@ -27,7 +27,7 @@ export const TransactionDetailsLayout = ({ itemsKeyValuePairs, layout, onClose }
                 <Region
                     name="key_value_pairs"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 10, width: 380, top: 13, height: 336, flexDirection: 'column', gap: 2 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2 }}
                 >
                     {itemsKeyValuePairs ?? (
                         <>
@@ -299,7 +299,7 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     params={278672}
                     visible={visibleNumberContainer ?? false}
                     backgroundColor="#2f6982"
-                    layout={{ position: 'absolute', left: 27, width: 13, top: 2, height: 16 }}
+                    layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
                 >
                     <Region
                         name="number_container_inner_border"
@@ -310,7 +310,7 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                         <Region
                             name="furni_quantity"
                             params={4194320}
-                            layout={{ position: 'absolute', left: 1, width: 10, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionFurniQuantity ?? '0'}
@@ -338,7 +338,7 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     name="incomplete_text"
                     params={3088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, width: 34, top: '50%', marginTop: -11, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionIncompleteText ?? ' 5'}
@@ -422,7 +422,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                     params={278672}
                     visible={visibleNumberContainer ?? false}
                     backgroundColor="#2f6982"
-                    layout={{ position: 'absolute', left: 27, width: 13, top: 2, height: 16 }}
+                    layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
                 >
                     <Region
                         name="number_container_inner_border"
@@ -433,7 +433,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                         <Region
                             name="furni_quantity"
                             params={4194320}
-                            layout={{ position: 'absolute', left: 1, width: 10, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionFurniQuantity ?? '0'}
@@ -461,7 +461,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                     name="incomplete_text"
                     params={3088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, width: 34, top: '50%', marginTop: -11, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionIncompleteText ?? ' 5'}
@@ -504,7 +504,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
         >
             <Region
                 params={786640}
-                layout={{ position: 'absolute', left: 18, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -172, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
             >
                 <Region
                     name="withdrawals_container"
@@ -513,7 +513,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={t('wiredchests.log_details.transactions.withdrawn')}
@@ -528,7 +528,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 5, width: 155, top: 5, height: 131 }}
+                            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                         >
                             <Region
                                 name="item_grid"
@@ -543,7 +543,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                         <Region
                             name="empty_text"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 165, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
@@ -559,7 +559,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={t('wiredchests.log_details.transactions.deposit')}
@@ -574,7 +574,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 5, width: 155, top: 5, height: 132 }}
+                            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 4 }}
                         >
                             <Region
                                 name="item_grid"
@@ -590,7 +590,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                             name="empty_text"
                             params={144}
                             visible={false}
-                            layout={{ position: 'absolute', left: 0, width: 165, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionEmptyText2 ?? t('wiredchests.log_details.transactions.none_placeholder')}
@@ -766,7 +766,7 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                 params={81}
                 onPointerTap={onExtraInfoButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 357, width: 20, top: 0, height: 20 }}
+                layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
             >
                 <ThemeImage
                     params={16}
@@ -788,7 +788,7 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                     <Region
                         name="extra_info_bubble_texts"
                         params={8388752}
-                        layout={{ position: 'absolute', left: 8, width: 293, top: 8, height: 147, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsExtraInfoBubbleTexts ?? (
                             <>

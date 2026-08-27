@@ -43,7 +43,7 @@ export const AvatareditorWardrobeBaseLayout = ({ itemsHeader, itemsSlotsColumnsL
                         <Region
                             name="header"
                             params={786640}
-                            layout={{ position: 'absolute', left: 0, width: 186, top: 19, height: 23, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -84, width: 186, top: 19, height: 23, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsHeader ?? (
                                 <AvatareditorWardrobeBaseLayoutHcIconItem />

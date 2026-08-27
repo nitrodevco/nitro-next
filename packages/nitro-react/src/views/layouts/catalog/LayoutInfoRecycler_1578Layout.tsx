@@ -17,13 +17,13 @@ export const LayoutInfoRecycler_1578Layout = ({ captionCtlgDescription, captionC
             <Region
                 name="ctlg_recycler_info"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     params={2064}
                     tintColor="#fbc362"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 440 }}
+                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, bottom: 10 }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"

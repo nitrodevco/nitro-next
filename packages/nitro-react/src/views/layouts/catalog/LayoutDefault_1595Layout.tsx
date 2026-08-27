@@ -29,7 +29,7 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
             <Region
                 name="container"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     params={16}
@@ -52,19 +52,19 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
                     name="itemGridWidget"
                     tags={[ 'E' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 155 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 60 }}
                 />
                 <Region
                     name="colourGridWidget"
                     tags={[ 'E' ]}
                     params={1040}
                     visible={visibleColourGridWidget ?? false}
-                    layout={{ position: 'absolute', left: 182, width: 176, top: 245, height: 155 }}
+                    layout={{ position: 'absolute', left: 182, width: 176, bottom: 60, height: 155 }}
                 />
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
                 <Region
                     name="activityPointDisplayWidget"
@@ -89,13 +89,13 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
                 <Region
                     name="soldLtdItemsWidget"
                     params={1024}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 425, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 5, height: 30 }}
                 />
                 <Region
                     name="spinnerWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={17424}
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 405, height: 25 }}
+                    layout={{ position: 'absolute', left: 0, width: 200, bottom: 30, height: 25 }}
                 >
                     <Region
                         name="text_header"
@@ -206,7 +206,7 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
                     name="totalPriceWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={17424}
-                    layout={{ position: 'absolute', left: 180, width: 180, top: 405, height: 25 }}
+                    layout={{ position: 'absolute', left: 180, width: 180, bottom: 30, height: 25 }}
                 >
                     <Region
                         params={16}
@@ -220,7 +220,7 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
                     <Region
                         name="totalprice_container"
                         params={409616}
-                        layout={{ position: 'absolute', left: 85, width: 92, top: 1, height: 24, flexDirection: 'row' }}
+                        layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row' }}
                     >
                         {itemsTotalpriceContainer ?? (
                             <>
@@ -238,7 +238,7 @@ export const LayoutDefault_1595Layout = ({ captionPromoInfo, captionQuantityLabe
                 <Region
                     name="builderWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 400, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 60 }}
                 />
             </Region>
         </Region>

@@ -27,7 +27,7 @@ export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonLi
                     name="_alert_summary"
                     tags={[ 'DESCRIPTION' ]}
                     params={8388624}
-                    layout={{ position: 'absolute', left: 27, width: 210, top: 14, height: 57, minHeight: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 27, width: 210, top: 14, minHeight: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionAlertSummary ?? 'Alert'}
@@ -38,7 +38,7 @@ export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonLi
                 <Region
                     name="_alert_button_list"
                     params={787664}
-                    layout={{ position: 'absolute', left: 26, width: 215, top: 81, height: 24, minHeight: 22, flexDirection: 'row', gap: 32 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -113, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32 }}
                 >
                     {itemsAlertButtonList ?? (
                         <>

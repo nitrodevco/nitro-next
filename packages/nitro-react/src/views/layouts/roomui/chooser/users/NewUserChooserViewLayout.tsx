@@ -32,7 +32,7 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                 <Border
                     variant="105"
                     params={144}
-                    layout={{ position: 'absolute', left: 6, width: 154, top: 18, height: 26 }}
+                    layout={{ position: 'absolute', left: 6, right: 130, top: 18, height: 26 }}
                 >
                     <Region
                         name="search_placeholder"
@@ -48,7 +48,7 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                         value={textInputValue}
                         onChange={setTextInputValue}
                         textColor="#666666"
-                        layout={{ position: 'absolute', left: 6, width: 125, top: 4, height: 18 }}
+                        layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
                     />
                     <Region
                         name="clear_button"
@@ -56,7 +56,7 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                         visible={visibleClearButton ?? false}
                         onPointerTap={onClearButton}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 132, width: 20, top: 3, height: 20 }}
+                        layout={{ position: 'absolute', right: 2, width: 20, top: 3, height: 20 }}
                     >
                         <ThemeImage
                             params={16}
@@ -70,19 +70,19 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                     name="type_dropdown"
                     params={81}
                     onPointerTap={onTypeDropdown}
-                    layout={{ position: 'absolute', left: 172, width: 100, top: 18, height: 25 }}
+                    layout={{ position: 'absolute', right: 18, width: 100, top: 18, height: 25 }}
                 >
                     {t('new_user_chooser.usertype.all')}
                 </Dropmenu>
                 <Region
                     name="table_container"
                     params={2192}
-                    layout={{ position: 'absolute', left: 6, width: 266, top: 53, height: 243 }}
+                    layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61 }}
                 />
                 <Region
                     name="amount_indicator"
                     params={1040}
-                    layout={{ position: 'absolute', left: 6, width: 212, top: 303, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAmountIndicator ?? t('new_user_chooser.amount_indicator')} />
                 </Region>

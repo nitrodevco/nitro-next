@@ -85,7 +85,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                 </Border>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 65, height: 155 }}
+                    layout={{ position: 'absolute', left: 5, width: 270, top: 65, bottom: 125 }}
                 >
                     <Region
                         name="chat_list"
@@ -105,7 +105,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                 </ScrollArea>
                 <Region
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 220, height: 79 }}
+                    layout={{ position: 'absolute', left: 0, width: 280, bottom: 46, height: 79 }}
                 >
                     <ThemeImage
                         params={147472}

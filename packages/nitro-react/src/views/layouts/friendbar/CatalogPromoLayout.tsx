@@ -24,7 +24,7 @@ export const CatalogPromoLayout = ({ captionCatalogPromoStatus, itemsInfoContain
                 <Region
                     name="info_container"
                     params={147472}
-                    layout={{ position: 'absolute', left: 11, width: 300, top: 9, height: 98, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 11, top: 9, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsInfoContainer ?? (
                         <>

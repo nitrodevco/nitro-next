@@ -255,7 +255,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, captionTit
                     params={132113}
                     tintColor="#bbbbbb"
                     onPointerTap={onFunnyButton}
-                    layout={{ position: 'absolute', left: 14, width: 348, top: 479, height: 28, minWidth: 348, maxWidth: 348 }}
+                    layout={{ position: 'absolute', left: 14, width: 348, bottom: 44, height: 28, minWidth: 348, maxWidth: 348 }}
                 >
                     {t('discord_activity.funny_button')}
                 </Button>

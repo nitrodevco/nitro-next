@@ -10,7 +10,7 @@ export const ProgressIndicatorLayout = ({ layout }: ProgressIndicatorLayoutProps
         <Region layout={{ position: 'relative', width: 8, height: 8, ...layout }}>
             <Region
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8, flexDirection: 'row', gap: 3 }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 3 }}
             >
                 <ThemeImage
                     params={16}

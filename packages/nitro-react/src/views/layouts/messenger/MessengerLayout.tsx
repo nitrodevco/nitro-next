@@ -42,7 +42,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                         <Region
                             name="avatar_list"
                             params={144}
-                            layout={{ position: 'absolute', left: 16, width: 248, top: 0, height: 40 }}
+                            layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40 }}
                         >
                             <Border
                                 variant="102"
@@ -102,7 +102,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                             params={81}
                             onPointerTap={onAvatarsScrollRight}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 265, width: 15, top: 0, height: 35 }}
+                            layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -113,12 +113,12 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                         <WidgetSlot
                             widgetType="separator"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 281, top: 39, height: 15 }}
+                            layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
                         >
                             <Region
                                 name="separator_label"
                                 params={3088}
-                                layout={{ position: 'absolute', left: 0, width: 157, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 0, width: 157, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionSeparatorLabel ?? t('messenger.window.separator')}
@@ -130,7 +130,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                         <Region
                             name="button_strip"
                             params={144}
-                            layout={{ position: 'absolute', left: 7, width: 266, top: 57, height: 21, flexDirection: 'row', gap: 4 }}
+                            layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4 }}
                         >
                             {itemsButtonStrip ?? (
                                 <>
@@ -145,11 +145,11 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                             name="close_conversation_button"
                             params={65}
                             onPointerTap={onCloseConversationButton}
-                            layout={{ position: 'absolute', left: 253, width: 20, top: 57, height: 20 }}
+                            layout={{ position: 'absolute', right: 9, width: 20, top: 57, height: 20 }}
                         />
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 7, width: 266, top: 84, height: 212 }}
+                            layout={{ position: 'absolute', left: 7, right: 9, top: 84, bottom: 89 }}
                         >
                             <Region
                                 name="conversation"
@@ -172,7 +172,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                             tooltip={t('messenger.habbicons.tooltip')}
                             params={1105}
                             onPointerTap={onHabbiconButton}
-                            layout={{ position: 'absolute', left: 243, width: 30, top: 305, height: 28 }}
+                            layout={{ position: 'absolute', right: 9, width: 30, bottom: 52, height: 28 }}
                         >
                             <ThemeImage
                                 name="habbicon_button_icon"
@@ -186,7 +186,7 @@ export const MessengerLayout = ({ captionSeparatorLabel, itemsButtonStrip, items
                             name="input_widget"
                             params={1168}
                             options={{ 'illumina_input:empty_message': '${messenger.window.input.default}', 'illumina_input:max_chars': '120' }}
-                            layout={{ position: 'absolute', left: 7, width: 232, top: 305, height: 30 }}
+                            layout={{ position: 'absolute', left: 7, right: 43, bottom: 50, height: 30 }}
                         />
                     </Region>
                 </Frame>
@@ -314,7 +314,7 @@ export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout }: M
             <Region
                 name="content"
                 params={3088}
-                layout={{ position: 'absolute', left: 50, width: 205, top: 15, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 50, width: 205, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? ''}
@@ -348,7 +348,7 @@ export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout }: Mes
             <Region
                 name="content"
                 params={3088}
-                layout={{ position: 'absolute', left: 50, width: 205, top: 15, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 50, width: 205, top: '50%', marginTop: -10, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? ''}

@@ -14,17 +14,17 @@ export const LayoutClubGifts_1639Layout = ({ captionInfoText, captionPastClubDay
             <Region
                 name="ctlg_presents"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="clubGiftWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 35, height: 409 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 35, bottom: 16 }}
                     >
                         <Region
                             name="gift_list"
@@ -46,7 +46,7 @@ export const LayoutClubGifts_1639Layout = ({ captionInfoText, captionPastClubDay
                     <Region
                         name="past_club_days"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 445, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPastClubDays ?? 'lorem ipsum'}
@@ -58,7 +58,7 @@ export const LayoutClubGifts_1639Layout = ({ captionInfoText, captionPastClubDay
                         name="past_vip_days"
                         params={1040}
                         visible={false}
-                        layout={{ position: 'absolute', left: 30, width: 310, top: 445, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                        layout={{ position: 'absolute', left: 30, width: 310, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
                     >
                         <ThemeText
                             text={captionPastVipDays ?? 'lorem ipsum'}

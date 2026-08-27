@@ -26,25 +26,25 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ captionWarning, layout, 
                     name="content_background"
                     params={2192}
                     backgroundColor="#aae0f0"
-                    layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="background_gradient_top"
                         params={2192}
                         src={srcBackgroundGradientTop}
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: -175, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: -175, bottom: 996 }}
                     />
                     <ThemeImage
                         name="background_gradient"
                         params={1168}
                         src={srcBackgroundGradient}
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: -366, height: 1150 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 38, height: 1150 }}
                     />
                     <ThemeImage
                         name="background_right"
                         params={1311824}
                         src={srcBackgroundRight}
-                        layout={{ position: 'absolute', left: 645, width: 526, top: 377, height: 407 }}
+                        layout={{ position: 'absolute', right: 1, width: 526, bottom: 38, height: 407 }}
                     />
                     <Region
                         visible={false}
@@ -61,13 +61,13 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ captionWarning, layout, 
                         name="background_horizon"
                         params={1049616}
                         src={srcBackgroundHorizon}
-                        layout={{ position: 'absolute', left: 0, width: 693, top: 443, height: 341 }}
+                        layout={{ position: 'absolute', left: 0, width: 693, bottom: 38, height: 341 }}
                     />
                     <Region
                         name="moving_objects_container"
                         params={2192}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Icon
                         variant="0"
@@ -79,30 +79,30 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ captionWarning, layout, 
                         name="background_hotel_top"
                         params={2064}
                         src={srcBackgroundHotelTop ?? '${image.library.url}reception/reception_backdrop_hotel_top_stretch.png'}
-                        layout={{ position: 'absolute', left: 0, width: 123, top: 0, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, width: 123, top: 0, bottom: 821 }}
                     />
                     <ThemeImage
                         name="background_left"
                         params={1049616}
                         src={srcBackgroundLeft}
-                        layout={{ position: 'absolute', left: 0, width: 1006, top: -214, height: 998 }}
+                        layout={{ position: 'absolute', left: 0, width: 1006, bottom: 38, height: 998 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_avatarimage"
                         params={1040}
-                        layout={{ position: 'absolute', left: 109, width: 10, top: 620, height: 10 }}
+                        layout={{ position: 'absolute', left: 109, width: 10, bottom: 192, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_bottom_slot"
                         params={1040}
-                        layout={{ position: 'absolute', left: 120, width: 10, top: 570, height: 10 }}
+                        layout={{ position: 'absolute', left: 120, width: 10, bottom: 242, height: 10 }}
                     />
                     <Region
                         params={1168}
                         backgroundColor="#333333"
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: 772, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 50 }}
                     />
                     <ThemeImage
                         name="logo"

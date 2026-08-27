@@ -24,7 +24,7 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 139 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 36 }}
                 >
                     <Region
                         params={16}
@@ -50,7 +50,7 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
                         name="cancel_buy_tokens_button"
                         params={393233}
                         onPointerTap={onCancelBuyTokensButton}
-                        layout={{ position: 'absolute', left: 205, width: 56, top: 106, height: 28 }}
+                        layout={{ position: 'absolute', right: 10, width: 56, top: 106, height: 28 }}
                     >
                         {t('inventory.marketplace.buy_tokens.cancel')}
                     </Button>

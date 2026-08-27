@@ -23,7 +23,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
             <Region
                 name="notifications"
                 params={2112}
-                layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 510 }}
+                layout={{ position: 'absolute', right: 0, width: 300, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="1"
@@ -65,18 +65,18 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                     name="main_view"
                     params={34961}
                     tintColor="#58544d"
-                    layout={{ position: 'absolute', left: 40, width: 260, top: 0, height: 510 }}
+                    layout={{ position: 'absolute', left: 40, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="settings_toggle"
                         params={145}
                         onPointerTap={onSettingsToggle}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 245, top: 5, height: 25 }}
+                        layout={{ position: 'absolute', left: 0, right: 15, top: 5, height: 25 }}
                     >
                         <Region
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                            layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
                                 text="_settings"
@@ -96,7 +96,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                         params={1197137}
                         onPointerTap={onInfo}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 200, width: 48, top: 470, height: 25 }}
+                        layout={{ position: 'absolute', right: 12, width: 48, bottom: 15, height: 25 }}
                     >
                         <Button
                             variant="3"
@@ -111,16 +111,16 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                     <Region
                         name="pane_feeds"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 260, top: 25, height: 435 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 50 }}
                     >
                         <Region
                             name="pane_notifications"
                             params={2192}
-                            layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 435 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 6, width: 235, top: 0, height: 435 }}
+                                layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="list"
@@ -142,11 +142,11 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                         <Region
                             name="pane_stream"
                             params={2192}
-                            layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 435 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 6, width: 235, top: 0, height: 435 }}
+                                layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0 }}
                             >
                                 <Region
                                     name="list"
@@ -161,18 +161,18 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                         name="pane_info"
                         params={2192}
                         visible={visiblePaneInfo ?? false}
-                        layout={{ position: 'absolute', left: 40, width: 220, top: 25, height: 475 }}
+                        layout={{ position: 'absolute', left: 40, right: 0, top: 25, bottom: 10 }}
                     >
                         <Border
                             variant="0"
                             name="page_welcome_texts"
                             params={2192}
-                            layout={{ position: 'absolute', left: 5, width: 215, top: 0, height: 470 }}
+                            layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 5 }}
                         >
                             <Region
                                 name="welcome_list"
                                 params={133264}
-                                layout={{ position: 'absolute', left: 0, width: 215, top: 10, height: 448, flexDirection: 'column' }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 12, flexDirection: 'column' }}
                             >
                                 {itemsWelcomeList ?? (
                                     <>
@@ -192,7 +192,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                         name="pane_settings"
                         params={2192}
                         visible={visiblePaneSettings ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 260, top: 25, height: 483 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 2 }}
                     >
                         <Border
                             variant="3"
@@ -200,17 +200,17 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                             params={2192}
                             tintColor="#000000"
                             blend={0.6}
-                            layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 485 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -2 }}
                         />
                         <Border
                             variant="3"
                             name="item_list_border"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 220 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 220 }}
                         />
                         <Region
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 252, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 252, flexDirection: 'column' }}
                         >
                             <Region
                                 name="settings_all"
@@ -220,7 +220,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                             >
                                 <Region
                                     params={144}
-                                    layout={{ position: 'absolute', left: 30, width: 210, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text="_show_all"
@@ -243,7 +243,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                             >
                                 <Region
                                     params={144}
-                                    layout={{ position: 'absolute', left: 30, width: 210, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text="_show_friends"
@@ -266,7 +266,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                             >
                                 <Region
                                     params={144}
-                                    layout={{ position: 'absolute', left: 30, width: 210, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text="_show_me"
@@ -289,7 +289,7 @@ export const FeedDisplayLayout = ({ itemsList, itemsWelcomeList, layout, onInfo,
                             >
                                 <Region
                                     params={144}
-                                    layout={{ position: 'absolute', left: 30, width: 210, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text="_show_hotel"
@@ -322,7 +322,7 @@ export const FeedDisplayLayoutListUrgentItem = ({ layout }: FeedDisplayLayoutLis
         <Region
             name="list_urgent"
             params={8536208}
-            layout={{ width: 230, height: 0, flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
 };
@@ -337,7 +337,7 @@ export const FeedDisplayLayoutListActionsItem = ({ layout }: FeedDisplayLayoutLi
         <Region
             name="list_actions"
             params={8536208}
-            layout={{ width: 230, height: 0, flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
 };
@@ -352,7 +352,7 @@ export const FeedDisplayLayoutListPersistentItem = ({ layout }: FeedDisplayLayou
         <Region
             name="list_persistent"
             params={8536208}
-            layout={{ width: 230, height: 0, flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
 };
@@ -367,7 +367,7 @@ export const FeedDisplayLayoutListNotificationsItem = ({ layout }: FeedDisplayLa
         <Region
             name="list_notifications"
             params={8536208}
-            layout={{ width: 230, height: 0, flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
 };
@@ -383,12 +383,12 @@ export const FeedDisplayLayoutTitleItem = ({ captionTitle, layout }: FeedDisplay
         <Region
             name="title"
             params={12583056}
-            layout={{ width: 200, height: 29, flexShrink: 0, minWidth: 260, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ flexShrink: 0, minWidth: 260, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionTitle ?? '_into_title'}
                 textStyle="text-style-u-bold"
-                textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 200 }}
+                textOptions={{ fill: '#999999', wordWrap: true }}
             />
         </Region>
     );
@@ -397,13 +397,16 @@ export const FeedDisplayLayoutTitleItem = ({ captionTitle, layout }: FeedDisplay
 /** Row template `space_ingress` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutSpaceIngressItemProps {
     layout?: BoxLayout;
+    onSpaceIngress?: () => void;
 }
 
-export const FeedDisplayLayoutSpaceIngressItem = ({ layout }: FeedDisplayLayoutSpaceIngressItemProps) => {
+export const FeedDisplayLayoutSpaceIngressItem = ({ layout, onSpaceIngress }: FeedDisplayLayoutSpaceIngressItemProps) => {
     return (
         <Region
             name="space_ingress"
             params={8519825}
+            onPointerTap={onSpaceIngress}
+            cursor="pointer"
             layout={{ width: 194, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, ...layout }}
         />
     );
@@ -420,7 +423,7 @@ export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout }: FeedDis
         <Region
             name="ingress"
             params={8388752}
-            layout={{ width: 200, height: 21, flexShrink: 0, minWidth: 220, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 200, flexShrink: 0, minWidth: 220, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionIngress ?? '_info_ingress'}
@@ -434,13 +437,16 @@ export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout }: FeedDis
 /** Row template `space_description` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutSpaceDescriptionItemProps {
     layout?: BoxLayout;
+    onSpaceDescription?: () => void;
 }
 
-export const FeedDisplayLayoutSpaceDescriptionItem = ({ layout }: FeedDisplayLayoutSpaceDescriptionItemProps) => {
+export const FeedDisplayLayoutSpaceDescriptionItem = ({ layout, onSpaceDescription }: FeedDisplayLayoutSpaceDescriptionItemProps) => {
     return (
         <Region
             name="space_description"
             params={8519825}
+            onPointerTap={onSpaceDescription}
+            cursor="pointer"
             layout={{ width: 200, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, ...layout }}
         />
     );
@@ -503,7 +509,7 @@ export const FeedDisplayLayoutInfoOkItem = ({ captionFeedInfoOkText, layout, onI
             <Region
                 name="feed_info_ok_text"
                 params={12585104}
-                layout={{ position: 'absolute', left: 0, width: 150, top: 4, height: 24, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, top: 4, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionFeedInfoOkText ?? '_info_ok'}

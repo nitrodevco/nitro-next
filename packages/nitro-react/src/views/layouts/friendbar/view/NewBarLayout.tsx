@@ -5,6 +5,7 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `24_new_bar_xml` (layout "new_bar", 300x48) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NewBarLayoutProps {
     layout?: BoxLayout;
+    onBorder?: () => void;
     onButtonLeftPage?: () => void;
     onButtonRightPage?: () => void;
     onCollapseLeft?: () => void;
@@ -20,7 +21,7 @@ export interface NewBarLayoutProps {
     srcLine?: string;
 }
 
-export const NewBarLayout = ({ layout, onButtonLeftPage, onButtonRightPage, onCollapseLeft, onCollapseRight, onIconAllFriends, onIconFindFriends, onIconMessenger, srcIcon, srcIcon1, srcIcon2, srcIconsToolbarCollapseLeft, srcIconsToolbarCollapseRight, srcLine }: NewBarLayoutProps) => {
+export const NewBarLayout = ({ layout, onBorder, onButtonLeftPage, onButtonRightPage, onCollapseLeft, onCollapseRight, onIconAllFriends, onIconFindFriends, onIconMessenger, srcIcon, srcIcon1, srcIcon2, srcIconsToolbarCollapseLeft, srcIconsToolbarCollapseRight, srcLine }: NewBarLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -28,6 +29,8 @@ export const NewBarLayout = ({ layout, onButtonLeftPage, onButtonRightPage, onCo
             <Region
                 name="border"
                 params={1}
+                onPointerTap={onBorder}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 48 }}
             >
                 <Region
@@ -59,7 +62,7 @@ export const NewBarLayout = ({ layout, onButtonLeftPage, onButtonRightPage, onCo
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
                         />
                     </Region>
                     <Region
@@ -150,7 +153,7 @@ export const NewBarLayout = ({ layout, onButtonLeftPage, onButtonRightPage, onCo
                 <Region
                     name="list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 173, width: 75, top: 6, height: 38, flexDirection: 'row', gap: 3 }}
+                    layout={{ position: 'absolute', left: 173, top: 6, flexDirection: 'row', gap: 3 }}
                 />
                 <Region
                     name="button_right_page"
@@ -194,7 +197,7 @@ export const NewBarLayout = ({ layout, onButtonLeftPage, onButtonRightPage, onCo
                         tags={[ 'ICON_BMP', '#icon' ]}
                         params={208}
                         src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
-                        layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 45 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
                     />
                 </Region>
             </Region>

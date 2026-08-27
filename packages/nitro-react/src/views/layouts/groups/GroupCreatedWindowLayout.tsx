@@ -28,14 +28,14 @@ export const GroupCreatedWindowLayout = ({ layout, onClose, onOkButton, srcGroup
                     name="group_welcome_info"
                     params={1040}
                     src={srcGroupWelcomeInfo ?? '${image.library.url}guilds/group_welcome_info.png'}
-                    layout={{ position: 'absolute', left: 20, width: 316, top: 140, height: 155 }}
+                    layout={{ position: 'absolute', left: 20, width: 316, bottom: 86, height: 155 }}
                 />
                 <ButtonThick
                     variant="3"
                     name="ok_button"
                     params={132113}
                     onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', left: 115, width: 131, top: 304, height: 29, minWidth: 131, maxWidth: 131 }}
+                    layout={{ position: 'absolute', left: 115, width: 131, bottom: 48, height: 29, minWidth: 131, maxWidth: 131 }}
                 >
                     {t('group.created.ok')}
                 </ButtonThick>

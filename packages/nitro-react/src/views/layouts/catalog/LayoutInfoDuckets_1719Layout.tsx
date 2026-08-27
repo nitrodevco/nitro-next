@@ -16,7 +16,7 @@ export const LayoutInfoDuckets_1719Layout = ({ captionCtlgDescription, layout, s
             <Region
                 name="ctlg_info_duckets"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"

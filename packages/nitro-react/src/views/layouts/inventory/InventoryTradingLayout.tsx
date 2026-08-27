@@ -66,7 +66,7 @@ export const InventoryTradingLayout = ({ captionContentText1A, captionContentTex
                         <Region
                             name="text_list_0"
                             params={934033}
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 2, height: 16, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
                         >
                             {itemsTextList0 ?? (
                                 <>
@@ -194,7 +194,7 @@ export const InventoryTradingLayout = ({ captionContentText1A, captionContentTex
                         <Region
                             name="text_list_1"
                             params={934033}
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 2, height: 16, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
                         >
                             {itemsTextList1 ?? (
                                 <>
@@ -377,7 +377,7 @@ export const InventoryTradingLayout = ({ captionContentText1A, captionContentTex
                     <Region
                         name="requirement_container"
                         params={409744}
-                        layout={{ position: 'absolute', left: 212, width: 61, top: 29, height: 25, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', left: 212, right: 205, top: 29, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5 }}
                     >
                         {itemsRequirementContainer ?? (
                             <InventoryTradingLayoutSilverProgressHtmlItem />
@@ -443,7 +443,7 @@ export const InventoryTradingLayout = ({ captionContentText1A, captionContentTex
                         name="button_cancel"
                         params={393233}
                         onPointerTap={onButtonCancel}
-                        layout={{ position: 'absolute', left: 415, width: 56, top: 0, height: 28 }}
+                        layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
                     >
                         {t('generic.cancel')}
                     </Button>

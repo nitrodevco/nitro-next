@@ -23,7 +23,7 @@ export const CampaignCompletedLayout = ({ captionCompletedTxt, layout, srcComple
                 <Region
                     name="completed_txt"
                     params={144}
-                    layout={{ position: 'absolute', left: 40, width: 230, top: 41, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 40, right: 92, top: 41, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCompletedTxt ?? t('quests.list.completed')}

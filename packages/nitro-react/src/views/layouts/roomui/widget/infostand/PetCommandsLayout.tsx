@@ -9,13 +9,15 @@ export interface PetCommandsLayoutProps {
     captionStatusSkillValueText?: string;
     layout?: BoxLayout;
     onClose?: () => void;
+    onImageContainer?: () => void;
     onPetCommandTemplate?: () => void;
+    onStatusSkillContainer?: () => void;
     srcAvatarImage?: string;
     srcStatusSkillBitmap?: string;
     srcStatusSkillIcon?: string;
 }
 
-export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, captionStatusSkillValueText, layout, onClose, onPetCommandTemplate, srcAvatarImage, srcStatusSkillBitmap, srcStatusSkillIcon }: PetCommandsLayoutProps) => {
+export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, captionStatusSkillValueText, layout, onClose, onImageContainer, onPetCommandTemplate, onStatusSkillContainer, srcAvatarImage, srcStatusSkillBitmap, srcStatusSkillIcon }: PetCommandsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,6 +34,8 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                 <Region
                     name="image_container"
                     params={17}
+                    onPointerTap={onImageContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 5, width: 71, top: 7, height: 90 }}
                 >
                     <ThemeImage
@@ -64,7 +68,9 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                 <Region
                     name="status_skill_container"
                     params={787473}
-                    layout={{ position: 'absolute', left: 5, width: 169, top: 400, height: 20 }}
+                    onPointerTap={onStatusSkillContainer}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -92.5, width: 169, bottom: 42, height: 20 }}
                 >
                     <ThemeImage
                         name="status_skill_bitmap"
@@ -75,7 +81,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     <Region
                         name="status_skill_value_text"
                         params={208}
-                        layout={{ position: 'absolute', left: 82, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -2.5, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionStatusSkillValueText ?? ''} />
                     </Region>
@@ -89,7 +95,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         name="status_skill_text"
                         params={208}
                         visible={false}
-                        layout={{ position: 'absolute', left: 7, width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -77.5, width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionStatusSkillText ?? t('infostand.pet.text.skill.next')} />
                     </Region>

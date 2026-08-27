@@ -28,7 +28,7 @@ export const LockConfirmLayout = ({ itemsTopList, layout, onCancelButton, onClos
                 <Region
                     name="top_list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 9, width: 290, top: 1, height: 163, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 9, top: 1, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsTopList ?? (
                         <>
@@ -61,7 +61,7 @@ export const LockConfirmLayout = ({ itemsTopList, layout, onCancelButton, onClos
                             params={393297}
                             tintColor="#bbbbbb"
                             onPointerTap={onConfirmButton}
-                            layout={{ position: 'absolute', left: 144, width: 140, top: -2, height: 48, maxWidth: 140 }}
+                            layout={{ position: 'absolute', right: 4, width: 140, top: -2, height: 48, maxWidth: 140 }}
                         >
                             {t('friend.furniture.confirm.lock.button.confirm')}
                         </Button>
@@ -121,7 +121,7 @@ export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layo
             <Region
                 name="message"
                 params={1049616}
-                layout={{ position: 'absolute', left: 0, width: 291, top: 49, height: 24, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, width: 291, bottom: -8, height: 24, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionMessage ?? t('friend.furniture.confirm.lock.other.locked')}

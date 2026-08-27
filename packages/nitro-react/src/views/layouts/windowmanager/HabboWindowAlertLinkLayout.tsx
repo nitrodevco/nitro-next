@@ -30,7 +30,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     name="_alert_description"
                     tags={[ 'DESCRIPTION' ]}
                     params={8388624}
-                    layout={{ position: 'absolute', left: 27, width: 210, top: 13, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 27, width: 210, top: 13, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionAlertDescription ?? 'Alert'}
@@ -44,7 +44,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     tags={[ 'LINK' ]}
                     params={918545}
                     onPointerTap={onAlertButtonLink}
-                    layout={{ position: 'absolute', left: 157, width: 81, top: 118, height: 24, minWidth: 50 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: 18, width: 81, bottom: 39, height: 24, minWidth: 50 }}
                 >
                     Open URL
                 </ButtonThick>
@@ -52,7 +52,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     name="_alert_button_ok"
                     tags={[ 'OK' ]}
                     params={918529}
-                    layout={{ position: 'absolute', left: 21, width: 82, top: 121, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -118, width: 82, bottom: 43, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onAlertButtonOk}
                     cursor="pointer"
                 >

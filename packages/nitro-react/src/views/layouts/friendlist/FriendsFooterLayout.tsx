@@ -37,7 +37,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                     name="border"
                     params={144}
                     tintColor="#d9d9d9"
-                    layout={{ position: 'absolute', left: 5, width: 213, top: 5, height: 31 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
                 >
                     <Region
                         visible={visibleButtonOpenMinimail ?? false}
@@ -91,7 +91,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                         name="button_search"
                         params={81}
                         onPointerTap={onButtonSearch}
-                        layout={{ position: 'absolute', left: 158, width: 23, top: 4, height: 22 }}
+                        layout={{ position: 'absolute', right: 32, width: 23, top: 4, height: 22 }}
                     >
                         <ThemeImage
                             name="icon"
@@ -103,7 +103,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                     <TextInput
                         value={friendSearchValue}
                         onChange={setFriendSearchValue}
-                        layout={{ position: 'absolute', left: 76, width: 103, top: 5, height: 19 }}
+                        layout={{ position: 'absolute', left: 76, right: 34, top: 5, height: 19 }}
                     />
                     <Region
                         name="clear_input_region"
@@ -111,7 +111,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                         visible={visibleClearInputRegion ?? false}
                         onPointerTap={onClearInputRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 162, width: 16, top: 7, height: 16 }}
+                        layout={{ position: 'absolute', right: 35, width: 16, top: 7, height: 16 }}
                     >
                         <Region
                             params={16}
@@ -121,7 +121,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                         <ThemeImage
                             params={80}
                             src={layoutImage('var_picker_cancel_search.png')}
-                            layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
+                            layout={{ position: 'absolute', right: 4, width: 9, top: 3, height: 9 }}
                         />
                     </Region>
                     <ContainerButton
@@ -129,7 +129,7 @@ export const FriendsFooterLayout = ({ layout, onButtonOpenHomepage, onButtonOpen
                         name="button_remove_friend"
                         params={81}
                         onPointerTap={onButtonRemoveFriend}
-                        layout={{ position: 'absolute', left: 185, width: 23, top: 4, height: 22 }}
+                        layout={{ position: 'absolute', right: 5, width: 23, top: 4, height: 22 }}
                     >
                         <ThemeImage
                             name="icon"

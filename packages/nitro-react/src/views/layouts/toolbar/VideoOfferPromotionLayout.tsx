@@ -39,7 +39,7 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                     <Region
                         name="promo_text"
                         params={8388624}
-                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPromoText ?? 'video offer promo text'}
@@ -58,7 +58,7 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                     name="promo_close_icon"
                     params={262161}
                     tintColor="#666666"
-                    layout={{ position: 'absolute', left: 173, width: 16, top: 7, height: 16 }}
+                    layout={{ position: 'absolute', right: 3, width: 16, top: 7, height: 16 }}
                 />
             </Border>
         </Region>

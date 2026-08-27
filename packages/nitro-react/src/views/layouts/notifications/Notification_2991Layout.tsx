@@ -18,7 +18,7 @@ export const Notification_2991Layout = ({ layout }: Notification_2991LayoutProps
                     tags={[ 'notification_icon' ]}
                     params={3088}
                     src={undefined}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: 8, height: 50 }}
+                    layout={{ position: 'absolute', left: 8, width: 50, top: '50%', marginTop: -25, height: 50 }}
                 />
                 <Region
                     tags={[ 'notification_text' ]}
@@ -29,7 +29,7 @@ export const Notification_2991Layout = ({ layout }: Notification_2991LayoutProps
                     tags={[ 'notification_icon_static' ]}
                     params={3088}
                     src={undefined}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: 8, height: 50 }}
+                    layout={{ position: 'absolute', left: 8, width: 50, top: '50%', marginTop: -25, height: 50 }}
                 />
             </Border>
         </Region>

@@ -31,7 +31,7 @@ export const PurchaseButtonsLayout = ({ captionPurchaseLabel, layout, onBuyButto
                         <Region
                             name="purchase_label"
                             params={786448}
-                            layout={{ position: 'absolute', left: 0, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -80, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}

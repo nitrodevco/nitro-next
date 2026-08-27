@@ -28,7 +28,7 @@ export const RoomToolsInfoLayout = ({ captionRoomName, captionRoomOwner, itemsTa
                     <Region
                         name="room_name"
                         params={4341888}
-                        layout={{ position: 'absolute', left: 10, width: 245, top: 6, height: 24, minWidth: 60, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, top: 6, height: 24, minWidth: 60, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomName ?? '...'}
@@ -43,7 +43,7 @@ export const RoomToolsInfoLayout = ({ captionRoomName, captionRoomOwner, itemsTa
                         <Region
                             name="room_owner"
                             params={4341776}
-                            layout={{ position: 'absolute', left: 0, width: 126, top: 0, height: 21, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, top: 0, height: 21, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionRoomOwner ?? '...'}
@@ -54,7 +54,7 @@ export const RoomToolsInfoLayout = ({ captionRoomName, captionRoomOwner, itemsTa
                         <Region
                             name="tags"
                             params={147472}
-                            layout={{ position: 'absolute', left: 0, width: 69, top: 25, height: 19, maxWidth: 230, flexDirection: 'row', gap: 4 }}
+                            layout={{ position: 'absolute', left: 0, top: 25, maxWidth: 230, flexDirection: 'row', gap: 4 }}
                         >
                             {itemsTags ?? (
                                 <>
@@ -96,7 +96,7 @@ export const RoomToolsInfoLayoutTag1BorderItem = ({ captionTag1, layout, onTag1R
                 <Region
                     name="tag1"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTag1 ?? '#jobs'}
@@ -134,7 +134,7 @@ export const RoomToolsInfoLayoutTag2BorderItem = ({ captionTag2, layout, onTag2R
                 <Region
                     name="tag2"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTag2 ?? '#party'}

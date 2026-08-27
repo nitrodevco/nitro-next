@@ -38,7 +38,7 @@ export const LogsOverviewLayout = ({ captionFilterKey, captionInfoText, captionL
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 700, top: 0, height: 117 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117 }}
                 >
                     <Border
                         variant="4"
@@ -48,7 +48,7 @@ export const LogsOverviewLayout = ({ captionFilterKey, captionInfoText, captionL
                         <Region
                             name="info_text"
                             params={2185}
-                            layout={{ position: 'absolute', left: 1, width: 578, top: 3, height: 32, minWidth: 578, maxWidth: 578, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 3, bottom: 3, minWidth: 578, maxWidth: 578, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionInfoText ?? t('wiredmenu.logs_overview.info')}
@@ -138,23 +138,23 @@ export const LogsOverviewLayout = ({ captionFilterKey, captionInfoText, captionL
                 <Region
                     name="middle"
                     params={2192}
-                    layout={{ position: 'absolute', left: 1, width: 698, top: 97, height: 316 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 97, bottom: 95 }}
                 >
                     <Region
                         name="table_view"
                         params={2192}
-                        layout={{ position: 'absolute', left: 13, width: 672, top: 0, height: 316 }}
+                        layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Region
                     name="footer"
                     params={1049744}
-                    layout={{ position: 'absolute', left: 0, width: 700, top: 413, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60 }}
                 >
                     <Region
                         name="pagination"
                         params={1168}
-                        layout={{ position: 'absolute', left: 0, width: 700, top: 16, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30 }}
                     >
                         <Region
                             name="footer_buttons_left"
@@ -171,7 +171,7 @@ export const LogsOverviewLayout = ({ captionFilterKey, captionInfoText, captionL
                         <Region
                             name="footer_buttons_right"
                             params={262224}
-                            layout={{ position: 'absolute', left: 573, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsFooterButtonsRight ?? (
                                 <>
@@ -182,7 +182,7 @@ export const LogsOverviewLayout = ({ captionFilterKey, captionInfoText, captionL
                         </Region>
                         <Region
                             params={786640}
-                            layout={{ position: 'absolute', left: 245, width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -105, width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
                         >
                             <Region
                                 name="pagina_text_start"

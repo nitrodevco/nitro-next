@@ -32,7 +32,7 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 <Region
                     name="name_text_online"
                     params={4325392}
-                    layout={{ position: 'absolute', left: 40, width: 95, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 40, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNameTextOnline ?? 'PH Avatar Name'}

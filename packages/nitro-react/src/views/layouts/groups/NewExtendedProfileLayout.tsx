@@ -12,12 +12,13 @@ export interface NewExtendedProfileLayoutProps {
     itemsTop?: ReactNode;
     layout?: BoxLayout;
     onBlockButton?: () => void;
+    onBlockedContainer?: () => void;
     onClose?: () => void;
     srcFrankStop?: string;
     visibleBlockedContainer?: boolean;
 }
 
-export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, itemsMiddle, itemsTop, layout, onBlockButton, onClose, srcFrankStop, visibleBlockedContainer }: NewExtendedProfileLayoutProps) => {
+export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, itemsMiddle, itemsTop, layout, onBlockButton, onBlockedContainer, onClose, srcFrankStop, visibleBlockedContainer }: NewExtendedProfileLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -98,7 +99,7 @@ export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, item
                         >
                             <Region
                                 params={786448}
-                                layout={{ position: 'absolute', left: 131, width: 215, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -118, width: 215, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('profile.full_profile_hidden')}
@@ -127,6 +128,8 @@ export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, item
                     name="blocked_container"
                     params={9}
                     visible={visibleBlockedContainer ?? false}
+                    onPointerTap={onBlockedContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: -2, width: 519, top: -3, height: 503 }}
                 >
                     <Region
@@ -163,12 +166,12 @@ export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, item
                         variant="2"
                         params={3145744}
                         tintColor="#e9e9e1"
-                        layout={{ position: 'absolute', left: 44, width: 250, top: 195, height: 100 }}
+                        layout={{ position: 'absolute', left: 44, width: 250, top: '50%', marginTop: -56.5, height: 100 }}
                     >
                         <Region
                             name="blocked_html"
                             params={8388609}
-                            layout={{ position: 'absolute', left: 13, width: 218, top: 14, height: 71, minWidth: 218, maxWidth: 218, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 13, width: 218, top: 14, minWidth: 218, maxWidth: 218, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionBlockedHtml ?? t('extendedprofile.blocked')}
@@ -456,7 +459,7 @@ export const NewExtendedProfileLayoutTopLeftItem = ({ captionChangeBadges, capti
                     name="avatar_image"
                     params={787536}
                     options={{ 'avatar_image:cropped': 'true' }}
-                    layout={{ position: 'absolute', left: 10, width: 34, top: 0, height: 84 }}
+                    layout={{ position: 'absolute', right: 12, width: 34, bottom: 29, height: 84 }}
                 />
             </Region>
             <Region
@@ -499,7 +502,7 @@ export const NewExtendedProfileLayoutTopLeftItem = ({ captionChangeBadges, capti
                 <Region
                     name="change_badges"
                     params={262209}
-                    layout={{ position: 'absolute', left: 85, width: 169, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 3, width: 169, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     onPointerTap={onChangeBadges}
                     cursor="pointer"
                 >
@@ -620,7 +623,7 @@ export const NewExtendedProfileLayoutRelationshipHeartItem = ({ captionHeartFrie
                 name="heart_head"
                 params={1049616}
                 options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                layout={{ position: 'absolute', left: 191, width: 33, top: 2, height: 34 }}
+                layout={{ position: 'absolute', left: 191, width: 33, bottom: 11, height: 34 }}
             />
             <Region
                 name="heart_txt"
@@ -684,7 +687,7 @@ export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileFrie
                 name="smile_head"
                 params={1049616}
                 options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                layout={{ position: 'absolute', left: 191, width: 33, top: 2, height: 34 }}
+                layout={{ position: 'absolute', left: 191, width: 33, bottom: 11, height: 34 }}
             />
             <Region
                 name="smile_txt"
@@ -748,7 +751,7 @@ export const NewExtendedProfileLayoutRelationshipBobbaItem = ({ captionBobbaFrie
                 name="bobba_head"
                 params={1049616}
                 options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                layout={{ position: 'absolute', left: 191, width: 33, top: 2, height: 34 }}
+                layout={{ position: 'absolute', left: 191, width: 33, bottom: 11, height: 34 }}
             />
             <Region
                 name="bobba_txt"
@@ -850,7 +853,7 @@ export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, 
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: 2, width: 162, top: 0, height: 30, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -81, width: 162, top: 0, height: 30, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}
@@ -899,7 +902,7 @@ export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: 17, width: 127, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -66, width: 127, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}
@@ -972,7 +975,7 @@ export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, cap
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: 19, width: 123, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -64.5, width: 123, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}

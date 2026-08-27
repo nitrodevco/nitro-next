@@ -15,7 +15,7 @@ export const PromoDucketsLayout = ({ layout, onCloseButton }: PromoDucketsLayout
         <Region layout={{ position: 'relative', width: 278, height: 44, ...layout }}>
             <Region
                 params={16448}
-                layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 44 }}
+                layout={{ position: 'absolute', right: 0, width: 278, top: 0, height: 44 }}
             >
                 <Border
                     variant="6"
@@ -57,7 +57,7 @@ export const PromoDucketsLayout = ({ layout, onCloseButton }: PromoDucketsLayout
                 <ThemeImage
                     params={80}
                     src={layoutImage('common_promo_arrow_top_right.png')}
-                    layout={{ position: 'absolute', left: 261, width: 17, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', right: 0, width: 17, top: 0, height: 30 }}
                 />
             </Region>
         </Region>

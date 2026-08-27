@@ -21,7 +21,7 @@ export const Header7Layout = ({ captionHeaderTitleText, layout, onHeaderButtonCl
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                     params={2147483856}
-                    layout={{ position: 'absolute', left: 4, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -28, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeaderTitleText ?? ''}

@@ -24,7 +24,7 @@ export const SuggestionListItemNewLayout = ({ captionNameText, layout, onSuggest
                 <Region
                     name="name_text"
                     params={12730384}
-                    layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 20, minWidth: 150, maxWidth: 261, minHeight: 20, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 150, maxWidth: 261, minHeight: 20, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNameText ?? t('001_lorem_ipsum_title')}

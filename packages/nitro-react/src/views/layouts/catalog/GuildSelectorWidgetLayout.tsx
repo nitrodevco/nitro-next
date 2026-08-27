@@ -44,7 +44,7 @@ export const GuildSelectorWidgetLayout = ({ layout, onFindGroupsButton }: GuildS
                         name="find_groups_button"
                         params={917521}
                         onPointerTap={onFindGroupsButton}
-                        layout={{ position: 'absolute', left: -23, width: 210, top: 55, height: 25 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -108, width: 210, top: 55, height: 25 }}
                     >
                         {t('catalog.guild_selector.find_groups')}
                     </Button>

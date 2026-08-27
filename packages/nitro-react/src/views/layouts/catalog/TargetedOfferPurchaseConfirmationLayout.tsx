@@ -27,7 +27,7 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ itemsContent, itemsPro
                 <Region
                     name="content"
                     params={8538256}
-                    layout={{ position: 'absolute', left: 0, width: 323, top: 8, height: 235, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 48, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContent ?? (
                         <>
@@ -37,7 +37,7 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ itemsContent, itemsPro
                     )}
                     <Region
                         params={131088}
-                        layout={{ width: 404, height: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+                        layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
                     >
                         <Region
                             params={16}
@@ -156,7 +156,7 @@ export const TargetedOfferPurchaseConfirmationLayoutButtonsItem = ({ itemsButton
         <Region
             name="buttons"
             params={131088}
-            layout={{ width: 315, height: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
+            layout={{ minWidth: 315, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
         >
             {itemsButtons ?? (
                 <>
@@ -179,7 +179,7 @@ export const TargetedOfferPurchaseConfirmationLayoutProductNameItem = ({ caption
         <Region
             name="product_name"
             params={8536080}
-            layout={{ width: 177, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 177, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionProductName ?? '001 lorem ipsum title that wraps around'}
@@ -201,7 +201,7 @@ export const TargetedOfferPurchaseConfirmationLayoutQuantityItem = ({ captionQua
         <Region
             name="quantity"
             params={8536080}
-            layout={{ width: 41, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 41, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionQuantity ?? ''}
@@ -234,7 +234,7 @@ export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ 
             )}
             <Region
                 params={147472}
-                layout={{ width: 288, height: 22, flexShrink: 0, flexDirection: 'row' }}
+                layout={{ flexShrink: 0, flexDirection: 'row' }}
             >
                 <Region
                     params={16}

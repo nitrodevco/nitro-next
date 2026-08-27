@@ -34,13 +34,13 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 880, top: 0, height: 62 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 62 }}
                 >
                     <Region
                         name="warning_text"
                         params={2185}
                         visible={false}
-                        layout={{ position: 'absolute', left: 10, width: 861, top: 10, height: 58, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionWarningText ?? ''}
@@ -64,7 +64,7 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                         name="refresh_btn"
                         params={393297}
                         onPointerTap={onRefreshBtn}
-                        layout={{ position: 'absolute', left: 801, width: 62, top: 13, height: 30 }}
+                        layout={{ position: 'absolute', right: 17, width: 62, top: 13, height: 30 }}
                     >
                         {t('wiredchests.logs.refresh')}
                     </Button>
@@ -83,23 +83,23 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                 <Region
                     name="middle"
                     params={2192}
-                    layout={{ position: 'absolute', left: 1, width: 878, top: 62, height: 234 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 62, bottom: 95 }}
                 >
                     <Region
                         name="table_view"
                         params={2192}
-                        layout={{ position: 'absolute', left: 13, width: 852, top: 0, height: 234 }}
+                        layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Region
                     name="footer"
                     params={1049744}
-                    layout={{ position: 'absolute', left: 0, width: 880, top: 296, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60 }}
                 >
                     <Region
                         name="pagination"
                         params={1168}
-                        layout={{ position: 'absolute', left: 0, width: 880, top: 16, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30 }}
                     >
                         <Region
                             name="footer_buttons_left"
@@ -116,7 +116,7 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                         <Region
                             name="footer_buttons_right"
                             params={262224}
-                            layout={{ position: 'absolute', left: 753, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsFooterButtonsRight ?? (
                                 <>
@@ -127,7 +127,7 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                         </Region>
                         <Region
                             params={786640}
-                            layout={{ position: 'absolute', left: 312, width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -128, width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
                         >
                             <Region
                                 name="pagina_text_start"

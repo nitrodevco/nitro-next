@@ -23,14 +23,16 @@ export interface UserInfoLayoutProps {
     captionViewIdBansTxt?: string;
     captionViewTradingLockCountTxt?: string;
     layout?: BoxLayout;
+    onButtons?: () => void;
     onChatlogBut?: () => void;
+    onFields?: () => void;
     onHabboinfotoolBut?: () => void;
     onMessageBut?: () => void;
     onModactionBut?: () => void;
     onRoomvisitsBut?: () => void;
 }
 
-export const UserInfoLayout = ({ captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionLoadingTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onChatlogBut, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut }: UserInfoLayoutProps) => {
+export const UserInfoLayout = ({ captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionLoadingTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onButtons, onChatlogBut, onFields, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut }: UserInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 280, height: 194, ...layout }}>
             <Border
@@ -51,6 +53,8 @@ export const UserInfoLayout = ({ captionAbusiveCfhCountTxt, captionBanCountTxt, 
                 <Region
                     name="fields"
                     params={32769}
+                    onPointerTap={onFields}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 5, width: 270, top: 5, height: 194 }}
                 >
                     <Region
@@ -318,6 +322,8 @@ export const UserInfoLayout = ({ captionAbusiveCfhCountTxt, captionBanCountTxt, 
                     <Region
                         name="buttons"
                         params={32769}
+                        onPointerTap={onButtons}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 190, width: 80, top: 0, height: 122 }}
                     >
                         <Button

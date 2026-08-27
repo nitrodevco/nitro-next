@@ -171,7 +171,7 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                             name="avatar_image"
                             params={1040}
                             options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                            layout={{ position: 'absolute', left: 10, width: 33, top: 14, height: 34 }}
+                            layout={{ position: 'absolute', left: 10, width: 33, bottom: 19, height: 34 }}
                         />
                         <Region
                             name="user_rank_txt"

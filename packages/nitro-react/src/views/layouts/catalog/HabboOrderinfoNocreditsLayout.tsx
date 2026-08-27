@@ -45,7 +45,7 @@ export const HabboOrderinfoNocreditsLayout = ({ captionHabboMessageTextA, captio
                     name="nobalance_ok"
                     params={393361}
                     onPointerTap={onNobalanceOk}
-                    layout={{ position: 'absolute', left: 77, width: 33, top: 90, height: 22, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 77, right: 174, top: 90, height: 22, maxWidth: 80 }}
                 >
                     {t('ok')}
                 </Button>
@@ -54,7 +54,7 @@ export const HabboOrderinfoNocreditsLayout = ({ captionHabboMessageTextA, captio
                     name="button_cancel"
                     params={393361}
                     onPointerTap={onButtonCancel}
-                    layout={{ position: 'absolute', left: 193, width: 54, top: 90, height: 22, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 193, right: 37, top: 90, height: 22, maxWidth: 80 }}
                 >
                     {t('cancel')}
                 </Button>

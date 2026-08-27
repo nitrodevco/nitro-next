@@ -18,7 +18,7 @@ export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR
                 params={81}
                 onPointerTap={onTag}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 14 }}
+                layout={{ position: 'absolute', right: 0, width: 38, top: 0, height: 14 }}
             >
                 <ThemeImage
                     name="bg_l"
@@ -30,13 +30,13 @@ export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR
                     name="bg_m"
                     params={144}
                     src={srcBgM}
-                    layout={{ position: 'absolute', left: 4, width: 28, top: 0, height: 14 }}
+                    layout={{ position: 'absolute', left: 4, right: 6, top: 0, height: 14 }}
                 />
                 <ThemeImage
                     name="bg_r"
                     params={80}
                     src={srcBgR}
-                    layout={{ position: 'absolute', left: 32, width: 5, top: 0, height: 14 }}
+                    layout={{ position: 'absolute', right: 1, width: 5, top: 0, height: 14 }}
                 />
                 <Region
                     name="txt"

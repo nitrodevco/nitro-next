@@ -26,14 +26,14 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
                     variant="0"
                     params={2192}
                     tintColor="#f0f0f0"
-                    layout={{ position: 'absolute', left: 0, width: 296, top: 0, height: 119 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Button
                         variant="0"
                         name="Boy"
                         params={1180753}
                         onPointerTap={onBoy}
-                        layout={{ position: 'absolute', left: 19, width: 100, top: 82, height: 22, minWidth: 100 }}
+                        layout={{ position: 'absolute', right: 177, width: 100, bottom: 15, height: 22, minWidth: 100 }}
                     >
                         {t('widget.furni.clothingchange.gender.male')}
                     </Button>
@@ -42,7 +42,7 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
                         name="Girl"
                         params={1442897}
                         onPointerTap={onGirl}
-                        layout={{ position: 'absolute', left: 174, width: 100, top: 82, height: 22, minWidth: 100 }}
+                        layout={{ position: 'absolute', right: 22, width: 100, bottom: 15, height: 22, minWidth: 100 }}
                     >
                         {t('widget.furni.clothingchange.gender.female')}
                     </Button>

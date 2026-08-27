@@ -115,7 +115,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                     <Region
                         name="avatar_name"
                         params={786448}
-                        layout={{ position: 'absolute', left: 40, width: 400, top: 15, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -204.5, width: 400, top: 15, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionAvatarName ?? t('avatareditor.title')}
@@ -759,7 +759,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                         params={917521}
                         onPointerTap={onSave}
                         textStyle="text-style-button-shiny-bold"
-                        layout={{ position: 'absolute', left: 356, width: 122, top: 373, height: 28, minWidth: 100 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: 111.5, width: 122, top: 373, height: 28, minWidth: 100 }}
                     >
                         {t('avatareditor.save')}
                     </ButtonThick>
@@ -818,7 +818,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                             tintColor="#00aa00"
                             onPointerTap={onGetMoreButton}
                             textStyle="text-style-button-shiny-bold"
-                            layout={{ position: 'absolute', left: 347, width: 115, top: 6, height: 28, maxWidth: 115 }}
+                            layout={{ position: 'absolute', right: 6, width: 115, top: 6, height: 28, maxWidth: 115 }}
                         >
                             {t('avatareditor.effects.shop')}
                         </ButtonThick>

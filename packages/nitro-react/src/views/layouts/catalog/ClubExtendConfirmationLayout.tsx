@@ -60,7 +60,7 @@ export const ClubExtendConfirmationLayout = ({ itemsItemlistVertical, layout, on
                     name="club_teaser"
                     params={1049712}
                     src={srcClubTeaser}
-                    layout={{ position: 'absolute', left: 1, width: 40, top: 110, height: 144 }}
+                    layout={{ position: 'absolute', right: 409, width: 40, bottom: -19, height: 144 }}
                 />
             </Region>
         </Frame>
@@ -109,7 +109,7 @@ export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNo
             <Region
                 name="normal_price_label"
                 params={1048592}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionNormalPriceLabel ?? ''}
@@ -119,7 +119,7 @@ export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNo
             <Region
                 name="normal_price_price_left"
                 params={1048592}
-                layout={{ position: 'absolute', left: 150, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionNormalPricePriceLeft ?? ''}
@@ -147,7 +147,7 @@ export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNo
             <Region
                 name="normal_price_price_right"
                 params={1048592}
-                layout={{ position: 'absolute', left: 220, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionNormalPricePriceRight ?? ''}
@@ -185,7 +185,7 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
             <Region
                 name="you_save_label"
                 params={1048592}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionYouSaveLabel ?? ''}
@@ -195,7 +195,7 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
             <Region
                 name="you_save_price_left"
                 params={1048592}
-                layout={{ position: 'absolute', left: 150, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionYouSavePriceLeft ?? ''}
@@ -223,7 +223,7 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
             <Region
                 name="you_save_price_right"
                 params={1048592}
-                layout={{ position: 'absolute', left: 220, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionYouSavePriceRight ?? ''}
@@ -292,7 +292,7 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
             <Region
                 name="your_price_label"
                 params={1048592}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 4, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionYourPriceLabel ?? ''}
@@ -302,7 +302,7 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
             <Region
                 name="your_price_price_left"
                 params={1048592}
-                layout={{ position: 'absolute', left: 150, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 150, width: 30, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionYourPricePriceLeft ?? ''}
@@ -330,7 +330,7 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
             <Region
                 name="your_price_price_right"
                 params={1048592}
-                layout={{ position: 'absolute', left: 220, width: 30, top: 15, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 220, width: 30, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionYourPricePriceRight ?? ''}
@@ -390,7 +390,7 @@ export const ClubExtendConfirmationLayoutActionContainerItem = ({ captionMaybeLa
                 name="buy_now_button"
                 params={393233}
                 onPointerTap={onBuyNowButton}
-                layout={{ position: 'absolute', left: 135, width: 150, top: 0, height: 30, maxWidth: 150 }}
+                layout={{ position: 'absolute', right: 0, width: 150, top: 0, height: 30, maxWidth: 150 }}
             />
             <Region
                 name="maybe_later_region"
@@ -402,7 +402,7 @@ export const ClubExtendConfirmationLayoutActionContainerItem = ({ captionMaybeLa
                 <Region
                     name="maybe_later_link"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 0, width: 4, top: 5, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 5, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMaybeLaterLink ?? ''}

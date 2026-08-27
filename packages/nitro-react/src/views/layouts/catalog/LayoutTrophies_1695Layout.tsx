@@ -51,7 +51,7 @@ export const LayoutTrophies_1695Layout = ({ captionTrophyDescription, captionTro
                         name="ctlg_prevmodel_button"
                         params={393233}
                         onPointerTap={onCtlgPrevmodelButton}
-                        layout={{ position: 'absolute', left: 130, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                        layout={{ position: 'absolute', right: 200, width: 30, top: 96, height: 30, maxWidth: 100 }}
                     >
                         <Icon
                             variant="2"
@@ -66,7 +66,7 @@ export const LayoutTrophies_1695Layout = ({ captionTrophyDescription, captionTro
                         name="ctlg_nextmodel_button"
                         params={393233}
                         onPointerTap={onCtlgNextmodelButton}
-                        layout={{ position: 'absolute', left: 190, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                        layout={{ position: 'absolute', right: 140, width: 30, top: 96, height: 30, maxWidth: 100 }}
                     >
                         <Icon
                             variant="3"

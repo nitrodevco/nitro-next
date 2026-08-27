@@ -42,31 +42,31 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                 <Region
                     name="background_container"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 462 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
                 >
                     <Region
                         name="bg1"
                         params={2192}
                         backgroundColor="#bfbfbf"
-                        layout={{ position: 'absolute', left: 3, width: 414, top: 0, height: 455 }}
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 0, bottom: 7 }}
                     />
                     <Region
                         name="bg2"
                         params={1168}
                         backgroundColor="#bfbfbf"
-                        layout={{ position: 'absolute', left: 4, width: 412, top: 455, height: 2 }}
+                        layout={{ position: 'absolute', left: 4, right: 4, bottom: 5, height: 2 }}
                     />
                     <Region
                         name="bg3"
                         params={1168}
                         backgroundColor="#bfbfbf"
-                        layout={{ position: 'absolute', left: 6, width: 408, top: 457, height: 1 }}
+                        layout={{ position: 'absolute', left: 6, right: 6, bottom: 4, height: 1 }}
                     />
                 </Region>
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 107 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 107 }}
                 >
                     <Border
                         variant="2"
@@ -109,7 +109,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                 <Region
                     name="center"
                     params={1168}
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 107, height: 220 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 168, height: 220 }}
                 >
                     <Region
                         name="item_viewer"
@@ -187,7 +187,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                         <Region
                             name="page_list"
                             params={934096}
-                            layout={{ position: 'absolute', left: 149, width: 44, top: 0, height: 11, flexDirection: 'row', gap: 7 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -22, top: 0, flexDirection: 'row', gap: 7 }}
                         >
                             {itemsPageList ?? (
                                 <>
@@ -206,7 +206,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                 />
                 <Region
                     visible={visibleClaimContainer ?? false}
-                    layout={{ position: 'absolute', left: 55, width: 310, top: 115, height: 40 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -155, width: 310, top: 115, height: 40 }}
                 >
                     <Border
                         variant="2"
@@ -241,7 +241,7 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                 <Region
                     name="bottom"
                     params={1168}
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 327, height: 135 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 33, height: 135 }}
                 >
                     <Border
                         variant="2"
@@ -294,13 +294,13 @@ export const SpecialItemsDisplayLayout = ({ captionClaimTxt, captionSetDesc, cap
                         </ScrollArea>
                         <Region
                             visible={false}
-                            layout={{ position: 'absolute', left: 330, width: 40, top: 9, height: 40 }}
+                            layout={{ position: 'absolute', right: 24, width: 40, top: 9, height: 40 }}
                         >
                             <ThemeImage
                                 name="temp"
                                 params={262160}
                                 src={srcTemp ?? layoutImage('bottom_bar_wired_menu.png')}
-                                layout={{ position: 'absolute', left: 330, width: 40, top: 9, height: 40 }}
+                                layout={{ position: 'absolute', right: 24, width: 40, top: 9, height: 40 }}
                             />
                         </Region>
                         <WidgetSlot

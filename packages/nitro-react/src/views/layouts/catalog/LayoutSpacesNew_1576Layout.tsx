@@ -20,7 +20,7 @@ export const LayoutSpacesNew_1576Layout = ({ layout, onGroupFloors, onGroupViews
             <Region
                 name="ctlg_spaces_new"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="productViewWidget"
@@ -60,7 +60,7 @@ export const LayoutSpacesNew_1576Layout = ({ layout, onGroupFloors, onGroupViews
                     name="spacesNewWidget"
                     tags={[ 'EMBEDDED', 'FIXED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 180 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 >
                     <Region
                         name="groups"
@@ -99,11 +99,11 @@ export const LayoutSpacesNew_1576Layout = ({ layout, onGroupFloors, onGroupViews
                         variant="6"
                         params={2064}
                         blend={0.5}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 25, height: 155 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 25, bottom: 0 }}
                     />
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 2, width: 356, top: 27, height: 151 }}
+                        layout={{ position: 'absolute', left: 2, width: 356, top: 27, bottom: 2 }}
                     >
                         <Region
                             name="itemGrid"
@@ -115,7 +115,7 @@ export const LayoutSpacesNew_1576Layout = ({ layout, onGroupFloors, onGroupViews
                 <Region
                     name="purchaseWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

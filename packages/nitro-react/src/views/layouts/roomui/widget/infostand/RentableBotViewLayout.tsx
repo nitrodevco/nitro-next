@@ -271,7 +271,7 @@ export const RentableBotViewLayoutDescriptionContainerItem = ({ layout, onAvatar
                     name="avatar_image"
                     params={3282}
                     options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                    layout={{ position: 'absolute', left: 16, width: 34, top: 21, height: 84 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 34, top: '50%', marginTop: -42.5, height: 84 }}
                 />
             </Region>
             <WidgetSlot

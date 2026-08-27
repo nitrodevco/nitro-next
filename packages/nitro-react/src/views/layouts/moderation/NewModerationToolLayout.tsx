@@ -67,11 +67,11 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                     name="main_view"
                     params={2192}
                     visible={visibleMainView ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 11, width: 215, top: 7, height: 154, flexDirection: 'column', gap: 7 }}
+                        layout={{ position: 'absolute', left: 11, right: 12, top: 7, height: 154, flexDirection: 'column', gap: 7 }}
                     >
                         <Button
                             variant="102"
@@ -128,7 +128,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                 <Region
                     name="subview_wrapper"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
                 >
                     <ContainerButton
                         variant="103"
@@ -148,7 +148,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         name="hotel_alert_view"
                         params={2192}
                         visible={visibleHotelAlertView ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="hotel_alert_txt"
@@ -164,13 +164,13 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                             variant="105"
                             name="message_border"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 29, height: 96 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 96 }}
                         >
                             <TextInput
                                 value={hotelAlertInputValue}
                                 onChange={setHotelAlertInputValue}
                                 multiline
-                                layout={{ position: 'absolute', left: 5, width: 207, top: 5, height: 86 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Button
@@ -187,7 +187,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         name="send_warning_view"
                         params={2192}
                         visible={visibleSendWarningView ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="user_txt"
@@ -202,12 +202,12 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 29, height: 26 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
                         >
                             <TextInput
                                 value={warningUsernameInputValue}
                                 onChange={setWarningUsernameInputValue}
-                                layout={{ position: 'absolute', left: 5, width: 207, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Region
@@ -223,13 +223,13 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 81, height: 44 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 81, height: 44 }}
                         >
                             <TextInput
                                 value={warningInputValue}
                                 onChange={setWarningInputValue}
                                 multiline
-                                layout={{ position: 'absolute', left: 5, width: 207, top: 5, height: 34 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Button
@@ -246,7 +246,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         name="give_coins_view"
                         params={2192}
                         visible={visibleGiveCoinsView ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="user_txt"
@@ -261,12 +261,12 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 29, height: 26 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
                         >
                             <TextInput
                                 value={giveCoinsUsernameInputValue}
                                 onChange={setGiveCoinsUsernameInputValue}
-                                layout={{ position: 'absolute', left: 5, width: 204, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Region
@@ -282,13 +282,13 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 10, width: 86, top: 87, height: 26 }}
+                            layout={{ position: 'absolute', left: 10, right: 142, top: 87, height: 26 }}
                         >
                             <TextInput
                                 value={amountCoinsInputValue}
                                 onChange={setAmountCoinsInputValue}
                                 multiline
-                                layout={{ position: 'absolute', left: 5, width: 76, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Button
@@ -318,7 +318,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                     <Region
                         name="give_furni_view"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="user_txt"
@@ -333,12 +333,12 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 29, height: 26 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
                         >
                             <TextInput
                                 value={giveFurniUsernameInputValue}
                                 onChange={setGiveFurniUsernameInputValue}
-                                layout={{ position: 'absolute', left: 5, width: 204, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Region
@@ -354,13 +354,13 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 134, width: 34, top: 87, height: 26 }}
+                            layout={{ position: 'absolute', left: 134, right: 70, top: 87, height: 26 }}
                         >
                             <TextInput
                                 value={amountFurniInputValue}
                                 onChange={setAmountFurniInputValue}
                                 multiline
-                                layout={{ position: 'absolute', left: 5, width: 24, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Region
@@ -376,12 +376,12 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 110, top: 87, height: 26 }}
+                            layout={{ position: 'absolute', left: 9, right: 119, top: 87, height: 26 }}
                         >
                             <TextInput
                                 value={productNameInputValue}
                                 onChange={setProductNameInputValue}
-                                layout={{ position: 'absolute', left: 5, width: 97, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <ContainerButton
@@ -412,7 +412,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         name="ban_view"
                         params={2192}
                         visible={visibleBanView ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 173 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="user_txt"
@@ -427,18 +427,18 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                         <Border
                             variant="105"
                             params={144}
-                            layout={{ position: 'absolute', left: 9, width: 217, top: 29, height: 26 }}
+                            layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
                         >
                             <TextInput
                                 value={banUsernameInputValue}
                                 onChange={setBanUsernameInputValue}
-                                layout={{ position: 'absolute', left: 5, width: 204, top: 5, height: 16 }}
+                                layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                             />
                         </Border>
                         <Region
                             name="ban_type"
                             params={145}
-                            layout={{ position: 'absolute', left: 13, width: 210, top: 62, height: 54 }}
+                            layout={{ position: 'absolute', left: 13, right: 15, top: 62, height: 54 }}
                         >
                             <RadioButton
                                 variant="100"
@@ -487,7 +487,7 @@ export const NewModerationToolLayout = ({ captionAmountTxt, captionAmountTxt2, c
                             name="duration_selector"
                             params={81}
                             onPointerTap={onDurationSelector}
-                            layout={{ position: 'absolute', left: 124, width: 101, top: 63, height: 22 }}
+                            layout={{ position: 'absolute', right: 13, width: 101, top: 63, height: 22 }}
                         >
                             1 Month
                         </Dropmenu>

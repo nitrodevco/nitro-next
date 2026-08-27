@@ -21,24 +21,24 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 151, top: -530, height: 1462 }}
+                layout={{ position: 'absolute', left: 0, width: 151, bottom: 530, height: 1462 }}
             >
                 <Region
                     name="border"
                     params={12583056}
-                    layout={{ position: 'absolute', left: 0, width: 143, top: 0, height: 1458 }}
+                    layout={{ position: 'absolute', left: 0, right: 8, top: 0, height: 1458 }}
                 >
                     <Region
                         name="profile_link"
                         params={145}
                         onPointerTap={onProfileLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 143, top: 7, height: 16 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16 }}
                     >
                         <Region
                             name="name"
                             params={208}
-                            layout={{ position: 'absolute', left: 31, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'my_name_here'}
@@ -56,12 +56,12 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                     <Region
                         params={144}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, width: 139, top: 27, height: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
                     />
                     <Region
                         name="buttons"
                         params={8519824}
-                        layout={{ position: 'absolute', left: 2, width: 139, top: 28, height: 1402, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 28, minHeight: 1402, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -127,13 +127,13 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                         params={1169}
                         onPointerTap={onMinimize}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 3, width: 136, top: 1429, height: 18 }}
+                        layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18 }}
                     >
                         <Icon
                             variant="7"
                             name="icon"
                             params={208}
-                            layout={{ position: 'absolute', left: 62, width: 12, top: 7, height: 11 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -6, width: 12, top: 7, height: 11 }}
                         />
                     </Region>
                 </Region>
@@ -166,12 +166,12 @@ export const AvatarMenuWidgetLayoutOpenProfileItem = ({ captionLabel, layout, on
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.open_profile')}
@@ -208,12 +208,12 @@ export const AvatarMenuWidgetLayoutFriendItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.friend')}
@@ -250,12 +250,12 @@ export const AvatarMenuWidgetLayoutTradeItem = ({ captionLabel, layout, onButton
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.trade')}
@@ -292,12 +292,12 @@ export const AvatarMenuWidgetLayoutWhisperItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.whisper')}
@@ -334,12 +334,12 @@ export const AvatarMenuWidgetLayoutRespectItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.respect')}
@@ -376,12 +376,12 @@ export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layou
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.replenish_respect')}
@@ -422,12 +422,12 @@ export const AvatarMenuWidgetLayoutBlowItem = ({ captionLabel, layout, onButton 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? 'infostand.button.blow'}
@@ -464,12 +464,12 @@ export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.perform')}
@@ -482,7 +482,7 @@ export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButt
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -513,12 +513,12 @@ export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.relationship')}
@@ -531,7 +531,7 @@ export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, o
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -562,12 +562,12 @@ export const AvatarMenuWidgetLayoutKickItem = ({ captionLabel, layout, onButton 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.kick')}
@@ -604,12 +604,12 @@ export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute')}
@@ -622,7 +622,7 @@ export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton 
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -653,12 +653,12 @@ export const AvatarMenuWidgetLayoutMute2minItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_2min')}
@@ -695,12 +695,12 @@ export const AvatarMenuWidgetLayoutMute5minItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_5min')}
@@ -737,12 +737,12 @@ export const AvatarMenuWidgetLayoutMute10minItem = ({ captionLabel, layout, onBu
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_10min')}
@@ -779,12 +779,12 @@ export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.ban')}
@@ -797,7 +797,7 @@ export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -828,12 +828,12 @@ export const AvatarMenuWidgetLayoutBanHourItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.ban_hour')}
@@ -870,12 +870,12 @@ export const AvatarMenuWidgetLayoutBanDayItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.ban_day')}
@@ -912,12 +912,12 @@ export const AvatarMenuWidgetLayoutPermBanItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.perm_ban')}
@@ -954,12 +954,12 @@ export const AvatarMenuWidgetLayoutGiveRightsItem = ({ captionLabel, layout, onB
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.giverights')}
@@ -996,12 +996,12 @@ export const AvatarMenuWidgetLayoutRemoveRightsItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.removerights')}
@@ -1038,12 +1038,12 @@ export const AvatarMenuWidgetLayoutUnignoreItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.unignore')}
@@ -1080,12 +1080,12 @@ export const AvatarMenuWidgetLayoutIgnoreItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.ignore')}
@@ -1122,12 +1122,12 @@ export const AvatarMenuWidgetLayoutReportItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.report')}
@@ -1164,12 +1164,12 @@ export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.moderate')}
@@ -1182,7 +1182,7 @@ export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onBut
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -1244,7 +1244,7 @@ export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton }
                 <ThemeImage
                     params={2192}
                     src={layoutImage('relationship_status_smile.png')}
-                    layout={{ position: 'absolute', left: 0, width: 49, top: 7, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5 }}
                 />
             </ContainerButton>
         </Region>
@@ -1275,7 +1275,7 @@ export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton }
                 <ThemeImage
                     params={2192}
                     src={layoutImage('relationship_status_bobba.png')}
-                    layout={{ position: 'absolute', left: 0, width: 49, top: 7, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5 }}
                 />
             </ContainerButton>
         </Region>
@@ -1331,12 +1331,12 @@ export const AvatarMenuWidgetLayoutNoRelationshipItem = ({ captionLabel, layout,
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.clear_relationship')}
@@ -1373,12 +1373,12 @@ export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.actions')}
@@ -1422,12 +1422,12 @@ export const AvatarMenuWidgetLayoutPassHanditemItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.pass_hand_item')}
@@ -1464,12 +1464,12 @@ export const AvatarMenuWidgetLayoutChangeBotNameItem = ({ captionLabel, layout, 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.change_bot_name')}
@@ -1506,12 +1506,12 @@ export const AvatarMenuWidgetLayoutDressUpItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.dress_up')}
@@ -1548,12 +1548,12 @@ export const AvatarMenuWidgetLayoutSetupChatItem = ({ captionLabel, layout, onBu
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.setup_chat')}
@@ -1590,12 +1590,12 @@ export const AvatarMenuWidgetLayoutRandomWalkItem = ({ captionLabel, layout, onB
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.random_walk')}
@@ -1632,12 +1632,12 @@ export const AvatarMenuWidgetLayoutDanceItem = ({ captionLabel, layout, onButton
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.dance')}
@@ -1674,12 +1674,12 @@ export const AvatarMenuWidgetLayoutPickItem = ({ captionLabel, layout, onButton 
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.pick_up')}
@@ -1718,12 +1718,12 @@ export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, on
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.nux.proceed')}
@@ -1760,12 +1760,12 @@ export const AvatarMenuWidgetLayoutNuxTakeTourItem = ({ captionLabel, layout, on
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.nux.take.tour')}
@@ -1802,12 +1802,12 @@ export const AvatarMenuWidgetLayoutNuxAgainItem = ({ captionLabel, layout, onBut
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.nux.again')}
@@ -1842,12 +1842,12 @@ export const AvatarMenuWidgetLayoutNuxRestartItem = ({ captionLabel, layout, onB
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? 'NUX RESTART'}
@@ -1882,12 +1882,12 @@ export const AvatarMenuWidgetLayoutNuxNextDayItem = ({ captionLabel, layout, onB
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? 'NUX NEXT DAY'}
@@ -1924,12 +1924,12 @@ export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? 'PH'}
@@ -1966,12 +1966,12 @@ export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onB
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.link.ambassador')}
@@ -1984,7 +1984,7 @@ export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onB
                     name="icon"
                     tags={[ 'arrow_right' ]}
                     params={80}
-                    layout={{ position: 'absolute', left: 128, width: 5, top: 12, height: 10 }}
+                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
         </Region>
@@ -2015,12 +2015,12 @@ export const AvatarMenuWidgetLayoutAmbassadorAlertItem = ({ captionLabel, layout
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.ambassador.alert')}
@@ -2057,12 +2057,12 @@ export const AvatarMenuWidgetLayoutAmbassadorKickItem = ({ captionLabel, layout,
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.kick')}
@@ -2099,12 +2099,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute2minItem = ({ captionLabel, lay
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_2min')}
@@ -2141,12 +2141,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute10minItem = ({ captionLabel, la
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_10min')}
@@ -2183,12 +2183,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute15minItem = ({ captionLabel, la
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_15min')}
@@ -2225,12 +2225,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute60minItem = ({ captionLabel, la
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_60min')}
@@ -2267,12 +2267,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute18hourItem = ({ captionLabel, l
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_18hour')}
@@ -2309,12 +2309,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute36hourItem = ({ captionLabel, l
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_36hour')}
@@ -2351,12 +2351,12 @@ export const AvatarMenuWidgetLayoutAmbassadorMute72hourItem = ({ captionLabel, l
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.mute_72hour')}
@@ -2393,12 +2393,12 @@ export const AvatarMenuWidgetLayoutAmbassadorUnmuteItem = ({ captionLabel, layou
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.unmute')}
@@ -2435,12 +2435,12 @@ export const AvatarMenuWidgetLayoutDonateToAllItem = ({ captionLabel, layout, on
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.dta')}
@@ -2477,12 +2477,12 @@ export const AvatarMenuWidgetLayoutDonateToUserItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('avatar.widget.dtu')}
@@ -2519,12 +2519,12 @@ export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, o
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 143, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 137, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.wired_inspect')}

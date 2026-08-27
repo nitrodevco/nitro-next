@@ -43,7 +43,7 @@ export const NewFeatureNotificationLayout = ({ captionCancelLink, captionDesc, l
                     name="open_button"
                     params={410705}
                     onPointerTap={onOpenButton}
-                    layout={{ position: 'absolute', left: 133, width: 51, top: 54, height: 28 }}
+                    layout={{ position: 'absolute', right: 8, width: 51, bottom: 10, height: 28 }}
                 >
                     {t('notifications.button.view')}
                 </Button>
@@ -52,7 +52,7 @@ export const NewFeatureNotificationLayout = ({ captionCancelLink, captionDesc, l
                     params={148497}
                     onPointerTap={onCancelLinkRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 8, width: 155, top: 60, height: 17 }}
+                    layout={{ position: 'absolute', left: 8, width: 155, bottom: 15, height: 17 }}
                 >
                     <Region
                         name="cancel_link"

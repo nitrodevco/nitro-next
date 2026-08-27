@@ -27,11 +27,11 @@ export const EvidenceFrameLayout = ({ captionText, itemsEvidenceList, layout, on
                     name="chat_cont"
                     params={2192}
                     backgroundColor="#4184b0"
-                    layout={{ position: 'absolute', left: 0, width: 470, top: 0, height: 533 }}
+                    layout={{ position: 'absolute', left: 0, right: 10, top: 0, bottom: 32 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 443, top: 0, height: 530 }}
+                        layout={{ position: 'absolute', left: 0, right: 27, top: 0, bottom: 3 }}
                     >
                         <Region
                             name="evidence_list"

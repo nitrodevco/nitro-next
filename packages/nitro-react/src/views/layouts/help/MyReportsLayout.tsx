@@ -32,7 +32,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                 <Region
                     name="reports_table_cont"
                     params={12585104}
-                    layout={{ position: 'absolute', left: 4, width: 531, top: 3, height: 176 }}
+                    layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41 }}
                 />
                 <Region
                     visible={visibleStatusInfoBubble ?? true}

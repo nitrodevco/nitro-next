@@ -15,12 +15,12 @@ export const ChooserItemLayout = ({ captionItemtext, layout }: ChooserItemLayout
             <Region
                 params={131217}
                 backgroundColor="#eeeeee"
-                layout={{ position: 'absolute', left: 0, width: 159, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
             >
                 <Region
                     name="itemtext"
                     params={144}
-                    layout={{ position: 'absolute', left: 7, width: 152, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 7, right: 0, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionItemtext ?? t('001_lorem_ipsum_title')} />
                 </Region>

@@ -39,7 +39,7 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                     name="button_cancel"
                     params={393233}
                     onPointerTap={onButtonCancel}
-                    layout={{ position: 'absolute', left: 412, width: 56, top: 36, height: 28 }}
+                    layout={{ position: 'absolute', right: 10, width: 56, top: 36, height: 28 }}
                 >
                     {t('generic.cancel')}
                 </Button>

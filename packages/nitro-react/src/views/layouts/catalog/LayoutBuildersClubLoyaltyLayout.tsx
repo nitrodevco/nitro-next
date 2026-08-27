@@ -17,7 +17,7 @@ export const LayoutBuildersClubLoyaltyLayout = ({ captionCtlgDescription, captio
             <Region
                 name="ctlg_builders_club_loyalty"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 508 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"
@@ -37,11 +37,11 @@ export const LayoutBuildersClubLoyaltyLayout = ({ captionCtlgDescription, captio
                 <Region
                     name="builderLoyaltyWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 14, width: 300, top: 108, height: 380 }}
+                    layout={{ position: 'absolute', left: 14, width: 300, top: 108, bottom: 20 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 287, top: 0, height: 360 }}
+                        layout={{ position: 'absolute', left: 0, width: 287, top: 0, bottom: 20 }}
                     >
                         <Region
                             name="loyalty_list"
@@ -93,7 +93,7 @@ export const LayoutBuildersClubLoyaltyLayout = ({ captionCtlgDescription, captio
                                     params={393233}
                                     tintColor="#0a9bc5"
                                     onPointerTap={onItemBuy}
-                                    layout={{ position: 'absolute', left: 123, width: 142, top: 37, height: 35, minWidth: 40 }}
+                                    layout={{ position: 'absolute', right: 4, width: 142, top: 37, height: 35, minWidth: 40 }}
                                 >
                                     {t('buy')}
                                 </ButtonThick>

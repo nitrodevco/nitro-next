@@ -14,11 +14,12 @@ export interface AvatarEditorNameChangeLayoutProps {
     onCheckNameButton?: () => void;
     onClose?: () => void;
     onSelectNameButton?: () => void;
+    onSuggestions?: () => void;
     srcHcIconImage?: string;
     srcPenImage?: string;
 }
 
-export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, srcHcIconImage, srcPenImage }: AvatarEditorNameChangeLayoutProps) => {
+export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, onSuggestions, srcHcIconImage, srcPenImage }: AvatarEditorNameChangeLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -40,7 +41,7 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                     <Region
                         name="static_info_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 30, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -142.5, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionStaticInfoText ?? t('tutorial.name_change.title.main')}
@@ -91,6 +92,8 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                     <Region
                         name="suggestions"
                         params={131089}
+                        onPointerTap={onSuggestions}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 10, width: 280, top: 150, height: 31 }}
                     />
                     <Button
@@ -109,7 +112,7 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                         params={393233}
                         tintColor="#bbbbbb"
                         onPointerTap={onCancelSelectionButton}
-                        layout={{ position: 'absolute', left: 3000, width: 119, top: 1, height: 43 }}
+                        layout={{ position: 'absolute', right: -2774, width: 119, top: 1, height: 43 }}
                     >
                         {t('generic.cancel')}
                     </Button>

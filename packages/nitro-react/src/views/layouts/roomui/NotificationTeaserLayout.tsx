@@ -87,7 +87,7 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         <Region
                             name="ok"
                             params={3932176}
-                            layout={{ position: 'absolute', left: 5, width: 295, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -148, width: 295, top: '50%', marginTop: -12, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionOk ?? t('widget.furni.teaser.get')}
@@ -100,7 +100,7 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         name="dialog_bg"
                         params={1048592}
                         src={srcDialogBg}
-                        layout={{ position: 'absolute', left: 1, width: 418, top: 0, height: 160 }}
+                        layout={{ position: 'absolute', left: 1, width: 418, bottom: 68, height: 160 }}
                     />
                     <ThemeImage
                         name="deco_img"

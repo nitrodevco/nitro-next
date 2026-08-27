@@ -29,7 +29,7 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 45, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -76, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.other.settings.title')}
@@ -41,7 +41,7 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 40, width: 162, top: 24, height: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -81, width: 162, top: 24, height: 1 }}
                 />
                 <Region
                     params={8388624}
@@ -121,7 +121,7 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                     params={1180721}
                     onPointerTap={onBackBtn}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 10, width: 60, top: 148, height: 28, minWidth: 60, maxWidth: 60, minHeight: 28, maxHeight: 28 }}
+                    layout={{ position: 'absolute', left: 10, width: 60, bottom: 8, height: 28, minWidth: 60, maxWidth: 60, minHeight: 28, maxHeight: 28 }}
                 >
                     {t('widget.memenu.back')}
                 </Button>

@@ -56,7 +56,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                 <Border
                     variant="102"
                     params={208}
-                    layout={{ position: 'absolute', left: 24, width: 310, top: 123, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -156.5, width: 310, top: 123, height: 60 }}
                 >
                     <ThemeImage
                         name="needed_base"
@@ -73,7 +73,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     <Region
                         name="waiting_text"
                         params={3088}
-                        layout={{ position: 'absolute', left: 62, width: 228, top: 22, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 62, width: 228, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionWaitingText ?? 'Waiting for the other user to insert the key.'} />
                     </Region>
@@ -84,7 +84,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: 117, width: 124, top: 186, height: 48 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -63.5, width: 124, top: 186, height: 48 }}
                 >
                     Cancel opening
                 </Button>

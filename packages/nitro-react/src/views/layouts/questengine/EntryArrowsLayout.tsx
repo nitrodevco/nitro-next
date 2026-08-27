@@ -19,13 +19,13 @@ export const EntryArrowsLayout = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsL
                     name="arrow_0"
                     params={2192}
                     src={srcArrow0 ?? '${image.library.questing.url}quest_arrow1.png'}
-                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="arrow_1"
                     params={3280}
                     src={srcArrow1 ?? '${image.library.questing.url}quest_arrow2.png'}
-                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -7.5, width: 15, top: '50%', marginTop: -12.5, height: 25 }}
                 />
             </Region>
         </Region>

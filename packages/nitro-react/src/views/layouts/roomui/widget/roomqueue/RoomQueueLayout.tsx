@@ -52,13 +52,13 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                     name="cancel_button"
                     params={917521}
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: 31, width: 154, top: 50, height: 27 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -83.5, width: 154, top: 50, height: 27 }}
                 >
                     {t('room.queue.button.exit')}
                 </Button>
                 <Region
                     visible={visibleChangeButton ?? false}
-                    layout={{ position: 'absolute', left: 67, width: 178, top: 140, height: 26 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, width: 178, top: 140, height: 26 }}
                 >
                     <Button
                         variant="3"

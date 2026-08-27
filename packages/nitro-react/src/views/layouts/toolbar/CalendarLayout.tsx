@@ -31,17 +31,17 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, itemsCalen
                 <Region
                     params={2192}
                     backgroundColor="#0e0f1f"
-                    layout={{ position: 'absolute', left: 0, width: 1033, top: 0, height: 607 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="spinner_container"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 1033, top: 106, height: 463 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 106, height: 463 }}
                     >
                         <Region
                             name="calendar_itemlist"
                             params={149}
-                            layout={{ position: 'absolute', left: 0, width: 1033, top: 15, height: 447, flexDirection: 'row', gap: 4 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 447, flexDirection: 'row', gap: 4 }}
                         >
                             {itemsCalendarItemlist ?? (
                                 <CalendarLayoutBtnSlotItem />
@@ -91,13 +91,13 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, itemsCalen
                             name="gradient1"
                             params={2064}
                             src={srcGradient1}
-                            layout={{ position: 'absolute', left: 0, width: 408, top: 15, height: 447 }}
+                            layout={{ position: 'absolute', left: 0, width: 408, top: 15, bottom: 1 }}
                         />
                         <ThemeImage
                             name="gradient2"
                             params={2048}
                             src={srcGradient2}
-                            layout={{ position: 'absolute', left: 618, width: 408, top: 15, height: 447 }}
+                            layout={{ position: 'absolute', left: 618, width: 408, top: 15, bottom: 1 }}
                         />
                     </Region>
                 </Region>
@@ -113,7 +113,7 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, itemsCalen
                     <Region
                         name="info_heading"
                         params={9584688}
-                        layout={{ width: 500, height: 26, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoHeading ?? 'December 20th'}
@@ -124,7 +124,7 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, itemsCalen
                     <Region
                         name="info_body"
                         params={9437232}
-                        layout={{ width: 500, height: 17, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoBody ?? 'This spell will produce xxxxxx xxx xxxxx'}
@@ -181,6 +181,7 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, itemsCalen
 /** Row template `btn_slot` of CalendarLayout - pass real rows through its `items…` slot. */
 export interface CalendarLayoutBtnSlotItemProps {
     layout?: BoxLayout;
+    onBtnSlot?: () => void;
     srcBitmapBg?: string;
     srcBitmapIcon?: string;
     srcBitmapIcon2?: string;
@@ -189,11 +190,13 @@ export interface CalendarLayoutBtnSlotItemProps {
     srcBitmapOpenedBg?: string;
 }
 
-export const CalendarLayoutBtnSlotItem = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapItem, srcBitmapLock, srcBitmapOpenedBg }: CalendarLayoutBtnSlotItemProps) => {
+export const CalendarLayoutBtnSlotItem = ({ layout, onBtnSlot, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapItem, srcBitmapLock, srcBitmapOpenedBg }: CalendarLayoutBtnSlotItemProps) => {
     return (
         <Region
             name="btn_slot"
             params={21}
+            onPointerTap={onBtnSlot}
+            cursor="pointer"
             layout={{ width: 202, height: 447, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -211,37 +214,37 @@ export const CalendarLayoutBtnSlotItem = ({ layout, srcBitmapBg, srcBitmapIcon, 
                     name="bitmap_bg"
                     params={4079635}
                     src={srcBitmapBg}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 192 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
                 />
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 192 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
                 >
                     <ThemeImage
                         name="bitmap_opened_bg"
                         params={4079635}
                         src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
-                        layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 192 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
                     />
                 </Region>
                 <ThemeImage
                     name="bitmap_icon2"
                     params={4079635}
                     src={srcBitmapIcon2}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 192 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
                 />
                 <ThemeImage
                     name="bitmap_icon"
                     params={4079635}
                     src={srcBitmapIcon}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 192 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -96, width: 192, top: '50%', marginTop: -96, height: 192 }}
                 />
             </Region>
             <ThemeImage
                 name="bitmap_lock"
                 params={4079635}
                 src={srcBitmapLock ?? layoutImage('campaign_calendar_generic_lock.png')}
-                layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 51 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -101, width: 47, top: '50%', marginTop: -223.5, height: 51 }}
             />
         </Region>
     );

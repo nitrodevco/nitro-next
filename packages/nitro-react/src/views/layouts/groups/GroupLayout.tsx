@@ -63,7 +63,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                 <Region
                     name="group_name"
                     params={129}
-                    layout={{ position: 'absolute', left: 125, width: 206, top: 9, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 125, right: 12, top: 9, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionGroupName ?? 'Group Name Placeholder'}
@@ -80,7 +80,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                 />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 103, width: 215, top: 42, height: 55 }}
+                    layout={{ position: 'absolute', left: 103, right: 25, top: 42, bottom: 117 }}
                 >
                     <Region
                         name="group_description_item_list"
@@ -103,7 +103,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="members_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 10, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -38.5, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMembersTxt ?? 'Members PH'}
@@ -121,7 +121,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="pending_members_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 10, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -38.5, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPendingMembersTxt ?? 'Members PH'}
@@ -139,7 +139,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="group_room_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 92, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionGroupRoomLink ?? t('group.room.link')} />
                     </Region>
@@ -154,7 +154,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="buy_furni_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 86, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionBuyFurniLink ?? t('group.buyfurni')} />
                     </Region>
@@ -169,7 +169,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="show_groups_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 106, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionShowGroupsLink ?? t('group.showgroups')} />
                     </Region>
@@ -184,7 +184,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="manage_guild_link"
                         params={3932176}
-                        layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -48.5, width: 83, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionManageGuildLink ?? t('group.manage')} />
                     </Region>
@@ -199,7 +199,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="delete_guild_link"
                         params={3932176}
-                        layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -48.5, width: 83, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionDeleteGuildLink ?? t('group.delete')} />
                     </Region>
@@ -290,7 +290,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     name="membership_pending_txt"
                     params={208}
                     visible={false}
-                    layout={{ position: 'absolute', left: 84, width: 175, top: 184, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -87.5, width: 175, top: 184, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionMembershipPendingTxt ?? t('group.membershippending')} />
                 </Region>
@@ -304,7 +304,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                 <Region
                     name="youaremember_txt"
                     params={208}
-                    layout={{ position: 'absolute', left: 110, width: 123, top: 184, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -61.5, width: 123, top: 184, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionYouarememberTxt ?? t('group.youaremember')} />
                 </Region>
@@ -388,7 +388,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     <Region
                         name="show_forum_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 103, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionShowForumLink ?? t('group.showforum')} />
                     </Region>

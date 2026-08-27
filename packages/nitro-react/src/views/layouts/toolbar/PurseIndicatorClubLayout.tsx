@@ -61,7 +61,7 @@ export const PurseIndicatorClubLayout = ({ captionChange, captionDays, layout, s
                 <Region
                     name="days"
                     params={262160}
-                    layout={{ position: 'absolute', left: 70, width: 80, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 42, width: 80, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionDays ?? '0'}

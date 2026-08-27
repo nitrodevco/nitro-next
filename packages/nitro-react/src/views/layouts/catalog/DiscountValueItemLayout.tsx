@@ -28,18 +28,18 @@ export const DiscountValueItemLayout = ({ captionDiscountCurrencyValueLeft, capt
                     name="total_value_backgroundbackground"
                     params={128}
                     backgroundColor="#737373"
-                    layout={{ position: 'absolute', left: 0, width: 180, top: 1, height: 15 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15 }}
                 />
                 <Region
                     name="discount_value_backgroundbackground"
                     params={128}
                     backgroundColor="#009100"
-                    layout={{ position: 'absolute', left: 0, width: 180, top: 17, height: 15 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 17, height: 15 }}
                 />
                 <Region
                     name="header_container"
                     params={262160}
-                    layout={{ position: 'absolute', left: 0, width: 28, top: 2, height: 31 }}
+                    layout={{ position: 'absolute', right: 152, width: 28, top: 2, height: 31 }}
                 >
                     <ThemeImage
                         name="icon_splash_bitmap"
@@ -55,7 +55,7 @@ export const DiscountValueItemLayout = ({ captionDiscountCurrencyValueLeft, capt
                 <Region
                     name="total_value_container"
                     params={80}
-                    layout={{ position: 'absolute', left: 28, width: 155, top: 1, height: 15 }}
+                    layout={{ position: 'absolute', right: -3, width: 155, top: 1, height: 15 }}
                 >
                     <Region
                         name="total_text"
@@ -105,7 +105,7 @@ export const DiscountValueItemLayout = ({ captionDiscountCurrencyValueLeft, capt
                 <Region
                     name="discount_value_container"
                     params={80}
-                    layout={{ position: 'absolute', left: 28, width: 155, top: 17, height: 15 }}
+                    layout={{ position: 'absolute', right: -3, width: 155, top: 17, height: 15 }}
                 >
                     <Region
                         name="discount_text"

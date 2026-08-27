@@ -11,19 +11,19 @@ export const UiHelpModalLayout = ({ layout, srcBitmap }: UiHelpModalLayoutProps)
         <Region layout={{ position: 'relative', width: 150, height: 100, ...layout }}>
             <Region
                 params={2176}
-                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bitmap"
                     params={2225}
                     src={srcBitmap}
                     tint="#24231e"
-                    layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 99 }}
+                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 1 }}
                 />
                 <Region
                     name="ui_container"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 146, top: 0, height: 94 }}
+                    layout={{ position: 'absolute', left: 0, right: 4, top: 0, bottom: 6 }}
                 />
             </Region>
         </Region>

@@ -45,7 +45,7 @@ export const PromoArticleLayout = ({ itemsContent, itemsTitle, layout, onArticle
                 <Region
                     name="title"
                     params={147600}
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 18, minWidth: 500, maxWidth: 500, flexDirection: 'row', gap: 4 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minWidth: 500, maxWidth: 500, flexDirection: 'row', gap: 4 }}
                 >
                     {itemsTitle ?? (
                         <>

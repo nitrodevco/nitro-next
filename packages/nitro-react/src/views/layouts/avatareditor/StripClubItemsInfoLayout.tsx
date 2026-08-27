@@ -28,13 +28,13 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                 <Region
                     name="_border"
                     params={8390800}
-                    layout={{ position: 'absolute', left: 0, width: 266, top: 0, height: 122 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Region
                         name="_strip_description"
                         tags={[ 'DESCRIPTION' ]}
                         params={8388624}
-                        layout={{ position: 'absolute', left: 27, width: 210, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 27, width: 210, top: 10, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionStripDescription ?? t('avatareditor.invalidclubitems.description')}
@@ -47,7 +47,7 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                         tags={[ 'OK' ]}
                         params={132113}
                         onPointerTap={onStripButtonClubInfo}
-                        layout={{ position: 'absolute', left: 110, width: 244, top: 93, height: 22, minWidth: 50 }}
+                        layout={{ position: 'absolute', left: 110, width: 244, bottom: 7, height: 22, minWidth: 50 }}
                     >
                         {t('avatareditor.invalidclubitems.moreinfo')}
                     </ButtonThick>
@@ -57,7 +57,7 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                         tags={[ 'OK' ]}
                         params={918545}
                         onPointerTap={onStripButtonOk}
-                        layout={{ position: 'absolute', left: 18, width: 78, top: 93, height: 22, minWidth: 50 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -115, width: 78, bottom: 7, height: 22, minWidth: 50 }}
                     >
                         {t('generic.ok')}
                     </Button>

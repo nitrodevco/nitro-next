@@ -10,13 +10,15 @@ export interface MainWindow_3100LayoutProps {
     onButtonFollowFriend?: () => void;
     onButtonMinimail?: () => void;
     onClose?: () => void;
+    onContent?: () => void;
+    onConversationstab?: () => void;
     srcClose?: string;
     srcConvoBg?: string;
     srcIcon?: string;
     srcIcon2?: string;
 }
 
-export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, onClose, srcClose, srcConvoBg, srcIcon, srcIcon2 }: MainWindow_3100LayoutProps) => {
+export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, onClose, onContent, onConversationstab, srcClose, srcConvoBg, srcIcon, srcIcon2 }: MainWindow_3100LayoutProps) => {
     const t = useTranslation();
     const [ messageInputValue, setMessageInputValue ] = useState('');
 
@@ -35,30 +37,34 @@ export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButto
                     name="content"
                     params={2193}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 1, width: 210, top: 0, height: 305 }}
+                    onPointerTap={onContent}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 100 }}
                 >
                     <ThemeImage
                         name="convo_bg"
                         params={144}
                         src={srcConvoBg}
-                        layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 31 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31 }}
                     />
                     <Region
                         name="conversationstab"
                         params={145}
-                        layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 600 }}
+                        onPointerTap={onConversationstab}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 600 }}
                     />
                     <Region
                         name="conversation"
                         params={2192}
                         backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 5, width: 200, top: 31, height: 269 }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 31, bottom: 5 }}
                     >
                         <Region
                             name="hdr"
                             params={144}
                             backgroundColor="#ffffff"
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 32 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 32 }}
                         >
                             <ContainerButton
                                 variant="0"
@@ -109,20 +115,20 @@ export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButto
                                 name="close"
                                 params={81}
                                 src={srcClose}
-                                layout={{ position: 'absolute', left: 186, width: 13, top: 6, height: 13 }}
+                                layout={{ position: 'absolute', right: 1, width: 13, top: 6, height: 13 }}
                             />
                         </Region>
                         <Region
                             name="list"
                             params={2192}
                             backgroundColor="#ffffff"
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 32, height: 236 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 32, bottom: 1 }}
                         >
                             <Region
                                 name="msg_list"
                                 params={2193}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 236, flexDirection: 'column' }}
+                                layout={{ position: 'absolute', left: 0, right: 22, top: 0, bottom: 0, flexDirection: 'column' }}
                             />
                             {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
                         </Region>
@@ -131,7 +137,7 @@ export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButto
                         name="bg"
                         params={1168}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 210, top: 304, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 1 }}
                     />
                 </Region>
                 <TextInput
@@ -139,7 +145,7 @@ export const MainWindow_3100Layout = ({ layout, onButtonExtendedProfile, onButto
                     onChange={setMessageInputValue}
                     textColor="#000000"
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 10, width: 190, top: 315, height: 54 }}
+                    layout={{ position: 'absolute', left: 10, right: 12, bottom: 36, height: 54 }}
                 />
             </Region>
         </Frame>

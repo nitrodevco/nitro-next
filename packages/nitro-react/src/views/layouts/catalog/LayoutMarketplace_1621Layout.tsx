@@ -23,17 +23,17 @@ export const LayoutMarketplace_1621Layout = ({ captionStatusText, itemsOfferList
                 name="ctlg_marketplace"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 608 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="marketPlaceWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 608 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Region
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 608 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="search_selector"
@@ -46,7 +46,7 @@ export const LayoutMarketplace_1621Layout = ({ captionStatusText, itemsOfferList
                                 params={131217}
                                 onPointerTap={onSearchByActivity}
                                 textStyle="text-style-il-button"
-                                layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                                layout={{ position: 'absolute', left: 0, right: 253, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
                             >
                                 {t('catalog.marketplace.search_by_activity')}
                             </ButtonGroupLeft>
@@ -56,7 +56,7 @@ export const LayoutMarketplace_1621Layout = ({ captionStatusText, itemsOfferList
                                 params={131217}
                                 onPointerTap={onSearchByValue}
                                 textStyle="text-style-il-button"
-                                layout={{ position: 'absolute', left: 107, width: 106, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
+                                layout={{ position: 'absolute', left: 107, right: 147, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
                             >
                                 {t('catalog.marketplace.search_by_value')}
                             </ButtonGroupCenter>
@@ -66,7 +66,7 @@ export const LayoutMarketplace_1621Layout = ({ captionStatusText, itemsOfferList
                                 params={131217}
                                 onPointerTap={onSearchAdvanced}
                                 textStyle="text-style-il-button"
-                                layout={{ position: 'absolute', left: 213, width: 107, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                                layout={{ position: 'absolute', left: 213, right: 40, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
                             >
                                 {t('catalog.marketplace.search_advanced')}
                             </ButtonGroupRight>
@@ -90,7 +90,7 @@ export const LayoutMarketplace_1621Layout = ({ captionStatusText, itemsOfferList
                         </Region>
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 0, width: 360, top: 170, height: 425 }}
+                            layout={{ position: 'absolute', left: 0, width: 360, top: 170, bottom: 13 }}
                         >
                             <Region
                                 name="offer_list"
@@ -230,7 +230,7 @@ export const LayoutMarketplace_1621LayoutOfferItemItem = ({ captionItemDesc, cap
                 params={393233}
                 onPointerTap={onBuyButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 295, width: 39, top: 6, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 39, top: 6, height: 22 }}
             >
                 {t('buy')}
             </Button>
@@ -240,7 +240,7 @@ export const LayoutMarketplace_1621LayoutOfferItemItem = ({ captionItemDesc, cap
                 params={393233}
                 onPointerTap={onMoreButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 137, width: 197, top: 31, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 197, top: 31, height: 22 }}
             >
                 {t('catalog.marketplace.view_more')}
             </Button>

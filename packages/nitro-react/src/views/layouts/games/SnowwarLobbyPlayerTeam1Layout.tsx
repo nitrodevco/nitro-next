@@ -74,7 +74,7 @@ export const SnowwarLobbyPlayerTeam1Layout = ({ captionPlayerHits, captionPlayer
                         name="playerName_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: 46, width: 71, top: 3, height: 20, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35, width: 71, top: 3, height: 20, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerNameStroke ?? 'Painimies'}
@@ -84,7 +84,7 @@ export const SnowwarLobbyPlayerTeam1Layout = ({ captionPlayerHits, captionPlayer
                     <Region
                         name="playerName"
                         params={208}
-                        layout={{ position: 'absolute', left: 47, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerName ?? 'Painimies'}

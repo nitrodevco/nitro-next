@@ -8,10 +8,11 @@ export interface InstantFriendRequestLayoutProps {
     onAcceptButton?: () => void;
     onCloseButton?: () => void;
     onDeclineButton?: () => void;
+    onMasterContainer?: () => void;
     onProfileRegion?: () => void;
 }
 
-export const InstantFriendRequestLayout = ({ captionText, layout, onAcceptButton, onCloseButton, onDeclineButton, onProfileRegion }: InstantFriendRequestLayoutProps) => {
+export const InstantFriendRequestLayout = ({ captionText, layout, onAcceptButton, onCloseButton, onDeclineButton, onMasterContainer, onProfileRegion }: InstantFriendRequestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,13 +21,15 @@ export const InstantFriendRequestLayout = ({ captionText, layout, onAcceptButton
                 name="master_container"
                 params={33057}
                 backgroundColor="#000000"
+                onPointerTap={onMasterContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 83 }}
             >
                 <Bubble
                     variant="0"
                     params={2449}
                     tintColor="#fac919"
-                    layout={{ position: 'absolute', left: -6, width: 209, top: -6, height: 89 }}
+                    layout={{ position: 'absolute', left: -6, right: -6, top: -6, bottom: 0 }}
                 >
                     <Icon
                         variant="21"
@@ -58,7 +61,7 @@ export const InstantFriendRequestLayout = ({ captionText, layout, onAcceptButton
                         params={148497}
                         onPointerTap={onDeclineButton}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 8, width: 152, top: 46, height: 16, minWidth: 1 }}
+                        layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1 }}
                     >
                         <Region
                             params={16}
@@ -76,7 +79,7 @@ export const InstantFriendRequestLayout = ({ captionText, layout, onAcceptButton
                         name="accept_button"
                         params={1041}
                         onPointerTap={onAcceptButton}
-                        layout={{ position: 'absolute', left: 99, width: 90, top: 42, height: 24, minWidth: 90, maxWidth: 90 }}
+                        layout={{ position: 'absolute', left: 99, width: 90, bottom: 23, height: 24, minWidth: 90, maxWidth: 90 }}
                     >
                         <Icon
                             variant="8"

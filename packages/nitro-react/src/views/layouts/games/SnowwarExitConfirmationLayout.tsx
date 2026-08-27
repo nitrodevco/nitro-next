@@ -40,7 +40,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: 4, width: 102, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -51, width: 102, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('snowwar.exit.no')} />
                     </Region>
@@ -54,7 +54,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: 2, width: 107, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 107, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('snowwar.exit.yes')} />
                     </Region>

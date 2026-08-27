@@ -36,13 +36,13 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                     name="mysterytrophy.header.background.border"
                     params={144}
                     backgroundColor="#376275"
-                    layout={{ position: 'absolute', left: 1, width: 473, top: 0, height: 100 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
                 >
                     <Region
                         name="mysterytrophy.header.background.body"
                         params={144}
                         backgroundColor="#0e3f52"
-                        layout={{ position: 'absolute', left: 2, width: 469, top: 2, height: 95 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
                     />
                     <ThemeImage
                         name="mysterytrophy.header.icon"
@@ -111,12 +111,12 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                         params={1041}
                         onPointerTap={onCancel}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 177, width: 101, top: 11, height: 32 }}
+                        layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32 }}
                     >
                         <Region
                             name="cancel"
                             params={3280}
-                            layout={{ position: 'absolute', left: 9, width: 83, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -41.5, width: 83, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionCancel ?? t('generic.cancel')}
@@ -131,7 +131,7 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                         params={132113}
                         tintColor="#00aa00"
                         onPointerTap={onOk}
-                        layout={{ position: 'absolute', left: 319, width: 130, top: 10, height: 33, minWidth: 130 }}
+                        layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
                     >
                         {t('generic.ok')}
                     </ButtonThick>

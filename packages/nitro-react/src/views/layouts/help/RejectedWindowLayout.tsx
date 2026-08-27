@@ -26,7 +26,7 @@ export const RejectedWindowLayout = ({ captionHeading, captionMessage, layout, o
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8538128}
-                    layout={{ position: 'absolute', left: 8, width: 226, top: 0, height: 99, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}
                 >
                     <Region
                         name="heading"

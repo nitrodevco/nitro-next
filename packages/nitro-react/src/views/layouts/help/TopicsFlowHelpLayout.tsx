@@ -513,7 +513,7 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
                         <Region
                             name="unlawful_message_confirm_label"
                             params={2064}
-                            layout={{ position: 'absolute', left: 20, width: 370, top: 40, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionUnlawfulMessageConfirmLabel ?? t('help.cfh.unlawful_activity.confirm_label')}
@@ -646,15 +646,18 @@ export interface TopicsFlowHelpLayoutUserPrototypeItemProps {
     captionRoomName?: string;
     captionUserName?: string;
     layout?: BoxLayout;
+    onUserPrototype?: () => void;
 }
 
-export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout, onUserPrototype }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_prototype"
             params={17}
+            onPointerTap={onUserPrototype}
+            cursor="pointer"
             layout={{ width: 367, height: 57, flexShrink: 0, ...layout }}
         >
             <Border

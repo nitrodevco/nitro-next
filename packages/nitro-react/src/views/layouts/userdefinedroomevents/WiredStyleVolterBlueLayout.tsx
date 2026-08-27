@@ -88,7 +88,7 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                     <Region
                         params={4194448}
                         backgroundColor="#222222"
-                        layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
                     />
                 </Region>
                 <Region
@@ -119,7 +119,7 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                     name="text_html"
                     params={1073741840}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 96, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 96, top: 0, height: 13, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTextHtml ?? 'Use this by typing'}
@@ -138,7 +138,7 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                         value={fieldValue}
                         onChange={setFieldValue}
                         textColor="#222222"
-                        layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 15 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Region
@@ -212,7 +212,7 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                     name="sourcetype_selector_view"
                     params={147456}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: -2, height: 17, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
                 >
                     {itemsSourcetypeSelectorView ?? (
                         <>
@@ -309,12 +309,12 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                         params={144}
                         src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
                         tint="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 17 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17 }}
                     />
                     <Region
                         name="slider_movement_area"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 1, height: 15 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15 }}
                     >
                         <ThemeImage
                             name="slider_button"
@@ -343,7 +343,7 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                     name="mini_button_view"
                     params={147456}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: -2, height: 17, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
                 >
                     {itemsMiniButtonView ?? (
                         <>
@@ -367,17 +367,17 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                         <Border
                             variant="11"
                             params={2192}
-                            layout={{ position: 'absolute', left: 1, width: 143, top: 1, height: 25 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
                             <Border
                                 variant="11"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 1, width: 141, top: 1, height: 23 }}
+                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             >
                                 <Region
                                     name="menu_list"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 23, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column' }}
                                 >
                                     {itemsMenuList ?? (
                                         <>
@@ -499,7 +499,7 @@ export const WiredStyleVolterBlueLayoutSourceBtnItem = ({ itemsSourceElements, l
                 name="source_elements"
                 params={147600}
                 backgroundColor="#ffeda5"
-                layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 15, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
             >
                 {itemsSourceElements ?? (
                     <>
@@ -531,12 +531,12 @@ export const WiredStyleVolterBlueLayoutSourceOptionsBorderItem = ({ itemsSourceO
                 name="source_options_cont"
                 params={147600}
                 backgroundColor="#ffeda5"
-                layout={{ position: 'absolute', left: 0, width: 13, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
             >
                 <Region
                     name="source_options_list"
                     params={147600}
-                    layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 15, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsSourceOptionsList ?? (
                         <WiredStyleVolterBlueLayoutSourceBtnItem />
@@ -638,7 +638,7 @@ export const WiredStyleVolterBlueLayoutMiniButtonBgItem = ({ layout, onMiniButto
                 backgroundColor="#ffeda5"
                 onPointerTap={onMiniButtonClick}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 13, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
             >
                 <ThemeImage
                     name="mini_button_icon"
@@ -740,7 +740,7 @@ export const WiredStyleVolterBlueLayoutSpacerTemplateItem = ({ layout }: WiredSt
             <Region
                 params={144}
                 backgroundColor="#999999"
-                layout={{ position: 'absolute', left: 6, width: 129, top: 1, height: 1 }}
+                layout={{ position: 'absolute', left: 6, right: 6, top: 1, height: 1 }}
             />
         </Region>
     );

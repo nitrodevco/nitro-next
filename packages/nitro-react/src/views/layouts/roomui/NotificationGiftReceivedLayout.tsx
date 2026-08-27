@@ -46,7 +46,7 @@ export const NotificationGiftReceivedLayout = ({ captionHeader, captionOpenTxt, 
                             name="dialog_bg"
                             params={1048592}
                             src={srcDialogBg}
-                            layout={{ position: 'absolute', left: 1, width: 419, top: 0, height: 159 }}
+                            layout={{ position: 'absolute', left: 1, width: 419, bottom: 1, height: 159 }}
                         />
                     </Border>
                     <Region
@@ -94,7 +94,7 @@ export const NotificationGiftReceivedLayout = ({ captionHeader, captionOpenTxt, 
                         <Region
                             name="open_txt"
                             params={3932176}
-                            layout={{ position: 'absolute', left: 6, width: 294, top: 11, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -147, width: 294, top: '50%', marginTop: -12, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionOpenTxt ?? t('generic.ok')}

@@ -26,7 +26,7 @@ export const HabbiconPurchaseConfirmationLayout = ({ itemsContent, layout, onClo
                 <Region
                     name="content"
                     params={8405136}
-                    layout={{ position: 'absolute', left: 0, width: 351, top: 8, height: 250, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, height: 250, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContent ?? (
                         <>
@@ -256,7 +256,7 @@ export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLa
             <Region
                 name="properties_itemlist"
                 params={144}
-                layout={{ position: 'absolute', left: 143, width: 197, top: 15, height: 89, flexDirection: 'column', gap: 6 }}
+                layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6 }}
             >
                 {itemsPropertiesItemlist ?? (
                     <>
@@ -311,7 +311,7 @@ export const HabbiconPurchaseConfirmationLayoutNormalPriceRowItem = ({ captionNo
             <Region
                 name="normal_price_amount"
                 params={80}
-                layout={{ position: 'absolute', left: 232, width: 95, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', right: 0, width: 95, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionNormalPriceAmount ?? '0'}
@@ -353,7 +353,7 @@ export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDisco
             <Region
                 name="discount_amount"
                 params={1040}
-                layout={{ position: 'absolute', left: 232, width: 95, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                layout={{ position: 'absolute', left: 232, width: 95, bottom: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText
                     text={captionDiscountAmount ?? '0'}
@@ -446,7 +446,7 @@ export const HabbiconPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, la
         <Region
             name="buttons"
             params={131216}
-            layout={{ width: 341, height: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
+            layout={{ minWidth: 341, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
         >
             {itemsButtons ?? (
                 <>

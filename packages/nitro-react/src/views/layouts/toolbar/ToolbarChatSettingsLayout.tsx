@@ -27,7 +27,7 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 56, width: 144, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -72.5, width: 144, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('toolbar.chat.settings.title')}
@@ -39,12 +39,12 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                     name="line"
                     params={786576}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 10, width: 237, top: 24, height: 1 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 24, height: 1 }}
                 />
                 <Region
                     name="chat_settings_info"
                     params={144}
-                    layout={{ position: 'absolute', left: 10, width: 237, top: 33, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 33, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionChatSettingsInfo ?? t('toolbar.chat.settings.info')}
@@ -55,7 +55,7 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 <Region
                     name="chat_settings_list"
                     params={144}
-                    layout={{ position: 'absolute', left: 10, width: 237, top: 70, height: 143, flexDirection: 'column', gap: 4 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 70, height: 143, flexDirection: 'column', gap: 4 }}
                 >
                     {itemsChatSettingsList ?? (
                         <>
@@ -73,7 +73,7 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                     name="back_btn"
                     params={132145}
                     onPointerTap={onBackBtn}
-                    layout={{ position: 'absolute', left: 10, width: 60, top: 229, height: 28, minWidth: 60, maxWidth: 60, minHeight: 28, maxHeight: 28 }}
+                    layout={{ position: 'absolute', left: 10, width: 60, bottom: 12, height: 28, minWidth: 60, maxWidth: 60, minHeight: 28, maxHeight: 28 }}
                 >
                     {t('widget.memenu.back')}
                 </Button>

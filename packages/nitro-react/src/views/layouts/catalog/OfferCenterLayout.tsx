@@ -25,7 +25,7 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={208}
-                    layout={{ position: 'absolute', left: 94, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('offers.center.rewards.label')}
@@ -36,11 +36,11 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
                     variant="0"
                     params={2064}
                     tintColor="#bbbbb4"
-                    layout={{ position: 'absolute', left: 14, width: 348, top: 31, height: 336 }}
+                    layout={{ position: 'absolute', left: 14, width: 348, top: 31, bottom: 45 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 10, width: 330, top: 10, height: 316 }}
+                        layout={{ position: 'absolute', left: 10, width: 330, top: 10, bottom: 10 }}
                     >
                         <Region
                             name="reward_list"

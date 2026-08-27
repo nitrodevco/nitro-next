@@ -30,7 +30,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                 <Region
                     name="content"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 12, width: 366, top: 20, height: 268 }}
+                    layout={{ position: 'absolute', left: 12, right: 12, top: 20, height: 268 }}
                 >
                     <Region
                         name="top_body"
@@ -42,7 +42,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                             name="premium_icon_panel"
                             params={2064}
                             tintColor="#f5def8"
-                            layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 208 }}
+                            layout={{ position: 'absolute', left: 0, width: 132, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="15"
@@ -60,11 +60,11 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                             </Border>
                             <Region
                                 params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 132, top: 115, height: 81 }}
+                                layout={{ position: 'absolute', left: 0, width: 132, top: 115, bottom: 12 }}
                             >
                                 <Region
                                     params={3148800}
-                                    layout={{ position: 'absolute', left: 0, width: 132, top: 23, height: 35, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, width: 132, top: '50%', marginTop: -17.5, height: 35, flexDirection: 'column' }}
                                 >
                                     <Region
                                         params={16}
@@ -90,7 +90,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                         <Region
                             name="benefits"
                             params={8388752}
-                            layout={{ position: 'absolute', left: 146, width: 220, top: 3, height: 205, flexDirection: 'column', gap: 5 }}
+                            layout={{ position: 'absolute', left: 146, right: 0, top: 3, height: 205, flexDirection: 'column', gap: 5 }}
                         >
                             {itemsBenefits ?? (
                                 <>
@@ -111,7 +111,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                         name="purchase_cost_box"
                         params={1040}
                         tintColor="#f7e7ff"
-                        layout={{ position: 'absolute', left: 0, width: 366, top: 220, height: 38 }}
+                        layout={{ position: 'absolute', left: 0, width: 366, bottom: 10, height: 38 }}
                     >
                         <Region
                             params={16}
@@ -125,7 +125,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                         <Region
                             name="price"
                             params={262224}
-                            layout={{ position: 'absolute', left: 264, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3 }}
+                            layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3 }}
                         >
                             {itemsPrice ?? (
                                 <>
@@ -142,7 +142,7 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
                 <Region
                     name="buttons"
                     params={132240}
-                    layout={{ position: 'absolute', left: 12, width: 366, top: 289, height: 27, flexDirection: 'row', gap: 146 }}
+                    layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146 }}
                 >
                     {itemsButtons ?? (
                         <>

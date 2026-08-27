@@ -181,7 +181,7 @@ export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAccep
         >
             <Region
                 params={8536080}
-                layout={{ position: 'absolute', left: 20, width: 200, top: 11, height: 25, maxWidth: 200, flexDirection: 'row', gap: 5 }}
+                layout={{ position: 'absolute', left: 20, top: 11, maxWidth: 200, flexDirection: 'row', gap: 5 }}
             >
                 <ThemeImage
                     params={16}

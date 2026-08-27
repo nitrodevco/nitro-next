@@ -13,7 +13,7 @@ export const MinimizedMenuLayout = ({ layout, onMinimize }: MinimizedMenuLayoutP
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 45, top: 1, height: 35 }}
+                layout={{ position: 'absolute', left: 0, width: 45, bottom: -1, height: 35 }}
             >
                 <Region
                     name="minimize"

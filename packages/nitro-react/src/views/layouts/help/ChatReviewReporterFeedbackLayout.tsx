@@ -78,7 +78,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
                         params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
-                        layout={{ position: 'absolute', left: 102, width: 140, top: 216, height: 50 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 140, top: 216, height: 50 }}
                     >
                         {t('alert.close.button')}
                     </Button>
@@ -86,7 +86,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
                 <ThemeImage
                     params={1040}
                     src={layoutImage('help_illustrations_bully.png')}
-                    layout={{ position: 'absolute', left: 307, width: 35, top: 16, height: 120 }}
+                    layout={{ position: 'absolute', left: 307, width: 35, bottom: 168, height: 120 }}
                 />
             </Region>
         </Frame>

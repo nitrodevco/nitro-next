@@ -14,19 +14,19 @@ export const CustomWordFilterItemLayout = ({ captionText, layout, onBgRegion }: 
                 name="word_filter_list_item"
                 params={144}
                 backgroundColor="#ff00ff"
-                layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
             >
                 <Region
                     name="bg_region"
                     params={145}
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
                 />
                 <Region
                     name="text"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionText ?? 'BadWord'} />
                 </Region>

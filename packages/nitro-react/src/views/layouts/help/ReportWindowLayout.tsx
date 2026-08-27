@@ -30,7 +30,7 @@ export const ReportWindowLayout = ({ captionUrgentHelpLink, itemsList, layout, o
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 0, height: 292, minWidth: 270, maxWidth: 270, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column' }}
                 >
                     {itemsList ?? (
                         <>
@@ -88,7 +88,7 @@ export const ReportWindowLayout = ({ captionUrgentHelpLink, itemsList, layout, o
                             params={147665}
                             tintColor="#bbbbbb"
                             onPointerTap={onSubmitButton}
-                            layout={{ position: 'absolute', left: 60, width: 136, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -75, width: 136, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
                         >
                             {t('guide.help.request.user.create.input.button')}
                         </Button>

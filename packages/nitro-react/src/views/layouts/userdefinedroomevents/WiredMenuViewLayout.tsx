@@ -41,6 +41,8 @@ export interface WiredMenuViewLayoutProps {
     onDeleteVarBtn?: () => void;
     onDiscordRegion?: () => void;
     onHighlightWiredBtn?: () => void;
+    onInspectionContainer?: () => void;
+    onLoadingView?: () => void;
     onLockAllButton?: () => void;
     onLockOwnButton?: () => void;
     onLogOverviewBtn?: () => void;
@@ -81,7 +83,7 @@ export interface WiredMenuViewLayoutProps {
     visibleVariableOverviewContainer?: boolean;
 }
 
-export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstructionFurni, captionPreviewInstructionUser, captionStatisticsFloorfurniHtml, captionStatisticsHeavyHtml, captionStatisticsPermVarsFurniHtml, captionStatisticsPermVarsGlobalHtml, captionStatisticsPermVarsUserHtml, captionStatisticsUsageHtml, captionStatisticsWallfurniHtml, captionTitle, captionTitle10, captionTitle11, captionTitle12, captionTitle13, captionTitle2, captionTitle3, captionTitle4, captionTitle5, captionTitle6, captionTitle7, captionTitle8, captionTitle9, captionTitleExtra, itemsButtonRow, itemsButtons, itemsButtons2, layout, onAddVarBtn, onClearLogBtn, onClose, onCreateVarBtn, onDeleteVarBtn, onDiscordRegion, onHighlightWiredBtn, onLockAllButton, onLockOwnButton, onLogOverviewBtn, onModify1Checkbox, onModify2Checkbox, onModify3Checkbox, onPinCheckbox, onPreferenceAllNotificationsCheckbox, onPreferenceInspectButtonCheckbox, onPreferencePlaytestCheckbox, onPreferenceToolbarCheckbox, onRead0Checkbox, onRead1Checkbox, onRead2Checkbox, onRead3Checkbox, onReloadRoomBtn, onRollBackBtn, onTimezonePicker, onTopViewChestsButton, onTopViewInfoButton, onTopViewInspectionButton, onTopViewMonitorButton, onTopViewSettingsButton, onTopViewVariableOverviewButton, onUnlockOwnButton, onViewInDetailButton, onWiredStylePicker, srcGlobalPlaceholder, srcMonitorImage1, srcMonitorImage2, srcPreviewImageBitmap, visibleChestsContainer, visibleCreateVarBubble, visibleInfoContainer, visibleInspectionContainer, visibleLoadingView, visibleSettingsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutProps) => {
+export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstructionFurni, captionPreviewInstructionUser, captionStatisticsFloorfurniHtml, captionStatisticsHeavyHtml, captionStatisticsPermVarsFurniHtml, captionStatisticsPermVarsGlobalHtml, captionStatisticsPermVarsUserHtml, captionStatisticsUsageHtml, captionStatisticsWallfurniHtml, captionTitle, captionTitle10, captionTitle11, captionTitle12, captionTitle13, captionTitle2, captionTitle3, captionTitle4, captionTitle5, captionTitle6, captionTitle7, captionTitle8, captionTitle9, captionTitleExtra, itemsButtonRow, itemsButtons, itemsButtons2, layout, onAddVarBtn, onClearLogBtn, onClose, onCreateVarBtn, onDeleteVarBtn, onDiscordRegion, onHighlightWiredBtn, onInspectionContainer, onLoadingView, onLockAllButton, onLockOwnButton, onLogOverviewBtn, onModify1Checkbox, onModify2Checkbox, onModify3Checkbox, onPinCheckbox, onPreferenceAllNotificationsCheckbox, onPreferenceInspectButtonCheckbox, onPreferencePlaytestCheckbox, onPreferenceToolbarCheckbox, onRead0Checkbox, onRead1Checkbox, onRead2Checkbox, onRead3Checkbox, onReloadRoomBtn, onRollBackBtn, onTimezonePicker, onTopViewChestsButton, onTopViewInfoButton, onTopViewInspectionButton, onTopViewMonitorButton, onTopViewSettingsButton, onTopViewVariableOverviewButton, onUnlockOwnButton, onViewInDetailButton, onWiredStylePicker, srcGlobalPlaceholder, srcMonitorImage1, srcMonitorImage2, srcPreviewImageBitmap, visibleChestsContainer, visibleCreateVarBubble, visibleInfoContainer, visibleInspectionContainer, visibleLoadingView, visibleSettingsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutProps) => {
     const t = useTranslation();
     const [ valueInputValue, setValueInputValue ] = useState('');
 
@@ -284,49 +286,49 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                         <Region
                                             name="statistics_usage_html"
                                             params={1073758352}
-                                            layout={{ width: 68, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 68, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsUsageHtml ?? 'Wired usage:'} />
                                         </Region>
                                         <Region
                                             name="statistics_heavy_html"
                                             params={1073758352}
-                                            layout={{ width: 48, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 48, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsHeavyHtml ?? 'Is heavy:'} />
                                         </Region>
                                         <Region
                                             name="statistics_floorfurni_html"
                                             params={1073758352}
-                                            layout={{ width: 60, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 60, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsFloorfurniHtml ?? 'Floor furni:'} />
                                         </Region>
                                         <Region
                                             name="statistics_wallfurni_html"
                                             params={1073758352}
-                                            layout={{ width: 57, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 57, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsWallfurniHtml ?? 'Wall furni:'} />
                                         </Region>
                                         <Region
                                             name="statistics_perm_vars_furni_html"
                                             params={1073758352}
-                                            layout={{ width: 114, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 114, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsPermVarsFurniHtml ?? 'Permanent furni vars:'} />
                                         </Region>
                                         <Region
                                             name="statistics_perm_vars_user_html"
                                             params={1073758352}
-                                            layout={{ width: 113, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 113, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsPermVarsUserHtml ?? 'Permanent user vars:'} />
                                         </Region>
                                         <Region
                                             name="statistics_perm_vars_global_html"
                                             params={1073758352}
-                                            layout={{ width: 122, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ width: 122, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText text={captionStatisticsPermVarsGlobalHtml ?? 'Permanent global vars:'} />
                                         </Region>
@@ -391,7 +393,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 params={393233}
                                 onPointerTap={onLogOverviewBtn}
                                 textStyle="text-style-button-shiny-regular"
-                                layout={{ position: 'absolute', left: 361, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
+                                layout={{ position: 'absolute', right: 1, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
                             >
                                 {t('wiredmenu.monitor.log_overview')}
                             </Button>
@@ -441,7 +443,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                         <Region
                             name="variable_picker_container"
                             params={144}
-                            layout={{ position: 'absolute', left: 14, width: 188, top: 94, height: 239 }}
+                            layout={{ position: 'absolute', left: 14, right: 298, top: 94, height: 239 }}
                         >
                             <Region
                                 name="title"
@@ -453,7 +455,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                             <Region
                                 name="variable_list_container"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 188, top: 20, height: 219 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
                             />
                         </Region>
                         <Region
@@ -483,7 +485,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                             <Region
                                 name="variable_properties_table_container"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 256, top: 20, height: 188 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
                             />
                         </Region>
                         <Region
@@ -501,7 +503,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                             <Region
                                 name="variable_texts_table_container"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 256, top: 20, height: 115 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
                             />
                         </Region>
                     </Region>
@@ -509,6 +511,8 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                         name="inspection_container"
                         params={12582929}
                         visible={visibleInspectionContainer ?? false}
+                        onPointerTap={onInspectionContainer}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
                     >
                         <Region
@@ -560,11 +564,11 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                             <Region
                                 name="variable_values_table_container"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 303, top: 20, height: 297 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34 }}
                             />
                             <Region
                                 params={1168}
-                                layout={{ position: 'absolute', left: 0, width: 303, top: 326, height: 30, flexDirection: 'row', gap: 13 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, bottom: -5, height: 30, flexDirection: 'row', gap: 13 }}
                             >
                                 <Button
                                     variant="3"
@@ -600,7 +604,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                     <Region
                                         name="variable_setting"
                                         params={144}
-                                        layout={{ position: 'absolute', left: 6, width: 158, top: 6, height: 42 }}
+                                        layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
                                     >
                                         <Region
                                             params={16}
@@ -611,13 +615,13 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                         <Region
                                             name="var_picker_container"
                                             params={144}
-                                            layout={{ position: 'absolute', left: 0, width: 158, top: 20, height: 22 }}
+                                            layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22 }}
                                         />
                                     </Region>
                                     <Region
                                         name="value_setting"
                                         params={144}
-                                        layout={{ position: 'absolute', left: 6, width: 158, top: 52, height: 42 }}
+                                        layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
                                     >
                                         <Region
                                             params={16}
@@ -634,7 +638,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                             <TextInput
                                                 value={valueInputValue}
                                                 onChange={setValueInputValue}
-                                                layout={{ position: 'absolute', left: 5, width: 71, top: 3, height: 17 }}
+                                                layout={{ position: 'absolute', left: 5, right: 4, top: 3, bottom: 2 }}
                                             />
                                         </Border>
                                     </Region>
@@ -644,7 +648,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                         params={132241}
                                         onPointerTap={onCreateVarBtn}
                                         textStyle="text-style-button-shiny-regular"
-                                        layout={{ position: 'absolute', left: 6, width: 158, top: 100, height: 25, minWidth: 158, maxWidth: 158 }}
+                                        layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
                                     >
                                         {t('wiredmenu.inspection.create')}
                                     </Button>
@@ -668,13 +672,13 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="preview_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, width: 141, top: 20, height: 225 }}
+                                layout={{ position: 'absolute', left: 0, right: 9, top: 20, height: 225 }}
                             >
                                 <Region
                                     name="preview_instruction_furni"
                                     params={144}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewInstructionFurni ?? t('wiredmenu.inspection.preview_furni_instruction')}
@@ -685,7 +689,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                     name="preview_instruction_user"
                                     params={144}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionPreviewInstructionUser ?? t('wiredmenu.inspection.preview_user_instruction')}
@@ -698,35 +702,35 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                     params={3932368}
                                     visible={false}
                                     options={{ 'avatar_image:cropped': 'true' }}
-                                    layout={{ position: 'absolute', left: 53, width: 34, top: 70, height: 84 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 34, top: '50%', marginTop: -42.5, height: 84 }}
                                 />
                                 <WidgetSlot
                                     widgetType="pet_image"
                                     name="preview_pet"
                                     params={1077674128}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 46, width: 49, top: 93, height: 38 }}
+                                    layout={{ position: 'absolute', left: 46, right: 46, top: '50%', marginTop: -19.5, height: 38, overflow: 'hidden' }}
                                 />
                                 <Region
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 45, width: 50, top: 87, height: 50 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: '50%', marginTop: -25.5, height: 50 }}
                                 >
                                     <ThemeImage
                                         name="preview_image_bitmap"
                                         params={3932368}
                                         src={srcPreviewImageBitmap}
-                                        layout={{ position: 'absolute', left: 45, width: 50, top: 87, height: 50 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: '50%', marginTop: -25.5, height: 50 }}
                                     />
                                 </Region>
                                 <Region
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 10, width: 120, top: 64, height: 97 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -60.5, width: 120, top: 64, height: 97 }}
                                 >
                                     <ThemeImage
                                         name="global_placeholder"
                                         params={208}
                                         src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
-                                        layout={{ position: 'absolute', left: 10, width: 120, top: 64, height: 97 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -60.5, width: 120, top: 64, height: 97 }}
                                     />
                                 </Region>
                                 <ContainerButton
@@ -735,7 +739,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                     tooltip={t('wiredmenu.inspection.highlight_wireds')}
                                     params={81}
                                     onPointerTap={onHighlightWiredBtn}
-                                    layout={{ position: 'absolute', left: 110, width: 25, top: 6, height: 26 }}
+                                    layout={{ position: 'absolute', right: 6, width: 25, top: 6, height: 26 }}
                                 >
                                     <ThemeImage
                                         params={16}
@@ -788,7 +792,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="preferences_border"
                                 params={2192}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 90 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
                             >
                                 <Region
                                     params={16}
@@ -847,14 +851,14 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                             <Region
                                 name="title_extra"
                                 params={262160}
-                                layout={{ position: 'absolute', left: 272, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText text={captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')} />
                             </Region>
                             <Region
                                 name="logs_table_container"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 168 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 40 }}
                             />
                             <Button
                                 variant="3"
@@ -891,7 +895,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="room_settings_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, width: 227, top: 20, height: 111 }}
+                                layout={{ position: 'absolute', left: 0, right: 245, top: 20, height: 111 }}
                             >
                                 <Region
                                     name="modify_settings_container"
@@ -968,7 +972,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="room_settings_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 245, width: 227, top: 20, height: 111 }}
+                                layout={{ position: 'absolute', left: 245, right: 0, top: 20, height: 111 }}
                             >
                                 <Region
                                     name="read_settings_container"
@@ -1064,7 +1068,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="room_settings_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, width: 227, top: 143, height: 64 }}
+                                layout={{ position: 'absolute', left: 0, right: 245, top: 143, height: 64 }}
                             >
                                 <Region
                                     name="timezone_container"
@@ -1091,7 +1095,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="room_settings_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 245, width: 227, top: 143, height: 64 }}
+                                layout={{ position: 'absolute', left: 245, right: 0, top: 143, height: 64 }}
                             >
                                 <Region
                                     name="timezone_container"
@@ -1145,12 +1149,12 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="preferences_border"
                                 params={2192}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, width: 227, top: 20, height: 111 }}
+                                layout={{ position: 'absolute', left: 0, right: 245, top: 20, bottom: 0 }}
                             >
                                 <Region
                                     name="preferences_container"
                                     params={2192}
-                                    layout={{ position: 'absolute', left: 10, width: 213, top: 8, height: 101 }}
+                                    layout={{ position: 'absolute', left: 10, right: 4, top: 8, bottom: 2 }}
                                 >
                                     <Region
                                         params={16}
@@ -1241,7 +1245,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="wired_style_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 245, width: 227, top: 20, height: 64 }}
+                                layout={{ position: 'absolute', left: 245, right: 0, top: 20, height: 64 }}
                             >
                                 <Region
                                     name="wored_style_container"
@@ -1276,6 +1280,8 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                         params={12582937}
                         visible={visibleLoadingView ?? false}
                         backgroundColor="#e9e9e1"
+                        onPointerTap={onLoadingView}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
                     />
                 </Region>

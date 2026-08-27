@@ -9,12 +9,13 @@ export interface CatalogVolterLayoutProps {
     captionCatalogHeaderDescription?: string;
     itemsNavigationList?: ReactNode;
     layout?: BoxLayout;
+    onCatalogMainContainer?: () => void;
     onNavigatorMain?: () => void;
     srcCatalogHeaderImage?: string;
     srcLayoutBackground?: string;
 }
 
-export const CatalogVolterLayout = ({ captionCatalogHeaderDescription, itemsNavigationList, layout, onNavigatorMain, srcCatalogHeaderImage, srcLayoutBackground }: CatalogVolterLayoutProps) => {
+export const CatalogVolterLayout = ({ captionCatalogHeaderDescription, itemsNavigationList, layout, onCatalogMainContainer, onNavigatorMain, srcCatalogHeaderImage, srcLayoutBackground }: CatalogVolterLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -22,6 +23,8 @@ export const CatalogVolterLayout = ({ captionCatalogHeaderDescription, itemsNavi
             <Region
                 name="catalog_main_container"
                 params={32801}
+                onPointerTap={onCatalogMainContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 550, top: 0, height: 516 }}
             >
                 <Frame
@@ -39,7 +42,7 @@ export const CatalogVolterLayout = ({ captionCatalogHeaderDescription, itemsNavi
                             variant="5"
                             name="navigationContainer"
                             params={2192}
-                            layout={{ position: 'absolute', left: 0, width: 163, top: 0, height: 434 }}
+                            layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                         >
                             <ScrollArea
                                 orientation="vertical"
@@ -156,7 +159,7 @@ export const CatalogVolterLayoutItemTemplateItem = ({ captionItemTitle, layout, 
                 name="item_title"
                 tags={[ 'ITEM_TITLE' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 26, width: 4, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 26, right: 128, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionItemTitle ?? ''} />
             </Region>
@@ -208,7 +211,7 @@ export const CatalogVolterLayoutSubitemTemplateItem = ({ captionItemTitle, layou
                 name="item_title"
                 tags={[ 'ITEM_TITLE' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 32, width: 4, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 32, right: 122, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionItemTitle ?? ''} />
             </Region>

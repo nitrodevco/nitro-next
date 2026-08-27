@@ -88,7 +88,7 @@ export const SanctionInfoLayout = ({ captionFaqLink, captionSanctionInfoDisclaim
                         params={393297}
                         tintColor="#009900"
                         onPointerTap={onOkButton}
-                        layout={{ position: 'absolute', left: 327, width: 99, top: 0, height: 40, minWidth: 99 }}
+                        layout={{ position: 'absolute', right: 0, width: 99, top: 0, height: 40, minWidth: 99 }}
                     >
                         {t('generic.got.it')}
                     </ButtonThick>
@@ -109,7 +109,7 @@ export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout
         <Region
             name="sanction_info"
             params={8536080}
-            layout={{ width: 404, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 404, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionSanctionInfo ?? 'sanction info'}

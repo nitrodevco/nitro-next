@@ -33,7 +33,7 @@ export const CostumehopperCostumerequiredLayout = ({ itemsList, layout, onClose,
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 290, top: 0, height: 109, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsList ?? (
                         <>
@@ -105,7 +105,7 @@ export const CostumehopperCostumerequiredLayoutListTopItem = ({ itemsListTop, la
         <Region
             name="list_top"
             params={147472}
-            layout={{ width: 290, height: 43, flexShrink: 0, flexDirection: 'column', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
                 <>
@@ -168,7 +168,7 @@ export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBott
         <Region
             name="list_bottom"
             params={147472}
-            layout={{ width: 290, height: 63, flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsListBottom ?? (
                 <>

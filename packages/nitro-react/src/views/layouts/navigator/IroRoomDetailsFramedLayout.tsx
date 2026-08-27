@@ -26,6 +26,9 @@ export interface IroRoomDetailsFramedLayoutProps {
     onMakeFavouriteRegion?: () => void;
     onMakeHomeRegion?: () => void;
     onOwnerNameCont?: () => void;
+    onPublicSpaceDetails?: () => void;
+    onRankingCont?: () => void;
+    onRatingCont?: () => void;
     onRatingRegion?: () => void;
     onRemoveRightsRegion?: () => void;
     onRoomFilterButton?: () => void;
@@ -33,6 +36,7 @@ export interface IroRoomDetailsFramedLayoutProps {
     onRoomReportButton?: () => void;
     onRoomSettingsButton?: () => void;
     onStaffPickButton?: () => void;
+    onTags?: () => void;
     srcFavourite?: string;
     srcHome?: string;
     srcIconWeblink?: string;
@@ -45,7 +49,7 @@ export interface IroRoomDetailsFramedLayoutProps {
     visiblePublicSpaceDetails?: boolean;
 }
 
-export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCaption, captionOwnerName, captionPublicSpaceDesc, captionPublicSpaceName, captionRankingCaption, captionRankingTxt, captionRatingCaption, captionRatingTxt, captionRoomDesc, captionRoomName, layout, onAddThumbnailRegion, onClose, onEmbedInfoRegion, onFavouriteRegion, onFloorPlanEditorButton, onMakeFavouriteRegion, onMakeHomeRegion, onOwnerNameCont, onRatingRegion, onRemoveRightsRegion, onRoomFilterButton, onRoomMuteallButton, onRoomReportButton, onRoomSettingsButton, onStaffPickButton, srcFavourite, srcHome, srcIconWeblink, srcMakeFavourite, srcMakeHome, srcRemoveRights, srcThumbnailImage, srcThumbUp, visibleEmbedInfo, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutProps) => {
+export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCaption, captionOwnerName, captionPublicSpaceDesc, captionPublicSpaceName, captionRankingCaption, captionRankingTxt, captionRatingCaption, captionRatingTxt, captionRoomDesc, captionRoomName, layout, onAddThumbnailRegion, onClose, onEmbedInfoRegion, onFavouriteRegion, onFloorPlanEditorButton, onMakeFavouriteRegion, onMakeHomeRegion, onOwnerNameCont, onPublicSpaceDetails, onRankingCont, onRatingCont, onRatingRegion, onRemoveRightsRegion, onRoomFilterButton, onRoomMuteallButton, onRoomReportButton, onRoomSettingsButton, onStaffPickButton, onTags, srcFavourite, srcHome, srcIconWeblink, srcMakeFavourite, srcMakeHome, srcRemoveRights, srcThumbnailImage, srcThumbUp, visibleEmbedInfo, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutProps) => {
     const t = useTranslation();
     const [ embedSrcTxtValue, setEmbedSrcTxtValue ] = useState('');
 
@@ -110,6 +114,8 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                     name="public_space_details"
                     params={17}
                     visible={visiblePublicSpaceDetails ?? false}
+                    onPointerTap={onPublicSpaceDetails}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 100 }}
                 >
                     <Region
@@ -146,7 +152,7 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                         params={81}
                         onPointerTap={onRemoveRightsRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 163, width: 18, top: 1, height: 22 }}
+                        layout={{ position: 'absolute', right: 49, width: 18, top: 1, height: 22 }}
                     >
                         <ThemeImage
                             name="remove_rights"
@@ -161,7 +167,7 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                         params={81}
                         onPointerTap={onMakeHomeRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 185, width: 18, top: 1, height: 16 }}
+                        layout={{ position: 'absolute', right: 27, width: 18, top: 1, height: 16 }}
                     >
                         <ThemeImage
                             name="make_home"
@@ -187,7 +193,7 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                         params={81}
                         onPointerTap={onFavouriteRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 206, width: 18, top: 1, height: 16 }}
+                        layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16 }}
                     >
                         <ThemeImage
                             name="favourite"
@@ -202,7 +208,7 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                         params={81}
                         onPointerTap={onMakeFavouriteRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 206, width: 18, top: 1, height: 16 }}
+                        layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16 }}
                     >
                         <ThemeImage
                             name="make_favourite"
@@ -273,6 +279,8 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                     <Region
                         name="tags"
                         params={17}
+                        onPointerTap={onTags}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 5, width: 220, top: 37, height: 100 }}
                     />
                     <Region
@@ -289,6 +297,8 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                     <Region
                         name="rating_cont"
                         params={17}
+                        onPointerTap={onRatingCont}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 5, width: 220, top: 110, height: 16 }}
                     >
                         <Region
@@ -297,7 +307,7 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                             params={81}
                             onPointerTap={onRatingRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                            layout={{ position: 'absolute', right: 202, width: 18, top: 0, height: 16 }}
                         >
                             <ThemeImage
                                 name="thumb_up"
@@ -331,6 +341,8 @@ export const IroRoomDetailsFramedLayout = ({ captionEmbedInfoTxt, captionOwnerCa
                     <Region
                         name="ranking_cont"
                         params={17}
+                        onPointerTap={onRankingCont}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 5, width: 220, top: 125, height: 16 }}
                     >
                         <Region

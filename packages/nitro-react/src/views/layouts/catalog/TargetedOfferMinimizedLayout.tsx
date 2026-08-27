@@ -30,7 +30,7 @@ export const TargetedOfferMinimizedLayout = ({ itemsItemlist, layout, onTargeted
                     <Region
                         name="itemlist"
                         params={147472}
-                        layout={{ position: 'absolute', left: 0, width: 192, top: 6, height: 22, flexDirection: 'column', gap: 2 }}
+                        layout={{ position: 'absolute', left: 0, top: 6, flexDirection: 'column', gap: 2 }}
                     >
                         {itemsItemlist ?? (
                             <>
@@ -62,7 +62,7 @@ export const TargetedOfferMinimizedLayoutTxtTitleItem = ({ captionTxtTitle, layo
         <Region
             name="txt_title"
             params={8388624}
-            layout={{ width: 138, height: 4, flexShrink: 0, maxWidth: 162, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 138, flexShrink: 0, maxWidth: 162, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionTxtTitle ?? ''}

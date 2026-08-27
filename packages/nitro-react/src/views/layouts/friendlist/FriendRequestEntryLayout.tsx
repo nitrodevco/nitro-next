@@ -5,16 +5,21 @@ export interface FriendRequestEntryLayoutProps {
     captionInfoText?: string;
     captionRequesterNameText?: string;
     layout?: BoxLayout;
+    onAccept?: () => void;
     onBgRegion?: () => void;
+    onCont26981?: () => void;
+    onReject?: () => void;
 }
 
-export const FriendRequestEntryLayout = ({ captionInfoText, captionRequesterNameText, layout, onBgRegion }: FriendRequestEntryLayoutProps) => {
+export const FriendRequestEntryLayout = ({ captionInfoText, captionRequesterNameText, layout, onAccept, onBgRegion, onCont26981, onReject }: FriendRequestEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
                 name="cont_26981"
                 params={17}
                 backgroundColor="#9a9773"
+                onPointerTap={onCont26981}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20 }}
             >
                 <Region
@@ -22,7 +27,7 @@ export const FriendRequestEntryLayout = ({ captionInfoText, captionRequesterName
                     params={145}
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 />
                 <Region
                     name="user_info_region"
@@ -52,14 +57,16 @@ export const FriendRequestEntryLayout = ({ captionInfoText, captionRequesterName
                 <Region
                     name="info_text"
                     params={80}
-                    layout={{ position: 'absolute', left: 110, width: 67, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 13, width: 67, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionInfoText ?? 'PH Info Text'} />
                 </Region>
                 <Region
                     name="accept"
                     params={81}
-                    layout={{ position: 'absolute', left: 149, width: 16, top: 4, height: 14 }}
+                    onPointerTap={onAccept}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', right: 25, width: 16, top: 4, height: 14 }}
                 >
                     <Icon
                         variant="8"
@@ -72,7 +79,9 @@ export const FriendRequestEntryLayout = ({ captionInfoText, captionRequesterName
                 <Region
                     name="reject"
                     params={81}
-                    layout={{ position: 'absolute', left: 174, width: 16, top: 4, height: 14 }}
+                    onPointerTap={onReject}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', right: 0, width: 16, top: 4, height: 14 }}
                 >
                     <Icon
                         variant="9"

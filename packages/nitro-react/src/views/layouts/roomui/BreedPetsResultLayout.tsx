@@ -26,7 +26,7 @@ export const BreedPetsResultLayout = ({ itemsElementList, layout, onClose }: Bre
                 <Region
                     name="element_list"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 274, top: 0, height: 291, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsElementList ?? (
                         <>
@@ -291,7 +291,7 @@ export const BreedPetsResultLayoutSeed1ItemlistItem = ({ itemsSeed1Itemlist, lay
         <Region
             name="seed1_itemlist"
             params={147472}
-            layout={{ width: 122, height: 122, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed1Itemlist ?? (
                 <>
@@ -437,7 +437,7 @@ export const BreedPetsResultLayoutSeed2ItemlistItem = ({ itemsSeed2Itemlist, lay
         <Region
             name="seed2_itemlist"
             params={147472}
-            layout={{ width: 122, height: 122, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed2Itemlist ?? (
                 <>
@@ -463,7 +463,7 @@ export const BreedPetsResultLayoutPreviewListItem = ({ itemsPreviewList, layout 
         <Region
             name="preview_list"
             params={4079632}
-            layout={{ width: 254, height: 122, flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
                 <>
@@ -543,7 +543,7 @@ export const BreedPetsResultLayoutSeed1ButtonlistItem = ({ itemsSeed1Buttonlist,
         <Region
             name="seed1_buttonlist"
             params={933904}
-            layout={{ width: 122, height: 0, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed1Buttonlist ?? (
                 <>
@@ -623,7 +623,7 @@ export const BreedPetsResultLayoutSeed2ButtonlistItem = ({ itemsSeed2Buttonlist,
         <Region
             name="seed2_buttonlist"
             params={933904}
-            layout={{ width: 122, height: 0, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed2Buttonlist ?? (
                 <>
@@ -646,7 +646,7 @@ export const BreedPetsResultLayoutPreviewButtonlistItem = ({ itemsPreviewButtonl
         <Region
             name="preview_buttonlist"
             params={4079632}
-            layout={{ width: 120, height: 30, flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewButtonlist ?? (
                 <>
@@ -691,7 +691,7 @@ export const BreedPetsResultLayoutButtonListItem = ({ itemsButtonList, layout }:
         <Region
             name="button_list"
             params={4079632}
-            layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
                 <BreedPetsResultLayoutCloseButtonItem />

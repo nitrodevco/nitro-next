@@ -96,7 +96,7 @@ export const UserViewLayoutProfileLinkItem = ({ captionNameText, layout, onProfi
             <Region
                 name="name_text"
                 params={146}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 131, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#3d3d3d"
             >
                 <ThemeText
@@ -161,7 +161,7 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImag
                     params={3282}
                     visible={false}
                     options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                    layout={{ position: 'absolute', left: 16, width: 34, top: 21, height: 84 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 34, top: '50%', marginTop: -42.5, height: 84 }}
                 />
             </Region>
             <WidgetSlot
@@ -247,7 +247,7 @@ export const UserViewLayoutMottoContainerItem = ({ layout, srcChangemottoImage }
                 name="changemotto.image"
                 params={3088}
                 src={srcChangemottoImage ?? layoutImage('common_small_pen.png')}
-                layout={{ position: 'absolute', left: 3, width: 17, top: 19, height: 18 }}
+                layout={{ position: 'absolute', left: 3, width: 17, top: '50%', marginTop: -9.5, height: 18 }}
             />
             <TextInput
                 value={mottoTextValue}

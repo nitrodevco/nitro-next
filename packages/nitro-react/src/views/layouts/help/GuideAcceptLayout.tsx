@@ -68,13 +68,13 @@ export const GuideAcceptLayout = ({ itemsItemlist, layout, onClose, srcFrankGree
                 </Border>
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', left: -10, width: 230, top: 155, height: 140 }}
+                    layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
                 >
                     <ThemeImage
                         name="frank_greeting"
                         params={1040}
                         src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
-                        layout={{ position: 'absolute', left: -10, width: 230, top: 155, height: 140 }}
+                        layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
                     />
                 </Region>
             </Region>
@@ -190,7 +190,7 @@ export const GuideAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton }: Gu
             {t('guide.help.request.user.pending.cancel.button')}
             <Region
                 params={8536080}
-                layout={{ position: 'absolute', left: 20, width: 200, top: 11, height: 25, maxWidth: 200, flexDirection: 'row', gap: 5 }}
+                layout={{ position: 'absolute', left: 20, top: 11, maxWidth: 200, flexDirection: 'row', gap: 5 }}
             >
                 <ThemeImage
                     params={16}

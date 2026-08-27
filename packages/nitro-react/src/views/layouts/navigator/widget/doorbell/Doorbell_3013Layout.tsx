@@ -35,7 +35,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                 <Region
                     name="info"
                     params={2192}
-                    layout={{ position: 'absolute', left: 10, width: 240, top: 35, height: 66, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 20, top: 35, bottom: 81, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfo ?? t('navigator.doorbell.info')}
@@ -52,12 +52,12 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                         params={131221}
                         onPointerTap={onCancelRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 86, top: 0, height: 36 }}
+                        layout={{ position: 'absolute', left: 0, right: 154, top: 0, height: 36 }}
                     >
                         <Region
                             name="cancel"
                             params={4194322}
-                            layout={{ position: 'absolute', left: 3, width: 83, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 3, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionCancel ?? t('generic.cancel')} />
                         </Region>
@@ -67,7 +67,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                         name="ring"
                         params={393233}
                         onPointerTap={onRing}
-                        layout={{ position: 'absolute', left: 45, width: 190, top: 4, height: 28 }}
+                        layout={{ position: 'absolute', right: 5, width: 190, top: 4, height: 28 }}
                     >
                         {t('navigator.doorbell.button.ring')}
                     </Button>

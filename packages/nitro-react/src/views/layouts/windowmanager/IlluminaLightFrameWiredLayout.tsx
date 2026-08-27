@@ -7,11 +7,12 @@ export interface IlluminaLightFrameWiredLayoutProps {
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     onHeaderButtonMenu?: () => void;
+    onTitlebar?: () => void;
     srcBannerLeft?: string;
     srcBannerRight?: string;
 }
 
-export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonMenu, srcBannerLeft, srcBannerRight }: IlluminaLightFrameWiredLayoutProps) => {
+export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonMenu, onTitlebar, srcBannerLeft, srcBannerRight }: IlluminaLightFrameWiredLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
@@ -21,7 +22,7 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
                 name="wired_banner"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'wired_header_bg' ]}
                 params={144}
-                layout={{ position: 'absolute', left: 1, width: 48, top: 1, height: 0 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 0 }}
             >
                 <ThemeImage
                     name="banner_left"
@@ -35,13 +36,13 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
                     params={2192}
                     tintColor="#000000"
                     blend={0.1}
-                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 138 }}
+                    layout={{ position: 'absolute', left: 0, right: -236, top: 0, height: 138 }}
                 />
                 <ThemeImage
                     name="banner_right"
                     params={80}
                     src={srcBannerRight ?? layoutImage('illumina_wired_bg_right.png')}
-                    layout={{ position: 'absolute', left: -192, width: 240, top: -19, height: 160 }}
+                    layout={{ position: 'absolute', right: 0, width: 240, top: -19, height: 160 }}
                 />
             </Region>
             <Region
@@ -54,13 +55,15 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
                 name="titlebar"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={401}
+                onPointerTap={onTitlebar}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
             />
             <Region
                 name="header_title_text"
                 tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 params={2147483856}
-                layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHeaderTitleText ?? ''}

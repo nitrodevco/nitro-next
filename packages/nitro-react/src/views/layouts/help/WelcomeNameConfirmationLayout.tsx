@@ -69,7 +69,7 @@ export const WelcomeNameConfirmationLayout = ({ captionConfirmText, captionFinal
                     params={393233}
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelConfirmationButton}
-                    layout={{ position: 'absolute', left: 162, width: 120, top: 136, height: 43, minWidth: 120, maxWidth: 120 }}
+                    layout={{ position: 'absolute', right: 21, width: 120, top: 136, height: 43, minWidth: 120, maxWidth: 120 }}
                 >
                     {t('generic.cancel')}
                 </Button>

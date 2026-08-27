@@ -19,13 +19,13 @@ export const LayoutLoyaltyVipBuy_1620Layout = ({ captionVipInfo, captionVipLink,
                 name="ctlg_loyalty_vip_buy"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="loyaltyVipBuyWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Region
                         tags={[ 'own_items_grid' ]}
@@ -62,12 +62,12 @@ export const LayoutLoyaltyVipBuy_1620Layout = ({ captionVipInfo, captionVipLink,
                     <Region
                         name="item_list_vip"
                         params={2064}
-                        layout={{ position: 'absolute', left: 19, width: 316, top: 170, height: 257, flexDirection: 'column', gap: 4 }}
+                        layout={{ position: 'absolute', left: 19, width: 316, top: 170, bottom: 33, flexDirection: 'column', gap: 4 }}
                     />
                     <Region
                         name="vip_link"
                         params={787473}
-                        layout={{ position: 'absolute', left: 39, width: 286, top: 433, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -141, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionVipLink ?? t('catalog.vip.buy.link')}

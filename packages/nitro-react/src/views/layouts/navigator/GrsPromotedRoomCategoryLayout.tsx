@@ -31,7 +31,7 @@ export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionC
                     name="category_header"
                     params={145}
                     tintColor="#999999"
-                    layout={{ position: 'absolute', left: 1, width: 126, top: 0, height: 22 }}
+                    layout={{ position: 'absolute', left: 1, right: 143, top: 0, height: 22 }}
                 >
                     <Region
                         name="category_name_txt"
@@ -49,7 +49,7 @@ export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionC
                     name="enter_room_button"
                     params={145}
                     onPointerTap={onEnterRoomButton}
-                    layout={{ position: 'absolute', left: 1, width: 269, top: 19, height: 53 }}
+                    layout={{ position: 'absolute', left: 1, right: 0, top: 19, height: 53 }}
                 >
                     <WidgetSlot
                         widgetType="avatar_image"
@@ -62,7 +62,7 @@ export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionC
                         params={1041}
                         onPointerTap={onLeaderRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 61, width: 201, top: 28, height: 19 }}
+                        layout={{ position: 'absolute', left: 61, width: 201, bottom: 6, height: 19 }}
                     >
                         <Region
                             name="leader_name_caption_txt"
@@ -90,7 +90,7 @@ export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionC
                         name="navi_room_icon"
                         params={80}
                         src={srcNaviRoomIcon}
-                        layout={{ position: 'absolute', left: 212, width: 44, top: 3, height: 30 }}
+                        layout={{ position: 'absolute', right: 13, width: 44, top: 3, height: 30 }}
                     />
                 </ContainerButton>
                 <Region
@@ -132,7 +132,7 @@ export const GrsPromotedRoomCategoryLayout = ({ captionCategoryNameTxt, captionC
                 <Region
                     name="item_list"
                     params={2193}
-                    layout={{ position: 'absolute', left: 3, width: 264, top: 97, height: 216, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 97, bottom: -223, flexDirection: 'column' }}
                 />
             </Region>
         </Region>

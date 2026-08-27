@@ -39,7 +39,7 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                 </Region>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 70, width: 200, top: 0, height: 147, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 70, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}
                 >
                     <Region
                         params={16}

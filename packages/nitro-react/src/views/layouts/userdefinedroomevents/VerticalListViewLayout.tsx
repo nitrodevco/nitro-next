@@ -11,7 +11,7 @@ export const VerticalListViewLayout = ({ layout }: VerticalListViewLayoutProps) 
             <Region
                 name="vertical_list_view"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 0, flexDirection: 'column' }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
             />
         </Region>
     );

@@ -13,7 +13,7 @@ export const DropmenuItemLayout = ({ captionBTNTEXT, layout }: DropmenuItemLayou
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 params={2147486736}
-                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 8, top: '50%', marginTop: -6, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionBTNTEXT ?? ''}

@@ -50,7 +50,7 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
                     <Region
                         name="poll_offer_header_wrapper"
                         params={2193}
-                        layout={{ position: 'absolute', left: 110, width: 250, top: 25, height: 60, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 110, right: 20, top: 25, bottom: 10, flexDirection: 'column' }}
                     >
                         {itemsPollOfferHeaderWrapper ?? (
                             <PollOfferLayoutPollOfferHeadlineItem />
@@ -61,12 +61,12 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
                     variant="2"
                     name="poll_offer_border"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 370, top: 100, height: 150 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
                 >
                     <Region
                         name="poll_offer_summary_wrapper"
                         params={2193}
-                        layout={{ position: 'absolute', left: 8, width: 355, top: 10, height: 50, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 8, right: 7, top: 10, bottom: 90, flexDirection: 'column' }}
                     >
                         {itemsPollOfferSummaryWrapper ?? (
                             <PollOfferLayoutPollOfferSummaryItem />
@@ -75,7 +75,7 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
                     <Region
                         name="poll_options_container"
                         params={9700368}
-                        layout={{ position: 'absolute', left: 120, width: 250, top: 67, height: 42 }}
+                        layout={{ position: 'absolute', right: 0, width: 250, bottom: 41, height: 42 }}
                     >
                         <Region
                             name="poll_offer_button_cancel"

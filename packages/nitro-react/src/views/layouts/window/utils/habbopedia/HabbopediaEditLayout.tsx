@@ -25,13 +25,13 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                 <Border
                     variant="105"
                     params={2193}
-                    layout={{ position: 'absolute', left: 8, width: 368, top: 7, height: 276 }}
+                    layout={{ position: 'absolute', left: 8, right: 9, top: 7, bottom: 72 }}
                 >
                     <TextInput
                         value={dataValue}
                         onChange={setDataValue}
                         multiline
-                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, height: 276 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Border>
                 <Button
@@ -40,7 +40,7 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                     params={132113}
                     tintColor="#bbbbbb"
                     onPointerTap={onRevert}
-                    layout={{ position: 'absolute', left: -3, width: 83, top: 279, height: 46 }}
+                    layout={{ position: 'absolute', left: -3, width: 83, bottom: 30, height: 46 }}
                 >
                     Revert
                 </Button>
@@ -50,7 +50,7 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                     params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSave}
-                    layout={{ position: 'absolute', left: 314, width: 73, top: 279, height: 46 }}
+                    layout={{ position: 'absolute', right: -2, width: 73, bottom: 30, height: 46 }}
                 >
                     Save
                 </Button>

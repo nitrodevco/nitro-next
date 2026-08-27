@@ -73,7 +73,7 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, layout
                 />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 38, height: 184 }}
+                    layout={{ position: 'absolute', left: 5, width: 270, top: 38, bottom: 118 }}
                 >
                     <Region
                         name="chat_list"
@@ -93,7 +93,7 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, layout
                 </ScrollArea>
                 <Region
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 221, height: 75 }}
+                    layout={{ position: 'absolute', left: 0, width: 280, bottom: 44, height: 75 }}
                 >
                     <ThemeImage
                         params={147472}

@@ -23,15 +23,17 @@ export interface GrsGuestRoomDetailsLongLayoutProps {
     captionStartedat?: string;
     captionStartedatCaption?: string;
     layout?: BoxLayout;
+    onDetailsContainer?: () => void;
     onRoomownerCont?: () => void;
     onRoomsettingsCont?: () => void;
+    onTags?: () => void;
     srcDoormodeDoorbell?: string;
     srcDoormodeInvisible?: string;
     srcDoormodePassword?: string;
     srcTradingAllowed?: string;
 }
 
-export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, captionEventinfoDesc, captionEventinfoExpirationtime, captionEventinfoName, captionInfotxt, captionInfotxt2, captionInfotxt3, captionInfotxt4, captionRating, captionRatingCaption, captionRoomctg, captionRoomctgCaption, captionRoomdesc, captionRoomname, captionRoomowner, captionRoomownerCaption, captionRoomsettings, captionStartedat, captionStartedatCaption, layout, onRoomownerCont, onRoomsettingsCont, srcDoormodeDoorbell, srcDoormodeInvisible, srcDoormodePassword, srcTradingAllowed }: GrsGuestRoomDetailsLongLayoutProps) => {
+export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, captionEventinfoDesc, captionEventinfoExpirationtime, captionEventinfoName, captionInfotxt, captionInfotxt2, captionInfotxt3, captionInfotxt4, captionRating, captionRatingCaption, captionRoomctg, captionRoomctgCaption, captionRoomdesc, captionRoomname, captionRoomowner, captionRoomownerCaption, captionRoomsettings, captionStartedat, captionStartedatCaption, layout, onDetailsContainer, onRoomownerCont, onRoomsettingsCont, onTags, srcDoormodeDoorbell, srcDoormodeInvisible, srcDoormodePassword, srcTradingAllowed }: GrsGuestRoomDetailsLongLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -44,12 +46,14 @@ export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, caption
                 <Region
                     name="details_container"
                     params={145}
-                    layout={{ position: 'absolute', left: 10, width: 230, top: 10, height: 326 }}
+                    onPointerTap={onDetailsContainer}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 10, right: 13, top: 10, height: 326 }}
                 >
                     <Region
                         name="roomname"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: -3, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomname ?? 'PH Room Name: Neque porro quisquam est que'}
@@ -74,7 +78,7 @@ export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, caption
                         <Region
                             name="user_info_region"
                             params={80}
-                            layout={{ position: 'absolute', left: 50, width: 15, top: 0, height: 13 }}
+                            layout={{ position: 'absolute', right: 170, width: 15, top: 0, height: 13 }}
                         >
                             <Icon
                                 variant="21"
@@ -120,7 +124,7 @@ export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, caption
                     <Region
                         name="roomdesc"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 233, top: 70, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: -3, top: 70, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomdesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
@@ -135,6 +139,8 @@ export const GrsGuestRoomDetailsLongLayout = ({ captionEventinfoCaption, caption
                         <Region
                             name="tags"
                             params={17}
+                            onPointerTap={onTags}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 40 }}
                         />
                         <Region

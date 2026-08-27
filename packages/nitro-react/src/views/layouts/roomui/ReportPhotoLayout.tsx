@@ -57,7 +57,7 @@ export const ReportPhotoLayout = ({ layout, onClose, onReportConfirm, srcSelfieL
                     name="report_confirm"
                     params={393233}
                     onPointerTap={onReportConfirm}
-                    layout={{ position: 'absolute', left: 204, width: 173, top: 538, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
+                    layout={{ position: 'absolute', right: 18, width: 173, top: 538, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
                 >
                     {t('help.report.selfie.button')}
                 </Button>

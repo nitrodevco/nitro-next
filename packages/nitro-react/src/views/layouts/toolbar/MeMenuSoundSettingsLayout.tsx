@@ -20,6 +20,7 @@ export interface MeMenuSoundSettingsLayoutProps {
     onSoundsOn?: () => void;
     onSoundsOn2?: () => void;
     onSoundsOn3?: () => void;
+    onUiVolumeContainer?: () => void;
     srcSliderBase?: string;
     srcSliderBase2?: string;
     srcSliderBase3?: string;
@@ -35,7 +36,7 @@ export interface MeMenuSoundSettingsLayoutProps {
     visibleVolumeGreyArea?: boolean;
 }
 
-export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, captionTitle2, captionTitle3, captionVolumeText, layout, onBackBtn, onSliderButton, onSliderButton2, onSliderButton3, onSoundsOff, onSoundsOff2, onSoundsOff3, onSoundsOn, onSoundsOn2, onSoundsOn3, srcSliderBase, srcSliderBase2, srcSliderBase3, srcSliderBitmap, srcSliderBitmap2, srcSliderBitmap3, srcSoundsOffIcon, srcSoundsOffIcon2, srcSoundsOffIcon3, srcSoundsOnIcon, srcSoundsOnIcon2, srcSoundsOnIcon3, visibleVolumeGreyArea }: MeMenuSoundSettingsLayoutProps) => {
+export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, captionTitle2, captionTitle3, captionVolumeText, layout, onBackBtn, onSliderButton, onSliderButton2, onSliderButton3, onSoundsOff, onSoundsOff2, onSoundsOff3, onSoundsOn, onSoundsOn2, onSoundsOn3, onUiVolumeContainer, srcSliderBase, srcSliderBase2, srcSliderBase3, srcSliderBitmap, srcSliderBitmap2, srcSliderBitmap3, srcSoundsOffIcon, srcSoundsOffIcon2, srcSoundsOffIcon3, srcSoundsOnIcon, srcSoundsOnIcon2, srcSoundsOnIcon3, visibleVolumeGreyArea }: MeMenuSoundSettingsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -50,7 +51,7 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, 
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 93, width: 126, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -63, width: 126, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.settings.title')}
@@ -62,7 +63,7 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, 
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 10, width: 292, top: 24, height: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -146, width: 292, top: 24, height: 1 }}
                 />
                 <Region
                     visible={visibleVolumeGreyArea ?? false}
@@ -79,7 +80,7 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, 
                 <Region
                     name="volume_text"
                     params={786640}
-                    layout={{ position: 'absolute', left: 82, width: 148, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -74, width: 148, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionVolumeText ?? t('widget.memenu.settings.volume')}
@@ -90,6 +91,8 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, 
                 <Region
                     name="ui_volume_container"
                     params={17}
+                    onPointerTap={onUiVolumeContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 14, width: 285, top: 48, height: 28 }}
                 >
                     <Region
@@ -320,7 +323,7 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionTitle, 
                     name="back_btn"
                     params={1180721}
                     onPointerTap={onBackBtn}
-                    layout={{ position: 'absolute', left: 10, width: 60, top: 132, height: 28, minWidth: 60, maxWidth: 60 }}
+                    layout={{ position: 'absolute', left: 10, width: 60, bottom: 10, height: 28, minWidth: 60, maxWidth: 60 }}
                 >
                     {t('widget.memenu.back')}
                 </Button>

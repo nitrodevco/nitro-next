@@ -16,7 +16,7 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
             <Border
                 variant="1"
                 params={64}
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 90 }}
+                layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 90 }}
             >
                 <Region
                     params={16}

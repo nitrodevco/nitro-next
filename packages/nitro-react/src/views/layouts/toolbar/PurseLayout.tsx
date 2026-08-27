@@ -77,7 +77,7 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, itemsPu
                         tags={[ '#icon' ]}
                         params={786640}
                         visible={false}
-                        layout={{ position: 'absolute', left: 38, width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -12.5, width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionJoin ?? 'join'}
@@ -172,7 +172,7 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, itemsPu
                         {t('toolbar.help')}
                         <Region
                             params={1838288}
-                            layout={{ position: 'absolute', left: 0, width: 71, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 71, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('toolbar.help')}
@@ -252,7 +252,7 @@ export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout,
                 name="diamond_count"
                 tags={[ '#icon' ]}
                 params={262160}
-                layout={{ position: 'absolute', left: 25, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDiamondCount ?? '0'}
@@ -294,7 +294,7 @@ export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, o
                 name="credit_count"
                 tags={[ '#icon' ]}
                 params={262160}
-                layout={{ position: 'absolute', left: 25, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCreditCount ?? '0'}
@@ -336,7 +336,7 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
                 name="ducket_count"
                 tags={[ '#icon' ]}
                 params={262160}
-                layout={{ position: 'absolute', left: 25, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDucketCount ?? '0'}

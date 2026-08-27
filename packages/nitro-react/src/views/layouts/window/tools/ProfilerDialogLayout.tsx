@@ -23,23 +23,23 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                 <Border
                     variant="0"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 458, top: 0, height: 145 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 37 }}
                 >
                     <Region
                         name="header"
                         tags={[ 'header' ]}
                         params={144}
-                        layout={{ position: 'absolute', left: 26, width: 330, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 26, right: 102, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionHeader ?? '...'} />
                     </Region>
                     <Region
                         params={2193}
-                        layout={{ position: 'absolute', left: 4, width: 450, top: 20, height: 130 }}
+                        layout={{ position: 'absolute', left: 4, right: 4, top: 20, bottom: -5 }}
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 0, width: 430, top: 0, height: 95 }}
+                            layout={{ position: 'absolute', left: 0, right: 20, top: 0, bottom: 35 }}
                         >
                             <Region
                                 name="list"
@@ -52,7 +52,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                             name="footer"
                             tags={[ 'footer' ]}
                             params={1168}
-                            layout={{ position: 'absolute', left: 20, width: 48, top: 95, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 20, right: 382, bottom: 19, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionFooter ?? 'Info text'} />
                         </Region>
@@ -61,7 +61,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                             name="footer_enable_toggle"
                             params={1041}
                             onPointerTap={onFooterEnableToggle}
-                            layout={{ position: 'absolute', left: 0, width: 20, top: 98, height: 21 }}
+                            layout={{ position: 'absolute', left: 0, width: 20, bottom: 11, height: 21 }}
                         >
                             Profiler
                         </CheckBox>
@@ -73,7 +73,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                         params={132177}
                         tintColor="#bbbbbb"
                         onPointerTap={onButtonGc}
-                        layout={{ position: 'absolute', left: 391, width: 65, top: 109, height: 43 }}
+                        layout={{ position: 'absolute', right: 2, width: 65, bottom: -7, height: 43 }}
                     >
                         GC
                     </Button>

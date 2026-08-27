@@ -25,7 +25,7 @@ export const PollAnswerTextInputLayout = ({ layout, srcWriteDeco }: PollAnswerTe
                     onChange={setPollAnswerInputValue}
                     maxLength={512}
                     multiline
-                    layout={{ position: 'absolute', left: 8, width: 282, top: 3, height: 84 }}
+                    layout={{ position: 'absolute', left: 8, right: 10, top: 3, bottom: 3 }}
                 />
                 <ThemeImage
                     name="write_deco"

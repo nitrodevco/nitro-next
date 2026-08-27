@@ -28,7 +28,7 @@ export const ToolbarViewLayout = ({ itemsToolbarItems, layout }: ToolbarViewLayo
                     <Region
                         name="toolbar_items"
                         params={8536080}
-                        layout={{ position: 'absolute', left: 0, width: 87, top: 5, height: 870, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, top: 5, flexDirection: 'column' }}
                     >
                         {itemsToolbarItems ?? (
                             <>
@@ -76,14 +76,14 @@ export const ToolbarViewLayoutRECEPTIONItem = ({ layout, onRECEPTION, srcIconsTo
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 57 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8 }}
             >
                 <ThemeImage
                     name="icons_toolbar_reception"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarReception ?? layoutImage('icons_toolbar_reception_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <ThemeImage
@@ -118,14 +118,14 @@ export const ToolbarViewLayoutHOMEItem = ({ layout, onHOME, srcIconsToolbarHome 
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 57 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8 }}
             >
                 <ThemeImage
                     name="icons_toolbar_home"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarHome ?? layoutImage('icons_toolbar_home_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: -2, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: -2, height: 60 }}
                 />
             </Border>
             <ThemeImage
@@ -163,20 +163,20 @@ export const ToolbarViewLayoutNAVIGATORItem = ({ captionText, layout, onNAVIGATO
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_navigator"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarNavigator ?? layoutImage('icons_toolbar_navigator_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: -2, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: -2, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.navigator')}
@@ -213,20 +213,20 @@ export const ToolbarViewLayoutQUESTSItem = ({ captionText, layout, onQUESTS, src
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_quests"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarQuests ?? layoutImage('icons_toolbar_quests_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.quests')}
@@ -263,20 +263,20 @@ export const ToolbarViewLayoutGAMESItem = ({ captionText, layout, onGAMES, srcIc
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_games"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarGames ?? layoutImage('icons_toolbar_games_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.games')}
@@ -313,20 +313,20 @@ export const ToolbarViewLayoutSTORIESItem = ({ captionText, layout, onSTORIES, s
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_stories"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarStories ?? layoutImage('icons_toolbar_stories_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.stories')}
@@ -363,20 +363,20 @@ export const ToolbarViewLayoutACHIEVEMENTSItem = ({ captionText, layout, onACHIE
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_achievements"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarAchievements ?? layoutImage('icons_toolbar_achievements_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.achievements')}
@@ -413,20 +413,20 @@ export const ToolbarViewLayoutCATALOGUEItem = ({ captionText, layout, onCATALOGU
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_catalogue"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarCatalogue ?? layoutImage('icons_toolbar_catalogue_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.catalogue')}
@@ -463,20 +463,20 @@ export const ToolbarViewLayoutBUILDERItem = ({ captionText, layout, onBUILDER, s
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_builder"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarBuilder ?? layoutImage('icons_toolbar_builder_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.builder')}
@@ -513,20 +513,20 @@ export const ToolbarViewLayoutINVENTORYItem = ({ captionText, layout, onINVENTOR
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icons_toolbar_inventory"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconsToolbarInventory ?? layoutImage('icons_toolbar_inventory_normal.png')}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.inventory')}
@@ -564,20 +564,20 @@ export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, src
                 tags={[ 'ICON_BORDER' ]}
                 params={2064}
                 tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, height: 75 }}
+                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0 }}
             >
                 <ThemeImage
                     name="icon_me_menu"
                     tags={[ 'ICON_BMP' ]}
                     params={208}
                     src={srcIconMeMenu}
-                    layout={{ position: 'absolute', left: 5, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
                 params={263184}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 62, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionText ?? t('toolbar.icon.label.memenu')}

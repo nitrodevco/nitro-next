@@ -13,7 +13,7 @@ export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, lay
         <Region layout={{ position: 'relative', width: 100, height: 46, ...layout }}>
             <Region
                 params={64}
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 46 }}
+                layout={{ position: 'absolute', right: 0, width: 100, top: 0, height: 46 }}
             >
                 <Region
                     visible={visibleChecksumIndicator ?? false}

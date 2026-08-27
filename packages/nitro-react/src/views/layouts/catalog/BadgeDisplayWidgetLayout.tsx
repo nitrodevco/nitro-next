@@ -26,13 +26,13 @@ export const BadgeDisplayWidgetLayout = ({ layout, srcAssetImage, srcChatStyle }
                     name="badge_image"
                     params={2192}
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="chat_style"
                     params={2192}
                     src={srcChatStyle}
-                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Region>

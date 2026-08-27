@@ -15,7 +15,7 @@ export const FacebookLayout = ({ captionName, layout, srcIcon }: FacebookLayoutP
                 name="facebook"
                 params={144}
                 backgroundColor="#72893f"
-                layout={{ position: 'absolute', left: 0, width: 121, top: 0, height: 19 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
             >
                 <ThemeImage
                     name="icon"
@@ -26,7 +26,7 @@ export const FacebookLayout = ({ captionName, layout, srcIcon }: FacebookLayoutP
                 <Region
                     name="name"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 32, width: 87, top: -2, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 32, right: 2, top: -2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionName ?? 'Baz Bar Foo'}

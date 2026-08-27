@@ -33,7 +33,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                     variant="0"
                     name="tab_context"
                     params={12585104}
-                    layout={{ position: 'absolute', left: 3, width: 566, top: 5, height: 204 }}
+                    layout={{ position: 'absolute', left: 3, right: 16, top: 5, bottom: 64 }}
                 >
                     <TabButton
                         variant="0"
@@ -66,22 +66,22 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                 <Region
                     name="tab_content"
                     params={2192}
-                    layout={{ position: 'absolute', left: 10, width: 557, top: 30, height: 177 }}
+                    layout={{ position: 'absolute', left: 10, right: 18, top: 30, bottom: 66 }}
                 >
                     <Region
                         name="open_issues_prototype"
                         params={2192}
                         visible={visibleOpenIssuesPrototype ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 557, top: 0, height: 177 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             params={2192}
-                            layout={{ position: 'absolute', left: 10, width: 547, top: 10, height: 167 }}
+                            layout={{ position: 'absolute', left: 10, right: 0, top: 10, bottom: 0 }}
                         >
                             <Region
                                 name="list_header"
                                 params={144}
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 0, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                             >
                                 <Region
                                     params={16}
@@ -109,14 +109,14 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                 </Region>
                                 <Region
                                     params={80}
-                                    layout={{ position: 'absolute', left: 390, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 77, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text="Open" />
                                 </Region>
                             </Region>
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 15, height: 125 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 15, bottom: 27 }}
                             >
                                 <Region
                                     name="issue_list"
@@ -135,16 +135,16 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                         name="my_issues_prototype"
                         params={2192}
                         visible={visibleMyIssuesPrototype ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 557, top: 0, height: 177 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             params={2192}
-                            layout={{ position: 'absolute', left: 10, width: 547, top: 10, height: 167 }}
+                            layout={{ position: 'absolute', left: 10, right: 0, top: 10, bottom: 0 }}
                         >
                             <Region
                                 name="list_header"
                                 params={144}
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 0, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                             >
                                 <Region
                                     params={16}
@@ -172,20 +172,20 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                 </Region>
                                 <Region
                                     params={80}
-                                    layout={{ position: 'absolute', left: 311, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 146, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text="Open" />
                                 </Region>
                                 <Region
                                     params={80}
-                                    layout={{ position: 'absolute', left: 371, width: 35, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 111, width: 35, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text="Msgs" />
                                 </Region>
                             </Region>
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 15, height: 125 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 15, bottom: 27 }}
                             >
                                 <Region
                                     name="issue_list"
@@ -203,7 +203,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                 name="release_all"
                                 params={394321}
                                 onPointerTap={onReleaseAll}
-                                layout={{ position: 'absolute', left: 447, width: 70, top: 141, height: 22 }}
+                                layout={{ position: 'absolute', right: 30, width: 70, bottom: 4, height: 22 }}
                             >
                                 release all
                             </Button>
@@ -212,16 +212,16 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                     <Region
                         name="picked_issues_prototype"
                         params={2192}
-                        layout={{ position: 'absolute', left: 0, width: 557, top: 0, height: 177 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             params={2192}
-                            layout={{ position: 'absolute', left: 10, width: 547, top: 10, height: 167 }}
+                            layout={{ position: 'absolute', left: 10, right: 0, top: 10, bottom: 0 }}
                         >
                             <Region
                                 name="list_header"
                                 params={144}
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 0, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                             >
                                 <Region
                                     params={16}
@@ -249,20 +249,20 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                                 </Region>
                                 <Region
                                     params={80}
-                                    layout={{ position: 'absolute', left: 350, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 107, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text="Open" />
                                 </Region>
                                 <Region
                                     params={80}
-                                    layout={{ position: 'absolute', left: 410, width: 107, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', right: 0, width: 107, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text="Picker" />
                                 </Region>
                             </Region>
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 517, top: 15, height: 125 }}
+                                layout={{ position: 'absolute', left: 0, right: 30, top: 15, bottom: 27 }}
                             >
                                 <Region
                                     name="issue_list"
@@ -283,7 +283,7 @@ export const IssueBrowserLayout = ({ itemsIssueList, itemsIssueList2, itemsIssue
                     name="auto_pick"
                     params={394257}
                     onPointerTap={onAutoPick}
-                    layout={{ position: 'absolute', left: 4, width: 175, top: 215, height: 22 }}
+                    layout={{ position: 'absolute', right: 406, width: 175, bottom: 36, height: 22 }}
                 >
                     Give me the next priority issue
                 </Button>
@@ -300,21 +300,27 @@ export interface IssueBrowserLayoutItemPrototypeItemProps {
     captionTargetName?: string;
     captionTime?: string;
     layout?: BoxLayout;
+    onItemPrototype?: () => void;
     onPickButton?: () => void;
+    onTextsContainer?: () => void;
     srcTargetIcon?: string;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionScore, captionSource, captionTargetName, captionTime, layout, onPickButton, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItemProps) => {
+export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionScore, captionSource, captionTargetName, captionTime, layout, onItemPrototype, onPickButton, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItemProps) => {
     return (
         <Region
             name="item_prototype"
             params={145}
+            onPointerTap={onItemPrototype}
+            cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
         >
             <Region
                 name="texts_container"
                 params={145}
-                layout={{ position: 'absolute', left: 0, width: 455, top: 4, height: 16 }}
+                onPointerTap={onTextsContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 62, top: 4, height: 16 }}
             >
                 <Region
                     name="score"
@@ -333,14 +339,14 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                 <Region
                     name="source"
                     params={144}
-                    layout={{ position: 'absolute', left: 180, width: 90, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 180, right: 185, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSource ?? 'source'} />
                 </Region>
                 <Region
                     name="target_name"
                     params={144}
-                    layout={{ position: 'absolute', left: 270, width: 120, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 270, right: 65, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTargetName ?? 'target'} />
                 </Region>
@@ -348,12 +354,12 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                     name="target_icon"
                     params={80}
                     src={srcTargetIcon}
-                    layout={{ position: 'absolute', left: 390, width: 20, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', right: 45, width: 20, top: 0, height: 19 }}
                 />
                 <Region
                     name="time"
                     params={80}
-                    layout={{ position: 'absolute', left: 410, width: 45, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 0, width: 45, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTime ?? 'mm:ss'} />
                 </Region>
@@ -363,7 +369,7 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                 name="pick_button"
                 params={131153}
                 onPointerTap={onPickButton}
-                layout={{ position: 'absolute', left: 455, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', right: 2, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
             >
                 pick
             </Button>
@@ -381,21 +387,27 @@ export interface IssueBrowserLayoutItemPrototypeItem2Props {
     captionTime?: string;
     layout?: BoxLayout;
     onHandleButton?: () => void;
+    onItemPrototype?: () => void;
     onReleaseButton?: () => void;
+    onTextsContainer?: () => void;
     srcTargetIcon?: string;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionMsgs, captionScore, captionSource, captionTargetName, captionTime, layout, onHandleButton, onReleaseButton, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItem2Props) => {
+export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionMsgs, captionScore, captionSource, captionTargetName, captionTime, layout, onHandleButton, onItemPrototype, onReleaseButton, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItem2Props) => {
     return (
         <Region
             name="item_prototype"
             params={145}
+            onPointerTap={onItemPrototype}
+            cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
         >
             <Region
                 name="texts_container"
                 params={145}
-                layout={{ position: 'absolute', left: 0, width: 455, top: 4, height: 16 }}
+                onPointerTap={onTextsContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 62, top: 4, height: 16 }}
             >
                 <Region
                     name="score"
@@ -414,14 +426,14 @@ export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionM
                 <Region
                     name="source"
                     params={144}
-                    layout={{ position: 'absolute', left: 151, width: 70, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 151, right: 234, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSource ?? 'source'} />
                 </Region>
                 <Region
                     name="target_name"
                     params={144}
-                    layout={{ position: 'absolute', left: 221, width: 90, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 221, right: 144, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTargetName ?? 'target'} />
                 </Region>
@@ -429,19 +441,19 @@ export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionM
                     name="target_icon"
                     params={80}
                     src={srcTargetIcon}
-                    layout={{ position: 'absolute', left: 311, width: 20, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', right: 124, width: 20, top: 0, height: 19 }}
                 />
                 <Region
                     name="time"
                     params={80}
-                    layout={{ position: 'absolute', left: 331, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 84, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTime ?? 'mm:ss'} />
                 </Region>
                 <Region
                     name="msgs"
                     params={80}
-                    layout={{ position: 'absolute', left: 371, width: 25, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 59, width: 25, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionMsgs ?? 'yy'} />
                 </Region>
@@ -451,7 +463,7 @@ export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionM
                 name="handle_button"
                 params={131153}
                 onPointerTap={onHandleButton}
-                layout={{ position: 'absolute', left: 396, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', right: 61, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
             >
                 handle
             </Button>
@@ -460,7 +472,7 @@ export const IssueBrowserLayoutItemPrototypeItem2 = ({ captionCategory, captionM
                 name="release_button"
                 params={131153}
                 onPointerTap={onReleaseButton}
-                layout={{ position: 'absolute', left: 457, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', right: 0, width: 60, top: 1, height: 22, minWidth: 60, maxWidth: 60 }}
             >
                 release
             </Button>
@@ -477,20 +489,26 @@ export interface IssueBrowserLayoutItemPrototypeItem3Props {
     captionTargetName?: string;
     captionTime?: string;
     layout?: BoxLayout;
+    onItemPrototype?: () => void;
+    onTextsContainer?: () => void;
     srcTargetIcon?: string;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem3 = ({ captionCategory, captionPicker, captionScore, captionSource, captionTargetName, captionTime, layout, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItem3Props) => {
+export const IssueBrowserLayoutItemPrototypeItem3 = ({ captionCategory, captionPicker, captionScore, captionSource, captionTargetName, captionTime, layout, onItemPrototype, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutItemPrototypeItem3Props) => {
     return (
         <Region
             name="item_prototype"
             params={145}
+            onPointerTap={onItemPrototype}
+            cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
         >
             <Region
                 name="texts_container"
                 params={145}
-                layout={{ position: 'absolute', left: 0, width: 517, top: 4, height: 16 }}
+                onPointerTap={onTextsContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 16 }}
             >
                 <Region
                     name="score"
@@ -509,14 +527,14 @@ export const IssueBrowserLayoutItemPrototypeItem3 = ({ captionCategory, captionP
                 <Region
                     name="source"
                     params={144}
-                    layout={{ position: 'absolute', left: 160, width: 70, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 160, right: 287, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSource ?? 'source'} />
                 </Region>
                 <Region
                     name="target_name"
                     params={144}
-                    layout={{ position: 'absolute', left: 230, width: 120, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 230, right: 167, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTargetName ?? 'target'} />
                 </Region>
@@ -524,19 +542,19 @@ export const IssueBrowserLayoutItemPrototypeItem3 = ({ captionCategory, captionP
                     name="target_icon"
                     params={80}
                     src={srcTargetIcon}
-                    layout={{ position: 'absolute', left: 350, width: 20, top: 1, height: 19 }}
+                    layout={{ position: 'absolute', right: 147, width: 20, top: 1, height: 19 }}
                 />
                 <Region
                     name="time"
                     params={80}
-                    layout={{ position: 'absolute', left: 370, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 107, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTime ?? 'mm:ss'} />
                 </Region>
                 <Region
                     name="picker"
                     params={80}
-                    layout={{ position: 'absolute', left: 410, width: 107, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 0, width: 107, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPicker ?? 'picker'} />
                 </Region>

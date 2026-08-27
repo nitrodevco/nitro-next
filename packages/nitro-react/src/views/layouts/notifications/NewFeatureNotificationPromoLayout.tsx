@@ -43,7 +43,7 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                         name="desc"
                         tags={[ '#icon' ]}
                         params={8388624}
-                        layout={{ position: 'absolute', left: 30, width: 148, top: 7, height: 17, maxWidth: 148, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 30, width: 148, top: 7, maxWidth: 148, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDesc ?? 'some text here'}

@@ -173,7 +173,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
                 name="pick_button"
                 params={393233}
                 onPointerTap={onPickButton}
-                layout={{ position: 'absolute', left: 241, width: 73, top: 31, height: 22 }}
+                layout={{ position: 'absolute', right: 6, width: 73, top: 31, height: 22 }}
             >
                 {t('catalog.marketplace.offer.pick')}
             </Button>

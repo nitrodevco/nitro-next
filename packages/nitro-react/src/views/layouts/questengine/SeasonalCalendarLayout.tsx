@@ -16,6 +16,7 @@ export interface SeasonalCalendarLayoutProps {
     onClickRegion3?: () => void;
     onClose?: () => void;
     onEntityMouseRegion?: () => void;
+    onRareTeaserCont?: () => void;
     srcBackgroundSlice?: string;
     srcButtonLeft?: string;
     srcButtonRight?: string;
@@ -31,7 +32,7 @@ export interface SeasonalCalendarLayoutProps {
     srcStripeMaskRight?: string;
 }
 
-export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionPromoHeader, captionPromoInfo, captionTeaserHeader, captionTeaserInfo, captionYourBalanceTxt, layout, onBuyButton, onClickRegion, onClickRegion2, onClickRegion3, onClose, onEntityMouseRegion, srcBackgroundSlice, srcButtonLeft, srcButtonRight, srcEntityBitmap, srcEntityIndicatorStatus, srcEntityMouseover, srcFurniPic, srcFurniPic2, srcFurniPic3, srcFurniPreview, srcFurniPreviewBackground, srcStripeMaskLeft, srcStripeMaskRight }: SeasonalCalendarLayoutProps) => {
+export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionPromoHeader, captionPromoInfo, captionTeaserHeader, captionTeaserInfo, captionYourBalanceTxt, layout, onBuyButton, onClickRegion, onClickRegion2, onClickRegion3, onClose, onEntityMouseRegion, onRareTeaserCont, srcBackgroundSlice, srcButtonLeft, srcButtonRight, srcEntityBitmap, srcEntityIndicatorStatus, srcEntityMouseover, srcFurniPic, srcFurniPic2, srcFurniPic3, srcFurniPreview, srcFurniPreviewBackground, srcStripeMaskLeft, srcStripeMaskRight }: SeasonalCalendarLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -149,19 +150,19 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                             name="bg"
                             params={2192}
                             backgroundColor="#04bdc8"
-                            layout={{ position: 'absolute', left: 0, width: 384, top: 0, height: 97 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                         <Region
                             name="top"
                             params={2192}
                             backgroundColor="#95dfe4"
-                            layout={{ position: 'absolute', left: 2, width: 380, top: 2, height: 93 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         />
                         <Region
                             name="bottom"
                             params={144}
                             backgroundColor="#70d7dd"
-                            layout={{ position: 'absolute', left: 2, width: 380, top: 48, height: 47 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 48, height: 47 }}
                         />
                         <Region
                             name="promo_info_cont"
@@ -247,25 +248,27 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                     <Region
                         name="rare_teaser_cont"
                         params={17}
+                        onPointerTap={onRareTeaserCont}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 395, width: 235, top: 1, height: 97 }}
                     >
                         <Region
                             name="bg"
                             params={2192}
                             backgroundColor="#9cb0b6"
-                            layout={{ position: 'absolute', left: 0, width: 235, top: 0, height: 97 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                         <Region
                             name="top"
                             params={2192}
                             backgroundColor="#d4e4e8"
-                            layout={{ position: 'absolute', left: 2, width: 231, top: 2, height: 93 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         />
                         <Region
                             name="bottom"
                             params={144}
                             backgroundColor="#c6d7dd"
-                            layout={{ position: 'absolute', left: 2, width: 231, top: 48, height: 47 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 48, height: 47 }}
                         />
                         <Region
                             name="rare_cont_1"
@@ -277,13 +280,13 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                                 name="locked_bg"
                                 params={2192}
                                 tintColor="#9cb0b6"
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Border
                                 variant="2"
                                 name="open_bg"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Icon
                                 variant="28"
@@ -315,13 +318,13 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                                 name="locked_bg"
                                 params={2192}
                                 tintColor="#9cb0b6"
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Border
                                 variant="2"
                                 name="open_bg"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Icon
                                 variant="28"
@@ -353,13 +356,13 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                                 name="locked_bg"
                                 params={2192}
                                 tintColor="#9cb0b6"
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Border
                                 variant="2"
                                 name="open_bg"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Icon
                                 variant="28"
@@ -384,7 +387,7 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                         <Region
                             name="teaser_header"
                             params={786448}
-                            layout={{ position: 'absolute', left: 0, width: 230, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -117.5, width: 230, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionTeaserHeader ?? t('quests.seasonalcalendar.rareteaser.header')}
@@ -394,7 +397,7 @@ export const SeasonalCalendarLayout = ({ captionEntityIndicatorText, captionProm
                         <Region
                             name="teaser_info"
                             params={786448}
-                            layout={{ position: 'absolute', left: 11, width: 212, top: 71, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -106.5, width: 212, top: 71, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionTeaserInfo ?? t('quests.seasonalcalendar.rareteaser.info')}

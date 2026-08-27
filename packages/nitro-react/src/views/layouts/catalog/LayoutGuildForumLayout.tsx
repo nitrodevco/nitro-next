@@ -17,7 +17,7 @@ export const LayoutGuildForumLayout = ({ captionCtlgDescription, captionCtlgSele
             <Region
                 name="ctlg_default_3x3"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 662 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="firstProductAutoSelectorWidget"
@@ -40,7 +40,7 @@ export const LayoutGuildForumLayout = ({ captionCtlgDescription, captionCtlgSele
                     name="ctlg_description"
                     tags={[ 'E' ]}
                     params={2049}
-                    layout={{ position: 'absolute', left: 0, width: 260, top: 10, height: 528, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 260, top: 10, bottom: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCtlgDescription ?? t('loremipsum.html')}
@@ -56,22 +56,22 @@ export const LayoutGuildForumLayout = ({ captionCtlgDescription, captionCtlgSele
                 <Region
                     name="simplePriceWidget"
                     params={1024}
-                    layout={{ position: 'absolute', left: 48, width: 47, top: 543, height: 28 }}
+                    layout={{ position: 'absolute', left: 48, width: 47, bottom: 91, height: 28 }}
                 />
                 <Region
                     name="guildBadgeViewWidget"
                     params={1024}
-                    layout={{ position: 'absolute', left: 271, width: 40, top: 552, height: 40 }}
+                    layout={{ position: 'absolute', left: 271, width: 40, bottom: 70, height: 40 }}
                 />
                 <Region
                     name="guildForumSelectorWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 90, width: 180, top: 552, height: 85 }}
+                    layout={{ position: 'absolute', left: 90, width: 180, bottom: 25, height: 85 }}
                 />
                 <Region
                     name="warningWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 600, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 30, height: 32 }}
                 >
                     <Region
                         name="warning_text"
@@ -88,7 +88,7 @@ export const LayoutGuildForumLayout = ({ captionCtlgDescription, captionCtlgSele
                     name="purchaseWidget"
                     tags={[ 'NO_GIFT_OPTION' ]}
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 632, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 />
             </Region>
         </Region>

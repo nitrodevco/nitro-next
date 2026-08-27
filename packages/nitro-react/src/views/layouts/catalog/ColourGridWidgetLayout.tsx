@@ -10,17 +10,17 @@ export const ColourGridWidgetLayout = ({ layout }: ColourGridWidgetLayoutProps) 
         <Region layout={{ position: 'relative', width: 115, height: 100, ...layout }}>
             <Region
                 params={2192}
-                layout={{ position: 'absolute', left: 0, width: 115, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="6"
                     params={2192}
                     blend={0.5}
-                    layout={{ position: 'absolute', left: 0, width: 115, top: 0, height: 100 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 2, width: 111, top: 2, height: 96 }}
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                 >
                     <Region
                         name="colourGrid"

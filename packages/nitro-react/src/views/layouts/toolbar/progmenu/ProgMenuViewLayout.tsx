@@ -63,7 +63,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText ?? t('widget.progmenu.dailytasks')}
@@ -94,7 +94,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText2 ?? t('widget.progmenu.quests')}
@@ -125,7 +125,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText3 ?? t('widget.progmenu.achievements')}
@@ -156,7 +156,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText4 ?? t('widget.progmenu.leaderboards')}
@@ -187,7 +187,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: 0, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText5 ?? t('widget.progmenu.introduction')}

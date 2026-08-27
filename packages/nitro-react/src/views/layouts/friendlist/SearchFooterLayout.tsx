@@ -27,20 +27,20 @@ export const SearchFooterLayout = ({ layout, onSearchBut, srcSearch }: SearchFoo
                     name="border"
                     params={144}
                     tintColor="#848484"
-                    layout={{ position: 'absolute', left: 5, width: 213, top: 5, height: 31 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
                 >
                     <TextInput
                         value={searchStrValue}
                         onChange={setSearchStrValue}
                         backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 6, width: 125, top: 5, height: 20 }}
+                        layout={{ position: 'absolute', left: 6, right: 82, top: 5, height: 20 }}
                     />
                     <ContainerButton
                         variant="0"
                         name="search_but"
                         params={81}
                         onPointerTap={onSearchBut}
-                        layout={{ position: 'absolute', left: 136, width: 70, top: 5, height: 21 }}
+                        layout={{ position: 'absolute', right: 7, width: 70, top: 5, height: 21 }}
                     >
                         <ThemeImage
                             name="search"

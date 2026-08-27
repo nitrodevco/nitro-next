@@ -27,13 +27,13 @@ export const LayoutPets_1592Layout = ({ captionCtlgText1, captionCtlgText2, capt
             <Region
                 name="ctlg_pets"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="petsWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"
@@ -104,14 +104,14 @@ export const LayoutPets_1592Layout = ({ captionCtlgText1, captionCtlgText2, capt
                     <Region
                         name="purchaseWidget"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 429, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, bottom: 1, height: 30 }}
                     />
                 </Region>
                 <Region
                     name="newPetsWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"
@@ -170,7 +170,7 @@ export const LayoutPets_1592Layout = ({ captionCtlgText1, captionCtlgText2, capt
                     <Region
                         name="purchaseWidget"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 429, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, bottom: 1, height: 30 }}
                     />
                     <Region
                         name="addOnBadgeViewWidget"

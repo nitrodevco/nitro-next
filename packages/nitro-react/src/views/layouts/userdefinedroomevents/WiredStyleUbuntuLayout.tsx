@@ -87,7 +87,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                             dynamicStyle="brightness_and_shadow_under"
                             onPointerTap={onCloseRuleRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 174, width: 15, top: 3, height: 15 }}
+                            layout={{ position: 'absolute', right: 4, width: 15, top: 3, height: 15 }}
                         >
                             <Border
                                 variant="12"
@@ -108,7 +108,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         <Region
                             name="grid"
                             params={8388752}
-                            layout={{ position: 'absolute', left: 6, width: 181, top: 21, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}
+                            layout={{ position: 'absolute', left: 6, right: 6, top: 21, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}
                         >
                             {itemsGrid ?? (
                                 <>
@@ -147,7 +147,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     <Region
                         params={4194448}
                         backgroundColor="#b5b5b5"
-                        layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
                     />
                 </Region>
                 <Region
@@ -159,7 +159,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     <Region
                         params={4196368}
                         backgroundColor="#b5b5b5"
-                        layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Region
@@ -182,7 +182,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     name="text_html"
                     params={1073741840}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 17, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionTextHtml ?? 'Use this by typing'} />
                 </Region>
@@ -199,7 +199,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         <TextInput
                             value={fieldValue}
                             onChange={setFieldValue}
-                            layout={{ position: 'absolute', left: 5, width: 168, top: 3, height: 18 }}
+                            layout={{ position: 'absolute', left: 5, right: 5, top: 3, bottom: 3 }}
                         />
                     </Border>
                 </Region>
@@ -376,18 +376,18 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                             variant="11"
                             params={2192}
                             tintColor="#f2f2f2"
-                            layout={{ position: 'absolute', left: 1, width: 143, top: 1, height: 25 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
                             <Border
                                 variant="11"
                                 params={2192}
                                 tintColor="#d6d6d6"
-                                layout={{ position: 'absolute', left: 1, width: 141, top: 1, height: 23 }}
+                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             >
                                 <Region
                                     name="menu_list"
                                     params={144}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 3, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, flexDirection: 'column' }}
                                 >
                                     {itemsMenuList ?? (
                                         <>
@@ -404,7 +404,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     name="sourcetype_selector_view"
                     params={147456}
                     visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: -2, height: 17, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
                 >
                     {itemsSourcetypeSelectorView ?? (
                         <>
@@ -425,12 +425,12 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         params={144}
                         src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
                         tint="#999999"
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 19 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
                     />
                     <Region
                         name="slider_movement_area"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 148, top: 1, height: 17 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17 }}
                     >
                         <ThemeImage
                             name="slider_button"
@@ -540,13 +540,13 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                     params={263248}
                     tintColor="#cccccc"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 23, width: 16, top: 27, height: 13 }}
+                    layout={{ position: 'absolute', right: 3, width: 16, bottom: 2, height: 13 }}
                 >
                     <Region
                         name="quantity_amount"
                         tags={[ '#ico' ]}
                         params={4194320}
-                        layout={{ position: 'absolute', left: 3, width: 9, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 3, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionQuantityAmount ?? '2'}
@@ -560,7 +560,7 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onCloseRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 27, width: 15, top: 0, height: 15 }}
+                    layout={{ position: 'absolute', right: 0, width: 15, top: 0, height: 15 }}
                 >
                     <Border
                         variant="12"
@@ -601,7 +601,7 @@ export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore }
                 name="add_more"
                 params={3281}
                 onPointerTap={onAddMore}
-                layout={{ position: 'absolute', left: 2, width: 23, top: 10, height: 22 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -11, width: 23, top: '50%', marginTop: -11, height: 22 }}
             />
         </Region>
     );
@@ -662,7 +662,7 @@ export const WiredStyleUbuntuLayoutSpacerTemplateItem = ({ layout }: WiredStyleU
             <Region
                 params={144}
                 backgroundColor="#aaaaaa"
-                layout={{ position: 'absolute', left: 6, width: 129, top: 1, height: 1 }}
+                layout={{ position: 'absolute', left: 6, right: 6, top: 1, height: 1 }}
             />
         </Region>
     );
@@ -771,7 +771,7 @@ export const WiredStyleUbuntuLayoutSourceBtnItem = ({ itemsSourceElements, layou
                 name="source_elements"
                 params={147600}
                 backgroundColor="#333333"
-                layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 15, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
             >
                 {itemsSourceElements ?? (
                     <>
@@ -803,12 +803,12 @@ export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ itemsSourceOptio
                 name="source_options_cont"
                 params={147600}
                 backgroundColor="#181818"
-                layout={{ position: 'absolute', left: 0, width: 13, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
             >
                 <Region
                     name="source_options_list"
                     params={147600}
-                    layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 15, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsSourceOptionsList ?? (
                         <WiredStyleUbuntuLayoutSourceBtnItem />

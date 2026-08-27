@@ -9,6 +9,12 @@ export interface MainWindow_1503LayoutProps {
     captionInfoText?: string;
     layout?: BoxLayout;
     onClose?: () => void;
+    onFlt1?: () => void;
+    onFlt2?: () => void;
+    onFlt3?: () => void;
+    onHeader?: () => void;
+    onHeader2?: () => void;
+    onHeader3?: () => void;
     onOpenEditCtgsBut?: () => void;
     srcArrowDownBlack?: string;
     srcArrowDownBlack2?: string;
@@ -31,7 +37,7 @@ export interface MainWindow_1503LayoutProps {
     srcOpenEditCtgs?: string;
 }
 
-export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2, captionCaptionText3, captionInfoText, layout, onClose, onOpenEditCtgsBut, srcArrowDownBlack, srcArrowDownBlack2, srcArrowDownBlack3, srcArrowDownWhite, srcArrowDownWhite2, srcArrowDownWhite3, srcArrowRightBlack, srcArrowRightBlack2, srcArrowRightBlack3, srcArrowRightWhite, srcArrowRightWhite2, srcArrowRightWhite3, srcHdrFriendRequests, srcHdrFriends, srcHdrHilite, srcHdrHilite2, srcHdrHilite3, srcHdrSearch, srcOpenEditCtgs }: MainWindow_1503LayoutProps) => {
+export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2, captionCaptionText3, captionInfoText, layout, onClose, onFlt1, onFlt2, onFlt3, onHeader, onHeader2, onHeader3, onOpenEditCtgsBut, srcArrowDownBlack, srcArrowDownBlack2, srcArrowDownBlack3, srcArrowDownWhite, srcArrowDownWhite2, srcArrowDownWhite3, srcArrowRightBlack, srcArrowRightBlack2, srcArrowRightBlack3, srcArrowRightWhite, srcArrowRightWhite2, srcArrowRightWhite3, srcHdrFriendRequests, srcHdrFriends, srcHdrHilite, srcHdrHilite2, srcHdrHilite3, srcHdrSearch, srcOpenEditCtgs }: MainWindow_1503LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -60,11 +66,15 @@ export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2,
                     <Region
                         name="flt_1"
                         params={17}
+                        onPointerTap={onFlt1}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
                     >
                         <Region
                             name="header"
                             params={1}
+                            onPointerTap={onHeader}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
                         >
                             <ThemeImage
@@ -117,11 +127,15 @@ export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2,
                     <Region
                         name="flt_2"
                         params={17}
+                        onPointerTap={onFlt2}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 273, top: 15, height: 17 }}
                     >
                         <Region
                             name="header"
                             params={1}
+                            onPointerTap={onHeader2}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
                         >
                             <ThemeImage
@@ -174,11 +188,15 @@ export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2,
                     <Region
                         name="flt_3"
                         params={17}
+                        onPointerTap={onFlt3}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 273, top: 30, height: 17 }}
                     >
                         <Region
                             name="header"
                             params={1}
+                            onPointerTap={onHeader3}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
                         >
                             <ThemeImage
@@ -258,7 +276,7 @@ export const MainWindow_1503Layout = ({ captionCaptionText, captionCaptionText2,
                     <Region
                         name="info_text"
                         params={145}
-                        layout={{ position: 'absolute', left: 100, width: 110, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 100, right: 0, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoText ?? 'PH Info'}

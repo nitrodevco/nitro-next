@@ -6,20 +6,23 @@ import { BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
 export interface PollAnswerCheckboxInputLayoutProps {
     itemsPollAnswerItemlist?: ReactNode;
     layout?: BoxLayout;
+    onPollAnswerContent?: () => void;
 }
 
-export const PollAnswerCheckboxInputLayout = ({ itemsPollAnswerItemlist, layout }: PollAnswerCheckboxInputLayoutProps) => {
+export const PollAnswerCheckboxInputLayout = ({ itemsPollAnswerItemlist, layout, onPollAnswerContent }: PollAnswerCheckboxInputLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 372, height: 125, ...layout }}>
             <Region
                 name="poll_answer_content"
                 params={131217}
-                layout={{ position: 'absolute', left: 0, width: 372, top: 0, height: 125 }}
+                onPointerTap={onPollAnswerContent}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125 }}
             >
                 <Region
                     name="poll_answer_itemlist"
                     params={131217}
-                    layout={{ position: 'absolute', left: 0, width: 365, top: 0, height: 125, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 7, top: 0, minHeight: 125, flexDirection: 'column' }}
                 >
                     {itemsPollAnswerItemlist ?? (
                         <PollAnswerCheckboxInputLayoutPollAnswerEntityItem />
@@ -35,13 +38,16 @@ export interface PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps {
     captionPollAnswerEntityText?: string;
     layout?: BoxLayout;
     onPollAnswerCheckbox?: () => void;
+    onPollAnswerEntity?: () => void;
 }
 
-export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerCheckbox }: PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps) => {
+export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerCheckbox, onPollAnswerEntity }: PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps) => {
     return (
         <Region
             name="poll_answer_entity"
             params={131217}
+            onPointerTap={onPollAnswerEntity}
+            cursor="pointer"
             layout={{ width: 365, height: 32, flexShrink: 0, ...layout }}
         >
             <CheckBox

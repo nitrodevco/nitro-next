@@ -29,7 +29,7 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onCl
                 <Border
                     variant="0"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 133 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Button
                         variant="0"
@@ -45,7 +45,7 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onCl
                         name="exchange"
                         params={917521}
                         onPointerTap={onExchange}
-                        layout={{ position: 'absolute', left: 190, width: 100, top: 100, height: 22, minWidth: 100 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: 38.5, width: 100, top: 100, height: 22, minWidth: 100 }}
                     >
                         {t('catalog.redeem.dialog.button.exchange')}
                     </ButtonThick>

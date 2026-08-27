@@ -12,11 +12,12 @@ export interface ThreadListItemLayoutProps {
     itemsInfoButtons?: ReactNode;
     itemsModButtons?: ReactNode;
     layout?: BoxLayout;
+    onButtonContainer?: () => void;
     onHeaderRegion?: () => void;
     onUnreadRegion?: () => void;
 }
 
-export const ThreadListItemLayout = ({ captionDetails, captionHeader, captionMessages1, captionMessages2, itemsInfoButtons, itemsModButtons, layout, onHeaderRegion, onUnreadRegion }: ThreadListItemLayoutProps) => {
+export const ThreadListItemLayout = ({ captionDetails, captionHeader, captionMessages1, captionMessages2, itemsInfoButtons, itemsModButtons, layout, onButtonContainer, onHeaderRegion, onUnreadRegion }: ThreadListItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 600, height: 40, ...layout }}>
             <Region
@@ -67,7 +68,7 @@ export const ThreadListItemLayout = ({ captionDetails, captionHeader, captionMes
                     <Region
                         name="details"
                         params={1073741825}
-                        layout={{ position: 'absolute', left: 0, width: 460, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 460, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionDetails ?? 'By author LongLongLongName 7 days ago, last message by LongLongLongName 30 seconds ago'} />
                     </Region>
@@ -108,6 +109,8 @@ export const ThreadListItemLayout = ({ captionDetails, captionHeader, captionMes
                 <Region
                     name="button_container"
                     params={17}
+                    onPointerTap={onButtonContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 550, width: 50, top: 0, height: 40 }}
                 >
                     <Region
@@ -148,7 +151,7 @@ export const ThreadListItemLayoutThreadLockItem = ({ layout, onThreadLock, srcIc
                 name="icon"
                 params={2192}
                 src={srcIcon ?? layoutImage('forum_forum_locked.png')}
-                layout={{ position: 'absolute', left: 3, width: 13, top: 1, height: 18 }}
+                layout={{ position: 'absolute', left: 3, right: 4, top: 1, bottom: 1 }}
             />
         </Region>
     );
@@ -174,7 +177,7 @@ export const ThreadListItemLayoutThreadPinItem = ({ layout, onThreadPin, srcIcon
                 name="icon"
                 params={2192}
                 src={srcIcon ?? layoutImage('forum_forum_pinned.png')}
-                layout={{ position: 'absolute', left: 3, width: 13, top: 2, height: 15 }}
+                layout={{ position: 'absolute', left: 3, right: 4, top: 2, bottom: 3 }}
             />
         </Region>
     );
@@ -201,7 +204,7 @@ export const ThreadListItemLayoutDeleteThreadItem = ({ layout, onDeleteThread, s
                 name="icon"
                 params={2192}
                 src={srcIcon ?? layoutImage('forum_forum_hide.png')}
-                layout={{ position: 'absolute', left: 5, width: 16, top: 11, height: 16 }}
+                layout={{ position: 'absolute', left: 5, right: 4, top: 11, bottom: 13 }}
             />
         </Region>
     );
@@ -228,7 +231,7 @@ export const ThreadListItemLayoutReportThreadItem = ({ layout, onReportThread, s
                 name="icon"
                 params={2192}
                 src={srcIcon ?? layoutImage('forum_forum_report.png')}
-                layout={{ position: 'absolute', left: 4, width: 17, top: 12, height: 15 }}
+                layout={{ position: 'absolute', left: 4, right: 4, top: 12, bottom: 13 }}
             />
         </Region>
     );

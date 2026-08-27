@@ -24,7 +24,7 @@ export const GroupRoomInfoLayout = ({ captionGroupNameTxt, captionHeaderTxt, lay
         <Region layout={{ position: 'relative', width: 195, height: 119, ...layout }}>
             <Region
                 params={80}
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 119 }}
+                layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 119 }}
             >
                 <ThemeImage
                     name="bg_expanded"
@@ -41,14 +41,14 @@ export const GroupRoomInfoLayout = ({ captionGroupNameTxt, captionHeaderTxt, lay
                     params={145}
                     onPointerTap={onTitleRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
                 />
                 <Region
                     name="info_region"
                     params={145}
                     onPointerTap={onInfoRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 28, height: 47 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 28, height: 47 }}
                 />
                 <Region
                     name="content_cont"
@@ -58,7 +58,7 @@ export const GroupRoomInfoLayout = ({ captionGroupNameTxt, captionHeaderTxt, lay
                     <Region
                         name="header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: 15, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -82.5, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderTxt ?? t('group.homeroominfo.title')}

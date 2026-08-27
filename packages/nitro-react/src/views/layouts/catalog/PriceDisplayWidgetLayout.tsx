@@ -11,11 +11,11 @@ export const PriceDisplayWidgetLayout = ({ layout }: PriceDisplayWidgetLayoutPro
             <Border
                 variant="6"
                 params={409600}
-                layout={{ position: 'absolute', left: 12, width: 20, top: 9, height: 29, minWidth: 20, minHeight: 28 }}
+                layout={{ position: 'absolute', right: -12, width: 20, top: 9, height: 29, minWidth: 20, minHeight: 28 }}
             >
                 <Region
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 29, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row' }}
                 >
                     <Region
                         params={16}

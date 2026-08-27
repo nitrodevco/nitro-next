@@ -10,7 +10,7 @@ export const UserListLayout = ({ layout }: UserListLayoutProps) => {
         <Region layout={{ position: 'relative', width: 800, height: 220, ...layout }}>
             <Region
                 params={148496}
-                layout={{ position: 'absolute', left: 0, width: 800, top: 0, height: 220 }}
+                layout={{ position: 'absolute', left: 0, width: 800, bottom: 0, height: 220 }}
             />
         </Region>
     );

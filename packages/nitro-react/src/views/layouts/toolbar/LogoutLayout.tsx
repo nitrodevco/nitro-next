@@ -42,7 +42,7 @@ export const LogoutLayout = ({ captionHelpText, captionLogoutText, layout, onHel
                                 name="help_text"
                                 tags={[ 'TEXT' ]}
                                 params={786448}
-                                layout={{ position: 'absolute', left: 12, width: 67, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -32.5, width: 67, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionHelpText ?? t('toolbar.help')}
@@ -79,7 +79,7 @@ export const LogoutLayout = ({ captionHelpText, captionLogoutText, layout, onHel
                                 name="logout_text"
                                 tags={[ 'TEXT' ]}
                                 params={786448}
-                                layout={{ position: 'absolute', left: 5, width: 77, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -39.5, width: 77, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionLogoutText ?? t('toolbar.logout')}

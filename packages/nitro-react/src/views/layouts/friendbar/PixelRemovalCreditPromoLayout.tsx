@@ -34,13 +34,13 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                     name="left_mid"
                     params={2064}
                     src={srcLeftMid ?? '${image.library.url}reception/silverscreen250_mid2.png'}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 72, height: 233, minHeight: 1 }}
+                    layout={{ position: 'absolute', left: 0, width: 250, top: 72, bottom: 35, minHeight: 1 }}
                 />
                 <ThemeImage
                     name="lift_bottom"
                     params={1049616}
                     src={srcLiftBottom ?? '${image.library.url}reception/silverscreen250_btm.png'}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 304, height: 37 }}
+                    layout={{ position: 'absolute', left: 0, width: 250, bottom: -1, height: 37 }}
                 />
                 <ThemeImage
                     name="promo_bitmap"
@@ -74,7 +74,7 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                     name="open_catalog_button"
                     params={3277841}
                     onPointerTap={onOpenCatalogButton}
-                    layout={{ position: 'absolute', left: 115, width: 125, top: 261, height: 48, maxWidth: 125, minHeight: 48, maxHeight: 48 }}
+                    layout={{ position: 'absolute', left: 115, width: 125, bottom: 31, height: 48, maxWidth: 125, minHeight: 48, maxHeight: 48 }}
                 >
                     {t('landing.view.pixelremoval.button')}
                 </Button>

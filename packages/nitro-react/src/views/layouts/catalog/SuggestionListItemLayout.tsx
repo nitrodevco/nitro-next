@@ -5,9 +5,10 @@ import { BoxLayout, Region, ThemeText } from '#base/theme';
 export interface SuggestionListItemLayoutProps {
     captionNameText?: string;
     layout?: BoxLayout;
+    onSuggestionListItem?: () => void;
 }
 
-export const SuggestionListItemLayout = ({ captionNameText, layout }: SuggestionListItemLayoutProps) => {
+export const SuggestionListItemLayout = ({ captionNameText, layout, onSuggestionListItem }: SuggestionListItemLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -16,6 +17,8 @@ export const SuggestionListItemLayout = ({ captionNameText, layout }: Suggestion
                 name="suggestion_list_item"
                 params={17}
                 backgroundColor="#cceeff"
+                onPointerTap={onSuggestionListItem}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
             >
                 <Region

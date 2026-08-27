@@ -5,12 +5,13 @@ import { BoxLayout, Bubble, Region, ThemeImage, ThemeText } from '#base/theme';
 export interface AvatarInfoWidgetLayoutProps {
     captionName?: string;
     layout?: BoxLayout;
+    onChangeNameContainer?: () => void;
     srcPenIcon?: string;
     srcRelationshipStatus?: string;
     visibleBorder?: boolean;
 }
 
-export const AvatarInfoWidgetLayout = ({ captionName, layout, srcPenIcon, srcRelationshipStatus, visibleBorder }: AvatarInfoWidgetLayoutProps) => {
+export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContainer, srcPenIcon, srcRelationshipStatus, visibleBorder }: AvatarInfoWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,7 +36,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, srcPenIcon, srcRel
                     <Region
                         name="name"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 16, width: 81, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 16, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionName ?? 'my_name_here'}
@@ -46,7 +47,9 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, srcPenIcon, srcRel
                     <Region
                         name="change_name_container"
                         params={209}
-                        layout={{ position: 'absolute', left: 0, width: 123, top: 19, height: 18 }}
+                        onPointerTap={onChangeNameContainer}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -64.5, width: 123, top: 19, height: 18 }}
                     >
                         <Region
                             params={16}

@@ -6,9 +6,10 @@ export interface MemenuEffectsLayoutProps {
     captionInfoText?: string;
     layout?: BoxLayout;
     onBackBtn?: () => void;
+    onEffectsCnvs?: () => void;
 }
 
-export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn }: MemenuEffectsLayoutProps) => {
+export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffectsCnvs }: MemenuEffectsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,7 +22,7 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn }: Meme
             >
                 <Region
                     params={786640}
-                    layout={{ position: 'absolute', left: 0, width: 176, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -87.5, width: 176, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('widget.memenu.activeeffects')}
@@ -32,11 +33,13 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn }: Meme
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 11, width: 153, top: 22, height: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -76.5, width: 153, top: 22, height: 1 }}
                 />
                 <Region
                     name="effects_cnvs"
                     params={17}
+                    onPointerTap={onEffectsCnvs}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 11, width: 154, top: 29, height: 48 }}
                 />
                 <Button
@@ -44,7 +47,7 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn }: Meme
                     name="back_btn"
                     params={1180721}
                     onPointerTap={onBackBtn}
-                    layout={{ position: 'absolute', left: 5, width: 165, top: 87, height: 22, minWidth: 165, maxWidth: 165 }}
+                    layout={{ position: 'absolute', left: 5, width: 165, bottom: 5, height: 22, minWidth: 165, maxWidth: 165 }}
                 >
                     {t('generic.back')}
                 </Button>

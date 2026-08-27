@@ -26,7 +26,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={144}
-                    layout={{ position: 'absolute', left: 5, width: 198, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 18, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={t('poll_cancel_confirm_short')}
@@ -35,7 +35,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
                 </Region>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 5, width: 199, top: 32, height: 13, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 17, top: 32, bottom: 108, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={t('poll_cancel_confirm_long')}
@@ -44,14 +44,14 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
                 </Region>
                 <Region
                     params={1232}
-                    layout={{ position: 'absolute', left: 4, width: 201, top: 94, height: 22 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -106.5, width: 201, bottom: 37, height: 22 }}
                 >
                     <Button
                         variant="0"
                         name="poll_cancel_confirm_button_cancel"
                         params={393233}
                         onPointerTap={onPollCancelConfirmButtonCancel}
-                        layout={{ position: 'absolute', left: 48, width: 51, top: 0, height: 22 }}
+                        layout={{ position: 'absolute', right: 102, width: 51, top: 0, height: 22 }}
                     >
                         {t('cancel')}
                     </Button>

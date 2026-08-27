@@ -19,7 +19,7 @@ export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMini
                 variant="0"
                 params={1048865}
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, top: 0, height: 140 }}
+                layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 140 }}
             >
                 <Region
                     name="border"
@@ -36,7 +36,7 @@ export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMini
                         <Region
                             name="name"
                             params={208}
-                            layout={{ position: 'absolute', left: 22, width: 62, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -31.5, width: 62, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'group_title'}
@@ -48,12 +48,12 @@ export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMini
                     <Region
                         params={144}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 27, height: 1 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
                     />
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: 2, width: 103, top: 28, height: 80, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 28, minHeight: 80, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -68,7 +68,7 @@ export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMini
                         params={1041}
                         onPointerTap={onMinimize}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, top: 108, height: 18 }}
+                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18 }}
                     >
                         <Icon
                             variant="7"
@@ -107,12 +107,12 @@ export const GuildFurniMenuLayoutJoinItem = ({ captionLabel, layout, onButton }:
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('widget.furniture.button.join.group')}
@@ -149,12 +149,12 @@ export const GuildFurniMenuLayoutHomeRoomItem = ({ captionLabel, layout, onButto
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('widget.furniture.button.go.to.group.home.room')}
@@ -191,12 +191,12 @@ export const GuildFurniMenuLayoutOpenForumItem = ({ captionLabel, layout, onButt
                 params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
-                layout={{ position: 'absolute', left: -3, width: 107, top: -4, height: 35 }}
+                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
                     params={144}
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('widget.furniture.button.open_group_forum')}

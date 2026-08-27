@@ -14,7 +14,7 @@ export const LayoutRecycler_1572Layout = ({ layout, srcRecycleMachine }: LayoutR
                 name="ctlg_recycler"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="recycle_machine"
@@ -31,7 +31,7 @@ export const LayoutRecycler_1572Layout = ({ layout, srcRecycleMachine }: LayoutR
                     name="recyclerWidget"
                     tags={[ 'E' ]}
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 258, height: 208 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, bottom: -6, height: 208 }}
                 />
             </Region>
         </Region>

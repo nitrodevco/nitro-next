@@ -57,7 +57,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                         <Region
                             name="offence_name"
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 24, width: 123, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 24, width: 123, top: 7, height: 15, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionOffenceName ?? 'Room tool for this room'}

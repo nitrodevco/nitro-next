@@ -30,7 +30,7 @@ export const GuideToolLayout = ({ captionStatusCaptionTxt, itemsList, layout, on
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 226, top: 0, height: 253, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 8, top: 0, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsList ?? (
                         <>

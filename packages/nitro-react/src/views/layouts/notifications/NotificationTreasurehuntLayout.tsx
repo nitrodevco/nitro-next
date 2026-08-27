@@ -23,18 +23,18 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, layout }: N
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                 >
                     <Border
                         variant="2"
                         params={144}
                         tintColor="#382b0c"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                     />
                     <Region
                         params={144}
                         backgroundColor="#382b0c"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
                     <Region
                         params={16}

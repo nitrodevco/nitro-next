@@ -22,7 +22,7 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
             <Region
                 name="roomads"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_price_1"
@@ -37,7 +37,7 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                 <Region
                     name="roomAdsCatalogWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="ctlg_text_1"
@@ -89,19 +89,19 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                     <Border
                         variant="105"
                         params={2064}
-                        layout={{ position: 'absolute', left: 10, width: 330, top: 168, height: 144 }}
+                        layout={{ position: 'absolute', left: 10, width: 330, top: 168, bottom: 148 }}
                     >
                         <TextInput
                             value={descInputTextValue}
                             onChange={setDescInputTextValue}
                             maxLength={100}
                             multiline
-                            layout={{ position: 'absolute', left: 5, width: 320, top: 4, height: 134 }}
+                            layout={{ position: 'absolute', left: 5, right: 5, top: 4, bottom: 6 }}
                         />
                     </Border>
                     <Region
                         params={1040}
-                        layout={{ position: 'absolute', left: 10, width: 130, top: 326, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, width: 130, bottom: 119, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('roomad.catalog_roomname')}
@@ -113,18 +113,18 @@ export const LayoutRoomads_1548Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                         name="room_drop_menu"
                         params={1041}
                         onPointerTap={onRoomDropMenu}
-                        layout={{ position: 'absolute', left: 10, width: 330, top: 345, height: 24 }}
+                        layout={{ position: 'absolute', left: 10, width: 330, bottom: 91, height: 24 }}
                     />
                     <Region
                         name="price_container"
                         params={148688}
-                        layout={{ position: 'absolute', left: 158, width: 44, top: 384, height: 18 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -22, width: 44, bottom: 58, height: 18 }}
                     />
                     <Region
                         name="purchaseWidget"
                         tags={[ 'NO_GIFT_OPTION', 'ROOM_INITIATE_PURCHASE' ]}
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 416, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, bottom: 14, height: 30 }}
                     />
                 </Region>
             </Region>

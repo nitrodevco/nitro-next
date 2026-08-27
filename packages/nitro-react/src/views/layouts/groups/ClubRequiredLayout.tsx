@@ -31,7 +31,7 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
                 <Region
                     params={144}
                     backgroundColor="#3c3c3c"
-                    layout={{ position: 'absolute', left: 0, width: 427, top: 0, height: 125 }}
+                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 125 }}
                 />
                 <Icon
                     variant="18"

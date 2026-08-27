@@ -35,7 +35,7 @@ export const ChatinputWindowNewLayout = ({ captionBlockText, layout, onChatExtra
                     name="bubblecont"
                     tags={[ 'chat_bubble' ]}
                     params={1048592}
-                    layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 100, minWidth: 90 }}
+                    layout={{ position: 'absolute', left: 0, width: 471, bottom: 0, height: 100, minWidth: 90 }}
                 >
                     <Region
                         name="chat_input_container"
@@ -153,13 +153,13 @@ export const ChatinputWindowNewLayout = ({ captionBlockText, layout, onChatExtra
                     name="chatstyles_menu"
                     params={1179648}
                     dropShadow={{ distance: 4, alpha: 0.6 }}
-                    layout={{ position: 'absolute', left: 2, width: 160, top: -6, height: 60 }}
+                    layout={{ position: 'absolute', left: 2, width: 160, bottom: 46, height: 60 }}
                 />
                 <Region
                     name="habbicon_menu"
                     params={1179648}
                     dropShadow={{ distance: 4, alpha: 0.6 }}
-                    layout={{ position: 'absolute', left: 2, width: 270, top: -6, height: 260 }}
+                    layout={{ position: 'absolute', left: 2, width: 270, bottom: -154, height: 260 }}
                 />
             </Region>
         </Region>

@@ -5,12 +5,20 @@ import { BoxLayout, Region, TextInput, ThemeImage } from '#base/theme';
 /** Generated from `883_stickie_xml` (layout "stickie", 185x178) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface StickieLayoutProps {
     layout?: BoxLayout;
+    onBlue?: () => void;
+    onCyan?: () => void;
+    onGreen?: () => void;
+    onOrange?: () => void;
+    onPurple?: () => void;
+    onRed?: () => void;
+    onWhite?: () => void;
+    onYellow?: () => void;
     srcBg?: string;
     srcClose?: string;
     srcDelete?: string;
 }
 
-export const StickieLayout = ({ layout, srcBg, srcClose, srcDelete }: StickieLayoutProps) => {
+export const StickieLayout = ({ layout, onBlue, onCyan, onGreen, onOrange, onPurple, onRed, onWhite, onYellow, srcBg, srcClose, srcDelete }: StickieLayoutProps) => {
     const [ textValue, setTextValue ] = useState('');
 
     return (
@@ -37,48 +45,64 @@ export const StickieLayout = ({ layout, srcBg, srcClose, srcDelete }: StickieLay
                     name="blue"
                     params={17}
                     backgroundColor="#9cceff"
+                    onPointerTap={onBlue}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 26, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="purple"
                     params={17}
                     backgroundColor="#ff9cff"
+                    onPointerTap={onPurple}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 38, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="green"
                     params={17}
                     backgroundColor="#9cff9c"
+                    onPointerTap={onGreen}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 50, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="yellow"
                     params={17}
                     backgroundColor="#ffff33"
+                    onPointerTap={onYellow}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 62, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="white"
                     params={17}
                     backgroundColor="#ffffff"
+                    onPointerTap={onWhite}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 74, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="red"
                     params={17}
                     backgroundColor="#ff9c9c"
+                    onPointerTap={onRed}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 86, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="orange"
                     params={17}
                     backgroundColor="#ffcc66"
+                    onPointerTap={onOrange}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 98, width: 9, top: 5, height: 9 }}
                 />
                 <Region
                     name="cyan"
                     params={17}
                     backgroundColor="#9cffff"
+                    onPointerTap={onCyan}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 110, width: 9, top: 5, height: 9 }}
                 />
                 <ThemeImage

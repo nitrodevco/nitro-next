@@ -92,7 +92,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                         name="playerName_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: 47, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerNameStroke ?? 'Painimies'}
@@ -102,7 +102,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                     <Region
                         name="playerName"
                         params={208}
-                        layout={{ position: 'absolute', left: 47, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPlayerName ?? 'Painimies'}
@@ -312,14 +312,14 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerHits, captionPlay
                     </Region>
                     <Region
                         visible={false}
-                        layout={{ position: 'absolute', left: 5, width: 50, top: 5, height: 50 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 5, height: 50 }}
                     >
                         <ThemeImage
                             name="loadingIcon"
                             tags={[ 'bitmap' ]}
                             params={208}
                             src={srcLoadingIcon}
-                            layout={{ position: 'absolute', left: 5, width: 50, top: 5, height: 50 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 5, height: 50 }}
                         />
                     </Region>
                 </Region>

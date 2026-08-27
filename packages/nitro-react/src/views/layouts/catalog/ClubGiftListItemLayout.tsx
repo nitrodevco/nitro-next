@@ -59,7 +59,7 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                     name="select_button"
                     params={393233}
                     onPointerTap={onSelectButton}
-                    layout={{ position: 'absolute', left: 167, width: 148, top: 32, height: 22 }}
+                    layout={{ position: 'absolute', right: 5, width: 148, top: 32, height: 22 }}
                 >
                     {t('catalog.club_gift.select')}
                 </Button>
@@ -77,7 +77,7 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                     <Region
                         name="bundleCounter"
                         params={176}
-                        layout={{ position: 'absolute', left: 18, width: 10, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 18, right: 24, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBundleCounter ?? '0'}

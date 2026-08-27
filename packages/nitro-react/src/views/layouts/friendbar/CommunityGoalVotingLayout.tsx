@@ -61,7 +61,7 @@ export const CommunityGoalVotingLayout = ({ captionCommunityTitle, captionCommun
                 <Region
                     name="info_container"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 300, top: 20, height: 150, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, top: 20, flexDirection: 'column' }}
                 >
                     {itemsInfoContainer ?? (
                         <>

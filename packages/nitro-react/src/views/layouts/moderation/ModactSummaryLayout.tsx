@@ -59,7 +59,7 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                     value={messageInputValue}
                     onChange={setMessageInputValue}
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 20, width: 320, top: 105, height: 45 }}
+                    layout={{ position: 'absolute', left: 20, width: 320, bottom: 145, height: 45 }}
                 />
                 <Button
                     variant="0"

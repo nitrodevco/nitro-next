@@ -21,7 +21,7 @@ export const ActivityPointDisplayWidgetLayout = ({ captionActivityPointsTxt, lay
                     variant="27"
                     name="activity_point_icon"
                     params={1040}
-                    layout={{ position: 'absolute', left: 6, width: 23, top: 3, height: 23 }}
+                    layout={{ position: 'absolute', left: 6, width: 23, bottom: -1, height: 23 }}
                 />
                 <Region
                     name="activity_points_txt"

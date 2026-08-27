@@ -7,11 +7,12 @@ export interface MemenuEffectInactiveLayoutProps {
     captionEffectName?: string;
     layout?: BoxLayout;
     onActivateEffect?: () => void;
+    onSelectedBorder?: () => void;
     srcEffectIcon?: string;
     srcEffectIconBg?: string;
 }
 
-export const MemenuEffectInactiveLayout = ({ captionEffectAmount, captionEffectName, layout, onActivateEffect, srcEffectIcon, srcEffectIconBg }: MemenuEffectInactiveLayoutProps) => {
+export const MemenuEffectInactiveLayout = ({ captionEffectAmount, captionEffectName, layout, onActivateEffect, onSelectedBorder, srcEffectIcon, srcEffectIconBg }: MemenuEffectInactiveLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -19,6 +20,8 @@ export const MemenuEffectInactiveLayout = ({ captionEffectAmount, captionEffectN
             <Region
                 name="selected_border"
                 params={17}
+                onPointerTap={onSelectedBorder}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 52 }}
             >
                 <Border

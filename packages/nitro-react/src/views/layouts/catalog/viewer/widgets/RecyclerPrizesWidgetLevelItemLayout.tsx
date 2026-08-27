@@ -21,12 +21,12 @@ export const RecyclerPrizesWidgetLevelItemLayout = ({ itemsContent, layout }: Re
                     variant="0"
                     name="border"
                     params={8390800}
-                    layout={{ position: 'absolute', left: 0, width: 348, top: 0, height: 78 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="content"
                         params={8388752}
-                        layout={{ position: 'absolute', left: 5, width: 338, top: 5, height: 68, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 68, flexDirection: 'column' }}
                     >
                         {itemsContent ?? (
                             <RecyclerPrizesWidgetLevelItemLayoutHeaderBarItem />
@@ -45,7 +45,7 @@ export const RecyclerPrizesWidgetLevelItemLayout = ({ itemsContent, layout }: Re
                                 name="itemGrid"
                                 params={8388752}
                                 backgroundColor="#eaeaea"
-                                layout={{ position: 'absolute', left: 5, width: 328, top: 5, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                                layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                             />
                         </Region>
                     </Region>

@@ -25,7 +25,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                 >
                     <Region
                         params={4341776}
-                        layout={{ position: 'absolute', left: 8, width: 192, top: 0, height: 63, maxWidth: 772, flexDirection: 'row', gap: 20 }}
+                        layout={{ position: 'absolute', left: 8, top: 0, maxWidth: 772, flexDirection: 'row', gap: 20 }}
                     >
                         <Region
                             params={131073}
@@ -41,7 +41,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                             <Region
                                 name="lbl_dislike_count"
                                 params={933904}
-                                layout={{ position: 'absolute', left: 9, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -7, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionLblDislikeCount ?? '0'}
@@ -53,12 +53,12 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                         <Region
                             name="quiz_topic"
                             params={5131472}
-                            layout={{ width: 80, height: 30, flexShrink: 0, minWidth: 10, maxWidth: 660, maxHeight: 58, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ height: 30, flexShrink: 0, minWidth: 10, maxWidth: 660, maxHeight: 58, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionQuizTopic ?? 'topic'}
                                 textStyle="text-style-ubuntu-condensed-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 80 }}
+                                textOptions={{ wordWrap: true }}
                             />
                         </Region>
                         <Region
@@ -75,7 +75,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                             <Region
                                 name="lbl_like_count"
                                 params={933904}
-                                layout={{ position: 'absolute', left: 9, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -11, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionLblLikeCount ?? '0'}

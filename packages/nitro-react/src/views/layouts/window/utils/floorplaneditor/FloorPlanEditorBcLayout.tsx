@@ -41,12 +41,12 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                 <Region
                     params={144}
                     backgroundColor="#4e4844"
-                    layout={{ position: 'absolute', left: 0, width: 662, top: 0, height: 50 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
                 >
                     <Region
                         params={144}
                         backgroundColor="#2d2724"
-                        layout={{ position: 'absolute', left: 3, width: 656, top: 2, height: 45 }}
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 2, height: 45 }}
                     >
                         <ThemeImage
                             params={16}
@@ -70,12 +70,12 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                     name="heightmap_border"
                     params={2192}
                     tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', left: 10, width: 344, top: 57, height: 448 }}
+                    layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 95 }}
                 >
                     <Region
                         name="controls_container"
                         params={144}
-                        layout={{ position: 'absolute', left: 8, width: 322, top: 4, height: 127, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 8, right: 14, top: 4, height: 127, flexDirection: 'column' }}
                     >
                         {itemsControlsContainer ?? (
                             <>
@@ -100,11 +100,11 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                         name="heightmap_bg"
                         params={2192}
                         tintColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 332, top: 132, height: 304 }}
+                        layout={{ position: 'absolute', left: 0, right: 12, top: 132, bottom: 12 }}
                     />
                     <ScrollArea
                         orientation="horizontal"
-                        layout={{ position: 'absolute', left: 0, width: 331, top: 132, height: 304 }}
+                        layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12 }}
                     >
                         <Region
                             name="heightmap_wrapper"
@@ -129,7 +129,7 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                         params={2193}
                         onPointerTap={onMouseCapturer}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 331, top: 132, height: 304 }}
+                        layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12 }}
                     />
                     {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
                     {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
@@ -138,7 +138,7 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                         params={1041}
                         onPointerTap={onZoom}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 12, width: 20, top: 400, height: 26 }}
+                        layout={{ position: 'absolute', left: 12, width: 20, bottom: 22, height: 26 }}
                     >
                         <ThemeImage
                             name="zoom"
@@ -159,7 +159,7 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                     name="preview_border"
                     params={2128}
                     tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', left: 366, width: 289, top: 57, height: 449 }}
+                    layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
                 >
                     <Region
                         name="room_controls_itemlist"
@@ -234,11 +234,11 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                         variant="3"
                         name="preview_bitmap_border"
                         params={2064}
-                        layout={{ position: 'absolute', left: 0, width: 275, top: 133, height: 302 }}
+                        layout={{ position: 'absolute', left: 0, width: 275, top: 133, bottom: 14 }}
                     />
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 1, width: 273, top: 135, height: 300 }}
+                        layout={{ position: 'absolute', left: 1, width: 273, top: 135, bottom: 14 }}
                     >
                         <Region
                             name="preview_wrapper"
@@ -267,7 +267,7 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                 <Region
                     name="main_buttons"
                     params={1168}
-                    layout={{ position: 'absolute', left: 10, width: 643, top: 518, height: 40 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 42, height: 40 }}
                 >
                     <Region
                         name="left_buttons"
@@ -281,7 +281,7 @@ export const FloorPlanEditorBcLayout = ({ itemsControlsContainer, itemsHeightmap
                     <Region
                         name="right_buttons"
                         params={262224}
-                        layout={{ position: 'absolute', left: 265, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8 }}
+                        layout={{ position: 'absolute', right: 2, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8 }}
                     >
                         {itemsRightButtons ?? (
                             <>
@@ -315,7 +315,7 @@ export const FloorPlanEditorBcLayoutAddTileItem = ({ layout, onAddTile }: FloorP
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_add_tile.png')}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, top: '50%', marginTop: -21, height: 40 }}
             />
         </ContainerButton>
     );
@@ -339,7 +339,7 @@ export const FloorPlanEditorBcLayoutRemoveTileItem = ({ layout, onRemoveTile }: 
             <ThemeImage
                 params={1835024}
                 src={layoutImage('floor_plan_editor_remove_tile.png')}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 1, height: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, bottom: 1, height: 40 }}
             />
         </ContainerButton>
     );
@@ -363,7 +363,7 @@ export const FloorPlanEditorBcLayoutIncreaseHeightItem = ({ layout, onIncreaseHe
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_raise_tile.png')}
-                layout={{ position: 'absolute', left: 6, width: 40, top: 1, height: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 40, top: '50%', marginTop: -20, height: 40 }}
             />
         </ContainerButton>
     );
@@ -387,7 +387,7 @@ export const FloorPlanEditorBcLayoutDecreaseHeightItem = ({ layout, onDecreaseHe
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_sink_tile.png')}
-                layout={{ position: 'absolute', left: 6, width: 40, top: 4, height: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 40, top: '50%', marginTop: -17, height: 40 }}
             />
         </ContainerButton>
     );
@@ -411,7 +411,7 @@ export const FloorPlanEditorBcLayoutSetEnterTileItem = ({ layout, onSetEnterTile
             <ThemeImage
                 params={3932176}
                 src={layoutImage('floor_plan_editor_enter_tile.png')}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 1, height: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -20.5, width: 40, top: '50%', marginTop: -20, height: 40 }}
             />
         </ContainerButton>
     );

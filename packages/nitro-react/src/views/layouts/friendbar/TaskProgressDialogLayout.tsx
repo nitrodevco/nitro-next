@@ -27,7 +27,7 @@ export const TaskProgressDialogLayout = ({ itemsList, itemsTopList, layout, onCl
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 321, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
                 >
                     {itemsList ?? (
                         <>
@@ -44,7 +44,7 @@ export const TaskProgressDialogLayout = ({ itemsList, itemsTopList, layout, onCl
                         <Region
                             name="top_list"
                             params={147472}
-                            layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 204, minHeight: 70, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, top: 0, minHeight: 70, flexDirection: 'column' }}
                         >
                             {itemsTopList ?? (
                                 <>

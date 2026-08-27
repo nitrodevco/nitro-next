@@ -25,7 +25,7 @@ export const UserThanksLayout = ({ layout, onClose, onCloseButton }: UserThanksL
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 10, width: 260, top: 0, height: 107, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 10, top: 0, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}
                 >
                     <Region
                         params={16}

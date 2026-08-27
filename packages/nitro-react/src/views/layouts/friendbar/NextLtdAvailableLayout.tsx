@@ -44,7 +44,7 @@ export const NextLtdAvailableLayout = ({ captionHeader, layout, onCatalogueButto
                 </Region>
                 <Region
                     visible={visibleGet ?? false}
-                    layout={{ position: 'absolute', left: 367, width: 173, top: -1, height: 46, minWidth: 125, maxWidth: 200 }}
+                    layout={{ position: 'absolute', left: 367, right: 1, top: -1, height: 46, minWidth: 125, maxWidth: 200 }}
                 >
                     <Button
                         variant="100"

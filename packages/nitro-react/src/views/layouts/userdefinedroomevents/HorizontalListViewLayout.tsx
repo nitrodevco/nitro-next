@@ -11,7 +11,7 @@ export const HorizontalListViewLayout = ({ layout }: HorizontalListViewLayoutPro
             <Region
                 name="horizontal_list_view"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 0, top: 0, height: 0, minHeight: 0, flexDirection: 'row' }}
+                layout={{ position: 'absolute', left: 0, top: 0, minHeight: 0, flexDirection: 'row' }}
             />
         </Region>
     );

@@ -17,42 +17,42 @@ export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, sr
             <Region
                 params={2176}
                 backgroundColor="#eefafc"
-                layout={{ position: 'absolute', left: 0, width: 1153, top: 0, height: 553 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="sky"
                     tags={[ 'bitmap' ]}
                     params={144}
                     src={srcSky ?? layoutImage('bg_sky.png')}
-                    layout={{ position: 'absolute', left: 0, width: 1153, top: 0, height: 158 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 158 }}
                 />
                 <ThemeImage
                     name="sunshine"
                     tags={[ 'bitmap' ]}
                     params={208}
                     src={srcSunshine ?? layoutImage('bg_sunshine.png')}
-                    layout={{ position: 'absolute', left: 292, width: 569, top: 0, height: 144 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -284.5, width: 569, top: 0, height: 144 }}
                 />
                 <ThemeImage
                     name="vista_1"
                     tags={[ 'bitmap' ]}
                     params={144}
                     src={srcVista1 ?? layoutImage('bg_vista_1.png')}
-                    layout={{ position: 'absolute', left: 0, width: 1153, top: 90, height: 133 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 90, height: 133 }}
                 />
                 <ThemeImage
                     name="vista_2"
                     tags={[ 'bitmap' ]}
                     params={144}
                     src={srcVista2 ?? layoutImage('bg_vista_2.png')}
-                    layout={{ position: 'absolute', left: 0, width: 1153, top: 125, height: 187 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 125, height: 187 }}
                 />
                 <ThemeImage
                     name="vista_3"
                     tags={[ 'bitmap' ]}
                     params={144}
                     src={srcVista3 ?? layoutImage('bg_vista_3.png')}
-                    layout={{ position: 'absolute', left: 0, width: 1153, top: 163, height: 274 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 163, height: 274 }}
                 />
             </Region>
         </Region>

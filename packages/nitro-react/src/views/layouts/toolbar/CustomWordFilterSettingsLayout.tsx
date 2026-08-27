@@ -29,7 +29,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                 <Region
                     name="word_filter_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 45, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -76, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionWordFilterTitle ?? t('word_filter.settings.title')}
@@ -41,7 +41,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 40, width: 162, top: 24, height: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -81, width: 162, top: 24, height: 1 }}
                 />
                 <Region
                     params={8388624}
@@ -54,7 +54,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                         <Border
                             variant="3"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 24, maxWidth: 160 }}
+                            layout={{ position: 'absolute', left: 0, right: 70, top: 0, height: 24, maxWidth: 160 }}
                         >
                             <TextInput
                                 value={addWordInputValue}
@@ -67,7 +67,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                             name="add_btn"
                             params={393361}
                             onPointerTap={onAddBtn}
-                            layout={{ position: 'absolute', left: 157, width: 66, top: 0, height: 24, minWidth: 66, maxWidth: 66 }}
+                            layout={{ position: 'absolute', left: 157, right: -1, top: 0, height: 24, minWidth: 66, maxWidth: 66 }}
                         >
                             {t('navigator.roomsettings.roomfilter.addword')}
                         </Button>
@@ -80,7 +80,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 3, width: 215, top: 4, height: 93 }}
+                            layout={{ position: 'absolute', left: 3, right: 4, top: 4, bottom: 3 }}
                         >
                             <Region
                                 name="wordlist"

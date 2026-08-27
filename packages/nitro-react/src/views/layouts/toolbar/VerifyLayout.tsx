@@ -37,12 +37,12 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                     <Region
                         params={2048}
                         backgroundColor="#6f95a4"
-                        layout={{ position: 'absolute', left: 2, width: 472, top: 2, height: 95 }}
+                        layout={{ position: 'absolute', left: 2, width: 472, top: 2, bottom: 3 }}
                     />
                 </Region>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 208 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}
                 >
                     <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
                         <Region
@@ -64,7 +64,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                     <Region
                         name="input_border"
                         params={144}
-                        layout={{ position: 'absolute', left: 8, width: 458, top: 99, height: 50 }}
+                        layout={{ position: 'absolute', left: 8, right: 5, top: 99, height: 50 }}
                     >
                         <Border
                             variant="4"
@@ -97,7 +97,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                     <Region
                         name="user_input_buttons_container"
                         params={144}
-                        layout={{ position: 'absolute', left: 8, width: 457, top: 159, height: 42 }}
+                        layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42 }}
                     >
                         <Border
                             variant="3"
@@ -107,7 +107,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                         <Region
                             name="did_not_receive_code_link"
                             params={786625}
-                            layout={{ position: 'absolute', left: 3, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -225.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onDidNotReceiveCodeLink}
                             cursor="pointer"
                         >
@@ -121,7 +121,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                             name="retry_wait_label"
                             params={786625}
                             visible={false}
-                            layout={{ position: 'absolute', left: 10, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -218.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}

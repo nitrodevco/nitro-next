@@ -26,7 +26,7 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                     name="enter_category_button"
                     params={145}
                     onPointerTap={onEnterCategoryButton}
-                    layout={{ position: 'absolute', left: 1, width: 344, top: 0, height: 53 }}
+                    layout={{ position: 'absolute', left: 1, right: 0, top: 0, height: 53 }}
                 >
                     <Region
                         name="category_name_txt"
@@ -39,7 +39,7 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                         name="navi_room_icon"
                         params={80}
                         src={srcNaviRoomIcon}
-                        layout={{ position: 'absolute', left: 287, width: 44, top: 3, height: 30 }}
+                        layout={{ position: 'absolute', right: 13, width: 44, top: 3, height: 30 }}
                     />
                     <Region
                         name="toggle_open_region"

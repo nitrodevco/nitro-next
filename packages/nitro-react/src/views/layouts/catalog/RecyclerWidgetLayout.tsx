@@ -55,11 +55,11 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                 <Region
                     name="normal"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 208 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         params={786448}
-                        layout={{ position: 'absolute', left: 19, width: 42, top: 7, height: 30, flexDirection: 'row' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -161, width: 42, top: 7, height: 30, flexDirection: 'row' }}
                     >
                         <Region
                             name="ducket_cost"
@@ -100,12 +100,12 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                     <Region
                         name="slots_wrapper"
                         params={1168}
-                        layout={{ position: 'absolute', left: 16, width: 185, top: 85, height: 156 }}
+                        layout={{ position: 'absolute', left: 16, right: 159, bottom: -33, height: 156 }}
                     >
                         <Region
                             name="layout"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 115 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -115,12 +115,12 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                             <ThemeImage
                                 params={144}
                                 src={layoutImage('recycler_furnimatic_container_slice.png')}
-                                layout={{ position: 'absolute', left: 15, width: 158, top: 0, height: 115 }}
+                                layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
                             />
                             <ThemeImage
                                 params={80}
                                 src={layoutImage('recycler_furnimatic_container_right.png')}
-                                layout={{ position: 'absolute', left: 172, width: 13, top: 0, height: 115 }}
+                                layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
                             />
                         </Region>
                         <Region
@@ -277,12 +277,12 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                     <Region
                         name="indicator_wrapper"
                         params={1168}
-                        layout={{ position: 'absolute', left: 214, width: 123, top: 85, height: 115, minWidth: 123, maxWidth: 123, minHeight: 115, maxHeight: 115 }}
+                        layout={{ position: 'absolute', left: 214, right: 23, bottom: 8, height: 115, minWidth: 123, maxWidth: 123, minHeight: 115, maxHeight: 115 }}
                     >
                         <Region
                             name="layout"
                             params={144}
-                            layout={{ position: 'absolute', left: 0, width: 123, top: 0, height: 115 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115 }}
                         >
                             <ThemeImage
                                 params={16}
@@ -292,12 +292,12 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                             <ThemeImage
                                 params={144}
                                 src={layoutImage('recycler_furnimatic_container_slice.png')}
-                                layout={{ position: 'absolute', left: 15, width: 96, top: 0, height: 115 }}
+                                layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
                             />
                             <ThemeImage
                                 params={80}
                                 src={layoutImage('recycler_furnimatic_container_right.png')}
-                                layout={{ position: 'absolute', left: 110, width: 13, top: 0, height: 115 }}
+                                layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
                             />
                         </Region>
                         <Region
@@ -335,7 +335,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                                 visible={visibleAbortRegion ?? false}
                                 onPointerTap={onAbortRegion}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 29, width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -32.5, width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
                             >
                                 <Region
                                     params={16}
@@ -349,7 +349,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                 </Region>
                 <Region
                     visible={visibleDisabledBorder ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 208 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="3"
@@ -362,17 +362,17 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                         <ThemeImage
                             params={1040}
                             src={layoutImage('image_frank_dont_know.png')}
-                            layout={{ position: 'absolute', left: 235, width: 118, top: 99, height: 176 }}
+                            layout={{ position: 'absolute', left: 235, width: 118, bottom: -67, height: 176 }}
                         />
                         <Bubble
                             variant="7"
                             params={1025}
                             pointer="right"
-                            layout={{ position: 'absolute', left: 107, width: 155, top: 98, height: 81 }}
+                            layout={{ position: 'absolute', left: 107, width: 155, bottom: 29, height: 81 }}
                         >
                             <Region
                                 params={8388624}
-                                layout={{ position: 'absolute', left: 4, width: 107, top: 4, height: 57, minWidth: 107, maxWidth: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 4, width: 107, top: 4, minWidth: 107, maxWidth: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('recycler.broken')}
@@ -392,7 +392,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                             params={393233}
                             onPointerTap={onPatFrankBtn}
                             textStyle="text-style-button-shiny-regular"
-                            layout={{ position: 'absolute', left: 235, width: 115, top: 11, height: 30 }}
+                            layout={{ position: 'absolute', right: 10, width: 115, top: 11, height: 30 }}
                         >
                             {t('recycler.pat_frank')}
                         </Button>
@@ -400,7 +400,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                             name="emoji_2_template"
                             params={1040}
                             src={srcEmoji2Template ?? layoutImage('franks_emotions_heart.png')}
-                            layout={{ position: 'absolute', left: 32, width: 40, top: 210, height: 40 }}
+                            layout={{ position: 'absolute', left: 32, width: 40, bottom: -42, height: 40 }}
                         />
                     </Border>
                 </Region>

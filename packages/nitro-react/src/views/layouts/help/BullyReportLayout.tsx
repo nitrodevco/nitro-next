@@ -28,7 +28,7 @@ export const BullyReportLayout = ({ itemsUserPanel, layout, onClose, onSubmitBut
                 <Region
                     name="user_panel"
                     params={131088}
-                    layout={{ position: 'absolute', left: 9, width: 282, top: 8, height: 388, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 9, minWidth: 282, top: 8, minHeight: 388, flexDirection: 'column', gap: 8 }}
                 >
                     {itemsUserPanel ?? (
                         <BullyReportLayoutUserListItem />
@@ -59,7 +59,7 @@ export const BullyReportLayout = ({ itemsUserPanel, layout, onClose, onSubmitBut
                     params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmitButton}
-                    layout={{ position: 'absolute', left: 76, width: 135, top: 409, height: 43 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -68.5, width: 135, top: 409, height: 43 }}
                 >
                     {t('help.bully.submit')}
                 </Button>

@@ -18,7 +18,7 @@ export const LayoutRecyclerPrizes_1537Layout = ({ captionCtlgDescription, captio
             <Region
                 name="ctlg_default_3x3"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 659 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_selectproduct"
@@ -40,11 +40,11 @@ export const LayoutRecyclerPrizes_1537Layout = ({ captionCtlgDescription, captio
                     name="recyclerPrizesWidget"
                     tags={[ 'WIDE' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 659 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 237, height: 422 }}
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 237, bottom: 0 }}
                     >
                         <Region
                             name="itemList"

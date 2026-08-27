@@ -38,7 +38,7 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                     <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                         <Region
                             params={147664}
-                            layout={{ position: 'absolute', left: 198, width: 102, top: 0, height: 30, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -52, top: 0, flexDirection: 'row', gap: 2 }}
                         >
                             <WidgetSlot
                                 widgetType="progress_indicator"
@@ -134,7 +134,7 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                             >
                                 <Region
                                     params={147472}
-                                    layout={{ position: 'absolute', left: 0, width: 197, top: 15, height: 45, flexDirection: 'row' }}
+                                    layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}
                                 >
                                     <Region
                                         params={16}
@@ -172,11 +172,11 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                                 params={409617}
                                 tintColor="#bbbbbb"
                                 onPointerTap={onNextButton}
-                                layout={{ position: 'absolute', left: 303, width: 178, top: 350, height: 60 }}
+                                layout={{ position: 'absolute', right: 19, width: 178, top: 350, height: 60 }}
                             >
                                 <Region
                                     params={147472}
-                                    layout={{ position: 'absolute', left: 0, width: 178, top: 15, height: 45, flexDirection: 'row' }}
+                                    layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}
                                 >
                                     <Region
                                         params={16}
@@ -249,7 +249,7 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                             >
                                 <Region
                                     params={147472}
-                                    layout={{ position: 'absolute', left: 0, width: 177, top: 15, height: 45, flexDirection: 'row' }}
+                                    layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}
                                 >
                                     <Region
                                         params={16}
@@ -288,7 +288,7 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                                 params={393233}
                                 tintColor="#bbbbbb"
                                 onPointerTap={onQuizButton}
-                                layout={{ position: 'absolute', left: 319, width: 162, top: 350, height: 60 }}
+                                layout={{ position: 'absolute', right: 19, width: 162, top: 350, height: 60 }}
                             >
                                 {t('habbo.way.quiz.button')}
                             </Button>

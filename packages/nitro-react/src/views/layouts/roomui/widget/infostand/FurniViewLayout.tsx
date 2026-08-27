@@ -80,14 +80,14 @@ export const FurniViewLayout = ({ captionName, itemsButtonList, itemsInfostandEl
                             name="set_values"
                             params={131281}
                             onPointerTap={onSetValues}
-                            layout={{ position: 'absolute', left: 55, width: 75, top: 4, height: 24 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -37, width: 75, top: 4, height: 24 }}
                         >
                             Set values
                         </Button>
                         <Region
                             name="variable_list"
                             params={8536080}
-                            layout={{ position: 'absolute', left: 0, width: 214, top: 32, height: 26, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column' }}
                         >
                             <Region
                                 params={16}
@@ -282,7 +282,7 @@ export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, srcUniqueI
                 name="unique_item_background_container"
                 params={2096}
                 visible={visibleUniqueItemBackgroundContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 130, minHeight: 45 }}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45 }}
             >
                 <ThemeImage
                     name="unique_item_background_bottom"
@@ -298,7 +298,7 @@ export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, srcUniqueI
                     name="unique_item_background_mid"
                     params={2064}
                     src={srcUniqueItemBackgroundMid ?? layoutImage('unique_item_large_glass_mid.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, height: 120 }}
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
                 />
                 <ThemeImage
                     name="unique_item_background_top"
@@ -310,37 +310,37 @@ export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, srcUniqueI
                     name="unique_item_background_bottom"
                     params={1040}
                     src={srcUniqueItemBackgroundBottom3 ?? layoutImage('unique_item_large_glass_bottom.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 125, height: 5 }}
+                    layout={{ position: 'absolute', left: 0, width: 170, bottom: 0, height: 5 }}
                 />
                 <ThemeImage
                     name="unique_item_background_bottom"
                     params={1024}
                     src={srcUniqueItemBackgroundBottom4 ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 8, width: 5, top: 123, height: 9 }}
+                    layout={{ position: 'absolute', left: 8, width: 5, bottom: -2, height: 9 }}
                 />
                 <ThemeImage
                     name="unique_item_background_bottom"
                     params={1024}
                     src={srcUniqueItemBackgroundBottom5 ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 155, width: 5, top: 123, height: 9 }}
+                    layout={{ position: 'absolute', left: 155, width: 5, bottom: -2, height: 9 }}
                 />
             </Region>
             <ThemeImage
                 name="image"
                 params={8388624}
                 src={srcImage}
-                layout={{ position: 'absolute', left: 5, width: 140, top: 5, height: 120, minHeight: 45 }}
+                layout={{ position: 'absolute', left: 5, width: 140, top: 5, minHeight: 45 }}
             />
             <Region
                 name="unique_item_overlay_container"
                 params={2096}
                 visible={visibleUniqueItemOverlayContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 130, minHeight: 45 }}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45 }}
             >
                 <ThemeImage
                     params={2064}
                     src={layoutImage('unique_item_large_glass_shine.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, height: 120 }}
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
                 />
                 <WidgetSlot
                     widgetType="limited_item_overlay_preview"
@@ -353,7 +353,7 @@ export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, srcUniqueI
                 name="rarity_item_overlay_container"
                 params={2096}
                 visible={visibleRarityItemOverlayContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 130 }}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="rarity_item_overlay_preview"
@@ -452,13 +452,13 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
             </Region>
             <Region
                 visible={false}
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 15, top: '50%', marginTop: -8.5, height: 15 }}
             >
                 <ThemeImage
                     name="temp_icon"
                     params={3932176}
                     src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
-                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -85, width: 15, top: '50%', marginTop: -8.5, height: 15 }}
                 />
             </Region>
         </Region>

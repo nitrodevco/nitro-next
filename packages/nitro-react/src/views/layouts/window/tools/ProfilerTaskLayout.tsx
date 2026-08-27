@@ -23,19 +23,19 @@ export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas }: ProfilerTaskL
                 <TextInput
                     value={textValue}
                     onChange={setTextValue}
-                    layout={{ position: 'absolute', left: 22, width: 329, top: 2, height: 14 }}
+                    layout={{ position: 'absolute', left: 22, right: 79, top: 2, height: 14, overflow: 'hidden' }}
                 />
                 <TextInput
                     value={captionValue}
                     onChange={setCaptionValue}
                     textColor="#555555"
-                    layout={{ position: 'absolute', left: 22, width: 320, top: 20, height: 14 }}
+                    layout={{ position: 'absolute', left: 22, width: 320, top: 20, height: 14, overflow: 'hidden' }}
                 />
                 <ThemeImage
                     name="canvas"
                     params={1073741904}
                     src={srcCanvas}
-                    layout={{ position: 'absolute', left: 354, width: 66, top: 3, height: 33 }}
+                    layout={{ position: 'absolute', right: 10, width: 66, top: 3, height: 33, overflow: 'hidden' }}
                 />
                 <CheckBox
                     variant="0"

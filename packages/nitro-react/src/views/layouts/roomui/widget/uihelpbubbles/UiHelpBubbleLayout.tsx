@@ -15,11 +15,11 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
             <Region
                 name="master_container"
                 params={96}
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 500, maxWidth: 180 }}
+                layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 500, maxWidth: 180 }}
             >
                 <Region
                     visible={visibleBubble ?? true}
-                    layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 500, maxWidth: 200 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 200 }}
                 >
                     <Bubble
                         variant="7"
@@ -32,17 +32,17 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
                             params={2193}
                             onPointerTap={onProfileRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 2, width: 160, top: 2, height: 440, maxWidth: 200 }}
+                            layout={{ position: 'absolute', left: 2, right: 18, top: 2, bottom: 58, maxWidth: 200 }}
                         >
                             <Region
                                 name="help_bubble_text"
                                 params={12585104}
-                                layout={{ position: 'absolute', left: 0, width: 159, top: 0, height: 437, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionHelpBubbleText ?? 'Testing Testing!testingdsf'}
                                     textStyle="text-style-u-bold"
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 159 }}
+                                    textOptions={{ wordWrap: true }}
                                 />
                             </Region>
                         </Region>
@@ -52,7 +52,7 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
                             params={917713}
                             tintColor="#33cc33"
                             onPointerTap={onHelpBubbleBtnOk}
-                            layout={{ position: 'absolute', left: 59, width: 41, top: 441, height: 28 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -31, width: 41, top: 441, height: 28 }}
                         >
                             OK
                         </Button>

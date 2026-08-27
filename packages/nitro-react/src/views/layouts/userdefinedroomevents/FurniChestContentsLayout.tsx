@@ -35,11 +35,11 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                     name="items_grid_border"
                     params={2192}
                     tintColor="#e3e3e3"
-                    layout={{ position: 'absolute', left: 9, width: 255, top: 11, height: 242 }}
+                    layout={{ position: 'absolute', left: 9, right: 194, top: 11, bottom: 11 }}
                 >
                     <Region
                         visible={visibleSearchBorder ?? false}
-                        layout={{ position: 'absolute', left: 5, width: 245, top: 4, height: 24, minHeight: 24, maxHeight: 24 }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 4, height: 24, minHeight: 24, maxHeight: 24 }}
                     >
                         <Border
                             variant="105"
@@ -61,14 +61,14 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                                 value={searchInputValue}
                                 onChange={setSearchInputValue}
                                 textColor="#666666"
-                                layout={{ position: 'absolute', left: 4, width: 216, top: 3, height: 18, minHeight: 18, maxHeight: 18 }}
+                                layout={{ position: 'absolute', left: 4, right: 25, top: 3, height: 18, minHeight: 18, maxHeight: 18 }}
                             />
                             <Region
                                 name="clear_search_button"
                                 params={81}
                                 onPointerTap={onClearSearchButton}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 222, width: 20, top: 2, height: 20 }}
+                                layout={{ position: 'absolute', right: 3, width: 20, top: 2, height: 20 }}
                             >
                                 <ThemeImage
                                     params={16}
@@ -81,13 +81,13 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                     <Region
                         name="no_items_text"
                         params={3935440}
-                        layout={{ position: 'absolute', left: 73, width: 108, top: 113, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -54.5, width: 108, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionNoItemsText ?? t('wiredchests.furni_chest.no_items')} />
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 5, width: 245, top: 5, height: 232 }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                     >
                         <Region
                             name="grid_items"
@@ -103,19 +103,19 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                 <Region
                     name="right_panel"
                     params={2128}
-                    layout={{ position: 'absolute', left: 274, width: 175, top: 11, height: 242 }}
+                    layout={{ position: 'absolute', right: 9, width: 175, top: 11, bottom: 11 }}
                 >
                     <Border
                         variant="2"
                         params={2192}
                         tintColor="#d8d8d8"
-                        layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 211 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 31 }}
                     >
                         <Region
                             name="furni_name"
                             tags={[ 'furni_name' ]}
                             params={786576}
-                            layout={{ position: 'absolute', left: 5, width: 190, top: 5, height: 17, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 5, right: -20, top: 5, height: 17, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionFurniName ?? 'furni_name'}
@@ -125,36 +125,36 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                         <Region
                             name="stretching_preview_image_container"
                             params={2192}
-                            layout={{ position: 'absolute', left: 0, width: 175, top: 26, height: 185 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0 }}
                         >
                             <WidgetSlot
                                 widgetType="product_image"
                                 name="preview_image"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 2, width: 170, top: 9, height: 167 }}
+                                layout={{ position: 'absolute', left: 2, right: 3, top: 9, bottom: 9 }}
                             />
                         </Region>
                         <Region
                             visible={false}
-                            layout={{ position: 'absolute', left: 0, width: 175, top: 10, height: 201 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="placeholder_preview_image"
                                 params={2192}
                                 src={srcPlaceholderPreviewImage ?? layoutImage('wired_chests_images_classic_furni_chest_empty.png')}
-                                layout={{ position: 'absolute', left: 0, width: 175, top: 10, height: 201 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 0 }}
                             />
                         </Region>
                     </Border>
                     <Region
                         name="options"
                         params={1168}
-                        layout={{ position: 'absolute', left: 0, width: 175, top: 211, height: 62 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: -31, height: 62 }}
                     >
                         <Region
                             name="withdraw_cont"
                             params={409680}
-                            layout={{ position: 'absolute', left: 62, width: 113, top: 9, height: 28, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', right: 0, top: 9, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsWithdrawCont ?? (
                                 <>
@@ -165,7 +165,7 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                         </Region>
                         <Region
                             visible={visibleViewLogsByFurniBtn ?? false}
-                            layout={{ position: 'absolute', left: 102, width: 73, top: 37, height: 22, minWidth: 60 }}
+                            layout={{ position: 'absolute', right: 0, width: 73, top: 37, height: 22, minWidth: 60 }}
                         >
                             <Button
                                 variant="3"
@@ -232,7 +232,7 @@ export const FurniChestContentsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     params={278672}
                     visible={visibleNumberContainer ?? false}
                     backgroundColor="#2f6982"
-                    layout={{ position: 'absolute', left: 27, width: 13, top: 2, height: 16 }}
+                    layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
                 >
                     <Region
                         name="number_container_inner_border"
@@ -243,7 +243,7 @@ export const FurniChestContentsLayoutFurniTemplateItem = ({ captionFurniQuantity
                         <Region
                             name="furni_quantity"
                             params={4194320}
-                            layout={{ position: 'absolute', left: 1, width: 10, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionFurniQuantity ?? '0'}

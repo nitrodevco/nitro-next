@@ -64,7 +64,7 @@ export const VipBuyItemLayout = ({ captionItemHeader, layout, onItemBuy, onItemG
                     params={393233}
                     tintColor="#00aa00"
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', left: 225, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
+                    layout={{ position: 'absolute', right: 5, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
                 >
                     {t('catalog.club.button.buy')}
                 </ButtonThick>
@@ -74,7 +74,7 @@ export const VipBuyItemLayout = ({ captionItemHeader, layout, onItemBuy, onItemG
                     params={393233}
                     tintColor="#00aa00"
                     onPointerTap={onItemGift}
-                    layout={{ position: 'absolute', left: 130, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
+                    layout={{ position: 'absolute', right: 100, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
                 >
                     {t('catalog.purchase_confirmation.gift')}
                 </ButtonThick>

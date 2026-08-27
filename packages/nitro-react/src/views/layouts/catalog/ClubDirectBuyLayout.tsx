@@ -112,7 +112,7 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                         Buy
                         <Region
                             params={3932176}
-                            layout={{ position: 'absolute', left: 27, width: 25, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -13.5, width: 25, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('buy')}

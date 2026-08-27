@@ -23,12 +23,12 @@ export const NewUserHelpLayout = ({ captionHelp, layout, visibleBorder }: NewUse
                     <Region
                         name="help"
                         params={12582928}
-                        layout={{ position: 'absolute', left: 5, width: 0, top: 5, height: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHelp ?? ''}
                             textStyle="text-style-u-bold"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 0 }}
+                            textOptions={{ wordWrap: true }}
                         />
                     </Region>
                 </Bubble>

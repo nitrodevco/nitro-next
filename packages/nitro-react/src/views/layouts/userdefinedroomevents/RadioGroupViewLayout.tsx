@@ -16,7 +16,7 @@ export const RadioGroupViewLayout = ({ layout }: RadioGroupViewLayoutProps) => {
                 <Region
                     name="radio_button_list"
                     params={149648}
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 0, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column' }}
                 />
             </Region>
         </Region>

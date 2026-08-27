@@ -9,17 +9,19 @@ export interface DimmerUiLayoutProps {
     layout?: BoxLayout;
     onApplyButton?: () => void;
     onClose?: () => void;
+    onColorGridContainer?: () => void;
     onOnOffButton?: () => void;
     onTab1?: () => void;
     onTab2?: () => void;
     onTab3?: () => void;
+    onTabbedview?: () => void;
     onTypeCheckbox?: () => void;
     srcOffImage?: string;
     srcSliderBase?: string;
     srcSliderButton?: string;
 }
 
-export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeText, layout, onApplyButton, onClose, onOnOffButton, onTab1, onTab2, onTab3, onTypeCheckbox, srcOffImage, srcSliderBase, srcSliderButton }: DimmerUiLayoutProps) => {
+export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeText, layout, onApplyButton, onClose, onColorGridContainer, onOnOffButton, onTab1, onTab2, onTab3, onTabbedview, onTypeCheckbox, srcOffImage, srcSliderBase, srcSliderButton }: DimmerUiLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -59,6 +61,8 @@ export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeT
                 <Region
                     name="tabbedview"
                     params={17}
+                    onPointerTap={onTabbedview}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 2, width: 266, top: -1, height: 166 }}
                 >
                     <TabContext
@@ -103,6 +107,8 @@ export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeT
                         <Region
                             name="color_grid_container"
                             params={17}
+                            onPointerTap={onColorGridContainer}
+                            cursor="pointer"
                             layout={{ position: 'absolute', left: 2, width: 210, top: 1, height: 30 }}
                         >
                             <Region
@@ -120,7 +126,7 @@ export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeT
                                 name="slider_base"
                                 params={3932176}
                                 src={srcSliderBase}
-                                layout={{ position: 'absolute', left: 2, width: 201, top: 0, height: 12 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -101, width: 201, top: '50%', marginTop: -9, height: 12 }}
                             />
                             <Region
                                 name="slider_movement_area"
@@ -180,7 +186,7 @@ export const DimmerUiLayout = ({ captionDimmerInfo, captionOffText, captionTypeT
                     name="on_off_button"
                     params={393233}
                     onPointerTap={onOnOffButton}
-                    layout={{ position: 'absolute', left: 203, width: 58, top: 167, height: 22 }}
+                    layout={{ position: 'absolute', right: 16, width: 58, top: 167, height: 22 }}
                 >
                     {t('widget.dimmer.button.on')}
                 </Button>

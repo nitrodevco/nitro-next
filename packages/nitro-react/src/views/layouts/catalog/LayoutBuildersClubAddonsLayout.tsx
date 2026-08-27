@@ -22,7 +22,7 @@ export const LayoutBuildersClubAddonsLayout = ({ captionCtlgDescription, caption
             <Region
                 name="ctlg_builders_club_addons"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 508 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"
@@ -42,11 +42,11 @@ export const LayoutBuildersClubAddonsLayout = ({ captionCtlgDescription, caption
                 <Region
                     name="builderAddonsWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 14, width: 300, top: 108, height: 380 }}
+                    layout={{ position: 'absolute', left: 14, width: 300, top: 108, bottom: 20 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 287, top: 0, height: 360 }}
+                        layout={{ position: 'absolute', left: 0, width: 287, top: 0, bottom: 20 }}
                     >
                         <Region
                             name="addons_list"
@@ -130,7 +130,7 @@ export const LayoutBuildersClubAddonsLayout = ({ captionCtlgDescription, caption
                                     params={393233}
                                     tintColor="#0a9bc5"
                                     onPointerTap={onItemBuy}
-                                    layout={{ position: 'absolute', left: 123, width: 142, top: 37, height: 35, minWidth: 40 }}
+                                    layout={{ position: 'absolute', right: 4, width: 142, top: 37, height: 35, minWidth: 40 }}
                                 >
                                     {t('buy')}
                                 </ButtonThick>
@@ -140,7 +140,7 @@ export const LayoutBuildersClubAddonsLayout = ({ captionCtlgDescription, caption
                     <Region
                         name="trial_warning"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 193, top: 360, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 193, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTrialWarning ?? t('builder.addon_page.warning.trial')}

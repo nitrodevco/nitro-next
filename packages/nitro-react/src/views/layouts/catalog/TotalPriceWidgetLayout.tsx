@@ -28,7 +28,7 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceConta
                 <Region
                     name="totalprice_container"
                     params={409616}
-                    layout={{ position: 'absolute', left: 49, width: 128, top: 1, height: 24, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row' }}
                 >
                     {itemsTotalpriceContainer ?? (
                         <>

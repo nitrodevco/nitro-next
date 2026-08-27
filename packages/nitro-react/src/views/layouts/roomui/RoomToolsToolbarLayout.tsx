@@ -32,12 +32,12 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                     params={8538112}
                     tintColor="#24231e"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 1, width: 164, top: 0, height: 229 }}
+                    layout={{ position: 'absolute', left: 1, width: 164, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="itemlist_buttons"
                         params={8536064}
-                        layout={{ position: 'absolute', left: 24, width: 140, top: 6, height: 223, minWidth: 140, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 24, top: 6, minWidth: 140, flexDirection: 'column' }}
                     >
                         {itemsItemlistButtons ?? (
                             <>
@@ -124,7 +124,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                             tags={[ '#icon' ]}
                             params={3145744}
                             src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 9, width: 6, top: 99, height: 8 }}
+                            layout={{ position: 'absolute', left: 9, width: 6, top: '50%', marginTop: 13, height: 8 }}
                         />
                     </Region>
                 </Border>
@@ -133,20 +133,20 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                     name="side_bar_expand"
                     params={1064960}
                     tintColor="#3b3933"
-                    layout={{ position: 'absolute', left: 0, width: 19, top: 64, height: 108 }}
+                    layout={{ position: 'absolute', left: 0, width: 19, bottom: 57, height: 108 }}
                 >
                     <Region
                         name="button_expand"
                         params={2049}
                         onPointerTap={onButtonExpand}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 108 }}
+                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="arrow_expand"
                             params={3145744}
                             src={srcArrowExpand ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 11, width: 6, top: 50, height: 8 }}
+                            layout={{ position: 'absolute', left: 11, width: 6, top: '50%', marginTop: -4, height: 8 }}
                         />
                     </Region>
                 </Border>

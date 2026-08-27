@@ -33,7 +33,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={131088}
-                    layout={{ position: 'absolute', left: 9, width: 280, top: 8, height: 563, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 9, minWidth: 280, top: 8, minHeight: 563, flexDirection: 'column', gap: 8 }}
                 >
                     <Region
                         params={16}
@@ -64,7 +64,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                     <Region
                         name="topic_selector"
                         params={147473}
-                        layout={{ width: 270, height: 79, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+                        layout={{ flexShrink: 0, flexDirection: 'column', gap: 5 }}
                     >
                         {itemsTopicSelector ?? (
                             <>
@@ -80,7 +80,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                     name="user_panel"
                     params={131088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 309, width: 282, top: 8, height: 378, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8 }}
                 >
                     {itemsUserPanel ?? (
                         <EmergencyHelpRequestLayoutUserListItem />
@@ -108,7 +108,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                 <Region
                     name="room_panel"
                     params={131088}
-                    layout={{ position: 'absolute', left: 309, width: 282, top: 8, height: 378, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8 }}
                 >
                     {itemsRoomPanel ?? (
                         <>
@@ -152,7 +152,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                         name="submit_button"
                         params={393233}
                         onPointerTap={onSubmitButton}
-                        layout={{ position: 'absolute', left: 345, width: 225, top: 4, height: 48 }}
+                        layout={{ position: 'absolute', right: 3, width: 225, top: 4, height: 48 }}
                     >
                         {t('help.emergency.main.submit.button')}
                     </Button>
@@ -194,7 +194,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                         params={147665}
                         tintColor="#bbbbbb"
                         onPointerTap={onSubmitButton2}
-                        layout={{ position: 'absolute', left: 8, width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -132, width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
                     >
                         {t('guide.help.request.user.create.input.button')}
                     </Button>

@@ -40,17 +40,17 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                 <Region
                     name="categories_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 19, width: 371, top: 0, height: 10 }}
+                    layout={{ position: 'absolute', left: 19, right: -1, top: 0, height: 10 }}
                 />
                 <Region
                     name="categories_footer_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 389, top: 0, height: 37 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
                 >
                     <Region
                         name="achievement_score_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 5, width: 379, top: 23, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 23, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionAchievementScoreTxt ?? t('achievements.categories.score')}
@@ -61,12 +61,12 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                 <Region
                     name="achievements_header_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 389, top: 0, height: 75 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 75 }}
                 >
                     <Region
                         params={2192}
                         backgroundColor="#8899a2"
-                        layout={{ position: 'absolute', left: 1, width: 387, top: 0, height: 75 }}
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0 }}
                     />
                     <Region
                         params={16}
@@ -82,7 +82,7 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                     <Region
                         name="category_name_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 78, width: 286, top: 13, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 78, right: 25, top: 13, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCategoryNameTxt ?? 'Category Name Placeholder'}
@@ -92,7 +92,7 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                     <Region
                         name="category_progress_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 78, width: 245, top: 40, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 78, right: 66, top: 40, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCategoryProgressTxt ?? t('achievements.details.categoryprogress')}
@@ -139,12 +139,12 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                     name="achievement_cont"
                     params={144}
                     tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 15, width: 360, top: 0, height: 129 }}
+                    layout={{ position: 'absolute', left: 15, right: 14, top: 0, height: 129 }}
                 >
                     <Region
                         name="achievement_name_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 114, width: 238, top: 18, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 114, right: 8, top: 18, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAchievementNameTxt ?? 'Achievement Name Placeholder'}
@@ -161,7 +161,7 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                     <Region
                         name="achievement_desc_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 114, width: 238, top: 34, height: 47, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 114, right: 8, top: 34, height: 47, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAchievementDescTxt ?? 'Achievement Desc: pasdsad sadaddsad sadsa as dasd sad asd sada sdas das dsad sad asd asd ad ada sdas dsa das dsa dsad jhg jhg jh gjh gjh g'}
@@ -171,14 +171,14 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                     <Region
                         name="reward_caption_txt"
                         params={1040}
-                        layout={{ position: 'absolute', left: 113, width: 162, top: 74, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 113, width: 162, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionRewardCaptionTxt ?? t('achievements.details.reward')} />
                     </Region>
                     <Region
                         name="reward_amount_txt"
                         params={1040}
-                        layout={{ position: 'absolute', left: 164, width: 23, top: 74, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 164, width: 23, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionRewardAmountTxt ?? '200'} />
                     </Region>
@@ -186,7 +186,7 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
                         variant="0"
                         name="currency_icon"
                         params={1040}
-                        layout={{ position: 'absolute', left: 183, width: 23, top: 70, height: 26 }}
+                        layout={{ position: 'absolute', left: 183, width: 23, bottom: 33, height: 26 }}
                     />
                     <Region
                         name="level_txt"

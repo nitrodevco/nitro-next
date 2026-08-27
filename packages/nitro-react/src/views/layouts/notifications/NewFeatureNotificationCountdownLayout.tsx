@@ -43,7 +43,7 @@ export const NewFeatureNotificationCountdownLayout = ({ captionDesc, layout, onC
                         name="desc"
                         tags={[ '#icon' ]}
                         params={8388624}
-                        layout={{ position: 'absolute', left: 14, width: 154, top: 7, height: 17, minWidth: 154, maxWidth: 154, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDesc ?? 'some text here'}
@@ -55,7 +55,7 @@ export const NewFeatureNotificationCountdownLayout = ({ captionDesc, layout, onC
                         name="countdown_widget"
                         params={148496}
                         options={{ 'countdown:running': 'true', 'countdown:color_style': '1' }}
-                        layout={{ position: 'absolute', left: 46, width: 99, top: 33, height: 37 }}
+                        layout={{ position: 'absolute', left: 46, width: 99, bottom: 6, height: 37 }}
                     />
                     <Region
                         name="cancel_link_region"

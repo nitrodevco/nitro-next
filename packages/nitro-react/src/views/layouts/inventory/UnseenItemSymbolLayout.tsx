@@ -18,7 +18,7 @@ export const UnseenItemSymbolLayout = ({ captionText, layout }: UnseenItemSymbol
                 <Region
                     name="text"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 4, width: 100, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 4, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionText ?? 'inventory.furni.tab.new'}

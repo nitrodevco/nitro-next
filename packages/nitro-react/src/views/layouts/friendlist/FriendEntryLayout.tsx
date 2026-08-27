@@ -9,6 +9,7 @@ export interface FriendEntryLayoutProps {
     layout?: BoxLayout;
     onBg?: () => void;
     onFollowFriend?: () => void;
+    onPager?: () => void;
     onRelationshipStatus?: () => void;
     onSelectAllRegion?: () => void;
     onStartChat?: () => void;
@@ -21,7 +22,7 @@ export interface FriendEntryLayoutProps {
     srcStatus?: string;
 }
 
-export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAllText, layout, onBg, onFollowFriend, onRelationshipStatus, onSelectAllRegion, onStartChat, onUserInfoRegion, srcArrowDownBlack, srcArrowRightBlack, srcFace, srcFollowFriend, srcStartChat, srcStatus }: FriendEntryLayoutProps) => {
+export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAllText, layout, onBg, onFollowFriend, onPager, onRelationshipStatus, onSelectAllRegion, onStartChat, onUserInfoRegion, srcArrowDownBlack, srcArrowRightBlack, srcFace, srcFollowFriend, srcStartChat, srcStatus }: FriendEntryLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,7 +33,7 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                 backgroundColor="#ffffcc"
                 onPointerTap={onBg}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 102, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
             >
                 <Region
                     name="name"
@@ -56,14 +57,14 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                     params={81}
                     onPointerTap={onStartChat}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 83, width: 16, top: 2, height: 14 }}
+                    layout={{ position: 'absolute', right: 3, width: 16, top: 2, height: 14 }}
                 >
                     <ThemeImage
                         name="start_chat"
                         tags={[ 'bitmap' ]}
                         params={80}
                         src={srcStartChat}
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 14 }}
+                        layout={{ position: 'absolute', right: 0, width: 16, top: 0, height: 14 }}
                     />
                 </Region>
                 <Region
@@ -71,14 +72,14 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                     params={81}
                     onPointerTap={onFollowFriend}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 66, width: 16, top: 2, height: 14 }}
+                    layout={{ position: 'absolute', right: 20, width: 16, top: 2, height: 14 }}
                 >
                     <ThemeImage
                         name="follow_friend"
                         tags={[ 'bitmap' ]}
                         params={80}
                         src={srcFollowFriend}
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 14 }}
+                        layout={{ position: 'absolute', right: 0, width: 16, top: 0, height: 14 }}
                     />
                 </Region>
                 <Region
@@ -86,14 +87,14 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                     params={81}
                     onPointerTap={onRelationshipStatus}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 37, width: 26, top: 2, height: 16 }}
+                    layout={{ position: 'absolute', right: 39, width: 26, top: 2, height: 16 }}
                 >
                     <ThemeImage
                         name="status"
                         tags={[ 'bitmap' ]}
                         params={80}
                         src={srcStatus}
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
+                        layout={{ position: 'absolute', right: 10, width: 16, top: 1, height: 14 }}
                     />
                     <Icon
                         variant="7"
@@ -101,14 +102,14 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                         tags={[ 'drop' ]}
                         params={80}
                         tintColor="#000000"
-                        layout={{ position: 'absolute', left: 16, width: 10, top: 5, height: 5 }}
+                        layout={{ position: 'absolute', right: 0, width: 10, top: 5, height: 5 }}
                     />
                 </Region>
                 <ThemeImage
                     name="face"
                     params={3932176}
                     src={srcFace}
-                    layout={{ position: 'absolute', left: -2, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 20, top: '50%', marginTop: -10, height: 20 }}
                 />
                 <ThemeImage
                     name="arrow_down_black"
@@ -145,6 +146,8 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                 <Region
                     name="pager"
                     params={17}
+                    onPointerTap={onPager}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 190, top: 20, height: 20 }}
                 />
                 <Region
@@ -152,7 +155,7 @@ export const FriendEntryLayout = ({ captionCaption, captionName, captionSelectAl
                     params={409681}
                     onPointerTap={onSelectAllRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 47, width: 49, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', right: 6, width: 49, top: 0, height: 16 }}
                 >
                     <Region
                         name="select_all_text"

@@ -24,7 +24,7 @@ export const ErrorPopupLayout = ({ itemsContentList, layout, onClose }: ErrorPop
                 <Region
                     name="content_list"
                     params={144}
-                    layout={{ position: 'absolute', left: 17, width: 265, top: 10, height: 271, flexDirection: 'column', gap: 10 }}
+                    layout={{ position: 'absolute', left: 17, right: 18, top: 10, height: 271, flexDirection: 'column', gap: 10 }}
                 >
                     {itemsContentList ?? (
                         <>
@@ -105,7 +105,7 @@ export const ErrorPopupLayoutErrorInfoBorderItem = ({ layout }: ErrorPopupLayout
                 value={errorInfoContentsValue}
                 onChange={setErrorInfoContentsValue}
                 multiline
-                layout={{ position: 'absolute', left: 5, width: 255, top: 5, height: 126 }}
+                layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
             />
         </Border>
     );

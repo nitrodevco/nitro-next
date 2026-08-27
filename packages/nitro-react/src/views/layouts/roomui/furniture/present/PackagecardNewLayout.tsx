@@ -26,12 +26,12 @@ export const PackagecardNewLayout = ({ itemsElementList, layout, onClose }: Pack
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={935952}
-                    layout={{ position: 'absolute', left: 0, width: 326, top: 0, height: 312, minWidth: 326, maxWidth: 380, maxHeight: 345 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -167, width: 326, top: 0, bottom: 43, minWidth: 326, maxWidth: 380, maxHeight: 345 }}
                 >
                     <Region
                         name="element_list"
                         params={12730385}
-                        layout={{ position: 'absolute', left: 10, width: 306, top: 10, height: 302, minWidth: 306, maxWidth: 306, flexDirection: 'column', gap: 10 }}
+                        layout={{ position: 'absolute', left: 10, top: 10, minWidth: 306, maxWidth: 306, flexDirection: 'column', gap: 10 }}
                     >
                         {itemsElementList ?? (
                             <>
@@ -69,11 +69,11 @@ export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, sr
                 name="warning_background_border"
                 params={4063248}
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 306, top: 0, height: 56 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -153, width: 306, top: '50%', marginTop: -28, height: 56 }}
             >
                 <Region
                     params={150736}
-                    layout={{ position: 'absolute', left: 3, width: 300, top: 0, height: 56, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -150, top: '50%', marginTop: -28, flexDirection: 'column' }}
                 >
                     <Region
                         name="top-spacer"
@@ -90,7 +90,7 @@ export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, sr
                         <Region
                             name="warning_text"
                             params={3296272}
-                            layout={{ position: 'absolute', left: 65, width: 235, top: 10, height: 30, minWidth: 235, maxWidth: 235, minHeight: 30, maxHeight: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 65, width: 235, top: '50%', marginTop: -15, height: 30, minWidth: 235, maxWidth: 235, minHeight: 30, maxHeight: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionWarningText ?? t('gift.trusted.banner.text')}
@@ -101,13 +101,13 @@ export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, sr
                         <Region
                             name="warning_icon_container"
                             params={3148816}
-                            layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 50, maxWidth: 70 }}
+                            layout={{ position: 'absolute', left: 0, width: 70, top: '50%', marginTop: -25, height: 50, maxWidth: 70 }}
                         >
                             <ThemeImage
                                 name="warning_icon"
                                 params={3932176}
                                 src={srcWarningIcon ?? layoutImage('catalogue_ui2_checkmark_m.png')}
-                                layout={{ position: 'absolute', left: 20, width: 30, top: 13, height: 24 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -15, width: 30, top: '50%', marginTop: -12, height: 24 }}
                             />
                         </Region>
                     </Border>
@@ -153,7 +153,7 @@ export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, 
             <Region
                 name="avatar_image_container"
                 params={3932176}
-                layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 140, minWidth: 60, maxWidth: 60, minHeight: 140, maxHeight: 140 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -147, width: 60, top: '50%', marginTop: -72.5, height: 140, minWidth: 60, maxWidth: 60, minHeight: 140, maxHeight: 140 }}
             >
                 <Region
                     name="avatar_image_region"
@@ -161,7 +161,7 @@ export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, 
                     params={3935441}
                     onPointerTap={onAvatarImageRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 140 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -70, height: 140 }}
                 >
                     <ThemeImage
                         name="avatar_image"
@@ -172,19 +172,19 @@ export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, 
                     <Region
                         name="staff_image"
                         params={3932176}
-                        layout={{ position: 'absolute', left: 3, width: 54, top: 20, height: 54 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -27, width: 54, top: '50%', marginTop: -50, height: 54 }}
                     >
                         <ThemeImage
                             name="staff_image_background"
                             params={3932176}
                             src={srcStaffImageBackground ?? layoutImage('catalogue_giftcard_icon_bgstar.png')}
-                            layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 54 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -27, width: 54, top: '50%', marginTop: -27, height: 54 }}
                         />
                         <ThemeImage
                             name="staff_image_foreground"
                             params={3934224}
                             src={srcStaffImageForeground ?? layoutImage('catalogue_giftcard_staff_icon.png')}
-                            layout={{ position: 'absolute', left: 10, width: 34, top: 10, height: 34 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 34, top: 10, bottom: 10 }}
                         />
                     </Region>
                 </Region>
@@ -274,7 +274,7 @@ export const PackagecardNewLayoutButtonListItem = ({ itemsButtonList, layout }: 
         <Region
             name="button_list"
             params={12730385}
-            layout={{ width: 306, height: 66, flexShrink: 0, minWidth: 330, maxWidth: 306, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 330, maxWidth: 306, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
                 <>

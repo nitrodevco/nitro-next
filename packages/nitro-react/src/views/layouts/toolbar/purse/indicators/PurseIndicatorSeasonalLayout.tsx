@@ -52,7 +52,7 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                         variant="27"
                         name="seasonal_icon"
                         params={4081814}
-                        layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 23 }}
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                     />
                 </Border>
                 <Region
@@ -69,7 +69,7 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                 <Region
                     name="amount"
                     params={262160}
-                    layout={{ position: 'absolute', left: 90, width: 60, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionAmount ?? '0'}

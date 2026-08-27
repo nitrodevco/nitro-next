@@ -41,7 +41,7 @@ export const PurchaseWidgetBuyVipStubLayout = ({ captionCtlgWidgetGetClubText, l
                     name="ctlg_buy_club_button"
                     params={393361}
                     onPointerTap={onCtlgBuyClubButton}
-                    layout={{ position: 'absolute', left: 233, width: 122, top: 3, height: 24, maxWidth: 122 }}
+                    layout={{ position: 'absolute', left: 233, right: 5, top: 3, height: 24, maxWidth: 122 }}
                 >
                     {t('catalog.buy.widget.get.vip.button')}
                 </ButtonThick>

@@ -129,7 +129,7 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     name="search_button"
                     params={393233}
                     onPointerTap={onSearchButton}
-                    layout={{ position: 'absolute', left: 250, width: 100, top: 90, height: 22, minWidth: 100 }}
+                    layout={{ position: 'absolute', right: 10, width: 100, top: 90, height: 22, minWidth: 100 }}
                 >
                     {t('generic.search')}
                 </Button>

@@ -25,13 +25,13 @@ export const LandingViewJetsetLayout = ({ layout, srcBackgroundGradientTop, srcB
                     name="content_background"
                     params={2192}
                     backgroundColor="#aae0f0"
-                    layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="background_gradient_top"
                         params={2192}
                         src={srcBackgroundGradientTop ?? '${image.library.url}reception/js_background_top_pixel.png'}
-                        layout={{ position: 'absolute', left: 0, width: 1173, top: -175, height: 997 }}
+                        layout={{ position: 'absolute', left: 0, right: -1, top: -175, bottom: 0 }}
                     />
                     <Region
                         visible={false}
@@ -48,19 +48,19 @@ export const LandingViewJetsetLayout = ({ layout, srcBackgroundGradientTop, srcB
                         name="background_horizon_stretch"
                         params={1168}
                         src={srcBackgroundHorizonStretch ?? '${image.library.url}reception/js_reception_backdrop_BG_left.png'}
-                        layout={{ position: 'absolute', left: 0, width: 306, top: 314, height: 470 }}
+                        layout={{ position: 'absolute', left: 0, right: 866, bottom: 38, height: 470 }}
                     />
                     <ThemeImage
                         name="background_horizon"
                         params={263248}
                         src={srcBackgroundHorizon ?? '${image.library.url}reception/js_reception_BG_right_3.png'}
-                        layout={{ position: 'absolute', left: 305, width: 867, top: 314, height: 470 }}
+                        layout={{ position: 'absolute', right: 0, width: 867, bottom: 38, height: 470 }}
                     />
                     <ThemeImage
                         name="background_right"
                         params={1104}
                         src={srcBackgroundRight ?? '${image.library.url}reception/js_reception_backdrop_left.png'}
-                        layout={{ position: 'absolute', left: 868, width: 304, top: 576, height: 208 }}
+                        layout={{ position: 'absolute', right: 0, width: 304, bottom: 38, height: 208 }}
                     />
                     <Icon
                         variant="0"
@@ -72,36 +72,36 @@ export const LandingViewJetsetLayout = ({ layout, srcBackgroundGradientTop, srcB
                         name="background_hotel_top"
                         params={2064}
                         src={srcBackgroundHotelTop ?? '${image.library.url}reception/js_reception_backdrop_hotel_top_stretch.png'}
-                        layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: -44 }}
+                        layout={{ position: 'absolute', left: 0, width: 138, top: 0, bottom: 866 }}
                     />
                     <ThemeImage
                         name="background_hotel_left"
                         params={1040}
                         src={srcBackgroundHotelLeft ?? '${image.library.url}reception/js_reception_backdrop_right_2.png'}
-                        layout={{ position: 'absolute', left: 0, width: 1006, top: -264, height: 1048 }}
+                        layout={{ position: 'absolute', left: 0, width: 1006, bottom: 38, height: 1048 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_personalmessages"
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 10, top: 340, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, width: 10, bottom: 472, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_avatarimage"
                         params={1040}
-                        layout={{ position: 'absolute', left: 109, width: 10, top: 620, height: 10 }}
+                        layout={{ position: 'absolute', left: 109, width: 10, bottom: 192, height: 10 }}
                     />
                     <Icon
                         variant="4"
                         name="widget_placeholder_bottom_slot"
                         params={1040}
-                        layout={{ position: 'absolute', left: 120, width: 10, top: 570, height: 10 }}
+                        layout={{ position: 'absolute', left: 120, width: 10, bottom: 242, height: 10 }}
                     />
                     <Region
                         params={1168}
                         backgroundColor="#333333"
-                        layout={{ position: 'absolute', left: 0, width: 1172, top: 784, height: 38 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 38 }}
                     />
                     <ThemeImage
                         name="logo"

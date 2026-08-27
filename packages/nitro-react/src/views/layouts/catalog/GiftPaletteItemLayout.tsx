@@ -4,18 +4,21 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `1614_gift_palette_item_xml` (layout "palette_item", 27x22) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GiftPaletteItemLayoutProps {
     layout?: BoxLayout;
+    onColorContainer?: () => void;
     srcBorder?: string;
     srcColor?: string;
     srcSelection?: string;
 }
 
-export const GiftPaletteItemLayout = ({ layout, srcBorder, srcColor, srcSelection }: GiftPaletteItemLayoutProps) => {
+export const GiftPaletteItemLayout = ({ layout, onColorContainer, srcBorder, srcColor, srcSelection }: GiftPaletteItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 27, height: 22, ...layout }}>
             <Region
                 name="color_container"
                 params={17}
                 backgroundColor="#ffffff"
+                onPointerTap={onColorContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 22 }}
             >
                 <ThemeImage

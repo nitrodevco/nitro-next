@@ -57,7 +57,7 @@ export const ForumListItemLayout = ({ captionDetails, captionHeader, captionMess
                     <Region
                         name="details"
                         params={1073741825}
-                        layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'} />
                     </Region>
@@ -72,12 +72,12 @@ export const ForumListItemLayout = ({ captionDetails, captionHeader, captionMess
                         params={145}
                         onPointerTap={onUnreadRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 40 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 40 }}
                     />
                     <Region
                         name="messages1"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMessages1 ?? '100 messages'}
@@ -87,7 +87,7 @@ export const ForumListItemLayout = ({ captionDetails, captionHeader, captionMess
                     <Region
                         name="messages2"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 100, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMessages2 ?? '12 new'}

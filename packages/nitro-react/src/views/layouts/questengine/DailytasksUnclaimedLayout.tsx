@@ -28,7 +28,7 @@ export const DailytasksUnclaimedLayout = ({ itemsMainCont, layout, onClose }: Da
                 <Region
                     name="main_cont"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 452, top: 0, height: 383, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 4 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 4 }}
                 >
                     {itemsMainCont ?? (
                         <>

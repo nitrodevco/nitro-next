@@ -32,7 +32,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                 <Region
                     name="tab_content"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 7, width: 116, top: 3, height: 40, minHeight: 40, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 40, minHeight: 40, flexDirection: 'column' }}
                 >
                     {itemsTabContent ?? (
                         <FriendRequestsTabLayoutHeaderItem />
@@ -40,7 +40,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                 </Region>
                 <Region
                     visible={visibleBubble ?? true}
-                    layout={{ position: 'absolute', left: -45, width: 222, top: -298, height: 304 }}
+                    layout={{ position: 'absolute', left: -45, width: 222, bottom: 30, height: 304 }}
                 >
                     <Bubble
                         variant="0"
@@ -87,11 +87,11 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                             params={1041}
                             onPointerTap={onClickAreaDiscardAll}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 11, width: 143, top: 258, height: 16 }}
+                            layout={{ position: 'absolute', left: 11, width: 143, bottom: 30, height: 16 }}
                         >
                             <Region
                                 params={4194320}
-                                layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('friendbar.requests.discard')}
@@ -108,7 +108,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                         <Region
                             params={1040}
                             backgroundColor="#564620"
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 246, height: 1 }}
+                            layout={{ position: 'absolute', left: 4, width: 184, bottom: 57, height: 1 }}
                         />
                         <ButtonThick
                             variant="5"
@@ -116,7 +116,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                             params={394321}
                             tintColor="#77bf43"
                             onPointerTap={onButtonAcceptAll}
-                            layout={{ position: 'absolute', left: 28, width: 171, top: 254, height: 28 }}
+                            layout={{ position: 'absolute', right: 23, width: 171, bottom: 22, height: 28 }}
                         >
                             {t('friendbar.requests.accept')}
                         </ButtonThick>
@@ -126,7 +126,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                     variant="7"
                     params={409600}
                     tintColor="#de4537"
-                    layout={{ position: 'absolute', left: 99, width: 18, top: -8, height: 20 }}
+                    layout={{ position: 'absolute', right: 10, width: 18, top: -8, height: 20 }}
                 >
                     <Region
                         name="badge_counter"
@@ -168,13 +168,13 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
                 name="icon"
                 params={1310720}
                 src={srcIcon ?? layoutImage('add_friends_icon.png')}
-                layout={{ position: 'absolute', left: -2, width: 31, top: -5, height: 34 }}
+                layout={{ position: 'absolute', right: 83, width: 31, bottom: 2, height: 34 }}
             />
             <Region
                 name="label"
                 tags={[ 'label' ]}
                 params={3148816}
-                layout={{ position: 'absolute', left: 29, width: 77, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 29, width: 77, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionLabel ?? t('friendbar.requests.title')}
@@ -213,7 +213,7 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                 params={145}
                 onPointerTap={onRegionProfile}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 1, width: 39, top: 3, height: 44 }}
+                layout={{ position: 'absolute', left: 1, right: 156, top: 3, height: 44 }}
             >
                 <ThemeImage
                     name="canvas"
@@ -227,7 +227,7 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                 params={145}
                 onPointerTap={onRegionProfileName}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 43, width: 138, top: 6, height: 17 }}
+                layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17 }}
             >
                 <Region
                     name="name"
@@ -251,7 +251,7 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                 <Region
                     name="text_discard"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTextDiscard ?? t('friendbar.request.decline')}
@@ -265,7 +265,7 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                 name="button_accept"
                 params={393233}
                 onPointerTap={onButtonAccept}
-                layout={{ position: 'absolute', left: 93, width: 80, top: 22, height: 22, maxWidth: 80 }}
+                layout={{ position: 'absolute', right: 23, width: 80, top: 22, height: 22, maxWidth: 80 }}
             >
                 {t('friendbar.request.accept')}
             </Button>

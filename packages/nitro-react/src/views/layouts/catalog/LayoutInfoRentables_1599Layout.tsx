@@ -25,17 +25,17 @@ export const LayoutInfoRentables_1599Layout = ({ captionCtlgText1, captionCtlgTe
             <Region
                 name="ctlg_info_rentables"
                 params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     params={2064}
                     tintColor="#d8d8d8"
-                    layout={{ position: 'absolute', left: 17, width: 328, top: 20, height: 425 }}
+                    layout={{ position: 'absolute', left: 17, width: 328, top: 20, bottom: 15 }}
                 >
                     <Region
                         params={2064}
-                        layout={{ position: 'absolute', left: 10, width: 309, top: 9, height: 407, flexDirection: 'column', gap: 3 }}
+                        layout={{ position: 'absolute', left: 10, width: 309, top: 9, bottom: 9, flexDirection: 'column', gap: 3 }}
                     >
                         <Region
                             params={147472}

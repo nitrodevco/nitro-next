@@ -25,7 +25,7 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: 20, width: 141, top: 5, height: 17, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 141, top: 5, height: 17, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.settings')}

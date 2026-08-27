@@ -26,7 +26,7 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 10, width: 473, top: 7, height: 362 }}
+                    layout={{ position: 'absolute', left: 10, right: 29, top: 7, bottom: 79 }}
                 >
                     <Region
                         name="quest_list"
@@ -38,12 +38,12 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
                 <Region
                     name="hc_info_cont"
                     params={1040}
-                    layout={{ position: 'absolute', left: 7, width: 493, top: 370, height: 36 }}
+                    layout={{ position: 'absolute', left: 7, width: 493, bottom: 42, height: 36 }}
                 >
                     <Region
                         name="hc_info_text"
                         params={3145744}
-                        layout={{ position: 'absolute', left: 7, width: 349, top: 13, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 7, width: 349, top: '50%', marginTop: -5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHcInfoText ?? 'You get double duckets as you are an HC member!'}
@@ -56,7 +56,7 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
                         params={393297}
                         tintColor="#01a101"
                         onPointerTap={onGetHcBtn}
-                        layout={{ position: 'absolute', left: 368, width: 107, top: 5, height: 30 }}
+                        layout={{ position: 'absolute', right: 18, width: 107, top: 5, height: 30 }}
                     >
                         {t('generic.get_hc')}
                     </ButtonThick>

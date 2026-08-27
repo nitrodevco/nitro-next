@@ -48,7 +48,7 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                     name="avatar_image"
                     params={1310736}
                     options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                    layout={{ position: 'absolute', left: -3, width: 33, top: 0, height: 34 }}
+                    layout={{ position: 'absolute', right: 134, width: 33, bottom: 1, height: 34 }}
                 />
                 <Region
                     name="user_name_txt"
@@ -71,7 +71,7 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                     <Region
                         name="action_link"
                         params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 86, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionActionLink ?? 'Action Name PH'} />
                     </Region>
@@ -105,7 +105,7 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                     params={81}
                     onPointerTap={onBlockRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 130, width: 17, top: 1, height: 18 }}
+                    layout={{ position: 'absolute', right: 17, width: 17, top: 1, height: 18 }}
                 >
                     <ThemeImage
                         name="icon_close_down"
@@ -131,7 +131,7 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                     params={81}
                     onPointerTap={onRemoveRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 146, width: 17, top: 1, height: 18 }}
+                    layout={{ position: 'absolute', right: 1, width: 17, top: 1, height: 18 }}
                 >
                     <ThemeImage
                         name="icon_close_down"

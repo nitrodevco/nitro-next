@@ -26,7 +26,7 @@ export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayout
                         name="item_list"
                         tags={[ 'SIMPLE_ITEM' ]}
                         params={8519698}
-                        layout={{ position: 'absolute', left: 7, width: 245, top: 7, height: 25, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column' }}
                     >
                         {itemsItemList ?? (
                             <ToolbarHoverLayoutItemBasicItem />

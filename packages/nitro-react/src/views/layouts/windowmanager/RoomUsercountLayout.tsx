@@ -17,12 +17,12 @@ export const RoomUsercountLayout = ({ itemsUsercount, layout }: RoomUsercountLay
                 name="room_info_usercount_border"
                 params={1835024}
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, bottom: 0, height: 18 }}
             >
                 <Region
                     name="usercount"
                     params={786448}
-                    layout={{ position: 'absolute', left: 3, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsUsercount ?? (
                         <>

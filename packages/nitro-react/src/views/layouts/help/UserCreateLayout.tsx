@@ -31,7 +31,7 @@ export const UserCreateLayout = ({ captionCancelLink, itemsList, layout, onCance
                 <Region
                     name="list"
                     params={8536080}
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 0, height: 258, minWidth: 270, maxWidth: 270, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column' }}
                 >
                     {itemsList ?? (
                         <>

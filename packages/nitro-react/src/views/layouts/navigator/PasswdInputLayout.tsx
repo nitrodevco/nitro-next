@@ -66,7 +66,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                         params={131221}
                         onPointerTap={onCancelRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 83, top: 5, height: 26 }}
+                        layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26 }}
                     >
                         <Region
                             name="cancel"

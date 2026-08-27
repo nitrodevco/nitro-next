@@ -113,18 +113,18 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                 <Region
                     name="header_cont"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 391, top: 0, height: 110 }}
+                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110 }}
                 >
                     <Region
                         params={2192}
                         backgroundColor="#b3b099"
-                        layout={{ position: 'absolute', left: 1, width: 390, top: 0, height: 110 }}
+                        layout={{ position: 'absolute', left: 1, right: 0, top: 0, bottom: 0 }}
                     />
                     <TabContext
                         variant="0"
                         name="edit_guild_tab_context"
                         params={2193}
-                        layout={{ position: 'absolute', left: -6, width: 402, top: 89, height: 21 }}
+                        layout={{ position: 'absolute', left: -6, right: -5, top: 89, bottom: 0 }}
                     >
                         <TabButton
                             variant="0"
@@ -167,7 +167,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         name="steps_header_cont"
                         params={144}
                         visible={visibleStepsHeaderCont ?? false}
-                        layout={{ position: 'absolute', left: 16, width: 360, top: 5, height: 33 }}
+                        layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33 }}
                     >
                         <ThemeImage
                             name="gcreate_1_0"
@@ -226,7 +226,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="step_title_1"
                             params={786560}
-                            layout={{ position: 'absolute', left: -38, width: 156, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStepTitle1 ?? t('group.create.steplabel.1')}
@@ -236,7 +236,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="step_title_2"
                             params={786560}
-                            layout={{ position: 'absolute', left: 40, width: 156, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStepTitle2 ?? t('group.create.steplabel.2')}
@@ -246,7 +246,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="step_title_3"
                             params={786560}
-                            layout={{ position: 'absolute', left: 115, width: 156, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStepTitle3 ?? t('group.create.steplabel.3')}
@@ -256,7 +256,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="step_title_4"
                             params={786560}
-                            layout={{ position: 'absolute', left: 210, width: 156, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStepTitle4 ?? t('group.create.steplabel.4')}
@@ -303,7 +303,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="header_caption_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 263, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderCaptionTxt ?? 'Caption PH'}
@@ -313,7 +313,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="header_desc_txt"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 232, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderDescTxt ?? 'Desc PH'}
@@ -324,7 +324,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                 <Region
                     name="step_cont_1"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 373, top: 128, height: 310 }}
+                    layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310 }}
                 >
                     <Border
                         variant="0"
@@ -356,7 +356,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="step_1_members_txt"
                             params={786448}
-                            layout={{ position: 'absolute', left: 10, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -37, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionStep1MembersTxt ?? 'Members PH'}
@@ -367,7 +367,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="name_label"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 107, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionNameLabel ?? t('group.edit.name')} />
                     </Region>
@@ -375,12 +375,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         value={nameTxtValue}
                         onChange={setNameTxtValue}
                         maxLength={29}
-                        layout={{ position: 'absolute', left: 126, width: 247, top: 14, height: 26 }}
+                        layout={{ position: 'absolute', left: 126, right: 0, top: 14, height: 26 }}
                     />
                     <Region
                         name="desc_label"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 100, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionDescLabel ?? t('group.edit.desc')} />
                     </Region>
@@ -388,12 +388,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         value={descTxtValue}
                         onChange={setDescTxtValue}
                         maxLength={254}
-                        layout={{ position: 'absolute', left: 126, width: 247, top: 74, height: 80 }}
+                        layout={{ position: 'absolute', left: 126, right: 0, top: 74, height: 80 }}
                     />
                     <Region
                         name="base_label"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 101, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionBaseLabel ?? t('group.edit.base')} />
                     </Region>
@@ -402,12 +402,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         name="base_dropmenu"
                         params={129}
                         onPointerTap={onBaseDropmenu}
-                        layout={{ position: 'absolute', left: 126, width: 247, top: 188, height: 26 }}
+                        layout={{ position: 'absolute', left: 126, right: 0, top: 188, height: 26 }}
                     />
                     <Region
                         name="base_warning"
                         params={129}
-                        layout={{ position: 'absolute', left: 126, width: 247, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBaseWarning ?? t('group.edit.base.warning')}
@@ -425,7 +425,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="create_room_link_txt"
                             params={128}
-                            layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionCreateRoomLinkTxt ?? t('group.createroom')}
@@ -439,7 +439,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     name="step_cont_2"
                     params={144}
                     visible={visibleStepCont2 ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 392, top: 110, height: 305 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
                 />
                 <Region
                     visible={visibleResetBadge ?? false}
@@ -459,12 +459,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     name="step_cont_3"
                     params={144}
                     visible={visibleStepCont3 ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 392, top: 110, height: 305 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
                 >
                     <Region
                         name="label_guild_color"
                         params={1048592}
-                        layout={{ position: 'absolute', left: 13, width: 92, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionLabelGuildColor ?? t('group.edit.color.guild.color')}
@@ -512,7 +512,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="label_primary"
                         params={1048592}
-                        layout={{ position: 'absolute', left: 128, width: 142, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionLabelPrimary ?? t('group.edit.color.primary.color')}
@@ -523,7 +523,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="label_secondary"
                         params={1048592}
-                        layout={{ position: 'absolute', left: 280, width: 100, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionLabelSecondary ?? t('group.edit.color.secondary.color')}
@@ -576,7 +576,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     name="step_cont_4"
                     params={144}
                     visible={visibleStepCont4 ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 389, top: 111, height: 360 }}
+                    layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360 }}
                 >
                     <Region
                         name="confirmation_caption"
@@ -720,7 +720,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     name="footer_cont"
                     params={1168}
                     visible={visibleFooterCont ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 390, top: 410, height: 42 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42 }}
                 >
                     <Region
                         name="cancel_link_region"
@@ -732,7 +732,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="cancel_link"
                             params={4194320}
-                            layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionCancelLink ?? t('cancel')} />
                         </Region>
@@ -747,7 +747,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         <Region
                             name="previous_step_link"
                             params={4194320}
-                            layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionPreviousStepLink ?? t('group.create.previousstep')} />
                         </Region>
@@ -779,7 +779,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                             name="buy_button"
                             params={131153}
                             onPointerTap={onBuyButton}
-                            layout={{ position: 'absolute', left: 172, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
+                            layout={{ position: 'absolute', right: 4, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
                         >
                             {t('group.create.confirm.buy')}
                         </ButtonThick>
@@ -798,12 +798,12 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     name="step_cont_5"
                     params={144}
                     visible={visibleStepCont5 ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 389, top: 111, height: 360 }}
+                    layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360 }}
                 >
                     <Region
                         name="guild_type"
                         params={1048592}
-                        layout={{ position: 'absolute', left: 16, width: 170, top: 6, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionGuildType ?? t('group.edit.settings.type.caption')}
@@ -956,7 +956,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                     <Region
                         name="guild_rights"
                         params={1048592}
-                        layout={{ position: 'absolute', left: 207, width: 170, top: 6, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionGuildRights ?? t('group.edit.settings.rights.caption')}

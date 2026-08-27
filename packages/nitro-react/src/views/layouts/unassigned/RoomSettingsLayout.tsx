@@ -27,7 +27,7 @@ export const RoomSettingsLayout = ({ itemsContents, layout, onClose }: RoomSetti
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 4, width: 332, top: 0, height: 549 }}
+                    layout={{ position: 'absolute', left: 4, right: 5, top: 0, bottom: 35 }}
                 >
                     <Region
                         name="contents"
@@ -140,7 +140,7 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
                 value={roomNameValue}
                 onChange={setRoomNameValue}
                 backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 14, height: 20 }}
+                layout={{ position: 'absolute', left: 0, width: 300, top: 14, height: 20, overflow: 'hidden' }}
             />
             <Region
                 name="description_label"
@@ -156,7 +156,7 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
                 value={descriptionValue}
                 onChange={setDescriptionValue}
                 backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 51, height: 39 }}
+                layout={{ position: 'absolute', left: 0, width: 300, top: 51, height: 39, overflow: 'hidden' }}
             />
             <Region
                 name="tag_category_container"
@@ -228,13 +228,13 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
                     value={tag1Value}
                     onChange={setTag1Value}
                     backgroundColor="#fbfbf9"
-                    layout={{ position: 'absolute', left: 0, width: 145, top: 154, height: 15 }}
+                    layout={{ position: 'absolute', left: 0, width: 145, top: 154, height: 15, overflow: 'hidden' }}
                 />
                 <TextInput
                     value={tag2Value}
                     onChange={setTag2Value}
                     backgroundColor="#fbfbf9"
-                    layout={{ position: 'absolute', left: 149, width: 145, top: 154, height: 15 }}
+                    layout={{ position: 'absolute', left: 149, width: 145, top: 154, height: 15, overflow: 'hidden' }}
                 />
             </Region>
             <Region
@@ -265,12 +265,12 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionCategoryLabel, capt
                 params={147665}
                 onPointerTap={onRemoveLinkRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 66, width: 189, top: 334, height: 22 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 189, top: 334, height: 22 }}
             >
                 <Region
                     name="remove_link"
                     params={4194320}
-                    layout={{ position: 'absolute', left: 15, width: 174, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 15, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
@@ -435,7 +435,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
             <Region
                 name="normal_access_container"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 321, top: 0, height: 354 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 354 }}
             >
                 <Region
                     name="room_access_tab_caption"
@@ -567,7 +567,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
                         value={passwordValue}
                         onChange={setPasswordValue}
                         backgroundColor="#fbfbf9"
-                        layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15 }}
+                        layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15, overflow: 'hidden' }}
                     />
                     <Region
                         name="password__confirm_label"
@@ -583,7 +583,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
                         value={passwordConfirmValue}
                         onChange={setPasswordConfirmValue}
                         backgroundColor="#fbfbf9"
-                        layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15 }}
+                        layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15, overflow: 'hidden' }}
                     />
                 </Region>
                 <Region
@@ -620,7 +620,7 @@ export const RoomSettingsLayoutTabContainer2Item = ({ captionDoormodeDoorbellLab
                             params={131281}
                             onPointerTap={onBuildersFaqButton}
                             textStyle="text-style-button-shiny-regular"
-                            layout={{ position: 'absolute', left: 11, width: 287, top: 122, height: 30 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -143, width: 287, top: 122, height: 30 }}
                         >
                             {t('notification.builders_club.room_locked.linkTitle')}
                         </Button>
@@ -669,7 +669,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                 name="guild_rights_container"
                 params={144}
                 visible={visibleGuildRightsContainer ?? false}
-                layout={{ position: 'absolute', left: 6, width: 380, top: 0, height: 367 }}
+                layout={{ position: 'absolute', left: 6, right: -62, top: 0, height: 367 }}
             >
                 <Region
                     params={16}
@@ -695,7 +695,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
             <Region
                 name="normal_rights_container"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 392, top: 0, height: 367 }}
+                layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 367 }}
             >
                 <Border
                     variant="0"
@@ -717,13 +717,13 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                     <TextInput
                         value={filterUsersInputValue}
                         onChange={setFilterUsersInputValue}
-                        layout={{ position: 'absolute', left: 97, width: 206, top: 8, height: 23 }}
+                        layout={{ position: 'absolute', left: 97, right: 9, top: 8, height: 23, overflow: 'hidden' }}
                     />
                 </Border>
                 <Region
                     name="users_with_rights_txt"
                     params={786448}
-                    layout={{ position: 'absolute', left: 0, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -196, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
@@ -735,7 +735,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                     name="friends_txt"
                     params={786448}
                     visible={false}
-                    layout={{ position: 'absolute', left: 175, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
@@ -745,7 +745,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                 </Region>
                 <Region
                     visible={visibleUsersWithRightsCont ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 150, top: 74, height: 289 }}
+                    layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
                 >
                     <Border
                         variant="0"
@@ -756,7 +756,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 246 }}
+                            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39 }}
                         >
                             <Region
                                 name="users_with_rights_item_list"
@@ -771,7 +771,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                             params={132113}
                             onPointerTap={onRemoveAllFlatCtrls}
                             textStyle="text-style-button-shiny-bold"
-                            layout={{ position: 'absolute', left: 4, width: 142, top: 256, height: 29, minWidth: 142, maxWidth: 142 }}
+                            layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
                         >
                             {t('navigator.flatctrls.clear')}
                         </ButtonThick>
@@ -779,7 +779,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                 </Region>
                 <Region
                     visible={visibleFriendsCont ?? false}
-                    layout={{ position: 'absolute', left: 173, width: 150, top: 74, height: 289 }}
+                    layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
                 >
                     <Border
                         variant="0"
@@ -790,7 +790,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ captionFriendsTxt, caption
                     >
                         <ScrollArea
                             orientation="vertical"
-                            layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 281 }}
+                            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4 }}
                         >
                             <Region
                                 name="friends_item_list"
@@ -950,7 +950,7 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 value={idleSleepTimeoutValue}
                 onChange={setIdleSleepTimeoutValue}
                 backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 20, width: 72, top: 257, height: 20 }}
+                layout={{ position: 'absolute', left: 20, width: 72, top: 257, height: 20, overflow: 'hidden' }}
             />
             <Region
                 name="idle_sleep_timeout_label"
@@ -983,7 +983,7 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 value={idleAutokickTimeoutValue}
                 onChange={setIdleAutokickTimeoutValue}
                 backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 20, width: 72, top: 303, height: 20 }}
+                layout={{ position: 'absolute', left: 20, width: 72, top: 303, height: 20, overflow: 'hidden' }}
             />
             <Region
                 name="idle_autokick_timeout_label"

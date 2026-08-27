@@ -20,11 +20,11 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                 <Border
                     variant="0"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 213 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 4, width: 200, top: 4, height: 100 }}
+                        layout={{ position: 'absolute', left: 4, width: 200, top: 4, bottom: 109 }}
                     >
                         <Region
                             name="_list_vertical"
@@ -36,11 +36,11 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                     {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
                     <Region
                         params={1168}
-                        layout={{ position: 'absolute', left: 6, width: 218, top: 108, height: 100 }}
+                        layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}
                     >
                         <ScrollArea
                             orientation="horizontal"
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 81 }}
+                            layout={{ position: 'absolute', left: 0, right: 18, top: 0, height: 81 }}
                         >
                             <Region
                                 name="_list_horizontal"

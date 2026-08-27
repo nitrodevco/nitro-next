@@ -80,12 +80,12 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                     variant="0"
                     name="clubLevelIcon"
                     params={394320}
-                    layout={{ position: 'absolute', left: 15, width: 19, top: 2, height: 10 }}
+                    layout={{ position: 'absolute', right: 2, width: 19, bottom: 24, height: 10 }}
                 />
                 <Region
                     name="bundleCounter"
                     params={176}
-                    layout={{ position: 'absolute', left: 18, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionBundleCounter ?? ''}
@@ -97,7 +97,7 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                     name="multiContainer"
                     params={393232}
                     tintColor="#ff3300"
-                    layout={{ position: 'absolute', left: 18, width: 17, top: 21, height: 13 }}
+                    layout={{ position: 'absolute', right: 1, width: 17, top: 21, height: 13 }}
                 >
                     <Region
                         name="multiCounter"

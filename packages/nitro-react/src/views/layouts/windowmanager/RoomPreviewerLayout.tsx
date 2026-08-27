@@ -15,12 +15,12 @@ export const RoomPreviewerLayout = ({ layout, onRoomCanvasContainer }: RoomPrevi
                 backgroundColor="#000000"
                 onPointerTap={onRoomCanvasContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 168 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="room_canvas"
                     params={2208}
-                    layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 168 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Region>

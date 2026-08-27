@@ -7,10 +7,11 @@ export interface LayoutVipBuy_1547LayoutProps {
     captionVipInfo?: string;
     captionVipTitle?: string;
     layout?: BoxLayout;
+    onHccenterLinkContainer?: () => void;
     srcCtlgTeaserimg1?: string;
 }
 
-export const LayoutVipBuy_1547Layout = ({ captionHccenterLink, captionVipInfo, captionVipTitle, layout, srcCtlgTeaserimg1 }: LayoutVipBuy_1547LayoutProps) => {
+export const LayoutVipBuy_1547Layout = ({ captionHccenterLink, captionVipInfo, captionVipTitle, layout, onHccenterLinkContainer, srcCtlgTeaserimg1 }: LayoutVipBuy_1547LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -19,12 +20,12 @@ export const LayoutVipBuy_1547Layout = ({ captionHccenterLink, captionVipInfo, c
                 name="ctlg_vip_buy"
                 params={2064}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
             >
                 <Region
                     name="vipBuyWidget"
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 >
                     <Region
                         tags={[ 'own_items_grid' ]}
@@ -61,17 +62,19 @@ export const LayoutVipBuy_1547Layout = ({ captionHccenterLink, captionVipInfo, c
                     <Region
                         name="item_list_vip"
                         params={2064}
-                        layout={{ position: 'absolute', left: 19, width: 336, top: 170, height: 257, flexDirection: 'column', gap: 4 }}
+                        layout={{ position: 'absolute', left: 19, width: 336, top: 170, bottom: 33, flexDirection: 'column', gap: 4 }}
                     />
                     <Region
                         name="hccenter_link_container"
                         params={1310721}
-                        layout={{ position: 'absolute', left: 19, width: 316, top: 434, height: 17, minWidth: 316, maxWidth: 316 }}
+                        onPointerTap={onHccenterLinkContainer}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', right: 25, width: 316, bottom: 9, height: 17, minWidth: 316, maxWidth: 316 }}
                     >
                         <Region
                             name="hccenter_link"
                             params={1310721}
-                            layout={{ position: 'absolute', left: 40, width: 236, top: -13, height: 30, minWidth: 236, maxWidth: 236, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', right: 40, width: 236, bottom: 0, height: 30, minWidth: 236, maxWidth: 236, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionHccenterLink ?? ''}

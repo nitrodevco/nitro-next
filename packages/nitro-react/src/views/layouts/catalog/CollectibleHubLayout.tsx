@@ -74,6 +74,9 @@ export interface CollectibleHubLayoutProps {
     onCollectButton?: () => void;
     onCreateWalletButton?: () => void;
     onMoreInfoButton?: () => void;
+    onProductNameContainer?: () => void;
+    onProductNameContainer2?: () => void;
+    onProductNameContainer3?: () => void;
     onSearchClearButton?: () => void;
     onSilverBuyButton?: () => void;
     onSortSelection?: () => void;
@@ -140,7 +143,7 @@ export interface CollectibleHubLayoutProps {
     visibleTransferContainer?: boolean;
 }
 
-export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCollectionName, captionCollectorCollectionsHeader, captionCollectorLevel, captionCollectorLevelDescription, captionCollectorLevelHeader, captionCollectorProfileDescription, captionCollectorProfileDescription2, captionCollectorProfileDescription3, captionCollectorProfileHeader, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, captionEmeraldCurrencyValue, captionInfoDesc, captionLevelTitle, captionMintingDescription, captionMintingHeader, captionMintLockText, captionMintTokenBalance, captionNoWalletText, captionPreviewFurniName, captionPreviewFurniName2, captionPreviewFurniName3, captionPreviewRewardText, captionPreviewScoreText, captionPriceText, captionProcuctScoreText, captionProgressBarText, captionProgressBarText2, captionProgressText, captionRewardFurniName, captionSearchPlaceholder, captionSilverCostText, captionSilverCurrencyValue, captionStampPricing, captionStampsHeader, captionStampsHeader2, captionTransferDesc, captionTransferFeeText, itemsItemgridCollection, itemsItemgridInventory, itemsItemgridShop, itemsItemlist, itemsMintlimitContainer, itemsNavigationList, itemsNavigationList2, itemsProductInfoList, itemsProductInfoList2, layout, onBuyButton, onCategoryInfoDescriptionRegion, onCategoryInfoHeaderRegion, onCategoryInfoTransferRegion, onCategoryMintingDescriptionRegion, onCategoryMintingDescriptionRegion2, onCategoryMintingDescriptionRegion3, onCategoryNameRegion, onCategoryNameRegion2, onCategoryNameRegion3, onClaimButton, onClaimButton2, onClose, onCollectButton, onCreateWalletButton, onMoreInfoButton, onSearchClearButton, onSilverBuyButton, onSortSelection, onStampsPurchaseDropdown, onTopViewCollectionsButton, onTopViewInfoButton, onTopViewLevelsButton, onTopViewMintingButton, onTopViewProfileButton, onTopViewRewardsButton, onTopViewShopButton, onTopViewTransferButton, onTransferButton, onTransferWalletSelection, onWalletSelection, srcBgStar, srcBgStar2, srcBgStar3, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcLoadingIcon, srcLoadingIcon2, srcLoadingIcon3, srcLoadingIcon4, srcLoadingIcon5, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcPlaceholderImage2, srcPlaceholderImage3, srcProductPreview, srcProductPreview2, srcProductPreview3, srcSearchIcon, srcSilverCurrencyIcon, srcTransferFeeIcon, srcUnknownImage, srcUnknownImage2, srcUnknownImage3, visibleCategoryNameRegion, visibleCollectionProgressContainer, visibleCollectorProfileContainer, visibleInfoContainer, visibleLevelsContainer, visibleLoadedContent, visibleLoadingContents, visibleLoadingContents2, visibleLoadingContents3, visibleLoadingContents4, visibleLoadingContents5, visibleMintingContainer, visibleNoWalletContainer, visibleProductInfoContainer, visibleProductInfoContainer2, visibleProductNameContainer, visibleRewardsContainer, visibleShopContainer, visibleTabBg, visibleTopViewLevelsButton, visibleTopViewProfileButton, visibleTransferContainer }: CollectibleHubLayoutProps) => {
+export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCollectionName, captionCollectorCollectionsHeader, captionCollectorLevel, captionCollectorLevelDescription, captionCollectorLevelHeader, captionCollectorProfileDescription, captionCollectorProfileDescription2, captionCollectorProfileDescription3, captionCollectorProfileHeader, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, captionEmeraldCurrencyValue, captionInfoDesc, captionLevelTitle, captionMintingDescription, captionMintingHeader, captionMintLockText, captionMintTokenBalance, captionNoWalletText, captionPreviewFurniName, captionPreviewFurniName2, captionPreviewFurniName3, captionPreviewRewardText, captionPreviewScoreText, captionPriceText, captionProcuctScoreText, captionProgressBarText, captionProgressBarText2, captionProgressText, captionRewardFurniName, captionSearchPlaceholder, captionSilverCostText, captionSilverCurrencyValue, captionStampPricing, captionStampsHeader, captionStampsHeader2, captionTransferDesc, captionTransferFeeText, itemsItemgridCollection, itemsItemgridInventory, itemsItemgridShop, itemsItemlist, itemsMintlimitContainer, itemsNavigationList, itemsNavigationList2, itemsProductInfoList, itemsProductInfoList2, layout, onBuyButton, onCategoryInfoDescriptionRegion, onCategoryInfoHeaderRegion, onCategoryInfoTransferRegion, onCategoryMintingDescriptionRegion, onCategoryMintingDescriptionRegion2, onCategoryMintingDescriptionRegion3, onCategoryNameRegion, onCategoryNameRegion2, onCategoryNameRegion3, onClaimButton, onClaimButton2, onClose, onCollectButton, onCreateWalletButton, onMoreInfoButton, onProductNameContainer, onProductNameContainer2, onProductNameContainer3, onSearchClearButton, onSilverBuyButton, onSortSelection, onStampsPurchaseDropdown, onTopViewCollectionsButton, onTopViewInfoButton, onTopViewLevelsButton, onTopViewMintingButton, onTopViewProfileButton, onTopViewRewardsButton, onTopViewShopButton, onTopViewTransferButton, onTransferButton, onTransferWalletSelection, onWalletSelection, srcBgStar, srcBgStar2, srcBgStar3, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcLoadingIcon, srcLoadingIcon2, srcLoadingIcon3, srcLoadingIcon4, srcLoadingIcon5, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcPlaceholderImage2, srcPlaceholderImage3, srcProductPreview, srcProductPreview2, srcProductPreview3, srcSearchIcon, srcSilverCurrencyIcon, srcTransferFeeIcon, srcUnknownImage, srcUnknownImage2, srcUnknownImage3, visibleCategoryNameRegion, visibleCollectionProgressContainer, visibleCollectorProfileContainer, visibleInfoContainer, visibleLevelsContainer, visibleLoadedContent, visibleLoadingContents, visibleLoadingContents2, visibleLoadingContents3, visibleLoadingContents4, visibleLoadingContents5, visibleMintingContainer, visibleNoWalletContainer, visibleProductInfoContainer, visibleProductInfoContainer2, visibleProductNameContainer, visibleRewardsContainer, visibleShopContainer, visibleTabBg, visibleTopViewLevelsButton, visibleTopViewProfileButton, visibleTransferContainer }: CollectibleHubLayoutProps) => {
     const t = useTranslation();
     const [ stampsPurchaseInputValue, setStampsPurchaseInputValue ] = useState('');
     const [ searchInputValue, setSearchInputValue ] = useState('');
@@ -489,19 +492,19 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073889424}
                     visible={visibleMintingContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 490, top: 125, height: 430 }}
+                    layout={{ position: 'absolute', left: 0, right: 10, top: 125, height: 430, overflow: 'hidden' }}
                 >
                     <Region
                         name="loaded_content"
                         params={1073741840}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430 }}
+                        layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_minting_header_region"
                             tags={[ 'category_header' ]}
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58, overflow: 'hidden' }}
                         >
                             <Region
                                 name="category_name_region"
@@ -619,17 +622,17 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', left: 105, width: 80, top: 90, height: 80 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -40, width: 80, top: '50%', marginTop: -40, height: 80, overflow: 'hidden' }}
                                     />
                                     <Region
                                         visible={false}
-                                        layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                     >
                                         <ThemeImage
                                             name="unknown_image"
                                             params={3932176}
                                             src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                         />
                                     </Region>
                                     <WidgetSlot
@@ -638,7 +641,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', left: 53, width: 180, top: 60, height: 140 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 180, top: '50%', marginTop: -70, height: 140, overflow: 'hidden' }}
                                     />
                                     <WidgetSlot
                                         widgetType="room_previewer"
@@ -646,7 +649,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', left: 93, width: 100, top: 0, height: 260 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -52, width: 100, top: '50%', marginTop: -130, height: 260, overflow: 'hidden' }}
                                     />
                                     <Region
                                         visible={false}
@@ -663,6 +666,8 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         name="product_name_container"
                                         params={17}
                                         backgroundColor="#000000"
+                                        onPointerTap={onProductNameContainer}
+                                        cursor="pointer"
                                         layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
                                     >
                                         <Region
@@ -683,7 +688,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     >
                                         <Region
                                             params={409616}
-                                            layout={{ position: 'absolute', left: 100, width: 100, top: 0, height: 30, flexDirection: 'row' }}
+                                            layout={{ position: 'absolute', right: 0, top: 0, flexDirection: 'row' }}
                                         >
                                             <Region
                                                 name="stamp_pricing"
@@ -732,7 +737,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     >
                                         <Region
                                             params={3932161}
-                                            layout={{ position: 'absolute', left: 4, width: 274, top: 16, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -137, width: 274, top: '50%', marginTop: -9, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                                         >
                                             <ThemeText
                                                 text={t('shop.minting.no_furni')}
@@ -754,7 +759,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                             <Region
                                                 name="mint_lock_text"
                                                 params={786433}
-                                                layout={{ position: 'absolute', left: 0, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                                layout={{ position: 'absolute', left: '50%', marginLeft: -113, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                             >
                                                 <ThemeText
                                                     text={captionMintLockText ?? t('shop.minting.region_unlocked')}
@@ -822,7 +827,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                             name="category_footer"
                             tags={[ 'category_header' ]}
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 488, top: 330, height: 100 }}
+                            layout={{ position: 'absolute', left: 0, width: 488, top: 330, height: 100, overflow: 'hidden' }}
                         >
                             <Border
                                 variant="3"
@@ -878,7 +883,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     >
                                         <Region
                                             params={409616}
-                                            layout={{ position: 'absolute', left: 42, width: 154, top: 4, height: 30, flexDirection: 'row', gap: 6 }}
+                                            layout={{ position: 'absolute', right: 4, top: 4, flexDirection: 'row', gap: 6 }}
                                         >
                                             <Region
                                                 name="stamps_header"
@@ -918,7 +923,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         </Region>
                                         <Region
                                             params={409616}
-                                            layout={{ position: 'absolute', left: 49, width: 147, top: 36, height: 30, flexDirection: 'row' }}
+                                            layout={{ position: 'absolute', right: 4, top: 36, flexDirection: 'row' }}
                                         >
                                             <Region
                                                 name="silver_cost_text"
@@ -967,7 +972,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     <Region
                                         name="no_wallet_text"
                                         params={3145744}
-                                        layout={{ position: 'absolute', left: 10, width: 360, top: 0, height: 17, minHeight: 0, maxHeight: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                        layout={{ position: 'absolute', left: 10, width: 360, top: '50%', marginTop: -50, height: 17, minHeight: 0, maxHeight: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                     >
                                         <ThemeText
                                             text={captionNoWalletText ?? t('shop.minting.no_wallet.description')}
@@ -1029,19 +1034,19 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073889424}
                     visible={visibleCollectorProfileContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 390, top: 125, height: 400 }}
+                    layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 400, overflow: 'hidden' }}
                 >
                     <Region
                         name="category_content_background"
                         params={1073741840}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400 }}
+                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_collector_header_region"
                             tags={[ 'category_header' ]}
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 56 }}
+                            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 56, overflow: 'hidden' }}
                         >
                             <Region
                                 name="category_name_region"
@@ -1090,7 +1095,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     tags={[ 'TEMPLATE', 'category_container' ]}
                     params={1073889424}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 485, top: 125, height: 429 }}
+                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
                 >
                     <Region
                         name="loaded_content"
@@ -1130,7 +1135,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     name="search_icon"
                                     params={3935424}
                                     src={srcSearchIcon ?? layoutImage('icons_close.png')}
-                                    layout={{ position: 'absolute', left: 2, width: 20, top: 2, height: 20 }}
+                                    layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, top: '50%', marginTop: -10, height: 20 }}
                                 />
                                 <Button
                                     variant="100"
@@ -1157,17 +1162,17 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                         <Region
                             name="navigationContainer"
                             params={2064}
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 88, height: 341 }}
+                            layout={{ position: 'absolute', left: 4, width: 184, top: 88, bottom: 0 }}
                         >
                             <Border
                                 variant="6"
                                 params={2064}
                                 blend={0.5}
-                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 341 }}
+                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
                             />
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, height: 331 }}
+                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
                             >
                                 <Region
                                     name="navigationList"
@@ -1281,17 +1286,17 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', left: 105, width: 80, top: 90, height: 80 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -40, width: 80, top: '50%', marginTop: -40, height: 80, overflow: 'hidden' }}
                                     />
                                     <Region
                                         visible={false}
-                                        layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                     >
                                         <ThemeImage
                                             name="unknown_image"
                                             params={3932176}
                                             src={srcUnknownImage2 ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -24, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                         />
                                     </Region>
                                     <WidgetSlot
@@ -1300,7 +1305,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', left: 53, width: 180, top: 60, height: 140 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 180, top: '50%', marginTop: -70, height: 140, overflow: 'hidden' }}
                                     />
                                     <WidgetSlot
                                         widgetType="room_previewer"
@@ -1308,7 +1313,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', left: 93, width: 100, top: 0, height: 260 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -52, width: 100, top: '50%', marginTop: -130, height: 260, overflow: 'hidden' }}
                                     />
                                     <ThemeImage
                                         name="product_preview"
@@ -1321,6 +1326,8 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={17}
                                         visible={visibleProductNameContainer ?? false}
                                         backgroundColor="#000000"
+                                        onPointerTap={onProductNameContainer2}
+                                        cursor="pointer"
                                         layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
                                     >
                                         <Region
@@ -1429,7 +1436,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                             params={393233}
                                             tintColor="#01a101"
                                             onPointerTap={onClaimButton}
-                                            layout={{ position: 'absolute', left: 186, width: 97, top: 166, height: 30 }}
+                                            layout={{ position: 'absolute', right: 7, width: 97, top: 166, height: 30 }}
                                         >
                                             {t('collectibles.claim')}
                                         </Button>
@@ -1444,7 +1451,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         <Region
                                             name="preview_score_text"
                                             params={786433}
-                                            layout={{ position: 'absolute', left: 0, width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -145, width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                                         >
                                             <ThemeText
                                                 text={captionPreviewScoreText ?? t('collectibles.preview.score')}
@@ -1460,7 +1467,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                             <Region
                                                 name="preview_reward_text"
                                                 params={3932161}
-                                                layout={{ position: 'absolute', left: 4, width: 274, top: 2, height: 28, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                                layout={{ position: 'absolute', left: '50%', marginLeft: -137, width: 274, top: '50%', marginTop: -14, height: 28, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                                             >
                                                 <ThemeText
                                                     text={captionPreviewRewardText ?? t('collectibles.preview.reward')}
@@ -1484,7 +1491,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                             <Region
                                                 name="procuct_score_text"
                                                 params={3932161}
-                                                layout={{ position: 'absolute', left: 4, width: 274, top: 8, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                                layout={{ position: 'absolute', left: '50%', marginLeft: -137, width: 274, top: '50%', marginTop: -8, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                                             >
                                                 <ThemeText
                                                     text={captionProcuctScoreText ?? t('collectibles.preview.product.incomplete')}
@@ -1544,7 +1551,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073889424}
                     visible={visibleShopContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: -5, width: 490, top: 125, height: 428 }}
+                    layout={{ position: 'absolute', left: -5, right: 15, top: 125, height: 428, overflow: 'hidden' }}
                 >
                     <Region
                         name="loaded_content"
@@ -1554,17 +1561,17 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                         <Region
                             name="navigationContainer"
                             params={2064}
-                            layout={{ position: 'absolute', left: 8, width: 184, top: 3, height: 425 }}
+                            layout={{ position: 'absolute', left: 8, width: 184, top: 3, bottom: 0 }}
                         >
                             <Border
                                 variant="6"
                                 params={2064}
                                 blend={0.5}
-                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 425 }}
+                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
                             />
                             <ScrollArea
                                 orientation="vertical"
-                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, height: 415 }}
+                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
                             >
                                 <Region
                                     name="navigationList"
@@ -1640,17 +1647,17 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', left: 105, width: 80, top: 90, height: 80 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -43, width: 80, top: '50%', marginTop: -40, height: 80, overflow: 'hidden' }}
                                     />
                                     <Region
                                         visible={false}
-                                        layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -27, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                     >
                                         <ThemeImage
                                             name="unknown_image"
                                             params={3932176}
                                             src={srcUnknownImage3 ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', left: 121, width: 48, top: 106, height: 48 }}
+                                            layout={{ position: 'absolute', left: '50%', marginLeft: -27, width: 48, top: '50%', marginTop: -24, height: 48 }}
                                         />
                                     </Region>
                                     <WidgetSlot
@@ -1659,7 +1666,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', left: 53, width: 180, top: 60, height: 140 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -95, width: 180, top: '50%', marginTop: -70, height: 140, overflow: 'hidden' }}
                                     />
                                     <WidgetSlot
                                         widgetType="room_previewer"
@@ -1667,7 +1674,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         params={1077674000}
                                         visible={false}
                                         options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', left: 93, width: 100, top: 0, height: 260 }}
+                                        layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 100, top: '50%', marginTop: -130, height: 260, overflow: 'hidden' }}
                                     />
                                     <ThemeImage
                                         name="product_preview"
@@ -1679,6 +1686,8 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                         name="product_name_container"
                                         params={17}
                                         backgroundColor="#000000"
+                                        onPointerTap={onProductNameContainer3}
+                                        cursor="pointer"
                                         layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
                                     >
                                         <Region
@@ -1711,7 +1720,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     </Region>
                                     <Region
                                         params={409616}
-                                        layout={{ position: 'absolute', left: 114, width: 172, top: 226, height: 30, flexDirection: 'row', gap: 4 }}
+                                        layout={{ position: 'absolute', right: 10, top: 226, flexDirection: 'row', gap: 4 }}
                                     >
                                         <Region
                                             name="price_text"
@@ -1744,7 +1753,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                                     <Region
                                         name="mintlimit_container"
                                         params={409616}
-                                        layout={{ position: 'absolute', left: 184, width: 102, top: 196, height: 30, flexDirection: 'row', gap: 4 }}
+                                        layout={{ position: 'absolute', right: 10, top: 196, flexDirection: 'row', gap: 4 }}
                                     >
                                         {itemsMintlimitContainer ?? (
                                             <CollectibleHubLayoutMintlimitTextItem />
@@ -1806,7 +1815,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073758352}
                     visible={visibleTransferContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 485, top: 125, height: 429 }}
+                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
                 >
                     <Region
                         name="loaded_content"
@@ -1820,7 +1829,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                         >
                             <Region
                                 params={3935248}
-                                layout={{ position: 'absolute', left: 19, width: 450, top: 10, height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -223.5, width: 450, top: '50%', marginTop: -15, height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={t('collectibles.transfer.description')}
@@ -1851,7 +1860,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                             >
                                 <Region
                                     params={409616}
-                                    layout={{ position: 'absolute', left: 11, width: 146, top: 5, height: 30, flexDirection: 'row' }}
+                                    layout={{ position: 'absolute', right: 13, top: 5, flexDirection: 'row' }}
                                 >
                                     <Region
                                         name="transfer_fee_text"
@@ -1924,19 +1933,19 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073758352}
                     visible={visibleLevelsContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 485, top: 125, height: 429 }}
+                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
                 >
                     <Region
                         name="category_content_background"
                         params={1073741840}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
+                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_collector_header_region"
                             tags={[ 'category_header' ]}
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80 }}
+                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80, overflow: 'hidden' }}
                         >
                             <Region
                                 name="category_name_region"
@@ -1984,19 +1993,19 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073889424}
                     visible={visibleInfoContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 390, top: 125, height: 419 }}
+                    layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 419, overflow: 'hidden' }}
                 >
                     <Region
                         name="category_content_background"
                         params={1073741840}
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400 }}
+                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_collector_header_region"
                             tags={[ 'category_header' ]}
                             params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 135 }}
+                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 135, overflow: 'hidden' }}
                         >
                             <Region
                                 name="category_info_header_region"
@@ -2090,7 +2099,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                     params={1073758352}
                     visible={visibleRewardsContainer ?? false}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 485, top: 125, height: 429 }}
+                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
                 >
                     <Region
                         name="loaded_content"
@@ -2149,7 +2158,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                         >
                             <Region
                                 params={788496}
-                                layout={{ position: 'absolute', left: 19, width: 450, top: 28, height: 17, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -223.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={t('collectibles.no_claims')}
@@ -2165,7 +2174,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                             <ThemeImage
                                 params={3932176}
                                 src={layoutImage('image_frank_dont_know.png')}
-                                layout={{ position: 'absolute', left: 0, width: 485, top: 50, height: 176 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -242.5, width: 485, top: '50%', marginTop: -116, height: 176 }}
                             />
                         </Region>
                     </Region>
@@ -2264,17 +2273,17 @@ export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, on
                 params={1077674000}
                 visible={false}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -26.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <Region
                 visible={false}
-                layout={{ position: 'absolute', left: 16, width: 18, top: 15, height: 18 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 18, top: '50%', marginTop: -15.5, height: 18 }}
             >
                 <ThemeImage
                     name="unknown_image"
                     params={3932176}
                     src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                    layout={{ position: 'absolute', left: 16, width: 18, top: 15, height: 18 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 18, top: '50%', marginTop: -15.5, height: 18 }}
                 />
             </Region>
             <WidgetSlot
@@ -2283,7 +2292,7 @@ export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, on
                 params={1077674000}
                 visible={false}
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -26.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <Region
                 name="number_container"
@@ -2364,7 +2373,7 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 7, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'item'}
@@ -2498,13 +2507,13 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ captionNumber, layout, o
                 name="badge_image_widget"
                 params={1077674000}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -26.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <ThemeImage
                 name="unknown_image"
                 params={3932176}
                 src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                layout={{ position: 'absolute', left: 16, width: 18, top: 15, height: 18 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 18, top: '50%', marginTop: -15.5, height: 18 }}
             />
             <WidgetSlot
                 widgetType="pet_image"
@@ -2512,7 +2521,7 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ captionNumber, layout, o
                 params={1077674000}
                 visible={false}
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -26.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <Region
                 name="number_container"
@@ -2589,7 +2598,7 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, layout
                 name="item_title"
                 tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 params={176}
-                layout={{ position: 'absolute', left: 7, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionItemTitle ?? 'item'}
@@ -2717,13 +2726,13 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ captionNumber, layout, o
                 name="badge_image_widget"
                 params={1077674000}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -27, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <ThemeImage
                 name="unknown_image"
                 params={3932176}
                 src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                layout={{ position: 'absolute', left: 16, width: 18, top: 15, height: 18 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 18, top: '50%', marginTop: -16, height: 18 }}
             />
             <WidgetSlot
                 widgetType="pet_image"
@@ -2731,7 +2740,7 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ captionNumber, layout, o
                 params={1077674000}
                 visible={false}
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
-                layout={{ position: 'absolute', left: 5, width: 40, top: 4, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, top: '50%', marginTop: -27, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
             <Region
                 name="number_container"

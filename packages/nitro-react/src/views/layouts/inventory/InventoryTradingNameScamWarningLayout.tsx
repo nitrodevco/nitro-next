@@ -28,7 +28,7 @@ export const InventoryTradingNameScamWarningLayout = ({ itemsContentList, layout
                 <Region
                     name="content_list"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 10, width: 330, top: 8, height: 280, flexDirection: 'column', gap: 8 }}
+                    layout={{ position: 'absolute', left: 10, right: 16, top: 8, height: 280, flexDirection: 'column', gap: 8 }}
                 >
                     {itemsContentList ?? (
                         <>
@@ -117,7 +117,7 @@ export const InventoryTradingNameScamWarningLayoutTraderSectionItem = ({ caption
                 params={393297}
                 onPointerTap={onOpenProfileButton}
                 textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 224, width: 90, top: 16, height: 26 }}
+                layout={{ position: 'absolute', right: 16, width: 90, top: 16, height: 26 }}
             >
                 {t('inventory.trading.namescam.open_profile')}
             </Button>
@@ -151,7 +151,7 @@ export const InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem = ({ ca
             <Region
                 name="room_matches_text"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 330, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionRoomMatchesText ?? 'User 1'}
@@ -188,7 +188,7 @@ export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ 
             <Region
                 name="friend_matches_text"
                 params={144}
-                layout={{ position: 'absolute', left: 0, width: 330, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionFriendMatchesText ?? 'Friend 1'}

@@ -28,7 +28,7 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8519696}
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 0, height: 272, minWidth: 270, maxWidth: 270, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 5, minWidth: 270, top: 0, minHeight: 272, maxWidth: 270, flexDirection: 'column', gap: 5 }}
                 >
                     <Border
                         variant="102"
@@ -38,7 +38,7 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         <ThemeImage
                             params={1040}
                             src={layoutImage('help_user_pending.png')}
-                            layout={{ position: 'absolute', left: 10, width: 60, top: 37, height: 85 }}
+                            layout={{ position: 'absolute', left: 10, width: 60, bottom: 0, height: 85 }}
                         />
                         <Region
                             name="request_type"
@@ -121,7 +121,7 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         {t('guide.help.request.user.pending.cancel.button')}
                         <Region
                             params={8536080}
-                            layout={{ position: 'absolute', left: 20, width: 200, top: 11, height: 25, maxWidth: 200, flexDirection: 'row', gap: 5 }}
+                            layout={{ position: 'absolute', left: 20, top: 11, maxWidth: 200, flexDirection: 'row', gap: 5 }}
                         >
                             <ThemeImage
                                 params={16}

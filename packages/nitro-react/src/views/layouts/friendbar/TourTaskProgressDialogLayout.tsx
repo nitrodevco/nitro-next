@@ -32,7 +32,7 @@ export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, on
                 >
                     <Region
                         params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 215, top: 99, height: 110 }}
+                        layout={{ position: 'absolute', left: 0, width: 215, bottom: 2, height: 110 }}
                     >
                         <ThemeImage
                             params={16}
@@ -68,7 +68,7 @@ export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, on
                     <Region
                         name="top_list"
                         params={147472}
-                        layout={{ position: 'absolute', left: 118, width: 220, top: 79, height: 102, minHeight: 70, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 118, top: 79, minHeight: 70, flexDirection: 'column' }}
                     >
                         {itemsTopList ?? (
                             <>
@@ -88,7 +88,7 @@ export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, on
                 >
                     <Region
                         params={786448}
-                        layout={{ position: 'absolute', left: 103, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('talent.track.progress.tour.decline')} />
                     </Region>

@@ -139,7 +139,7 @@ export const DailyQuestLayout = ({ captionCancelQuestTxt, captionCaptionTxt, cap
                             name="go_button"
                             params={131153}
                             onPointerTap={onGoButton}
-                            layout={{ position: 'absolute', left: 184, width: 88, top: -2, height: 50, minWidth: 88, maxWidth: 88 }}
+                            layout={{ position: 'absolute', right: -1, width: 88, top: -2, height: 50, minWidth: 88, maxWidth: 88 }}
                         >
                             {t('landing.view.quest.go')}
                         </Button>
@@ -179,7 +179,7 @@ export const DailyQuestLayout = ({ captionCancelQuestTxt, captionCaptionTxt, cap
                         name="divider"
                         params={2128}
                         src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                        layout={{ position: 'absolute', left: 103, width: 2, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
                     />
                     <Region
                         name="hard_region"

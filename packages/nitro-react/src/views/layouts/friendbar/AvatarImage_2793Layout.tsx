@@ -13,13 +13,13 @@ export const AvatarImage_2793Layout = ({ layout, onRegion, srcBitmap, visibleReg
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <Region
                 params={2196}
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bitmap"
                     params={2192}
                     src={srcBitmap}
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Region
                     name="region"
@@ -27,7 +27,7 @@ export const AvatarImage_2793Layout = ({ layout, onRegion, srcBitmap, visibleReg
                     visible={visibleRegion ?? false}
                     onPointerTap={onRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Region>

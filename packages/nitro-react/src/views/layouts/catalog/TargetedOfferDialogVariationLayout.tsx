@@ -35,7 +35,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                 />
                 <Region
                     params={786448}
-                    layout={{ position: 'absolute', left: 55, width: 540, top: 366, height: 70 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -265, width: 540, top: 366, height: 70 }}
                 >
                     <Region
                         name="txt_status"
@@ -51,7 +51,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                     <Region
                         name="itemlist_buttonbar"
                         params={934096}
-                        layout={{ position: 'absolute', left: 30, width: 481, top: 38, height: 300, flexDirection: 'row', gap: 10 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -240, top: 38, flexDirection: 'row', gap: 10 }}
                     >
                         {itemsItemlistButtonbar ?? (
                             <>
@@ -75,7 +75,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                     >
                         <Region
                             params={933936}
-                            layout={{ position: 'absolute', left: 268, width: 96, top: 0, height: 30, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, top: 0, flexDirection: 'row' }}
                         >
                             <Region
                                 name="txt_time_left_label_1"
@@ -90,7 +90,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                             <Region
                                 name="txt_time_left"
                                 params={8405136}
-                                layout={{ width: 66, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ width: 66, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionTxtTimeLeft ?? '00:00'}

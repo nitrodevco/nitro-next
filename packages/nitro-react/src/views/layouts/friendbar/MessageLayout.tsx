@@ -16,12 +16,12 @@ export const MessageLayout = ({ itemsItems, layout }: MessageLayoutProps) => {
                 tags={[ 'notification' ]}
                 params={144}
                 backgroundColor="#4c5832"
-                layout={{ position: 'absolute', left: 0, width: 121, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
             >
                 <Region
                     name="items"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 0, width: 121, top: 0, height: 31, flexDirection: 'column', gap: -1 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31, flexDirection: 'column', gap: -1 }}
                 >
                     {itemsItems ?? (
                         <>
@@ -68,7 +68,7 @@ export const MessageLayoutMessageItem = ({ captionMessage, layout }: MessageLayo
         <Region
             name="message"
             params={8388624}
-            layout={{ width: 121, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 121, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionMessage ?? 'Message'}

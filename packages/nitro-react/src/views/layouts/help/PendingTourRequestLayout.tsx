@@ -25,7 +25,7 @@ export const PendingTourRequestLayout = ({ layout, onClose, onCloseButton }: Pen
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={8536080}
-                    layout={{ position: 'absolute', left: 8, width: 351, top: 2, height: 101, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
                 >
                     <Region
                         params={16}
@@ -56,14 +56,14 @@ export const PendingTourRequestLayout = ({ layout, onClose, onCloseButton }: Pen
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: 115, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>
                         <ThemeImage
                             params={1040}
                             src={layoutImage('help_illustrations_tour.png')}
-                            layout={{ position: 'absolute', left: 222, width: 147, top: -53, height: 109 }}
+                            layout={{ position: 'absolute', left: 222, width: 147, bottom: -4, height: 109 }}
                         />
                     </Region>
                 </Region>

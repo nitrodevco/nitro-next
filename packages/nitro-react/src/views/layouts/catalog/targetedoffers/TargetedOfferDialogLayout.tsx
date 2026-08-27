@@ -77,7 +77,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="txt_price_label"
                         params={935952}
-                        layout={{ position: 'absolute', left: 10, width: 97, top: 10, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -51, width: 97, top: 10, bottom: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPriceLabel ?? 'Price:'}
@@ -87,7 +87,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="txt_price_credits"
                         params={3557392}
-                        layout={{ position: 'absolute', left: 12, width: 89, top: 27, height: 43, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', right: 21, width: 89, top: 27, bottom: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPriceCredits ?? '40'}
@@ -103,7 +103,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="txt_price_activityPoints"
                         params={3557392}
-                        layout={{ position: 'absolute', left: 11, width: 89, top: 59, height: 43, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', right: 22, width: 89, top: 59, bottom: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPriceActivityPoints ?? '20'}
@@ -119,7 +119,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="txt_plus_character"
                         params={935952}
-                        layout={{ position: 'absolute', left: -5, width: 41, top: 62, height: 31, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -66, width: 41, top: 62, bottom: 41, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtPlusCharacter ?? ' '}
@@ -135,7 +135,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                 />
                 <Region
                     params={786448}
-                    layout={{ position: 'absolute', left: 15, width: 540, top: 316, height: 70 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -272.5, width: 540, top: 316, height: 70 }}
                 >
                     <Region
                         name="txt_status"
@@ -151,7 +151,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     <Region
                         name="itemlist_buttonbar"
                         params={934096}
-                        layout={{ position: 'absolute', left: 30, width: 481, top: 38, height: 300, flexDirection: 'row', gap: 10 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -240, top: 38, flexDirection: 'row', gap: 10 }}
                     >
                         {itemsItemlistButtonbar ?? (
                             <>
@@ -175,7 +175,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                     >
                         <Region
                             params={933936}
-                            layout={{ position: 'absolute', left: 222, width: 96, top: 0, height: 30, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -62.5, top: 0, flexDirection: 'row' }}
                         >
                             <Region
                                 name="txt_time_left_label_1"
@@ -190,7 +190,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                             <Region
                                 name="txt_time_left"
                                 params={8405136}
-                                layout={{ width: 66, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ width: 66, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionTxtTimeLeft ?? '00:00'}

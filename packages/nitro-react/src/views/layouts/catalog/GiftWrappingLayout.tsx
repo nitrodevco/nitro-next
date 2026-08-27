@@ -24,6 +24,7 @@ export interface GiftWrappingLayoutProps {
     onRibbonNext?: () => void;
     onRibbonPrev?: () => void;
     onShowFaceCheckbox?: () => void;
+    onSuggestionContainer?: () => void;
     srcAvatarImage?: string;
     srcGiftCard?: string;
     srcProductImage?: string;
@@ -31,7 +32,7 @@ export interface GiftWrappingLayoutProps {
     visibleSuggestionContainer?: boolean;
 }
 
-export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, captionMessageFrom, captionMessageInputHint, captionNameInputHint, captionPickBoxTitle, captionPickRibbonTitle, captionShowFaceCheckboxTitle, itemsPriceBoxContainer, layout, onBoxNext, onBoxPrev, onCancelLinkRegion, onClose, onGiveGiftButton, onRibbonNext, onRibbonPrev, onShowFaceCheckbox, srcAvatarImage, srcGiftCard, srcProductImage, srcWriteDeco, visibleSuggestionContainer }: GiftWrappingLayoutProps) => {
+export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, captionMessageFrom, captionMessageInputHint, captionNameInputHint, captionPickBoxTitle, captionPickRibbonTitle, captionShowFaceCheckboxTitle, itemsPriceBoxContainer, layout, onBoxNext, onBoxPrev, onCancelLinkRegion, onClose, onGiveGiftButton, onRibbonNext, onRibbonPrev, onShowFaceCheckbox, onSuggestionContainer, srcAvatarImage, srcGiftCard, srcProductImage, srcWriteDeco, visibleSuggestionContainer }: GiftWrappingLayoutProps) => {
     const t = useTranslation();
     const [ nameInputValue, setNameInputValue ] = useState('');
     const [ messageInputValue, setMessageInputValue ] = useState('');
@@ -50,7 +51,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                     variant="3"
                     params={2192}
                     tintColor="#e9e9e9"
-                    layout={{ position: 'absolute', left: 0, width: 330, top: 10, height: 440 }}
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 10, bottom: 32 }}
                 >
                     <Border
                         variant="0"
@@ -62,7 +63,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                             value={nameInputValue}
                             onChange={setNameInputValue}
                             maxLength={32}
-                            layout={{ position: 'absolute', left: 8, width: 266, top: 3, height: 21 }}
+                            layout={{ position: 'absolute', left: 8, right: 10, top: 3, bottom: 3 }}
                         />
                         <Region
                             name="name_input_hint"
@@ -88,6 +89,8 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                         params={147457}
                         visible={visibleSuggestionContainer ?? false}
                         backgroundColor="#999999"
+                        onPointerTap={onSuggestionContainer}
+                        cursor="pointer"
                         layout={{ position: 'absolute', left: 18, width: 264, top: 39, height: 0, minWidth: 150, maxWidth: 267 }}
                     >
                         <Region
@@ -98,7 +101,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                             <Region
                                 name="suggestion_list"
                                 params={12730385}
-                                layout={{ position: 'absolute', left: 1, width: 262, top: 0, height: 0, minWidth: 148, maxWidth: 262, flexDirection: 'column' }}
+                                layout={{ position: 'absolute', left: 1, top: 0, minWidth: 148, maxWidth: 262, flexDirection: 'column' }}
                             />
                         </Region>
                     </Region>
@@ -117,7 +120,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                             name="avatar_image"
                             params={3935440}
                             src={srcAvatarImage}
-                            layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 149 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: '50%', marginTop: -74.5, height: 149 }}
                         />
                     </Region>
                     <TextInput
@@ -199,7 +202,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                         <Region
                             name="price_box_container"
                             params={147473}
-                            layout={{ position: 'absolute', left: 154, width: 155, top: 20, height: 20, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: 154, top: 20, flexDirection: 'row' }}
                         >
                             {itemsPriceBoxContainer ?? (
                                 <>
@@ -293,7 +296,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                         <Region
                             name="color_grid"
                             params={786449}
-                            layout={{ position: 'absolute', left: 1, width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -153, width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                         />
                     </Region>
                     <ButtonThick

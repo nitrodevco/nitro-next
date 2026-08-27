@@ -8,11 +8,12 @@ export interface EcotronboxCardLayoutProps {
     layout?: BoxLayout;
     onEcotronboxCardBtnClose?: () => void;
     onEcotronboxCardBtnOpen?: () => void;
+    onEcotronboxContainer?: () => void;
     srcEcotronboxCardBg?: string;
     srcEcotronboxCardPreview?: string;
 }
 
-export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardLayoutProps) => {
+export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,6 +21,8 @@ export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotron
             <Region
                 name="ecotronbox_container"
                 params={33025}
+                onPointerTap={onEcotronboxContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114 }}
             >
                 <ThemeImage

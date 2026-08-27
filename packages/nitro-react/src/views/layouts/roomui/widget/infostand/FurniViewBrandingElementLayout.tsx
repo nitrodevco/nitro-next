@@ -27,7 +27,7 @@ export const FurniViewBrandingElementLayout = ({ captionElementName, layout }: F
                     <Region
                         name="element_name"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 160, top: 0, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 20, top: 0, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionElementName ?? 'element name'}

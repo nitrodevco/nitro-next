@@ -36,7 +36,7 @@ export const ClubBuyWidgetLayout = ({ captionClubHeader, captionClubInfo, captio
                 <Region
                     name="club_header"
                     params={786448}
-                    layout={{ position: 'absolute', left: 0, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -160, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionClubHeader ?? t('catalog.club.buy.header')}
@@ -82,7 +82,7 @@ export const ClubBuyWidgetLayout = ({ captionClubHeader, captionClubInfo, captio
                 <Region
                     name="club_link"
                     params={786449}
-                    layout={{ position: 'absolute', left: 0, width: 307, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -160, width: 307, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionClubLink ?? t('catalog.club.buy.link')}

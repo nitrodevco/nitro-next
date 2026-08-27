@@ -8,15 +8,18 @@ export interface TrophyLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
     onClose?: () => void;
+    onTrophyContainer?: () => void;
     srcTrophyBg?: string;
 }
 
-export const TrophyLayout = ({ captionDate, captionGreeting, captionName, captionTitle, layout, onClose, srcTrophyBg }: TrophyLayoutProps) => {
+export const TrophyLayout = ({ captionDate, captionGreeting, captionName, captionTitle, layout, onClose, onTrophyContainer, srcTrophyBg }: TrophyLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 340, height: 173, ...layout }}>
             <Region
                 name="trophy_container"
                 params={33025}
+                onPointerTap={onTrophyContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 173 }}
             >
                 <ThemeImage
@@ -48,7 +51,7 @@ export const TrophyLayout = ({ captionDate, captionGreeting, captionName, captio
                 <Region
                     name="name"
                     params={262160}
-                    layout={{ position: 'absolute', left: 246, width: 74, top: 142, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 20, width: 74, top: 142, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionName ?? 'kateislonger'} />
                 </Region>
@@ -68,7 +71,7 @@ export const TrophyLayout = ({ captionDate, captionGreeting, captionName, captio
                     <Region
                         name="title"
                         params={786432}
-                        layout={{ position: 'absolute', left: 0, width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTitle ?? 'Trophy'}

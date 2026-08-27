@@ -43,7 +43,7 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                     name="button_floor_level"
                     params={393233}
                     onPointerTap={onButtonFloorLevel}
-                    layout={{ position: 'absolute', left: 182, width: 126, top: 110, height: 29 }}
+                    layout={{ position: 'absolute', right: 12, width: 126, top: 110, height: 29 }}
                 >
                     {t('furniture.floor.level')}
                 </Button>

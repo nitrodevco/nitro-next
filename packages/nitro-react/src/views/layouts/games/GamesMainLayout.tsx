@@ -67,7 +67,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                 <Region
                     name="quick_play_container"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 485 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 485 }}
                 >
                     <Region
                         name="teaser_container"
@@ -89,7 +89,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             <Region
                                 name="header_stroke"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 279, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionHeaderStroke ?? t('snowwar.descriptionHeader')}
@@ -99,7 +99,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             <Region
                                 name="header"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 0, width: 279, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionHeader ?? t('snowwar.descriptionHeader')}
@@ -109,7 +109,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             <Region
                                 name="header"
                                 params={2192}
-                                layout={{ position: 'absolute', left: 18, width: 243, top: 30, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 18, right: 18, top: 30, bottom: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionHeader2 ?? t('snowwar.descriptionBody')}
@@ -120,7 +120,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="instructions_link"
                             params={193}
-                            layout={{ position: 'absolute', left: 0, width: 407, top: 280, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -203.5, width: 407, top: 280, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onInstructionsLink}
                             cursor="pointer"
                         >
@@ -132,7 +132,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="leaderboard_link"
                             params={193}
-                            layout={{ position: 'absolute', left: 0, width: 407, top: 315, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -203.5, width: 407, top: 315, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onLeaderboardLink}
                             cursor="pointer"
                         >
@@ -153,7 +153,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             tags={[ 'bitmap' ]}
                             params={208}
                             src={srcInstructionsImage}
-                            layout={{ position: 'absolute', left: 78, width: 250, top: 80, height: 166 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -125.5, width: 250, top: 80, height: 166 }}
                         />
                         <Region
                             name="instructions_back"
@@ -198,7 +198,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="instruction_text"
                             params={208}
-                            layout={{ position: 'absolute', left: 63, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -140.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionInstructionText ?? 'lorem ipsum'}
@@ -208,7 +208,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="page_list"
                             params={208}
-                            layout={{ position: 'absolute', left: 141, width: 125, top: 239, height: 25, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -62.5, width: 125, top: 239, height: 25, flexDirection: 'row' }}
                         >
                             {itemsPageList ?? (
                                 <>
@@ -335,12 +335,12 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             params={262161}
                             tintColor="#55cc00"
                             onPointerTap={onPlayButton}
-                            layout={{ position: 'absolute', left: 204, width: 190, top: 64, height: 50 }}
+                            layout={{ position: 'absolute', right: 13, width: 190, top: 64, height: 50 }}
                         >
                             <Region
                                 name="play_text"
                                 params={4194512}
-                                layout={{ position: 'absolute', left: 28, width: 135, top: 10, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -67, top: 10, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionPlayText ?? t('snowwar.play')}
@@ -354,7 +354,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                     name="snowwar_lobby_cont"
                     params={144}
                     visible={visibleSnowwarLobbyCont ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 436 }}
                 >
                     <Region
                         name="wait_text_stroke"

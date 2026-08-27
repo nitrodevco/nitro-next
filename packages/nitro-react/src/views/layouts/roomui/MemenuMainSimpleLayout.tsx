@@ -12,6 +12,7 @@ export interface MemenuMainSimpleLayoutProps {
     captionTalentsText?: string;
     layout?: BoxLayout;
     onAchievements?: () => void;
+    onButtons?: () => void;
     onGuide?: () => void;
     onMinimail?: () => void;
     onProfile?: () => void;
@@ -28,7 +29,7 @@ export interface MemenuMainSimpleLayoutProps {
     visibleGuide?: boolean;
 }
 
-export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideText, captionMinimailText, captionProfileText, captionRoomsText, captionSettingsText, captionTalentsText, layout, onAchievements, onGuide, onMinimail, onProfile, onRooms, onSettings, onTalents, srcAchievementsIcon, srcGuideIcon, srcMinimailIcon, srcProfileIcon, srcRoomsIcon, srcSettingsIcon, srcTalentsIcon, visibleGuide }: MemenuMainSimpleLayoutProps) => {
+export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideText, captionMinimailText, captionProfileText, captionRoomsText, captionSettingsText, captionTalentsText, layout, onAchievements, onButtons, onGuide, onMinimail, onProfile, onRooms, onSettings, onTalents, srcAchievementsIcon, srcGuideIcon, srcMinimailIcon, srcProfileIcon, srcRoomsIcon, srcSettingsIcon, srcTalentsIcon, visibleGuide }: MemenuMainSimpleLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -36,6 +37,8 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
             <Region
                 name="buttons"
                 params={17}
+                onPointerTap={onButtons}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 245 }}
             >
                 <Region
@@ -54,7 +57,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="profile_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionProfileText ?? t('widget.memenu.profile')}
@@ -78,7 +81,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="minimail_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMinimailText ?? t('widget.memenu.minimail')}
@@ -102,7 +105,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="rooms_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomsText ?? t('widget.memenu.myrooms')}
@@ -126,7 +129,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="settings_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSettingsText ?? t('widget.memenu.settings')}
@@ -150,7 +153,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="achievements_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAchievementsText ?? t('widget.memenu.achievements')}
@@ -174,7 +177,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="talents_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTalentsText ?? t('widget.memenu.talents')}
@@ -199,7 +202,7 @@ export const MemenuMainSimpleLayout = ({ captionAchievementsText, captionGuideTe
                     <Region
                         name="guide_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: 4, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGuideText ?? t('widget.memenu.guide')}

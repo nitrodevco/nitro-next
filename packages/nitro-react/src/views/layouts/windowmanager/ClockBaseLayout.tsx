@@ -14,7 +14,7 @@ export const ClockBaseLayout = ({ captionSeparator, captionUnit, captionValue, l
         <Region layout={{ position: 'relative', width: 36, height: 37, ...layout }}>
             <Region
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 37, flexDirection: 'row' }}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row' }}
             >
                 <Region
                     name="counter"

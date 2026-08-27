@@ -59,7 +59,7 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                     name="button.ok"
                     params={917521}
                     onPointerTap={onButtonOk}
-                    layout={{ position: 'absolute', left: 85, width: 172, top: 143, height: 32, minWidth: 100 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -76.5, width: 172, top: 143, height: 32, minWidth: 100 }}
                 >
                     {t('breedpets.nestbreeding.success.button.ok')}
                 </Button>

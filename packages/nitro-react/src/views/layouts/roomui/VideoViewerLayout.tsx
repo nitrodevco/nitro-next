@@ -33,12 +33,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                     name="video_background"
                     params={18448}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, height: 302 }}
+                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48 }}
                 >
                     <Region
                         name="no_videos_label"
                         params={3280}
-                        layout={{ position: 'absolute', left: 122, width: 187, top: 143, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -93.5, width: 187, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
@@ -49,13 +49,13 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                         name="video_wrapper"
                         params={2176}
                         visible={visibleVideoWrapper ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 431, top: 0, height: 302 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <Region
                     name="right_pane"
                     params={2064}
-                    layout={{ position: 'absolute', left: 447, width: 278, top: 6, height: 302 }}
+                    layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 48 }}
                 >
                     <ContainerButton
                         variant="3"
@@ -68,7 +68,7 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                         <ThemeImage
                             params={3280}
                             src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', left: 10, width: 21, top: 6, height: 16 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 21, top: '50%', marginTop: -8.5, height: 16 }}
                         />
                     </ContainerButton>
                     <ContainerButton
@@ -82,7 +82,7 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                         <ThemeImage
                             params={3280}
                             src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', left: 10, width: 21, top: 6, height: 16 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 21, top: '50%', marginTop: -8.5, height: 16 }}
                         />
                     </ContainerButton>
                     <Region
@@ -93,7 +93,7 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 278, top: 50, height: 252 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 50, bottom: 0 }}
                     >
                         <Region
                             name="playlists"
@@ -179,7 +179,7 @@ export const VideoViewerLayoutItemItem = ({ itemsItemContents, layout, onItem }:
                 <Region
                     name="item_contents"
                     params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 121, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
                 >
                     {itemsItemContents ?? (
                         <>

@@ -23,18 +23,18 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layou
                 <Region
                     name="header"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                 >
                     <Border
                         variant="2"
                         params={144}
                         tintColor="#012723"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
                     />
                     <Region
                         params={144}
                         backgroundColor="#012723"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 10 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
                     <Region
                         params={16}
@@ -67,16 +67,16 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layou
                     tags={[ 'notification_icon' ]}
                     params={3088}
                     src={undefined}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: 30, height: 50 }}
+                    layout={{ position: 'absolute', left: 8, width: 50, top: '50%', marginTop: -25, height: 50 }}
                 />
                 <Region
                     name="bottom"
                     params={1168}
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 80, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 >
                     <Region
                         params={144}
-                        layout={{ position: 'absolute', left: 6, width: 178, top: 0, height: 25 }}
+                        layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 25 }}
                     >
                         <Button
                             variant="3"
@@ -84,7 +84,7 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layou
                             params={131217}
                             tintColor="#f5d634"
                             onPointerTap={onRarityText}
-                            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 25, minWidth: 178 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, minWidth: 178 }}
                         >
                             {'Rarity: '}
                         </Button>

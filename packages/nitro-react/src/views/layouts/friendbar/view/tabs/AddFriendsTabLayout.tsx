@@ -23,7 +23,7 @@ export const AddFriendsTabLayout = ({ itemsTabContent, layout }: AddFriendsTabLa
                 <Region
                     name="tab_content"
                     params={8388752}
-                    layout={{ position: 'absolute', left: 7, width: 116, top: 3, height: 140, minHeight: 40, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 140, minHeight: 40, flexDirection: 'column' }}
                 >
                     {itemsTabContent ?? (
                         <>
@@ -62,13 +62,13 @@ export const AddFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
                 name="icon"
                 params={1310720}
                 src={srcIcon ?? layoutImage('add_friends_icon.png')}
-                layout={{ position: 'absolute', left: -2, width: 31, top: -5, height: 34 }}
+                layout={{ position: 'absolute', right: 83, width: 31, bottom: 2, height: 34 }}
             />
             <Region
                 name="title"
                 tags={[ 'label' ]}
                 params={3148816}
-                layout={{ position: 'absolute', left: 29, width: 77, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 29, width: 77, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTitle ?? t('friend.bar.find.title')}

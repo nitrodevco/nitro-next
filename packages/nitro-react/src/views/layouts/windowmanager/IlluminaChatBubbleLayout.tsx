@@ -18,7 +18,7 @@ export const IlluminaChatBubbleLayout = ({ itemsBubbleWrapper, itemsSpacedMessag
         <Region layout={{ position: 'relative', width: 259, height: 80, ...layout }}>
             <Region
                 params={147600}
-                layout={{ position: 'absolute', left: 0, width: 259, top: 0, height: 80 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
             >
                 <Region
                     params={16}
@@ -40,7 +40,7 @@ export const IlluminaChatBubbleLayout = ({ itemsBubbleWrapper, itemsSpacedMessag
                 <Region
                     name="bubble_wrapper"
                     params={147472}
-                    layout={{ position: 'absolute', left: 52, width: 207, top: 15, height: 65, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 52, top: 15, flexDirection: 'column' }}
                 >
                     {itemsBubbleWrapper ?? (
                         <>
@@ -64,7 +64,7 @@ export const IlluminaChatBubbleLayout = ({ itemsBubbleWrapper, itemsSpacedMessag
                             <Region
                                 name="spaced_message_container"
                                 params={147472}
-                                layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18, flexDirection: 'column' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
                             >
                                 {itemsSpacedMessageContainer ?? (
                                     <>
@@ -230,7 +230,7 @@ export const IlluminaChatBubbleLayoutMessageContainerItem = ({ itemsMessageConta
         <Region
             name="message_container"
             params={147472}
-            layout={{ width: 0, height: 4, flexShrink: 0, flexDirection: 'column', ...layout }}
+            layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsMessageContainer ?? (
                 <>

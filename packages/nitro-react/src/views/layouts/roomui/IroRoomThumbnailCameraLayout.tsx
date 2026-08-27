@@ -37,7 +37,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
                 </Region>
                 <Region
                     params={786640}
-                    layout={{ position: 'absolute', left: 4, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}
                 >
                     <ButtonThick
                         variant="6"

@@ -73,7 +73,7 @@ export const MannequinControllerSaveLayout = ({ captionBackText, captionDescript
                     <Region
                         name="back_text"
                         params={12582928}
-                        layout={{ position: 'absolute', left: 0, width: 144, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBackText ?? 'mannequin.widget.back'}

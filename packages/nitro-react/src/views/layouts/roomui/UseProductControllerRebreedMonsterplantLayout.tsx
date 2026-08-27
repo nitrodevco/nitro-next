@@ -19,7 +19,7 @@ export const UseProductControllerRebreedMonsterplantLayout = ({ itemsElementList
             <Region
                 name="element_list"
                 params={147472}
-                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 257, maxWidth: 290, flexDirection: 'column', gap: 10 }}
+                layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 290, flexDirection: 'column', gap: 10 }}
             >
                 {itemsElementList ?? (
                     <>
@@ -179,7 +179,7 @@ export const UseProductControllerRebreedMonsterplantLayoutPlantItemlistItem = ({
         <Region
             name="plant_itemlist"
             params={147472}
-            layout={{ width: 130, height: 184, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlantItemlist ?? (
                 <>
@@ -208,14 +208,14 @@ export const UseProductControllerRebreedMonsterplantLayoutPreviewListItem = ({ c
         <Region
             name="preview_list"
             params={147472}
-            layout={{ width: 270, height: 184, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
                 <UseProductControllerRebreedMonsterplantLayoutPlantItemlistItem />
             )}
             <Region
                 params={147472}
-                layout={{ width: 130, height: 117, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1 }}
+                layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1 }}
             >
                 <Region
                     name="separator"

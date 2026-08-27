@@ -14,13 +14,13 @@ export const PetImageLayout = ({ layout, onRegion, srcBitmap, visibleRegion }: P
         <Region layout={{ position: 'relative', width: 58, height: 49, ...layout }}>
             <Region
                 params={2196}
-                layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 49 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bitmap"
                     params={2192}
                     src={srcBitmap ?? layoutImage('placeholder_pet.png')}
-                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 49 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Region
                     name="region"
@@ -28,7 +28,7 @@ export const PetImageLayout = ({ layout, onRegion, srcBitmap, visibleRegion }: P
                     visible={visibleRegion ?? false}
                     onPointerTap={onRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 49 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>
         </Region>

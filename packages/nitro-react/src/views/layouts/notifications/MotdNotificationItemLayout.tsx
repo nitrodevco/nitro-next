@@ -12,12 +12,12 @@ export const MotdNotificationItemLayout = ({ captionMessageText, layout }: MotdN
             <Region
                 name="item_container"
                 params={133136}
-                layout={{ position: 'absolute', left: 0, width: 405, top: 0, height: 95 }}
+                layout={{ position: 'absolute', left: 0, width: 405, top: 0, bottom: 0 }}
             >
                 <Region
                     name="message_text"
                     params={133136}
-                    layout={{ position: 'absolute', left: 5, width: 395, top: 5, height: 85, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, width: 395, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMessageText ?? ''}

@@ -106,7 +106,7 @@ export const ClubCenterLayout = ({ captionGeneralInfo, captionGeneralInfolink, c
                                 name="hc_badge"
                                 params={3935440}
                                 src={srcHcBadge}
-                                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                                layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 50, top: '50%', marginTop: -25, height: 50 }}
                             />
                         </Region>
                         <Region
@@ -220,7 +220,7 @@ export const ClubCenterLayout = ({ captionGeneralInfo, captionGeneralInfolink, c
                                 tintColor="#3399cc"
                                 onPointerTap={onBtnGift}
                                 textStyle="text-style-button-shiny-bold"
-                                layout={{ position: 'absolute', left: 233, width: 154, top: 22, height: 33 }}
+                                layout={{ position: 'absolute', right: 25, width: 154, top: '50%', marginTop: -15, height: 33 }}
                             >
                                 {t('hccenter.btn.gifts.view')}
                             </ButtonThick>
@@ -335,7 +335,7 @@ export const ClubCenterLayout = ({ captionGeneralInfo, captionGeneralInfolink, c
                     <Region
                         name="special_breakdown_link"
                         params={262145}
-                        layout={{ position: 'absolute', left: 17, width: 190, top: 120, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                        layout={{ position: 'absolute', right: 15, width: 190, top: 120, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
                         onPointerTap={onSpecialBreakdownLink}
                         cursor="pointer"
                     >

@@ -27,7 +27,7 @@ export const ChestGenericLayout = ({ itemsMainList, layout, onClose }: ChestGene
                 <Region
                     name="main_list"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, width: 460, top: 0, height: 428, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 428, flexDirection: 'column' }}
                 >
                     {itemsMainList ?? (
                         <>
@@ -64,18 +64,18 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                 name="layout_1"
                 params={2192}
                 backgroundColor="#dadada"
-                layout={{ position: 'absolute', left: 1, width: 458, top: 0, height: 51 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0 }}
             />
             <Region
                 name="splitter"
                 params={1168}
                 backgroundColor="#c0c0c0"
-                layout={{ position: 'absolute', left: 1, width: 458, top: 50, height: 1 }}
+                layout={{ position: 'absolute', left: 1, right: 1, bottom: 0, height: 1 }}
             />
             <Region
                 name="desc"
                 params={8388752}
-                layout={{ position: 'absolute', left: 10, width: 380, top: 10, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 70, top: 10, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDesc ?? ' A cozy chest waiting to be filled with all sorts of treasures!'}
@@ -86,7 +86,7 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                 name="warning_text"
                 params={2185}
                 visible={false}
-                layout={{ position: 'absolute', left: 10, width: 406, top: 10, height: 47, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 44, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionWarningText ?? ''}
@@ -100,7 +100,7 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                 params={65}
                 dynamicStyle="button"
                 onPointerTap={onNotificationSettingsButton}
-                layout={{ position: 'absolute', left: 397, width: 24, top: 7, height: 24 }}
+                layout={{ position: 'absolute', right: 39, width: 24, top: 7, height: 24 }}
             >
                 <ThemeImage
                     tags={[ '#icon' ]}
@@ -116,7 +116,7 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                 params={65}
                 dynamicStyle="button"
                 onPointerTap={onSettingsButton}
-                layout={{ position: 'absolute', left: 426, width: 24, top: 7, height: 24 }}
+                layout={{ position: 'absolute', right: 10, width: 24, top: 7, height: 24 }}
             >
                 <ThemeImage
                     tags={[ '#icon' ]}
@@ -678,7 +678,7 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
             <Region
                 name="upgrade_capacity_container"
                 params={262224}
-                layout={{ position: 'absolute', left: 227, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', right: 16, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 6 }}
             >
                 {itemsUpgradeCapacityContainer ?? (
                     <>
@@ -691,7 +691,7 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
                 name="splitter"
                 params={144}
                 backgroundColor="#b0b0b0"
-                layout={{ position: 'absolute', left: 0, width: 429, top: 29, height: 1 }}
+                layout={{ position: 'absolute', left: 0, right: 14, top: 29, height: 1 }}
             />
         </Region>
     );
@@ -788,27 +788,27 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
                 name="layout_1"
                 params={2192}
                 backgroundColor="#dadada"
-                layout={{ position: 'absolute', left: 1, width: 458, top: 0, height: 110 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 13 }}
             />
             <Border
                 variant="2"
                 name="layout_2"
                 params={1168}
                 tintColor="#dadada"
-                layout={{ position: 'absolute', left: 1, width: 458, top: 87, height: 36 }}
+                layout={{ position: 'absolute', left: 1, right: 1, bottom: 0, height: 36 }}
             />
             <Region
                 name="splitter"
                 params={144}
                 backgroundColor="#c0c0c0"
-                layout={{ position: 'absolute', left: 1, width: 458, top: 0, height: 1 }}
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 1 }}
             />
             <Region
                 name="lock_info_button"
                 params={81}
                 onPointerTap={onLockInfoButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 423, width: 18, top: 6, height: 18 }}
+                layout={{ position: 'absolute', right: 19, width: 18, top: 6, height: 18 }}
             >
                 <ThemeImage
                     params={16}
@@ -830,7 +830,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
                     <Region
                         name="lock_info_bubble_texts"
                         params={8388752}
-                        layout={{ position: 'absolute', left: 8, width: 353, top: 8, height: 504, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 504, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsLockInfoBubbleTexts ?? (
                             <>
@@ -876,7 +876,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
             <Region
                 name="footer_options"
                 params={8388752}
-                layout={{ position: 'absolute', left: 17, width: 443, top: 7, height: 75, flexDirection: 'column', gap: 4 }}
+                layout={{ position: 'absolute', left: 17, right: 0, top: 7, height: 75, flexDirection: 'column', gap: 4 }}
             >
                 {itemsFooterOptions ?? (
                     <>
@@ -888,7 +888,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
             <Region
                 name="button_row"
                 params={1168}
-                layout={{ position: 'absolute', left: 0, width: 460, top: 87, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 6, height: 30 }}
             >
                 <Region
                     name="footer_buttons_left"
@@ -905,7 +905,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
                 <Region
                     name="footer_buttons_left"
                     params={262224}
-                    layout={{ position: 'absolute', left: 370, width: 73, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                    layout={{ position: 'absolute', right: 17, width: 73, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
                 >
                     {itemsFooterButtonsLeft2 ?? (
                         <ChestGenericLayoutViewLogsBtnItem />
@@ -915,7 +915,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, items
                     name="item_count_text_bottom"
                     params={262224}
                     visible={false}
-                    layout={{ position: 'absolute', left: 261, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 15, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionItemCountTextBottom ?? t('wiredchests.space_used')} />
                 </Region>

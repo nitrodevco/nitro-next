@@ -15,6 +15,7 @@ export interface CameraEditorLayoutProps {
     onPurchaseButton?: () => void;
     onSaveButton?: () => void;
     onShaftClickArea?: () => void;
+    onSliderContainer?: () => void;
     onZoomButton?: () => void;
     srcDownloadImage?: string;
     srcImage?: string;
@@ -24,7 +25,7 @@ export interface CameraEditorLayoutProps {
     visibleCaptionBg?: boolean;
 }
 
-export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, captionZoomText, layout, onCancelButton, onClose, onPurchaseButton, onSaveButton, onShaftClickArea, onZoomButton, srcDownloadImage, srcImage, srcMagnifier, srcSliderBase, srcSliderButton, visibleCaptionBg }: CameraEditorLayoutProps) => {
+export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, captionZoomText, layout, onCancelButton, onClose, onPurchaseButton, onSaveButton, onShaftClickArea, onSliderContainer, onZoomButton, srcDownloadImage, srcImage, srcMagnifier, srcSliderBase, srcSliderButton, visibleCaptionBg }: CameraEditorLayoutProps) => {
     const t = useTranslation();
     const [ captionInputValue, setCaptionInputValue ] = useState('');
 
@@ -115,6 +116,8 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                 <Region
                     name="slider_container"
                     params={17}
+                    onPointerTap={onSliderContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 249, width: 320, top: 271, height: 59 }}
                 >
                     <Border
@@ -161,7 +164,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                     <Region
                         name="slider_effect_info"
                         params={934096}
-                        layout={{ position: 'absolute', left: 105, width: 110, top: 8, height: 18, maxWidth: 320, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 110, top: 8, height: 18, maxWidth: 320, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSliderEffectInfo ?? 'default filter 50%'}
@@ -189,7 +192,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                         name="centerizer"
                         params={935938}
                         tintColor="#c7c6bf"
-                        layout={{ position: 'absolute', left: 5, width: 106, top: 0, height: 23 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 106, top: 0, bottom: 1 }}
                     >
                         <ThemeImage
                             name="magnifier"
@@ -229,7 +232,7 @@ export const CameraEditorLayout = ({ captionSaveText, captionSliderEffectInfo, c
                         name="centerizer"
                         params={935938}
                         tintColor="#c7c6bf"
-                        layout={{ position: 'absolute', left: 4, width: 109, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: '50%', marginLeft: -56, width: 109, top: 0, bottom: 4 }}
                     >
                         <ThemeImage
                             name="download_image"

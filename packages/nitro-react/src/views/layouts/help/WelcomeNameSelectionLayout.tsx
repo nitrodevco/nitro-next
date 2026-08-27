@@ -11,9 +11,10 @@ export interface WelcomeNameSelectionLayoutProps {
     onCancelSelectionButton?: () => void;
     onCheckNameButton?: () => void;
     onSelectNameButton?: () => void;
+    onSuggestions?: () => void;
 }
 
-export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton }: WelcomeNameSelectionLayoutProps) => {
+export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton, onSuggestions }: WelcomeNameSelectionLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -71,6 +72,8 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                 <Region
                     name="suggestions"
                     params={131089}
+                    onPointerTap={onSuggestions}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31 }}
                 />
                 <Button
@@ -89,7 +92,7 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                     params={393233}
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelSelectionButton}
-                    layout={{ position: 'absolute', left: 194, width: 99, top: 152, height: 33 }}
+                    layout={{ position: 'absolute', right: 10, width: 99, top: 152, height: 33 }}
                 >
                     {t('generic.cancel')}
                 </Button>

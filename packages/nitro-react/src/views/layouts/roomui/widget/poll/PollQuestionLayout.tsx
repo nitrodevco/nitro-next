@@ -41,7 +41,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                     <Region
                         name="poll_question_headline"
                         params={144}
-                        layout={{ position: 'absolute', left: 80, width: 290, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 80, right: 10, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPollQuestionHeadline ?? t('poll_question_headline')}
@@ -58,12 +58,12 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                 </Region>
                 <Region
                     params={8538128}
-                    layout={{ position: 'absolute', left: 0, width: 370, top: 70, height: 424 }}
+                    layout={{ position: 'absolute', left: 0, width: 370, top: 70, bottom: 67 }}
                 >
                     <Region
                         name="poll_content_wrapper"
                         params={8538257}
-                        layout={{ position: 'absolute', left: 5, width: 365, top: 0, height: 424, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                     >
                         <ScrollArea
                             orientation="vertical"
@@ -76,7 +76,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                                 <Region
                                     name="poll_question_text"
                                     params={8601616}
-                                    layout={{ width: 360, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ width: 360, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionPollQuestionText ?? ''}
@@ -104,12 +104,12 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                 <Region
                     name="footer_container"
                     params={10224656}
-                    layout={{ position: 'absolute', left: 5, width: 383, top: 486, height: 45 }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -186, width: 383, bottom: 30, height: 45 }}
                 >
                     <Region
                         name="poll_question_number"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, width: 129, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 254, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPollQuestionNumber ?? t('poll_question_number')}
@@ -120,7 +120,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                     <Region
                         name="poll_question_cancel"
                         params={393233}
-                        layout={{ position: 'absolute', left: 190, width: 74, top: 10, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', right: 119, width: 74, top: 10, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPollQuestionCancel ?? t('cancel')}

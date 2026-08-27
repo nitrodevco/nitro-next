@@ -17,7 +17,7 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout }: Notificatio
                 <Region
                     name="title"
                     params={3145936}
-                    layout={{ position: 'absolute', left: 65, width: 120, top: 7, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 120, top: '50%', marginTop: -158.5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTitle ?? 'Notification history'}

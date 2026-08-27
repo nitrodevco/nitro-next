@@ -10,6 +10,7 @@ export interface GridItemWithPriceMultiLayoutProps {
     itemsTotalpriceContainer?: ReactNode;
     itemsTotalpriceContainer2?: ReactNode;
     layout?: BoxLayout;
+    onSmallContainer?: () => void;
     srcBadgeAddOn?: string;
     srcImage?: string;
     srcImageWide?: string;
@@ -18,7 +19,7 @@ export interface GridItemWithPriceMultiLayoutProps {
     visibleBg?: boolean;
 }
 
-export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMultiCounter, itemsTotalpriceContainer, itemsTotalpriceContainer2, layout, srcBadgeAddOn, srcImage, srcImageWide, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg }: GridItemWithPriceMultiLayoutProps) => {
+export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMultiCounter, itemsTotalpriceContainer, itemsTotalpriceContainer2, layout, onSmallContainer, srcBadgeAddOn, srcImage, srcImageWide, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg }: GridItemWithPriceMultiLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region
@@ -41,19 +42,19 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                     tags={[ 'ITEM_HILIGHT' ]}
                     params={2192}
                     tintColor="#a1a19b"
-                    layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="3"
                         name="border_outline"
                         params={2192}
                         tintColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Border
                             variant="3"
                             params={2192}
-                            layout={{ position: 'absolute', left: 2, width: 49, top: 2, height: 70 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         />
                     </Border>
                 </Border>
@@ -78,6 +79,8 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                 <Region
                     name="small_container"
                     params={17}
+                    onPointerTap={onSmallContainer}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36 }}
                 >
                     <Region
@@ -108,12 +111,12 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                         variant="0"
                         name="clubLevelIcon"
                         params={394320}
-                        layout={{ position: 'absolute', left: 15, width: 19, top: 2, height: 10 }}
+                        layout={{ position: 'absolute', right: 2, width: 19, bottom: 24, height: 10 }}
                     />
                     <Region
                         name="bundleCounter"
                         params={176}
-                        layout={{ position: 'absolute', left: 18, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBundleCounter ?? ''}
@@ -125,7 +128,7 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                         name="multiContainer"
                         params={393232}
                         tintColor="#ff3300"
-                        layout={{ position: 'absolute', left: 18, width: 17, top: 21, height: 13 }}
+                        layout={{ position: 'absolute', right: 1, width: 17, top: 21, height: 13 }}
                     >
                         <Region
                             name="multiCounter"
@@ -164,7 +167,7 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                 <Region
                     name="totalprice_container"
                     params={409680}
-                    layout={{ position: 'absolute', left: 19, width: 32, top: 36, height: 19, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsTotalpriceContainer ?? (
                         <>
@@ -176,7 +179,7 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                 <Region
                     name="totalprice_container"
                     params={409680}
-                    layout={{ position: 'absolute', left: 8, width: 43, top: 51, height: 19, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsTotalpriceContainer2 ?? (
                         <>

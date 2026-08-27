@@ -78,7 +78,7 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                                 params={1041}
                                 onPointerTap={onClose}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 14, width: 100, top: 8, height: 33 }}
+                                layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33 }}
                             >
                                 <Region
                                     params={16}
@@ -96,7 +96,7 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                                 params={132113}
                                 tintColor="#00aa00"
                                 onPointerTap={onOpen}
-                                layout={{ position: 'absolute', left: 214, width: 130, top: 10, height: 30, minWidth: 130 }}
+                                layout={{ position: 'absolute', left: 214, width: 130, bottom: 10, height: 30, minWidth: 130 }}
                             >
                                 {t('widget.furni.present.open')}
                             </ButtonThick>

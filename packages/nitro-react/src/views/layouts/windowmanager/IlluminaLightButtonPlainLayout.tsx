@@ -13,7 +13,7 @@ export const IlluminaLightButtonPlainLayout = ({ captionBTNTEXT, layout }: Illum
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 params={2147486928}
-                layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -14, width: 28, top: '50%', marginTop: -14, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionBTNTEXT ?? ''}

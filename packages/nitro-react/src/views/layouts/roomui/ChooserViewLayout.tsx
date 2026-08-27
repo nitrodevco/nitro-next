@@ -22,11 +22,11 @@ export const ChooserViewLayout = ({ layout, onClose }: ChooserViewLayoutProps) =
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={2192}
-                    layout={{ position: 'absolute', left: 9, width: 173, top: 13, height: 120 }}
+                    layout={{ position: 'absolute', left: 9, right: 21, top: 13, bottom: 35 }}
                 >
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 120 }}
+                        layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="item_list"

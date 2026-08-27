@@ -14,6 +14,8 @@ export interface CraftingwidgetLayoutProps {
     onBtnCancel?: () => void;
     onBtnCraft?: () => void;
     onClose?: () => void;
+    onNumberContainer?: () => void;
+    onProgressBar?: () => void;
     onTooltip?: () => void;
     srcBitmap?: string;
     srcFurnitureIcon?: string;
@@ -21,7 +23,7 @@ export interface CraftingwidgetLayoutProps {
     visibleProgressBar?: boolean;
 }
 
-export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixer, captionHeaderRecipes, captionInfoText1, captionInfoText2, captionNumber, layout, onBtnCancel, onBtnCraft, onClose, onTooltip, srcBitmap, srcFurnitureIcon, visibleNumberContainer, visibleProgressBar }: CraftingwidgetLayoutProps) => {
+export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixer, captionHeaderRecipes, captionInfoText1, captionInfoText2, captionNumber, layout, onBtnCancel, onBtnCraft, onClose, onNumberContainer, onProgressBar, onTooltip, srcBitmap, srcFurnitureIcon, visibleNumberContainer, visibleProgressBar }: CraftingwidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -68,7 +70,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                 <Region
                     name="header_mixer"
                     params={1048592}
-                    layout={{ position: 'absolute', left: 292, width: 215, top: 33, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 292, width: 215, bottom: 346, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
@@ -82,7 +84,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                     <Region
                         name="info_text1"
                         params={9584688}
-                        layout={{ width: 134, height: 43, flexShrink: 0, maxWidth: 134, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ width: 134, flexShrink: 0, maxWidth: 134, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoText1 ?? 'This spell will produce yy yy yyyyyyyy yyyyyy yy yyy xxxxxx xxx xxxxx'}
@@ -92,7 +94,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                     <Region
                         name="info_text2"
                         params={9437232}
-                        layout={{ width: 134, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ width: 134, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoText2 ?? 'This spell will produce xxxxxx xxx xxxxx'}
@@ -112,6 +114,8 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                     name="progress_bar"
                     params={131073}
                     visible={visibleProgressBar ?? false}
+                    onPointerTap={onProgressBar}
+                    cursor="pointer"
                     layout={{ position: 'absolute', left: 285, width: 225, top: 316, height: 31 }}
                 >
                     <Button
@@ -133,7 +137,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                         <Region
                             params={147}
                             backgroundColor="#000000"
-                            layout={{ position: 'absolute', left: 0, width: 14, top: 14, height: 13 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 14, height: 13 }}
                         />
                     </Border>
                     <Region
@@ -175,7 +179,9 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                                 params={393363}
                                 visible={visibleNumberContainer ?? false}
                                 backgroundColor="#2f6982"
-                                layout={{ position: 'absolute', left: 33, width: 6, top: 2, height: 15 }}
+                                onPointerTap={onNumberContainer}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
                             >
                                 <Region
                                     name="number"

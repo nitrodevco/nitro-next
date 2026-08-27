@@ -9,10 +9,11 @@ export interface QuestHelpLayoutProps {
     captionHelpHeaderTitle?: string;
     itemsHelpContentItemlist?: ReactNode;
     layout?: BoxLayout;
+    onHelpContainer?: () => void;
     srcHelpHeaderImg?: string;
 }
 
-export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle, itemsHelpContentItemlist, layout, srcHelpHeaderImg }: QuestHelpLayoutProps) => {
+export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle, itemsHelpContentItemlist, layout, onHelpContainer, srcHelpHeaderImg }: QuestHelpLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,7 +21,9 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
             <Region
                 name="help.container"
                 params={2065}
-                layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 365 }}
+                onPointerTap={onHelpContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 208, top: 0, bottom: 0 }}
             >
                 <Region
                     name="help.header"

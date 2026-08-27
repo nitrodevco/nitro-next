@@ -88,7 +88,7 @@ export const LayoutRoomads_1600Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                             onChange={setDescInputTextValue}
                             maxLength={100}
                             multiline
-                            layout={{ position: 'absolute', left: 9, width: 313, top: 8, height: 129 }}
+                            layout={{ position: 'absolute', left: 9, right: 8, top: 8, bottom: 8 }}
                         />
                     </Border>
                     <Region
@@ -116,7 +116,7 @@ export const LayoutRoomads_1600Layout = ({ captionCtlgPrice1, captionCtlgText1, 
                         <Region
                             name="price_container"
                             params={131280}
-                            layout={{ position: 'absolute', left: 43, width: 44, top: 3, height: 18 }}
+                            layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 44, top: 3, height: 18 }}
                         />
                     </Border>
                     <Region

@@ -27,7 +27,7 @@ export const OfferExtensionLayout = ({ itemsList, layout }: OfferExtensionLayout
                     <Region
                         name="list"
                         params={8536080}
-                        layout={{ position: 'absolute', left: 3, width: 180, top: 3, height: 0, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 3, top: 3, flexDirection: 'column' }}
                     >
                         {itemsList ?? (
                             <>
@@ -67,7 +67,7 @@ export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, visib
             >
                 <Region
                     params={262160}
-                    layout={{ position: 'absolute', left: 7, width: 140, top: 7, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 33, width: 140, top: 7, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={t('offers.extension.start_video')}
@@ -105,7 +105,7 @@ export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, v
         >
             <Region
                 params={208}
-                layout={{ position: 'absolute', left: 7, width: 167, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: '50%', marginLeft: -83, width: 167, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={t('offers.extension.check_rewards')}
