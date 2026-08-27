@@ -21,6 +21,18 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     8: { layer: NineSlice('border-8-default-src', 10, 10, 10, 10) },
     9: { layer: NineSlice('border-9-default-src', 7, 7, 7, 8), tintColor: '#686661' },
     10: { layer: NineSlice('border-10-default-src', 6, 6, 6, 8) },
+    // habbo_skin - "white with sharpest corners" (border_slot_2)
+    11: { layer: NineSlice('border-11-default-src', 3, 3, 3, 3) },
+    // "white with thin dark border, sharpest corners, shadow"
+    12: { layer: NineSlice('border-12-default-src', 5, 5, 5, 5) },
+    // "ancient border"
+    13: { layer: NineSlice('border-13-default-src', 12, 11, 12, 11) },
+    // ubuntu_skin - "white round with grey light border"
+    14: { layer: NineSlice('border-14-default-src', 10, 10, 10, 10) },
+    // "recolorable round border" - the dark/mid/light HSV layers are pre-composed (see
+    // scripts/extract-skin-assets.ts), the element's `color` tints the result.
+    15: { layer: NineSlice('border-15-default-src', 5, 5, 5, 5) },
+    16: { layer: NineSlice('border-16-default-src', 6, 6, 6, 6) },
     100: { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
     101: {
         layer: Composite([

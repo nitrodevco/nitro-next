@@ -7,7 +7,10 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: ThemeOptions<T>): ThemeResult<T> => {
     const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
-    const config = variants[resolvedVariant];
+    // The Flash skins define many more `style` ids than have art here (border style 15, button
+    // style 5, ...) - a layout port passing one through verbatim must degrade to the default
+    // variant's chrome, not crash on `undefined.layout`.
+    const config = variants[resolvedVariant] ?? variants[defaultVariant] ?? ({} as T);
     const { state, handlers } = useInteractionState({
         disabled, stopsPropagation, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     });

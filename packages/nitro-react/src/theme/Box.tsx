@@ -1,4 +1,5 @@
-import { Container } from 'pixi.js';
+import { Color, Container } from 'pixi.js';
+import { DropShadowFilter } from 'pixi-filters';
 import { forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback } from 'react';
 
 import { boxLayoutToStyle } from './dom';
@@ -88,8 +89,15 @@ BoxPixi.displayName = 'BoxPixi';
  * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
  */
 const BoxDom = forwardRef<Container, BoxProps>(
-    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, visible, filters, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const style = boxLayoutToStyle(layout as BoxLayout | undefined);
+        const dropShadows = (Array.isArray(filters) ? filters : filters ? [ filters ] : []).filter((filter): filter is DropShadowFilter => filter instanceof DropShadowFilter);
+
+        // The one Pixi filter with a faithful CSS counterpart (Frame's window shadow, a layout
+        // port's `<DropShadowFilter>`); any other filter has no DOM equivalent and is dropped.
+        if (dropShadows.length) {
+            style.filter = dropShadows.map(filter => `drop-shadow(${filter.offset.x}px ${filter.offset.y}px ${filter.blur}px ${Color.shared.setValue(filter.color).setAlpha(filter.alpha).toRgbaString()})`).join(' ');
+        }
         const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
         // `#ui-container` (MainView.tsx) sets `pointer-events: none` at its root so clicks
@@ -101,6 +109,7 @@ const BoxDom = forwardRef<Container, BoxProps>(
         if (typeof cursor === 'string') style.cursor = cursor;
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
+        if (visible === false) style.display = 'none';
         if (x || y) {
             style.transform = `translate(${x}px, ${y}px)`;
             style.transformOrigin = 'top left';

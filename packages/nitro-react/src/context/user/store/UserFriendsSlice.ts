@@ -16,6 +16,8 @@ type Actions = {
     processFriends: (friends: IMessengerFriend[]) => void;
     processFriendUpdates: (updates: IMessengerUpdate[]) => void;
     processFriendRequests: (requests: IFriendRequest[]) => void;
+    /** Drops requests the user has answered (accept/decline) without waiting for the server's next friend-list update. */
+    removeFriendRequests: (playerIds: number[]) => void;
 };
 
 export const UserFriendsSlice: State = {
@@ -69,5 +71,12 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
         return {
             requests: { ...x.requests, ...updates },
         };
+    }),
+    removeFriendRequests: (playerIds: number[]) => set((x) => {
+        const requests = { ...x.requests };
+
+        for (const playerId of playerIds) delete requests[playerId];
+
+        return { requests };
     }),
 });

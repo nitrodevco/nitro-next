@@ -7,7 +7,8 @@
         "build": "vite build",
         "eslint": "eslint",
         "truffle:setup": "truffle-setup --out public/assets/truffle",
-        "bundle-theme-assets": "node scripts/build-theme-atlas.ts"
+        "bundle-theme-assets": "node scripts/build-theme-atlas.ts",
+        "generate-layout-views": "node scripts/generate-layout-views.ts"
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",

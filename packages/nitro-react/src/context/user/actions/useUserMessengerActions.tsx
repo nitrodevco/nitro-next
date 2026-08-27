@@ -8,4 +8,5 @@ export const useUserMessengerActions = () => useUserContext(useShallow(x => ({
     processFriends: x.processFriends,
     processFriendUpdates: x.processFriendUpdates,
     processFriendRequests: x.processFriendRequests,
+    removeFriendRequests: x.removeFriendRequests,
 })));

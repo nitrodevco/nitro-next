@@ -1,0 +1,329 @@
+import { useTranslation } from '#base/context';
+import { Border, BoxLayout, ButtonThick, Header, Region, ThemeImage, ThemeText } from '#base/theme';
+import { layoutImage } from '#base/views/layouts/layoutAssets';
+
+/** Generated from `960_camera_interface_xml` (layout "camera_interface", 340x536) by scripts/generate-layout-views.ts - do not edit by hand. */
+export interface CameraInterfaceLayoutProps {
+    captionPhotoDate?: string;
+    captionPhotoRoomname?: string;
+    layout?: BoxLayout;
+    onBgBorder?: () => void;
+    onButtonEditor?: () => void;
+    onButtonRelease?: () => void;
+    onCameraButton0?: () => void;
+    onCameraButton1?: () => void;
+    onCameraButton2?: () => void;
+    onCameraButton3?: () => void;
+    onCameraButton4?: () => void;
+    onChooseSlotButton0?: () => void;
+    onChooseSlotButton1?: () => void;
+    onChooseSlotButton2?: () => void;
+    onChooseSlotButton3?: () => void;
+    onChooseSlotButton4?: () => void;
+    onDeletePhotoButton?: () => void;
+    srcBuyButtonBg?: string;
+    srcCameraCrosshair?: string;
+    srcCameraSlot0?: string;
+    srcCameraSlot1?: string;
+    srcCameraSlot2?: string;
+    srcCameraSlot3?: string;
+    srcCameraSlot4?: string;
+    srcCustomFrame?: string;
+    srcFlash?: string;
+    srcImage?: string;
+    srcPhotoBorder?: string;
+    srcReleaseBitmap?: string;
+    srcSlotImage0?: string;
+    srcSlotImage1?: string;
+    srcSlotImage2?: string;
+    srcSlotImage3?: string;
+    srcSlotImage4?: string;
+    visibleDeletePhotoButton?: boolean;
+    visibleSlotContainer?: boolean;
+}
+
+export const CameraInterfaceLayout = ({ captionPhotoDate, captionPhotoRoomname, layout, onBgBorder, onButtonEditor, onButtonRelease, onCameraButton0, onCameraButton1, onCameraButton2, onCameraButton3, onCameraButton4, onChooseSlotButton0, onChooseSlotButton1, onChooseSlotButton2, onChooseSlotButton3, onChooseSlotButton4, onDeletePhotoButton, srcBuyButtonBg, srcCameraCrosshair, srcCameraSlot0, srcCameraSlot1, srcCameraSlot2, srcCameraSlot3, srcCameraSlot4, srcCustomFrame, srcFlash, srcImage, srcPhotoBorder, srcReleaseBitmap, srcSlotImage0, srcSlotImage1, srcSlotImage2, srcSlotImage3, srcSlotImage4, visibleDeletePhotoButton, visibleSlotContainer }: CameraInterfaceLayoutProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region layout={{ position: 'relative', width: 340, height: 536, ...layout }}>
+            <Region
+                name="bgBorder"
+                params={33025}
+                onPointerTap={onBgBorder}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536, justifyContent: 'center' }}
+            >
+                <Region
+                    visible={visibleSlotContainer ?? false}
+                    layout={{ position: 'absolute', left: 6, width: 328, top: 453, height: 82 }}
+                >
+                    <Border
+                        variant="7"
+                        name="slot_container"
+                        params={16}
+                        layout={{ width: '100%', height: '100%' }}
+                    >
+                        <Region
+                            params={16}
+                            layout={{ position: 'absolute', left: 7, width: 340, top: 15, height: 58 }}
+                        >
+                            <Region
+                                name="cameraButton_0"
+                                params={1}
+                                dynamicStyle="brightness_and_shadow_under"
+                                onPointerTap={onCameraButton0}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                            >
+                                <ThemeImage
+                                    name="cameraSlot_0"
+                                    params={16}
+                                    src={srcCameraSlot0}
+                                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                                />
+                            </Region>
+                            <Region
+                                name="cameraButton_1"
+                                params={17}
+                                onPointerTap={onCameraButton1}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 64, width: 58, top: 0, height: 58 }}
+                            >
+                                <ThemeImage
+                                    name="cameraSlot_1"
+                                    params={16}
+                                    src={srcCameraSlot1}
+                                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                                />
+                            </Region>
+                            <Region
+                                name="cameraButton_2"
+                                params={17}
+                                onPointerTap={onCameraButton2}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 128, width: 58, top: 0, height: 58 }}
+                            >
+                                <ThemeImage
+                                    name="cameraSlot_2"
+                                    params={16}
+                                    src={srcCameraSlot2}
+                                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                                />
+                            </Region>
+                            <Region
+                                name="cameraButton_3"
+                                params={17}
+                                onPointerTap={onCameraButton3}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 192, width: 58, top: 0, height: 58 }}
+                            >
+                                <ThemeImage
+                                    name="cameraSlot_3"
+                                    params={16}
+                                    src={srcCameraSlot3}
+                                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                                />
+                            </Region>
+                            <Region
+                                name="cameraButton_4"
+                                params={17}
+                                onPointerTap={onCameraButton4}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 256, width: 58, top: 0, height: 58 }}
+                            >
+                                <ThemeImage
+                                    name="cameraSlot_4"
+                                    params={16}
+                                    src={srcCameraSlot4}
+                                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                                />
+                            </Region>
+                        </Region>
+                        <Region
+                            visible={false}
+                            layout={{ position: 'absolute', left: 0, width: 62, top: -25, height: 62 }}
+                        >
+                            <ThemeImage
+                                name="photo_border"
+                                src={srcPhotoBorder ?? layoutImage('camera_photo_border.png')}
+                                layout={{ position: 'absolute', left: 0, width: 62, top: -25, height: 62 }}
+                            />
+                        </Region>
+                        <Region
+                            name="delete_photo_button"
+                            params={131073}
+                            visible={visibleDeletePhotoButton ?? false}
+                            onPointerTap={onDeletePhotoButton}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 21 }}
+                        >
+                            <ThemeImage
+                                params={16}
+                                src={layoutImage('camera_cam_close_x.png')}
+                                layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 21 }}
+                            />
+                        </Region>
+                    </Border>
+                </Region>
+                <ThemeImage
+                    name="image"
+                    params={20}
+                    src={srcImage}
+                    layout={{ position: 'absolute', left: 9, width: 320, top: 36, height: 320 }}
+                />
+                <ThemeImage
+                    name="flash"
+                    params={20}
+                    src={srcFlash}
+                    layout={{ position: 'absolute', left: 9, width: 320, top: 35, height: 320 }}
+                />
+                <ThemeImage
+                    name="custom_frame"
+                    params={16}
+                    src={srcCustomFrame ?? layoutImage('camera_cam_bg.png')}
+                    layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 462 }}
+                />
+                <Region
+                    name="photo_date"
+                    params={262160}
+                    visible={false}
+                    layout={{ position: 'absolute', right: 10, width: 88, top: 55, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionPhotoDate ?? '6/4/2014 14:02'}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Region
+                    name="photo_roomname"
+                    params={262160}
+                    visible={false}
+                    layout={{ position: 'absolute', right: 10, width: 110, top: 69, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                >
+                    <ThemeText
+                        text={captionPhotoRoomname ?? 'My awesome room'}
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
+                    />
+                </Region>
+                <ThemeImage
+                    name="camera_crosshair"
+                    params={16}
+                    src={srcCameraCrosshair ?? layoutImage('camera_viewfinder.png')}
+                    layout={{ position: 'absolute', left: 10, width: 318, top: 38, height: 318 }}
+                />
+                <Region
+                    name="button_release"
+                    tooltip={t('camera.take.photo.button.tooltip')}
+                    params={131073}
+                    onPointerTap={onButtonRelease}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 120, width: 98, top: 362, height: 95 }}
+                >
+                    <ThemeImage
+                        name="release_bitmap"
+                        tags={[ '#bg' ]}
+                        src={srcReleaseBitmap ?? layoutImage('camera_camera_btn.png')}
+                        layout={{ position: 'absolute', left: 3, width: 94, top: 1, height: 94 }}
+                    />
+                </Region>
+                <ThemeImage
+                    name="buyButtonBg"
+                    params={16}
+                    src={srcBuyButtonBg ?? layoutImage('tools_black_pixel.png')}
+                    tint="#ff0000"
+                    layout={{ position: 'absolute', left: 11, width: 318, top: 298, height: 58 }}
+                />
+                <ButtonThick
+                    variant="6"
+                    name="button_editor"
+                    tooltip={t('camera.editor.button.tooltip')}
+                    params={917505}
+                    dynamicStyle="brightness_and_shadow_under"
+                    tintColor="#009e00"
+                    onPointerTap={onButtonEditor}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 157, top: 308, height: 40 }}
+                >
+                    {t('camera.editor.button.text')}
+                </ButtonThick>
+                <Region
+                    name="chooseSlotButton_0"
+                    params={147473}
+                    onPointerTap={onChooseSlotButton0}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 350, width: 9, top: 42, height: 10 }}
+                >
+                    <ThemeImage
+                        name="slotImage_0"
+                        params={16}
+                        src={srcSlotImage0 ?? layoutImage('camera_arrow_gray.png')}
+                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
+                    />
+                </Region>
+                <Region
+                    name="chooseSlotButton_1"
+                    params={147473}
+                    onPointerTap={onChooseSlotButton1}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 350, width: 9, top: 109, height: 10 }}
+                >
+                    <ThemeImage
+                        name="slotImage_1"
+                        params={16}
+                        src={srcSlotImage1 ?? layoutImage('camera_arrow_gray.png')}
+                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
+                    />
+                </Region>
+                <Region
+                    name="chooseSlotButton_2"
+                    params={147473}
+                    onPointerTap={onChooseSlotButton2}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 350, width: 9, top: 177, height: 10 }}
+                >
+                    <ThemeImage
+                        name="slotImage_2"
+                        params={16}
+                        src={srcSlotImage2 ?? layoutImage('camera_arrow_gray.png')}
+                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
+                    />
+                </Region>
+                <Region
+                    name="chooseSlotButton_3"
+                    params={147473}
+                    onPointerTap={onChooseSlotButton3}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 350, width: 9, top: 244, height: 10 }}
+                >
+                    <ThemeImage
+                        name="slotImage_3"
+                        params={16}
+                        src={srcSlotImage3 ?? layoutImage('camera_arrow_gray.png')}
+                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
+                    />
+                </Region>
+                <Region
+                    name="chooseSlotButton_4"
+                    params={147473}
+                    onPointerTap={onChooseSlotButton4}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 350, width: 9, top: 310, height: 10 }}
+                >
+                    <ThemeImage
+                        name="slotImage_4"
+                        params={16}
+                        src={srcSlotImage4 ?? layoutImage('camera_arrow_gray.png')}
+                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 10 }}
+                    />
+                </Region>
+                <Header
+                    variant="3"
+                    params={273}
+                    tintColor="#666666"
+                    caption="${camera.interface.title}"
+                    layout={{ position: 'absolute', left: 9, width: 323, top: 5, height: 28 }}
+                />
+            </Region>
+        </Region>
+    );
+};

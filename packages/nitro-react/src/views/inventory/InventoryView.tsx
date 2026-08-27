@@ -1,6 +1,7 @@
 import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
 import { Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
+import { InventoryLayout } from '../layouts/inventory/InventoryLayout';
 import { InventoryBadgesView } from './InventoryBadgesView';
 import { InventoryBotsView } from './InventoryBotsView';
 import { InventoryFurniView } from './InventoryFurniView';
@@ -17,6 +18,8 @@ export const InventoryView = () => {
     const setActiveTab = (tab: WindowParams<'inventory'>['tab']) => {
         updateWindowParams('inventory', { tab });
     };
+
+    return <InventoryLayout />;
 
     return (
         <Frame

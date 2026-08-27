@@ -18,10 +18,16 @@ const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintCo
 
     if (!url) return null;
 
+    // Same start-inset pinning as `CompositePieceSprite.tsx`: an axis with neither inset set
+    // must not drift to the flex static position now that generated layouts set
+    // `justifyContent: 'center'` on boxes that hold centred ported children.
+    const left = piece.left ?? (piece.right === undefined ? 0 : undefined);
+    const top = piece.top ?? (piece.bottom === undefined ? 0 : undefined);
+
     return (
         <div style={{
             position: 'absolute',
-            top: piece.top, left: piece.left, right: piece.right, bottom: piece.bottom,
+            top, left, right: piece.right, bottom: piece.bottom,
             width: piece.width, height: piece.height,
         }}
         >

@@ -5,9 +5,9 @@ import { useConfigValue } from '#base/context';
 
 import { Box, BoxLayout } from './Box';
 import { useTextureFromUrl } from './hooks';
-import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, SpriteFrame } from './utils';
+import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
 
-export interface ImageProps {
+export interface ImageProps extends ThemeLayoutMeta {
     src: string | undefined;
     /** Crop a sub-region out of `src` (a shared spritesheet) instead of showing it whole. */
     frame?: SpriteFrame;
@@ -62,7 +62,7 @@ export interface ImageProps {
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
     src, frame, width, height, tint, alpha, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
-    showLoadingPlaceholder, layout,
+    showLoadingPlaceholder, layout, visible,
 }, ref) => {
     const baseTexture = useTextureFromUrl(src);
 
@@ -88,6 +88,7 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
     return (
         <Box
             ref={ref}
+            visible={visible}
             layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <pixiSprite
@@ -123,7 +124,7 @@ ImagePixi.displayName = 'ImagePixi';
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     src, frame, width, height, tint, alpha, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
-    layout,
+    layout, visible,
 }, ref) => {
     if (!src) return null;
 
@@ -149,6 +150,7 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     return (
         <Box
             ref={ref}
+            visible={visible}
             layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             {frame
