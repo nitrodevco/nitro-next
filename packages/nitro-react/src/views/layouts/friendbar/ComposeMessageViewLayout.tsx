@@ -162,12 +162,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     params={1041}
                     tintColor="#dddddd"
                     onPointerTap={onCancelBtn}
-                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         name="cancel_btn_label"
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 163, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 21.5, marginRight: -21.5, width: 163, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCancelBtnLabel ?? t('groupforum.compose.cancel')}
@@ -181,12 +181,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     params={263249}
                     tintColor="#0a9bc5"
                     onPointerTap={onPostBtn}
-                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120 }}
+                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         name="send_message_label"
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 152, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 16, marginRight: -16, width: 152, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSendMessageLabel ?? t('groupforum.compose.post')}

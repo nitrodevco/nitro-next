@@ -260,7 +260,7 @@ export const DailytasksLayoutTaskTemplateItem = ({ captionClaimTxt, captionRewar
             <Region
                 name="right_cont"
                 params={16}
-                layout={{ position: 'absolute', left: 286, width: 110, top: 6, height: 113 }}
+                layout={{ position: 'absolute', left: 286, width: 110, top: 6, height: 113, justifyContent: 'center' }}
             >
                 <Border
                     variant="2"
@@ -283,7 +283,7 @@ export const DailytasksLayoutTaskTemplateItem = ({ captionClaimTxt, captionRewar
                 <Region
                     name="rewards_list"
                     params={933904}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -23, top: 28, flexDirection: 'row', gap: 4 }}
+                    layout={{ position: 'absolute', top: 28, flexDirection: 'row', gap: 4 }}
                 >
                     {itemsRewardsList ?? (
                         <DailytasksLayoutRewardTemplateItem />
@@ -297,7 +297,7 @@ export const DailytasksLayoutTaskTemplateItem = ({ captionClaimTxt, captionRewar
                     <Region
                         name="claim_button_container"
                         params={16}
-                        layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23 }}
+                        layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, justifyContent: 'center' }}
                     >
                         <Button
                             variant="5"
@@ -305,12 +305,12 @@ export const DailytasksLayoutTaskTemplateItem = ({ captionClaimTxt, captionRewar
                             params={917521}
                             tintColor="#01a101"
                             onPointerTap={onClaimButton}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -55, width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
+                            layout={{ position: 'absolute', width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
                         />
                         <Region
                             name="claim_txt"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -52, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionClaimTxt ?? t('dailytasks.claim')}
@@ -374,7 +374,7 @@ export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGe
             <Region
                 name="hc_info_text"
                 params={3145744}
-                layout={{ position: 'absolute', left: 12, width: 289, top: '50%', marginTop: -10.5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 12, width: 289, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionHcInfoText ?? 'You get double duckets as you are an HC member!'}

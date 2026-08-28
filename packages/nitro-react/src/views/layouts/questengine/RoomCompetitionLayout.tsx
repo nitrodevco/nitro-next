@@ -32,13 +32,13 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     variant="1"
                     name="dont_show_again_container"
                     params={128}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86, justifyContent: 'center' }}
                 >
                     <Region
                         name="dont_show_info_txt"
                         tags={[ 'COLORABLE' ]}
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -102, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowInfoTxt ?? 'You will see this again adad adada ad'}
@@ -50,7 +50,7 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                         name="dont_show_again_txt"
                         tags={[ 'COLORABLE' ]}
                         params={3145936}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 247, top: '50%', marginTop: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, alignSelf: 'center', marginTop: 5.5, marginBottom: -5.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowAgainTxt ?? t('roomcompetition.dontshowagain.dontshow')}

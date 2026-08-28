@@ -314,13 +314,13 @@ export const InventoryTradingWiredLayout = ({ captionContentText1A, captionConte
                         name="offers_1_payment_placeholder"
                         params={16}
                         visible={visibleOffers1PaymentPlaceholder ?? false}
-                        layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200 }}
+                        layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="payment_layout_image"
                             params={3932176}
                             src={srcPaymentLayoutImage ?? layoutImage('wired_chests_images_generic_payments.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -80, width: 170, top: '50%', marginTop: -91, height: 173 }}
+                            layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, alignSelf: 'center', marginTop: -4.5, marginBottom: 4.5, height: 173 }}
                         />
                     </Region>
                     <ThemeImage
@@ -703,7 +703,7 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ captionAnyAllT
                         name="custom_text"
                         params={3145872}
                         visible={false}
-                        layout={{ position: 'absolute', left: 10, right: 10, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionCustomText ?? 'Entrance to the game and free candies'}
@@ -714,7 +714,7 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ captionAnyAllT
                         name="any_furni_text"
                         params={3145872}
                         visible={false}
-                        layout={{ position: 'absolute', left: 10, right: 10, top: '50%', marginTop: -20.5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAnyFurniText ?? t('inventory.wired_trading.requirements.donation.furni')}
@@ -725,7 +725,7 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ captionAnyAllT
                         name="any_coins_text"
                         params={3145872}
                         visible={false}
-                        layout={{ position: 'absolute', left: 10, right: 10, top: '50%', marginTop: -20.5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAnyCoinsText ?? t('inventory.wired_trading.requirements.donation.coins')}
@@ -736,7 +736,7 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ captionAnyAllT
                         name="any_all_text"
                         params={3145872}
                         visible={false}
-                        layout={{ position: 'absolute', left: 10, right: 10, top: '50%', marginTop: -20.5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAnyAllText ?? t('inventory.wired_trading.requirements.donation.all')}
@@ -746,7 +746,7 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ captionAnyAllT
                     <Region
                         name="rules_list"
                         params={3145872}
-                        layout={{ position: 'absolute', left: 1, right: 1, top: '50%', marginTop: -20.5, height: 40, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 1, right: 1, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 40, flexDirection: 'column' }}
                     >
                         {itemsRulesList ?? (
                             <InventoryTradingWiredLayoutRuleTemplateItem />

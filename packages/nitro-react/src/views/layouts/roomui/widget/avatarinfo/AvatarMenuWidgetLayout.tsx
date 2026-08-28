@@ -33,12 +33,12 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                         params={145}
                         onPointerTap={onProfileLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center' }}
                     >
                         <Region
                             name="name"
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -40.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'my_name_here'}
@@ -127,13 +127,13 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                         params={1169}
                         onPointerTap={onMinimize}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18 }}
+                        layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18, justifyContent: 'center' }}
                     >
                         <Icon
                             variant="7"
                             name="icon"
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -6, width: 12, top: 7, height: 11 }}
+                            layout={{ position: 'absolute', width: 12, top: 7, height: 11 }}
                         />
                     </Region>
                 </Region>

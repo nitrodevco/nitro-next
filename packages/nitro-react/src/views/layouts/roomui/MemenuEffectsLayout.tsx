@@ -18,11 +18,11 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffe
                 variant="1"
                 name="effects_brdr"
                 params={12582928}
-                layout={{ position: 'absolute', left: 1, width: 175, top: 1, height: 114 }}
+                layout={{ position: 'absolute', left: 1, width: 175, top: 1, height: 114, justifyContent: 'center' }}
             >
                 <Region
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -87.5, width: 176, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 176, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={t('widget.memenu.activeeffects')}
@@ -33,7 +33,7 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffe
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -76.5, width: 153, top: 22, height: 1 }}
+                    layout={{ position: 'absolute', width: 153, top: 22, height: 1 }}
                 />
                 <Region
                     name="effects_cnvs"

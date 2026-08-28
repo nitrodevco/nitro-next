@@ -21,7 +21,7 @@ export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundIm
         <Region layout={{ position: 'relative', width: 57, height: 260, ...layout }}>
             <Region
                 params={3072}
-                layout={{ position: 'absolute', left: 0, width: 57, top: '50%', marginTop: -47, height: 260 }}
+                layout={{ position: 'absolute', left: 0, width: 57, alignSelf: 'center', marginTop: 83, marginBottom: -83, height: 260 }}
             >
                 <Region
                     params={16}

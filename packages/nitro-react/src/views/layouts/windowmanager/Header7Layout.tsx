@@ -15,13 +15,13 @@ export const Header7Layout = ({ captionHeaderTitleText, layout, onHeaderButtonCl
                 name="header_container"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={2147483824}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, justifyContent: 'center' }}
             >
                 <Region
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                     params={2147483856}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -28, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -22, marginRight: 22, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeaderTitleText ?? ''}

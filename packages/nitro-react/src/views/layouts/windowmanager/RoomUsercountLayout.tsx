@@ -11,18 +11,18 @@ export interface RoomUsercountLayoutProps {
 
 export const RoomUsercountLayout = ({ itemsUsercount, layout }: RoomUsercountLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 40, height: 18, ...layout }}>
+        <Region layout={{ position: 'relative', width: 40, height: 18, justifyContent: 'center', ...layout }}>
             <Border
                 variant="3"
                 name="room_info_usercount_border"
                 params={1835024}
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -20, width: 40, bottom: 0, height: 18 }}
+                layout={{ position: 'absolute', width: 40, bottom: 0, height: 18, justifyContent: 'center' }}
             >
                 <Region
                     name="usercount"
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsUsercount ?? (
                         <>

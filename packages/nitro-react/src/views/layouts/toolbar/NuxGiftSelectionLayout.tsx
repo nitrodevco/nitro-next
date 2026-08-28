@@ -24,7 +24,7 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, items
             onClose={onClose}
             layout={{ width: 487, height: 287, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     params={2176}
                     backgroundColor="#3d6373"
@@ -57,7 +57,7 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, items
                 <Region
                     name="nux_gift_selection_list"
                     params={131280}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -193.5, minWidth: 374, top: 78, minHeight: 443, flexDirection: 'row', gap: 10 }}
+                    layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, minWidth: 374, top: 78, minHeight: 443, flexDirection: 'row', gap: 10 }}
                 >
                     {itemsNuxGiftSelectionList ?? (
                         <>

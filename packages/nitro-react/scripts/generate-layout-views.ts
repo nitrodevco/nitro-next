@@ -423,6 +423,21 @@ const anchor = (explicit: string | undefined, params: number, axis: 'h' | 'v'): 
     return 'fixed';
 };
 
+/**
+ * True when this element's own box will hold an absolutely-positioned child whose horizontal
+ * anchor is `center`. Such a child carries no horizontal inset (see `boxLayout`'s centre
+ * branch), so the parent centres it through its own `justifyContent` - the main axis of the
+ * default `row` direction (both `@pixi/layout`'s `Layout.defaultStyle` and CSS default to
+ * `row`; no generated non-flow container sets its own direction). Harmless to every sibling:
+ * all other anchors always emit at least one inset per axis, and an inset always wins over
+ * alignment. Vertical centring never needs the parent - it's the cross axis, so the child's
+ * own `alignSelf` covers it.
+ */
+const centersHChild = (el: Element): boolean => num(el.attrs.width) > 0
+    && el.children.some(child => anchor(child.scale?.horizontal, child.params, 'h') === 'center');
+
+const centerExtra = (el: Element): Record<string, string | undefined> => ({ justifyContent: centersHChild(el) ? '\'center\'' : undefined });
+
 interface BoxLayoutOptions {
     /** `reflect_*_resize_to_parent` leaf (a text or bitmap): size to content on that axis instead of the XML box. */
     autoSize?: boolean;
@@ -469,9 +484,22 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
             fields.right = parent.width - x - width;
             sizeField('width', width, autoWidth);
         } else if (horizontal === 'center' && parent.width > 0) {
-            // Keep the element's centre at the same offset from the parent's centre.
-            fields.left = '\'50%\'';
-            fields.marginLeft = x + width / 2 - parent.width / 2 - width / 2;
+            // Keep the element's centre at the same offset from the parent's centre - as real
+            // flex centring, not a `left: '50%'` + negative-pixel-margin hack: the parent box
+            // gets `justifyContent: 'center'` (see `centersHChild`), which centres this child
+            // because it deliberately carries no horizontal inset (both Yoga and CSS resolve an
+            // absolutely-positioned child's inset-less axis to its static position - centred,
+            // per the "as if it were the sole flex item" rule). A non-zero design offset rides
+            // along as an equal-and-opposite margin pair, which shifts the centred box without
+            // changing its margin-box size - so, unlike the old 50% form, an auto-sized child
+            // (a translated label, a template row) stays centred at whatever width it renders.
+            const offset = x + width / 2 - parent.width / 2;
+
+            if (offset) {
+                fields.marginLeft = offset;
+                fields.marginRight = -offset;
+            }
+
             sizeField('width', width, autoWidth);
         } else {
             fields.left = x;
@@ -485,8 +513,18 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
             fields.bottom = parent.height - y - height;
             sizeField('height', height, autoHeight);
         } else if (vertical === 'center' && parent.height > 0) {
-            fields.top = '\'50%\'';
-            fields.marginTop = y + height / 2 - parent.height / 2 - height / 2;
+            // Vertical is the cross axis of the (default) row direction, so this centring is
+            // fully child-local: `alignSelf: 'center'` needs nothing from the parent. Same
+            // margin-pair offset scheme as the horizontal branch above.
+            const offset = y + height / 2 - parent.height / 2;
+
+            fields.alignSelf = '\'center\'';
+
+            if (offset) {
+                fields.marginTop = offset;
+                fields.marginBottom = -offset;
+            }
+
             sizeField('height', height, autoHeight);
         } else {
             fields.top = y;
@@ -777,7 +815,7 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
 
     const content = wrap(
         'Region',
-        [ 'layout={{ position: \'relative\', flex: 1, width: \'100%\' }}' ],
+        [ `layout={${layoutLiteral({ position: '\'relative\'', flex: 1, width: '\'100%\'', ...centerExtra(el) })}}` ],
         indent + INDENT,
         emitChildren(ctx, el, selfBox(el), indent + INDENT + INDENT),
     );
@@ -818,12 +856,14 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     // bubble - see FriendRequestsTab.as showing its `bubble` on select) get a `visible<Name>` prop.
     const visibleOverride = el.attrs.name && (hidden || el.tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
 
-    if (!hidden && !visibleOverride && !el.dropShadow) return wrap(component, [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, children(indent + INDENT));
+    if (!hidden && !visibleOverride && !el.dropShadow) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
 
     // Components that don't forward `visible`/`dropShadow` to their Box get a Region wrapper carrying them instead.
     ctx.imports.add('Region');
 
-    const inner = wrap(component, [ ...props, 'layout={{ width: \'100%\', height: \'100%\' }}' ], indent + INDENT, children(indent + INDENT + INDENT));
+    // The children render inside the component, not the wrapper - a centred child's
+    // `justifyContent` belongs on the inner layout here, never on the wrapper's.
+    const inner = wrap(component, [ ...props, `layout={${layoutLiteral({ width: '\'100%\'', height: '\'100%\'', ...centerExtra(el) })}}` ], indent + INDENT, children(indent + INDENT + INDENT));
     const wrapperProps = [ ...dropShadowProp(el) ];
 
     if (visibleOverride) wrapperProps.push(`visible={${visibleOverride} ?? ${!hidden}}`);
@@ -857,7 +897,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
     if (tag === 'tab_selector') {
         ctx.imports.add('Region');
 
-        return wrap('Region', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent)}}` ], indent, emitChildren(ctx, el, selfBox(el), indent + INDENT));
+        return wrap('Region', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, emitChildren(ctx, el, selfBox(el), indent + INDENT));
     }
     if (TEXT_TAGS.has(tag)) return emitText(ctx, el, parent, indent);
     if (tag === 'static_bitmap' || tag === 'bitmap') return emitBitmap(ctx, el, parent, indent);
@@ -901,7 +941,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
                 props.push('cursor="pointer"');
             }
 
-            return wrap('Region', [ ...props, `layout={${boxLayout(el, parent)}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
+            return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
         }
         case 'border': {
             const blend = el.attrs.blend ? [ `blend={${num(el.attrs.blend)}}` ] : [];
@@ -955,7 +995,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
 
             if (options.length) props.push(`options={{ ${options.map(([ key, value ]) => `${quote(key)}: ${quote(value)}`).join(', ')} }}`);
 
-            props.push(`layout={${boxLayout(el, parent)}}`);
+            props.push(`layout={${boxLayout(el, parent, centerExtra(el))}}`);
 
             return wrap('WidgetSlot', props, indent, emitChildren(ctx, el, selfBox(el), childIndent));
         }
@@ -982,7 +1022,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string):
             ctx.warnings.push(`unmapped tag <${tag}>`);
             ctx.imports.add('Region');
 
-            return [ `${indent}{/* unmapped <${tag}> */}`, ...wrap('Region', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent)}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent)) ];
+            return [ `${indent}{/* unmapped <${tag}> */}`, ...wrap('Region', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent)) ];
         }
     }
 };
@@ -1316,7 +1356,12 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     '',
 ].join('\n'));
 
-writeFileSync(join(OUT_DIR, 'index.ts'), [ ...exports.sort().map(path => `export * from './${path}';`), 'export * from \'./layoutAssets\';', 'export * from \'./layoutRegistry\';', '' ].join('\n'));
+// Deliberately NO barrel index.ts: an `export *` over ~800 layout files puts every one of
+// them into the static module graph of whoever imports it - none are side-effect-free as far
+// as the bundler can prove, so tree-shaking keeps them all, and one convenience import once
+// turned the entire lazily-registered catalogue into ~800 eagerly-fetched entry chunks
+// (794 modulepreload links in the built index.html). Import a layout by its own path;
+// everything else goes through `layoutRegistry`'s per-entry dynamic `load()`.
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
 console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${unresolvedImages.size} referenced assets not found in scripts/images)`);

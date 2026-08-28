@@ -15,7 +15,7 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, layout, onRegion }: R
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 146 }}
+                layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 146, justifyContent: 'center' }}
             >
                 <Region
                     name="image"
@@ -33,7 +33,7 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, layout, onRegion }: R
                 <Region
                     name="loading_text"
                     params={1232}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -110, width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLoadingText ?? t('room.loading')}

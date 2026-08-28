@@ -43,7 +43,7 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
                     <Region
                         name="hc_info_text"
                         params={3145744}
-                        layout={{ position: 'absolute', left: 7, width: 349, top: '50%', marginTop: -5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 7, width: 349, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHcInfoText ?? 'You get double duckets as you are an HC member!'}

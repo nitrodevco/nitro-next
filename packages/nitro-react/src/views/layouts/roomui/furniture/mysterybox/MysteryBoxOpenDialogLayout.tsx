@@ -25,7 +25,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
             onClose={onClose}
             layout={{ width: 361, height: 271, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
                     params={16}
                     src="${image.library.url}Quests/ach_receive_star.png"
@@ -56,7 +56,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                 <Border
                     variant="102"
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -156.5, width: 310, top: 123, height: 60 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 310, top: 123, height: 60 }}
                 >
                     <ThemeImage
                         name="needed_base"
@@ -73,7 +73,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     <Region
                         name="waiting_text"
                         params={3088}
-                        layout={{ position: 'absolute', left: 62, width: 228, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 62, width: 228, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionWaitingText ?? 'Waiting for the other user to insert the key.'} />
                     </Region>
@@ -84,7 +84,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -63.5, width: 124, top: 186, height: 48 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 124, top: 186, height: 48 }}
                 >
                     Cancel opening
                 </Button>

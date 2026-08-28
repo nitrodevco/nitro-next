@@ -49,18 +49,18 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
     const t = useTranslation();
 
     return (
-        <Region layout={{ position: 'relative', width: 882, height: 510, ...layout }}>
+        <Region layout={{ position: 'relative', width: 882, height: 510, justifyContent: 'center', ...layout }}>
             <Region
                 params={192}
                 backgroundColor="#eeeeff"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -466, width: 882, top: 0, height: 510, minWidth: 455 }}
+                layout={{ position: 'absolute', marginLeft: -25, marginRight: 25, width: 882, top: 0, height: 510, minWidth: 455, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="snowwar_logo"
                     tags={[ 'bitmap' ]}
                     params={208}
                     src={srcSnowwarLogo ?? layoutImage('snowstorm_logo.png')}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -154, width: 308, top: 0, height: 83 }}
+                    layout={{ position: 'absolute', width: 308, top: 0, height: 83 }}
                 />
                 <Region
                     name="team1PlayersList"
@@ -77,11 +77,11 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     params={17}
                     onPointerTap={onStatusContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 293, width: 297, top: 321, height: 61 }}
+                    layout={{ position: 'absolute', left: 293, width: 297, top: 321, height: 61, justifyContent: 'center' }}
                 >
                     <Region
                         params={147664}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -73.5, top: 0, flexDirection: 'row', gap: 5 }}
+                        layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 5 }}
                     >
                         <Region
                             params={16}
@@ -118,7 +118,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     <Region
                         name="status.text_get_vip"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -148.5, width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionStatusTextGetVip ?? t('snowwar.get_more_games')}
@@ -129,7 +129,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         name="status.text_get_more_games"
                         params={786448}
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -148.5, width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionStatusTextGetMoreGames ?? t('snowwar.buy_x_games')}
@@ -141,11 +141,11 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     name="buttonsContainer"
                     params={208}
                     visible={visibleButtonsContainer ?? false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 180, top: 430, height: 50 }}
+                    layout={{ position: 'absolute', width: 180, top: 430, height: 50, justifyContent: 'center' }}
                 >
                     <Region
                         visible={visibleButtonPlayAgain ?? false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                        layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
                     >
                         <ButtonThick
                             variant="5"
@@ -164,13 +164,13 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         params={131281}
                         tintColor="#00ff00"
                         onPointerTap={onButtonRematch}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                        layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
                     >
                         Rematch
                     </ButtonThick>
                     <Region
                         visible={visibleButtonBuyGames ?? false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                        layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
                     >
                         <ButtonThick
                             variant="5"
@@ -189,7 +189,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     params={934097}
                     onPointerTap={onLeaveLinkRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -63, width: 127, top: 405, height: 17 }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 127, top: 405, height: 17 }}
                 >
                     <Icon
                         variant="4"
@@ -211,20 +211,20 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                 <Region
                     name="mostKillsContainer"
                     params={16}
-                    layout={{ position: 'absolute', left: 300, width: 130, top: 180, height: 117 }}
+                    layout={{ position: 'absolute', left: 300, width: 130, top: 180, height: 117, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="backgroundImage"
                         tags={[ 'bitmap' ]}
                         params={208}
                         src={srcBackgroundImage ?? layoutImage('blue_square.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -35, width: 70, top: 26, height: 70 }}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
                     <Region
                         name="mostKillsLabel_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -57, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
@@ -235,7 +235,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     <Region
                         name="mostKillsLabel"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -57, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionMostKillsLabel ?? t('snowwar.most_kills')}
@@ -247,7 +247,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         name="playerName"
                         tags={[ 'stroke' ]}
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -65, width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPlayerName ?? 'yyyy yyyyyy'}
@@ -260,26 +260,26 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tags={[ 'bitmap' ]}
                         params={208}
                         src={srcPlayerImage}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -35, width: 70, top: 26, height: 70 }}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
                 </Region>
                 <Region
                     name="mostHitsContainer"
                     params={16}
-                    layout={{ position: 'absolute', left: 450, width: 130, top: 180, height: 117 }}
+                    layout={{ position: 'absolute', left: 450, width: 130, top: 180, height: 117, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="backgroundImage"
                         tags={[ 'bitmap' ]}
                         params={208}
                         src={srcBackgroundImage2 ?? layoutImage('red_square.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -35, width: 70, top: 26, height: 70 }}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
                     <Region
                         name="mostHitsLabel_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -57, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
@@ -289,7 +289,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     <Region
                         name="mostHitsLabel"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -57, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionMostHitsLabel ?? t('snowwar.most_hits')}
@@ -300,7 +300,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         name="playerName"
                         tags={[ 'stroke' ]}
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -65, width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPlayerName2 ?? 'xxxxx xxxxx'}
@@ -311,7 +311,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         name="playerImage"
                         params={208}
                         src={srcPlayerImage2}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -35, width: 70, top: 26, height: 70 }}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
                 </Region>
                 <Region
@@ -385,7 +385,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                 <Region
                     name="headerContainer"
                     params={208}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -225, width: 450, top: 118, height: 35 }}
+                    layout={{ position: 'absolute', width: 450, top: 118, height: 35 }}
                 >
                     <Region
                         name="endingInformation_stroke"
@@ -413,13 +413,13 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     name="loadingContainer"
                     params={16}
                     visible={visibleLoadingContainer ?? false}
-                    layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235 }}
+                    layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235, justifyContent: 'center' }}
                 >
                     <Region
                         name="loadingText_stroke"
                         tags={[ 'stroke' ]}
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -104, width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
@@ -429,7 +429,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     <Region
                         name="loadingText"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -104, width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionLoadingText ?? t('snowwar.waiting_players')}
@@ -445,7 +445,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     <Region
                         name="arenaName"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -2, width: 4, top: 140, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 4, top: 140, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionArenaName ?? ''}
@@ -457,7 +457,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tags={[ 'bitmap' ]}
                         params={208}
                         src={srcMainLoadingIcon}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -25, width: 50, top: 180, height: 50 }}
+                        layout={{ position: 'absolute', width: 50, top: 180, height: 50 }}
                     />
                 </Region>
             </Region>

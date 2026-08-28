@@ -22,12 +22,12 @@ export const ChatinputWindowLayout = ({ itemsChatInputContainer, layout }: Chati
                     tags={[ 'chat_bubble' ]}
                     params={1049600}
                     dropShadow={{ distance: 4, alpha: 0.6 }}
-                    layout={{ position: 'absolute', left: 18, width: 733, bottom: 238, height: 117, minWidth: 90 }}
+                    layout={{ position: 'absolute', left: 18, width: 733, bottom: 238, height: 117, minWidth: 90, justifyContent: 'center' }}
                 >
                     <Region
                         name="chat_input_container"
                         params={4194512}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -242.5, width: 484, top: 60, height: 57, flexDirection: 'row', gap: 7 }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 484, top: 60, height: 57, flexDirection: 'row', gap: 7 }}
                     >
                         {itemsChatInputContainer ?? (
                             <>

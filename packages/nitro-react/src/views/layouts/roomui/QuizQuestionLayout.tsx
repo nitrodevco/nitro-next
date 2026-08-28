@@ -22,17 +22,17 @@ export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, 
                     params={131088}
                     tintColor="#000000"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 130 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 130, justifyContent: 'center' }}
                 >
                     <Region
                         name="ui_container2"
                         params={4341968}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -101, width: 203, top: 3, height: 70 }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 203, top: 3, height: 70, justifyContent: 'center' }}
                     >
                         <Region
                             name="quiz_topic"
                             params={8260816}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -101.5, top: '50%', marginTop: -33, height: 68, maxWidth: 660, maxHeight: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', alignSelf: 'center', marginTop: 1, marginBottom: -1, height: 68, maxWidth: 660, maxHeight: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionQuizTopic ?? '1jjjjjjlllll'}
@@ -44,7 +44,7 @@ export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, 
                     <Region
                         name="ui_container"
                         params={192}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -86, width: 172, top: 74, height: 50 }}
+                        layout={{ position: 'absolute', width: 172, top: 74, height: 50 }}
                     >
                         <Region
                             name="button_dislike"

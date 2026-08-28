@@ -52,7 +52,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                         name="bubble"
                         params={1}
                         tintColor="#9dbf5a"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                     >
                         <Region
                             name="bubble_title"
@@ -88,7 +88,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                             name="bubble_button_accept"
                             params={394449}
                             onPointerTap={onBubbleButtonAccept}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="8"
@@ -114,7 +114,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                             params={1233}
                             onPointerTap={onBubbleClickRegionReject}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -67.5, width: 118, bottom: 26, height: 15 }}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
                         >
                             <Region
                                 name="bubble_link_reject"
@@ -174,13 +174,13 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, onRegion
             >
                 <Region
                     params={16}
-                    layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70 }}
+                    layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="canvas"
                         params={3932160}
                         src={srcCanvas}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -5, width: 10, top: '50%', marginTop: -5, height: 10 }}
+                        layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
                     />
                 </Region>
             </Region>

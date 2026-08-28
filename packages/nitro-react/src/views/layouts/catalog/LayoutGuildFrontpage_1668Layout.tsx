@@ -49,14 +49,14 @@ export const LayoutGuildFrontpage_1668Layout = ({ captionCtlgDescription, captio
                 <Region
                     name="buyGuildWidget"
                     params={1040}
-                    layout={{ position: 'absolute', left: 49, width: 267, bottom: 184, height: 45 }}
+                    layout={{ position: 'absolute', left: 49, width: 267, bottom: 184, height: 45, justifyContent: 'center' }}
                 >
                     <Button
                         variant="3"
                         name="start_guild_purchase"
                         params={933905}
                         onPointerTap={onStartGuildPurchase}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -114.5, width: 213, top: 2, height: 28, minWidth: 190, minHeight: 28, maxHeight: 50 }}
+                        layout={{ position: 'absolute', marginLeft: -8, marginRight: 8, width: 213, top: 2, height: 28, minWidth: 190, minHeight: 28, maxHeight: 50 }}
                     >
                         {t('catalog.start.guild.purchase.button')}
                     </Button>

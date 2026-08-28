@@ -672,7 +672,7 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                 name="preview_border"
                                 params={144}
                                 tintColor="#dadada"
-                                layout={{ position: 'absolute', left: 0, right: 9, top: 20, height: 225 }}
+                                layout={{ position: 'absolute', left: 0, right: 9, top: 20, height: 225, justifyContent: 'center' }}
                             >
                                 <Region
                                     name="preview_instruction_furni"
@@ -702,35 +702,35 @@ export const WiredMenuViewLayout = ({ captionHeaderTitle, captionPreviewInstruct
                                     params={3932368}
                                     visible={false}
                                     options={{ 'avatar_image:cropped': 'true' }}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 34, top: '50%', marginTop: -42.5, height: 84 }}
+                                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
                                 />
                                 <WidgetSlot
                                     widgetType="pet_image"
                                     name="preview_pet"
                                     params={1077674128}
                                     visible={false}
-                                    layout={{ position: 'absolute', left: 46, right: 46, top: '50%', marginTop: -19.5, height: 38, overflow: 'hidden' }}
+                                    layout={{ position: 'absolute', left: 46, right: 46, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 38, overflow: 'hidden' }}
                                 />
                                 <Region
                                     visible={false}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: '50%', marginTop: -25.5, height: 50 }}
+                                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50, justifyContent: 'center' }}
                                 >
                                     <ThemeImage
                                         name="preview_image_bitmap"
                                         params={3932368}
                                         src={srcPreviewImageBitmap}
-                                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: '50%', marginTop: -25.5, height: 50 }}
+                                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50 }}
                                     />
                                 </Region>
                                 <Region
                                     visible={false}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -60.5, width: 120, top: 64, height: 97 }}
+                                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97, justifyContent: 'center' }}
                                 >
                                     <ThemeImage
                                         name="global_placeholder"
                                         params={208}
                                         src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
-                                        layout={{ position: 'absolute', left: '50%', marginLeft: -60.5, width: 120, top: 64, height: 97 }}
+                                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97 }}
                                     />
                                 </Region>
                                 <ContainerButton

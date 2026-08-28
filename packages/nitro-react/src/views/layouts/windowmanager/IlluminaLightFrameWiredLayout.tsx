@@ -16,7 +16,7 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
-            layout={{ position: 'relative', width: 50, height: 50, ...layout }}
+            layout={{ position: 'relative', width: 50, height: 50, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="wired_banner"
@@ -63,7 +63,7 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
                 name="header_title_text"
                 tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 params={2147483856}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHeaderTitleText ?? ''}

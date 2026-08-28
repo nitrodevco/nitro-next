@@ -20,12 +20,12 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 variant="6"
                 name="dance_container"
                 tintColor="#79756e"
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 140 }}
+                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 140, justifyContent: 'center' }}
             >
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 141, top: 5, height: 17, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 141, top: 5, height: 17, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.settings')}

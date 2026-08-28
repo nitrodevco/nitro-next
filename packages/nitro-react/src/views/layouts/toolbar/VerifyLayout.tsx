@@ -97,7 +97,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                     <Region
                         name="user_input_buttons_container"
                         params={144}
-                        layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42 }}
+                        layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42, justifyContent: 'center' }}
                     >
                         <Border
                             variant="3"
@@ -107,7 +107,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                         <Region
                             name="did_not_receive_code_link"
                             params={786625}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -225.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onDidNotReceiveCodeLink}
                             cursor="pointer"
                         >
@@ -121,7 +121,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                             name="retry_wait_label"
                             params={786625}
                             visible={false}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -218.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}

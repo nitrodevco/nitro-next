@@ -35,7 +35,7 @@ export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMai
                         name="down_icon"
                         params={12848208}
                         tintColor="#777777"
-                        layout={{ position: 'absolute', right: 8, width: 10, top: '50%', marginTop: -2, height: 5 }}
+                        layout={{ position: 'absolute', right: 8, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 5 }}
                     />
                 </Border>
                 <Region
@@ -285,7 +285,7 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout
                     name="right_triangle_icon"
                     params={12848208}
                     tintColor="#777777"
-                    layout={{ position: 'absolute', right: 6, width: 10, top: '50%', marginTop: -5, height: 10 }}
+                    layout={{ position: 'absolute', right: 6, width: 10, alignSelf: 'center', height: 10 }}
                 />
                 <Region
                     name="node_name"

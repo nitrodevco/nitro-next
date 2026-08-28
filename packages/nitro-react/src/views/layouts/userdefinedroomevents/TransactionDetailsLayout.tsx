@@ -338,7 +338,7 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     name="incomplete_text"
                     params={3088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, top: '50%', marginTop: -11, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionIncompleteText ?? ' 5'}
@@ -461,7 +461,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                     name="incomplete_text"
                     params={3088}
                     visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, top: '50%', marginTop: -11, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionIncompleteText ?? ' 5'}
@@ -500,11 +500,11 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
         <Region
             name="furni_details"
             params={16}
-            layout={{ width: 380, height: 161, flexShrink: 0, ...layout }}
+            layout={{ width: 380, height: 161, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={786640}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -172, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
             >
                 <Region
                     name="withdrawals_container"

@@ -95,11 +95,11 @@ export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, item
                             variant="3"
                             name="full_profile_hidden"
                             tintColor="#cccccc"
-                            layout={{ position: 'absolute', left: 0, width: 498, top: 5, height: 226 }}
+                            layout={{ position: 'absolute', left: 0, width: 498, top: 5, height: 226, justifyContent: 'center' }}
                         >
                             <Region
                                 params={786448}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -118, width: 215, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 215, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('profile.full_profile_hidden')}
@@ -166,7 +166,7 @@ export const NewExtendedProfileLayout = ({ captionBlockedHtml, itemsBottom, item
                         variant="2"
                         params={3145744}
                         tintColor="#e9e9e1"
-                        layout={{ position: 'absolute', left: 44, width: 250, top: '50%', marginTop: -56.5, height: 100 }}
+                        layout={{ position: 'absolute', left: 44, width: 250, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 100 }}
                     >
                         <Region
                             name="blocked_html"
@@ -849,11 +849,11 @@ export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, 
             params={16401}
             onPointerTap={onRoomsButton}
             cursor="pointer"
-            layout={{ width: 166, height: 30, flexShrink: 0, ...layout }}
+            layout={{ width: 166, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -81, width: 162, top: 0, height: 30, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', width: 162, top: 0, height: 30, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}
@@ -898,11 +898,11 @@ export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount
             params={17}
             onPointerTap={onBadgeCountRegion}
             cursor="pointer"
-            layout={{ width: 166, height: 32, flexShrink: 0, ...layout }}
+            layout={{ width: 166, height: 32, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -66, width: 127, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 127, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}
@@ -971,11 +971,11 @@ export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, cap
             params={17}
             onPointerTap={onLevelRegion}
             cursor="pointer"
-            layout={{ width: 167, height: 30, flexShrink: 0, ...layout }}
+            layout={{ width: 167, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={786448}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -64.5, width: 123, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
+                layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 0, height: 30, flexDirection: 'row', gap: 6 }}
             >
                 <ThemeImage
                     params={16}

@@ -66,12 +66,12 @@ export const TrophyLayout = ({ captionDate, captionGreeting, captionName, captio
                     name="title_bg"
                     params={131072}
                     backgroundColor="#ff0000"
-                    layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18 }}
+                    layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18, justifyContent: 'center' }}
                 >
                     <Region
                         name="title"
                         params={786432}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTitle ?? 'Trophy'}

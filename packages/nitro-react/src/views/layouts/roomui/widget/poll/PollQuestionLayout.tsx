@@ -29,7 +29,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
             onClose={onClose}
             layout={{ width: 382, height: 561, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="header_region"
                     params={1}
@@ -104,7 +104,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                 <Region
                     name="footer_container"
                     params={10224656}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -186, width: 383, bottom: 30, height: 45 }}
+                    layout={{ position: 'absolute', marginLeft: 5.5, marginRight: -5.5, width: 383, bottom: 30, height: 45 }}
                 >
                     <Region
                         name="poll_question_number"

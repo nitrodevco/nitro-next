@@ -77,7 +77,7 @@ export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVote
                             <Region
                                 name="vote_text"
                                 params={3088}
-                                layout={{ position: 'absolute', left: 20, width: 110, top: '50%', marginTop: -7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 20, width: 110, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionVoteText ?? 'The user behaved well'}
@@ -101,11 +101,11 @@ export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVote
                 </Border>
                 <Region
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 246, bottom: 31, height: 99 }}
+                    layout={{ position: 'absolute', left: 0, width: 246, bottom: 31, height: 99, justifyContent: 'center' }}
                 >
                     <Region
                         params={3145936}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -89, width: 179, top: '50%', marginTop: -37.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, alignSelf: 'center', marginTop: -23.5, marginBottom: 23.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={t('guide.bully.request.guide.results.thanks')}
@@ -118,7 +118,7 @@ export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVote
                         params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 41, height: 52 }}
+                        layout={{ position: 'absolute', width: 140, top: 41, height: 52 }}
                     >
                         {t('alert.close.button')}
                     </Button>

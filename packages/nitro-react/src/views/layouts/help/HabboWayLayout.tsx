@@ -35,10 +35,10 @@ export const HabboWayLayout = ({ captionCorrectDescription, captionCorrectTitle,
                     onClose={onFrameClose}
                     layout={{ position: 'absolute', left: 0, width: 500, top: 10, height: 470 }}
                 >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+                    <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                         <Region
                             params={147664}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -52, top: 0, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 2 }}
                         >
                             <WidgetSlot
                                 widgetType="progress_indicator"

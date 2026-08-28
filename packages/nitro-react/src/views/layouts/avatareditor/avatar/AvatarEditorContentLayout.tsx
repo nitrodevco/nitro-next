@@ -104,7 +104,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                 <Region
                     name="avatarNameEditor"
                     params={16}
-                    layout={{ position: 'absolute', left: 1, width: 489, top: 0, height: 110 }}
+                    layout={{ position: 'absolute', left: 1, width: 489, top: 0, height: 110, justifyContent: 'center' }}
                 >
                     <Region
                         name="name_background"
@@ -115,7 +115,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                     <Region
                         name="avatar_name"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -204.5, width: 400, top: 15, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 400, top: 15, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionAvatarName ?? t('avatareditor.title')}
@@ -159,7 +159,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                 <Region
                     name="avatarEditor"
                     params={4358160}
-                    layout={{ position: 'absolute', left: 1, width: 489, top: 70, height: 414 }}
+                    layout={{ position: 'absolute', left: 1, width: 489, top: 70, height: 414, justifyContent: 'center' }}
                 >
                     <Region
                         name="tabbedView"
@@ -759,7 +759,7 @@ export const AvatarEditorContentLayout = ({ captionAvatarInfoText, captionAvatar
                         params={917521}
                         onPointerTap={onSave}
                         textStyle="text-style-button-shiny-bold"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: 111.5, width: 122, top: 373, height: 28, minWidth: 100 }}
+                        layout={{ position: 'absolute', marginLeft: 172.5, marginRight: -172.5, width: 122, top: 373, height: 28, minWidth: 100 }}
                     >
                         {t('avatareditor.save')}
                     </ButtonThick>

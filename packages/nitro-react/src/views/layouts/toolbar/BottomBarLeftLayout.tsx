@@ -67,14 +67,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         params={1}
                         onPointerTap={onCollapseLeft}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 45 }}
+                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 45, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_collapse_left"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                         />
                     </Region>
                 </Region>
@@ -89,14 +89,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         params={1}
                         onPointerTap={onCollapseRight}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 46 }}
+                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 46, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_collapse_right"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -6.5, width: 13, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                         />
                     </Region>
                 </Region>
@@ -113,14 +113,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onRECEPTION}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 0, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_reception"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarReception ?? layoutImage('bottom_bar_logo.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -14.5, width: 28, top: 5, height: 28 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 28, top: 5, height: 28 }}
                         />
                     </Region>
                     <Region
@@ -131,14 +131,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onHOME}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 53, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 53, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_home"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarHome ?? layoutImage('bottom_bar_home.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -16.5, width: 32, top: 5, height: 30 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 32, top: 5, height: 30 }}
                         />
                     </Region>
                     <Region
@@ -149,14 +149,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onNAVIGATOR}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 106, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 106, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_navigator"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarNavigator ?? layoutImage('bottom_bar_navigator.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 44, top: 5, height: 30 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 5, height: 30 }}
                         />
                     </Region>
                     <Region
@@ -167,14 +167,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onPROGRESSION}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 159, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 159, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_progression"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarProgression ?? layoutImage('bottom_bar_progression.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 44, top: 0, height: 37 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 37 }}
                         />
                     </Region>
                     <Region
@@ -185,14 +185,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onGAMES}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 212, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 212, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_games"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarGames ?? layoutImage('bottom_bar_games.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -16.5, width: 33, top: 0, height: 43 }}
+                            layout={{ position: 'absolute', width: 33, top: 0, height: 43 }}
                         />
                     </Region>
                     <Region
@@ -203,14 +203,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onSTORIES}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 265, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 265, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_stories"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarStories ?? layoutImage('bottom_bar_stories.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 35, top: 1, height: 37 }}
+                            layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
                         />
                     </Region>
                     <Region
@@ -221,14 +221,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onCATALOGUE}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 318, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 318, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_catalogue"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCatalogue ?? layoutImage('bottom_bar_shop.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -18.5, width: 37, top: 1, height: 37 }}
+                            layout={{ position: 'absolute', width: 37, top: 1, height: 37 }}
                         />
                     </Region>
                     <Region
@@ -239,14 +239,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onBUILDER}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 371, width: 45, top: 1, height: 41 }}
+                        layout={{ position: 'absolute', left: 371, width: 45, top: 1, height: 41, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_builder"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarBuilder ?? layoutImage('bottom_bar_buildersclub.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -17.5, width: 35, top: 1, height: 37 }}
+                            layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
                         />
                     </Region>
                     <Region
@@ -257,14 +257,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onINVENTORY}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 424, width: 45, top: 1, height: 43 }}
+                        layout={{ position: 'absolute', left: 424, width: 45, top: 1, height: 43, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_inventory"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarInventory ?? layoutImage('bottom_bar_inventory.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -22.5, width: 44, top: 0, height: 41 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 41 }}
                         />
                     </Region>
                     <Region
@@ -275,7 +275,7 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onMEMENU}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 477, width: 45, top: 1, height: 45 }}
+                        layout={{ position: 'absolute', left: 477, width: 45, top: 1, height: 45, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             params={16}
@@ -287,7 +287,7 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconMeMenu}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -21.5, width: 44, top: -1, height: 41 }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 44, top: -1, height: 41 }}
                         />
                         <ThemeImage
                             src={layoutImage('bottom_bar_memenu_circle.png')}
@@ -302,14 +302,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onWIREDMENU}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 530, width: 45, top: 1, height: 45 }}
+                        layout={{ position: 'absolute', left: 530, width: 45, top: 1, height: 45, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_wired_menu"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarWiredMenu ?? layoutImage('bottom_bar_wired_menu.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 38, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
                         />
                     </Region>
                     <Region
@@ -320,14 +320,14 @@ export const BottomBarLeftLayout = ({ layout, onBUILDER, onCAMERA, onCATALOGUE, 
                         dynamicStyle="lifted_hover"
                         onPointerTap={onCAMERA}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 583, width: 45, top: 1, height: 45 }}
+                        layout={{ position: 'absolute', left: 583, width: 45, top: 1, height: 45, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_camera"
                             tags={[ 'ICON_BMP', '#icon' ]}
                             params={208}
                             src={srcIconsToolbarCamera ?? layoutImage('bottom_bar_camera.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -19.5, width: 38, top: 0, height: 45 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
                         />
                     </Region>
                     <ThemeImage

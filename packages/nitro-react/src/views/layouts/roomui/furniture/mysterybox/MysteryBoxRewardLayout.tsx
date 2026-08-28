@@ -34,18 +34,18 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
                     <Region
                         name="bitmap_container"
                         params={208}
-                        layout={{ width: 109, height: 109, flexShrink: 0, minWidth: 109, minHeight: 109 }}
+                        layout={{ width: 109, height: 109, flexShrink: 0, minWidth: 109, minHeight: 109, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             params={3280}
                             src="${image.library.url}Quests/ach_receive_star.png"
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -54.5, width: 109, top: '50%', marginTop: -54.5, height: 109 }}
+                            layout={{ position: 'absolute', width: 109, alignSelf: 'center', height: 109 }}
                         />
                         <ThemeImage
                             name="reward_image"
                             params={3280}
                             src={srcRewardImage}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -0.5, width: 1, top: '50%', marginTop: -0.5, height: 1 }}
+                            layout={{ position: 'absolute', width: 1, alignSelf: 'center', height: 1 }}
                         />
                     </Region>
                     <Button

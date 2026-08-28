@@ -24,19 +24,19 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                 <Region
                     name="border"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 590 }}
+                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 590, justifyContent: 'center' }}
                 >
                     <Region
                         name="profile_link"
                         params={1}
                         onPointerTap={onProfileLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28 }}
+                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center' }}
                     >
                         <Region
                             name="name"
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -53.5, width: 107, top: '50%', marginTop: -14, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'Incarnatus Hairbullis'}
@@ -53,7 +53,7 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -220,7 +220,7 @@ export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layou
                 <Region
                     name="label"
                     params={3088}
-                    layout={{ position: 'absolute', left: 26, width: 78, top: '50%', marginTop: -20, height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
@@ -865,7 +865,7 @@ export const OwnPetMenuLayoutToggleBreedingPermissionItem = ({ captionLabel, lay
                 <Region
                     name="label"
                     params={3088}
-                    layout={{ position: 'absolute', left: 26, width: 78, top: '50%', marginTop: -23, height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLabel ?? t('infostand.button.toggle_breeding_permission')}

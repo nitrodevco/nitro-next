@@ -72,7 +72,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                     <Region
                         name="teaser_container"
                         params={16}
-                        layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436 }}
+                        layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="quick_play_teaser"
@@ -120,7 +120,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="instructions_link"
                             params={193}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -203.5, width: 407, top: 280, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 407, top: 280, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onInstructionsLink}
                             cursor="pointer"
                         >
@@ -132,7 +132,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="leaderboard_link"
                             params={193}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -203.5, width: 407, top: 315, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 407, top: 315, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPointerTap={onLeaderboardLink}
                             cursor="pointer"
                         >
@@ -146,14 +146,14 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         name="instructions_container"
                         params={16}
                         visible={visibleInstructionsContainer ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436 }}
+                        layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="instructions_image"
                             tags={[ 'bitmap' ]}
                             params={208}
                             src={srcInstructionsImage}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -125.5, width: 250, top: 80, height: 166 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 250, top: 80, height: 166 }}
                         />
                         <Region
                             name="instructions_back"
@@ -198,7 +198,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="instruction_text"
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -140.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionInstructionText ?? 'lorem ipsum'}
@@ -208,7 +208,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                         <Region
                             name="page_list"
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -62.5, width: 125, top: 239, height: 25, flexDirection: 'row' }}
+                            layout={{ position: 'absolute', width: 125, top: 239, height: 25, flexDirection: 'row' }}
                         >
                             {itemsPageList ?? (
                                 <>
@@ -335,12 +335,12 @@ export const GamesMainLayout = ({ captionCancelLink, captionGamesLeft, captionGa
                             params={262161}
                             tintColor="#55cc00"
                             onPointerTap={onPlayButton}
-                            layout={{ position: 'absolute', right: 13, width: 190, top: 64, height: 50 }}
+                            layout={{ position: 'absolute', right: 13, width: 190, top: 64, height: 50, justifyContent: 'center' }}
                         >
                             <Region
                                 name="play_text"
                                 params={4194512}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -67, top: 10, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', top: 10, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionPlayText ?? t('snowwar.play')}

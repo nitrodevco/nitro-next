@@ -162,7 +162,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                     name="submit_box_narrow"
                     params={16}
                     tintColor="#ca0c07"
-                    layout={{ position: 'absolute', left: 9, width: 280, top: 336, height: 108 }}
+                    layout={{ position: 'absolute', left: 9, width: 280, top: 336, height: 108, justifyContent: 'center' }}
                 >
                     <Region
                         params={16}
@@ -194,7 +194,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                         params={147665}
                         tintColor="#bbbbbb"
                         onPointerTap={onSubmitButton2}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -132, width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
+                        layout={{ position: 'absolute', width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
                     >
                         {t('guide.help.request.user.create.input.button')}
                     </Button>

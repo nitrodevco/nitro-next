@@ -62,7 +62,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
             onClose={onClose}
             layout={{ width: 325, height: 474, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="tabbedview"
                     params={2065}
@@ -168,7 +168,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 name="guest_rooms"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0 }}
+                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
@@ -184,7 +184,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -147.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
@@ -196,7 +196,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 name="room_ads"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0 }}
+                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
@@ -212,7 +212,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 <Region
                                     name="no_rooms_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -147.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoRoomsFound2 ?? t('navigator.noroomsfound')}
@@ -224,7 +224,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 name="popular_tags"
                                 params={2064}
                                 backgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0 }}
+                                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
                             >
                                 <ScrollArea
                                     orientation="vertical"
@@ -240,7 +240,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 <Region
                                     name="no_tags_found"
                                     params={786449}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -147.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={captionNoTagsFound ?? t('navigator.notagsfound')}
@@ -331,11 +331,11 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                                 params={17}
                                 onPointerTap={onRoomCompetitionsHeader}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 33 }}
+                                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 33, justifyContent: 'center' }}
                             >
                                 <Region
                                     params={786449}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -153.5, width: 295, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 295, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                 >
                                     <ThemeText
                                         text={t('navigator.roomcompetitionspager')}
@@ -482,7 +482,7 @@ export const GrsMainWindowLayout = ({ captionAdCaption, captionGetEventCaption, 
                     name="loading_text"
                     params={786432}
                     visible={false}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -81.5, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -29.5, marginRight: 29.5, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionLoadingText ?? t('navigator.loading')} />
                 </Region>

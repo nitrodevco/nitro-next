@@ -55,12 +55,12 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                 <Region
                     name="content_cont"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135 }}
+                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135, justifyContent: 'center' }}
                 >
                     <Region
                         name="header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -36.5, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeaderTxt ?? 'Caption PH'}
@@ -90,7 +90,7 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                     <Region
                         name="in_progress_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -80.5, width: 156, top: 107, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 156, top: 107, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInProgressTxt ?? t('navigator.eventinprogress')}
@@ -112,12 +112,12 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                         params={17}
                         onPointerTap={onModifyLinkRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 88, top: 110, height: 18 }}
+                        layout={{ position: 'absolute', left: 0, width: 88, top: 110, height: 18, justifyContent: 'center' }}
                     >
                         <Region
                             name="modify_link"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -39, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionModifyLink ?? t('navigator.roominfo.editevent')}
@@ -130,12 +130,12 @@ export const IroEventInfoLayout = ({ captionCreateLink, captionDescTxt, captionG
                         params={17}
                         onPointerTap={onExtendEventRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 88, width: 88, top: 110, height: 18 }}
+                        layout={{ position: 'absolute', left: 88, width: 88, top: 110, height: 18, justifyContent: 'center' }}
                     >
                         <Region
                             name="modify_link"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -44, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                            layout={{ position: 'absolute', width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
                                 text={captionModifyLink2 ?? t('roomad.extend.event')}

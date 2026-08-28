@@ -196,7 +196,7 @@ export const GrsOfficialRoomRowPhaseOneLayout = ({ captionArrowLabel, captionEnt
                     <Region
                         name="enter_room"
                         params={144}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="enter_room_l"
@@ -220,7 +220,7 @@ export const GrsOfficialRoomRowPhaseOneLayout = ({ captionArrowLabel, captionEnt
                             name="enter_room_a"
                             params={786640}
                             src={srcEnterRoomA}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 48, top: 0, height: 64 }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 48, top: 0, height: 64 }}
                         />
                     </Region>
                 </Region>

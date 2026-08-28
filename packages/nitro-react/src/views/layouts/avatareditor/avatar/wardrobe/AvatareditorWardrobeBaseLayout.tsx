@@ -38,12 +38,12 @@ export const AvatareditorWardrobeBaseLayout = ({ itemsHeader, itemsSlotsColumnsL
                     <Region
                         name="main_container"
                         params={16}
-                        layout={{ width: 168, height: 490, flexShrink: 0 }}
+                        layout={{ width: 168, height: 490, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Region
                             name="header"
                             params={786640}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -84, width: 186, top: 19, height: 23, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', marginLeft: 9, marginRight: -9, width: 186, top: 19, height: 23, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsHeader ?? (
                                 <AvatareditorWardrobeBaseLayoutHcIconItem />

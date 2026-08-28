@@ -60,14 +60,14 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitiz
                             </Region>
                             <Region
                                 params={16}
-                                layout={{ width: 449, height: 79, flexShrink: 0 }}
+                                layout={{ width: 449, height: 79, flexShrink: 0, justifyContent: 'center' }}
                             >
                                 <Button
                                     variant="100"
                                     name="show_citizenship"
                                     params={131281}
                                     onPointerTap={onShowCitizenship}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -69.5, width: 139, top: 0, height: 52 }}
+                                    layout={{ position: 'absolute', width: 139, top: 0, height: 52 }}
                                 >
                                     {t('citizenship.promo.popup.open.button')}
                                 </Button>
@@ -76,7 +76,7 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitiz
                                     params={147665}
                                     onPointerTap={onPostponeCitizenship}
                                     cursor="pointer"
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -114.5, width: 228, top: 40, height: 22 }}
+                                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 228, top: 40, height: 22 }}
                                 >
                                     <Region
                                         params={16}

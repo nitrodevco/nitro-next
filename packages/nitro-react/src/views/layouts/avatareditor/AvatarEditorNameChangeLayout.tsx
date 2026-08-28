@@ -36,12 +36,12 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     params={16}
-                    layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 225 }}
+                    layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 225, justifyContent: 'center' }}
                 >
                     <Region
                         name="static_info_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -142.5, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionStaticInfoText ?? t('tutorial.name_change.title.main')}

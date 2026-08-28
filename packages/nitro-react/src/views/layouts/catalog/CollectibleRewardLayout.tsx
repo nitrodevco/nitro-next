@@ -41,7 +41,7 @@ export const CollectibleRewardLayout = ({ captionProductName, captionRarityText,
                 <Region
                     name="top_container"
                     params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 350 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 350, justifyContent: 'center' }}
                 >
                     <Region
                         name="collector_hub_background"
@@ -94,7 +94,7 @@ export const CollectibleRewardLayout = ({ captionProductName, captionRarityText,
                     <Region
                         name="product_container"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -150, width: 300, top: 25, height: 300 }}
+                        layout={{ position: 'absolute', width: 300, top: 25, height: 300 }}
                     >
                         <ThemeImage
                             name="rotating_star"
@@ -114,7 +114,7 @@ export const CollectibleRewardLayout = ({ captionProductName, captionRarityText,
                 <Region
                     name="bottom_container"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 348, bottom: 35 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 348, bottom: 35, justifyContent: 'center' }}
                 >
                     <Border
                         variant="3"
@@ -138,7 +138,7 @@ export const CollectibleRewardLayout = ({ captionProductName, captionRarityText,
                         name="ok_button"
                         params={918737}
                         onPointerTap={onOkButton}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -60, width: 120, bottom: 33, height: 30, minWidth: 120 }}
+                        layout={{ position: 'absolute', width: 120, bottom: 33, height: 30, minWidth: 120 }}
                     >
                         {t('generic.ok')}
                     </Button>

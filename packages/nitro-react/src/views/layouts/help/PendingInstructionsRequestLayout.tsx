@@ -90,7 +90,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                     </Border>
                     <Region
                         params={16}
-                        layout={{ width: 370, height: 52, flexShrink: 0 }}
+                        layout={{ width: 370, height: 52, flexShrink: 0, justifyContent: 'center' }}
                     >
                         <Button
                             variant="101"
@@ -98,7 +98,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                             params={131281}
                             tintColor="#bbbbbb"
                             onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -70, width: 140, top: 0, height: 48 }}
+                            layout={{ position: 'absolute', width: 140, top: 0, height: 48 }}
                         >
                             {t('alert.close.button')}
                         </Button>

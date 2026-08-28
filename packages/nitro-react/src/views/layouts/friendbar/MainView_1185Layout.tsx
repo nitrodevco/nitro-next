@@ -41,11 +41,11 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                 <Region
                     name="frame_header_override"
                     params={144}
-                    layout={{ position: 'absolute', left: 88, right: 113, top: 3, height: 32 }}
+                    layout={{ position: 'absolute', left: 88, right: 113, top: 3, height: 32, justifyContent: 'center' }}
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -57.5, width: 115, top: 0, height: 32, flexDirection: 'row', gap: 6 }}
+                        layout={{ position: 'absolute', width: 115, top: 0, height: 32, flexDirection: 'row', gap: 6 }}
                     >
                         <Region
                             name="hacky_title"
@@ -119,7 +119,7 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                 <Region
                     name="body"
                     params={2192}
-                    layout={{ position: 'absolute', left: 6, right: 30, top: 59, bottom: 17 }}
+                    layout={{ position: 'absolute', left: 6, right: 30, top: 59, bottom: 17, justifyContent: 'center' }}
                 >
                     <Region
                         name="info_container"
@@ -141,7 +141,7 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                         <Region
                             name="rank_type_info"
                             params={3145744}
-                            layout={{ position: 'absolute', left: 74, width: 295, top: '50%', marginTop: -21, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 74, width: 295, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionRankTypeInfo ?? 'Players with the most unique badges.Unique badges can be obtained from exceptional events where only a single user is awarded the badge.'}
@@ -172,14 +172,14 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                         <Region
                             name="rank_container"
                             params={3088}
-                            layout={{ position: 'absolute', left: 5, width: 45, top: '50%', marginTop: -19.5, height: 39 }}
+                            layout={{ position: 'absolute', left: 5, width: 45, alignSelf: 'center', height: 39, justifyContent: 'center' }}
                         >
                             <Border
                                 variant="14"
                                 name="rank_border"
                                 params={786640}
                                 tintColor="#6382aa"
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -13.5, width: 27, top: 7, height: 25 }}
+                                layout={{ position: 'absolute', width: 27, top: 7, height: 25 }}
                             >
                                 <Region
                                     name="rank_own"
@@ -202,20 +202,20 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                         >
                             <Region
                                 params={1073741840}
-                                layout={{ position: 'absolute', left: -3, width: 50, top: -18, height: 70, overflow: 'hidden' }}
+                                layout={{ position: 'absolute', left: -3, width: 50, top: -18, height: 70, overflow: 'hidden', justifyContent: 'center' }}
                             >
                                 <ThemeImage
                                     name="canvas"
                                     params={1077673984}
                                     src={srcCanvas}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -5, width: 10, top: '50%', marginTop: -5, height: 10, overflow: 'hidden' }}
+                                    layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10, overflow: 'hidden' }}
                                 />
                             </Region>
                         </Region>
                         <Region
                             name="username_txt"
                             params={3088}
-                            layout={{ position: 'absolute', left: 97, width: 99, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 97, width: 99, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionUsernameTxt ?? 'sirjonasxx-XIVXXI'} />
                         </Region>
@@ -235,7 +235,7 @@ export const MainView_1185Layout = ({ captionRankOwn, captionRankTypeInfo, capti
                     <Region
                         name="buttons"
                         params={787664}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -139, width: 279, bottom: 3, height: 26, flexDirection: 'row', gap: 79 }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 279, bottom: 3, height: 26, flexDirection: 'row', gap: 79 }}
                     >
                         {itemsButtons ?? (
                             <>
@@ -324,14 +324,14 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionRankNumber, captio
             <Region
                 name="rank_container"
                 params={3088}
-                layout={{ position: 'absolute', left: 5, width: 45, top: '50%', marginTop: -19.5, height: 39 }}
+                layout={{ position: 'absolute', left: 5, width: 45, alignSelf: 'center', height: 39, justifyContent: 'center' }}
             >
                 <Border
                     variant="14"
                     name="rank_border"
                     params={786640}
                     tintColor="#6382aa"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -12.5, width: 25, top: 7, height: 25 }}
+                    layout={{ position: 'absolute', width: 25, top: 7, height: 25 }}
                 >
                     <Region
                         name="rank_number"
@@ -354,20 +354,20 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionRankNumber, captio
             >
                 <Region
                     params={1073741840}
-                    layout={{ position: 'absolute', left: -3, width: 50, top: -18, height: 70, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', left: -3, width: 50, top: -18, height: 70, overflow: 'hidden', justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="canvas"
                         params={1077673984}
                         src={srcCanvas}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -5, width: 10, top: '50%', marginTop: -5, height: 10, overflow: 'hidden' }}
+                        layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10, overflow: 'hidden' }}
                     />
                 </Region>
             </Region>
             <Region
                 name="username_txt"
                 params={3088}
-                layout={{ position: 'absolute', left: 98, width: 114, top: '50%', marginTop: -8.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 98, width: 114, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionUsernameTxt ?? 'Username very long'} />
             </Region>

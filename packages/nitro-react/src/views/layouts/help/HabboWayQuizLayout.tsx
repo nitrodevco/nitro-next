@@ -57,12 +57,12 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                         name="indicator_image"
                         params={3088}
                         src={srcIndicatorImage}
-                        layout={{ position: 'absolute', left: 19, width: 29, top: '50%', marginTop: -9.5, height: 18 }}
+                        layout={{ position: 'absolute', left: 19, width: 29, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 18 }}
                     />
                     <Region
                         name="top_indicator"
                         params={3088}
-                        layout={{ position: 'absolute', left: 40, width: 77, top: '50%', marginTop: -7.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 40, width: 77, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTopIndicator ?? 'top indicator'}
@@ -100,12 +100,12 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                     name="failure_pane"
                     params={16}
                     visible={visibleFailurePane ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320 }}
+                    layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center' }}
                 >
                     <Region
                         name="failure_results"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -2, width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionFailureResults ?? ''}
@@ -115,7 +115,7 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                     <Region
                         name="failure_advice"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -145, width: 291, top: 70, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 291, top: 70, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionFailureAdvice ?? ''}
@@ -133,12 +133,12 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                     name="success_pane"
                     params={16}
                     visible={visibleSuccessPane ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320 }}
+                    layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center' }}
                 >
                     <Region
                         name="success_results"
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -210, width: 421, top: 27, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 421, top: 27, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionSuccessResults ?? ''}
@@ -366,7 +366,7 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                     name="exit_button_container"
                     params={1040}
                     visible={visibleExitButtonContainer ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 499, bottom: 31, height: 65 }}
+                    layout={{ position: 'absolute', left: 0, width: 499, bottom: 31, height: 65, justifyContent: 'center' }}
                 >
                     <Button
                         variant="101"
@@ -374,7 +374,7 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                         params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onExitButton2}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -91.5, width: 183, top: 0, height: 53 }}
+                        layout={{ position: 'absolute', width: 183, top: 0, height: 53 }}
                     >
                         {t('habbo.way.quiz.exit.button')}
                     </Button>
@@ -382,7 +382,7 @@ export const HabboWayQuizLayout = ({ captionAnswer, captionExplanation, captionF
                         name="retake_time_notice"
                         params={208}
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -63.5, width: 126, top: 43, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 126, top: 43, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRetakeTimeNotice ?? t('habbo.way.quiz.wait.indication')}

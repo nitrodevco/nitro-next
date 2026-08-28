@@ -8,12 +8,12 @@ export interface TabButtonBlackLayoutProps {
 
 export const TabButtonBlackLayout = ({ captionTitle, layout }: TabButtonBlackLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 22, justifyContent: 'center', ...layout }}>
             <Region
                 name="title"
                 tags={[ 'title', 'TAB_BUTTON_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 params={2147486928}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, top: '50%', marginTop: -11, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTitle ?? ''}

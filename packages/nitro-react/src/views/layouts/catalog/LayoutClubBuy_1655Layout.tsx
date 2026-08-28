@@ -25,18 +25,18 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                     name="clubBuyWidget"
                     tags={[ 'EMBEDDED' ]}
                     params={2064}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Border
                         variant="2"
                         params={16}
                         tintColor="#dfdfdf"
-                        layout={{ position: 'absolute', left: 10, width: 340, top: 0, height: 22 }}
+                        layout={{ position: 'absolute', left: 10, width: 340, top: 0, height: 22, justifyContent: 'center' }}
                     >
                         <Region
                             name="club_header"
                             params={786448}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -170, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: -16.5, marginRight: 16.5, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionClubHeader ?? t('catalog.club.buy.header')}
@@ -91,7 +91,7 @@ export const LayoutClubBuy_1655Layout = ({ captionClubHeader, captionClubInfo, c
                     <Region
                         name="club_link"
                         params={787473}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -170, width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionClubLink ?? t('catalog.club.buy.link')}

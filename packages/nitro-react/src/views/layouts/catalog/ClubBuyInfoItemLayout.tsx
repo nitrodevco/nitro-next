@@ -29,12 +29,12 @@ export const ClubBuyInfoItemLayout = ({ captionInfoContent, captionItemHeader, l
                     variant="2"
                     params={16}
                     tintColor="#9b9448"
-                    layout={{ position: 'absolute', left: 5, width: 141, top: 5, height: 25 }}
+                    layout={{ position: 'absolute', left: 5, width: 141, top: 5, height: 25, justifyContent: 'center' }}
                 >
                     <Region
                         name="item_header"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? t('catalog.club.info.header')}

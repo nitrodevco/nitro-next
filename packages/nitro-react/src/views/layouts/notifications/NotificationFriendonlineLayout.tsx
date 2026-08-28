@@ -70,13 +70,13 @@ export const NotificationFriendonlineLayout = ({ layout, onSlideNotificationAway
                         tags={[ 'notification_icon_static' ]}
                         params={3088}
                         src={undefined}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: '50%', marginTop: -25, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 50, alignSelf: 'center', height: 50 }}
                     />
                     <ThemeImage
                         tags={[ 'notification_icon' ]}
                         params={3088}
                         src={undefined}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: '50%', marginTop: -25, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 50, alignSelf: 'center', height: 50 }}
                     />
                 </Region>
                 <ThemeImage

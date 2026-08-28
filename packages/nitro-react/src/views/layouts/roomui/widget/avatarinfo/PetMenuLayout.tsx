@@ -24,19 +24,19 @@ export const PetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, o
                 <Region
                     name="border"
                     params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 265 }}
+                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 265, justifyContent: 'center' }}
                 >
                     <Region
                         name="profile_link"
                         params={1}
                         onPointerTap={onProfileLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28 }}
+                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center' }}
                     >
                         <Region
                             name="name"
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -53.5, width: 107, top: '50%', marginTop: -14, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionName ?? 'Incarnatus Hairbullis'}
@@ -53,7 +53,7 @@ export const PetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, o
                     <Region
                         name="buttons"
                         params={8519888}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51.5, minWidth: 103, top: 28, minHeight: 215, flexDirection: 'column', gap: 1 }}
+                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 215, flexDirection: 'column', gap: 1 }}
                     >
                         {itemsButtons ?? (
                             <>

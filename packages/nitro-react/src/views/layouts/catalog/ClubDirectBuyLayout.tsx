@@ -107,12 +107,12 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                         name="buy"
                         params={17}
                         onPointerTap={onBuy}
-                        layout={{ position: 'absolute', left: 167, width: 81, top: 36, height: 30, minWidth: 80, minHeight: 29 }}
+                        layout={{ position: 'absolute', left: 167, width: 81, top: 36, height: 30, minWidth: 80, minHeight: 29, justifyContent: 'center' }}
                     >
                         Buy
                         <Region
                             params={3932176}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -13.5, width: 25, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 25, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('buy')}

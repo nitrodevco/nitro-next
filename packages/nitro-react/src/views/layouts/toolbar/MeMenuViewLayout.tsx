@@ -48,7 +48,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onProfile}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 79 }}
+                    layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="profile_icon"
@@ -59,7 +59,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="profile_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -30.5, width: 60, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 60, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionProfileText ?? t('widget.memenu.profile')}
@@ -73,7 +73,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onMinimail}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 86, width: 79, top: 0, height: 79 }}
+                    layout={{ position: 'absolute', left: 86, width: 79, top: 0, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="minimail_icon"
@@ -84,7 +84,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="minimail_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -25.5, width: 50, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMinimailText ?? t('widget.memenu.minimail')}
@@ -98,7 +98,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onRooms}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 79, top: 79, height: 79 }}
+                    layout={{ position: 'absolute', left: 0, width: 79, top: 79, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="rooms_icon"
@@ -109,7 +109,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="rooms_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -31.5, width: 62, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRoomsText ?? t('widget.memenu.myrooms')}
@@ -123,7 +123,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onSettings}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 86, width: 79, top: 79, height: 79 }}
+                    layout={{ position: 'absolute', left: 86, width: 79, top: 79, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="settings_icon"
@@ -134,7 +134,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="settings_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -24.5, width: 49, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 49, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSettingsText ?? t('widget.memenu.settings')}
@@ -148,7 +148,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onAchievements}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 89, top: 158, height: 79 }}
+                    layout={{ position: 'absolute', left: 0, width: 89, top: 158, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="achievements_icon"
@@ -159,7 +159,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="achievements_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -41.5, width: 83, top: 61, height: 17, maxWidth: 89, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 83, top: 61, height: 17, maxWidth: 89, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionAchievementsText ?? t('widget.memenu.achievements')}
@@ -173,7 +173,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onTalents}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 86, width: 79, top: 158, height: 79 }}
+                    layout={{ position: 'absolute', left: 86, width: 79, top: 158, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="talents_icon"
@@ -184,7 +184,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="talents_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -21.5, width: 43, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 43, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTalentsText ?? t('widget.memenu.talents')}
@@ -198,7 +198,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onGuide}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 79, top: 247, height: 79 }}
+                    layout={{ position: 'absolute', left: 0, width: 79, top: 247, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="guide_icon"
@@ -209,7 +209,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="guide_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -34.5, width: 69, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 69, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGuideText ?? t('widget.memenu.guide')}
@@ -223,7 +223,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     params={17}
                     onPointerTap={onClothes}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 86, width: 79, top: 247, height: 79 }}
+                    layout={{ position: 'absolute', left: 86, width: 79, top: 247, height: 79, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="clothes_icon"
@@ -234,7 +234,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                     <Region
                         name="clothes_text"
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -35.5, width: 70, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionClothesText ?? t('widget.memenu.editavatar')}

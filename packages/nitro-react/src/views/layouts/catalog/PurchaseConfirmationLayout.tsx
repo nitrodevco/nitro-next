@@ -68,7 +68,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
                             <Region
                                 name="properties_itemlist"
                                 params={3145744}
-                                layout={{ position: 'absolute', left: 143, width: 176, top: '50%', marginTop: -77.5, height: 116, flexDirection: 'column', gap: 7 }}
+                                layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7 }}
                             >
                                 {itemsPropertiesItemlist ?? (
                                     <>
@@ -164,7 +164,7 @@ export const PurchaseConfirmationLayoutRaffleContainerItem = ({ captionRaffleTex
                 <Region
                     name="raffle_text"
                     params={3145744}
-                    layout={{ position: 'absolute', left: 10, width: 233, top: '50%', marginTop: -15.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, width: 233, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRaffleText ?? t('catalog.purchase.confirmation.dialog.raffling')}

@@ -22,12 +22,12 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 name="settings_brdr"
                 params={1}
                 tintColor="#79756e"
-                layout={{ position: 'absolute', left: 1, width: 257, top: 1, height: 269 }}
+                layout={{ position: 'absolute', left: 1, width: 257, top: 1, height: 269, justifyContent: 'center' }}
             >
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -72.5, width: 144, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('toolbar.chat.settings.title')}

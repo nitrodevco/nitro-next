@@ -22,7 +22,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
             onClose={onClose}
             layout={{ width: 310, height: 240, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     params={16}
                     layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -57,7 +57,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
                     name="ok"
                     params={917713}
                     onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 132, top: 158, height: 32 }}
+                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 132, top: 158, height: 32 }}
                 >
                     {t('enforce.category.ok')}
                 </Button>

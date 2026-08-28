@@ -71,7 +71,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                 <Region
                     name="footer_cont"
                     params={1168}
-                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 43, height: 25 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 43, height: 25, justifyContent: 'center' }}
                 >
                     <ContainerButton
                         variant="3"
@@ -105,7 +105,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                         name="footer_info_txt"
                         params={786448}
                         visible={false}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -68.5, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionFooterInfoTxt ?? t('group.members.pageinfo')}
@@ -114,7 +114,7 @@ export const GuildMembersWindowLayout = ({ captionFooterInfoTxt, captionPaginaTe
                     </Region>
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -89.5, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
                     >
                         <Region
                             name="pagina_text_start"

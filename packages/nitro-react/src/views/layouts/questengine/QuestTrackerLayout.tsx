@@ -44,12 +44,12 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
                     name="content_cont"
                     params={2176}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         name="quest_header_txt"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -71, width: 134, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 134, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionQuestHeaderTxt ?? t('quests.tracker.caption')}
@@ -69,7 +69,7 @@ export const QuestTrackerLayout = ({ captionDescTxt, captionMoreInfoTxt, caption
                     <Region
                         name="more_info_txt"
                         params={209}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -69, width: 139, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 139, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}

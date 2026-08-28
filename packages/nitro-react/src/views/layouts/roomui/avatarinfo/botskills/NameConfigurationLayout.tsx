@@ -25,11 +25,11 @@ export const NameConfigurationLayout = ({ itemsConfigurationItems, layout, onCan
                 <Region
                     params={144}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20 }}
+                    layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20, justifyContent: 'center' }}
                 >
                     <Region
                         params={786640}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 189, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 189, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('bot.skill.name.configuration.title')}

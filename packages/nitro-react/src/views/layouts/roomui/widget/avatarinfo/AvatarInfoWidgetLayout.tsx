@@ -25,7 +25,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                     name="border"
                     params={1}
                     tintColor="#3d3d3d"
-                    layout={{ width: '100%', height: '100%' }}
+                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="relationship_status"
@@ -49,7 +49,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                         params={209}
                         onPointerTap={onChangeNameContainer}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -64.5, width: 123, top: 19, height: 18 }}
+                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 19, height: 18 }}
                     >
                         <Region
                             params={16}

@@ -84,11 +84,11 @@ export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, on
                     params={17}
                     onPointerTap={onDeclineTourRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33 }}
+                    layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center' }}
                 >
                     <Region
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -70.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('talent.track.progress.tour.decline')} />
                     </Region>

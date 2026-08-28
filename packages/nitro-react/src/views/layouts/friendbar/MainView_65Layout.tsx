@@ -109,7 +109,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         />
                         <Region
                             params={1051664}
-                            layout={{ position: 'absolute', left: 17, width: 48, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 17, width: 48, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('groupforum.view.settings.header')}
@@ -168,12 +168,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     params={1041}
                     tintColor="#dddddd"
                     onPointerTap={onBackButton}
-                    layout={{ position: 'absolute', left: 10, width: 95, bottom: 62, height: 30, minWidth: 95 }}
+                    layout={{ position: 'absolute', left: 10, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
                 >
                     <Region
                         name="back_button_label"
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -47.5, width: 130, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 17.5, marginRight: -17.5, width: 130, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBackButtonLabel ?? t('groupforum.view.back')}
@@ -187,12 +187,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     params={394321}
                     tintColor="#0a9bc5"
                     onPointerTap={onPostButton}
-                    layout={{ position: 'absolute', right: 190, width: 95, bottom: 62, height: 30, minWidth: 95 }}
+                    layout={{ position: 'absolute', right: 190, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
                 >
                     <Region
                         name="post_button_label"
                         params={1838288}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -14.5, width: 29, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 29, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPostButtonLabel ?? 'Post'}
@@ -210,12 +210,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         name="show_first"
                         params={393233}
                         onPointerTap={onShowFirst}
-                        layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30 }}
+                        layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
                         {'<<'}
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -8.5, width: 17, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text="<<"
@@ -228,12 +228,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         name="show_previous"
                         params={393233}
                         onPointerTap={onShowPrevious}
-                        layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30 }}
+                        layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
                         {'<'}
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -5.5, width: 10, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text="<"
@@ -256,12 +256,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         name="show_next"
                         params={393233}
                         onPointerTap={onShowNext}
-                        layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30 }}
+                        layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
                         {'>'}
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -5.5, width: 10, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text=">"
@@ -274,12 +274,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         name="show_last"
                         params={393233}
                         onPointerTap={onShowLast}
-                        layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30 }}
+                        layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
                         {'>>'}
                         <Region
                             params={3280}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -8.5, width: 17, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text=">>"

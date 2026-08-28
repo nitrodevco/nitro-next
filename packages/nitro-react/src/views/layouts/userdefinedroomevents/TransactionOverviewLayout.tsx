@@ -99,7 +99,7 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                     <Region
                         name="pagination"
                         params={1168}
-                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center' }}
                     >
                         <Region
                             name="footer_buttons_left"
@@ -127,7 +127,7 @@ export const TransactionOverviewLayout = ({ captionPaginaTextEnd, captionPaginaT
                         </Region>
                         <Region
                             params={786640}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -128, width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
+                            layout={{ position: 'absolute', width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
                         >
                             <Region
                                 name="pagina_text_start"

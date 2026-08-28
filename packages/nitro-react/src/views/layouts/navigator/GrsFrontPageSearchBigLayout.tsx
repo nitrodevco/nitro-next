@@ -27,7 +27,7 @@ export const GrsFrontPageSearchBigLayout = ({ captionCaption, layout, onCont, sr
                     <Region
                         name="caption"
                         params={3145744}
-                        layout={{ position: 'absolute', left: 44, width: 179, top: '50%', marginTop: -8, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 44, width: 179, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaption ?? 'Search Caption Placeholder'}

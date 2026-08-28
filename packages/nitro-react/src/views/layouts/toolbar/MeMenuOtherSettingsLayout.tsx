@@ -24,12 +24,12 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                 name="settings_brdr"
                 params={1}
                 tintColor="#79756e"
-                layout={{ position: 'absolute', left: 1, width: 242, top: 1, height: 184 }}
+                layout={{ position: 'absolute', left: 1, width: 242, top: 1, height: 184, justifyContent: 'center' }}
             >
                 <Region
                     name="settings_title"
                     params={786640}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -76, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSettingsTitle ?? t('widget.memenu.other.settings.title')}
@@ -41,7 +41,7 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                     name="line"
                     params={786640}
                     backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -81, width: 162, top: 24, height: 1 }}
+                    layout={{ position: 'absolute', width: 162, top: 24, height: 1 }}
                 />
                 <Region
                     params={8388624}

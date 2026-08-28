@@ -52,7 +52,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             params={17}
                             onPointerTap={onDailytasks}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 12, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 12, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="dailytasks_icon_color"
@@ -63,7 +63,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText ?? t('widget.progmenu.dailytasks')}
@@ -83,7 +83,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             params={17}
                             onPointerTap={onQuests}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 80, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 80, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="quests_icon_color"
@@ -94,7 +94,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText2 ?? t('widget.progmenu.quests')}
@@ -114,7 +114,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             params={17}
                             onPointerTap={onAchievements}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 148, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 148, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="achievements_icon_color"
@@ -125,7 +125,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText3 ?? t('widget.progmenu.achievements')}
@@ -145,7 +145,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             params={17}
                             onPointerTap={onLeaderboards}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 216, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 216, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="leaderboards_icon_color"
@@ -156,7 +156,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText4 ?? t('widget.progmenu.leaderboards')}
@@ -176,7 +176,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             params={17}
                             onPointerTap={onIntroduction}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 284, width: 60, top: 2, height: 48 }}
+                            layout={{ position: 'absolute', left: 284, width: 60, top: 2, height: 48, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="introduction_icon_color"
@@ -187,7 +187,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                             <Region
                                 name="field_text"
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -30, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionFieldText5 ?? t('widget.progmenu.introduction')}

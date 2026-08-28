@@ -68,7 +68,7 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         name="teaser_ok_btn"
                         params={17}
                         onPointerTap={onTeaserOkBtn}
-                        layout={{ position: 'absolute', left: 56, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46 }}
+                        layout={{ position: 'absolute', left: 56, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
                         OK!
                         <Border
@@ -87,7 +87,7 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         <Region
                             name="ok"
                             params={3932176}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -148, width: 295, top: '50%', marginTop: -12, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 295, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionOk ?? t('widget.furni.teaser.get')}

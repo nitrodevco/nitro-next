@@ -62,13 +62,13 @@ export const BonusRarePromoLayout = ({ captionHeader, captionStatus, layout, onB
                         <Region
                             name="mid_container"
                             params={147472}
-                            layout={{ width: 304, height: 53, flexShrink: 0 }}
+                            layout={{ width: 304, height: 53, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Region
                                 name="header"
                                 tags={[ 'COLORABLE' ]}
                                 params={786640}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -123, width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionHeader ?? t('landing.view.bonus.rare.header')}

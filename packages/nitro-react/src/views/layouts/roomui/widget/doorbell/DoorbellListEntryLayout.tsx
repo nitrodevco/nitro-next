@@ -19,7 +19,7 @@ export const DoorbellListEntryLayout = ({ captionUserName, layout, onAccept, onD
                 <Region
                     name="user_name"
                     params={3088}
-                    layout={{ position: 'absolute', left: 3, width: 58, top: '50%', marginTop: -9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 3, width: 58, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionUserName ?? 'username'} />
                 </Region>

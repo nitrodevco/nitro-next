@@ -48,7 +48,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                         name="bubble"
                         params={1}
                         tintColor="#fac919"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                     >
                         <Region
                             name="message"
@@ -73,7 +73,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             name="button_accept"
                             params={394449}
                             onPointerTap={onButtonAccept}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="8"
@@ -99,7 +99,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             name="button_profile"
                             params={394449}
                             onPointerTap={onButtonProfile}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -56.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="21"
@@ -125,7 +125,7 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                             params={1233}
                             onPointerTap={onClickRegionReject}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -67.5, width: 118, bottom: 26, height: 15 }}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
                         >
                             <Region
                                 name="link_reject"
@@ -190,13 +190,13 @@ export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader
             >
                 <Region
                     params={16}
-                    layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70 }}
+                    layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="canvas"
                         params={3932160}
                         src={srcCanvas}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -5, width: 10, top: '50%', marginTop: -5, height: 10 }}
+                        layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
                     />
                 </Region>
             </Region>

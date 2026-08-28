@@ -36,11 +36,11 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                     name="no"
                     params={17}
                     onPointerTap={onNo}
-                    layout={{ position: 'absolute', left: 8, width: 110, top: 80, height: 35 }}
+                    layout={{ position: 'absolute', left: 8, width: 110, top: 80, height: 35, justifyContent: 'center' }}
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -51, width: 102, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 102, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('snowwar.exit.no')} />
                     </Region>
@@ -50,11 +50,11 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                     name="yes"
                     params={17}
                     onPointerTap={onYes}
-                    layout={{ position: 'absolute', left: 144, width: 110, top: 80, height: 35 }}
+                    layout={{ position: 'absolute', left: 144, width: 110, top: 80, height: 35, justifyContent: 'center' }}
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -53, width: 107, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={t('snowwar.exit.yes')} />
                     </Region>

@@ -14,13 +14,13 @@ export const HeaderBlackLayout = ({ captionHeaderTitleText, layout, onHeaderButt
                 name="header_container"
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={2147483824}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, justifyContent: 'center' }}
             >
                 <Region
                     name="header_title_text"
                     tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
                     params={2147483856}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -46, width: 12, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -40, marginRight: 40, width: 12, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     backgroundColor="#4b4b4b"
                 >
                     <ThemeText

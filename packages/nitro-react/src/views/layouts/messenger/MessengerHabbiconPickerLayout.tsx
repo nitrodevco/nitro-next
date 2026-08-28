@@ -52,12 +52,12 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 <Region
                     name="empty_view"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2, justifyContent: 'center' }}
                 >
                     <Region
                         name="empty_text"
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -100, width: 200, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEmptyText ?? t('habbicons.no_habbicons')}
@@ -111,7 +111,7 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                 params={3153}
                 onPointerTap={onHabbiconSearchClearButton}
                 cursor="pointer"
-                layout={{ position: 'absolute', right: 6, width: 17, top: '50%', marginTop: -8, height: 17 }}
+                layout={{ position: 'absolute', right: 6, width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17 }}
             >
                 <ThemeImage
                     params={2192}

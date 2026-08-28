@@ -55,11 +55,11 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                 <Region
                     name="normal"
                     params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -161, width: 42, top: 7, height: 30, flexDirection: 'row' }}
+                        layout={{ position: 'absolute', marginLeft: -140, marginRight: 140, width: 42, top: 7, height: 30, flexDirection: 'row' }}
                     >
                         <Region
                             name="ducket_cost"
@@ -303,7 +303,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                         <Region
                             name="indicator"
                             params={16}
-                            layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115 }}
+                            layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 name="indicator"
@@ -335,7 +335,7 @@ export const RecyclerWidgetLayout = ({ captionDucketCost, layout, onAbortRegion,
                                 visible={visibleAbortRegion ?? false}
                                 onPointerTap={onAbortRegion}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -32.5, width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
+                                layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
                             >
                                 <Region
                                     params={16}

@@ -35,7 +35,7 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                     name="items_grid_border"
                     params={2192}
                     tintColor="#e3e3e3"
-                    layout={{ position: 'absolute', left: 9, right: 194, top: 11, bottom: 11 }}
+                    layout={{ position: 'absolute', left: 9, right: 194, top: 11, bottom: 11, justifyContent: 'center' }}
                 >
                     <Region
                         visible={visibleSearchBorder ?? false}
@@ -81,7 +81,7 @@ export const FurniChestContentsLayout = ({ captionFurniName, captionNoItemsText,
                     <Region
                         name="no_items_text"
                         params={3935440}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -54.5, width: 108, top: '50%', marginTop: -8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 108, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionNoItemsText ?? t('wiredchests.furni_chest.no_items')} />
                     </Region>

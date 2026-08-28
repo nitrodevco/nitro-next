@@ -75,7 +75,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                         name="open_btn"
                         params={17}
                         onPointerTap={onOpenBtn}
-                        layout={{ position: 'absolute', left: 53, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46 }}
+                        layout={{ position: 'absolute', left: 53, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
                         {t('widget.furni.teaser.gift.title')}
                         <Border
@@ -95,7 +95,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                         <Region
                             name="open_txt"
                             params={3932176}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -147, width: 294, top: '50%', marginTop: -13, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionOpenTxt ?? t('widget.furni.teaser.gift.get')}

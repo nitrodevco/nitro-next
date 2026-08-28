@@ -67,7 +67,7 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layou
                     tags={[ 'notification_icon' ]}
                     params={3088}
                     src={undefined}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: '50%', marginTop: -25, height: 50 }}
+                    layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}
                 />
                 <Region
                     name="bottom"

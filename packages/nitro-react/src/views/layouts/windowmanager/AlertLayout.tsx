@@ -17,18 +17,18 @@ export const AlertLayout = ({ captionAlertText, captionAlertTitle, layout, onClo
             onClose={onClose}
             layout={{ width: 200, height: 400, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="alert_title"
                     params={240}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAlertTitle ?? ''} />
                 </Region>
                 <Region
                     name="alert_text"
                     params={240}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -92, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAlertText ?? ''} />
                 </Region>

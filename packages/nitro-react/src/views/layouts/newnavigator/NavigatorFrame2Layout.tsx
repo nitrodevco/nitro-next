@@ -133,7 +133,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                 <Region
                     name="right_pane"
                     params={2192}
-                    layout={{ position: 'absolute', left: 159, right: 9, top: 25, bottom: 55 }}
+                    layout={{ position: 'absolute', left: 159, right: 9, top: 25, bottom: 55, justifyContent: 'center' }}
                 >
                     <Border
                         variant="4"
@@ -236,7 +236,7 @@ export const NavigatorFrame2Layout = ({ itemsBlockResults, itemsQuicklinksList, 
                     <Region
                         name="search_tools"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -205, width: 408, top: 3, height: 36 }}
+                        layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 408, top: 3, height: 36 }}
                     >
                         <Dropmenu
                             variant="4"
@@ -606,7 +606,7 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, i
             tags={[ 'SUBTEMPLATE' ]}
             params={16}
             tintColor="#ebe9df"
-            layout={{ width: 122, height: 146, flexShrink: 0, ...layout }}
+            layout={{ width: 122, height: 146, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 params={16}
@@ -651,12 +651,12 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, i
                 name="room_info_usercount_border"
                 params={1835024}
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: '50%', marginLeft: -21, width: 40, bottom: 35, height: 18 }}
+                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 40, bottom: 35, height: 18, justifyContent: 'center' }}
             >
                 <Region
                     name="usercount"
                     params={786448}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsUsercount ?? (
                         <>
@@ -779,12 +779,12 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ captionRoo
                     name="room_info_usercount_border"
                     params={16}
                     tintColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 18 }}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 18, justifyContent: 'center' }}
                 >
                     <Region
                         name="usercount"
                         params={786448}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -17, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
                     >
                         {itemsUsercount ?? (
                             <>
@@ -1081,7 +1081,7 @@ export const NavigatorFrame2LayoutNoResultsContainerItem = ({ layout }: Navigato
         >
             <Region
                 params={3932240}
-                layout={{ position: 'absolute', right: 51, width: 286, top: '50%', marginTop: -26.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 51, width: 286, alignSelf: 'center', marginTop: -16, marginBottom: 16, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={t('navigator.search.returned.no.results')}

@@ -13,7 +13,7 @@ export const EntryArrowsLayout = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsL
             <Region
                 name="entry_arrows_cont"
                 params={16}
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25 }}
+                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="arrow_0"
@@ -25,7 +25,7 @@ export const EntryArrowsLayout = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsL
                     name="arrow_1"
                     params={3280}
                     src={srcArrow1 ?? '${image.library.questing.url}quest_arrow2.png'}
-                    layout={{ position: 'absolute', left: '50%', marginLeft: -7.5, width: 15, top: '50%', marginTop: -12.5, height: 25 }}
+                    layout={{ position: 'absolute', width: 15, alignSelf: 'center', height: 25 }}
                 />
             </Region>
         </Region>

@@ -55,14 +55,14 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTo
                 </Region>
                 <Region
                     params={16}
-                    layout={{ position: 'absolute', left: 83, width: 306, top: 80, height: 134 }}
+                    layout={{ position: 'absolute', left: 83, width: 306, top: 80, height: 134, justifyContent: 'center' }}
                 >
                     <Button
                         variant="3"
                         name="take_tour"
                         params={131281}
                         onPointerTap={onTakeTour}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -113, width: 226, top: 44, height: 28 }}
+                        layout={{ position: 'absolute', width: 226, top: 44, height: 28 }}
                     >
                         {t('help.tour.popup.action.accept')}
                     </Button>
@@ -72,7 +72,7 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTo
                         visible={visibleRefuseTour ?? false}
                         onPointerTap={onRefuseTour}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -84, width: 168, top: 57, height: 16 }}
+                        layout={{ position: 'absolute', width: 168, top: 57, height: 16 }}
                     >
                         <Region
                             params={16}

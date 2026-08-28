@@ -8,7 +8,7 @@ export interface TabButton3LayoutProps {
 
 export const TabButton3Layout = ({ captionTitle, layout }: TabButton3LayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 32, ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 32, justifyContent: 'center', ...layout }}>
             <Region
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={16}
@@ -18,7 +18,7 @@ export const TabButton3Layout = ({ captionTitle, layout }: TabButton3LayoutProps
                 name="title"
                 tags={[ 'title', 'TAB_BUTTON_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 params={2147486928}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 20, top: '50%', marginTop: -12, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTitle ?? ''}

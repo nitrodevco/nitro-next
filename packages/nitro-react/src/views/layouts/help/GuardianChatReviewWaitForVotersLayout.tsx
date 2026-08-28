@@ -64,11 +64,11 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                 <Border
                     variant="105"
                     params={2064}
-                    layout={{ position: 'absolute', left: 10, width: 258, top: 60, bottom: 174 }}
+                    layout={{ position: 'absolute', left: 10, width: 258, top: 60, bottom: 174, justifyContent: 'center' }}
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -90, width: 180, top: 87, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 180, top: 87, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={t('guide.bully.request.guide.vote.waiting')}
@@ -79,16 +79,16 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                         name="waiting_animation"
                         params={208}
                         src={srcWaitingAnimation ?? layoutImage('help_chat_review_progress_big_1.png')}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -19, width: 38, top: 123, height: 38 }}
+                        layout={{ position: 'absolute', width: 38, top: 123, height: 38 }}
                     />
                 </Border>
                 <Region
                     params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 277, bottom: 3, height: 180 }}
+                    layout={{ position: 'absolute', left: 0, width: 277, bottom: 3, height: 180, justifyContent: 'center' }}
                 >
                     <Region
                         params={208}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -99.5, width: 198, top: 23, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 198, top: 23, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={t('guide.bully.request.guide.vote.question')}
@@ -98,15 +98,15 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                     </Region>
                     <Region
                         params={147664}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -114.5, top: 41, flexDirection: 'row' }}
+                        layout={{ position: 'absolute', top: 41, flexDirection: 'row' }}
                     >
                         <Region
                             params={147472}
-                            layout={{ width: 76, height: 91, flexShrink: 0 }}
+                            layout={{ width: 76, height: 91, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Region
                                 params={208}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('guide.bully.request.guide.vote.ok')}
@@ -119,22 +119,22 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                                 params={131089}
                                 onPointerTap={onVoteOk}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77 }}
+                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
                             >
                                 <ThemeImage
                                     params={3280}
                                     src={layoutImage('help_chat_review_vote_ok.png')}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -38, width: 76, top: '50%', marginTop: -38.5, height: 77 }}
+                                    layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
                                 />
                             </Region>
                         </Region>
                         <Region
                             params={147472}
-                            layout={{ width: 76, height: 91, flexShrink: 0 }}
+                            layout={{ width: 76, height: 91, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Region
                                 params={208}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('guide.bully.request.guide.vote.bad')}
@@ -147,22 +147,22 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                                 params={131089}
                                 onPointerTap={onVoteBad}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77 }}
+                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
                             >
                                 <ThemeImage
                                     params={3280}
                                     src={layoutImage('help_chat_review_vote_bad.png')}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -38, width: 76, top: '50%', marginTop: -38.5, height: 77 }}
+                                    layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
                                 />
                             </Region>
                         </Region>
                         <Region
                             params={147472}
-                            layout={{ width: 76, height: 91, flexShrink: 0 }}
+                            layout={{ width: 76, height: 91, flexShrink: 0, justifyContent: 'center' }}
                         >
                             <Region
                                 params={208}
-                                layout={{ position: 'absolute', left: '50%', marginLeft: -34, width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={t('guide.bully.request.guide.vote.very_bad')}
@@ -175,12 +175,12 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                                 params={131089}
                                 onPointerTap={onVoteVeryBad}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77 }}
+                                layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
                             >
                                 <ThemeImage
                                     params={3280}
                                     src={layoutImage('help_chat_review_vote_very_bad.png')}
-                                    layout={{ position: 'absolute', left: '50%', marginLeft: -38, width: 76, top: '50%', marginTop: -38.5, height: 77 }}
+                                    layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
                                 />
                             </Region>
                         </Region>
@@ -195,11 +195,11 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                         params={17}
                         onPointerTap={onCloseLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center' }}
                     >
                         <Region
                             params={208}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -94.5, width: 188, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 188, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={t('guide.bully.request.guide.vote.close')}

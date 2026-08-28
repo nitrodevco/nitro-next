@@ -27,7 +27,7 @@ export const ChatstyleTemplateLayout = ({ layout, onChatstyleRegion, srcBubblePr
                     name="bubble_preview"
                     params={3148816}
                     src={srcBubblePreview}
-                    layout={{ position: 'absolute', left: 0, width: 55, top: '50%', marginTop: -12, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, width: 55, alignSelf: 'center', height: 24 }}
                 />
             </Region>
         </Region>

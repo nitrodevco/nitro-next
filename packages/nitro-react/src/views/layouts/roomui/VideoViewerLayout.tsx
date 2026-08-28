@@ -33,12 +33,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                     name="video_background"
                     params={18448}
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48 }}
+                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48, justifyContent: 'center' }}
                 >
                     <Region
                         name="no_videos_label"
                         params={3280}
-                        layout={{ position: 'absolute', left: '50%', marginLeft: -93.5, width: 187, top: '50%', marginTop: -8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
@@ -63,12 +63,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                         tooltip={t('widget.furni.video_viewer.tooltip.prev')}
                         params={17}
                         onPointerTap={onPlaylistPrev}
-                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 29, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             params={3280}
                             src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 21, top: '50%', marginTop: -8.5, height: 16 }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
                         />
                     </ContainerButton>
                     <ContainerButton
@@ -77,12 +77,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
                         tooltip={t('widget.furni.video_viewer.tooltip.next')}
                         params={17}
                         onPointerTap={onPlaylistNext}
-                        layout={{ position: 'absolute', left: 44, width: 40, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 44, width: 40, top: 0, height: 29, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             params={3280}
                             src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', left: '50%', marginLeft: -10, width: 21, top: '50%', marginTop: -8.5, height: 16 }}
+                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
                         />
                     </ContainerButton>
                     <Region

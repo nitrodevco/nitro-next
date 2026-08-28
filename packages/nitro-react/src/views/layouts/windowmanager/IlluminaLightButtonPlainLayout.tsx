@@ -8,12 +8,12 @@ export interface IlluminaLightButtonPlainLayoutProps {
 
 export const IlluminaLightButtonPlainLayout = ({ captionBTNTEXT, layout }: IlluminaLightButtonPlainLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 28, height: 28, ...layout }}>
+        <Region layout={{ position: 'relative', width: 28, height: 28, justifyContent: 'center', ...layout }}>
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 params={2147486928}
-                layout={{ position: 'absolute', left: '50%', marginLeft: -14, width: 28, top: '50%', marginTop: -14, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', width: 28, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionBTNTEXT ?? ''}
