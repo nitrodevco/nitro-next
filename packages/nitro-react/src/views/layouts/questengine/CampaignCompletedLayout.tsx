@@ -16,13 +16,11 @@ export const CampaignCompletedLayout = ({ captionCompletedTxt, layout, srcComple
             <Border
                 variant="0"
                 name="campaign_completed_container"
-                params={16}
                 tintColor="#c9c9c9"
                 layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 114 }}
             >
                 <Region
                     name="completed_txt"
-                    params={144}
                     layout={{ position: 'absolute', left: 40, right: 92, top: 41, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -32,7 +30,6 @@ export const CampaignCompletedLayout = ({ captionCompletedTxt, layout, srcComple
                 </Region>
                 <ThemeImage
                     name="completed_pic_bitmap"
-                    params={16}
                     src={srcCompletedPicBitmap ?? '${image.library.questing.url}category_completed.png'}
                     layout={{ position: 'absolute', left: 278, width: 53, top: 25, height: 57 }}
                 />

@@ -13,13 +13,9 @@ export interface CampaignPromoLayoutProps {
 export const CampaignPromoLayout = ({ content, layout, srcPromoBackground }: CampaignPromoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 130, ...layout }}>
-            <Region
-                params={147472}
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130, maxWidth: 500 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130, maxWidth: 500 }}>
                 <ThemeImage
                     name="promo_background"
-                    params={16}
                     src={srcPromoBackground}
                     layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130 }}
                 />
@@ -33,15 +29,16 @@ export const CampaignPromoLayout = ({ content, layout, srcPromoBackground }: Cam
 export interface CampaignPromoLayoutPromoTitleItemProps {
     captionPromoTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutPromoTitleItem = ({ captionPromoTitle, layout }: CampaignPromoLayoutPromoTitleItemProps) => {
+export const CampaignPromoLayoutPromoTitleItem = ({ captionPromoTitle, layout, tags }: CampaignPromoLayoutPromoTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="promo_title"
-            params={16}
+            tags={tags}
             layout={{ width: 251, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -55,13 +52,14 @@ export const CampaignPromoLayoutPromoTitleItem = ({ captionPromoTitle, layout }:
 /** Row template `spacing` of CampaignPromoLayout - pass real rows through its `items…` slot. */
 export interface CampaignPromoLayoutSpacingItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutSpacingItem = ({ layout }: CampaignPromoLayoutSpacingItemProps) => {
+export const CampaignPromoLayoutSpacingItem = ({ layout, tags }: CampaignPromoLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );
@@ -71,15 +69,16 @@ export const CampaignPromoLayoutSpacingItem = ({ layout }: CampaignPromoLayoutSp
 export interface CampaignPromoLayoutPromoTextItemProps {
     captionPromoText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutPromoTextItem = ({ captionPromoText, layout }: CampaignPromoLayoutPromoTextItemProps) => {
+export const CampaignPromoLayoutPromoTextItem = ({ captionPromoText, layout, tags }: CampaignPromoLayoutPromoTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="promo_text"
-            params={16}
+            tags={tags}
             layout={{ width: 251, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -93,13 +92,14 @@ export const CampaignPromoLayoutPromoTextItem = ({ captionPromoText, layout }: C
 /** Row template `spacing` of CampaignPromoLayout - pass real rows through its `items…` slot. */
 export interface CampaignPromoLayoutSpacingItem2Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutSpacingItem2 = ({ layout }: CampaignPromoLayoutSpacingItem2Props) => {
+export const CampaignPromoLayoutSpacingItem2 = ({ layout, tags }: CampaignPromoLayoutSpacingItem2Props) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );
@@ -109,16 +109,17 @@ export const CampaignPromoLayoutSpacingItem2 = ({ layout }: CampaignPromoLayoutS
 export interface CampaignPromoLayoutButtonItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutButtonItem = ({ layout, onButton }: CampaignPromoLayoutButtonItemProps) => {
+export const CampaignPromoLayoutButtonItem = ({ layout, onButton, tags }: CampaignPromoLayoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="button"
-            params={131089}
+            tags={tags}
             onPointerTap={onButton}
             layout={{ width: 233, height: 48, flexShrink: 0, ...layout }}
         >
@@ -131,13 +132,14 @@ export const CampaignPromoLayoutButtonItem = ({ layout, onButton }: CampaignProm
 export interface CampaignPromoLayoutContentProps {
     itemsContent?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CampaignPromoLayoutContent = ({ itemsContent, layout }: CampaignPromoLayoutContentProps) => {
+export const CampaignPromoLayoutContent = ({ itemsContent, layout, tags }: CampaignPromoLayoutContentProps) => {
     return (
         <Region
             name="content"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 161, width: 275, top: 16, height: 96, flexDirection: 'column', ...layout }}
         >
             {itemsContent ?? (

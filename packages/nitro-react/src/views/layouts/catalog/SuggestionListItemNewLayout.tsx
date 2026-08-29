@@ -20,15 +20,16 @@ export interface SuggestionListItemNewLayoutSuggestionListItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
     onSuggestionListItem?: () => void;
+    tags?: string[];
 }
 
-export const SuggestionListItemNewLayoutSuggestionListItem = ({ captionNameText, layout, onSuggestionListItem }: SuggestionListItemNewLayoutSuggestionListItemProps) => {
+export const SuggestionListItemNewLayoutSuggestionListItem = ({ captionNameText, layout, onSuggestionListItem, tags }: SuggestionListItemNewLayoutSuggestionListItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="suggestion_list_item"
-            params={12730385}
+            tags={tags}
             backgroundColor="#cceeff"
             onPointerTap={onSuggestionListItem}
             cursor="pointer"
@@ -36,7 +37,6 @@ export const SuggestionListItemNewLayoutSuggestionListItem = ({ captionNameText,
         >
             <Region
                 name="name_text"
-                params={12730384}
                 layout={{ position: 'absolute', left: 0, top: 0, minWidth: 150, maxWidth: 261, minHeight: 20, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

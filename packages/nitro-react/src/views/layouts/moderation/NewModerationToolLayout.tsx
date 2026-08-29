@@ -17,7 +17,6 @@ export const NewModerationToolLayout = ({ layout, mainView, onClose, subviewWrap
     return (
         <Frame
             variant="100"
-            params={32769}
             caption={t('moderation.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -39,27 +38,24 @@ export interface NewModerationToolLayoutMainViewProps {
     onGiveFurniBtn?: () => void;
     onHotelAlertBtn?: () => void;
     onSendWarningBtn?: () => void;
+    tags?: string[];
     visibleMainView?: boolean;
 }
 
-export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCoinsBtn, onGiveFurniBtn, onHotelAlertBtn, onSendWarningBtn, visibleMainView }: NewModerationToolLayoutMainViewProps) => {
+export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCoinsBtn, onGiveFurniBtn, onHotelAlertBtn, onSendWarningBtn, tags, visibleMainView }: NewModerationToolLayoutMainViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="main_view"
-            params={2192}
+            tags={tags}
             visible={visibleMainView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 11, right: 12, top: 7, height: 154, flexDirection: 'column', gap: 7 }}
-            >
+            <Region layout={{ position: 'absolute', left: 11, right: 12, top: 7, height: 154, flexDirection: 'column', gap: 7 }}>
                 <Button
                     variant="102"
                     name="ban_user_btn"
-                    params={131089}
                     tintColor="#eeeeee"
                     onPointerTap={onBanUserBtn}
                     layout={{ width: 214, height: 25, flexShrink: 0, minWidth: 214 }}
@@ -69,7 +65,6 @@ export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCo
                 <Button
                     variant="102"
                     name="hotel_alert_btn"
-                    params={131089}
                     tintColor="#eeeeee"
                     onPointerTap={onHotelAlertBtn}
                     layout={{ width: 214, height: 25, flexShrink: 0, minWidth: 214 }}
@@ -79,7 +74,6 @@ export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCo
                 <Button
                     variant="102"
                     name="send_warning_btn"
-                    params={131089}
                     tintColor="#eeeeee"
                     onPointerTap={onSendWarningBtn}
                     layout={{ width: 214, height: 25, flexShrink: 0, minWidth: 214 }}
@@ -89,7 +83,6 @@ export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCo
                 <Button
                     variant="102"
                     name="give_coins_btn"
-                    params={131089}
                     tintColor="#eeeeee"
                     onPointerTap={onGiveCoinsBtn}
                     layout={{ width: 214, height: 25, flexShrink: 0, minWidth: 214 }}
@@ -99,7 +92,6 @@ export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCo
                 <Button
                     variant="102"
                     name="give_furni_btn"
-                    params={131089}
                     tintColor="#eeeeee"
                     onPointerTap={onGiveFurniBtn}
                     layout={{ width: 214, height: 25, flexShrink: 0, minWidth: 214 }}
@@ -116,23 +108,23 @@ export interface NewModerationToolLayoutHotelAlertViewProps {
     captionHotelAlertTxt?: string;
     layout?: BoxLayout;
     onSendHotelAlertBtn?: () => void;
+    tags?: string[];
     visibleHotelAlertView?: boolean;
 }
 
-export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, layout, onSendHotelAlertBtn, visibleHotelAlertView }: NewModerationToolLayoutHotelAlertViewProps) => {
+export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, layout, onSendHotelAlertBtn, tags, visibleHotelAlertView }: NewModerationToolLayoutHotelAlertViewProps) => {
     const t = useTranslation();
     const [ hotelAlertInputValue, setHotelAlertInputValue ] = useState('');
 
     return (
         <Region
             name="hotel_alert_view"
-            params={2192}
+            tags={tags}
             visible={visibleHotelAlertView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="hotel_alert_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 106, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -143,7 +135,6 @@ export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, la
             <Border
                 variant="105"
                 name="message_border"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 96 }}
             >
                 <TextInput
@@ -156,7 +147,6 @@ export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, la
             <Button
                 variant="103"
                 name="send_hotel_alert_btn"
-                params={131089}
                 onPointerTap={onSendHotelAlertBtn}
                 layout={{ position: 'absolute', left: 44, width: 181, top: 133, height: 26, minWidth: 181 }}
             >
@@ -172,10 +162,11 @@ export interface NewModerationToolLayoutSendWarningViewProps {
     captionUserTxt?: string;
     layout?: BoxLayout;
     onSendWarningBtn?: () => void;
+    tags?: string[];
     visibleSendWarningView?: boolean;
 }
 
-export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, captionUserTxt, layout, onSendWarningBtn, visibleSendWarningView }: NewModerationToolLayoutSendWarningViewProps) => {
+export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, captionUserTxt, layout, onSendWarningBtn, tags, visibleSendWarningView }: NewModerationToolLayoutSendWarningViewProps) => {
     const t = useTranslation();
     const [ warningUsernameInputValue, setWarningUsernameInputValue ] = useState('');
     const [ warningInputValue, setWarningInputValue ] = useState('');
@@ -183,13 +174,12 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
     return (
         <Region
             name="send_warning_view"
-            params={2192}
+            tags={tags}
             visible={visibleSendWarningView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="user_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -199,7 +189,6 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
             >
                 <TextInput
@@ -210,7 +199,6 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
             </Border>
             <Region
                 name="text_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 72, top: 59, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -220,7 +208,6 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 81, height: 44 }}
             >
                 <TextInput
@@ -233,7 +220,6 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
             <Button
                 variant="103"
                 name="send_warning_btn"
-                params={131089}
                 onPointerTap={onSendWarningBtn}
                 layout={{ position: 'absolute', left: 44, width: 181, top: 133, height: 26, minWidth: 181 }}
             >
@@ -251,10 +237,11 @@ export interface NewModerationToolLayoutGiveCoinsViewProps {
     onAddCoinsBtn?: () => void;
     onMinusBtnCoins?: () => void;
     onPlusBtnCoins?: () => void;
+    tags?: string[];
     visibleGiveCoinsView?: boolean;
 }
 
-export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, captionUserTxt, layout, onAddCoinsBtn, onMinusBtnCoins, onPlusBtnCoins, visibleGiveCoinsView }: NewModerationToolLayoutGiveCoinsViewProps) => {
+export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, captionUserTxt, layout, onAddCoinsBtn, onMinusBtnCoins, onPlusBtnCoins, tags, visibleGiveCoinsView }: NewModerationToolLayoutGiveCoinsViewProps) => {
     const t = useTranslation();
     const [ giveCoinsUsernameInputValue, setGiveCoinsUsernameInputValue ] = useState('');
     const [ amountCoinsInputValue, setAmountCoinsInputValue ] = useState('');
@@ -262,13 +249,12 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
     return (
         <Region
             name="give_coins_view"
-            params={2192}
+            tags={tags}
             visible={visibleGiveCoinsView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="user_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -278,7 +264,6 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
             >
                 <TextInput
@@ -289,7 +274,6 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
             </Border>
             <Region
                 name="amount_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 131, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -299,7 +283,6 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 10, right: 142, top: 87, height: 26 }}
             >
                 <TextInput
@@ -312,7 +295,6 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
             <Button
                 variant="103"
                 name="add_coins_btn"
-                params={131089}
                 onPointerTap={onAddCoinsBtn}
                 layout={{ position: 'absolute', left: 44, width: 181, top: 133, height: 26, minWidth: 181 }}
             >
@@ -321,14 +303,12 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
             <ContainerButton
                 variant="4"
                 name="minus_btn_coins"
-                params={17}
                 onPointerTap={onMinusBtnCoins}
                 layout={{ position: 'absolute', left: 103, width: 30, top: 89, height: 30 }}
             />
             <ContainerButton
                 variant="3"
                 name="plus_btn_coins"
-                params={17}
                 onPointerTap={onPlusBtnCoins}
                 layout={{ position: 'absolute', left: 132, width: 30, top: 89, height: 30 }}
             />
@@ -345,9 +325,10 @@ export interface NewModerationToolLayoutGiveFurniViewProps {
     onAddFurniBtn?: () => void;
     onMinusBtnFurni?: () => void;
     onPlusBtnFurni?: () => void;
+    tags?: string[];
 }
 
-export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, captionProductNameTxt, captionUserTxt, layout, onAddFurniBtn, onMinusBtnFurni, onPlusBtnFurni }: NewModerationToolLayoutGiveFurniViewProps) => {
+export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, captionProductNameTxt, captionUserTxt, layout, onAddFurniBtn, onMinusBtnFurni, onPlusBtnFurni, tags }: NewModerationToolLayoutGiveFurniViewProps) => {
     const t = useTranslation();
     const [ giveFurniUsernameInputValue, setGiveFurniUsernameInputValue ] = useState('');
     const [ amountFurniInputValue, setAmountFurniInputValue ] = useState('');
@@ -356,12 +337,11 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
     return (
         <Region
             name="give_furni_view"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="user_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -371,7 +351,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
             >
                 <TextInput
@@ -382,7 +361,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             </Border>
             <Region
                 name="amount_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 134, width: 45, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -392,7 +370,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 134, right: 70, top: 87, height: 26 }}
             >
                 <TextInput
@@ -404,7 +381,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             </Border>
             <Region
                 name="product_name_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 76, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -414,7 +390,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 119, top: 87, height: 26 }}
             >
                 <TextInput
@@ -426,21 +401,18 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             <ContainerButton
                 variant="4"
                 name="minus_btn_furni"
-                params={17}
                 onPointerTap={onMinusBtnFurni}
                 layout={{ position: 'absolute', left: 175, width: 30, top: 89, height: 30 }}
             />
             <ContainerButton
                 variant="3"
                 name="plus_btn_furni"
-                params={17}
                 onPointerTap={onPlusBtnFurni}
                 layout={{ position: 'absolute', left: 204, width: 30, top: 89, height: 30 }}
             />
             <Button
                 variant="103"
                 name="add_furni_btn"
-                params={131089}
                 onPointerTap={onAddFurniBtn}
                 layout={{ position: 'absolute', left: 44, width: 181, top: 133, height: 26, minWidth: 181 }}
             >
@@ -455,26 +427,25 @@ export interface NewModerationToolLayoutBanTypeProps {
     layout?: BoxLayout;
     onBanRadio?: () => void;
     onUnbanRadio?: () => void;
+    tags?: string[];
 }
 
-export const NewModerationToolLayoutBanType = ({ layout, onBanRadio, onUnbanRadio }: NewModerationToolLayoutBanTypeProps) => {
+export const NewModerationToolLayoutBanType = ({ layout, onBanRadio, onUnbanRadio, tags }: NewModerationToolLayoutBanTypeProps) => {
     return (
         <Region
             name="ban_type"
-            params={145}
+            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 15, top: 62, height: 54, ...layout }}
         >
             <RadioButton
                 variant="100"
                 name="unban_radio"
-                params={17}
                 onPointerTap={onUnbanRadio}
                 layout={{ position: 'absolute', left: 0, width: 13, top: 25, height: 16, minHeight: 16, maxHeight: 16 }}
             />
             <RadioButton
                 variant="100"
                 name="ban_radio"
-                params={17}
                 onPointerTap={onBanRadio}
                 layout={{ position: 'absolute', left: 0, width: 12, top: 4, height: 16, minHeight: 16, maxHeight: 16 }}
             />
@@ -489,23 +460,23 @@ export interface NewModerationToolLayoutBanViewProps {
     layout?: BoxLayout;
     onBanBtn?: () => void;
     onDurationSelector?: () => void;
+    tags?: string[];
     visibleBanView?: boolean;
 }
 
-export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout, onBanBtn, onDurationSelector, visibleBanView }: NewModerationToolLayoutBanViewProps) => {
+export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout, onBanBtn, onDurationSelector, tags, visibleBanView }: NewModerationToolLayoutBanViewProps) => {
     const t = useTranslation();
     const [ banUsernameInputValue, setBanUsernameInputValue ] = useState('');
 
     return (
         <Region
             name="ban_view"
-            params={2192}
+            tags={tags}
             visible={visibleBanView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="user_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -515,7 +486,6 @@ export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout
             </Region>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
             >
                 <TextInput
@@ -528,25 +498,18 @@ export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout
             <Button
                 variant="103"
                 name="ban_btn"
-                params={131089}
                 onPointerTap={onBanBtn}
                 layout={{ position: 'absolute', left: 44, width: 181, top: 133, height: 26, minWidth: 181 }}
             >
                 {t('moderation.ban_management.do')}
             </Button>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 28, width: 47, top: 65, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 28, width: 47, top: 65, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('moderation.ban_management.ban')}
                     textOptions={{ fill: '#333333' }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 28, width: 63, top: 86, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 28, width: 63, top: 86, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('moderation.ban_management.unban')}
                     textOptions={{ fill: '#333333' }}
@@ -555,7 +518,6 @@ export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout
             <Dropmenu
                 variant="100"
                 name="duration_selector"
-                params={81}
                 onPointerTap={onDurationSelector}
                 layout={{ position: 'absolute', right: 13, width: 101, top: 63, height: 22 }}
             >
@@ -574,25 +536,24 @@ export interface NewModerationToolLayoutSubviewWrapperProps {
     layout?: BoxLayout;
     onReturnBtn?: () => void;
     sendWarningView?: NewModerationToolLayoutSendWarningViewProps;
+    tags?: string[];
 }
 
-export const NewModerationToolLayoutSubviewWrapper = ({ banView, giveCoinsView, giveFurniView, hotelAlertView, layout, onReturnBtn, sendWarningView }: NewModerationToolLayoutSubviewWrapperProps) => {
+export const NewModerationToolLayoutSubviewWrapper = ({ banView, giveCoinsView, giveFurniView, hotelAlertView, layout, onReturnBtn, sendWarningView, tags }: NewModerationToolLayoutSubviewWrapperProps) => {
     return (
         <Region
             name="subview_wrapper"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
         >
             <ContainerButton
                 variant="103"
                 name="return_btn"
-                params={17}
                 onPointerTap={onReturnBtn}
                 layout={{ position: 'absolute', left: 9, width: 27, top: 133, height: 26 }}
             >
                 <Icon
                     variant="2"
-                    params={16}
                     tintColor="#555555"
                     layout={{ position: 'absolute', left: 8, width: 14, top: 9, height: 11 }}
                 />

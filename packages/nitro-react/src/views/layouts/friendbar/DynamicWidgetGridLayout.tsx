@@ -19,13 +19,14 @@ export const DynamicWidgetGridLayout = ({ dynamicWidgetGridContainer, layout }: 
 /** Row template `widget_slot_1` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlot1ItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot1Item = ({ layout }: DynamicWidgetGridLayoutWidgetSlot1ItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot1Item = ({ layout, tags }: DynamicWidgetGridLayoutWidgetSlot1ItemProps) => {
     return (
         <Region
             name="widget_slot_1"
-            params={147472}
+            tags={tags}
             layout={{ width: 800, height: 75, flexShrink: 0, ...layout }}
         />
     );
@@ -34,13 +35,14 @@ export const DynamicWidgetGridLayoutWidgetSlot1Item = ({ layout }: DynamicWidget
 /** Row template `widget_slot_2` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlot2ItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot2Item = ({ layout }: DynamicWidgetGridLayoutWidgetSlot2ItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot2Item = ({ layout, tags }: DynamicWidgetGridLayoutWidgetSlot2ItemProps) => {
     return (
         <Region
             name="widget_slot_2"
-            params={147472}
+            tags={tags}
             layout={{ width: 500, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -49,13 +51,14 @@ export const DynamicWidgetGridLayoutWidgetSlot2Item = ({ layout }: DynamicWidget
 /** Row template `widget_slot_4` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlot4ItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot4Item = ({ layout }: DynamicWidgetGridLayoutWidgetSlot4ItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot4Item = ({ layout, tags }: DynamicWidgetGridLayoutWidgetSlot4ItemProps) => {
     return (
         <Region
             name="widget_slot_4"
-            params={147472}
+            tags={tags}
             layout={{ width: 500, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -65,13 +68,14 @@ export const DynamicWidgetGridLayoutWidgetSlot4Item = ({ layout }: DynamicWidget
 export interface DynamicWidgetGridLayoutWidgetSlot4RootItemProps {
     itemsWidgetSlot4Root?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot4RootItem = ({ itemsWidgetSlot4Root, layout }: DynamicWidgetGridLayoutWidgetSlot4RootItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot4RootItem = ({ itemsWidgetSlot4Root, layout, tags }: DynamicWidgetGridLayoutWidgetSlot4RootItemProps) => {
     return (
         <Region
             name="widget_slot_4_root"
-            params={16}
+            tags={tags}
             layout={{ width: 500, height: 1, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsWidgetSlot4Root ?? (
@@ -85,13 +89,14 @@ export const DynamicWidgetGridLayoutWidgetSlot4RootItem = ({ itemsWidgetSlot4Roo
 export interface DynamicWidgetGridLayoutWidgetSlotsCenterLeftItemProps {
     itemsWidgetSlotsCenterLeft?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlotsCenterLeftItem = ({ itemsWidgetSlotsCenterLeft, layout }: DynamicWidgetGridLayoutWidgetSlotsCenterLeftItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlotsCenterLeftItem = ({ itemsWidgetSlotsCenterLeft, layout, tags }: DynamicWidgetGridLayoutWidgetSlotsCenterLeftItemProps) => {
     return (
         <Region
             name="widget_slots_center_left"
-            params={147472}
+            tags={tags}
             layout={{ flexShrink: 0, maxWidth: 500, flexDirection: 'column', gap: 50, ...layout }}
         >
             {itemsWidgetSlotsCenterLeft ?? (
@@ -107,13 +112,14 @@ export const DynamicWidgetGridLayoutWidgetSlotsCenterLeftItem = ({ itemsWidgetSl
 /** Row template `widget_slot_3` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlot3ItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot3Item = ({ layout }: DynamicWidgetGridLayoutWidgetSlot3ItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot3Item = ({ layout, tags }: DynamicWidgetGridLayoutWidgetSlot3ItemProps) => {
     return (
         <Region
             name="widget_slot_3"
-            params={147472}
+            tags={tags}
             layout={{ width: 250, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -122,13 +128,14 @@ export const DynamicWidgetGridLayoutWidgetSlot3Item = ({ layout }: DynamicWidget
 /** Row template `widget_slot_5` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlot5ItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot5Item = ({ layout }: DynamicWidgetGridLayoutWidgetSlot5ItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot5Item = ({ layout, tags }: DynamicWidgetGridLayoutWidgetSlot5ItemProps) => {
     return (
         <Region
             name="widget_slot_5"
-            params={147472}
+            tags={tags}
             layout={{ width: 250, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -138,13 +145,14 @@ export const DynamicWidgetGridLayoutWidgetSlot5Item = ({ layout }: DynamicWidget
 export interface DynamicWidgetGridLayoutWidgetSlot5RootItemProps {
     itemsWidgetSlot5Root?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlot5RootItem = ({ itemsWidgetSlot5Root, layout }: DynamicWidgetGridLayoutWidgetSlot5RootItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlot5RootItem = ({ itemsWidgetSlot5Root, layout, tags }: DynamicWidgetGridLayoutWidgetSlot5RootItemProps) => {
     return (
         <Region
             name="widget_slot_5_root"
-            params={16}
+            tags={tags}
             layout={{ width: 250, height: 1, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsWidgetSlot5Root ?? (
@@ -158,13 +166,14 @@ export const DynamicWidgetGridLayoutWidgetSlot5RootItem = ({ itemsWidgetSlot5Roo
 export interface DynamicWidgetGridLayoutWidgetSlotsCenterRightProps {
     itemsWidgetSlotsCenterRight?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlotsCenterRight = ({ itemsWidgetSlotsCenterRight, layout }: DynamicWidgetGridLayoutWidgetSlotsCenterRightProps) => {
+export const DynamicWidgetGridLayoutWidgetSlotsCenterRight = ({ itemsWidgetSlotsCenterRight, layout, tags }: DynamicWidgetGridLayoutWidgetSlotsCenterRightProps) => {
     return (
         <Region
             name="widget_slots_center_right"
-            params={4341776}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 50, ...layout }}
         >
             {itemsWidgetSlotsCenterRight ?? (
@@ -180,14 +189,15 @@ export const DynamicWidgetGridLayoutWidgetSlotsCenterRight = ({ itemsWidgetSlots
 /** Row template `widget_slots_right` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutWidgetSlotsRightItemProps {
     layout?: BoxLayout;
+    tags?: string[];
     widgetSlotsCenterRight?: DynamicWidgetGridLayoutWidgetSlotsCenterRightProps;
 }
 
-export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ layout, widgetSlotsCenterRight }: DynamicWidgetGridLayoutWidgetSlotsRightItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ layout, tags, widgetSlotsCenterRight }: DynamicWidgetGridLayoutWidgetSlotsRightItemProps) => {
     return (
         <Region
             name="widget_slots_right"
-            params={147472}
+            tags={tags}
             layout={{ width: 250, height: 52, flexShrink: 0, maxWidth: 250, ...layout }}
         >
             <DynamicWidgetGridLayoutWidgetSlotsCenterRight {...widgetSlotsCenterRight} />
@@ -199,13 +209,14 @@ export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ layout, widgetSlot
 export interface DynamicWidgetGridLayoutWidgetSlotsCenterScrollableProps {
     itemsWidgetSlotsCenterScrollable?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetSlotsCenterScrollable = ({ itemsWidgetSlotsCenterScrollable, layout }: DynamicWidgetGridLayoutWidgetSlotsCenterScrollableProps) => {
+export const DynamicWidgetGridLayoutWidgetSlotsCenterScrollable = ({ itemsWidgetSlotsCenterScrollable, layout, tags }: DynamicWidgetGridLayoutWidgetSlotsCenterScrollableProps) => {
     return (
         <Region
             name="widget_slots_center_scrollable"
-            params={16400}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 800, top: 1, height: 681, flexDirection: 'row', gap: 50, ...layout }}
         >
             {itemsWidgetSlotsCenterScrollable ?? (
@@ -221,14 +232,15 @@ export const DynamicWidgetGridLayoutWidgetSlotsCenterScrollable = ({ itemsWidget
 /** Row template `center_slots_container` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
 export interface DynamicWidgetGridLayoutCenterSlotsContainerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
     widgetSlotsCenterScrollable?: DynamicWidgetGridLayoutWidgetSlotsCenterScrollableProps;
 }
 
-export const DynamicWidgetGridLayoutCenterSlotsContainerItem = ({ layout, widgetSlotsCenterScrollable }: DynamicWidgetGridLayoutCenterSlotsContainerItemProps) => {
+export const DynamicWidgetGridLayoutCenterSlotsContainerItem = ({ layout, tags, widgetSlotsCenterScrollable }: DynamicWidgetGridLayoutCenterSlotsContainerItemProps) => {
     return (
         <Region
             name="center_slots_container"
-            params={147472}
+            tags={tags}
             layout={{ width: 800, height: 682, flexShrink: 0, ...layout }}
         >
             <DynamicWidgetGridLayoutWidgetSlotsCenterScrollable {...widgetSlotsCenterScrollable} />
@@ -240,13 +252,14 @@ export const DynamicWidgetGridLayoutCenterSlotsContainerItem = ({ layout, widget
 export interface DynamicWidgetGridLayoutWidgetlistFromtopProps {
     itemsWidgetlistFromtop?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DynamicWidgetGridLayoutWidgetlistFromtop = ({ itemsWidgetlistFromtop, layout }: DynamicWidgetGridLayoutWidgetlistFromtopProps) => {
+export const DynamicWidgetGridLayoutWidgetlistFromtop = ({ itemsWidgetlistFromtop, layout, tags }: DynamicWidgetGridLayoutWidgetlistFromtopProps) => {
     return (
         <Region
             name="widgetlist_fromtop"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 86, width: 925, top: 4, height: 767, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsWidgetlistFromtop ?? (
@@ -262,14 +275,15 @@ export const DynamicWidgetGridLayoutWidgetlistFromtop = ({ itemsWidgetlistFromto
 /** Named region `dynamic_widget_grid_container` of DynamicWidgetGridLayout - configured through the parent's `dynamicWidgetGridContainer` prop. */
 export interface DynamicWidgetGridLayoutDynamicWidgetGridContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
     widgetlistFromtop?: DynamicWidgetGridLayoutWidgetlistFromtopProps;
 }
 
-export const DynamicWidgetGridLayoutDynamicWidgetGridContainer = ({ layout, widgetlistFromtop }: DynamicWidgetGridLayoutDynamicWidgetGridContainerProps) => {
+export const DynamicWidgetGridLayoutDynamicWidgetGridContainer = ({ layout, tags, widgetlistFromtop }: DynamicWidgetGridLayoutDynamicWidgetGridContainerProps) => {
     return (
         <Region
             name="dynamic_widget_grid_container"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 170, width: 1011, top: 0, height: 771, ...layout }}
         >
             <DynamicWidgetGridLayoutWidgetlistFromtop {...widgetlistFromtop} />

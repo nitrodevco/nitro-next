@@ -9,7 +9,6 @@ export const MovingObjectLayout = ({ layout }: MovingObjectLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 13, height: 25, ...layout }}>
             <ThemeImage
-                params={16}
                 src={undefined}
                 layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 25 }}
             />

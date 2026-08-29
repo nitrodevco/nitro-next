@@ -16,26 +16,20 @@ export interface RentableBotViewLayoutProps {
 export const RentableBotViewLayout = ({ buttonList, infostandElementList, layout, onClose, srcHomeIcon }: RentableBotViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1036, height: 400, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 1036, top: 0, height: 400, flexDirection: 'column', gap: 10 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 1036, top: 0, height: 400, flexDirection: 'column', gap: 10 }}>
                 <Border
                     variant="1"
                     name="info_border"
-                    params={17}
                     layout={{ width: 190, height: 350, flexShrink: 0 }}
                 >
                     <ThemeImage
                         name="home_icon"
-                        params={17}
                         src={srcHomeIcon}
                         layout={{ position: 'absolute', left: 8, width: 16, top: 11, height: 15 }}
                     />
                     <CloseButton
                         variant="1"
                         tags={[ 'close' ]}
-                        params={17}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -51,13 +45,14 @@ export const RentableBotViewLayout = ({ buttonList, infostandElementList, layout
 export interface RentableBotViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutNameTextItem = ({ captionNameText, layout }: RentableBotViewLayoutNameTextItemProps) => {
+export const RentableBotViewLayoutNameTextItem = ({ captionNameText, layout, tags }: RentableBotViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            params={146}
+            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             backgroundColor="#3d3d3d"
         >
@@ -72,13 +67,14 @@ export const RentableBotViewLayoutNameTextItem = ({ captionNameText, layout }: R
 /** Row template `images_spacer` of RentableBotViewLayout - pass real rows through its `items…` slot. */
 export interface RentableBotViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutImagesSpacerItem = ({ layout }: RentableBotViewLayoutImagesSpacerItemProps) => {
+export const RentableBotViewLayoutImagesSpacerItem = ({ layout, tags }: RentableBotViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            params={16}
+            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -89,26 +85,25 @@ export const RentableBotViewLayoutImagesSpacerItem = ({ layout }: RentableBotVie
 export interface RentableBotViewLayoutAvatarImageProfileLinkProps {
     layout?: BoxLayout;
     onAvatarImageProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink }: RentableBotViewLayoutAvatarImageProfileLinkProps) => {
+export const RentableBotViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink, tags }: RentableBotViewLayoutAvatarImageProfileLinkProps) => {
     return (
         <Region
             name="avatar_image_profile_link"
-            params={17}
+            tags={tags}
             onPointerTap={onAvatarImageProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('infostand_bot_info_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 66, top: 0, height: 127 }}
             />
             <WidgetSlot
                 widgetType="avatar_image"
                 name="avatar_image"
-                params={3282}
                 options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
                 layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
             />
@@ -120,20 +115,20 @@ export const RentableBotViewLayoutAvatarImageProfileLink = ({ layout, onAvatarIm
 export interface RentableBotViewLayoutDescriptionContainerItemProps {
     avatarImageProfileLink?: RentableBotViewLayoutAvatarImageProfileLinkProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfileLink, layout }: RentableBotViewLayoutDescriptionContainerItemProps) => {
+export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfileLink, layout, tags }: RentableBotViewLayoutDescriptionContainerItemProps) => {
     return (
         <Region
             name="description_container"
-            params={16}
+            tags={tags}
             backgroundColor="#6d6d6d"
             layout={{ width: 193, height: 132, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="0"
                 name="grey_bg"
-                params={16}
                 tintColor="#666666"
                 layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130 }}
             />
@@ -141,7 +136,6 @@ export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfi
             <WidgetSlot
                 widgetType="badge_image"
                 name="badge"
-                params={17}
                 options={{ 'badge_image:badge_id': 'BOT', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 116, width: 42, top: 21, height: 42 }}
             />
@@ -152,13 +146,14 @@ export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfi
 /** Row template `handitem_spacer` of RentableBotViewLayout - pass real rows through its `items…` slot. */
 export interface RentableBotViewLayoutHanditemSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutHanditemSpacerItem = ({ layout }: RentableBotViewLayoutHanditemSpacerItemProps) => {
+export const RentableBotViewLayoutHanditemSpacerItem = ({ layout, tags }: RentableBotViewLayoutHanditemSpacerItemProps) => {
     return (
         <Region
             name="handitem_spacer"
-            params={16}
+            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -169,15 +164,16 @@ export const RentableBotViewLayoutHanditemSpacerItem = ({ layout }: RentableBotV
 export interface RentableBotViewLayoutHanditemTextItemProps {
     captionHanditemText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutHanditemTextItem = ({ captionHanditemText, layout }: RentableBotViewLayoutHanditemTextItemProps) => {
+export const RentableBotViewLayoutHanditemTextItem = ({ captionHanditemText, layout, tags }: RentableBotViewLayoutHanditemTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handitem_text"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -192,13 +188,14 @@ export const RentableBotViewLayoutHanditemTextItem = ({ captionHanditemText, lay
 export interface RentableBotViewLayoutDescriptionTextItemProps {
     captionDescriptionText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutDescriptionTextItem = ({ captionDescriptionText, layout }: RentableBotViewLayoutDescriptionTextItemProps) => {
+export const RentableBotViewLayoutDescriptionTextItem = ({ captionDescriptionText, layout, tags }: RentableBotViewLayoutDescriptionTextItemProps) => {
     return (
         <Region
             name="description_text"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 31, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -213,15 +210,16 @@ export const RentableBotViewLayoutDescriptionTextItem = ({ captionDescriptionTex
 export interface RentableBotViewLayoutOwnerTextItemProps {
     captionOwnerText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutOwnerTextItem = ({ captionOwnerText, layout }: RentableBotViewLayoutOwnerTextItemProps) => {
+export const RentableBotViewLayoutOwnerTextItem = ({ captionOwnerText, layout, tags }: RentableBotViewLayoutOwnerTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="owner_text"
-            params={16}
+            tags={tags}
             layout={{ width: 126, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -236,13 +234,14 @@ export const RentableBotViewLayoutOwnerTextItem = ({ captionOwnerText, layout }:
 export interface RentableBotViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: RentableBotViewLayoutInfostandElementListProps) => {
+export const RentableBotViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: RentableBotViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 330, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -265,16 +264,16 @@ export interface RentableBotViewLayoutWhisperProps {
     layout?: BoxLayout;
     onWhisper?: () => void;
     onWhisper2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutWhisper = ({ layout, onWhisper, onWhisper2 }: RentableBotViewLayoutWhisperProps) => {
+export const RentableBotViewLayoutWhisper = ({ layout, onWhisper, onWhisper2, tags }: RentableBotViewLayoutWhisperProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="whisper"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onWhisper}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 25, ...layout }}
@@ -283,7 +282,6 @@ export const RentableBotViewLayoutWhisper = ({ layout, onWhisper, onWhisper2 }: 
                 variant="1"
                 name="whisper"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onWhisper2}
                 layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 25, minHeight: 22 }}
             >
@@ -298,16 +296,16 @@ export interface RentableBotViewLayoutIgnoreProps {
     layout?: BoxLayout;
     onIgnore?: () => void;
     onIgnore2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutIgnore = ({ layout, onIgnore, onIgnore2 }: RentableBotViewLayoutIgnoreProps) => {
+export const RentableBotViewLayoutIgnore = ({ layout, onIgnore, onIgnore2, tags }: RentableBotViewLayoutIgnoreProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ignore"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onIgnore}
             cursor="pointer"
             layout={{ position: 'absolute', left: 110, width: 100, top: 0, height: 25, ...layout }}
@@ -316,7 +314,6 @@ export const RentableBotViewLayoutIgnore = ({ layout, onIgnore, onIgnore2 }: Ren
                 variant="1"
                 name="ignore"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onIgnore2}
                 layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
             >
@@ -331,16 +328,16 @@ export interface RentableBotViewLayoutUnignoreProps {
     layout?: BoxLayout;
     onUnignore?: () => void;
     onUnignore2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutUnignore = ({ layout, onUnignore, onUnignore2 }: RentableBotViewLayoutUnignoreProps) => {
+export const RentableBotViewLayoutUnignore = ({ layout, onUnignore, onUnignore2, tags }: RentableBotViewLayoutUnignoreProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unignore"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onUnignore}
             cursor="pointer"
             layout={{ position: 'absolute', left: 220, width: 100, top: 0, height: 25, ...layout }}
@@ -349,7 +346,6 @@ export const RentableBotViewLayoutUnignore = ({ layout, onUnignore, onUnignore2 
                 variant="1"
                 name="unignore"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onUnignore2}
                 layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25, minHeight: 22 }}
             >
@@ -364,16 +360,16 @@ export interface RentableBotViewLayoutMoveProps {
     layout?: BoxLayout;
     onMove?: () => void;
     onMove2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutMove = ({ layout, onMove, onMove2 }: RentableBotViewLayoutMoveProps) => {
+export const RentableBotViewLayoutMove = ({ layout, onMove, onMove2, tags }: RentableBotViewLayoutMoveProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="move"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onMove}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, width: 132, top: 0, height: 25, ...layout }}
@@ -382,7 +378,6 @@ export const RentableBotViewLayoutMove = ({ layout, onMove, onMove2 }: RentableB
                 variant="1"
                 name="move"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onMove2}
                 layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25, minHeight: 22 }}
             >
@@ -397,16 +392,16 @@ export interface RentableBotViewLayoutRotateProps {
     layout?: BoxLayout;
     onRotate?: () => void;
     onRotate2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutRotate = ({ layout, onRotate, onRotate2 }: RentableBotViewLayoutRotateProps) => {
+export const RentableBotViewLayoutRotate = ({ layout, onRotate, onRotate2, tags }: RentableBotViewLayoutRotateProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rotate"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onRotate}
             cursor="pointer"
             layout={{ position: 'absolute', left: 472, width: 139, top: 0, height: 25, ...layout }}
@@ -415,7 +410,6 @@ export const RentableBotViewLayoutRotate = ({ layout, onRotate, onRotate2 }: Ren
                 variant="1"
                 name="rotate"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onRotate2}
                 layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25, minHeight: 22 }}
             >
@@ -430,16 +424,16 @@ export interface RentableBotViewLayoutPickProps {
     layout?: BoxLayout;
     onPick?: () => void;
     onPick2?: () => void;
+    tags?: string[];
 }
 
-export const RentableBotViewLayoutPick = ({ layout, onPick, onPick2 }: RentableBotViewLayoutPickProps) => {
+export const RentableBotViewLayoutPick = ({ layout, onPick, onPick2, tags }: RentableBotViewLayoutPickProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick"
-            tags={[ 'CMD_BUTTON_REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onPick}
             cursor="pointer"
             layout={{ position: 'absolute', left: 621, width: 137, top: 0, height: 25, ...layout }}
@@ -448,7 +442,6 @@ export const RentableBotViewLayoutPick = ({ layout, onPick, onPick2 }: RentableB
                 variant="1"
                 name="pick"
                 tags={[ 'CMD_BUTTON' ]}
-                params={131089}
                 onPointerTap={onPick2}
                 layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
             >
@@ -465,23 +458,42 @@ export interface RentableBotViewLayoutButtonListProps {
     move?: RentableBotViewLayoutMoveProps;
     pick?: RentableBotViewLayoutPickProps;
     rotate?: RentableBotViewLayoutRotateProps;
+    tags?: string[];
     unignore?: RentableBotViewLayoutUnignoreProps;
     whisper?: RentableBotViewLayoutWhisperProps;
 }
 
-export const RentableBotViewLayoutButtonList = ({ ignore, layout, move, pick, rotate, unignore, whisper }: RentableBotViewLayoutButtonListProps) => {
+export const RentableBotViewLayoutButtonList = ({ ignore, layout, move, pick, rotate, tags, unignore, whisper }: RentableBotViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            params={16}
+            tags={tags}
             layout={{ width: 1800, height: 25, flexShrink: 0, ...layout }}
         >
-            <RentableBotViewLayoutWhisper {...whisper} />
-            <RentableBotViewLayoutIgnore {...ignore} />
-            <RentableBotViewLayoutUnignore {...unignore} />
-            <RentableBotViewLayoutMove {...move} />
-            <RentableBotViewLayoutRotate {...rotate} />
-            <RentableBotViewLayoutPick {...pick} />
+            <RentableBotViewLayoutWhisper
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...whisper}
+            />
+            <RentableBotViewLayoutIgnore
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...ignore}
+            />
+            <RentableBotViewLayoutUnignore
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...unignore}
+            />
+            <RentableBotViewLayoutMove
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...move}
+            />
+            <RentableBotViewLayoutRotate
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...rotate}
+            />
+            <RentableBotViewLayoutPick
+                tags={[ 'CMD_BUTTON_REGION' ]}
+                {...pick}
+            />
         </Region>
     );
 };

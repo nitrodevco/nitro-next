@@ -18,7 +18,6 @@ export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, re
     return (
         <Frame
             variant="3"
-            params={164097}
             caption={t('rentablespace.widget.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -37,15 +36,16 @@ export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, re
 export interface RentablespaceLayoutRentInstructionsItemProps {
     captionRentInstructions?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRentInstructionsItem = ({ captionRentInstructions, layout }: RentablespaceLayoutRentInstructionsItemProps) => {
+export const RentablespaceLayoutRentInstructionsItem = ({ captionRentInstructions, layout, tags }: RentablespaceLayoutRentInstructionsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rent_instructions"
-            params={8388624}
+            tags={tags}
             layout={{ width: 241, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -62,26 +62,23 @@ export interface RentablespaceLayoutRentButtonItemProps {
     captionRentLabel?: string;
     layout?: BoxLayout;
     onRentButton?: () => void;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRentLabel, layout, onRentButton }: RentablespaceLayoutRentButtonItemProps) => {
+export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRentLabel, layout, onRentButton, tags }: RentablespaceLayoutRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="3"
             name="rent_button"
-            params={147665}
+            tags={tags}
             onPointerTap={onRentButton}
             layout={{ width: 270, height: 44, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={147472}
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 5 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 5 }}>
                 <Region
                     name="price_label"
-                    params={16}
                     layout={{ width: 56, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -91,12 +88,10 @@ export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRe
                 </Region>
                 <Icon
                     variant="10"
-                    params={16}
                     layout={{ width: 28, height: 24, flexShrink: 0 }}
                 />
                 <Region
                     name="rent_label"
-                    params={16}
                     layout={{ width: 176, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -113,13 +108,14 @@ export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRe
 export interface RentablespaceLayoutCantRentErrorItemProps {
     captionCantRentError?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutCantRentErrorItem = ({ captionCantRentError, layout }: RentablespaceLayoutCantRentErrorItemProps) => {
+export const RentablespaceLayoutCantRentErrorItem = ({ captionCantRentError, layout, tags }: RentablespaceLayoutCantRentErrorItemProps) => {
     return (
         <Region
             name="cant_rent_error"
-            params={147472}
+            tags={tags}
             layout={{ width: 245, height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -134,14 +130,15 @@ export const RentablespaceLayoutCantRentErrorItem = ({ captionCantRentError, lay
 /** Row template `icon_habboclub` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutIconHabboclubItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutIconHabboclubItem = ({ layout }: RentablespaceLayoutIconHabboclubItemProps) => {
+export const RentablespaceLayoutIconHabboclubItem = ({ layout, tags }: RentablespaceLayoutIconHabboclubItemProps) => {
     return (
         <Icon
             variant="15"
             name="icon_habboclub"
-            params={16}
+            tags={tags}
             layout={{ width: 37, height: 40, flexShrink: 0, ...layout }}
         />
     );
@@ -151,13 +148,14 @@ export const RentablespaceLayoutIconHabboclubItem = ({ layout }: RentablespaceLa
 export interface RentablespaceLayoutRentViewProps {
     itemsRentView?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRentView = ({ itemsRentView, layout }: RentablespaceLayoutRentViewProps) => {
+export const RentablespaceLayoutRentView = ({ itemsRentView, layout, tags }: RentablespaceLayoutRentViewProps) => {
     return (
         <Region
             name="rent_view"
-            params={8519696}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, minWidth: 243, top: 4, minHeight: 216, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsRentView ?? (
@@ -176,15 +174,16 @@ export const RentablespaceLayoutRentView = ({ itemsRentView, layout }: Rentables
 export interface RentablespaceLayoutRentedToLabelItemProps {
     captionRentedToLabel?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRentedToLabelItem = ({ captionRentedToLabel, layout }: RentablespaceLayoutRentedToLabelItemProps) => {
+export const RentablespaceLayoutRentedToLabelItem = ({ captionRentedToLabel, layout, tags }: RentablespaceLayoutRentedToLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rented_to_label"
-            params={16}
+            tags={tags}
             layout={{ width: 268, height: 29, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -199,13 +198,14 @@ export const RentablespaceLayoutRentedToLabelItem = ({ captionRentedToLabel, lay
 export interface RentablespaceLayoutRenterNameItemProps {
     captionRenterName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRenterNameItem = ({ captionRenterName, layout }: RentablespaceLayoutRenterNameItemProps) => {
+export const RentablespaceLayoutRenterNameItem = ({ captionRenterName, layout, tags }: RentablespaceLayoutRenterNameItemProps) => {
     return (
         <Region
             name="renter_name"
-            params={16}
+            tags={tags}
             layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -220,15 +220,16 @@ export const RentablespaceLayoutRenterNameItem = ({ captionRenterName, layout }:
 export interface RentablespaceLayoutTimeLabelItemProps {
     captionTimeLabel?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutTimeLabelItem = ({ captionTimeLabel, layout }: RentablespaceLayoutTimeLabelItemProps) => {
+export const RentablespaceLayoutTimeLabelItem = ({ captionTimeLabel, layout, tags }: RentablespaceLayoutTimeLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="time_label"
-            params={16}
+            tags={tags}
             layout={{ width: 249, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -243,13 +244,14 @@ export const RentablespaceLayoutTimeLabelItem = ({ captionTimeLabel, layout }: R
 export interface RentablespaceLayoutTimeRemainingLabelItemProps {
     captionTimeRemainingLabel?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutTimeRemainingLabelItem = ({ captionTimeRemainingLabel, layout }: RentablespaceLayoutTimeRemainingLabelItemProps) => {
+export const RentablespaceLayoutTimeRemainingLabelItem = ({ captionTimeRemainingLabel, layout, tags }: RentablespaceLayoutTimeRemainingLabelItemProps) => {
     return (
         <Region
             name="time_remaining_label"
-            params={16}
+            tags={tags}
             layout={{ width: 113, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -264,10 +266,11 @@ export const RentablespaceLayoutTimeRemainingLabelItem = ({ captionTimeRemaining
 export interface RentablespaceLayoutCancelRentButtonItemProps {
     layout?: BoxLayout;
     onCancelRentButton?: () => void;
+    tags?: string[];
     visibleCancelRentButton?: boolean;
 }
 
-export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentButton, visibleCancelRentButton }: RentablespaceLayoutCancelRentButtonItemProps) => {
+export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentButton, tags, visibleCancelRentButton }: RentablespaceLayoutCancelRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
@@ -278,7 +281,7 @@ export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentBu
             <Button
                 variant="3"
                 name="cancel_rent_button"
-                params={131281}
+                tags={tags}
                 onPointerTap={onCancelRentButton}
                 layout={{ width: '100%', height: '100%' }}
             >
@@ -292,13 +295,14 @@ export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentBu
 export interface RentablespaceLayoutRentedViewProps {
     itemsRentedView?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutRentedView = ({ itemsRentedView, layout }: RentablespaceLayoutRentedViewProps) => {
+export const RentablespaceLayoutRentedView = ({ itemsRentedView, layout, tags }: RentablespaceLayoutRentedViewProps) => {
     return (
         <Region
             name="rented_view"
-            params={8536080}
+            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5, ...layout }}
         >
@@ -319,13 +323,14 @@ export const RentablespaceLayoutRentedView = ({ itemsRentedView, layout }: Renta
 export interface RentablespaceLayoutErrorMessageItemProps {
     captionErrorMessage?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutErrorMessageItem = ({ captionErrorMessage, layout }: RentablespaceLayoutErrorMessageItemProps) => {
+export const RentablespaceLayoutErrorMessageItem = ({ captionErrorMessage, layout, tags }: RentablespaceLayoutErrorMessageItemProps) => {
     return (
         <Region
             name="error_message"
-            params={16}
+            tags={tags}
             layout={{ width: 252, height: 119, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -340,16 +345,17 @@ export const RentablespaceLayoutErrorMessageItem = ({ captionErrorMessage, layou
 export interface RentablespaceLayoutErrorButtonCloseItemProps {
     layout?: BoxLayout;
     onErrorButtonClose?: () => void;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutErrorButtonCloseItem = ({ layout, onErrorButtonClose }: RentablespaceLayoutErrorButtonCloseItemProps) => {
+export const RentablespaceLayoutErrorButtonCloseItem = ({ layout, onErrorButtonClose, tags }: RentablespaceLayoutErrorButtonCloseItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="error_button_close"
-            params={147473}
+            tags={tags}
             onPointerTap={onErrorButtonClose}
             layout={{ width: 169, height: 22, flexShrink: 0, ...layout }}
         >
@@ -362,13 +368,14 @@ export const RentablespaceLayoutErrorButtonCloseItem = ({ layout, onErrorButtonC
 export interface RentablespaceLayoutErrorViewProps {
     itemsErrorView?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentablespaceLayoutErrorView = ({ itemsErrorView, layout }: RentablespaceLayoutErrorViewProps) => {
+export const RentablespaceLayoutErrorView = ({ itemsErrorView, layout, tags }: RentablespaceLayoutErrorViewProps) => {
     return (
         <Region
             name="error_view"
-            params={131088}
+            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column', ...layout }}
         >

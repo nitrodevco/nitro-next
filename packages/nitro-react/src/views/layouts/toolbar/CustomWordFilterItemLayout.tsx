@@ -18,13 +18,14 @@ export const CustomWordFilterItemLayout = ({ layout, wordFilterListItem }: Custo
 export interface CustomWordFilterItemLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const CustomWordFilterItemLayoutBgRegion = ({ layout, onBgRegion }: CustomWordFilterItemLayoutBgRegionProps) => {
+export const CustomWordFilterItemLayoutBgRegion = ({ layout, onBgRegion, tags }: CustomWordFilterItemLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            params={145}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, ...layout }}
@@ -37,20 +38,20 @@ export interface CustomWordFilterItemLayoutWordFilterListItemProps {
     bgRegion?: CustomWordFilterItemLayoutBgRegionProps;
     captionText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CustomWordFilterItemLayoutWordFilterListItem = ({ bgRegion, captionText, layout }: CustomWordFilterItemLayoutWordFilterListItemProps) => {
+export const CustomWordFilterItemLayoutWordFilterListItem = ({ bgRegion, captionText, layout, tags }: CustomWordFilterItemLayoutWordFilterListItemProps) => {
     return (
         <Region
             name="word_filter_list_item"
-            params={144}
+            tags={tags}
             backgroundColor="#ff00ff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, ...layout }}
         >
             <CustomWordFilterItemLayoutBgRegion {...bgRegion} />
             <Region
                 name="text"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionText ?? 'BadWord'} />

@@ -22,18 +22,11 @@ export const MeMenuNewViewLayout = ({ clothes, collectibles, forums, guide, layo
             <Border
                 variant="6"
                 name="buttons"
-                params={147457}
                 tintColor="#3b3933"
                 layout={{ position: 'absolute', left: 0, width: 546, top: 0, height: 53 }}
             >
-                <Region
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 546, top: 0, height: 53 }}
-                >
-                    <Region
-                        params={147472}
-                        layout={{ position: 'absolute', left: 3, width: 543, top: 3, height: 50 }}
-                    >
+                <Region layout={{ position: 'absolute', left: 0, width: 546, top: 0, height: 53 }}>
+                    <Region layout={{ position: 'absolute', left: 3, width: 543, top: 3, height: 50 }}>
                         <MeMenuNewViewLayoutGuide {...guide} />
                         <MeMenuNewViewLayoutTalents {...talents} />
                         <MeMenuNewViewLayoutMinimail {...minimail} />
@@ -57,28 +50,27 @@ export interface MeMenuNewViewLayoutGuideProps {
     onGuide?: () => void;
     srcGuideIconColor?: string;
     srcGuideIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutGuide = ({ captionFieldText, layout, onGuide, srcGuideIconColor, srcGuideIconGrey }: MeMenuNewViewLayoutGuideProps) => {
+export const MeMenuNewViewLayoutGuide = ({ captionFieldText, layout, onGuide, srcGuideIconColor, srcGuideIconGrey, tags }: MeMenuNewViewLayoutGuideProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guide"
-            params={17}
+            tags={tags}
             onPointerTap={onGuide}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 50, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="guide_icon_color"
-                params={16}
                 src={srcGuideIconColor ?? layoutImage('me_menu_me_guide.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -89,7 +81,6 @@ export const MeMenuNewViewLayoutGuide = ({ captionFieldText, layout, onGuide, sr
             </Region>
             <ThemeImage
                 name="guide_icon_grey"
-                params={16}
                 src={srcGuideIconGrey ?? layoutImage('me_menu_me_guide.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -104,28 +95,27 @@ export interface MeMenuNewViewLayoutTalentsProps {
     onTalents?: () => void;
     srcTalentsIconColor?: string;
     srcTalentsIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutTalents = ({ captionFieldText, layout, onTalents, srcTalentsIconColor, srcTalentsIconGrey }: MeMenuNewViewLayoutTalentsProps) => {
+export const MeMenuNewViewLayoutTalents = ({ captionFieldText, layout, onTalents, srcTalentsIconColor, srcTalentsIconGrey, tags }: MeMenuNewViewLayoutTalentsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="talents"
-            params={17}
+            tags={tags}
             onPointerTap={onTalents}
             cursor="pointer"
             layout={{ position: 'absolute', left: 70, width: 50, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="talents_icon_color"
-                params={16}
                 src={srcTalentsIconColor ?? layoutImage('me_menu_me_talents.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -136,7 +126,6 @@ export const MeMenuNewViewLayoutTalents = ({ captionFieldText, layout, onTalents
             </Region>
             <ThemeImage
                 name="talents_icon_grey"
-                params={16}
                 src={srcTalentsIconGrey ?? layoutImage('me_menu_me_talents.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -151,28 +140,27 @@ export interface MeMenuNewViewLayoutMinimailProps {
     onMinimail?: () => void;
     srcMinimailIconColor?: string;
     srcMinimailIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutMinimail = ({ captionFieldText, layout, onMinimail, srcMinimailIconColor, srcMinimailIconGrey }: MeMenuNewViewLayoutMinimailProps) => {
+export const MeMenuNewViewLayoutMinimail = ({ captionFieldText, layout, onMinimail, srcMinimailIconColor, srcMinimailIconGrey, tags }: MeMenuNewViewLayoutMinimailProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="minimail"
-            params={17}
+            tags={tags}
             onPointerTap={onMinimail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 128, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="minimail_icon_color"
-                params={16}
                 src={srcMinimailIconColor ?? layoutImage('me_menu_me_mail.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -183,7 +171,6 @@ export const MeMenuNewViewLayoutMinimail = ({ captionFieldText, layout, onMinima
             </Region>
             <ThemeImage
                 name="minimail_icon_grey"
-                params={16}
                 src={srcMinimailIconGrey ?? layoutImage('me_menu_me_mail.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -198,28 +185,27 @@ export interface MeMenuNewViewLayoutProfileProps {
     onProfile?: () => void;
     srcProfileIconColor?: string;
     srcProfileIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutProfile = ({ captionFieldText, layout, onProfile, srcProfileIconColor, srcProfileIconGrey }: MeMenuNewViewLayoutProfileProps) => {
+export const MeMenuNewViewLayoutProfile = ({ captionFieldText, layout, onProfile, srcProfileIconColor, srcProfileIconGrey, tags }: MeMenuNewViewLayoutProfileProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="profile"
-            params={17}
+            tags={tags}
             onPointerTap={onProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 196, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="profile_icon_color"
-                params={16}
                 src={srcProfileIconColor ?? layoutImage('me_menu_me_profile.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -230,7 +216,6 @@ export const MeMenuNewViewLayoutProfile = ({ captionFieldText, layout, onProfile
             </Region>
             <ThemeImage
                 name="profile_icon_grey"
-                params={16}
                 src={srcProfileIconGrey ?? layoutImage('me_menu_me_profile.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -245,28 +230,27 @@ export interface MeMenuNewViewLayoutRoomsProps {
     onRooms?: () => void;
     srcRoomsIconColor?: string;
     srcRoomsIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutRooms = ({ captionFieldText, layout, onRooms, srcRoomsIconColor, srcRoomsIconGrey }: MeMenuNewViewLayoutRoomsProps) => {
+export const MeMenuNewViewLayoutRooms = ({ captionFieldText, layout, onRooms, srcRoomsIconColor, srcRoomsIconGrey, tags }: MeMenuNewViewLayoutRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms"
-            params={17}
+            tags={tags}
             onPointerTap={onRooms}
             cursor="pointer"
             layout={{ position: 'absolute', left: 264, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="rooms_icon_color"
-                params={16}
                 src={srcRoomsIconColor ?? layoutImage('me_menu_me_rooms.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -277,7 +261,6 @@ export const MeMenuNewViewLayoutRooms = ({ captionFieldText, layout, onRooms, sr
             </Region>
             <ThemeImage
                 name="rooms_icon_grey"
-                params={16}
                 src={srcRoomsIconGrey ?? layoutImage('me_menu_me_rooms.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -292,28 +275,27 @@ export interface MeMenuNewViewLayoutClothesProps {
     onClothes?: () => void;
     srcClothesIconColor?: string;
     srcClothesIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutClothes = ({ captionFieldText, layout, onClothes, srcClothesIconColor, srcClothesIconGrey }: MeMenuNewViewLayoutClothesProps) => {
+export const MeMenuNewViewLayoutClothes = ({ captionFieldText, layout, onClothes, srcClothesIconColor, srcClothesIconGrey, tags }: MeMenuNewViewLayoutClothesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clothes"
-            params={17}
+            tags={tags}
             onPointerTap={onClothes}
             cursor="pointer"
             layout={{ position: 'absolute', left: 332, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="clothes_icon_color"
-                params={16}
                 src={srcClothesIconColor ?? layoutImage('me_menu_me_clothing.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -324,7 +306,6 @@ export const MeMenuNewViewLayoutClothes = ({ captionFieldText, layout, onClothes
             </Region>
             <ThemeImage
                 name="clothes_icon_grey"
-                params={16}
                 src={srcClothesIconGrey ?? layoutImage('me_menu_me_clothing.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -339,28 +320,27 @@ export interface MeMenuNewViewLayoutForumsProps {
     onForums?: () => void;
     srcForumsIconColor?: string;
     srcForumsIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutForums = ({ captionFieldText, layout, onForums, srcForumsIconColor, srcForumsIconGrey }: MeMenuNewViewLayoutForumsProps) => {
+export const MeMenuNewViewLayoutForums = ({ captionFieldText, layout, onForums, srcForumsIconColor, srcForumsIconGrey, tags }: MeMenuNewViewLayoutForumsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="forums"
-            params={17}
+            tags={tags}
             onPointerTap={onForums}
             cursor="pointer"
             layout={{ position: 'absolute', left: 400, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="forums_icon_color"
-                params={16}
                 src={srcForumsIconColor ?? layoutImage('me_menu_me_forums.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -371,7 +351,6 @@ export const MeMenuNewViewLayoutForums = ({ captionFieldText, layout, onForums, 
             </Region>
             <ThemeImage
                 name="forums_icon_grey"
-                params={16}
                 src={srcForumsIconGrey ?? layoutImage('me_menu_me_forums.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -386,28 +365,27 @@ export interface MeMenuNewViewLayoutCollectiblesProps {
     onCollectibles?: () => void;
     srcCollectiblesIconColor?: string;
     srcCollectiblesIconGrey?: string;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCollectibles, srcCollectiblesIconColor, srcCollectiblesIconGrey }: MeMenuNewViewLayoutCollectiblesProps) => {
+export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCollectibles, srcCollectiblesIconColor, srcCollectiblesIconGrey, tags }: MeMenuNewViewLayoutCollectiblesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collectibles"
-            params={17}
+            tags={tags}
             onPointerTap={onCollectibles}
             cursor="pointer"
             layout={{ position: 'absolute', left: 468, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="collectibles_icon_color"
-                params={16}
                 src={srcCollectiblesIconColor ?? layoutImage('me_menu_me_cabinet.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -418,7 +396,6 @@ export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCo
             </Region>
             <ThemeImage
                 name="collectibles_icon_grey"
-                params={16}
                 src={srcCollectiblesIconGrey ?? layoutImage('me_menu_me_cabinet.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -429,13 +406,14 @@ export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCo
 /** Named region `spacer` of MeMenuNewViewLayout - configured through the parent's `spacer` prop. */
 export interface MeMenuNewViewLayoutSpacerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutSpacer = ({ layout }: MeMenuNewViewLayoutSpacerProps) => {
+export const MeMenuNewViewLayoutSpacer = ({ layout, tags }: MeMenuNewViewLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 536, width: 7, top: 2, height: 30, ...layout }}
         />
     );

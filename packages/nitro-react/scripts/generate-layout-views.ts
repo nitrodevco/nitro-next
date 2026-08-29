@@ -315,6 +315,8 @@ interface FileContext {
 
 interface EmitContext {
     file: FileContext;
+    /** Set while the root of an extracted sub-component is being emitted: its `tags` come from a prop, not the XML. */
+    rootTagsAsProp?: boolean;
     imports: Set<string>;
     usesTranslation: boolean;
     props: Map<string, string>;
@@ -371,7 +373,9 @@ const captionExpr = (ctx: EmitContext, raw: string | undefined): string | undefi
 };
 
 const uniqueProp = (ctx: EmitContext, base: string): string => {
-    const count = ctx.propCounts.get(base) ?? 0;
+    // `layout`/`tags` are set directly on `ctx.props` rather than through here - a region that
+    // happens to be named `tags` must not collide with them.
+    const count = ctx.propCounts.get(base) ?? (ctx.props.has(base) ? 1 : 0);
 
     ctx.propCounts.set(base, count + 1);
 
@@ -571,7 +575,13 @@ const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string
 
     if (el.attrs.name) props.push(`name=${jsxStr(el.attrs.name)}`);
 
-    if (el.attrs.tags) {
+    if (ctx.rootTagsAsProp) {
+        // The tags differ per page for a shared/extracted region (`RECOLORABLE_DARK` here, `#icon`
+        // there) - the caller passes them, so one component serves every use.
+        ctx.rootTagsAsProp = false;
+        ctx.props.set('tags', 'string[]');
+        props.push('tags={tags}');
+    } else if (el.attrs.tags) {
         const tags = decode(el.attrs.tags).split(',').map(tag => tag.trim()).filter(Boolean);
 
         if (tags.length) props.push(`tags={[ ${tags.map(quote).join(', ')} ]}`);
@@ -580,11 +590,17 @@ const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(`tooltip={${tooltip}}`);
-    if (el.params) props.push(`params={${el.params}}`);
     if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
     if (includeVisible && el.attrs.visible === 'false') props.push('visible={false}');
 
     return props;
+};
+
+/** The `tags` a caller hands to an extracted sub-component (whose root reads them from the `tags` prop). */
+const tagsProp = (el: Element): string[] => {
+    const tags = el.attrs.tags ? decode(el.attrs.tags).split(',').map(tag => tag.trim()).filter(Boolean) : [];
+
+    return tags.length ? [ `tags={[ ${tags.map(quote).join(', ')} ]}` ] : [];
 };
 
 const dropShadowProp = (el: Element): string[] => (el.dropShadow ? [ `dropShadow={${layoutLiteral({ ...el.dropShadow, color: el.dropShadow.color ? quote(el.dropShadow.color) : undefined })}}` ] : []);
@@ -796,7 +812,7 @@ const emitListChildren = (ctx: EmitContext, list: Element, parent: ParentBox, in
     ctx.imports.add('ReactNode');
 
     const templates = named.map(child => generateSubComponent(ctx.file, child, parent));
-    const fallback = templates.map(name => `${indent}${INDENT}<${name} />`);
+    const fallback = templates.map((name, index) => { const tags = tagsProp(named[index]); return tags.length ? `${indent}${INDENT}<${name} ${tags[0]} />` : `${indent}${INDENT}<${name} />`; });
     const rest = list.children.filter(child => !named.includes(child)).flatMap(child => emit(ctx, child, parent, indent));
 
     return [ `${indent}{${slot} ?? (`, ...(fallback.length === 1 ? fallback : [ `${indent}${INDENT}<>`, ...fallback.map(line => INDENT + line), `${indent}${INDENT}</>` ]), `${indent})}`, ...rest ];
@@ -951,11 +967,11 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
         file.imports.add('Region');
         file.imports.add('BoxLayout');
         file.subComponents.push([
-            `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout'> & { layout?: BoxLayout };`,
+            `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };`,
             '',
-            `export const ${draft} = ({ layout, ...widget }: ${draft}Props) => {`,
+            `export const ${draft} = ({ layout, tags, ...widget }: ${draft}Props) => {`,
             `${INDENT}return (`,
-            ...wrap('Region', [ ...metaProps(ctx, el, false), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
+            ...wrap('Region', [ ...(() => { ctx.rootTagsAsProp = true; return metaProps(ctx, el, false); })(), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
                 `${INDENT}${INDENT}${INDENT}<${wraps.componentName}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}{...widget}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}`,
@@ -1012,7 +1028,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         ctx.props.set(prop, `${token}Props`);
         ctx.file.sharedImports.add(token);
 
-        return [ `${indent}<${token}`, `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
+        return [ `${indent}<${token}`, ...tagsProp(el).map(tag => `${indent}${INDENT}${tag}`), `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
     }
 
     if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag])) {
@@ -1021,7 +1037,9 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
         ctx.props.set(prop, `${component}Props`);
 
-        return [ `${indent}<${component} {...${prop}} />` ];
+        const tags = tagsProp(el);
+
+        return tags.length ? [ `${indent}<${component}`, `${indent}${INDENT}${tags[0]}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ] : [ `${indent}<${component} {...${prop}} />` ];
     }
 
     if (SKIPPED_TAGS.has(tag)) return [ `${indent}{/* <${tag}> for ${el.vars.scrollable ?? '?'} - rendered by that list's ScrollArea */}` ];
@@ -1252,6 +1270,8 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox,
     ctx.props.set('layout', 'BoxLayout');
     ctx.imports.add('BoxLayout');
 
+    ctx.rootTagsAsProp = true;
+
     const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT, true);
     const doc = kind === 'item'
         ? `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`
@@ -1468,6 +1488,52 @@ const planned = sources.map((source) => {
 
     return { source, componentName, usage, folder: layoutFolder(usage) };
 });
+
+// Sub-group the flat library folders (`catalog`, `windowmanager`, `roomui`, ... - anything with
+// no driving-class package to split it): the hand-written window/skin templates go to
+// `templates/`, the catalog's `layout_*` page layouts to `pages/`, the widget layouts next to
+// the shared widgets, and whatever else shares a leading name token in 3+ layouts gets a folder
+// for it (`club_*` -> `club/`, `memenu_*` -> `memenu/`, `wired_*` -> `wired/`).
+const hasNamedParams = (node: XmlNode): boolean => node.tag === 'params' || node.children.some(hasNamedParams);
+const leadingToken = (base: string): string => {
+    const cleaned = base.replace(/^_+/, '');
+    const snake = /^([a-z0-9]+)_/i.exec(cleaned);
+
+    if (snake) return snake[1].toLowerCase();
+
+    const camel = /^([a-z]+)[A-Z]/.exec(cleaned);
+
+    return (camel ? camel[1] : cleaned).toLowerCase();
+};
+const flatFolders = new Map<string, typeof planned>();
+
+for (const entry of planned) if (!entry.folder.includes('/') && entry.folder !== 'unassigned') (flatFolders.get(entry.folder) ?? flatFolders.set(entry.folder, []).get(entry.folder)!).push(entry);
+
+for (const [ folder, entries ] of flatFolders) {
+    if (entries.length < 20) continue;
+
+    const tokenCounts = new Map<string, number>();
+
+    for (const entry of entries) tokenCounts.set(leadingToken(entry.source.base), (tokenCounts.get(leadingToken(entry.source.base)) ?? 0) + 1);
+
+    // Leading tokens too generic to name a folder after.
+    const stopTokens = new Set([ 'habbo', 'new', 'main', 'use', 'catalog', 'layout', 'illumina', 'default', 'simple' ]);
+    // Package-tail folders that already exist under this library (`catalog/targetedoffers`,
+    // `toolbar/memenu`) absorb the token that abbreviates them (`targeted_*`, `me_menu_*`).
+    const existing = [ ...new Set(planned.map(entry => entry.folder).filter(other => other.startsWith(`${folder}/`)).map(other => other.split('/')[1])) ];
+
+    for (const entry of entries) {
+        const base = entry.source.base;
+        const token = leadingToken(base);
+        const merged = existing.find(name => name.startsWith(token) && name !== token);
+
+        if (folder === 'catalog' && CATALOG_WIDGET_IDS.has(base)) entry.folder = WIDGETS_FOLDER;
+        else if (folder === 'catalog' && /^layout_/i.test(base)) entry.folder = 'catalog/pages';
+        else if (hasNamedParams(entry.source.root)) entry.folder = `${folder}/templates`;
+        else if (merged && (tokenCounts.get(token) ?? 0) >= 2) entry.folder = `${folder}/${merged}`;
+        else if (!stopTokens.has(token) && (tokenCounts.get(token) ?? 0) >= 3) entry.folder = `${folder}/${token}`;
+    }
+}
 
 for (const { source, componentName, folder } of planned) if (!layoutByBase.has(source.base)) layoutByBase.set(source.base, { componentName, folder });
 

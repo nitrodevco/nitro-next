@@ -11,7 +11,6 @@ export const StaticBitmapViewLayout = ({ layout, srcStaticBitmap }: StaticBitmap
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <ThemeImage
                 name="static_bitmap"
-                params={16}
                 src={srcStaticBitmap}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />

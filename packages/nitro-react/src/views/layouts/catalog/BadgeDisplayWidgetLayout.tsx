@@ -20,30 +20,29 @@ export interface BadgeDisplayWidgetLayoutContainerProps {
     layout?: BoxLayout;
     srcAssetImage?: string;
     srcChatStyle?: string;
+    tags?: string[];
 }
 
-export const BadgeDisplayWidgetLayoutContainer = ({ layout, srcAssetImage, srcChatStyle }: BadgeDisplayWidgetLayoutContainerProps) => {
+export const BadgeDisplayWidgetLayoutContainer = ({ layout, srcAssetImage, srcChatStyle, tags }: BadgeDisplayWidgetLayoutContainerProps) => {
     return (
         <Region
             name="container"
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42, ...layout }}
         >
             <ThemeImage
                 name="asset_image"
-                params={16}
                 src={srcAssetImage ?? layoutImage('catalogue_badge_background.png')}
                 layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
             />
             <WidgetSlot
                 widgetType="badge_image"
                 name="badge_image"
-                params={2192}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="chat_style"
-                params={2192}
                 src={srcChatStyle}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />

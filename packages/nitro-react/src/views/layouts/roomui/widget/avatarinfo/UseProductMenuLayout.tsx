@@ -14,7 +14,6 @@ export const UseProductMenuLayout = ({ border, layout }: UseProductMenuLayoutPro
         <Region layout={{ position: 'relative', width: 115, height: 302, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -9, height: 302 }}
             >
@@ -29,20 +28,20 @@ export interface UseProductMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: UseProductMenuLayoutProfileLinkProps) => {
+export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: UseProductMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={1}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,30 +59,28 @@ export interface UseProductMenuLayoutUseProductItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutUseProductItemProps) => {
+export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -102,30 +99,28 @@ export interface UseProductMenuLayoutUseProductShampooItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutUseProductShampooItemProps) => {
+export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductShampooItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_shampoo"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -144,30 +139,28 @@ export interface UseProductMenuLayoutUseProductCustomPartItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutUseProductCustomPartItemProps) => {
+export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductCustomPartItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_custom_part"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -186,30 +179,28 @@ export interface UseProductMenuLayoutUseProductCustomPartShampooItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutUseProductCustomPartShampooItemProps) => {
+export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductCustomPartShampooItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_custom_part_shampoo"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -228,30 +219,28 @@ export interface UseProductMenuLayoutUseProductSaddleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutUseProductSaddleItemProps) => {
+export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductSaddleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_saddle"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -270,30 +259,28 @@ export interface UseProductMenuLayoutReplaceProductSaddleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutReplaceProductSaddleItemProps) => {
+export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutReplaceProductSaddleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="replace_product_saddle"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -312,30 +299,28 @@ export interface UseProductMenuLayoutReviveMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutReviveMonsterplantItemProps) => {
+export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutReviveMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="revive_monsterplant"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -354,30 +339,28 @@ export interface UseProductMenuLayoutRebreedMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutRebreedMonsterplantItemProps) => {
+export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutRebreedMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rebreed_monsterplant"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -396,30 +379,28 @@ export interface UseProductMenuLayoutFertilizeMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, layout, onButton }: UseProductMenuLayoutFertilizeMonsterplantItemProps) => {
+export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutFertilizeMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="fertilize_monsterplant"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -437,26 +418,27 @@ export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, la
 export interface UseProductMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutButtons = ({ itemsButtons, layout }: UseProductMenuLayoutButtonsProps) => {
+export const UseProductMenuLayoutButtons = ({ itemsButtons, layout, tags }: UseProductMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519888}
+            tags={tags}
             layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <UseProductMenuLayoutUseProductItem />
-                    <UseProductMenuLayoutUseProductShampooItem />
-                    <UseProductMenuLayoutUseProductCustomPartItem />
-                    <UseProductMenuLayoutUseProductCustomPartShampooItem />
-                    <UseProductMenuLayoutUseProductSaddleItem />
-                    <UseProductMenuLayoutReplaceProductSaddleItem />
-                    <UseProductMenuLayoutReviveMonsterplantItem />
-                    <UseProductMenuLayoutRebreedMonsterplantItem />
-                    <UseProductMenuLayoutFertilizeMonsterplantItem />
+                    <UseProductMenuLayoutUseProductItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutUseProductShampooItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutUseProductCustomPartItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutUseProductCustomPartShampooItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutUseProductSaddleItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutReplaceProductSaddleItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutReviveMonsterplantItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutRebreedMonsterplantItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutFertilizeMonsterplantItem tags={[ 'action' ]} />
                 </>
             )}
         </Region>
@@ -467,13 +449,14 @@ export const UseProductMenuLayoutButtons = ({ itemsButtons, layout }: UseProduct
 export interface UseProductMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutMinimize = ({ layout, onMinimize }: UseProductMenuLayoutMinimizeProps) => {
+export const UseProductMenuLayoutMinimize = ({ layout, onMinimize, tags }: UseProductMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1041}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18, ...layout }}
@@ -481,7 +464,6 @@ export const UseProductMenuLayoutMinimize = ({ layout, onMinimize }: UseProductM
             <Icon
                 variant="7"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
             />
         </Region>
@@ -494,18 +476,18 @@ export interface UseProductMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: UseProductMenuLayoutMinimizeProps;
     profileLink?: UseProductMenuLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: UseProductMenuLayoutBorderProps) => {
+export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: UseProductMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center', ...layout }}
         >
             <UseProductMenuLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

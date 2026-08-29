@@ -14,7 +14,6 @@ export const GuildFurniMenuLayout = ({ border, layout }: GuildFurniMenuLayoutPro
         <Region layout={{ position: 'relative', width: 115, height: 140, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 140 }}
             >
@@ -29,20 +28,20 @@ export interface GuildFurniMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: GuildFurniMenuLayoutProfileLinkProps) => {
+export const GuildFurniMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: GuildFurniMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={17}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,30 +59,28 @@ export interface GuildFurniMenuLayoutJoinItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutJoinItem = ({ captionLabel, layout, onButton }: GuildFurniMenuLayoutJoinItemProps) => {
+export const GuildFurniMenuLayoutJoinItem = ({ captionLabel, layout, onButton, tags }: GuildFurniMenuLayoutJoinItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="join"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -102,30 +99,28 @@ export interface GuildFurniMenuLayoutHomeRoomItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutHomeRoomItem = ({ captionLabel, layout, onButton }: GuildFurniMenuLayoutHomeRoomItemProps) => {
+export const GuildFurniMenuLayoutHomeRoomItem = ({ captionLabel, layout, onButton, tags }: GuildFurniMenuLayoutHomeRoomItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="home_room"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -144,30 +139,28 @@ export interface GuildFurniMenuLayoutOpenForumItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutOpenForumItem = ({ captionLabel, layout, onButton }: GuildFurniMenuLayoutOpenForumItemProps) => {
+export const GuildFurniMenuLayoutOpenForumItem = ({ captionLabel, layout, onButton, tags }: GuildFurniMenuLayoutOpenForumItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="open_forum"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -185,20 +178,21 @@ export const GuildFurniMenuLayoutOpenForumItem = ({ captionLabel, layout, onButt
 export interface GuildFurniMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutButtons = ({ itemsButtons, layout }: GuildFurniMenuLayoutButtonsProps) => {
+export const GuildFurniMenuLayoutButtons = ({ itemsButtons, layout, tags }: GuildFurniMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519888}
+            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 80, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <GuildFurniMenuLayoutJoinItem />
-                    <GuildFurniMenuLayoutHomeRoomItem />
-                    <GuildFurniMenuLayoutOpenForumItem />
+                    <GuildFurniMenuLayoutJoinItem tags={[ 'action' ]} />
+                    <GuildFurniMenuLayoutHomeRoomItem tags={[ 'action' ]} />
+                    <GuildFurniMenuLayoutOpenForumItem tags={[ 'action' ]} />
                 </>
             )}
         </Region>
@@ -209,13 +203,14 @@ export const GuildFurniMenuLayoutButtons = ({ itemsButtons, layout }: GuildFurni
 export interface GuildFurniMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutMinimize = ({ layout, onMinimize }: GuildFurniMenuLayoutMinimizeProps) => {
+export const GuildFurniMenuLayoutMinimize = ({ layout, onMinimize, tags }: GuildFurniMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1041}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
@@ -223,7 +218,6 @@ export const GuildFurniMenuLayoutMinimize = ({ layout, onMinimize }: GuildFurniM
             <Icon
                 variant="7"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
             />
         </Region>
@@ -236,18 +230,18 @@ export interface GuildFurniMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: GuildFurniMenuLayoutMinimizeProps;
     profileLink?: GuildFurniMenuLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const GuildFurniMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: GuildFurniMenuLayoutBorderProps) => {
+export const GuildFurniMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: GuildFurniMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 130, justifyContent: 'center', ...layout }}
         >
             <GuildFurniMenuLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

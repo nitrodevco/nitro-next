@@ -8,13 +8,14 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `bundlePurchaseExtraInfoWidget` of BundlePurchaseExtraInfoWidget - configured through the parent's `bundlePurchaseExtraInfoWidget` prop. */
 export interface BundlePurchaseExtraInfoWidgetProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BundlePurchaseExtraInfoWidget = ({ layout }: BundlePurchaseExtraInfoWidgetProps) => {
+export const BundlePurchaseExtraInfoWidget = ({ layout, tags }: BundlePurchaseExtraInfoWidgetProps) => {
     return (
         <Region
             name="bundlePurchaseExtraInfoWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

@@ -15,8 +15,14 @@ export const RoomtoolsLayout = ({ layout, roominfoRegion, zoomRegion }: Roomtool
     return (
         <Region layout={{ position: 'relative', width: 192, height: 32, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 32 }}>
-                <RoomtoolsLayoutZoomRegion {...zoomRegion} />
-                <RoomtoolsLayoutRoominfoRegion {...roominfoRegion} />
+                <RoomtoolsLayoutZoomRegion
+                    tags={[ 'REGION' ]}
+                    {...zoomRegion}
+                />
+                <RoomtoolsLayoutRoominfoRegion
+                    tags={[ 'REGION' ]}
+                    {...roominfoRegion}
+                />
             </Region>
         </Region>
     );
@@ -28,17 +34,17 @@ export interface RoomtoolsLayoutZoomRegionProps {
     onZoomRegion?: () => void;
     srcIconZoomOff?: string;
     srcIconZoomOver?: string;
+    tags?: string[];
 }
 
-export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff, srcIconZoomOver }: RoomtoolsLayoutZoomRegionProps) => {
+export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff, srcIconZoomOver, tags }: RoomtoolsLayoutZoomRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="zoom_region"
-            tags={[ 'REGION' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.tooltip.zoom')}
-            params={17}
             onPointerTap={onZoomRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 29, top: 2, height: 29, ...layout }}
@@ -46,20 +52,17 @@ export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff
             <Border
                 variant="6"
                 tags={[ 'BGCOLOR' ]}
-                params={16}
                 tintColor="#55534e"
                 layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
                 />
                 <ThemeImage
                     name="icon_zoom_off"
-                    params={16}
                     src={srcIconZoomOff ?? '${image.library.url}album3726/icon_zoom_off.png'}
                     layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
                 />
@@ -69,7 +72,6 @@ export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff
                 >
                     <ThemeImage
                         name="icon_zoom_over"
-                        params={16}
                         src={srcIconZoomOver ?? '${image.library.url}album3726/icon_zoom_over.png'}
                         layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
                     />
@@ -83,16 +85,16 @@ export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff
 export interface RoomtoolsLayoutRoominfoTextItemProps {
     captionRoominfoText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomtoolsLayoutRoominfoTextItem = ({ captionRoominfoText, layout }: RoomtoolsLayoutRoominfoTextItemProps) => {
+export const RoomtoolsLayoutRoominfoTextItem = ({ captionRoominfoText, layout, tags }: RoomtoolsLayoutRoominfoTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="roominfo_text"
-            tags={[ 'TEXT' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 175, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -108,14 +110,14 @@ export const RoomtoolsLayoutRoominfoTextItem = ({ captionRoominfoText, layout }:
 export interface RoomtoolsLayoutRoominfoNameItemProps {
     captionRoominfoName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout }: RoomtoolsLayoutRoominfoNameItemProps) => {
+export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout, tags }: RoomtoolsLayoutRoominfoNameItemProps) => {
     return (
         <Region
             name="roominfo_name"
-            tags={[ 'TEXT' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 12, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -130,19 +132,20 @@ export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout }:
 export interface RoomtoolsLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomtoolsLayoutList = ({ itemsList, layout }: RoomtoolsLayoutListProps) => {
+export const RoomtoolsLayoutList = ({ itemsList, layout, tags }: RoomtoolsLayoutListProps) => {
     return (
         <Region
             name="list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 114, top: 5, height: 17, flexDirection: 'row', gap: 2, ...layout }}
         >
             {itemsList ?? (
                 <>
-                    <RoomtoolsLayoutRoominfoTextItem />
-                    <RoomtoolsLayoutRoominfoNameItem />
+                    <RoomtoolsLayoutRoominfoTextItem tags={[ 'TEXT' ]} />
+                    <RoomtoolsLayoutRoominfoNameItem tags={[ 'TEXT' ]} />
                 </>
             )}
         </Region>
@@ -155,14 +158,14 @@ export interface RoomtoolsLayoutRoominfoRegionProps {
     list?: RoomtoolsLayoutListProps;
     onRoominfoRegion?: () => void;
     srcIconZoomOff?: string;
+    tags?: string[];
 }
 
-export const RoomtoolsLayoutRoominfoRegion = ({ layout, list, onRoominfoRegion, srcIconZoomOff }: RoomtoolsLayoutRoominfoRegionProps) => {
+export const RoomtoolsLayoutRoominfoRegion = ({ layout, list, onRoominfoRegion, srcIconZoomOff, tags }: RoomtoolsLayoutRoominfoRegionProps) => {
     return (
         <Region
             name="roominfo_region"
-            tags={[ 'REGION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onRoominfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 31, width: 161, top: 2, height: 29, ...layout }}
@@ -170,13 +173,11 @@ export const RoomtoolsLayoutRoominfoRegion = ({ layout, list, onRoominfoRegion, 
             <Border
                 variant="6"
                 tags={[ 'BGCOLOR' ]}
-                params={16}
                 tintColor="#55534e"
                 layout={{ position: 'absolute', left: 0, width: 161, top: 0, height: 29 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ position: 'absolute', left: 3, width: 155, top: 3, height: 22 }}
@@ -185,20 +186,17 @@ export const RoomtoolsLayoutRoominfoRegion = ({ layout, list, onRoominfoRegion, 
             </Border>
             <Border
                 variant="6"
-                params={16}
                 tintColor="#55534e"
                 layout={{ position: 'absolute', left: 132, width: 29, top: 0, height: 29 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
                 />
                 <ThemeImage
                     name="icon_zoom_off"
-                    params={16}
                     src={srcIconZoomOff ?? layoutImage('toolbar_room_icon_0.png')}
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                 />

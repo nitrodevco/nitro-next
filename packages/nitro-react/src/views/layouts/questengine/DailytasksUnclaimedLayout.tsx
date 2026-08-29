@@ -18,7 +18,6 @@ export const DailytasksUnclaimedLayout = ({ layout, mainCont, onClose }: Dailyta
             variant="3"
             id="dailytasks_frame"
             name="dailytasks_frame"
-            params={1073774593}
             caption={t('dailytasks.unclaimed')}
             tintColor="#418db0"
             onClose={onClose}
@@ -34,13 +33,14 @@ export const DailytasksUnclaimedLayout = ({ layout, mainCont, onClose }: Dailyta
 /** Row template `spacing` of DailytasksUnclaimedLayout - pass real rows through its `items…` slot. */
 export interface DailytasksUnclaimedLayoutSpacingItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksUnclaimedLayoutSpacingItem = ({ layout }: DailytasksUnclaimedLayoutSpacingItemProps) => {
+export const DailytasksUnclaimedLayoutSpacingItem = ({ layout, tags }: DailytasksUnclaimedLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 452, height: 6, flexShrink: 0, ...layout }}
         />
     );
@@ -49,9 +49,10 @@ export const DailytasksUnclaimedLayoutSpacingItem = ({ layout }: DailytasksUncla
 /** Row template `tasks_list` of DailytasksUnclaimedLayout - pass real rows through its `items…` slot. */
 export interface DailytasksUnclaimedLayoutTasksListItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksUnclaimedLayoutTasksListItem = ({ layout }: DailytasksUnclaimedLayoutTasksListItemProps) => {
+export const DailytasksUnclaimedLayoutTasksListItem = ({ layout, tags }: DailytasksUnclaimedLayoutTasksListItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -59,7 +60,7 @@ export const DailytasksUnclaimedLayoutTasksListItem = ({ layout }: DailytasksUnc
         >
             <Region
                 name="tasks_list"
-                params={144}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 8, width: '100%' }}
             />
         </ScrollArea>
@@ -70,13 +71,14 @@ export const DailytasksUnclaimedLayoutTasksListItem = ({ layout }: DailytasksUnc
 export interface DailytasksUnclaimedLayoutMainContProps {
     itemsMainCont?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksUnclaimedLayoutMainCont = ({ itemsMainCont, layout }: DailytasksUnclaimedLayoutMainContProps) => {
+export const DailytasksUnclaimedLayoutMainCont = ({ itemsMainCont, layout, tags }: DailytasksUnclaimedLayoutMainContProps) => {
     return (
         <Region
             name="main_cont"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsMainCont ?? (

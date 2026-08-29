@@ -22,50 +22,37 @@ export const MysteryBoxToolbarExtensionLayout = ({ boxRegion, captionFaqLink, ke
         <Region layout={{ position: 'relative', width: 192, height: 137, ...layout }}>
             <Border
                 variant="6"
-                params={16}
                 tintColor="#676767"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 137 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 130, justifyContent: 'center' }}
                 >
                     <Region
-                        params={16}
                         backgroundColor="#676767"
                         layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 20 }}
                     />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 1, width: 150, top: 3, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 1, width: 150, top: 3, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('mysterybox.tracker.title')}
                             textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 6, width: 174, top: 27, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 6, width: 174, top: 27, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('mysterybox.tracker.description')}
                             textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
                         />
                     </Region>
-                    <Region
-                        params={147664}
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 89, top: 72, height: 39 }}
-                    >
+                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 89, top: 72, height: 39 }}>
                         <MysteryBoxToolbarExtensionLayoutBoxRegion {...boxRegion} />
                         <MysteryBoxToolbarExtensionLayoutKeyRegion {...keyRegion} />
                     </Region>
                     <Region
                         name="faq_link"
-                        params={193}
                         layout={{ position: 'absolute', width: 138, top: 112, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         onPointerTap={onFaqLink}
                         cursor="pointer"
@@ -85,7 +72,6 @@ export const MysteryBoxToolbarExtensionLayout = ({ boxRegion, captionFaqLink, ke
                 >
                     <ThemeImage
                         name="small_box"
-                        params={16}
                         src={srcSmallBox ?? layoutImage('mysterybox_box_small.png')}
                         tint="#ff0000"
                         layout={{ position: 'absolute', left: 124, width: 19, top: 2, height: 20 }}
@@ -97,7 +83,6 @@ export const MysteryBoxToolbarExtensionLayout = ({ boxRegion, captionFaqLink, ke
                 >
                     <ThemeImage
                         name="small_key"
-                        params={16}
                         src={srcSmallKey ?? layoutImage('mysterybox_key_small.png')}
                         tint="#ff0000"
                         layout={{ position: 'absolute', left: 144, width: 20, top: 3, height: 19 }}
@@ -114,32 +99,30 @@ export interface MysteryBoxToolbarExtensionLayoutBoxRegionProps {
     onBoxRegion?: () => void;
     srcBoxColour?: string;
     srcBoxOverlay?: string;
+    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutBoxRegion = ({ layout, onBoxRegion, srcBoxColour, srcBoxOverlay }: MysteryBoxToolbarExtensionLayoutBoxRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutBoxRegion = ({ layout, onBoxRegion, srcBoxColour, srcBoxOverlay, tags }: MysteryBoxToolbarExtensionLayoutBoxRegionProps) => {
     return (
         <Region
             name="box_region"
-            params={17}
+            tags={tags}
             onPointerTap={onBoxRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('mysterybox_tracker_border.png')}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
             <ThemeImage
                 name="box_colour"
-                params={16}
                 src={srcBoxColour ?? layoutImage('mysterybox_box_base.png')}
                 tint="#ff0000"
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
             <ThemeImage
                 name="box_overlay"
-                params={16}
                 src={srcBoxOverlay ?? layoutImage('mysterybox_box_overlay.png')}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
@@ -153,32 +136,30 @@ export interface MysteryBoxToolbarExtensionLayoutKeyRegionProps {
     onKeyRegion?: () => void;
     srcKeyColour?: string;
     srcKeyOverlay?: string;
+    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion, srcKeyColour, srcKeyOverlay }: MysteryBoxToolbarExtensionLayoutKeyRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion, srcKeyColour, srcKeyOverlay, tags }: MysteryBoxToolbarExtensionLayoutKeyRegionProps) => {
     return (
         <Region
             name="key_region"
-            params={17}
+            tags={tags}
             onPointerTap={onKeyRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 50, width: 39, top: 0, height: 39, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('mysterybox_tracker_border.png')}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
             <ThemeImage
                 name="key_colour"
-                params={16}
                 src={srcKeyColour ?? layoutImage('mysterybox_key_base.png')}
                 tint="#ff0000"
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
             <ThemeImage
                 name="key_overlay"
-                params={16}
                 src={srcKeyOverlay ?? layoutImage('mysterybox_key_overlay.png')}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
@@ -190,19 +171,19 @@ export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion,
 export interface MysteryBoxToolbarExtensionLayoutMinimizeRegionProps {
     layout?: BoxLayout;
     onMinimizeRegion?: () => void;
+    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinimizeRegion }: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinimizeRegion, tags }: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps) => {
     return (
         <Region
             name="minimize_region"
-            params={17}
+            tags={tags}
             onPointerTap={onMinimizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_minimize_unetched.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
             />
@@ -214,21 +195,21 @@ export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinim
 export interface MysteryBoxToolbarExtensionLayoutMaximizeRegionProps {
     layout?: BoxLayout;
     onMaximizeRegion?: () => void;
+    tags?: string[];
     visibleMaximizeRegion?: boolean;
 }
 
-export const MysteryBoxToolbarExtensionLayoutMaximizeRegion = ({ layout, onMaximizeRegion, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutMaximizeRegion = ({ layout, onMaximizeRegion, tags, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps) => {
     return (
         <Region
             name="maximize_region"
-            params={17}
+            tags={tags}
             visible={visibleMaximizeRegion ?? false}
             onPointerTap={onMaximizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_maximize_unetched.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
             />

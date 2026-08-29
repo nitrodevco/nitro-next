@@ -20,7 +20,6 @@ export const VariablesManagementDetailLayout = ({ header, infoBox, layout, onClo
             variant="3"
             id="variablemanagement_detail"
             name="variablemanagement_detail"
-            params={98305}
             caption={t('wiredmenu.variable_management_detail.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -40,26 +39,25 @@ export interface VariablesManagementDetailLayoutHeaderProps {
     captionInfoText?: string;
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
+    tags?: string[];
     visibleSearchingIcon?: boolean;
 }
 
-export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout, onRefreshBtn, visibleSearchingIcon }: VariablesManagementDetailLayoutHeaderProps) => {
+export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout, onRefreshBtn, tags, visibleSearchingIcon }: VariablesManagementDetailLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 7, height: 57, ...layout }}
         >
             <Border
                 variant="4"
-                params={2064}
                 layout={{ position: 'absolute', left: 0, width: 228, top: 0, bottom: 0 }}
             >
                 <Region
                     name="info_text"
-                    params={2185}
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 6, minWidth: 218, maxWidth: 218, minHeight: 46, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -71,7 +69,6 @@ export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout,
             <Button
                 variant="3"
                 name="refresh_btn"
-                params={393297}
                 onPointerTap={onRefreshBtn}
                 layout={{ position: 'absolute', right: 0, width: 62, top: 13, height: 30 }}
             >
@@ -95,14 +92,15 @@ export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout,
 export interface VariablesManagementDetailLayoutAvatarPreviewRegionProps {
     layout?: BoxLayout;
     onAvatarPreviewRegion?: () => void;
+    tags?: string[];
     visibleAvatarPreviewRegion?: boolean;
 }
 
-export const VariablesManagementDetailLayoutAvatarPreviewRegion = ({ layout, onAvatarPreviewRegion, visibleAvatarPreviewRegion }: VariablesManagementDetailLayoutAvatarPreviewRegionProps) => {
+export const VariablesManagementDetailLayoutAvatarPreviewRegion = ({ layout, onAvatarPreviewRegion, tags, visibleAvatarPreviewRegion }: VariablesManagementDetailLayoutAvatarPreviewRegionProps) => {
     return (
         <Region
             name="avatar_preview_region"
-            params={17}
+            tags={tags}
             visible={visibleAvatarPreviewRegion ?? false}
             onPointerTap={onAvatarPreviewRegion}
             cursor="pointer"
@@ -116,21 +114,21 @@ export interface VariablesManagementDetailLayoutInfoBoxProps {
     avatarPreviewRegion?: VariablesManagementDetailLayoutAvatarPreviewRegionProps;
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, captionTitle, layout }: VariablesManagementDetailLayoutInfoBoxProps) => {
+export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, captionTitle, layout, tags }: VariablesManagementDetailLayoutInfoBoxProps) => {
     const t = useTranslation();
     const [ infoBoxTextValue, setInfoBoxTextValue ] = useState('');
 
     return (
         <Region
             name="info_box"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 73, height: 114, ...layout }}
         >
             <Region
                 name="title"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTitle ?? t('wiredmenu.variable_management_detail.holder_info')} />
@@ -138,7 +136,6 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, ca
             <Border
                 variant="2"
                 name="preview"
-                params={16}
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 0, width: 94, top: 20, height: 94, justifyContent: 'center' }}
             >
@@ -146,7 +143,6 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, ca
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_preview"
-                    params={3932176}
                     visible={false}
                     options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                     layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 33, alignSelf: 'center', height: 34 }}
@@ -154,14 +150,12 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, ca
                 <WidgetSlot
                     widgetType="pet_image"
                     name="pet_preview"
-                    params={273}
                     visible={false}
                     layout={{ position: 'absolute', left: 0, width: 94, top: 0, height: 94 }}
                 />
             </Border>
             <Border
                 variant="10"
-                params={16}
                 layout={{ position: 'absolute', left: 109, width: 194, top: 20, height: 94 }}
             >
                 <TextInput
@@ -178,13 +172,14 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, ca
 /** Named region `variable_values_table_container` of VariablesManagementDetailLayout - configured through the parent's `variableValuesTableContainer` prop. */
 export interface VariablesManagementDetailLayoutVariableValuesTableContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ layout }: VariablesManagementDetailLayoutVariableValuesTableContainerProps) => {
+export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ layout, tags }: VariablesManagementDetailLayoutVariableValuesTableContainerProps) => {
     return (
         <Region
             name="variable_values_table_container"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34, ...layout }}
         />
     );
@@ -193,13 +188,14 @@ export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ la
 /** Named region `var_picker_container` of VariablesManagementDetailLayout - configured through the parent's `varPickerContainer` prop. */
 export interface VariablesManagementDetailLayoutVarPickerContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout }: VariablesManagementDetailLayoutVarPickerContainerProps) => {
+export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout, tags }: VariablesManagementDetailLayoutVarPickerContainerProps) => {
     return (
         <Region
             name="var_picker_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22, ...layout }}
         />
     );
@@ -208,22 +204,20 @@ export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout }: Va
 /** Named region `variable_setting` of VariablesManagementDetailLayout - configured through the parent's `variableSetting` prop. */
 export interface VariablesManagementDetailLayoutVariableSettingProps {
     layout?: BoxLayout;
+    tags?: string[];
     varPickerContainer?: VariablesManagementDetailLayoutVarPickerContainerProps;
 }
 
-export const VariablesManagementDetailLayoutVariableSetting = ({ layout, varPickerContainer }: VariablesManagementDetailLayoutVariableSettingProps) => {
+export const VariablesManagementDetailLayoutVariableSetting = ({ layout, tags, varPickerContainer }: VariablesManagementDetailLayoutVariableSettingProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_setting"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.inspection.select_variable')} />
             </Region>
             <VariablesManagementDetailLayoutVarPickerContainer {...varPickerContainer} />
@@ -234,28 +228,25 @@ export const VariablesManagementDetailLayoutVariableSetting = ({ layout, varPick
 /** Named region `value_setting` of VariablesManagementDetailLayout - configured through the parent's `valueSetting` prop. */
 export interface VariablesManagementDetailLayoutValueSettingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutValueSetting = ({ layout }: VariablesManagementDetailLayoutValueSettingProps) => {
+export const VariablesManagementDetailLayoutValueSetting = ({ layout, tags }: VariablesManagementDetailLayoutValueSettingProps) => {
     const t = useTranslation();
     const [ valueInputValue, setValueInputValue ] = useState('');
 
     return (
         <Region
             name="value_setting"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.inspection.select_value')} />
             </Region>
             <Border
                 variant="4"
                 name="value_input_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 80, top: 20, height: 22 }}
             >
                 <TextInput
@@ -275,37 +266,33 @@ export interface VariablesManagementDetailLayoutVariableValuesContainerProps {
     onAddVarBtn?: () => void;
     onCreateVarBtn?: () => void;
     onDeleteVarBtn?: () => void;
+    tags?: string[];
     valueSetting?: VariablesManagementDetailLayoutValueSettingProps;
     variableSetting?: VariablesManagementDetailLayoutVariableSettingProps;
     variableValuesTableContainer?: VariablesManagementDetailLayoutVariableValuesTableContainerProps;
     visibleCreateVarBubble?: boolean;
 }
 
-export const VariablesManagementDetailLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: VariablesManagementDetailLayoutVariableValuesContainerProps) => {
+export const VariablesManagementDetailLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, tags, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: VariablesManagementDetailLayoutVariableValuesContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_values_container"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 51, ...layout }}
         >
             <Region
                 name="title"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTitle ?? t('wiredmenu.variable_management_detail.variables')} />
             </Region>
             <VariablesManagementDetailLayoutVariableValuesTableContainer {...variableValuesTableContainer} />
-            <Region
-                params={1168}
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: -5, height: 30, flexDirection: 'row', gap: 13 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: -5, height: 30, flexDirection: 'row', gap: 13 }}>
                 <Button
                     variant="3"
                     name="delete_var_btn"
-                    params={131089}
                     onPointerTap={onDeleteVarBtn}
                     layout={{ width: 145, height: 25, flexShrink: 0, minWidth: 145, maxWidth: 145 }}
                 >
@@ -314,7 +301,6 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                 <Button
                     variant="3"
                     name="add_var_btn"
-                    params={131089}
                     onPointerTap={onAddVarBtn}
                     layout={{ width: 145, height: 25, flexShrink: 0, minWidth: 145, maxWidth: 145 }}
                 >
@@ -328,7 +314,6 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                 <Bubble
                     variant="7"
                     name="create_var_bubble"
-                    params={1}
                     layout={{ width: '100%', height: '100%' }}
                 >
                     <VariablesManagementDetailLayoutVariableSetting {...variableSetting} />
@@ -336,7 +321,6 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                     <Button
                         variant="3"
                         name="create_var_btn"
-                        params={132241}
                         onPointerTap={onCreateVarBtn}
                         layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
                     >

@@ -19,7 +19,6 @@ export const VaultViewLayout = ({ earningsContentArea, layout, onClose }: VaultV
             variant="3"
             id="VaultBase"
             name="VaultBase"
-            params={32769}
             caption={t('earnings.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -40,34 +39,32 @@ export interface VaultViewLayoutDailygiftContainerItemProps {
     layout?: BoxLayout;
     onDailygiftClaimButton?: () => void;
     srcDailygiftBitmap?: string;
+    tags?: string[];
     visibleCreditIcon?: boolean;
 }
 
-export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, visibleCreditIcon }: VaultViewLayoutDailygiftContainerItemProps) => {
+export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, tags, visibleCreditIcon }: VaultViewLayoutDailygiftContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dailygift_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="dailygift_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
                 <Icon
                     variant="32"
                     name="ducketIcon"
-                    params={147472}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="dailygiftDucketValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -82,13 +79,11 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        params={16}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="dailygiftCreditValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -101,19 +96,16 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
             <Border
                 variant="5"
                 name="dailygift_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="dailygift_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcDailygiftBitmap ?? layoutImage('vault_earnings_icon_dailygift.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="dailygift_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -125,7 +117,6 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
             <Button
                 variant="3"
                 name="dailygift_claim_button"
-                params={131089}
                 onPointerTap={onDailygiftClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -143,22 +134,22 @@ export interface VaultViewLayoutGamesContainerItemProps {
     layout?: BoxLayout;
     onGamesClaimButton?: () => void;
     srcGamesBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, visibleDucketIcon }: VaultViewLayoutGamesContainerItemProps) => {
+export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, tags, visibleDucketIcon }: VaultViewLayoutGamesContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="games_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="games_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -169,13 +160,11 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="gamesDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -187,12 +176,10 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="gamesCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -204,19 +191,16 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
             <Border
                 variant="5"
                 name="games_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="games_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcGamesBitmap ?? layoutImage('vault_earnings_icon_games.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="games_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -228,7 +212,6 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
             <Button
                 variant="3"
                 name="games_claim_button"
-                params={131089}
                 onPointerTap={onGamesClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -246,22 +229,22 @@ export interface VaultViewLayoutWiredchestContainerItemProps {
     layout?: BoxLayout;
     onWiredchestClaimButton?: () => void;
     srcWiredchestBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, visibleDucketIcon }: VaultViewLayoutWiredchestContainerItemProps) => {
+export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, tags, visibleDucketIcon }: VaultViewLayoutWiredchestContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wiredchest_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="wiredchest_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -272,13 +255,11 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="wiredchestDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -290,12 +271,10 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="wiredchestCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -307,19 +286,16 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
             <Border
                 variant="5"
                 name="wiredchest_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="wiredchest_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcWiredchestBitmap ?? layoutImage('vault_earnings_icon_chests.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 2, height: 32 }}
                 />
                 <Region
                     name="wiredchest_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -331,7 +307,6 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
             <Button
                 variant="3"
                 name="wiredchest_claim_button"
-                params={131089}
                 onPointerTap={onWiredchestClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -349,33 +324,31 @@ export interface VaultViewLayoutAchievementsContainerItemProps {
     layout?: BoxLayout;
     onAchievementsClaimButton?: () => void;
     srcAchievementsBitmap?: string;
+    tags?: string[];
 }
 
-export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCreditValue, captionAchievementsDucketValue, captionAchievementsLabel, layout, onAchievementsClaimButton, srcAchievementsBitmap }: VaultViewLayoutAchievementsContainerItemProps) => {
+export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCreditValue, captionAchievementsDucketValue, captionAchievementsLabel, layout, onAchievementsClaimButton, srcAchievementsBitmap, tags }: VaultViewLayoutAchievementsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="achievements_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
                 <Icon
                     variant="32"
                     name="ducketIcon"
-                    params={147472}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="achievementsDucketValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -386,12 +359,10 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="achievementsCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -403,19 +374,16 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
             <Border
                 variant="5"
                 name="achievements_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="achievements_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcAchievementsBitmap ?? layoutImage('vault_earnings_icon_achievements.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="achievements_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -427,7 +395,6 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
             <Button
                 variant="3"
                 name="achievements_claim_button"
-                params={131089}
                 onPointerTap={onAchievementsClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -445,22 +412,22 @@ export interface VaultViewLayoutMarketplaceContainerItemProps {
     layout?: BoxLayout;
     onMarketplaceClaimButton?: () => void;
     srcMarketplaceBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, visibleDucketIcon }: VaultViewLayoutMarketplaceContainerItemProps) => {
+export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, tags, visibleDucketIcon }: VaultViewLayoutMarketplaceContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="marketplace_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="marketplace_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -471,13 +438,11 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="marketplaceDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -489,12 +454,10 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="marketplaceCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -506,19 +469,16 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
             <Border
                 variant="5"
                 name="marketplace_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="marketplace_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcMarketplaceBitmap ?? layoutImage('vault_earnings_icon_marketplace.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="marketplace_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -530,7 +490,6 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
             <Button
                 variant="3"
                 name="marketplace_claim_button"
-                params={131089}
                 onPointerTap={onMarketplaceClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -548,22 +507,22 @@ export interface VaultViewLayoutHabboclubContainerItemProps {
     layout?: BoxLayout;
     onHabboclubClaimButton?: () => void;
     srcHabboclubBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, visibleDucketIcon }: VaultViewLayoutHabboclubContainerItemProps) => {
+export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, tags, visibleDucketIcon }: VaultViewLayoutHabboclubContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habboclub_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="habboclub_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -574,13 +533,11 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="habboclubDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -592,12 +549,10 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="habboclubCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -609,19 +564,16 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
             <Border
                 variant="5"
                 name="habboclub_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="habboclub_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcHabboclubBitmap ?? layoutImage('vault_earnings_icon_hcpayday.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="habboclub_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -633,7 +585,6 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
             <Button
                 variant="3"
                 name="habboclub_claim_button"
-                params={131089}
                 onPointerTap={onHabboclubClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -651,33 +602,31 @@ export interface VaultViewLayoutLevelprogressionContainerItemProps {
     layout?: BoxLayout;
     onLevelprogressionClaimButton?: () => void;
     srcLevelprogressionBitmap?: string;
+    tags?: string[];
 }
 
-export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogressionCreditValue, captionLevelprogressionDucketValue, captionLevelprogressionLabel, layout, onLevelprogressionClaimButton, srcLevelprogressionBitmap }: VaultViewLayoutLevelprogressionContainerItemProps) => {
+export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogressionCreditValue, captionLevelprogressionDucketValue, captionLevelprogressionLabel, layout, onLevelprogressionClaimButton, srcLevelprogressionBitmap, tags }: VaultViewLayoutLevelprogressionContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="levelprogression_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="levelprogression_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
                 <Icon
                     variant="32"
                     name="ducketIcon"
-                    params={147472}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="levelprogressionDucketValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -688,12 +637,10 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="levelprogressionCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -705,19 +652,16 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
             <Border
                 variant="5"
                 name="levelprogression_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="levelprogression_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcLevelprogressionBitmap ?? layoutImage('vault_earnings_icon_levelprogression.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="levelprogression_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -729,7 +673,6 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
             <Button
                 variant="3"
                 name="levelprogression_claim_button"
-                params={131089}
                 onPointerTap={onLevelprogressionClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -747,22 +690,22 @@ export interface VaultViewLayoutDonationContainerItemProps {
     layout?: BoxLayout;
     onDonationClaimButton?: () => void;
     srcDonationBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
+export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, tags, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donation_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="donation_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -773,13 +716,11 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="donationDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -791,12 +732,10 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="donationCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -808,19 +747,16 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
             <Border
                 variant="5"
                 name="donation_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="donation_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcDonationBitmap ?? layoutImage('vault_earnings_icon_donations.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="donation_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -832,7 +768,6 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
             <Button
                 variant="3"
                 name="donation_claim_button"
-                params={131089}
                 onPointerTap={onDonationClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -852,23 +787,23 @@ export interface VaultViewLayoutBonusbagContainerItemProps {
     onBonusbagClaimButton?: () => void;
     srcBonusbagBitmap?: string;
     srcProductIcon?: string;
+    tags?: string[];
     visibleCreditIcon?: boolean;
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
+export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, tags, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bonusbag_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="bonusbag_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -879,13 +814,11 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="bonusbagDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -901,13 +834,11 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        params={16}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="bonusbagCreditValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -918,7 +849,6 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                 </Region>
                 <Region
                     name="bonusbagProductValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -928,7 +858,6 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                 </Region>
                 <ThemeImage
                     name="productIcon"
-                    params={16}
                     src={srcProductIcon ?? layoutImage('vault_icon_present.png')}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 6, height: 30 }}
                 />
@@ -936,19 +865,16 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
             <Border
                 variant="5"
                 name="bonusbag_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="bonusbag_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcBonusbagBitmap ?? layoutImage('vault_earnings_icon_bonusbag.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="bonusbag_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -960,7 +886,6 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
             <Button
                 variant="3"
                 name="bonusbag_claim_button"
-                params={131089}
                 onPointerTap={onBonusbagClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -978,33 +903,31 @@ export interface VaultViewLayoutSurpriseContainerItemProps {
     layout?: BoxLayout;
     onSurpriseClaimButton?: () => void;
     srcSurpriseBitmap?: string;
+    tags?: string[];
 }
 
-export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValue, captionSurpriseDucketValue, captionSurpriseLabel, layout, onSurpriseClaimButton, srcSurpriseBitmap }: VaultViewLayoutSurpriseContainerItemProps) => {
+export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValue, captionSurpriseDucketValue, captionSurpriseLabel, layout, onSurpriseClaimButton, srcSurpriseBitmap, tags }: VaultViewLayoutSurpriseContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="surprise_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="surprise_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
                 <Icon
                     variant="32"
                     name="ducketIcon"
-                    params={147472}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="surpriseDucketValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1015,12 +938,10 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="surpriseCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1032,19 +953,16 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
             <Border
                 variant="5"
                 name="surprise_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="surprise_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcSurpriseBitmap ?? layoutImage('vault_earnings_icon_surprise.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="surprise_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1056,7 +974,6 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
             <Button
                 variant="3"
                 name="surprise_claim_button"
-                params={131089}
                 onPointerTap={onSurpriseClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -1076,34 +993,32 @@ export interface VaultViewLayoutSnowstormContainerItemProps {
     onSnowstormClaimButton?: () => void;
     srcProductIcon?: string;
     srcSnowstormBitmap?: string;
+    tags?: string[];
     visibleCreditIcon?: boolean;
 }
 
-export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, visibleCreditIcon }: VaultViewLayoutSnowstormContainerItemProps) => {
+export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, tags, visibleCreditIcon }: VaultViewLayoutSnowstormContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="snowstorm_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="snowstorm_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
                 <Icon
                     variant="32"
                     name="ducketIcon"
-                    params={147472}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="snowstormDucketValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1118,13 +1033,11 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        params={16}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="snowstormCreditValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -1135,13 +1048,11 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                 </Region>
                 <ThemeImage
                     name="productIcon"
-                    params={16}
                     src={srcProductIcon ?? layoutImage('vault_icon_present.png')}
                     layout={{ position: 'absolute', left: 85, width: 30, top: 6, height: 30 }}
                 />
                 <Region
                     name="snowstormProductValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1153,19 +1064,16 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
             <Border
                 variant="5"
                 name="snowstorm_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="snowstorm_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcSnowstormBitmap ?? layoutImage('vault_earnings_icon_snowstorm.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
                 <Region
                     name="snowstorm_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1177,7 +1085,6 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
             <Button
                 variant="3"
                 name="snowstorm_claim_button"
-                params={131089}
                 onPointerTap={onSnowstormClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -1195,22 +1102,22 @@ export interface VaultViewLayoutAgencyContainerItemProps {
     layout?: BoxLayout;
     onAgencyClaimButton?: () => void;
     srcAgencyBitmap?: string;
+    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
+export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, tags, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="agency_container"
-            params={16}
+            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="agency_extended_border"
-                params={16}
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
@@ -1221,13 +1128,11 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        params={147472}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="agencyDucketValue"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -1239,12 +1144,10 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                 <Icon
                     variant="34"
                     name="creditIcon"
-                    params={16}
                     layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                 />
                 <Region
                     name="agencyCreditValue"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1256,19 +1159,16 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
             <Border
                 variant="5"
                 name="agency_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="agency_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcAgencyBitmap ?? layoutImage('vault_earnings_icon_rpgs.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 3, height: 32 }}
                 />
                 <Region
                     name="agency_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1280,7 +1180,6 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
             <Button
                 variant="3"
                 name="agency_claim_button"
-                params={131089}
                 onPointerTap={onAgencyClaimButton}
                 layout={{ position: 'absolute', left: 339, width: 60, top: 4, height: 28, minWidth: 60, maxWidth: 60 }}
             >
@@ -1294,13 +1193,14 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
 export interface VaultViewLayoutScrollingEarningsListProps {
     itemsScrollingEarningsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VaultViewLayoutScrollingEarningsList = ({ itemsScrollingEarningsList, layout }: VaultViewLayoutScrollingEarningsListProps) => {
+export const VaultViewLayoutScrollingEarningsList = ({ itemsScrollingEarningsList, layout, tags }: VaultViewLayoutScrollingEarningsListProps) => {
     return (
         <Region
             name="scrolling_earnings_list"
-            params={8388624}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 404, top: 5, height: 441, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsScrollingEarningsList ?? (
@@ -1328,22 +1228,22 @@ export interface VaultViewLayoutEarningsContentAreaProps {
     layout?: BoxLayout;
     onClaimAllBtn?: () => void;
     scrollingEarningsList?: VaultViewLayoutScrollingEarningsListProps;
+    tags?: string[];
 }
 
-export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scrollingEarningsList }: VaultViewLayoutEarningsContentAreaProps) => {
+export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scrollingEarningsList, tags }: VaultViewLayoutEarningsContentAreaProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="earningsContentArea"
-            params={8390672}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center', ...layout }}
         >
             <VaultViewLayoutScrollingEarningsList {...scrollingEarningsList} />
             <ButtonThick
                 variant="3"
                 name="claim_all_btn"
-                params={918545}
                 onPointerTap={onClaimAllBtn}
                 layout={{ position: 'absolute', marginLeft: -9.5, marginRight: 9.5, width: 73, bottom: 4, height: 30 }}
             >

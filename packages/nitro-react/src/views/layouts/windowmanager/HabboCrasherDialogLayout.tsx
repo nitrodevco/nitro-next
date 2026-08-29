@@ -14,7 +14,6 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             variant="3"
             id="crasher_frame"
             name="crasher_frame"
-            params={32769}
             caption="Client Crasher Tool"
             tintColor="#418db0"
             onClose={onClose}
@@ -23,7 +22,6 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     name="crasher_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 7, width: 171, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -37,7 +35,6 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
                     name="crasher_button"
                     tags={[ 'button' ]}
                     tooltip={'Pressing me is the last thing you\'ll do...'}
-                    params={131089}
                     onPointerTap={onCrasherButton}
                     layout={{ position: 'absolute', left: 50, width: 79, top: 50, height: 34 }}
                 >

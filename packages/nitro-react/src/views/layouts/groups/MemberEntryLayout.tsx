@@ -20,7 +20,6 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
             <Border
                 variant="0"
                 name="group_entry_container"
-                params={16}
                 tintColor="#cc0000"
                 layout={{ position: 'absolute', left: 0, width: 164, top: 0, height: 35 }}
             >
@@ -28,13 +27,11 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image"
-                    params={1310736}
                     options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                     layout={{ position: 'absolute', right: 134, width: 33, bottom: 1, height: 34 }}
                 />
                 <Region
                     name="user_name_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 33, width: 77, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -46,7 +43,6 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
                 <MemberEntryLayoutAdminContainer {...adminContainer} />
                 <ThemeImage
                     name="icon_owner"
-                    params={16}
                     src={srcIconOwner ?? '${image.library.url}guilds/icon_owner.png'}
                     layout={{ position: 'absolute', left: 34, width: 15, top: 15, height: 13 }}
                 />
@@ -54,7 +50,6 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
                 <MemberEntryLayoutRemoveRegion {...removeRegion} />
                 <Region
                     name="member_since_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 50, width: 61, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -72,16 +67,17 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
 export interface MemberEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const MemberEntryLayoutBgRegion = ({ layout, onBgRegion }: MemberEntryLayoutBgRegionProps) => {
+export const MemberEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: MemberEntryLayoutBgRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bg_region"
+            tags={tags}
             tooltip={t('group.members.showinfo')}
-            params={17}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 164, top: 0, height: 35, ...layout }}
@@ -94,14 +90,15 @@ export interface MemberEntryLayoutActionLinkRegionProps {
     captionActionLink?: string;
     layout?: BoxLayout;
     onActionLinkRegion?: () => void;
+    tags?: string[];
     visibleActionLinkRegion?: boolean;
 }
 
-export const MemberEntryLayoutActionLinkRegion = ({ captionActionLink, layout, onActionLinkRegion, visibleActionLinkRegion }: MemberEntryLayoutActionLinkRegionProps) => {
+export const MemberEntryLayoutActionLinkRegion = ({ captionActionLink, layout, onActionLinkRegion, tags, visibleActionLinkRegion }: MemberEntryLayoutActionLinkRegionProps) => {
     return (
         <Region
             name="action_link_region"
-            params={17}
+            tags={tags}
             visible={visibleActionLinkRegion ?? false}
             onPointerTap={onActionLinkRegion}
             cursor="pointer"
@@ -109,7 +106,6 @@ export const MemberEntryLayoutActionLinkRegion = ({ captionActionLink, layout, o
         >
             <Region
                 name="action_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionActionLink ?? 'Action Name PH'} />
@@ -123,24 +119,23 @@ export interface MemberEntryLayoutAdminContainerProps {
     layout?: BoxLayout;
     srcIconAdminOff?: string;
     srcIconAdminOver?: string;
+    tags?: string[];
 }
 
-export const MemberEntryLayoutAdminContainer = ({ layout, srcIconAdminOff, srcIconAdminOver }: MemberEntryLayoutAdminContainerProps) => {
+export const MemberEntryLayoutAdminContainer = ({ layout, srcIconAdminOff, srcIconAdminOver, tags }: MemberEntryLayoutAdminContainerProps) => {
     return (
         <Region
             name="admin_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 33, width: 15, top: 15, height: 13, ...layout }}
         >
             <ThemeImage
                 name="icon_admin_off"
-                params={16}
                 src={srcIconAdminOff ?? '${image.library.url}guilds/icon_admin_off.png'}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
             />
             <ThemeImage
                 name="icon_admin_over"
-                params={16}
                 src={srcIconAdminOver ?? '${image.library.url}guilds/icon_admin_over.png'}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
             />
@@ -155,32 +150,30 @@ export interface MemberEntryLayoutBlockRegionProps {
     srcIconCloseDown?: string;
     srcIconCloseOff?: string;
     srcIconCloseOver?: string;
+    tags?: string[];
 }
 
-export const MemberEntryLayoutBlockRegion = ({ layout, onBlockRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver }: MemberEntryLayoutBlockRegionProps) => {
+export const MemberEntryLayoutBlockRegion = ({ layout, onBlockRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver, tags }: MemberEntryLayoutBlockRegionProps) => {
     return (
         <Region
             name="block_region"
-            params={81}
+            tags={tags}
             onPointerTap={onBlockRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 17, width: 17, top: 1, height: 18, ...layout }}
         >
             <ThemeImage
                 name="icon_close_down"
-                params={16}
                 src={srcIconCloseDown ?? '${image.library.url}guilds/icon_close_down.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />
             <ThemeImage
                 name="icon_close_over"
-                params={16}
                 src={srcIconCloseOver ?? '${image.library.url}guilds/icon_close_over.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />
             <ThemeImage
                 name="icon_close_off"
-                params={16}
                 src={srcIconCloseOff ?? '${image.library.url}guilds/icon_close_off.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />
@@ -195,32 +188,30 @@ export interface MemberEntryLayoutRemoveRegionProps {
     srcIconCloseDown?: string;
     srcIconCloseOff?: string;
     srcIconCloseOver?: string;
+    tags?: string[];
 }
 
-export const MemberEntryLayoutRemoveRegion = ({ layout, onRemoveRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver }: MemberEntryLayoutRemoveRegionProps) => {
+export const MemberEntryLayoutRemoveRegion = ({ layout, onRemoveRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver, tags }: MemberEntryLayoutRemoveRegionProps) => {
     return (
         <Region
             name="remove_region"
-            params={81}
+            tags={tags}
             onPointerTap={onRemoveRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 1, width: 17, top: 1, height: 18, ...layout }}
         >
             <ThemeImage
                 name="icon_close_down"
-                params={16}
                 src={srcIconCloseDown ?? '${image.library.url}guilds/icon_close_down.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />
             <ThemeImage
                 name="icon_close_over"
-                params={16}
                 src={srcIconCloseOver ?? '${image.library.url}guilds/icon_close_over.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />
             <ThemeImage
                 name="icon_close_off"
-                params={16}
                 src={srcIconCloseOff ?? '${image.library.url}guilds/icon_close_off.png'}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
             />

@@ -14,7 +14,6 @@ export const OwnAvatarMenuLayout = ({ border, layout }: OwnAvatarMenuLayoutProps
         <Region layout={{ position: 'relative', width: 115, height: 887, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 20, width: 115, bottom: 0, height: 887 }}
             >
@@ -29,20 +28,20 @@ export interface OwnAvatarMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: OwnAvatarMenuLayoutProfileLinkProps) => {
+export const OwnAvatarMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: OwnAvatarMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={17}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,30 +59,28 @@ export interface OwnAvatarMenuLayoutChangeNameItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutChangeNameItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutChangeNameItemProps) => {
+export const OwnAvatarMenuLayoutChangeNameItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutChangeNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_name"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -102,30 +99,28 @@ export interface OwnAvatarMenuLayoutDecorateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDecorateItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDecorateItemProps) => {
+export const OwnAvatarMenuLayoutDecorateItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDecorateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decorate"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -144,30 +139,28 @@ export interface OwnAvatarMenuLayoutChangeLooksItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutChangeLooksItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutChangeLooksItemProps) => {
+export const OwnAvatarMenuLayoutChangeLooksItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutChangeLooksItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_looks"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -186,30 +179,28 @@ export interface OwnAvatarMenuLayoutSitItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSitItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutSitItemProps) => {
+export const OwnAvatarMenuLayoutSitItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutSitItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="sit"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -228,30 +219,28 @@ export interface OwnAvatarMenuLayoutStandItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutStandItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutStandItemProps) => {
+export const OwnAvatarMenuLayoutStandItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutStandItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="stand"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -270,30 +259,28 @@ export interface OwnAvatarMenuLayoutWaveItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutWaveItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutWaveItemProps) => {
+export const OwnAvatarMenuLayoutWaveItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutWaveItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wave"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -312,30 +299,28 @@ export interface OwnAvatarMenuLayoutBlowItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutBlowItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutBlowItemProps) => {
+export const OwnAvatarMenuLayoutBlowItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutBlowItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="blow"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -347,7 +332,6 @@ export const OwnAvatarMenuLayoutBlowItem = ({ captionLabel, layout, onButton }: 
                 <Icon
                     variant="14"
                     name="icon_vip"
-                    params={80}
                     layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                 />
             </ContainerButton>
@@ -360,30 +344,28 @@ export interface OwnAvatarMenuLayout_67ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayout_67Item = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayout_67ItemProps) => {
+export const OwnAvatarMenuLayout_67Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayout_67ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="67"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -395,7 +377,6 @@ export const OwnAvatarMenuLayout_67Item = ({ captionLabel, layout, onButton }: O
                 <Icon
                     variant="14"
                     name="icon_vip"
-                    params={80}
                     layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                 />
             </ContainerButton>
@@ -408,30 +389,28 @@ export interface OwnAvatarMenuLayoutJumpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutJumpItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutJumpItemProps) => {
+export const OwnAvatarMenuLayoutJumpItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutJumpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="jump"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -443,7 +422,6 @@ export const OwnAvatarMenuLayoutJumpItem = ({ captionLabel, layout, onButton }: 
                 <Icon
                     variant="14"
                     name="icon_vip"
-                    params={80}
                     layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                 />
             </ContainerButton>
@@ -456,30 +434,28 @@ export interface OwnAvatarMenuLayoutLaughItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutLaughItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutLaughItemProps) => {
+export const OwnAvatarMenuLayoutLaughItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutLaughItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="laugh"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -491,7 +467,6 @@ export const OwnAvatarMenuLayoutLaughItem = ({ captionLabel, layout, onButton }:
                 <Icon
                     variant="14"
                     name="icon_vip"
-                    params={80}
                     layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                 />
             </ContainerButton>
@@ -504,30 +479,28 @@ export interface OwnAvatarMenuLayoutIdleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutIdleItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutIdleItemProps) => {
+export const OwnAvatarMenuLayoutIdleItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutIdleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="idle"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -546,30 +519,28 @@ export interface OwnAvatarMenuLayoutExpressionsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutExpressionsItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutExpressionsItemProps) => {
+export const OwnAvatarMenuLayoutExpressionsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutExpressionsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expressions"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -582,7 +553,6 @@ export const OwnAvatarMenuLayoutExpressionsItem = ({ captionLabel, layout, onBut
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -595,30 +565,28 @@ export interface OwnAvatarMenuLayoutDanceMenuItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDanceMenuItemProps) => {
+export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceMenuItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_menu"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -631,7 +599,6 @@ export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButto
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -644,30 +611,28 @@ export interface OwnAvatarMenuLayoutDanceItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDanceItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDanceItemProps) => {
+export const OwnAvatarMenuLayoutDanceItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -686,30 +651,28 @@ export interface OwnAvatarMenuLayoutDanceStopItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDanceStopItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDanceStopItemProps) => {
+export const OwnAvatarMenuLayoutDanceStopItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceStopItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_stop"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -728,30 +691,28 @@ export interface OwnAvatarMenuLayoutDance1ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDance1Item = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDance1ItemProps) => {
+export const OwnAvatarMenuLayoutDance1Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_1"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -770,30 +731,28 @@ export interface OwnAvatarMenuLayoutDance2ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDance2Item = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDance2ItemProps) => {
+export const OwnAvatarMenuLayoutDance2Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance2ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_2"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -812,30 +771,28 @@ export interface OwnAvatarMenuLayoutDance3ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDance3Item = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDance3ItemProps) => {
+export const OwnAvatarMenuLayoutDance3Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance3ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_3"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -854,30 +811,28 @@ export interface OwnAvatarMenuLayoutDance4ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutDance4ItemProps) => {
+export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance4ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_4"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -895,27 +850,24 @@ export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton }
 export interface OwnAvatarMenuLayoutSign1ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign1ItemProps) => {
+export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign1ItemProps) => {
     return (
         <Region
             name="sign_1"
-            params={16}
+            tags={tags}
             layout={{ width: 34, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 39, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 39, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="1"
                         textStyle="text-style-u-bold"
@@ -931,27 +883,24 @@ export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign2ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign2ItemProps) => {
+export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign2ItemProps) => {
     return (
         <Region
             name="sign_2"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="2"
                         textStyle="text-style-u-bold"
@@ -967,27 +916,24 @@ export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign3ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign3ItemProps) => {
+export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign3ItemProps) => {
     return (
         <Region
             name="sign_3"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="3"
                         textStyle="text-style-u-bold"
@@ -1003,27 +949,24 @@ export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign4ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign4ItemProps) => {
+export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign4ItemProps) => {
     return (
         <Region
             name="sign_4"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="4"
                         textStyle="text-style-u-bold"
@@ -1039,27 +982,24 @@ export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign5ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign5ItemProps) => {
+export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign5ItemProps) => {
     return (
         <Region
             name="sign_5"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="5"
                         textStyle="text-style-u-bold"
@@ -1075,27 +1015,24 @@ export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign6ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign6ItemProps) => {
+export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign6ItemProps) => {
     return (
         <Region
             name="sign_6"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="6"
                         textStyle="text-style-u-bold"
@@ -1111,27 +1048,24 @@ export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign7ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign7ItemProps) => {
+export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign7ItemProps) => {
     return (
         <Region
             name="sign_7"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="7"
                         textStyle="text-style-u-bold"
@@ -1147,27 +1081,24 @@ export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign8ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign8ItemProps) => {
+export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign8ItemProps) => {
     return (
         <Region
             name="sign_8"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="8"
                         textStyle="text-style-u-bold"
@@ -1183,27 +1114,24 @@ export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign9ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign9ItemProps) => {
+export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign9ItemProps) => {
     return (
         <Region
             name="sign_9"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="9"
                         textStyle="text-style-u-bold"
@@ -1219,27 +1147,24 @@ export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton }: OwnAvatarMenu
 export interface OwnAvatarMenuLayoutSign10ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign10Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign10ItemProps) => {
+export const OwnAvatarMenuLayoutSign10Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign10ItemProps) => {
     return (
         <Region
             name="sign_10"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="10"
                         textStyle="text-style-u-bold"
@@ -1256,19 +1181,19 @@ export interface OwnAvatarMenuLayoutSign11ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIconHeart?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHeart }: OwnAvatarMenuLayoutSign11ItemProps) => {
+export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHeart, tags }: OwnAvatarMenuLayoutSign11ItemProps) => {
     return (
         <Region
             name="sign_11"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1276,7 +1201,6 @@ export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHea
                 <ThemeImage
                     name="sign_icon_heart"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIconHeart}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1290,19 +1214,19 @@ export interface OwnAvatarMenuLayoutSign12ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIconSkull?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSkull }: OwnAvatarMenuLayoutSign12ItemProps) => {
+export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSkull, tags }: OwnAvatarMenuLayoutSign12ItemProps) => {
     return (
         <Region
             name="sign_12"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1310,7 +1234,6 @@ export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSku
                 <ThemeImage
                     name="sign_icon_skull"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIconSkull}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1323,27 +1246,24 @@ export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSku
 export interface OwnAvatarMenuLayoutSign0ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign0Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign0ItemProps) => {
+export const OwnAvatarMenuLayoutSign0Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign0ItemProps) => {
     return (
         <Region
             name="sign_0"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
             >
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text="0"
                         textStyle="text-style-u-bold"
@@ -1360,19 +1280,19 @@ export interface OwnAvatarMenuLayoutSign13ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon13?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13 }: OwnAvatarMenuLayoutSign13ItemProps) => {
+export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13, tags }: OwnAvatarMenuLayoutSign13ItemProps) => {
     return (
         <Region
             name="sign_13"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1380,7 +1300,6 @@ export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13 
                 <ThemeImage
                     name="sign_icon_13"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIcon13}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1394,19 +1313,19 @@ export interface OwnAvatarMenuLayoutSign15ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon15?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15 }: OwnAvatarMenuLayoutSign15ItemProps) => {
+export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15, tags }: OwnAvatarMenuLayoutSign15ItemProps) => {
     return (
         <Region
             name="sign_15"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1414,7 +1333,6 @@ export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15 
                 <ThemeImage
                     name="sign_icon_15"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIcon15}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1428,19 +1346,19 @@ export interface OwnAvatarMenuLayoutSign14ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon14?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14 }: OwnAvatarMenuLayoutSign14ItemProps) => {
+export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14, tags }: OwnAvatarMenuLayoutSign14ItemProps) => {
     return (
         <Region
             name="sign_14"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1448,7 +1366,6 @@ export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14 
                 <ThemeImage
                     name="sign_icon_14"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIcon14}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1462,19 +1379,19 @@ export interface OwnAvatarMenuLayoutSign17ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon17?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17 }: OwnAvatarMenuLayoutSign17ItemProps) => {
+export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17, tags }: OwnAvatarMenuLayoutSign17ItemProps) => {
     return (
         <Region
             name="sign_17"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1482,7 +1399,6 @@ export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17 
                 <ThemeImage
                     name="sign_icon_17"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIcon17}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1496,19 +1412,19 @@ export interface OwnAvatarMenuLayoutSign16ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon16?: string;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16 }: OwnAvatarMenuLayoutSign16ItemProps) => {
+export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16, tags }: OwnAvatarMenuLayoutSign16ItemProps) => {
     return (
         <Region
             name="sign_16"
-            params={16}
+            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 39, top: -3, height: 29 }}
@@ -1516,7 +1432,6 @@ export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16 
                 <ThemeImage
                     name="sign_icon_16"
                     tags={[ 'icon' ]}
-                    params={2192}
                     src={srcSignIcon16}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1529,14 +1444,14 @@ export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16 
 export interface OwnAvatarMenuLayoutSignsGridItemProps {
     itemsSignsGrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSignsGridItem = ({ itemsSignsGrid, layout }: OwnAvatarMenuLayoutSignsGridItemProps) => {
+export const OwnAvatarMenuLayoutSignsGridItem = ({ itemsSignsGrid, layout, tags }: OwnAvatarMenuLayoutSignsGridItemProps) => {
     return (
         <Region
             name="signs_grid"
-            tags={[ 'grid' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 152, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         >
             {itemsSignsGrid ?? (
@@ -1570,30 +1485,28 @@ export interface OwnAvatarMenuLayoutSignsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSignsItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutSignsItemProps) => {
+export const OwnAvatarMenuLayoutSignsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutSignsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="signs"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1606,7 +1519,6 @@ export const OwnAvatarMenuLayoutSignsItem = ({ captionLabel, layout, onButton }:
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1619,30 +1531,28 @@ export interface OwnAvatarMenuLayoutBackItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutBackItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutBackItemProps) => {
+export const OwnAvatarMenuLayoutBackItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutBackItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="back"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1655,7 +1565,6 @@ export const OwnAvatarMenuLayoutBackItem = ({ captionLabel, layout, onButton }: 
                     variant="4"
                     name="icon"
                     tags={[ 'arrow_left' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1668,30 +1577,28 @@ export interface OwnAvatarMenuLayoutHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutHanditemItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutHanditemItemProps) => {
+export const OwnAvatarMenuLayoutHanditemItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handitem"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1710,30 +1617,28 @@ export interface OwnAvatarMenuLayoutEffectsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutEffectsItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutEffectsItemProps) => {
+export const OwnAvatarMenuLayoutEffectsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutEffectsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effects"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1752,30 +1657,28 @@ export interface OwnAvatarMenuLayoutMoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutMoreItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutMoreItemProps) => {
+export const OwnAvatarMenuLayoutMoreItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutMoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="more"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1788,7 +1691,6 @@ export const OwnAvatarMenuLayoutMoreItem = ({ captionLabel, layout, onButton }: 
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1801,30 +1703,28 @@ export interface OwnAvatarMenuLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton }: OwnAvatarMenuLayoutWiredInspectItemProps) => {
+export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1842,43 +1742,44 @@ export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onBu
 export interface OwnAvatarMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout }: OwnAvatarMenuLayoutButtonsProps) => {
+export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout, tags }: OwnAvatarMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519888}
+            tags={tags}
             layout={{ position: 'absolute', minWidth: 105, top: 28, minHeight: 827, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <OwnAvatarMenuLayoutChangeNameItem />
-                    <OwnAvatarMenuLayoutDecorateItem />
-                    <OwnAvatarMenuLayoutChangeLooksItem />
-                    <OwnAvatarMenuLayoutSitItem />
-                    <OwnAvatarMenuLayoutStandItem />
-                    <OwnAvatarMenuLayoutWaveItem />
-                    <OwnAvatarMenuLayoutBlowItem />
-                    <OwnAvatarMenuLayout_67Item />
-                    <OwnAvatarMenuLayoutJumpItem />
-                    <OwnAvatarMenuLayoutLaughItem />
-                    <OwnAvatarMenuLayoutIdleItem />
-                    <OwnAvatarMenuLayoutExpressionsItem />
-                    <OwnAvatarMenuLayoutDanceMenuItem />
-                    <OwnAvatarMenuLayoutDanceItem />
-                    <OwnAvatarMenuLayoutDanceStopItem />
-                    <OwnAvatarMenuLayoutDance1Item />
-                    <OwnAvatarMenuLayoutDance2Item />
-                    <OwnAvatarMenuLayoutDance3Item />
-                    <OwnAvatarMenuLayoutDance4Item />
-                    <OwnAvatarMenuLayoutSignsGridItem />
-                    <OwnAvatarMenuLayoutSignsItem />
-                    <OwnAvatarMenuLayoutBackItem />
-                    <OwnAvatarMenuLayoutHanditemItem />
-                    <OwnAvatarMenuLayoutEffectsItem />
-                    <OwnAvatarMenuLayoutMoreItem />
-                    <OwnAvatarMenuLayoutWiredInspectItem />
+                    <OwnAvatarMenuLayoutChangeNameItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDecorateItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutChangeLooksItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutSitItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutStandItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutWaveItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutBlowItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayout_67Item tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutJumpItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutLaughItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutIdleItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutExpressionsItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDanceMenuItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDanceItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDanceStopItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDance1Item tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDance2Item tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDance3Item tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutDance4Item tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutSignsGridItem tags={[ 'grid' ]} />
+                    <OwnAvatarMenuLayoutSignsItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutBackItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutHanditemItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutEffectsItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutMoreItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutWiredInspectItem tags={[ 'action' ]} />
                 </>
             )}
         </Region>
@@ -1889,13 +1790,14 @@ export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout }: OwnAvatarMe
 export interface OwnAvatarMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize }: OwnAvatarMenuLayoutMinimizeProps) => {
+export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize, tags }: OwnAvatarMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1041}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
@@ -1903,7 +1805,6 @@ export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize }: OwnAvatarMen
             <Icon
                 variant="7"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
             />
         </Region>
@@ -1916,18 +1817,18 @@ export interface OwnAvatarMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: OwnAvatarMenuLayoutMinimizeProps;
     profileLink?: OwnAvatarMenuLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: OwnAvatarMenuLayoutBorderProps) => {
+export const OwnAvatarMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: OwnAvatarMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 877, justifyContent: 'center', ...layout }}
         >
             <OwnAvatarMenuLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

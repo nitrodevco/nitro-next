@@ -10,13 +10,9 @@ export interface SeparatorLayoutProps {
 export const SeparatorLayout = ({ children, layout, srcCanvas }: SeparatorLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
-            <Region
-                params={2192}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="canvas"
-                    params={2192}
                     src={srcCanvas}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -29,13 +25,14 @@ export const SeparatorLayout = ({ children, layout, srcCanvas }: SeparatorLayout
 /** Named region `children` of SeparatorLayout - configured through the parent's `children` prop. */
 export interface SeparatorLayoutChildrenProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SeparatorLayoutChildren = ({ layout }: SeparatorLayoutChildrenProps) => {
+export const SeparatorLayoutChildren = ({ layout, tags }: SeparatorLayoutChildrenProps) => {
     return (
         <Region
             name="children"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
     );

@@ -16,17 +16,13 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
     return (
         <Frame
             variant="3"
-            params={1}
             caption={t('enforce.category.title')}
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 310, height: 240, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('enforce.category.body.text.multiline')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
@@ -35,27 +31,21 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
                 <Dropmenu
                     variant="3"
                     name="category"
-                    params={17}
                     onPointerTap={onCategory}
                     layout={{ position: 'absolute', left: 6, width: 279, top: 68, height: 23 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 4, width: 295, top: 96, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 4, width: 295, top: 96, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('enforce.category.trade.setting')} />
                 </Region>
                 <Dropmenu
                     variant="3"
                     name="trade_mode"
-                    params={17}
                     onPointerTap={onTradeMode}
                     layout={{ position: 'absolute', left: 6, width: 279, top: 120, height: 23 }}
                 />
                 <Button
                     variant="3"
                     name="ok"
-                    params={917713}
                     onPointerTap={onOk}
                     layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 132, top: 158, height: 32 }}
                 >

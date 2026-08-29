@@ -19,19 +19,19 @@ export const NewSearchFriendsTabLayout = ({ container, layout }: NewSearchFriend
 export interface NewSearchFriendsTabLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
+    tags?: string[];
 }
 
-export const NewSearchFriendsTabLayoutContainer = ({ layout, onContainer }: NewSearchFriendsTabLayoutContainerProps) => {
+export const NewSearchFriendsTabLayoutContainer = ({ layout, onContainer, tags }: NewSearchFriendsTabLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={17}
+            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('friend_bar_search_habbos.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />

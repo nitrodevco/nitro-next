@@ -10,7 +10,6 @@ export const BorderViewLayout = ({ layout }: BorderViewLayoutProps) => {
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <Border
                 variant="2"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
         </Region>

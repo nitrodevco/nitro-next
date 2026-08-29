@@ -20,15 +20,16 @@ export interface GuildInfoLayoutGuildInfoProps {
     captionGuildBaseTxt?: string;
     layout?: BoxLayout;
     onGuildInfo?: () => void;
+    tags?: string[];
 }
 
-export const GuildInfoLayoutGuildInfo = ({ captionGuildBaseTxt, layout, onGuildInfo }: GuildInfoLayoutGuildInfoProps) => {
+export const GuildInfoLayoutGuildInfo = ({ captionGuildBaseTxt, layout, onGuildInfo, tags }: GuildInfoLayoutGuildInfoProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_info"
-            params={17}
+            tags={tags}
             onPointerTap={onGuildInfo}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 49, ...layout }}
@@ -36,13 +37,11 @@ export const GuildInfoLayoutGuildInfo = ({ captionGuildBaseTxt, layout, onGuildI
             <WidgetSlot
                 widgetType="badge_image"
                 name="guild_badge"
-                params={16}
                 options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 5, height: 39 }}
             />
             <Region
                 name="guild_base_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 170, top: 1, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

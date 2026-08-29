@@ -18,18 +18,13 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
     return (
         <Region layout={{ position: 'relative', width: 500, height: 245, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
                 <FastfoodGamePromoLayoutCol1 {...col1} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        params={16}
                         layout={{ width: 296, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -40,7 +35,6 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     <FastfoodGamePromoLayoutSpacing {...spacing} />
                     <Region
                         name="title_txt"
-                        params={16}
                         layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -51,7 +45,6 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="info_txt"
-                        params={16}
                         layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -62,7 +55,6 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     <Button
                         variant="100"
                         name="go_button"
-                        params={131089}
                         onPointerTap={onGoButton}
                         layout={{ width: 228, height: 50, flexShrink: 0 }}
                     >
@@ -78,19 +70,19 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
 export interface FastfoodGamePromoLayoutCol1Props {
     layout?: BoxLayout;
     srcTeaserImage?: string;
+    tags?: string[];
 }
 
-export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage }: FastfoodGamePromoLayoutCol1Props) => {
+export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: FastfoodGamePromoLayoutCol1Props) => {
     return (
         <Region
             name="col1"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
         >
             <ThemeImage
                 name="teaser_image"
-                params={16}
                 src={srcTeaserImage ?? '${image.library.url}reception/fastfood_promo.png'}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 0, height: 250 }}
             />
@@ -101,13 +93,14 @@ export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage }: Fastfood
 /** Named region `spacing` of FastfoodGamePromoLayout - configured through the parent's `spacing` prop. */
 export interface FastfoodGamePromoLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FastfoodGamePromoLayoutSpacing = ({ layout }: FastfoodGamePromoLayoutSpacingProps) => {
+export const FastfoodGamePromoLayoutSpacing = ({ layout, tags }: FastfoodGamePromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

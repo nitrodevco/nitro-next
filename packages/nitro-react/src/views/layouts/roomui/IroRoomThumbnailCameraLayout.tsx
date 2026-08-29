@@ -16,7 +16,6 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('navigator.thumbnail.camera.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -24,25 +23,19 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
-                    params={16}
                     backgroundColor="#000000"
                     layout={{ position: 'absolute', left: 14, width: 112, top: 12, height: 112 }}
                 >
                     <ThemeImage
                         name="viewfinder"
-                        params={16}
                         src={srcViewfinder}
                         layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
                     />
                 </Region>
-                <Region
-                    params={786640}
-                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}
-                >
+                <Region layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}>
                     <ButtonThick
                         variant="6"
                         name="button_cancel"
-                        params={131089}
                         tintColor="#ff0000"
                         onPointerTap={onButtonCancel}
                         layout={{ width: 65, height: 30, flexShrink: 0, minWidth: 65, maxWidth: 65 }}
@@ -52,7 +45,6 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
                     <ButtonThick
                         variant="6"
                         name="button_capture"
-                        params={131089}
                         tintColor="#00ff00"
                         onPointerTap={onButtonCapture}
                         layout={{ width: 65, height: 30, flexShrink: 0, minWidth: 65, maxWidth: 65 }}

@@ -21,14 +21,15 @@ export interface NewFeatureNotificationCountdownLayoutCancelLinkRegionProps {
     onCancelLinkRegion?: () => void;
     srcCancelImg?: string;
     srcCancelImg2?: string;
+    tags?: string[];
     visibleCancelLinkRegion?: boolean;
 }
 
-export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps) => {
+export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, tags, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps) => {
     return (
         <Region
             name="cancel_link_region"
-            params={17}
+            tags={tags}
             visible={visibleCancelLinkRegion ?? false}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
@@ -36,7 +37,6 @@ export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, 
         >
             <ThemeImage
                 name="cancel_img"
-                params={16}
                 src={srcCancelImg ?? layoutImage('common_close_x.png')}
                 layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
             />
@@ -46,7 +46,6 @@ export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, 
             >
                 <ThemeImage
                     name="cancel_img"
-                    params={16}
                     src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
                     tint="#000000"
                     layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
@@ -63,13 +62,14 @@ export interface NewFeatureNotificationCountdownLayoutMainRegionProps {
     layout?: BoxLayout;
     onMainRegion?: () => void;
     srcStaticBitmap?: string;
+    tags?: string[];
 }
 
-export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
+export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap, tags }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
     return (
         <Region
             name="main_region"
-            params={1}
+            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onMainRegion}
             cursor="pointer"
@@ -79,21 +79,18 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegi
                 variant="9"
                 name="border"
                 tags={[ '#bg' ]}
-                params={8388624}
                 tintColor="#686661"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 76 }}
             >
                 <ThemeImage
                     name="static_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                 />
                 <Region
                     name="desc"
                     tags={[ '#icon' ]}
-                    params={8388624}
                     layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -104,7 +101,6 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegi
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown_widget"
-                    params={148496}
                     options={{ 'countdown:running': 'true', 'countdown:color_style': '1' }}
                     layout={{ position: 'absolute', left: 46, width: 99, bottom: 6, height: 37 }}
                 />

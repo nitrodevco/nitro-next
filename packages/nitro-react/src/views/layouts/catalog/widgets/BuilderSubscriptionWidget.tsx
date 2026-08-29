@@ -13,18 +13,19 @@ export interface BuilderSubscriptionWidgetProps {
     onSubscribeButtonBig?: () => void;
     onSubscribeButtonSms?: () => void;
     onTryButton?: () => void;
+    tags?: string[];
     visibleSubscribeButton?: boolean;
     visibleSubscribeButtonBig?: boolean;
     visibleSubscribeButtonSms?: boolean;
 }
 
-export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscribeButtonBig, onSubscribeButtonSms, onTryButton, visibleSubscribeButton, visibleSubscribeButtonBig, visibleSubscribeButtonSms }: BuilderSubscriptionWidgetProps) => {
+export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscribeButtonBig, onSubscribeButtonSms, onTryButton, tags, visibleSubscribeButton, visibleSubscribeButtonBig, visibleSubscribeButtonSms }: BuilderSubscriptionWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="builderSubscriptionWidget"
-            params={1040}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region
@@ -34,7 +35,6 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
                 <ButtonThick
                     variant="5"
                     name="subscribe_button_big"
-                    params={131089}
                     tintColor="#0a9bc5"
                     onPointerTap={onSubscribeButtonBig}
                     layout={{ width: '100%', height: '100%' }}
@@ -49,7 +49,6 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
                 <ButtonThick
                     variant="5"
                     name="subscribe_button"
-                    params={131089}
                     tintColor="#0a9bc5"
                     onPointerTap={onSubscribeButton}
                     layout={{ width: '100%', height: '100%' }}
@@ -60,7 +59,6 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
             <ButtonThick
                 variant="5"
                 name="try_button"
-                params={131089}
                 tintColor="#dda100"
                 onPointerTap={onTryButton}
                 layout={{ position: 'absolute', left: 25, width: 140, top: 60, height: 30, minWidth: 140, maxWidth: 140 }}
@@ -74,7 +72,6 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
                 <ButtonThick
                     variant="5"
                     name="subscribe_button_sms"
-                    params={131089}
                     tintColor="#0a9bc5"
                     onPointerTap={onSubscribeButtonSms}
                     layout={{ width: '100%', height: '100%' }}

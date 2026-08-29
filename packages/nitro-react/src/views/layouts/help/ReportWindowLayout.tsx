@@ -18,7 +18,6 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
             variant="100"
             id="report_user"
             name="report_user"
-            params={32769}
             caption={t('guide.help.request.emergency.title')}
             onClose={onClose}
             layout={{ width: 282, height: 347, ...layout }}
@@ -34,15 +33,16 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
 export interface ReportWindowLayoutReportErrorItemProps {
     captionReportError?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout }: ReportWindowLayoutReportErrorItemProps) => {
+export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout, tags }: ReportWindowLayoutReportErrorItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report_error"
-            params={16}
+            tags={tags}
             visible={false}
             layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -57,14 +57,15 @@ export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout }
 /** Row template `input_widget` of ReportWindowLayout - pass real rows through its `items…` slot. */
 export interface ReportWindowLayoutInputWidgetItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ReportWindowLayoutInputWidgetItem = ({ layout }: ReportWindowLayoutInputWidgetItemProps) => {
+export const ReportWindowLayoutInputWidgetItem = ({ layout, tags }: ReportWindowLayoutInputWidgetItemProps) => {
     return (
         <WidgetSlot
             widgetType="illumina_input"
             name="input_widget"
-            params={16}
+            tags={tags}
             options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${guide.help.request.emergency.input.empty}', 'illumina_input:multiline': 'true' }}
             layout={{ width: 270, height: 100, flexShrink: 0, ...layout }}
         />
@@ -76,15 +77,16 @@ export interface ReportWindowLayoutCancelLinkItemProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLink?: () => void;
+    tags?: string[];
 }
 
-export const ReportWindowLayoutCancelLinkItem = ({ captionCancelLink, layout, onCancelLink }: ReportWindowLayoutCancelLinkItemProps) => {
+export const ReportWindowLayoutCancelLinkItem = ({ captionCancelLink, layout, onCancelLink, tags }: ReportWindowLayoutCancelLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link"
-            params={1}
+            tags={tags}
             layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             onPointerTap={onCancelLink}
             cursor="pointer"
@@ -104,15 +106,16 @@ export interface ReportWindowLayoutListProps {
     layout?: BoxLayout;
     onSubmitButton?: () => void;
     onUrgentHelpLink?: () => void;
+    tags?: string[];
 }
 
-export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink }: ReportWindowLayoutListProps) => {
+export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink, tags }: ReportWindowLayoutListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (
@@ -122,29 +125,19 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                     <ReportWindowLayoutCancelLinkItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 264, height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 264, height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('guide.help.request.emergency.desc')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 30, height: 20, flexShrink: 0 }}
-            />
+            <Region layout={{ width: 30, height: 20, flexShrink: 0 }} />
             <Border
                 variant="104"
-                params={16}
                 tintColor="#ac1d19"
                 layout={{ width: 270, height: 108, flexShrink: 0, justifyContent: 'center' }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('guide.help.request.emergency.help.title')}
                         textStyle="text-style-il-regular-white"
@@ -153,7 +146,6 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                 </Region>
                 <Region
                     name="urgent_help_link"
-                    params={33}
                     visible={false}
                     layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onUrgentHelpLink}
@@ -168,7 +160,6 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                 <Button
                     variant="101"
                     name="submit_button"
-                    params={147665}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmitButton}
                     layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 136, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
@@ -176,10 +167,7 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                     {t('guide.help.request.user.create.input.button')}
                 </Button>
             </Border>
-            <Region
-                params={16}
-                layout={{ width: 30, height: 10, flexShrink: 0 }}
-            />
+            <Region layout={{ width: 30, height: 10, flexShrink: 0 }} />
         </Region>
     );
 };

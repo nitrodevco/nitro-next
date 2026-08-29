@@ -11,26 +11,25 @@ export interface RedeemItemCodeWidget2Props {
     captionVoucherCode?: string;
     layout?: BoxLayout;
     onRedeem?: () => void;
+    tags?: string[];
 }
 
-export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem }: RedeemItemCodeWidget2Props) => {
+export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem, tags }: RedeemItemCodeWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="redeemItemCodeWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 200, top: 25, height: 20 }}
             />
             <Button
                 variant="3"
                 name="redeem"
-                params={393361}
                 onPointerTap={onRedeem}
                 layout={{ position: 'absolute', left: 213, right: 7, top: 25, height: 22, maxWidth: 100 }}
             >
@@ -38,7 +37,6 @@ export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem }: 
             </Button>
             <Region
                 name="voucher_code"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 72, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionVoucherCode ?? 'lorem ipsum'} />

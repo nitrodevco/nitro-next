@@ -10,13 +10,9 @@ export interface InstructionsListItemLayoutProps {
 export const InstructionsListItemLayout = ({ captionNumber, captionText, layout }: InstructionsListItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 236, height: 50, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 236, top: 0, height: 50 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 236, top: 0, height: 50 }}>
                 <Region
                     name="number"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -26,7 +22,6 @@ export const InstructionsListItemLayout = ({ captionNumber, captionText, layout 
                 </Region>
                 <Region
                     name="text"
-                    params={2192}
                     layout={{ position: 'absolute', left: 15, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

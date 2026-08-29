@@ -12,21 +12,21 @@ export interface SpacesNewWidget2GroupsProps {
     onGroupFloors?: () => void;
     onGroupViews?: () => void;
     onGroupWalls?: () => void;
+    tags?: string[];
 }
 
-export const SpacesNewWidget2Groups = ({ layout, onGroupFloors, onGroupViews, onGroupWalls }: SpacesNewWidget2GroupsProps) => {
+export const SpacesNewWidget2Groups = ({ layout, onGroupFloors, onGroupViews, onGroupWalls, tags }: SpacesNewWidget2GroupsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="groups"
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 22, ...layout }}
         >
             <ButtonGroupLeft
                 variant="100"
                 name="group.walls"
-                params={131089}
                 onPointerTap={onGroupWalls}
                 layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 21, minWidth: 50 }}
             >
@@ -35,7 +35,6 @@ export const SpacesNewWidget2Groups = ({ layout, onGroupFloors, onGroupViews, on
             <ButtonGroupCenter
                 variant="100"
                 name="group.floors"
-                params={131089}
                 onPointerTap={onGroupFloors}
                 layout={{ position: 'absolute', left: 50, width: 152, top: 0, height: 21, minWidth: 50 }}
             >
@@ -44,7 +43,6 @@ export const SpacesNewWidget2Groups = ({ layout, onGroupFloors, onGroupViews, on
             <ButtonGroupRight
                 variant="100"
                 name="group.views"
-                params={131089}
                 onPointerTap={onGroupViews}
                 layout={{ position: 'absolute', left: 100, width: 150, top: 0, height: 21, minWidth: 50 }}
             >
@@ -57,9 +55,10 @@ export const SpacesNewWidget2Groups = ({ layout, onGroupFloors, onGroupViews, on
 /** Named region `itemGrid` of SpacesNewWidget2 - configured through the parent's `itemGrid` prop. */
 export interface SpacesNewWidget2ItemGridProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SpacesNewWidget2ItemGrid = ({ layout }: SpacesNewWidget2ItemGridProps) => {
+export const SpacesNewWidget2ItemGrid = ({ layout, tags }: SpacesNewWidget2ItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -67,7 +66,7 @@ export const SpacesNewWidget2ItemGrid = ({ layout }: SpacesNewWidget2ItemGridPro
         >
             <Region
                 name="itemGrid"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -79,14 +78,14 @@ export interface SpacesNewWidget2Props {
     groups?: SpacesNewWidget2GroupsProps;
     itemGrid?: SpacesNewWidget2ItemGridProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SpacesNewWidget2 = ({ groups, itemGrid, layout }: SpacesNewWidget2Props) => {
+export const SpacesNewWidget2 = ({ groups, itemGrid, layout, tags }: SpacesNewWidget2Props) => {
     return (
         <Region
             name="spacesNewWidget"
-            tags={[ 'EMBEDDED', 'FIXED' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <SpacesNewWidget2Groups {...groups} />

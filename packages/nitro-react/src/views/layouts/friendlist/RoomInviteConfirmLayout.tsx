@@ -22,7 +22,6 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
             variant="0"
             id="alert_%202"
             name="alert_%202"
-            params={32769}
             caption={t('friendlist.invite.title')}
             onClose={onClose}
             layout={{ width: 211, height: 175, ...layout }}
@@ -31,12 +30,10 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 <Border
                     variant="0"
                     name="border"
-                    params={98305}
                     layout={{ position: 'absolute', left: 0, width: 199, top: 0, height: 118 }}
                 >
                     <Region
                         name="invite_summary"
-                        params={1}
                         layout={{ position: 'absolute', left: 10, width: 180, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -52,7 +49,6 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                     />
                     <Region
                         name="invite_note"
-                        params={1}
                         layout={{ position: 'absolute', left: 10, width: 180, top: 98, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -64,7 +60,6 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 <Button
                     variant="0"
                     name="cancel"
-                    params={131089}
                     onPointerTap={onCancel}
                     layout={{ position: 'absolute', left: 139, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
                 >
@@ -73,7 +68,6 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 <ButtonThick
                     variant="0"
                     name="ok"
-                    params={131089}
                     onPointerTap={onOk}
                     layout={{ position: 'absolute', left: 0, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
                 >

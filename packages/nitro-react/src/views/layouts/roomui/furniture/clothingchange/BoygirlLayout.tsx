@@ -15,7 +15,6 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
     return (
         <Frame
             variant="0"
-            params={32768}
             caption={t('widget.furni.clothingchange.gender.title')}
             tintColor="#3d3d3d"
             onClose={onClose}
@@ -24,14 +23,12 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="0"
-                    params={2192}
                     tintColor="#f0f0f0"
                     layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <Button
                         variant="0"
                         name="Boy"
-                        params={1180753}
                         onPointerTap={onBoy}
                         layout={{ position: 'absolute', right: 177, width: 100, bottom: 15, height: 22, minWidth: 100 }}
                     >
@@ -40,16 +37,12 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
                     <Button
                         variant="0"
                         name="Girl"
-                        params={1442897}
                         onPointerTap={onGirl}
                         layout={{ position: 'absolute', right: 22, width: 100, bottom: 15, height: 22, minWidth: 100 }}
                     >
                         {t('widget.furni.clothingchange.gender.female')}
                     </Button>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 20, width: 254, top: 16, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 20, width: 254, top: 16, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('widget.furni.clothingchange.gender.info')}
                             textOptions={{ fill: '#000000' }}

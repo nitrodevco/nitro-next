@@ -16,14 +16,10 @@ export const UseProductControllerSaddleLayout = ({ cancelText, captionDescriptio
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
                 <ButtonThick
                     variant="3"
                     name="save_button"
-                    params={131089}
                     onPointerTap={onSaveButton}
                     layout={{ position: 'absolute', left: 230, width: 130, top: 112, height: 28, minWidth: 130, maxWidth: 145 }}
                 >
@@ -32,7 +28,6 @@ export const UseProductControllerSaddleLayout = ({ cancelText, captionDescriptio
                 <UseProductControllerSaddleLayoutPreviewImageRegion {...previewImageRegion} />
                 <Region
                     name="description"
-                    params={16}
                     layout={{ position: 'absolute', left: 140, width: 200, top: 15, height: 61, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -41,15 +36,11 @@ export const UseProductControllerSaddleLayout = ({ cancelText, captionDescriptio
                     />
                 </Region>
                 <UseProductControllerSaddleLayoutCancelText {...cancelText} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('useproduct.widget.cancel')} />
                 </Region>
                 <Region
                     name="info"
-                    params={16}
                     layout={{ position: 'absolute', left: 140, width: 200, top: 60, height: 40, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -68,20 +59,20 @@ export interface UseProductControllerSaddleLayoutPreviewImageRegionProps {
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
+    tags?: string[];
 }
 
-export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerSaddleLayoutPreviewImageRegionProps) => {
+export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: UseProductControllerSaddleLayoutPreviewImageRegionProps) => {
     return (
         <Region
             name="preview_image_region"
-            params={17}
+            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
         >
             <ThemeImage
                 name="preview_image"
-                params={16}
                 src={srcPreviewImage}
                 layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
             />
@@ -93,13 +84,14 @@ export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onP
 export interface UseProductControllerSaddleLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
+    tags?: string[];
 }
 
-export const UseProductControllerSaddleLayoutCancelText = ({ layout, onCancelText }: UseProductControllerSaddleLayoutCancelTextProps) => {
+export const UseProductControllerSaddleLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerSaddleLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            params={17}
+            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

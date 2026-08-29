@@ -8,13 +8,14 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `guildForumSelectorWidget` of GuildForumSelectorWidget - configured through the parent's `guildForumSelectorWidget` prop. */
 export interface GuildForumSelectorWidgetProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GuildForumSelectorWidget = ({ layout }: GuildForumSelectorWidgetProps) => {
+export const GuildForumSelectorWidget = ({ layout, tags }: GuildForumSelectorWidgetProps) => {
     return (
         <Region
             name="guildForumSelectorWidget"
-            params={1040}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

@@ -18,7 +18,6 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('floor.plan.editor.import.export')}
             tintColor="#418db0"
             onClose={onClose}
@@ -27,7 +26,6 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="105"
-                    params={2193}
                     tintColor="#ffffff"
                     layout={{ position: 'absolute', left: 8, right: 23, top: 12, bottom: 93 }}
                 >
@@ -43,7 +41,6 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                 <Button
                     variant="101"
                     name="revert"
-                    params={132113}
                     tintColor="#bbbbbb"
                     onPointerTap={onRevert}
                     layout={{ position: 'absolute', left: -3, width: 191, bottom: 31, height: 49, maxWidth: 191 }}
@@ -53,7 +50,6 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                 <Button
                     variant="101"
                     name="save"
-                    params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSave}
                     layout={{ position: 'absolute', right: 5, width: 73, bottom: 31, height: 49, maxWidth: 73 }}

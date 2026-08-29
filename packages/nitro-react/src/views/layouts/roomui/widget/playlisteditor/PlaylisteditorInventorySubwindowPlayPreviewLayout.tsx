@@ -25,28 +25,25 @@ export interface PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayCon
     srcAuthorNameIconBitmap?: string;
     srcPreviewPlayBackgroundImage?: string;
     srcSongNameIconBitmap?: string;
+    tags?: string[];
 }
 
-export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainer = ({ captionPreviewPlayAuthorName, captionPreviewPlayTrackName, layout, onStopPreviewButton, srcAuthorNameIconBitmap, srcPreviewPlayBackgroundImage, srcSongNameIconBitmap }: PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainerProps) => {
+export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainer = ({ captionPreviewPlayAuthorName, captionPreviewPlayTrackName, layout, onStopPreviewButton, srcAuthorNameIconBitmap, srcPreviewPlayBackgroundImage, srcSongNameIconBitmap, tags }: PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_play_container"
-            params={16}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110, ...layout }}
         >
             <ThemeImage
                 name="preview_play_background_image"
-                params={16}
                 src={srcPreviewPlayBackgroundImage}
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 15, width: 287, top: 21, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 15, width: 287, top: 21, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('playlist.editor.text.preview.playing.for.you')}
                     textStyle="text-style-bold"
@@ -54,34 +51,29 @@ export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContain
             </Region>
             <Region
                 name="preview_play_track_name"
-                params={16}
                 layout={{ position: 'absolute', left: 31, width: 193, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionPreviewPlayTrackName ?? 'preview_track_name'} />
             </Region>
             <Region
                 name="preview_play_author_name"
-                params={16}
                 layout={{ position: 'absolute', left: 31, width: 193, top: 56, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionPreviewPlayAuthorName ?? 'preview_author_name'} />
             </Region>
             <ThemeImage
                 name="song_name_icon_bitmap"
-                params={16}
                 src={srcSongNameIconBitmap ?? layoutImage('jb_icon_disc.png')}
                 layout={{ position: 'absolute', left: 15, width: 14, top: 42, height: 14 }}
             />
             <ThemeImage
                 name="author_name_icon_bitmap"
-                params={16}
                 src={srcAuthorNameIconBitmap ?? layoutImage('jb_icon_composer.png')}
                 layout={{ position: 'absolute', left: 15, width: 14, top: 56, height: 14 }}
             />
             <ButtonThick
                 variant="5"
                 name="stop_preview_button"
-                params={131089}
                 tintColor="#cc0000"
                 onPointerTap={onStopPreviewButton}
                 layout={{ position: 'absolute', left: 15, width: 219, top: 76, height: 28 }}

@@ -10,20 +10,20 @@ import { BoxLayout, Region, ThemeText } from '#base/theme';
 export interface WarningWidgetProps {
     captionWarningText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const WarningWidget = ({ captionWarningText, layout }: WarningWidgetProps) => {
+export const WarningWidget = ({ captionWarningText, layout, tags }: WarningWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="warningWidget"
-            params={1040}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region
                 name="warning_text"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

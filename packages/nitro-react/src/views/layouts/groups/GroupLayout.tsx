@@ -41,13 +41,11 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
             <Border
                 variant="0"
                 name="group_info"
-                params={16}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, width: 343, top: 0, height: 214, justifyContent: 'center' }}
             >
                 <Region
                     name="group_name"
-                    params={129}
                     layout={{ position: 'absolute', left: 125, right: 12, top: 9, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -59,7 +57,6 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                 <WidgetSlot
                     widgetType="badge_image"
                     name="group_logo"
-                    params={16}
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
                     layout={{ position: 'absolute', left: 11, width: 85, top: 14, height: 85 }}
                 />
@@ -75,7 +72,6 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                 <ButtonThick
                     variant="3"
                     name="leave_button"
-                    params={131089}
                     onPointerTap={onLeaveButton}
                     layout={{ position: 'absolute', left: 99, width: 160, top: 179, height: 29, minWidth: 160, maxWidth: 160 }}
                 >
@@ -88,7 +84,6 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                     <ButtonThick
                         variant="3"
                         name="join_button"
-                        params={131089}
                         onPointerTap={onJoinButton}
                         layout={{ width: '100%', height: '100%' }}
                     >
@@ -102,7 +97,6 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                     <ButtonThick
                         variant="3"
                         name="request_membership_button"
-                        params={131089}
                         onPointerTap={onRequestMembershipButton}
                         layout={{ width: '100%', height: '100%' }}
                     >
@@ -114,7 +108,6 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                 <GroupLayoutYouAreMemberRegion {...youAreMemberRegion} />
                 <Region
                     name="membership_pending_txt"
-                    params={208}
                     visible={false}
                     layout={{ position: 'absolute', width: 175, top: 184, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
@@ -123,20 +116,17 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                 <Icon
                     variant="8"
                     name="youaremember_icon"
-                    params={16}
                     tintColor="#3ce600"
                     layout={{ position: 'absolute', left: 62, width: 16, top: 186, height: 16 }}
                 />
                 <Region
                     name="youaremember_txt"
-                    params={208}
                     layout={{ position: 'absolute', width: 123, top: 184, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionYouarememberTxt ?? t('group.youaremember')} />
                 </Region>
                 <Region
                     name="created_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 103, width: 112, top: 27, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -158,13 +148,14 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
 export interface GroupLayoutGroupDescriptionItemProps {
     captionGroupDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GroupLayoutGroupDescriptionItem = ({ captionGroupDescription, layout }: GroupLayoutGroupDescriptionItemProps) => {
+export const GroupLayoutGroupDescriptionItem = ({ captionGroupDescription, layout, tags }: GroupLayoutGroupDescriptionItemProps) => {
     return (
         <Region
             name="group_description"
-            params={16}
+            tags={tags}
             layout={{ width: 215, height: 120, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -179,9 +170,10 @@ export const GroupLayoutGroupDescriptionItem = ({ captionGroupDescription, layou
 export interface GroupLayoutGroupDescriptionItemListProps {
     itemsGroupDescriptionItemList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GroupLayoutGroupDescriptionItemList = ({ itemsGroupDescriptionItemList, layout }: GroupLayoutGroupDescriptionItemListProps) => {
+export const GroupLayoutGroupDescriptionItemList = ({ itemsGroupDescriptionItemList, layout, tags }: GroupLayoutGroupDescriptionItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -189,7 +181,7 @@ export const GroupLayoutGroupDescriptionItemList = ({ itemsGroupDescriptionItemL
         >
             <Region
                 name="group_description_item_list"
-                params={2177}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsGroupDescriptionItemList ?? (
@@ -205,20 +197,20 @@ export interface GroupLayoutMembersRegionProps {
     captionMembersTxt?: string;
     layout?: BoxLayout;
     onMembersRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutMembersRegion = ({ captionMembersTxt, layout, onMembersRegion }: GroupLayoutMembersRegionProps) => {
+export const GroupLayoutMembersRegion = ({ captionMembersTxt, layout, onMembersRegion, tags }: GroupLayoutMembersRegionProps) => {
     return (
         <Region
             name="members_region"
-            params={17}
+            tags={tags}
             onPointerTap={onMembersRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 97, top: 103, height: 18, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="members_txt"
-                params={786448}
                 layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -235,20 +227,20 @@ export interface GroupLayoutPendingMembersRegionProps {
     captionPendingMembersTxt?: string;
     layout?: BoxLayout;
     onPendingMembersRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutPendingMembersRegion = ({ captionPendingMembersTxt, layout, onPendingMembersRegion }: GroupLayoutPendingMembersRegionProps) => {
+export const GroupLayoutPendingMembersRegion = ({ captionPendingMembersTxt, layout, onPendingMembersRegion, tags }: GroupLayoutPendingMembersRegionProps) => {
     return (
         <Region
             name="pending_members_region"
-            params={17}
+            tags={tags}
             onPointerTap={onPendingMembersRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 97, top: 121, height: 18, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="pending_members_txt"
-                params={786448}
                 layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -265,22 +257,22 @@ export interface GroupLayoutGroupRoomLinkRegionProps {
     captionGroupRoomLink?: string;
     layout?: BoxLayout;
     onGroupRoomLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutGroupRoomLinkRegion = ({ captionGroupRoomLink, layout, onGroupRoomLinkRegion }: GroupLayoutGroupRoomLinkRegionProps) => {
+export const GroupLayoutGroupRoomLinkRegion = ({ captionGroupRoomLink, layout, onGroupRoomLinkRegion, tags }: GroupLayoutGroupRoomLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="group_room_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onGroupRoomLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 103, width: 238, top: 103, height: 18, ...layout }}
         >
             <Region
                 name="group_room_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionGroupRoomLink ?? t('group.room.link')} />
@@ -294,22 +286,22 @@ export interface GroupLayoutBuyFurniLinkRegionProps {
     captionBuyFurniLink?: string;
     layout?: BoxLayout;
     onBuyFurniLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutBuyFurniLinkRegion = ({ captionBuyFurniLink, layout, onBuyFurniLinkRegion }: GroupLayoutBuyFurniLinkRegionProps) => {
+export const GroupLayoutBuyFurniLinkRegion = ({ captionBuyFurniLink, layout, onBuyFurniLinkRegion, tags }: GroupLayoutBuyFurniLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buy_furni_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onBuyFurniLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 103, width: 238, top: 119, height: 18, ...layout }}
         >
             <Region
                 name="buy_furni_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionBuyFurniLink ?? t('group.buyfurni')} />
@@ -323,22 +315,22 @@ export interface GroupLayoutShowGroupsLinkRegionProps {
     captionShowGroupsLink?: string;
     layout?: BoxLayout;
     onShowGroupsLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutShowGroupsLinkRegion = ({ captionShowGroupsLink, layout, onShowGroupsLinkRegion }: GroupLayoutShowGroupsLinkRegionProps) => {
+export const GroupLayoutShowGroupsLinkRegion = ({ captionShowGroupsLink, layout, onShowGroupsLinkRegion, tags }: GroupLayoutShowGroupsLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="show_groups_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onShowGroupsLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 103, width: 238, top: 137, height: 18, ...layout }}
         >
             <Region
                 name="show_groups_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionShowGroupsLink ?? t('group.showgroups')} />
@@ -352,22 +344,22 @@ export interface GroupLayoutManageGuildRegionProps {
     captionManageGuildLink?: string;
     layout?: BoxLayout;
     onManageGuildRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutManageGuildRegion = ({ captionManageGuildLink, layout, onManageGuildRegion }: GroupLayoutManageGuildRegionProps) => {
+export const GroupLayoutManageGuildRegion = ({ captionManageGuildLink, layout, onManageGuildRegion, tags }: GroupLayoutManageGuildRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="manage_guild_region"
-            params={17}
+            tags={tags}
             onPointerTap={onManageGuildRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 97, top: 121, height: 18, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="manage_guild_link"
-                params={3932176}
                 layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 83, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionManageGuildLink ?? t('group.manage')} />
@@ -381,22 +373,22 @@ export interface GroupLayoutDeleteGuildRegionProps {
     captionDeleteGuildLink?: string;
     layout?: BoxLayout;
     onDeleteGuildRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutDeleteGuildRegion = ({ captionDeleteGuildLink, layout, onDeleteGuildRegion }: GroupLayoutDeleteGuildRegionProps) => {
+export const GroupLayoutDeleteGuildRegion = ({ captionDeleteGuildLink, layout, onDeleteGuildRegion, tags }: GroupLayoutDeleteGuildRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="delete_guild_region"
-            params={17}
+            tags={tags}
             onPointerTap={onDeleteGuildRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 97, top: 139, height: 18, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="delete_guild_link"
-                params={3932176}
                 layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 83, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionDeleteGuildLink ?? t('group.delete')} />
@@ -410,23 +402,23 @@ export interface GroupLayoutYouAreOwnerRegionProps {
     layout?: BoxLayout;
     onYouAreOwnerRegion?: () => void;
     srcIconOwner?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutYouAreOwnerRegion = ({ layout, onYouAreOwnerRegion, srcIconOwner }: GroupLayoutYouAreOwnerRegionProps) => {
+export const GroupLayoutYouAreOwnerRegion = ({ layout, onYouAreOwnerRegion, srcIconOwner, tags }: GroupLayoutYouAreOwnerRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="you_are_owner_region"
+            tags={tags}
             tooltip={t('group.youareowner')}
-            params={17}
             onPointerTap={onYouAreOwnerRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 40, width: 20, top: 183, height: 20, ...layout }}
         >
             <ThemeImage
                 name="icon_owner"
-                params={16}
                 src={srcIconOwner ?? '${image.library.url}guilds/group_icon_big_owner.png'}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -439,23 +431,23 @@ export interface GroupLayoutYouAreAdminRegionProps {
     layout?: BoxLayout;
     onYouAreAdminRegion?: () => void;
     srcIconAdminOff?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutYouAreAdminRegion = ({ layout, onYouAreAdminRegion, srcIconAdminOff }: GroupLayoutYouAreAdminRegionProps) => {
+export const GroupLayoutYouAreAdminRegion = ({ layout, onYouAreAdminRegion, srcIconAdminOff, tags }: GroupLayoutYouAreAdminRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="you_are_admin_region"
+            tags={tags}
             tooltip={t('group.youareadmin')}
-            params={17}
             onPointerTap={onYouAreAdminRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 40, width: 20, top: 183, height: 20, ...layout }}
         >
             <ThemeImage
                 name="icon_admin_off"
-                params={16}
                 src={srcIconAdminOff ?? '${image.library.url}guilds/group_icon_big_admin.png'}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -468,23 +460,23 @@ export interface GroupLayoutYouAreMemberRegionProps {
     layout?: BoxLayout;
     onYouAreMemberRegion?: () => void;
     srcIconAdminOver?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutYouAreMemberRegion = ({ layout, onYouAreMemberRegion, srcIconAdminOver }: GroupLayoutYouAreMemberRegionProps) => {
+export const GroupLayoutYouAreMemberRegion = ({ layout, onYouAreMemberRegion, srcIconAdminOver, tags }: GroupLayoutYouAreMemberRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="you_are_member_region"
+            tags={tags}
             tooltip={t('group.youaremember')}
-            params={17}
             onPointerTap={onYouAreMemberRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 40, width: 20, top: 183, height: 20, ...layout }}
         >
             <ThemeImage
                 name="icon_admin_over"
-                params={16}
                 src={srcIconAdminOver ?? '${image.library.url}guilds/group_icon_big_member.png'}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -497,23 +489,23 @@ export interface GroupLayoutGrouptypeRegion0Props {
     layout?: BoxLayout;
     onGrouptypeRegion0?: () => void;
     srcGrouptypeIcon0?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0 }: GroupLayoutGrouptypeRegion0Props) => {
+export const GroupLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0, tags }: GroupLayoutGrouptypeRegion0Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_0"
+            tags={tags}
             tooltip={t('group.edit.settings.type.regular.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion0}
             cursor="pointer"
             layout={{ position: 'absolute', left: 107, width: 16, top: 10, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_0"
-                params={16}
                 src={srcGrouptypeIcon0 ?? '${image.library.url}guilds/grouptype_icon_5.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -526,23 +518,23 @@ export interface GroupLayoutGrouptypeRegion1Props {
     layout?: BoxLayout;
     onGrouptypeRegion1?: () => void;
     srcGrouptypeIcon1?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1 }: GroupLayoutGrouptypeRegion1Props) => {
+export const GroupLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1, tags }: GroupLayoutGrouptypeRegion1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_1"
+            tags={tags}
             tooltip={t('group.edit.settings.type.exclusive.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion1}
             cursor="pointer"
             layout={{ position: 'absolute', left: 107, width: 16, top: 10, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_1"
-                params={16}
                 src={srcGrouptypeIcon1 ?? '${image.library.url}guilds/grouptype_icon_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -555,23 +547,23 @@ export interface GroupLayoutGrouptypeRegion2Props {
     layout?: BoxLayout;
     onGrouptypeRegion2?: () => void;
     srcGrouptypeIcon2?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2 }: GroupLayoutGrouptypeRegion2Props) => {
+export const GroupLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2, tags }: GroupLayoutGrouptypeRegion2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_2"
+            tags={tags}
             tooltip={t('group.edit.settings.type.private.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion2}
             cursor="pointer"
             layout={{ position: 'absolute', left: 107, width: 16, top: 10, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_2"
-                params={16}
                 src={srcGrouptypeIcon2 ?? '${image.library.url}guilds/grouptype_icon_2.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -584,23 +576,23 @@ export interface GroupLayoutGroupDecorateIconRegionProps {
     layout?: BoxLayout;
     onGroupDecorateIconRegion?: () => void;
     srcGroupDecorateIcon?: string;
+    tags?: string[];
 }
 
-export const GroupLayoutGroupDecorateIconRegion = ({ layout, onGroupDecorateIconRegion, srcGroupDecorateIcon }: GroupLayoutGroupDecorateIconRegionProps) => {
+export const GroupLayoutGroupDecorateIconRegion = ({ layout, onGroupDecorateIconRegion, srcGroupDecorateIcon, tags }: GroupLayoutGroupDecorateIconRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="group_decorate_icon_region"
+            tags={tags}
             tooltip={t('group.memberscandecorate')}
-            params={17}
             onPointerTap={onGroupDecorateIconRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 125, width: 15, top: 10, height: 15, ...layout }}
         >
             <ThemeImage
                 name="group_decorate_icon"
-                params={16}
                 src={srcGroupDecorateIcon ?? '${image.library.url}guilds/group_decorate_icon.png'}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
             />
@@ -613,22 +605,22 @@ export interface GroupLayoutShowForumLinkRegionProps {
     captionShowForumLink?: string;
     layout?: BoxLayout;
     onShowForumLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupLayoutShowForumLinkRegion = ({ captionShowForumLink, layout, onShowForumLinkRegion }: GroupLayoutShowForumLinkRegionProps) => {
+export const GroupLayoutShowForumLinkRegion = ({ captionShowForumLink, layout, onShowForumLinkRegion, tags }: GroupLayoutShowForumLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="show_forum_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onShowForumLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 103, width: 255, top: 155, height: 18, ...layout }}
         >
             <Region
                 name="show_forum_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionShowForumLink ?? t('group.showforum')} />

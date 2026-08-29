@@ -17,19 +17,16 @@ export const NewFeatureNotificationLayout = ({ cancelLinkRegion, captionDesc, la
         <Region layout={{ position: 'relative', width: 192, height: 92, ...layout }}>
             <Border
                 variant="9"
-                params={273}
                 tintColor="#686661"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 92 }}
             >
                 <ThemeImage
                     name="static_bitmap"
-                    params={16}
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 55 }}
                 />
                 <Region
                     name="desc"
-                    params={16}
                     layout={{ position: 'absolute', left: 67, width: 113, top: 7, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -40,7 +37,6 @@ export const NewFeatureNotificationLayout = ({ cancelLinkRegion, captionDesc, la
                 <Button
                     variant="4"
                     name="open_button"
-                    params={410705}
                     onPointerTap={onOpenButton}
                     layout={{ position: 'absolute', right: 8, width: 51, bottom: 10, height: 28 }}
                 >
@@ -57,15 +53,16 @@ export interface NewFeatureNotificationLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const NewFeatureNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: NewFeatureNotificationLayoutCancelLinkRegionProps) => {
+export const NewFeatureNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: NewFeatureNotificationLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            params={148497}
+            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 155, bottom: 15, height: 17, ...layout }}

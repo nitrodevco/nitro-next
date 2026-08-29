@@ -9,7 +9,6 @@ export const UserTagLayout = ({ layout }: UserTagLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
-                params={17}
                 layout={{ position: 'absolute', left: 0, width: 43, top: 0, height: 15, minHeight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#333333"
             >

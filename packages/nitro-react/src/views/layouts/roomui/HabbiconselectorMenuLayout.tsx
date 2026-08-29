@@ -18,7 +18,6 @@ export const HabbiconselectorMenuLayout = ({ emptyView, habbiconSectionList, lay
             <Border
                 variant="2"
                 name="habbicon_selector_window"
-                params={17}
                 tintColor="#24231e"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 245, top: 0, height: 138 }}
@@ -35,19 +34,19 @@ export const HabbiconselectorMenuLayout = ({ emptyView, habbiconSectionList, lay
 export interface HabbiconselectorMenuLayoutHabbiconSearchClearButtonProps {
     layout?: BoxLayout;
     onHabbiconSearchClearButton?: () => void;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconSearchClearButton = ({ layout, onHabbiconSearchClearButton }: HabbiconselectorMenuLayoutHabbiconSearchClearButtonProps) => {
+export const HabbiconselectorMenuLayoutHabbiconSearchClearButton = ({ layout, onHabbiconSearchClearButton, tags }: HabbiconselectorMenuLayoutHabbiconSearchClearButtonProps) => {
     return (
         <Region
             name="habbicon_search_clear_button"
-            params={3153}
+            tags={tags}
             onPointerTap={onHabbiconSearchClearButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, ...layout }}
         >
             <ThemeImage
-                params={2192}
                 src={layoutImage('common_promo_arrow_close.png')}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
@@ -60,9 +59,10 @@ export interface HabbiconselectorMenuLayoutHabbiconSearchBorderItemProps {
     captionHabbiconSearchPlaceholder?: string;
     habbiconSearchClearButton?: HabbiconselectorMenuLayoutHabbiconSearchClearButtonProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, habbiconSearchClearButton, layout }: HabbiconselectorMenuLayoutHabbiconSearchBorderItemProps) => {
+export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, habbiconSearchClearButton, layout, tags }: HabbiconselectorMenuLayoutHabbiconSearchBorderItemProps) => {
     const t = useTranslation();
     const [ habbiconSearchInputValue, setHabbiconSearchInputValue ] = useState('');
 
@@ -70,7 +70,7 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
         <Border
             variant="4"
             name="habbicon_search_border"
-            params={16}
+            tags={tags}
             layout={{ width: 122, height: 28, flexShrink: 0, ...layout }}
         >
             <TextInput
@@ -82,7 +82,6 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
             />
             <Region
                 name="habbicon_search_placeholder"
-                params={3216}
                 layout={{ position: 'absolute', left: 6, right: 26, alignSelf: 'center', height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -100,16 +99,17 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
 export interface HabbiconselectorMenuLayoutHabbiconOpenHubButtonItemProps {
     layout?: BoxLayout;
     onHabbiconOpenHubButton?: () => void;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconOpenHubButtonItem = ({ layout, onHabbiconOpenHubButton }: HabbiconselectorMenuLayoutHabbiconOpenHubButtonItemProps) => {
+export const HabbiconselectorMenuLayoutHabbiconOpenHubButtonItem = ({ layout, onHabbiconOpenHubButton, tags }: HabbiconselectorMenuLayoutHabbiconOpenHubButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="4"
             name="habbicon_open_hub_button"
-            params={131073}
+            tags={tags}
             onPointerTap={onHabbiconOpenHubButton}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 100, height: 28, flexShrink: 0, minWidth: 100, maxWidth: 100, ...layout }}
@@ -123,13 +123,14 @@ export const HabbiconselectorMenuLayoutHabbiconOpenHubButtonItem = ({ layout, on
 export interface HabbiconselectorMenuLayoutTopControlsProps {
     itemsTopControls?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutTopControls = ({ itemsTopControls, layout }: HabbiconselectorMenuLayoutTopControlsProps) => {
+export const HabbiconselectorMenuLayoutTopControls = ({ itemsTopControls, layout, tags }: HabbiconselectorMenuLayoutTopControlsProps) => {
     return (
         <Region
             name="top_controls"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 232, top: 8, height: 28, flexDirection: 'row', gap: 9, ...layout }}
         >
             {itemsTopControls ?? (
@@ -147,13 +148,14 @@ export interface HabbiconselectorMenuLayoutHabbiconItemTemplateItemProps {
     layout?: BoxLayout;
     onHabbiconItemTemplate?: () => void;
     srcHabbiconIcon?: string;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconItemTemplateItem = ({ layout, onHabbiconItemTemplate, srcHabbiconIcon }: HabbiconselectorMenuLayoutHabbiconItemTemplateItemProps) => {
+export const HabbiconselectorMenuLayoutHabbiconItemTemplateItem = ({ layout, onHabbiconItemTemplate, srcHabbiconIcon, tags }: HabbiconselectorMenuLayoutHabbiconItemTemplateItemProps) => {
     return (
         <Region
             name="habbicon_item_template"
-            params={17}
+            tags={tags}
             onPointerTap={onHabbiconItemTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -161,13 +163,11 @@ export const HabbiconselectorMenuLayoutHabbiconItemTemplateItem = ({ layout, onH
             <Border
                 variant="2"
                 name="habbicon_item_bg"
-                params={16}
                 tintColor="#1f1f1f"
                 layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
             />
             <ThemeImage
                 name="habbicon_icon"
-                params={16}
                 src={srcHabbiconIcon}
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             />
@@ -179,13 +179,14 @@ export const HabbiconselectorMenuLayoutHabbiconItemTemplateItem = ({ layout, onH
 export interface HabbiconselectorMenuLayoutHabbiconGridProps {
     itemsHabbiconGrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconGrid = ({ itemsHabbiconGrid, layout }: HabbiconselectorMenuLayoutHabbiconGridProps) => {
+export const HabbiconselectorMenuLayoutHabbiconGrid = ({ itemsHabbiconGrid, layout, tags }: HabbiconselectorMenuLayoutHabbiconGridProps) => {
     return (
         <Region
             name="habbicon_grid"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 217, top: 20, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         >
             {itemsHabbiconGrid ?? (
@@ -200,18 +201,18 @@ export interface HabbiconselectorMenuLayoutHabbiconSectionTemplateItemProps {
     captionSectionTitle?: string;
     habbiconGrid?: HabbiconselectorMenuLayoutHabbiconGridProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, habbiconGrid, layout }: HabbiconselectorMenuLayoutHabbiconSectionTemplateItemProps) => {
+export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, habbiconGrid, layout, tags }: HabbiconselectorMenuLayoutHabbiconSectionTemplateItemProps) => {
     return (
         <Region
             name="habbicon_section_template"
-            params={16}
+            tags={tags}
             layout={{ width: 217, height: 62, flexShrink: 0, ...layout }}
         >
             <Region
                 name="section_title"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 217, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -228,9 +229,10 @@ export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionS
 export interface HabbiconselectorMenuLayoutHabbiconSectionListProps {
     itemsHabbiconSectionList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutHabbiconSectionList = ({ itemsHabbiconSectionList, layout }: HabbiconselectorMenuLayoutHabbiconSectionListProps) => {
+export const HabbiconselectorMenuLayoutHabbiconSectionList = ({ itemsHabbiconSectionList, layout, tags }: HabbiconselectorMenuLayoutHabbiconSectionListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -238,7 +240,7 @@ export const HabbiconselectorMenuLayoutHabbiconSectionList = ({ itemsHabbiconSec
         >
             <Region
                 name="habbicon_section_list"
-                params={144}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 4, width: '100%' }}
             >
                 {itemsHabbiconSectionList ?? (
@@ -253,20 +255,20 @@ export const HabbiconselectorMenuLayoutHabbiconSectionList = ({ itemsHabbiconSec
 export interface HabbiconselectorMenuLayoutEmptyViewProps {
     captionEmptyText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabbiconselectorMenuLayoutEmptyView = ({ captionEmptyText, layout }: HabbiconselectorMenuLayoutEmptyViewProps) => {
+export const HabbiconselectorMenuLayoutEmptyView = ({ captionEmptyText, layout, tags }: HabbiconselectorMenuLayoutEmptyViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="empty_view"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="empty_text"
-                params={3935440}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText

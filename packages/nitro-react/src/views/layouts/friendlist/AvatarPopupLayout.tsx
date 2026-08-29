@@ -25,13 +25,11 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
             >
                 <ThemeImage
                     name="face"
-                    params={17}
                     src={srcFace}
                     layout={{ position: 'absolute', left: 11, width: 32, top: 5, height: 72 }}
                 />
                 <Region
                     name="name_text_online"
-                    params={4325392}
                     layout={{ position: 'absolute', left: 40, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -41,7 +39,6 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <Region
                     name="name_text_offline"
-                    params={16}
                     layout={{ position: 'absolute', left: 60, width: 140, top: 9, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -51,7 +48,6 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <Region
                     name="motto_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 40, width: 150, top: 20, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -61,7 +57,6 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <Region
                     name="online_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 180, top: 66, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -71,13 +66,11 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <ThemeImage
                     name="offline"
-                    params={17}
                     src={srcOffline}
                     layout={{ position: 'absolute', left: 10, width: 30, top: 8, height: 10 }}
                 />
                 <Region
                     name="last_access_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 180, top: 27, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

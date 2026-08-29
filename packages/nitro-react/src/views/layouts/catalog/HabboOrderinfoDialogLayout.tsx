@@ -23,20 +23,20 @@ export interface HabboOrderinfoDialogLayoutInfoContainerItemProps {
     captionHabboOrderinfoTextB?: string;
     captionHabboOrderinfoTextC?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboOrderinfoDialogLayoutInfoContainerItem = ({ captionHabboOrderinfoTextA, captionHabboOrderinfoTextB, captionHabboOrderinfoTextC, layout }: HabboOrderinfoDialogLayoutInfoContainerItemProps) => {
+export const HabboOrderinfoDialogLayoutInfoContainerItem = ({ captionHabboOrderinfoTextA, captionHabboOrderinfoTextB, captionHabboOrderinfoTextC, layout, tags }: HabboOrderinfoDialogLayoutInfoContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="infoContainer"
-            params={16}
+            tags={tags}
             layout={{ width: 284, height: 80, flexShrink: 0, ...layout }}
         >
             <Region
                 name="habbo_orderinfo_text_a"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 250, top: 14, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -47,7 +47,6 @@ export const HabboOrderinfoDialogLayoutInfoContainerItem = ({ captionHabboOrderi
             </Region>
             <Region
                 name="habbo_orderinfo_text_b"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 250, top: 34, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -58,7 +57,6 @@ export const HabboOrderinfoDialogLayoutInfoContainerItem = ({ captionHabboOrderi
             </Region>
             <Region
                 name="habbo_orderinfo_text_c"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 250, top: 54, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -76,21 +74,21 @@ export interface HabboOrderinfoDialogLayoutButtonContainerItemProps {
     layout?: BoxLayout;
     onButtonCancel?: () => void;
     onButtonOk?: () => void;
+    tags?: string[];
 }
 
-export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButtonCancel, onButtonOk }: HabboOrderinfoDialogLayoutButtonContainerItemProps) => {
+export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButtonCancel, onButtonOk, tags }: HabboOrderinfoDialogLayoutButtonContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buttonContainer"
-            params={16}
+            tags={tags}
             layout={{ width: 281, height: 34, flexShrink: 0, ...layout }}
         >
             <Button
                 variant="3"
                 name="button_cancel"
-                params={393361}
                 onPointerTap={onButtonCancel}
                 layout={{ position: 'absolute', left: 151, right: 74, top: 3, height: 22, maxWidth: 130 }}
             >
@@ -99,7 +97,6 @@ export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButton
             <Button
                 variant="3"
                 name="button_ok"
-                params={131217}
                 onPointerTap={onButtonOk}
                 layout={{ position: 'absolute', left: 80, right: 166, top: 3, height: 22, maxWidth: 130 }}
             >
@@ -113,13 +110,14 @@ export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButton
 export interface HabboOrderinfoDialogLayoutOrderItemListProps {
     itemsOrderItemList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboOrderinfoDialogLayoutOrderItemList = ({ itemsOrderItemList, layout }: HabboOrderinfoDialogLayoutOrderItemListProps) => {
+export const HabboOrderinfoDialogLayoutOrderItemList = ({ itemsOrderItemList, layout, tags }: HabboOrderinfoDialogLayoutOrderItemListProps) => {
     return (
         <Region
             name="orderItemList"
-            params={131088}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, minWidth: 284, top: 0, minHeight: 149, flexDirection: 'column', ...layout }}
         >
             {itemsOrderItemList ?? (
@@ -136,18 +134,18 @@ export const HabboOrderinfoDialogLayoutOrderItemList = ({ itemsOrderItemList, la
 export interface HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps {
     layout?: BoxLayout;
     orderItemList?: HabboOrderinfoDialogLayoutOrderItemListProps;
+    tags?: string[];
 }
 
-export const HabboOrderinfoDialogLayoutHabboOrderinfoDialog = ({ layout, orderItemList }: HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps) => {
+export const HabboOrderinfoDialogLayoutHabboOrderinfoDialog = ({ layout, orderItemList, tags }: HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps) => {
     return (
         <Region
             name="habbo_orderinfo_dialog"
-            params={131088}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149, ...layout }}
         >
             <Border
                 variant="0"
-                params={131088}
                 layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149 }}
             >
                 <HabboOrderinfoDialogLayoutOrderItemList {...orderItemList} />

@@ -16,7 +16,6 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
             variant="3"
             id="groups_info_window"
             name="groups_info_window"
-            params={32769}
             caption={t('group.window.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -32,13 +31,14 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
 /** Named region `group_cont` of GroupInfoWindowLayout - configured through the parent's `groupCont` prop. */
 export interface GroupInfoWindowLayoutGroupContProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GroupInfoWindowLayoutGroupCont = ({ layout }: GroupInfoWindowLayoutGroupContProps) => {
+export const GroupInfoWindowLayoutGroupCont = ({ layout, tags }: GroupInfoWindowLayoutGroupContProps) => {
     return (
         <Region
             name="group_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 343, top: 10, height: 214, ...layout }}
         />
     );

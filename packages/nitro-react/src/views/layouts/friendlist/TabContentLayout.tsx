@@ -17,13 +17,14 @@ export const TabContentLayout = ({ layout, tabContent }: TabContentLayoutProps) 
 /** Named region `list_content` of TabContentLayout - configured through the parent's `listContent` prop. */
 export interface TabContentLayoutListContentProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TabContentLayoutListContent = ({ layout }: TabContentLayoutListContentProps) => {
+export const TabContentLayoutListContent = ({ layout, tags }: TabContentLayoutListContentProps) => {
     return (
         <Region
             name="list_content"
-            params={17}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 95, flexDirection: 'column', ...layout }}
         />
@@ -34,13 +35,14 @@ export const TabContentLayoutListContent = ({ layout }: TabContentLayoutListCont
 export interface TabContentLayoutListProps {
     layout?: BoxLayout;
     listContent?: TabContentLayoutListContentProps;
+    tags?: string[];
 }
 
-export const TabContentLayoutList = ({ layout, listContent }: TabContentLayoutListProps) => {
+export const TabContentLayoutList = ({ layout, listContent, tags }: TabContentLayoutListProps) => {
     return (
         <Region
             name="list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 218, top: 5, height: 95, ...layout }}
         >
             <TabContentLayoutListContent {...listContent} />
@@ -54,13 +56,14 @@ export interface TabContentLayoutTabContentProps {
     layout?: BoxLayout;
     list?: TabContentLayoutListProps;
     onTabContent?: () => void;
+    tags?: string[];
 }
 
-export const TabContentLayoutTabContent = ({ layout, list, onTabContent }: TabContentLayoutTabContentProps) => {
+export const TabContentLayoutTabContent = ({ layout, list, onTabContent, tags }: TabContentLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            params={17}
+            tags={tags}
             backgroundColor="#cccccc"
             onPointerTap={onTabContent}
             cursor="pointer"

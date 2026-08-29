@@ -9,7 +9,10 @@ export interface PropertyLayoutProps {
 export const PropertyLayout = ({ layout, roomProperty }: PropertyLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 155, height: 20, ...layout }}>
-            <PropertyLayoutRoomProperty {...roomProperty} />
+            <PropertyLayoutRoomProperty
+                tags={[ 'TEMPLATE' ]}
+                {...roomProperty}
+            />
         </Region>
     );
 };
@@ -19,19 +22,18 @@ export interface PropertyLayoutRoomPropertyProps {
     captionPropertyName?: string;
     captionPropertyValue?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PropertyLayoutRoomProperty = ({ captionPropertyName, captionPropertyValue, layout }: PropertyLayoutRoomPropertyProps) => {
+export const PropertyLayoutRoomProperty = ({ captionPropertyName, captionPropertyValue, layout, tags }: PropertyLayoutRoomPropertyProps) => {
     return (
         <Region
             name="room_property"
-            tags={[ 'TEMPLATE' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 20, ...layout }}
         >
             <Region
                 name="property_name"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -41,7 +43,6 @@ export const PropertyLayoutRoomProperty = ({ captionPropertyName, captionPropert
             </Region>
             <Region
                 name="property_value"
-                params={16}
                 layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

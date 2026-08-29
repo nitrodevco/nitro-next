@@ -14,7 +14,6 @@ export const BreedPetMenuLayout = ({ border, layout }: BreedPetMenuLayoutProps) 
         <Region layout={{ position: 'relative', width: 115, height: 221, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 221 }}
             >
@@ -29,20 +28,20 @@ export interface BreedPetMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const BreedPetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: BreedPetMenuLayoutProfileLinkProps) => {
+export const BreedPetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: BreedPetMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={1}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,30 +59,28 @@ export interface BreedPetMenuLayoutBreedItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const BreedPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton }: BreedPetMenuLayoutBreedItemProps) => {
+export const BreedPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton, tags }: BreedPetMenuLayoutBreedItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="breed"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -101,17 +98,18 @@ export const BreedPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton }: 
 export interface BreedPetMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BreedPetMenuLayoutButtons = ({ itemsButtons, layout }: BreedPetMenuLayoutButtonsProps) => {
+export const BreedPetMenuLayoutButtons = ({ itemsButtons, layout, tags }: BreedPetMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519888}
+            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 161, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
-                <BreedPetMenuLayoutBreedItem />
+                <BreedPetMenuLayoutBreedItem tags={[ 'action' ]} />
             )}
         </Region>
     );
@@ -121,13 +119,14 @@ export const BreedPetMenuLayoutButtons = ({ itemsButtons, layout }: BreedPetMenu
 export interface BreedPetMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const BreedPetMenuLayoutMinimize = ({ layout, onMinimize }: BreedPetMenuLayoutMinimizeProps) => {
+export const BreedPetMenuLayoutMinimize = ({ layout, onMinimize, tags }: BreedPetMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1041}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
@@ -135,7 +134,6 @@ export const BreedPetMenuLayoutMinimize = ({ layout, onMinimize }: BreedPetMenuL
             <Icon
                 variant="7"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
             />
         </Region>
@@ -148,18 +146,18 @@ export interface BreedPetMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: BreedPetMenuLayoutMinimizeProps;
     profileLink?: BreedPetMenuLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const BreedPetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: BreedPetMenuLayoutBorderProps) => {
+export const BreedPetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: BreedPetMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 211, justifyContent: 'center', ...layout }}
         >
             <BreedPetMenuLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

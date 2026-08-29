@@ -8,13 +8,14 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `fake_productimage` of SimplePriceWidget - configured through the parent's `fakeProductimage` prop. */
 export interface SimplePriceWidgetFakeProductimageProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimplePriceWidgetFakeProductimage = ({ layout }: SimplePriceWidgetFakeProductimageProps) => {
+export const SimplePriceWidgetFakeProductimage = ({ layout, tags }: SimplePriceWidgetFakeProductimageProps) => {
     return (
         <Region
             name="fake_productimage"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30, ...layout }}
         />
     );
@@ -24,12 +25,14 @@ export const SimplePriceWidgetFakeProductimage = ({ layout }: SimplePriceWidgetF
 export interface SimplePriceWidgetProps {
     fakeProductimage?: SimplePriceWidgetFakeProductimageProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimplePriceWidget = ({ fakeProductimage, layout }: SimplePriceWidgetProps) => {
+export const SimplePriceWidget = ({ fakeProductimage, layout, tags }: SimplePriceWidgetProps) => {
     return (
         <Region
             name="simplePriceWidget"
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <SimplePriceWidgetFakeProductimage {...fakeProductimage} />

@@ -19,7 +19,6 @@ export const DailytasksLayout = ({ layout, mainCont, onClose }: DailytasksLayout
             variant="3"
             id="dailytasks_frame"
             name="dailytasks_frame"
-            params={1073774593}
             caption={t('dailytasks.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -35,13 +34,14 @@ export const DailytasksLayout = ({ layout, mainCont, onClose }: DailytasksLayout
 /** Row template `spacer` of DailytasksLayout - pass real rows through its `items…` slot. */
 export interface DailytasksLayoutSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksLayoutSpacerItem = ({ layout }: DailytasksLayoutSpacerItemProps) => {
+export const DailytasksLayoutSpacerItem = ({ layout, tags }: DailytasksLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 0, flexShrink: 0, ...layout }}
         />
     );
@@ -51,22 +51,22 @@ export const DailytasksLayoutSpacerItem = ({ layout }: DailytasksLayoutSpacerIte
 export interface DailytasksLayoutExtraContItemProps {
     layout?: BoxLayout;
     onUnclaimedBtn?: () => void;
+    tags?: string[];
 }
 
-export const DailytasksLayoutExtraContItem = ({ layout, onUnclaimedBtn }: DailytasksLayoutExtraContItemProps) => {
+export const DailytasksLayoutExtraContItem = ({ layout, onUnclaimedBtn, tags }: DailytasksLayoutExtraContItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="extra_cont"
-            params={16}
+            tags={tags}
             layout={{ width: 428, height: 30, flexShrink: 0, ...layout }}
         >
             <Button
                 variant="3"
                 name="unclaimed_btn"
                 tooltip={t('dailytasks.unclaimed.tooltip')}
-                params={393297}
                 onPointerTap={onUnclaimedBtn}
                 layout={{ position: 'absolute', right: 16, width: 133, top: 0, height: 30 }}
             >
@@ -80,21 +80,19 @@ export const DailytasksLayoutExtraContItem = ({ layout, onUnclaimedBtn }: Dailyt
 export interface DailytasksLayoutInfoHoverRegionProps {
     layout?: BoxLayout;
     onInfoHoverRegion?: () => void;
+    tags?: string[];
 }
 
-export const DailytasksLayoutInfoHoverRegion = ({ layout, onInfoHoverRegion }: DailytasksLayoutInfoHoverRegionProps) => {
+export const DailytasksLayoutInfoHoverRegion = ({ layout, onInfoHoverRegion, tags }: DailytasksLayoutInfoHoverRegionProps) => {
     return (
         <Region
             name="info_hover_region"
-            params={17}
+            tags={tags}
             onPointerTap={onInfoHoverRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 254, width: 14, top: 4, height: 22, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 1, width: 12, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 1, width: 12, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="?"
                     textOptions={{ fill: '#ffffff' }}
@@ -107,26 +105,23 @@ export const DailytasksLayoutInfoHoverRegion = ({ layout, onInfoHoverRegion }: D
 /** Named region `completion_cont` of DailytasksLayout - configured through the parent's `completionCont` prop. */
 export interface DailytasksLayoutCompletionContProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksLayoutCompletionCont = ({ layout }: DailytasksLayoutCompletionContProps) => {
+export const DailytasksLayoutCompletionCont = ({ layout, tags }: DailytasksLayoutCompletionContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="completion_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 76, width: 198, top: 83, height: 29, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_icon_task_completed_s.png')}
                 layout={{ position: 'absolute', left: 178, width: 20, top: 3, height: 22 }}
             />
-            <Region
-                params={262160}
-                layout={{ position: 'absolute', right: 23, width: 143, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', right: 23, width: 143, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('dailytasks.task.complete')}
                     textOptions={{ fill: '#24850b' }}
@@ -145,25 +140,24 @@ export interface DailytasksLayoutLeftContProps {
     layout?: BoxLayout;
     srcTaskBitmap?: string;
     srcTaskStaticBitmap?: string;
+    tags?: string[];
 }
 
-export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleTxt, completionCont, infoHoverRegion, layout, srcTaskBitmap, srcTaskStaticBitmap }: DailytasksLayoutLeftContProps) => {
+export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleTxt, completionCont, infoHoverRegion, layout, srcTaskBitmap, srcTaskStaticBitmap, tags }: DailytasksLayoutLeftContProps) => {
     return (
         <Region
             name="left_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 274, top: 6, height: 113, ...layout }}
         >
             <Border
                 variant="4"
                 name="task_name_cont"
-                params={16}
                 tintColor="#4bb245"
                 layout={{ position: 'absolute', left: 0, width: 274, top: 0, height: 28 }}
             >
                 <Region
                     name="task_title_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 20, width: 79, top: 5, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -179,20 +173,17 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
             >
                 <ThemeImage
                     name="task_bitmap"
-                    params={16}
                     src={srcTaskBitmap}
                     layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
                 />
             </Region>
             <ThemeImage
                 name="task_static_bitmap"
-                params={16}
                 src={srcTaskStaticBitmap}
                 layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
             />
             <Region
                 name="task_desc_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 76, width: 198, top: 36, height: 55, minWidth: 198, maxWidth: 198, minHeight: 55, maxHeight: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -210,19 +201,19 @@ export interface DailytasksLayoutRewardTemplateItemProps {
     captionRewardAmountText?: string;
     layout?: BoxLayout;
     srcRewardBitmap?: string;
+    tags?: string[];
 }
 
-export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, layout, srcRewardBitmap }: DailytasksLayoutRewardTemplateItemProps) => {
+export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, layout, srcRewardBitmap, tags }: DailytasksLayoutRewardTemplateItemProps) => {
     return (
         <Region
             name="reward_template"
-            params={16}
+            tags={tags}
             layout={{ width: 44, height: 50, flexShrink: 0, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50, ...layout }}
         >
             <WidgetSlot
                 widgetType="product_icon"
                 name="reward_display_widget"
-                params={16}
                 layout={{ position: 'absolute', left: 2, width: 40, top: 1, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Region
@@ -231,7 +222,6 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
             >
                 <ThemeImage
                     name="reward_bitmap"
-                    params={16}
                     src={srcRewardBitmap}
                     layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 50, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50 }}
                 />
@@ -239,14 +229,12 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
             <Border
                 variant="3"
                 name="reward_amount_border"
-                params={934032}
                 tintColor="#7c7c7c"
                 blend={0.9}
                 layout={{ position: 'absolute', left: 8, right: 8, top: 36, height: 14, minHeight: 14, maxHeight: 14 }}
             >
                 <Region
                     name="reward_amount_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -263,13 +251,14 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
 export interface DailytasksLayoutRewardsListProps {
     itemsRewardsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksLayoutRewardsList = ({ itemsRewardsList, layout }: DailytasksLayoutRewardsListProps) => {
+export const DailytasksLayoutRewardsList = ({ itemsRewardsList, layout, tags }: DailytasksLayoutRewardsListProps) => {
     return (
         <Region
             name="rewards_list"
-            params={933904}
+            tags={tags}
             layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, top: 28, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsRewardsList ?? (
@@ -284,28 +273,27 @@ export interface DailytasksLayoutClaimButtonContainerProps {
     captionClaimTxt?: string;
     layout?: BoxLayout;
     onClaimButton?: () => void;
+    tags?: string[];
 }
 
-export const DailytasksLayoutClaimButtonContainer = ({ captionClaimTxt, layout, onClaimButton }: DailytasksLayoutClaimButtonContainerProps) => {
+export const DailytasksLayoutClaimButtonContainer = ({ captionClaimTxt, layout, onClaimButton, tags }: DailytasksLayoutClaimButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="claim_button_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, justifyContent: 'center', ...layout }}
         >
             <Button
                 variant="5"
                 name="claim_button"
-                params={917521}
                 tintColor="#01a101"
                 onPointerTap={onClaimButton}
                 layout={{ position: 'absolute', width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
             />
             <Region
                 name="claim_txt"
-                params={786448}
                 layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -320,14 +308,15 @@ export const DailytasksLayoutClaimButtonContainer = ({ captionClaimTxt, layout, 
 /** Named region `progress_bar_wrapper` of DailytasksLayout - configured through the parent's `progressBarWrapper` prop. */
 export interface DailytasksLayoutProgressBarWrapperProps {
     layout?: BoxLayout;
+    tags?: string[];
     visibleProgressBarWrapper?: boolean;
 }
 
-export const DailytasksLayoutProgressBarWrapper = ({ layout, visibleProgressBarWrapper }: DailytasksLayoutProgressBarWrapperProps) => {
+export const DailytasksLayoutProgressBarWrapper = ({ layout, tags, visibleProgressBarWrapper }: DailytasksLayoutProgressBarWrapperProps) => {
     return (
         <Region
             name="progress_bar_wrapper"
-            params={16}
+            tags={tags}
             visible={visibleProgressBarWrapper ?? false}
             layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110, minHeight: 23, maxHeight: 23, ...layout }}
         />
@@ -339,13 +328,14 @@ export interface DailytasksLayoutRightBottomContProps {
     claimButtonContainer?: DailytasksLayoutClaimButtonContainerProps;
     layout?: BoxLayout;
     progressBarWrapper?: DailytasksLayoutProgressBarWrapperProps;
+    tags?: string[];
 }
 
-export const DailytasksLayoutRightBottomCont = ({ claimButtonContainer, layout, progressBarWrapper }: DailytasksLayoutRightBottomContProps) => {
+export const DailytasksLayoutRightBottomCont = ({ claimButtonContainer, layout, progressBarWrapper, tags }: DailytasksLayoutRightBottomContProps) => {
     return (
         <Region
             name="right_bottom_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 110, top: 84, height: 29, ...layout }}
         >
             <DailytasksLayoutClaimButtonContainer {...claimButtonContainer} />
@@ -360,27 +350,26 @@ export interface DailytasksLayoutRightContProps {
     layout?: BoxLayout;
     rewardsList?: DailytasksLayoutRewardsListProps;
     rightBottomCont?: DailytasksLayoutRightBottomContProps;
+    tags?: string[];
 }
 
-export const DailytasksLayoutRightCont = ({ captionRewardTitleText, layout, rewardsList, rightBottomCont }: DailytasksLayoutRightContProps) => {
+export const DailytasksLayoutRightCont = ({ captionRewardTitleText, layout, rewardsList, rightBottomCont, tags }: DailytasksLayoutRightContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="right_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 286, width: 110, top: 6, height: 113, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
                 name="reward_title_border"
-                params={16}
                 tintColor="#a6ce92"
                 layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 28 }}
             >
                 <Region
                     name="reward_title_text"
-                    params={4194448}
                     layout={{ position: 'absolute', left: 0, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -400,14 +389,15 @@ export interface DailytasksLayoutTaskTemplateItemProps {
     layout?: BoxLayout;
     leftCont?: DailytasksLayoutLeftContProps;
     rightCont?: DailytasksLayoutRightContProps;
+    tags?: string[];
 }
 
-export const DailytasksLayoutTaskTemplateItem = ({ layout, leftCont, rightCont }: DailytasksLayoutTaskTemplateItemProps) => {
+export const DailytasksLayoutTaskTemplateItem = ({ layout, leftCont, rightCont, tags }: DailytasksLayoutTaskTemplateItemProps) => {
     return (
         <Border
             variant="4"
             name="task_template"
-            params={16}
+            tags={tags}
             tintColor="#c6e0b4"
             layout={{ width: 402, height: 119, flexShrink: 0, ...layout }}
         >
@@ -421,9 +411,10 @@ export const DailytasksLayoutTaskTemplateItem = ({ layout, leftCont, rightCont }
 export interface DailytasksLayoutTasksListItemProps {
     itemsTasksList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksLayoutTasksListItem = ({ itemsTasksList, layout }: DailytasksLayoutTasksListItemProps) => {
+export const DailytasksLayoutTasksListItem = ({ itemsTasksList, layout, tags }: DailytasksLayoutTasksListItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -431,7 +422,7 @@ export const DailytasksLayoutTasksListItem = ({ itemsTasksList, layout }: Dailyt
         >
             <Region
                 name="tasks_list"
-                params={144}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 8, width: '100%' }}
             >
                 {itemsTasksList ?? (
@@ -447,20 +438,20 @@ export interface DailytasksLayoutHcInfoContItemProps {
     captionHcInfoText?: string;
     layout?: BoxLayout;
     onGetHcBtn?: () => void;
+    tags?: string[];
 }
 
-export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGetHcBtn }: DailytasksLayoutHcInfoContItemProps) => {
+export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGetHcBtn, tags }: DailytasksLayoutHcInfoContItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hc_info_cont"
-            params={16}
+            tags={tags}
             layout={{ width: 428, height: 35, flexShrink: 0, ...layout }}
         >
             <Region
                 name="hc_info_text"
-                params={3145744}
                 layout={{ position: 'absolute', left: 12, width: 289, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -471,7 +462,6 @@ export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGe
             <ButtonThick
                 variant="5"
                 name="get_hc_btn"
-                params={393297}
                 tintColor="#01a101"
                 onPointerTap={onGetHcBtn}
                 layout={{ position: 'absolute', right: 16, width: 107, top: 0, height: 30 }}
@@ -486,13 +476,14 @@ export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGe
 export interface DailytasksLayoutMainContProps {
     itemsMainCont?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DailytasksLayoutMainCont = ({ itemsMainCont, layout }: DailytasksLayoutMainContProps) => {
+export const DailytasksLayoutMainCont = ({ itemsMainCont, layout, tags }: DailytasksLayoutMainContProps) => {
     return (
         <Region
             name="main_cont"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsMainCont ?? (

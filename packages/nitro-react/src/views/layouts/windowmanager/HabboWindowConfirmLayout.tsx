@@ -19,7 +19,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
             variant="3"
             id="_alert_frame"
             name="_alert_frame"
-            params={32769}
             caption="Alert"
             tintColor="#418db0"
             onClose={onClose}
@@ -29,7 +28,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
                 <Region
                     name="_alert_description"
                     tags={[ 'DESCRIPTION' ]}
-                    params={8388624}
                     layout={{ position: 'absolute', left: 16, width: 253, top: 14, minHeight: 72, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -40,7 +38,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
                 </Region>
                 <Region
                     name="_alert_button_cancel"
-                    params={132097}
                     layout={{ position: 'absolute', left: 20, width: 100, bottom: 46, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onAlertButtonCancel}
                     cursor="pointer"
@@ -54,7 +51,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
                     variant="3"
                     name="_alert_button_ok"
                     tags={[ 'OK' ]}
-                    params={918545}
                     tintColor="#efefef"
                     onPointerTap={onAlertButtonOk}
                     layout={{ position: 'absolute', marginLeft: 71, marginRight: -71, width: 50, bottom: 39, height: 28, minWidth: 50 }}

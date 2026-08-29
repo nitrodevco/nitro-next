@@ -1,17 +1,18 @@
 import { BoxLayout, Region } from '#base/theme';
-import { GuildBadgeViewWidgetLayout, GuildBadgeViewWidgetLayoutProps } from '#base/views/layouts/catalog/GuildBadgeViewWidgetLayout';
+import { GuildBadgeViewWidgetLayout, GuildBadgeViewWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/GuildBadgeViewWidgetLayout';
 
 /**
  * Catalog widget `guildBadgeViewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
- * layout reserves a container by that name and the client attaches the widget to it. Shared by 2 pages
- * (LayoutGuildCustomFurni_1586Layout, LayoutGuildCustomFurni_1680Layout); each passes its own placement through `layout`.
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 3 pages
+ * (LayoutGuildCustomFurni_1586Layout, LayoutGuildCustomFurni_1680Layout, LayoutGuildForumLayout); each passes its own placement through `layout`.
  */
-export type GuildBadgeViewWidgetProps = Omit<GuildBadgeViewWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+export type GuildBadgeViewWidgetProps = Omit<GuildBadgeViewWidgetLayoutProps, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };
 
-export const GuildBadgeViewWidget = ({ layout, ...widget }: GuildBadgeViewWidgetProps) => {
+export const GuildBadgeViewWidget = ({ layout, tags, ...widget }: GuildBadgeViewWidgetProps) => {
     return (
         <Region
             name="guildBadgeViewWidget"
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <GuildBadgeViewWidgetLayout

@@ -21,36 +21,28 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entr
         <Region layout={{ position: 'relative', width: 275, height: 341, ...layout }}>
             <Bubble
                 variant="100"
-                params={1}
                 layout={{ position: 'absolute', left: 0, width: 275, top: 0, height: 341, justifyContent: 'center' }}
             >
                 <HighScoreDisplayLayoutTitle {...title} />
                 <Border
                     variant="100"
                     name="header"
-                    params={16}
                     layout={{ position: 'absolute', left: 8, width: 258, top: 30, height: 23 }}
                 >
                     <Border
                         variant="100"
-                        params={16}
                         layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 23 }}
                     >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
+                        <Region layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText text={t('high.score.display.users.header')} />
                         </Region>
                     </Border>
                     <Border
                         variant="100"
-                        params={16}
                         layout={{ position: 'absolute', left: 188, width: 70, top: 0, height: 23 }}
                     >
                         <Region
                             name="score_header"
-                            params={262224}
                             layout={{ position: 'absolute', right: 5, width: 161, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionScoreHeader ?? t('high.score.display.score.header')} />
@@ -60,13 +52,11 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entr
                 <Border
                     variant="108"
                     name="list_background"
-                    params={16}
                     tintColor="#676767"
                     layout={{ position: 'absolute', left: 8, width: 257, top: 53, height: 255 }}
                 />
                 <Region
                     name="footer"
-                    params={786640}
                     layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -77,7 +67,6 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entr
                 </Region>
                 <ThemeImage
                     name="cup_icon"
-                    params={16}
                     src={srcCupIcon ?? layoutImage('high_score_highscore_cup.png')}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 269, height: 70 }}
                 />
@@ -90,22 +79,20 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entr
 /** Named region `title` of HighScoreDisplayLayout - configured through the parent's `title` prop. */
 export interface HighScoreDisplayLayoutTitleProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutTitle = ({ layout }: HighScoreDisplayLayoutTitleProps) => {
+export const HighScoreDisplayLayoutTitle = ({ layout, tags }: HighScoreDisplayLayoutTitleProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            params={16}
+            tags={tags}
             backgroundColor="#3f3f3f"
             layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center', ...layout }}
         >
-            <Region
-                params={786640}
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('high.score.display.caption')}
                     textStyle="text-style-u-bold"
@@ -121,18 +108,18 @@ export interface HighScoreDisplayLayoutEntryTemplateItemProps {
     captionScore?: string;
     captionUsernames?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionUsernames, layout }: HighScoreDisplayLayoutEntryTemplateItemProps) => {
+export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionUsernames, layout, tags }: HighScoreDisplayLayoutEntryTemplateItemProps) => {
     return (
         <Region
             name="entry_template"
-            params={16}
+            tags={tags}
             layout={{ width: 258, height: 20, flexShrink: 0, ...layout }}
         >
             <Region
                 name="usernames"
-                params={80}
                 layout={{ position: 'absolute', right: 136, width: 120, top: 2, height: 16, maxWidth: 180, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -142,7 +129,6 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
             </Region>
             <Region
                 name="score"
-                params={262224}
                 layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -158,9 +144,10 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
 export interface HighScoreDisplayLayoutEntriesProps {
     itemsEntries?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout }: HighScoreDisplayLayoutEntriesProps) => {
+export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout, tags }: HighScoreDisplayLayoutEntriesProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -168,7 +155,7 @@ export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout }: HighScor
         >
             <Region
                 name="entries"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsEntries ?? (

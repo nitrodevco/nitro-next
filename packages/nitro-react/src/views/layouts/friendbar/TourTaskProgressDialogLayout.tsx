@@ -18,7 +18,6 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
     return (
         <Frame
             variant="100"
-            params={131073}
             caption={t('talent.track.task.progress.dialog.title')}
             onClose={onClose}
             layout={{ width: 378, height: 289, ...layout }}
@@ -26,34 +25,23 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="104"
-                    params={16400}
                     tintColor="#e2e2e2"
                     layout={{ position: 'absolute', left: 15, width: 347, top: 0, height: 211 }}
                 >
-                    <Region
-                        params={1040}
-                        layout={{ position: 'absolute', left: 0, width: 215, bottom: 2, height: 110 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 215, bottom: 2, height: 110 }}>
                         <ThemeImage
-                            params={16}
                             src={layoutImage('help_frank_greeting.png')}
                             layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 160 }}
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('talent.track.progress.tour.header.caption')}
                             textStyle="text-style-il-heading-2"
                             textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('talent.track.progress.tour.header.body')}
                             textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
@@ -62,7 +50,6 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
                     <WidgetSlot
                         widgetType="separator"
                         name="action_separator"
-                        params={16}
                         layout={{ position: 'absolute', left: 10, width: 325, top: 57, height: 30 }}
                     />
                     <TourTaskProgressDialogLayoutTopList {...topList} />
@@ -77,15 +64,16 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
 export interface TourTaskProgressDialogLayoutActionTitleItemProps {
     captionActionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout }: TourTaskProgressDialogLayoutActionTitleItemProps) => {
+export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout, tags }: TourTaskProgressDialogLayoutActionTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_title"
-            params={16}
+            tags={tags}
             layout={{ width: 210, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -101,15 +89,16 @@ export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle
 export interface TourTaskProgressDialogLayoutActionDescriptionItemProps {
     captionActionDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout }: TourTaskProgressDialogLayoutActionDescriptionItemProps) => {
+export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout, tags }: TourTaskProgressDialogLayoutActionDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_description"
-            params={16}
+            tags={tags}
             layout={{ width: 210, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -124,16 +113,17 @@ export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActio
 export interface TourTaskProgressDialogLayoutTakeTourButtonItemProps {
     layout?: BoxLayout;
     onTakeTourButton?: () => void;
+    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeTourButton }: TourTaskProgressDialogLayoutTakeTourButtonItemProps) => {
+export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeTourButton, tags }: TourTaskProgressDialogLayoutTakeTourButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="101"
             name="take_tour_button"
-            params={131089}
+            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onTakeTourButton}
             layout={{ width: 153, height: 55, flexShrink: 0, ...layout }}
@@ -147,13 +137,14 @@ export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeT
 export interface TourTaskProgressDialogLayoutTopListProps {
     itemsTopList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TourTaskProgressDialogLayoutTopListProps) => {
+export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout, tags }: TourTaskProgressDialogLayoutTopListProps) => {
     return (
         <Region
             name="top_list"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 118, top: 79, minHeight: 70, flexDirection: 'column', ...layout }}
         >
             {itemsTopList ?? (
@@ -171,23 +162,21 @@ export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: To
 export interface TourTaskProgressDialogLayoutDeclineTourRegionProps {
     layout?: BoxLayout;
     onDeclineTourRegion?: () => void;
+    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutDeclineTourRegion = ({ layout, onDeclineTourRegion }: TourTaskProgressDialogLayoutDeclineTourRegionProps) => {
+export const TourTaskProgressDialogLayoutDeclineTourRegion = ({ layout, onDeclineTourRegion, tags }: TourTaskProgressDialogLayoutDeclineTourRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decline_tour_region"
-            params={17}
+            tags={tags}
             onPointerTap={onDeclineTourRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center', ...layout }}
         >
-            <Region
-                params={786448}
-                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('talent.track.progress.tour.decline')} />
             </Region>
         </Region>

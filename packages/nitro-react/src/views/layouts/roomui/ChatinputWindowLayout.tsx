@@ -20,18 +20,18 @@ export const ChatinputWindowLayout = ({ layout, masterContainer }: ChatinputWind
 /** Named region `dropdown_icon_container` of ChatinputWindowLayout - configured through the parent's `dropdownIconContainer` prop. */
 export interface ChatinputWindowLayoutDropdownIconContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutDropdownIconContainer = ({ layout }: ChatinputWindowLayoutDropdownIconContainerProps) => {
+export const ChatinputWindowLayoutDropdownIconContainer = ({ layout, tags }: ChatinputWindowLayoutDropdownIconContainerProps) => {
     return (
         <Region
             name="dropdown_icon_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 63, width: 18, top: 3, height: 33, ...layout }}
         >
             <Icon
                 variant="7"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 2, width: 10, top: 14, height: 5 }}
             />
@@ -44,19 +44,19 @@ export interface ChatinputWindowLayoutStylesItemProps {
     dropdownIconContainer?: ChatinputWindowLayoutDropdownIconContainerProps;
     layout?: BoxLayout;
     srcPreviewBitmap?: string;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutStylesItem = ({ dropdownIconContainer, layout, srcPreviewBitmap }: ChatinputWindowLayoutStylesItemProps) => {
+export const ChatinputWindowLayoutStylesItem = ({ dropdownIconContainer, layout, srcPreviewBitmap, tags }: ChatinputWindowLayoutStylesItemProps) => {
     return (
         <Border
             variant="8"
             name="styles"
-            params={17}
+            tags={tags}
             layout={{ width: 83, height: 38, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="preview_bitmap"
-                params={16}
                 src={srcPreviewBitmap}
                 layout={{ position: 'absolute', left: 7, width: 55, top: 2, height: 34 }}
             />
@@ -69,13 +69,14 @@ export const ChatinputWindowLayoutStylesItem = ({ dropdownIconContainer, layout,
 export interface ChatinputWindowLayoutHelpbuttonShowHoverRegionProps {
     layout?: BoxLayout;
     onHelpbuttonShowHoverRegion?: () => void;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutHelpbuttonShowHoverRegion = ({ layout, onHelpbuttonShowHoverRegion }: ChatinputWindowLayoutHelpbuttonShowHoverRegionProps) => {
+export const ChatinputWindowLayoutHelpbuttonShowHoverRegion = ({ layout, onHelpbuttonShowHoverRegion, tags }: ChatinputWindowLayoutHelpbuttonShowHoverRegionProps) => {
     return (
         <Region
             name="helpbutton_show_hover_region"
-            params={17}
+            tags={tags}
             onPointerTap={onHelpbuttonShowHoverRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 1, width: 340, top: 0, height: 37, ...layout }}
@@ -89,9 +90,10 @@ export interface ChatinputWindowLayoutInputBorderItemProps {
     helpbuttonShowHoverRegion?: ChatinputWindowLayoutHelpbuttonShowHoverRegionProps;
     layout?: BoxLayout;
     onHelpbutton?: () => void;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbuttonShowHoverRegion, layout, onHelpbutton }: ChatinputWindowLayoutInputBorderItemProps) => {
+export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbuttonShowHoverRegion, layout, onHelpbutton, tags }: ChatinputWindowLayoutInputBorderItemProps) => {
     const t = useTranslation();
     const [ chatInputValue, setChatInputValue ] = useState('');
 
@@ -99,7 +101,7 @@ export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbut
         <Border
             variant="8"
             name="input_border"
-            params={16}
+            tags={tags}
             layout={{ width: 340, height: 38, flexShrink: 0, ...layout }}
         >
             <ChatinputWindowLayoutHelpbuttonShowHoverRegion {...helpbuttonShowHoverRegion} />
@@ -111,7 +113,6 @@ export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbut
             />
             <Region
                 name="block_text"
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
@@ -123,7 +124,6 @@ export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbut
             <CloseButton
                 variant="4"
                 name="helpbutton"
-                params={17}
                 onPointerTap={onHelpbutton}
                 layout={{ position: 'absolute', left: 313, width: 22, top: 9, height: 21 }}
             />
@@ -136,21 +136,20 @@ export interface ChatinputWindowLayoutSendButtonItemProps {
     captionSendButtonText?: string;
     layout?: BoxLayout;
     onSendButton?: () => void;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, layout, onSendButton }: ChatinputWindowLayoutSendButtonItemProps) => {
+export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, layout, onSendButton, tags }: ChatinputWindowLayoutSendButtonItemProps) => {
     return (
         <ContainerButton
             variant="4"
             name="send_button"
-            tags={[ 'FIT:chatSayButton' ]}
-            params={12582929}
+            tags={tags}
             onPointerTap={onSendButton}
             layout={{ width: 47, height: 38, flexShrink: 0, ...layout }}
         >
             <Region
                 name="send_button_text"
-                params={12582928}
                 layout={{ position: 'absolute', left: 20, top: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionSendButtonText ?? '.'} />
@@ -163,20 +162,21 @@ export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, lay
 export interface ChatinputWindowLayoutChatInputContainerProps {
     itemsChatInputContainer?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutChatInputContainer = ({ itemsChatInputContainer, layout }: ChatinputWindowLayoutChatInputContainerProps) => {
+export const ChatinputWindowLayoutChatInputContainer = ({ itemsChatInputContainer, layout, tags }: ChatinputWindowLayoutChatInputContainerProps) => {
     return (
         <Region
             name="chat_input_container"
-            params={4194512}
+            tags={tags}
             layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 484, top: 60, height: 57, flexDirection: 'row', gap: 7, ...layout }}
         >
             {itemsChatInputContainer ?? (
                 <>
                     <ChatinputWindowLayoutStylesItem />
                     <ChatinputWindowLayoutInputBorderItem />
-                    <ChatinputWindowLayoutSendButtonItem />
+                    <ChatinputWindowLayoutSendButtonItem tags={[ 'FIT:chatSayButton' ]} />
                 </>
             )}
         </Region>
@@ -187,14 +187,14 @@ export const ChatinputWindowLayoutChatInputContainer = ({ itemsChatInputContaine
 export interface ChatinputWindowLayoutBubblecontProps {
     chatInputContainer?: ChatinputWindowLayoutChatInputContainerProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutBubblecont = ({ chatInputContainer, layout }: ChatinputWindowLayoutBubblecontProps) => {
+export const ChatinputWindowLayoutBubblecont = ({ chatInputContainer, layout, tags }: ChatinputWindowLayoutBubblecontProps) => {
     return (
         <Region
             name="bubblecont"
-            tags={[ 'chat_bubble' ]}
-            params={1049600}
+            tags={tags}
             dropShadow={{ distance: 4, alpha: 0.6 }}
             layout={{ position: 'absolute', left: 18, width: 733, bottom: 238, height: 117, minWidth: 90, justifyContent: 'center', ...layout }}
         >
@@ -206,13 +206,14 @@ export const ChatinputWindowLayoutBubblecont = ({ chatInputContainer, layout }: 
 /** Named region `chatstyles_menu` of ChatinputWindowLayout - configured through the parent's `chatstylesMenu` prop. */
 export interface ChatinputWindowLayoutChatstylesMenuProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutChatstylesMenu = ({ layout }: ChatinputWindowLayoutChatstylesMenuProps) => {
+export const ChatinputWindowLayoutChatstylesMenu = ({ layout, tags }: ChatinputWindowLayoutChatstylesMenuProps) => {
     return (
         <Region
             name="chatstyles_menu"
-            params={1180672}
+            tags={tags}
             dropShadow={{ distance: 4, alpha: 0.6 }}
             layout={{ position: 'absolute', left: 2, width: 160, bottom: 258, height: 105, ...layout }}
         />
@@ -224,16 +225,20 @@ export interface ChatinputWindowLayoutMasterContainerProps {
     bubblecont?: ChatinputWindowLayoutBubblecontProps;
     chatstylesMenu?: ChatinputWindowLayoutChatstylesMenuProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatinputWindowLayoutMasterContainer = ({ bubblecont, chatstylesMenu, layout }: ChatinputWindowLayoutMasterContainerProps) => {
+export const ChatinputWindowLayoutMasterContainer = ({ bubblecont, chatstylesMenu, layout, tags }: ChatinputWindowLayoutMasterContainerProps) => {
     return (
         <Region
             name="master_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 1280, top: 0, height: 1024, minWidth: 90, ...layout }}
         >
-            <ChatinputWindowLayoutBubblecont {...bubblecont} />
+            <ChatinputWindowLayoutBubblecont
+                tags={[ 'chat_bubble' ]}
+                {...bubblecont}
+            />
             <ChatinputWindowLayoutChatstylesMenu {...chatstylesMenu} />
         </Region>
     );

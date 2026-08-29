@@ -17,7 +17,6 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
         <Region layout={{ position: 'relative', width: 67, height: 70, ...layout }}>
             <Border
                 variant="2"
-                params={17}
                 tintColor="#24231e"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 70 }}
@@ -26,14 +25,12 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
                 <StyleselectorMenuNewLayoutDivider {...divider} />
                 <Border
                     variant="2"
-                    params={1168}
                     tintColor="#000000"
                     blend={0.3}
                     layout={{ position: 'absolute', left: 6, right: 5, bottom: 0, height: 26 }}
                 />
                 <Region
                     name="font_size_title"
-                    params={1040}
                     layout={{ position: 'absolute', left: 15, width: 51, bottom: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -50,13 +47,14 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
 /** Named region `itemgrid` of StyleselectorMenuNewLayout - configured through the parent's `itemgrid` prop. */
 export interface StyleselectorMenuNewLayoutItemgridProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const StyleselectorMenuNewLayoutItemgrid = ({ layout }: StyleselectorMenuNewLayoutItemgridProps) => {
+export const StyleselectorMenuNewLayoutItemgrid = ({ layout, tags }: StyleselectorMenuNewLayoutItemgridProps) => {
     return (
         <Region
             name="itemgrid"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         />
     );
@@ -65,14 +63,15 @@ export const StyleselectorMenuNewLayoutItemgrid = ({ layout }: StyleselectorMenu
 /** Named region `divider` of StyleselectorMenuNewLayout - configured through the parent's `divider` prop. */
 export interface StyleselectorMenuNewLayoutDividerProps {
     layout?: BoxLayout;
+    tags?: string[];
     visibleDivider?: boolean;
 }
 
-export const StyleselectorMenuNewLayoutDivider = ({ layout, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
+export const StyleselectorMenuNewLayoutDivider = ({ layout, tags, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
     return (
         <Region
             name="divider"
-            params={1104}
+            tags={tags}
             visible={visibleDivider ?? false}
             backgroundColor="#c7c7c7"
             layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1, ...layout }}
@@ -83,13 +82,14 @@ export const StyleselectorMenuNewLayoutDivider = ({ layout, visibleDivider }: St
 /** Named region `font_size_list` of StyleselectorMenuNewLayout - configured through the parent's `fontSizeList` prop. */
 export interface StyleselectorMenuNewLayoutFontSizeListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const StyleselectorMenuNewLayoutFontSizeList = ({ layout }: StyleselectorMenuNewLayoutFontSizeListProps) => {
+export const StyleselectorMenuNewLayoutFontSizeList = ({ layout, tags }: StyleselectorMenuNewLayoutFontSizeListProps) => {
     return (
         <Region
             name="font_size_list"
-            params={787536}
+            tags={tags}
             layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2, ...layout }}
         />
     );

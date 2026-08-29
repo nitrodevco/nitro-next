@@ -15,21 +15,16 @@ export interface SnowwarOwnStatsLayoutProps {
 export const SnowwarOwnStatsLayout = ({ captionPersonalScore, captionPersonalScoreStroke, layout, srcBackgroundFlashImage, srcBackgroundImage, srcEnergyBar, srcUserImage }: SnowwarOwnStatsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 171, height: 73, ...layout }}>
-            <Region
-                params={1024}
-                layout={{ position: 'absolute', left: 0, width: 171, bottom: 0, height: 73 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 171, bottom: 0, height: 73 }}>
                 <ThemeImage
                     name="backgroundImage"
                     tags={[ 'bitmap' ]}
-                    params={16}
                     src={srcBackgroundImage ?? layoutImage('ui_me_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 171, top: 0, height: 73 }}
                 />
                 <ThemeImage
                     name="energy_bar"
                     tags={[ 'bitmap' ]}
-                    params={16}
                     src={srcEnergyBar ?? layoutImage('ui_me_health_5.png')}
                     layout={{ position: 'absolute', left: 73, width: 8, top: 14, height: 46 }}
                 />
@@ -41,7 +36,6 @@ export const SnowwarOwnStatsLayout = ({ captionPersonalScore, captionPersonalSco
                 />
                 <ThemeImage
                     name="user_image"
-                    params={16}
                     src={srcUserImage}
                     layout={{ position: 'absolute', left: 0, width: 73, top: 0, height: 73 }}
                 />

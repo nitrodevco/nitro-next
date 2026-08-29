@@ -10,13 +10,9 @@ export interface AvatarImage_2793LayoutProps {
 export const AvatarImage_2793Layout = ({ layout, region, srcBitmap }: AvatarImage_2793LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
-            <Region
-                params={2196}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="bitmap"
-                    params={2192}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -30,14 +26,15 @@ export const AvatarImage_2793Layout = ({ layout, region, srcBitmap }: AvatarImag
 export interface AvatarImage_2793LayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const AvatarImage_2793LayoutRegion = ({ layout, onRegion, visibleRegion }: AvatarImage_2793LayoutRegionProps) => {
+export const AvatarImage_2793LayoutRegion = ({ layout, onRegion, tags, visibleRegion }: AvatarImage_2793LayoutRegionProps) => {
     return (
         <Region
             name="region"
-            params={2193}
+            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

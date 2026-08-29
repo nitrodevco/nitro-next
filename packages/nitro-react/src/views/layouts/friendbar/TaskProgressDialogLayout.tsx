@@ -17,7 +17,6 @@ export const TaskProgressDialogLayout = ({ layout, list, onClose }: TaskProgress
     return (
         <Frame
             variant="100"
-            params={131073}
             caption={t('talent.track.task.progress.dialog.title')}
             onClose={onClose}
             layout={{ width: 378, height: 370, ...layout }}
@@ -38,48 +37,43 @@ export interface TaskProgressDialogLayoutProgressContainerProps {
     srcUnachievedLeft?: string;
     srcUnachievedMid?: string;
     srcUnachievedRight?: string;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: TaskProgressDialogLayoutProgressContainerProps) => {
+export const TaskProgressDialogLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight, tags }: TaskProgressDialogLayoutProgressContainerProps) => {
     return (
         <Region
             name="progress_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 16, ...layout }}
         >
             <ThemeImage
                 name="unachieved_left"
-                params={16}
                 src={srcUnachievedLeft ?? layoutImage('talent_unachieved_left.png')}
                 layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="unachieved_mid"
-                params={16}
                 src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
                 layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="unachieved_right"
-                params={16}
                 src={srcUnachievedRight ?? layoutImage('talent_unachieved_right.png')}
                 layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="achieved_left"
-                params={16}
                 src={srcAchievedLeft ?? layoutImage('talent_achieved_left.png')}
                 layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="achieved_mid"
-                params={16}
                 src={srcAchievedMid ?? layoutImage('talent_achieved_mid.png')}
                 layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="achieved_right"
-                params={16}
                 src={srcAchievedRight ?? layoutImage('talent_achieved_right.png')}
                 layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
             />
@@ -92,21 +86,21 @@ export interface TaskProgressDialogLayoutProgressMainContainerItemProps {
     captionProgressText?: string;
     layout?: BoxLayout;
     progressContainer?: TaskProgressDialogLayoutProgressContainerProps;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer }: TaskProgressDialogLayoutProgressMainContainerItemProps) => {
+export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer, tags }: TaskProgressDialogLayoutProgressMainContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_main_container"
-            params={16}
+            tags={tags}
             layout={{ width: 350, height: 47, flexShrink: 0, ...layout }}
         >
             <TaskProgressDialogLayoutProgressContainer {...progressContainer} />
             <Region
                 name="progress_text"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 349, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -118,7 +112,6 @@ export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgr
             <WidgetSlot
                 widgetType="separator"
                 name="progress_separator"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 350, top: 46, height: 2 }}
             />
         </Region>
@@ -129,16 +122,17 @@ export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgr
 export interface TaskProgressDialogLayoutActionLinkItemProps {
     layout?: BoxLayout;
     onActionLink?: () => void;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutActionLinkItem = ({ layout, onActionLink }: TaskProgressDialogLayoutActionLinkItemProps) => {
+export const TaskProgressDialogLayoutActionLinkItem = ({ layout, onActionLink, tags }: TaskProgressDialogLayoutActionLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="101"
             name="action_link"
-            params={131281}
+            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onActionLink}
             layout={{ width: 246, height: 55, flexShrink: 0, ...layout }}
@@ -152,13 +146,14 @@ export const TaskProgressDialogLayoutActionLinkItem = ({ layout, onActionLink }:
 export interface TaskProgressDialogLayoutInstructionItemProps {
     captionInstruction?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutInstructionItem = ({ captionInstruction, layout }: TaskProgressDialogLayoutInstructionItemProps) => {
+export const TaskProgressDialogLayoutInstructionItem = ({ captionInstruction, layout, tags }: TaskProgressDialogLayoutInstructionItemProps) => {
     return (
         <Region
             name="instruction"
-            params={16}
+            tags={tags}
             layout={{ width: 285, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -174,13 +169,14 @@ export const TaskProgressDialogLayoutInstructionItem = ({ captionInstruction, la
 export interface TaskProgressDialogLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutTitleItem = ({ captionTitle, layout }: TaskProgressDialogLayoutTitleItemProps) => {
+export const TaskProgressDialogLayoutTitleItem = ({ captionTitle, layout, tags }: TaskProgressDialogLayoutTitleItemProps) => {
     return (
         <Region
             name="title"
-            params={16}
+            tags={tags}
             layout={{ width: 285, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -194,14 +190,15 @@ export const TaskProgressDialogLayoutTitleItem = ({ captionTitle, layout }: Task
 /** Row template `action_separator` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
 export interface TaskProgressDialogLayoutActionSeparatorItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutActionSeparatorItem = ({ layout }: TaskProgressDialogLayoutActionSeparatorItemProps) => {
+export const TaskProgressDialogLayoutActionSeparatorItem = ({ layout, tags }: TaskProgressDialogLayoutActionSeparatorItemProps) => {
     return (
         <WidgetSlot
             widgetType="separator"
             name="action_separator"
-            params={16}
+            tags={tags}
             layout={{ width: 325, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -211,15 +208,16 @@ export const TaskProgressDialogLayoutActionSeparatorItem = ({ layout }: TaskProg
 export interface TaskProgressDialogLayoutActionTitleItemProps {
     captionActionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout }: TaskProgressDialogLayoutActionTitleItemProps) => {
+export const TaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout, tags }: TaskProgressDialogLayoutActionTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_title"
-            params={16}
+            tags={tags}
             layout={{ width: 325, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -235,13 +233,14 @@ export const TaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, la
 export interface TaskProgressDialogLayoutActionDescriptionItemProps {
     captionActionDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout }: TaskProgressDialogLayoutActionDescriptionItemProps) => {
+export const TaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout, tags }: TaskProgressDialogLayoutActionDescriptionItemProps) => {
     return (
         <Region
             name="action_description"
-            params={16}
+            tags={tags}
             layout={{ width: 325, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -256,23 +255,21 @@ export const TaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDes
 export interface TaskProgressDialogLayoutChangeEmailRegionProps {
     layout?: BoxLayout;
     onChangeEmailRegion?: () => void;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutChangeEmailRegion = ({ layout, onChangeEmailRegion }: TaskProgressDialogLayoutChangeEmailRegionProps) => {
+export const TaskProgressDialogLayoutChangeEmailRegion = ({ layout, onChangeEmailRegion, tags }: TaskProgressDialogLayoutChangeEmailRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_email_region"
-            params={17}
+            tags={tags}
             onPointerTap={onChangeEmailRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 3, width: 319, top: 28, height: 21, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('talent.track.progress.setemail')} />
             </Region>
         </Region>
@@ -282,26 +279,23 @@ export const TaskProgressDialogLayoutChangeEmailRegion = ({ layout, onChangeEmai
 /** Named region `changed_container` of TaskProgressDialogLayout - configured through the parent's `changedContainer` prop. */
 export interface TaskProgressDialogLayoutChangedContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutChangedContainer = ({ layout }: TaskProgressDialogLayoutChangedContainerProps) => {
+export const TaskProgressDialogLayoutChangedContainer = ({ layout, tags }: TaskProgressDialogLayoutChangedContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="changed_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 328, top: 29, height: 36, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('help_accept_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 11, top: 6, height: 10 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('talent.track.progress.emailchanged')}
                     textStyle="text-style-il-heading-3"
@@ -318,30 +312,29 @@ export interface TaskProgressDialogLayoutUnverifiedContainerProps {
     changedContainer?: TaskProgressDialogLayoutChangedContainerProps;
     changeEmailRegion?: TaskProgressDialogLayoutChangeEmailRegionProps;
     layout?: BoxLayout;
+    tags?: string[];
     visibleUnverifiedContainer?: boolean;
 }
 
-export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, changedContainer, changeEmailRegion, layout, visibleUnverifiedContainer }: TaskProgressDialogLayoutUnverifiedContainerProps) => {
+export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, changedContainer, changeEmailRegion, layout, tags, visibleUnverifiedContainer }: TaskProgressDialogLayoutUnverifiedContainerProps) => {
     const [ emailTxtValue, setEmailTxtValue ] = useState('');
 
     return (
         <Region
             name="unverified_container"
-            params={16}
+            tags={tags}
             visible={visibleUnverifiedContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60, ...layout }}
         >
             <Border
                 variant="105"
                 name="error_border"
-                params={16}
                 tintColor="#cc0000"
                 layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 29 }}
             />
             <Border
                 variant="105"
                 name="input_border"
-                params={16}
                 layout={{ position: 'absolute', left: 2, width: 267, top: 2, height: 24 }}
             >
                 <TextInput
@@ -353,7 +346,6 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, c
             <TaskProgressDialogLayoutChangeEmailRegion {...changeEmailRegion} />
             <Region
                 name="error_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 2, width: 318, top: 28, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -371,22 +363,22 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, c
 export interface TaskProgressDialogLayoutEmailContainerItemProps {
     captionVerifiedTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
     unverifiedContainer?: TaskProgressDialogLayoutUnverifiedContainerProps;
 }
 
-export const TaskProgressDialogLayoutEmailContainerItem = ({ captionVerifiedTxt, layout, unverifiedContainer }: TaskProgressDialogLayoutEmailContainerItemProps) => {
+export const TaskProgressDialogLayoutEmailContainerItem = ({ captionVerifiedTxt, layout, tags, unverifiedContainer }: TaskProgressDialogLayoutEmailContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="email_container"
-            params={16}
+            tags={tags}
             layout={{ width: 320, height: 60, flexShrink: 0, ...layout }}
         >
             <TaskProgressDialogLayoutUnverifiedContainer {...unverifiedContainer} />
             <Region
                 name="verified_txt"
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -404,13 +396,14 @@ export const TaskProgressDialogLayoutEmailContainerItem = ({ captionVerifiedTxt,
 export interface TaskProgressDialogLayoutTopListProps {
     itemsTopList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TaskProgressDialogLayoutTopListProps) => {
+export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout, tags }: TaskProgressDialogLayoutTopListProps) => {
     return (
         <Region
             name="top_list"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, minHeight: 70, flexDirection: 'column', ...layout }}
         >
             {itemsTopList ?? (
@@ -423,10 +416,7 @@ export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TaskPr
                     <TaskProgressDialogLayoutEmailContainerItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 345, height: 10, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 345, height: 10, flexShrink: 0 }}>
                 <WidgetSlot
                     widgetType="badge_image"
                     name="badge"
@@ -434,10 +424,7 @@ export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TaskPr
                     layout={{ position: 'absolute', left: 0, width: 60, top: 1, height: 70 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 345, height: 10, flexShrink: 0 }}
-            />
+            <Region layout={{ width: 345, height: 10, flexShrink: 0 }} />
         </Region>
     );
 };
@@ -446,14 +433,15 @@ export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TaskPr
 export interface TaskProgressDialogLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
     topList?: TaskProgressDialogLayoutTopListProps;
 }
 
-export const TaskProgressDialogLayoutList = ({ itemsList, layout, topList }: TaskProgressDialogLayoutListProps) => {
+export const TaskProgressDialogLayoutList = ({ itemsList, layout, tags, topList }: TaskProgressDialogLayoutListProps) => {
     return (
         <Region
             name="list"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (
@@ -464,16 +452,12 @@ export const TaskProgressDialogLayoutList = ({ itemsList, layout, topList }: Tas
             )}
             <Border
                 variant="104"
-                params={147472}
                 tintColor="#e2e2e2"
                 layout={{ width: 345, height: 204, flexShrink: 0 }}
             >
                 <TaskProgressDialogLayoutTopList {...topList} />
             </Border>
-            <Region
-                params={16}
-                layout={{ width: 380, height: 15, flexShrink: 0 }}
-            />
+            <Region layout={{ width: 380, height: 15, flexShrink: 0 }} />
         </Region>
     );
 };

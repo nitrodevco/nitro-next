@@ -18,7 +18,6 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
             variant="0"
             id="alert_%200"
             name="alert_%200"
-            params={32769}
             caption={t('friendlist.removefriendconfirm.title')}
             onClose={onClose}
             layout={{ width: 160, height: 200, ...layout }}
@@ -27,12 +26,10 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 <Border
                     variant="0"
                     name="border"
-                    params={98305}
                     layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 143 }}
                 >
                     <Region
                         name="remove_info"
-                        params={1}
                         layout={{ position: 'absolute', left: 10, width: 130, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -44,7 +41,6 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 <Button
                     variant="0"
                     name="cancel"
-                    params={131089}
                     onPointerTap={onCancel}
                     layout={{ position: 'absolute', left: 88, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
                 >
@@ -53,7 +49,6 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 <ButtonThick
                     variant="0"
                     name="ok"
-                    params={131089}
                     onPointerTap={onOk}
                     layout={{ position: 'absolute', left: 0, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
                 >

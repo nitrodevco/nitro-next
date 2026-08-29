@@ -15,9 +15,10 @@ export interface BuilderAddonsWidgetAddonsListProps {
     layout?: BoxLayout;
     onItemBuy?: () => void;
     srcDiamondsIcon?: string;
+    tags?: string[];
 }
 
-export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon }: BuilderAddonsWidgetAddonsListProps) => {
+export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon, tags }: BuilderAddonsWidgetAddonsListProps) => {
     const t = useTranslation();
 
     return (
@@ -27,29 +28,25 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
         >
             <Region
                 name="addons_list"
-                params={2064}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 12, width: '100%' }}
             >
                 <Border
                     variant="2"
-                    params={16}
                     tintColor="#d7d7cf"
                     layout={{ width: 269, height: 77, flexShrink: 0 }}
                 >
                     <Border
                         variant="3"
-                        params={16}
                         tintColor="#afafa9"
                         layout={{ position: 'absolute', left: 5, width: 260, top: 5, height: 25 }}
                     >
                         <ThemeImage
-                            params={16}
                             src="${image.library.url}/catalogue/icon_193.png"
                             layout={{ position: 'absolute', left: 8, width: 15, top: 5, height: 15 }}
                         />
                         <Region
                             name="item_header"
-                            params={16}
                             layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -59,13 +56,9 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                             />
                         </Region>
                     </Border>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 9, width: 105, top: 45, height: 24, flexDirection: 'row', gap: 3 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 9, width: 105, top: 45, height: 24, flexDirection: 'row', gap: 3 }}>
                         <Region
                             name="item_price"
-                            params={16}
                             layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -74,13 +67,11 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                             />
                         </Region>
                         <ThemeImage
-                            params={16}
                             src={layoutImage('pursearea_credits_icon.png')}
                             layout={{ width: 15, height: 15, flexShrink: 0 }}
                         />
                         <Region
                             name="diamonds_price"
-                            params={16}
                             visible={false}
                             layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
@@ -95,7 +86,6 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                         >
                             <ThemeImage
                                 name="diamonds_icon"
-                                params={16}
                                 src={srcDiamondsIcon ?? layoutImage('pursearea_diamond_icon.png')}
                                 layout={{ width: 15, height: 15, flexShrink: 0 }}
                             />
@@ -104,7 +94,6 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                     <ButtonThick
                         variant="5"
                         name="item_buy"
-                        params={393233}
                         tintColor="#0a9bc5"
                         onPointerTap={onItemBuy}
                         layout={{ position: 'absolute', right: 4, width: 142, top: 37, height: 35, minWidth: 40 }}
@@ -122,21 +111,21 @@ export interface BuilderAddonsWidgetProps {
     addonsList?: BuilderAddonsWidgetAddonsListProps;
     captionTrialWarning?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BuilderAddonsWidget = ({ addonsList, captionTrialWarning, layout }: BuilderAddonsWidgetProps) => {
+export const BuilderAddonsWidget = ({ addonsList, captionTrialWarning, layout, tags }: BuilderAddonsWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="builderAddonsWidget"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BuilderAddonsWidgetAddonsList {...addonsList} />
             <Region
                 name="trial_warning"
-                params={1040}
                 layout={{ position: 'absolute', left: 0, width: 193, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

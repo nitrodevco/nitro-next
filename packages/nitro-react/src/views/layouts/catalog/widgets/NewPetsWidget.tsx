@@ -4,7 +4,7 @@ import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { AddOnBadgeViewWidget, AddOnBadgeViewWidgetProps } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
-import { PurchaseWidget2, PurchaseWidget2Props } from '#base/views/layouts/catalog/widgets/PurchaseWidget2';
+import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 
 /**
  * Catalog widget `newPetsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -19,29 +19,28 @@ export interface NewPetsWidgetProps {
     captionPetBreedText?: string;
     colourGridWidget?: ColourGridWidgetProps;
     layout?: BoxLayout;
-    purchaseWidget?: PurchaseWidget2Props;
+    purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1 }: NewPetsWidgetProps) => {
+export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1, tags }: NewPetsWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
     return (
         <Region
             name="newPetsWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 127 }}
             />
             <Region
                 name="pet_breed_text"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 340, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -52,7 +51,6 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             </Region>
             <Region
                 name="ctlg_text_3"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 340, top: 156, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -67,7 +65,6 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             />
             <Region
                 name="ctlg_text_2"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 339, top: 253, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -78,7 +75,6 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             </Region>
             <Border
                 variant="4"
-                params={16}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 10, width: 340, top: 275, height: 25 }}
             >
@@ -89,7 +85,7 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
                     layout={{ position: 'absolute', left: 4, width: 325, top: 4, height: 17 }}
                 />
             </Border>
-            <PurchaseWidget2
+            <PurchaseWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 345, height: 30 }}
                 {...purchaseWidget}
             />

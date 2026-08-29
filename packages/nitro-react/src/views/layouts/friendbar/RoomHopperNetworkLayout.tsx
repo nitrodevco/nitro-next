@@ -21,19 +21,16 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
     return (
         <Region layout={{ position: 'relative', width: 250, height: 218, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 218, maxWidth: 250 }}
             >
                 <ThemeImage
                     name="border_bar"
-                    params={16}
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
                 <Region
                     name="title"
-                    params={16}
                     layout={{ position: 'absolute', left: 18, width: 174, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -43,17 +40,12 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                 </Region>
                 <ThemeImage
                     name="hdr_line"
-                    params={16}
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 167, width: 100, top: 10, height: 4 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 20, height: 198, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 20, height: 198, flexDirection: 'column' }}>
                     <Region
                         name="header"
-                        params={16}
                         layout={{ width: 341, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -63,19 +55,16 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     </Region>
                     <RoomHopperNetworkLayoutSpacing {...spacing} />
                     <Region
-                        params={16400}
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 120, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="bitmap"
-                            params={16}
                             src={srcBitmap ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
                             layout={{ position: 'absolute', left: 126, width: 120, top: 0, height: 120 }}
                         />
                         <Region
                             name="info"
-                            params={16}
                             layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -87,7 +76,6 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     <Button
                         variant="100"
                         name="button"
-                        params={131089}
                         onPointerTap={onButton}
                         layout={{ width: 271, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >
@@ -102,13 +90,14 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
 /** Named region `spacing` of RoomHopperNetworkLayout - configured through the parent's `spacing` prop. */
 export interface RoomHopperNetworkLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomHopperNetworkLayoutSpacing = ({ layout }: RoomHopperNetworkLayoutSpacingProps) => {
+export const RoomHopperNetworkLayoutSpacing = ({ layout, tags }: RoomHopperNetworkLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );

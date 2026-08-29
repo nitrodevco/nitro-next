@@ -18,7 +18,6 @@ export const TransactionOverviewLayout = ({ footer, header, layout, middle, onCl
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('wiredchests.logs.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -37,15 +36,16 @@ export const TransactionOverviewLayout = ({ footer, header, layout, middle, onCl
 export interface TransactionOverviewLayoutListTypeKeyItemProps {
     captionListTypeKey?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutListTypeKeyItem = ({ captionListTypeKey, layout }: TransactionOverviewLayoutListTypeKeyItemProps) => {
+export const TransactionOverviewLayoutListTypeKeyItem = ({ captionListTypeKey, layout, tags }: TransactionOverviewLayoutListTypeKeyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list_type_key"
-            params={16}
+            tags={tags}
             layout={{ width: 57, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionListTypeKey ?? t('wiredchests.logs.list_type')} />
@@ -57,15 +57,16 @@ export const TransactionOverviewLayoutListTypeKeyItem = ({ captionListTypeKey, l
 export interface TransactionOverviewLayoutListTypeValueItemProps {
     captionListTypeValue?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutListTypeValueItem = ({ captionListTypeValue, layout }: TransactionOverviewLayoutListTypeValueItemProps) => {
+export const TransactionOverviewLayoutListTypeValueItem = ({ captionListTypeValue, layout, tags }: TransactionOverviewLayoutListTypeValueItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list_type_value"
-            params={16}
+            tags={tags}
             layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionListTypeValue ?? t('wiredchests.logs.type.0')} />
@@ -77,13 +78,14 @@ export const TransactionOverviewLayoutListTypeValueItem = ({ captionListTypeValu
 export interface TransactionOverviewLayoutPairItemProps {
     itemsPair?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutPairItem = ({ itemsPair, layout }: TransactionOverviewLayoutPairItemProps) => {
+export const TransactionOverviewLayoutPairItem = ({ itemsPair, layout, tags }: TransactionOverviewLayoutPairItemProps) => {
     return (
         <Region
             name="pair"
-            params={16}
+            tags={tags}
             layout={{ width: 94, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             {itemsPair ?? (
@@ -100,15 +102,16 @@ export const TransactionOverviewLayoutPairItem = ({ itemsPair, layout }: Transac
 export interface TransactionOverviewLayoutIdKeyItemProps {
     captionIdKey?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutIdKeyItem = ({ captionIdKey, layout }: TransactionOverviewLayoutIdKeyItemProps) => {
+export const TransactionOverviewLayoutIdKeyItem = ({ captionIdKey, layout, tags }: TransactionOverviewLayoutIdKeyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="id_key"
-            params={16}
+            tags={tags}
             layout={{ width: 53, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionIdKey ?? t('wiredchests.logs.chest_id')} />
@@ -120,13 +123,14 @@ export const TransactionOverviewLayoutIdKeyItem = ({ captionIdKey, layout }: Tra
 export interface TransactionOverviewLayoutIdValueItemProps {
     captionIdValue?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutIdValueItem = ({ captionIdValue, layout }: TransactionOverviewLayoutIdValueItemProps) => {
+export const TransactionOverviewLayoutIdValueItem = ({ captionIdValue, layout, tags }: TransactionOverviewLayoutIdValueItemProps) => {
     return (
         <Region
             name="id_value"
-            params={16}
+            tags={tags}
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionIdValue ?? '12345'} />
@@ -138,13 +142,14 @@ export const TransactionOverviewLayoutIdValueItem = ({ captionIdValue, layout }:
 export interface TransactionOverviewLayoutPairItem2Props {
     itemsPair?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutPairItem2 = ({ itemsPair, layout }: TransactionOverviewLayoutPairItem2Props) => {
+export const TransactionOverviewLayoutPairItem2 = ({ itemsPair, layout, tags }: TransactionOverviewLayoutPairItem2Props) => {
     return (
         <Region
             name="pair"
-            params={16}
+            tags={tags}
             layout={{ width: 93, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             {itemsPair ?? (
@@ -161,13 +166,14 @@ export const TransactionOverviewLayoutPairItem2 = ({ itemsPair, layout }: Transa
 export interface TransactionOverviewLayoutKeyValuePairsProps {
     itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: TransactionOverviewLayoutKeyValuePairsProps) => {
+export const TransactionOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout, tags }: TransactionOverviewLayoutKeyValuePairsProps) => {
     return (
         <Region
             name="key_value_pairs"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 400, top: 13, height: 42, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (
@@ -186,21 +192,21 @@ export interface TransactionOverviewLayoutHeaderProps {
     keyValuePairs?: TransactionOverviewLayoutKeyValuePairsProps;
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
+    tags?: string[];
     visibleSearchingIcon?: boolean;
 }
 
-export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePairs, layout, onRefreshBtn, visibleSearchingIcon }: TransactionOverviewLayoutHeaderProps) => {
+export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePairs, layout, onRefreshBtn, tags, visibleSearchingIcon }: TransactionOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 62, ...layout }}
         >
             <Region
                 name="warning_text"
-                params={2185}
                 visible={false}
                 layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -213,7 +219,6 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePa
             <Button
                 variant="3"
                 name="refresh_btn"
-                params={393297}
                 onPointerTap={onRefreshBtn}
                 layout={{ position: 'absolute', right: 17, width: 62, top: 13, height: 30 }}
             >
@@ -226,7 +231,6 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePa
                 <Icon
                     variant="23"
                     name="searching_icon"
-                    params={16}
                     layout={{ width: '100%', height: '100%' }}
                 />
             </Region>
@@ -237,13 +241,14 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePa
 /** Named region `table_view` of TransactionOverviewLayout - configured through the parent's `tableView` prop. */
 export interface TransactionOverviewLayoutTableViewProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutTableView = ({ layout }: TransactionOverviewLayoutTableViewProps) => {
+export const TransactionOverviewLayoutTableView = ({ layout, tags }: TransactionOverviewLayoutTableViewProps) => {
     return (
         <Region
             name="table_view"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -253,13 +258,14 @@ export const TransactionOverviewLayoutTableView = ({ layout }: TransactionOvervi
 export interface TransactionOverviewLayoutMiddleProps {
     layout?: BoxLayout;
     tableView?: TransactionOverviewLayoutTableViewProps;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutMiddle = ({ layout, tableView }: TransactionOverviewLayoutMiddleProps) => {
+export const TransactionOverviewLayoutMiddle = ({ layout, tableView, tags }: TransactionOverviewLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 62, bottom: 95, ...layout }}
         >
             <TransactionOverviewLayoutTableView {...tableView} />
@@ -271,26 +277,25 @@ export const TransactionOverviewLayoutMiddle = ({ layout, tableView }: Transacti
 export interface TransactionOverviewLayoutFirstPageBtnItemProps {
     layout?: BoxLayout;
     onFirstPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: TransactionOverviewLayoutFirstPageBtnItemProps) => {
+export const TransactionOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tags }: TransactionOverviewLayoutFirstPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="first_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onFirstPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -302,20 +307,20 @@ export const TransactionOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageB
 export interface TransactionOverviewLayoutPrevPageBtnItemProps {
     layout?: BoxLayout;
     onPrevPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: TransactionOverviewLayoutPrevPageBtnItemProps) => {
+export const TransactionOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags }: TransactionOverviewLayoutPrevPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="prev_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onPrevPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 22, width: 10, top: 10, height: 10 }}
             />
@@ -327,13 +332,14 @@ export const TransactionOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn
 export interface TransactionOverviewLayoutFooterButtonsLeftProps {
     itemsFooterButtonsLeft?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: TransactionOverviewLayoutFooterButtonsLeftProps) => {
+export const TransactionOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout, tags }: TransactionOverviewLayoutFooterButtonsLeftProps) => {
     return (
         <Region
             name="footer_buttons_left"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
         >
             {itemsFooterButtonsLeft ?? (
@@ -350,20 +356,20 @@ export const TransactionOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsL
 export interface TransactionOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
     onNextPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: TransactionOverviewLayoutNextPageBtnItemProps) => {
+export const TransactionOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags }: TransactionOverviewLayoutNextPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="next_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onNextPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 23, width: 10, top: 10, height: 10 }}
             />
@@ -375,26 +381,25 @@ export const TransactionOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn
 export interface TransactionOverviewLayoutLastPageBtnItemProps {
     layout?: BoxLayout;
     onLastPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: TransactionOverviewLayoutLastPageBtnItemProps) => {
+export const TransactionOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags }: TransactionOverviewLayoutLastPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="last_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onLastPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -406,13 +411,14 @@ export const TransactionOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn
 export interface TransactionOverviewLayoutFooterButtonsRightProps {
     itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: TransactionOverviewLayoutFooterButtonsRightProps) => {
+export const TransactionOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout, tags }: TransactionOverviewLayoutFooterButtonsRightProps) => {
     return (
         <Region
             name="footer_buttons_right"
-            params={262224}
+            tags={tags}
             layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsFooterButtonsRight ?? (
@@ -432,26 +438,23 @@ export interface TransactionOverviewLayoutPaginationProps {
     footerButtonsLeft?: TransactionOverviewLayoutFooterButtonsLeftProps;
     footerButtonsRight?: TransactionOverviewLayoutFooterButtonsRightProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: TransactionOverviewLayoutPaginationProps) => {
+export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout, tags }: TransactionOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="pagination"
-            params={1168}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
             <TransactionOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
             <TransactionOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
-            <Region
-                params={786640}
-                layout={{ position: 'absolute', width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
-            >
+            <Region layout={{ position: 'absolute', width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"
-                    params={16}
                     layout={{ width: 205, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextStart ?? 'X transactions found. Showing page '} />
@@ -463,7 +466,6 @@ export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, capt
                 />
                 <Region
                     name="pagina_text_end"
-                    params={16}
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextEnd ?? 'of Y'} />
@@ -477,13 +479,14 @@ export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, capt
 export interface TransactionOverviewLayoutFooterProps {
     layout?: BoxLayout;
     pagination?: TransactionOverviewLayoutPaginationProps;
+    tags?: string[];
 }
 
-export const TransactionOverviewLayoutFooter = ({ layout, pagination }: TransactionOverviewLayoutFooterProps) => {
+export const TransactionOverviewLayoutFooter = ({ layout, pagination, tags }: TransactionOverviewLayoutFooterProps) => {
     return (
         <Region
             name="footer"
-            params={1049744}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
         >
             <TransactionOverviewLayoutPagination {...pagination} />

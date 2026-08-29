@@ -19,7 +19,6 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
             variant="0"
             id="creditExchangeTitle"
             name="creditExchangeTitle"
-            params={32785}
             caption={t('catalog.redeem.dialog.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -28,13 +27,11 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="0"
-                    params={2192}
                     layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
                 >
                     <Button
                         variant="0"
                         name="cancel"
-                        params={131089}
                         onPointerTap={onCancel}
                         layout={{ position: 'absolute', left: 12, width: 80, top: 100, height: 22, minWidth: 80 }}
                     >
@@ -43,7 +40,6 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
                     <ButtonThick
                         variant="0"
                         name="exchange"
-                        params={917521}
                         onPointerTap={onExchange}
                         layout={{ position: 'absolute', marginLeft: 88.5, marginRight: -88.5, width: 100, top: 100, height: 22, minWidth: 100 }}
                     >
@@ -51,7 +47,6 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
                     </ButtonThick>
                     <Region
                         name="exchange_text"
-                        params={16}
                         layout={{ position: 'absolute', left: 20, width: 265, top: 17, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -70,22 +65,22 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
 export interface CreditRedeemLayoutLinkProps {
     layout?: BoxLayout;
     onLink?: () => void;
+    tags?: string[];
 }
 
-export const CreditRedeemLayoutLink = ({ layout, onLink }: CreditRedeemLayoutLinkProps) => {
+export const CreditRedeemLayoutLink = ({ layout, onLink, tags }: CreditRedeemLayoutLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="link"
-            params={131089}
+            tags={tags}
             onPointerTap={onLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 20, width: 158, top: 60, height: 17, ...layout }}
         >
             <Region
                 tags={[ 'read_more' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 153, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#ffffff"
             >

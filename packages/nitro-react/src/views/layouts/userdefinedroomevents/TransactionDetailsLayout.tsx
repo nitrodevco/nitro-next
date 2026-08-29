@@ -17,7 +17,6 @@ export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: Tra
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('wiredchests.log_details.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -33,27 +32,22 @@ export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: Tra
 /** Row template `transaction_type_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutTransactionTypePairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout }: TransactionDetailsLayoutTransactionTypePairItemProps) => {
+export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout, tags }: TransactionDetailsLayoutTransactionTypePairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="transaction_type_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 111, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 101, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 101, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.type')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -63,27 +57,22 @@ export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout }: Tran
 /** Row template `timestamp_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutTimestampPairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTimestampPairItem = ({ layout }: TransactionDetailsLayoutTimestampPairItemProps) => {
+export const TransactionDetailsLayoutTimestampPairItem = ({ layout, tags }: TransactionDetailsLayoutTimestampPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="timestamp_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 77, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 67, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 67, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.timestamp')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -93,27 +82,22 @@ export const TransactionDetailsLayoutTimestampPairItem = ({ layout }: Transactio
 /** Row template `room_id_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutRoomIdPairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutRoomIdPairItem = ({ layout }: TransactionDetailsLayoutRoomIdPairItemProps) => {
+export const TransactionDetailsLayoutRoomIdPairItem = ({ layout, tags }: TransactionDetailsLayoutRoomIdPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_id_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 61, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 51, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 51, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.room_id')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -123,27 +107,22 @@ export const TransactionDetailsLayoutRoomIdPairItem = ({ layout }: TransactionDe
 /** Row template `chest_ids_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutChestIdsPairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutChestIdsPairItem = ({ layout }: TransactionDetailsLayoutChestIdsPairItemProps) => {
+export const TransactionDetailsLayoutChestIdsPairItem = ({ layout, tags }: TransactionDetailsLayoutChestIdsPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chest_ids_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 78, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 68, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 68, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.chest_ids')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -153,27 +132,22 @@ export const TransactionDetailsLayoutChestIdsPairItem = ({ layout }: Transaction
 /** Row template `username_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutUsernamePairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutUsernamePairItem = ({ layout }: TransactionDetailsLayoutUsernamePairItemProps) => {
+export const TransactionDetailsLayoutUsernamePairItem = ({ layout, tags }: TransactionDetailsLayoutUsernamePairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="username_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 74, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 64, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 64, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.username')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -183,27 +157,22 @@ export const TransactionDetailsLayoutUsernamePairItem = ({ layout }: Transaction
 /** Row template `furni_transactions_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTransactionsPairItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: TransactionDetailsLayoutFurniTransactionsPairItemProps) => {
+export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout, tags }: TransactionDetailsLayoutFurniTransactionsPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="furni_transactions_pair"
-            params={16}
+            tags={tags}
             layout={{ width: 89, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 79, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 79, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.transactions')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -214,19 +183,19 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: Tr
 export interface TransactionDetailsLayoutNumberContainerInnerBorderProps {
     captionFurniQuantity?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
+export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout, tags }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
     return (
         <Region
             name="number_container_inner_border"
-            params={4194320}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
         >
             <Region
                 name="furni_quantity"
-                params={4194320}
                 layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -243,14 +212,15 @@ export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurn
 export interface TransactionDetailsLayoutNumberContainerProps {
     layout?: BoxLayout;
     numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorderProps;
+    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
+export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, tags, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            params={278672}
+            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
@@ -269,13 +239,14 @@ export interface TransactionDetailsLayoutFurniTemplateItemProps {
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItemProps) => {
+export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, tags }: TransactionDetailsLayoutFurniTemplateItemProps) => {
     return (
         <Region
             name="furni_template"
-            params={17}
+            tags={tags}
             onPointerTap={onFurniTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -283,7 +254,6 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
             <Border
                 variant="5"
                 name="border"
-                params={16}
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
@@ -293,7 +263,6 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                 >
                     <ThemeImage
                         name="coins_icon"
-                        params={16}
                         src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
                         layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
                     />
@@ -304,7 +273,6 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                 >
                     <ThemeImage
                         name="unique_item_background_bitmap"
-                        params={16}
                         src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
@@ -312,27 +280,23 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
                 <TransactionDetailsLayoutNumberContainer {...numberContainer} />
                 <WidgetSlot
                     widgetType="limited_item_overlay_grid"
                     name="unique_item_overlay_container"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                 />
                 <WidgetSlot
                     widgetType="rarity_item_overlay_grid"
                     name="rarity_item_overlay_container"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                 />
                 <Region
                     name="incomplete_text"
-                    params={3088}
                     visible={false}
                     layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
@@ -348,7 +312,6 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
             >
                 <ThemeImage
                     name="outline_focus"
-                    params={16}
                     src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                 />
@@ -361,9 +324,10 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
 export interface TransactionDetailsLayoutItemGridProps {
     itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGridProps) => {
+export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout, tags }: TransactionDetailsLayoutItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -371,7 +335,7 @@ export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout }: Tran
         >
             <Region
                 name="item_grid"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             >
                 {itemsItemGrid ?? (
@@ -387,21 +351,19 @@ export interface TransactionDetailsLayoutWithdrawalsContainerProps {
     captionEmptyText?: string;
     itemGrid?: TransactionDetailsLayoutItemGridProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutWithdrawalsContainerProps) => {
+export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText, itemGrid, layout, tags }: TransactionDetailsLayoutWithdrawalsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="withdrawals_container"
-            params={16}
+            tags={tags}
             layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('wiredchests.log_details.transactions.withdrawn')}
                     textOptions={{ align: 'center' }}
@@ -409,14 +371,12 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
             </Region>
             <Border
                 variant="4"
-                params={16}
                 tintColor="#e2e2e2"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
             >
                 <TransactionDetailsLayoutItemGrid {...itemGrid} />
                 <Region
                     name="empty_text"
-                    params={144}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -433,19 +393,19 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
 export interface TransactionDetailsLayoutNumberContainerInnerBorder2Props {
     captionFurniQuantity?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
+export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout, tags }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
     return (
         <Region
             name="number_container_inner_border"
-            params={4194320}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
         >
             <Region
                 name="furni_quantity"
-                params={4194320}
                 layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -462,14 +422,15 @@ export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFur
 export interface TransactionDetailsLayoutNumberContainer2Props {
     layout?: BoxLayout;
     numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorder2Props;
+    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
+export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, tags, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
     return (
         <Region
             name="number_container"
-            params={278672}
+            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
@@ -488,13 +449,14 @@ export interface TransactionDetailsLayoutFurniTemplateItem2Props {
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
+export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, tags }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
     return (
         <Region
             name="furni_template"
-            params={17}
+            tags={tags}
             onPointerTap={onFurniTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -502,7 +464,6 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
             <Border
                 variant="5"
                 name="border"
-                params={16}
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
@@ -512,7 +473,6 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                 >
                     <ThemeImage
                         name="coins_icon"
-                        params={16}
                         src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
                         layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
                     />
@@ -523,7 +483,6 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                 >
                     <ThemeImage
                         name="unique_item_background_bitmap"
-                        params={16}
                         src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
@@ -531,27 +490,23 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
                 <TransactionDetailsLayoutNumberContainer2 {...numberContainer} />
                 <WidgetSlot
                     widgetType="limited_item_overlay_grid"
                     name="unique_item_overlay_container"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                 />
                 <WidgetSlot
                     widgetType="rarity_item_overlay_grid"
                     name="rarity_item_overlay_container"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                 />
                 <Region
                     name="incomplete_text"
-                    params={3088}
                     visible={false}
                     layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
@@ -567,7 +522,6 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
             >
                 <ThemeImage
                     name="outline_focus"
-                    params={16}
                     src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                 />
@@ -580,9 +534,10 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
 export interface TransactionDetailsLayoutItemGrid2Props {
     itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGrid2Props) => {
+export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout, tags }: TransactionDetailsLayoutItemGrid2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -590,7 +545,7 @@ export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout }: Tra
         >
             <Region
                 name="item_grid"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             >
                 {itemsItemGrid ?? (
@@ -606,21 +561,19 @@ export interface TransactionDetailsLayoutDepositsContainerProps {
     captionEmptyText?: string;
     itemGrid?: TransactionDetailsLayoutItemGrid2Props;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutDepositsContainerProps) => {
+export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout, tags }: TransactionDetailsLayoutDepositsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="deposits_container"
-            params={16}
+            tags={tags}
             layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('wiredchests.log_details.transactions.deposit')}
                     textOptions={{ align: 'center' }}
@@ -628,14 +581,12 @@ export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, it
             </Region>
             <Border
                 variant="4"
-                params={16}
                 tintColor="#e2e2e2"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
             >
                 <TransactionDetailsLayoutItemGrid2 {...itemGrid} />
                 <Region
                     name="empty_text"
-                    params={144}
                     visible={false}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
@@ -653,20 +604,18 @@ export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, it
 export interface TransactionDetailsLayoutFurniDetailsItemProps {
     depositsContainer?: TransactionDetailsLayoutDepositsContainerProps;
     layout?: BoxLayout;
+    tags?: string[];
     withdrawalsContainer?: TransactionDetailsLayoutWithdrawalsContainerProps;
 }
 
-export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, layout, withdrawalsContainer }: TransactionDetailsLayoutFurniDetailsItemProps) => {
+export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, layout, tags, withdrawalsContainer }: TransactionDetailsLayoutFurniDetailsItemProps) => {
     return (
         <Region
             name="furni_details"
-            params={16}
+            tags={tags}
             layout={{ width: 380, height: 161, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
-                params={786640}
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}>
                 <TransactionDetailsLayoutWithdrawalsContainer {...withdrawalsContainer} />
                 <TransactionDetailsLayoutDepositsContainer {...depositsContainer} />
             </Region>
@@ -677,13 +626,14 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, la
 /** Row template `spacing` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutSpacingItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutSpacingItem = ({ layout }: TransactionDetailsLayoutSpacingItemProps) => {
+export const TransactionDetailsLayoutSpacingItem = ({ layout, tags }: TransactionDetailsLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            params={144}
+            tags={tags}
             layout={{ width: 380, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -692,27 +642,22 @@ export const TransactionDetailsLayoutSpacingItem = ({ layout }: TransactionDetai
 /** Named region `extra_pair` of TransactionDetailsLayout - configured through the parent's `extraPair` prop. */
 export interface TransactionDetailsLayoutExtraPairProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraPair = ({ layout }: TransactionDetailsLayoutExtraPairProps) => {
+export const TransactionDetailsLayoutExtraPair = ({ layout, tags }: TransactionDetailsLayoutExtraPairProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="extra_pair"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredchests.log_details.extra')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="-" />
             </Region>
         </Region>
@@ -723,19 +668,19 @@ export const TransactionDetailsLayoutExtraPair = ({ layout }: TransactionDetails
 export interface TransactionDetailsLayoutExtraInfoButtonProps {
     layout?: BoxLayout;
     onExtraInfoButton?: () => void;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton }: TransactionDetailsLayoutExtraInfoButtonProps) => {
+export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton, tags }: TransactionDetailsLayoutExtraInfoButtonProps) => {
     return (
         <Region
             name="extra_info_button"
-            params={81}
+            tags={tags}
             onPointerTap={onExtraInfoButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_info_grey.png')}
                 layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 18 }}
             />
@@ -747,15 +692,16 @@ export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoBut
 export interface TransactionDetailsLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout }: TransactionDetailsLayoutTitleItemProps) => {
+export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout, tags }: TransactionDetailsLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            params={16}
+            tags={tags}
             layout={{ width: 123, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -769,13 +715,14 @@ export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout }: Tran
 /** Row template `spacer` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutSpacerItem = ({ layout }: TransactionDetailsLayoutSpacerItemProps) => {
+export const TransactionDetailsLayoutSpacerItem = ({ layout, tags }: TransactionDetailsLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 7, flexShrink: 0, ...layout }}
         />
     );
@@ -785,15 +732,16 @@ export const TransactionDetailsLayoutSpacerItem = ({ layout }: TransactionDetail
 export interface TransactionDetailsLayoutDesc1ItemProps {
     captionDesc1?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout }: TransactionDetailsLayoutDesc1ItemProps) => {
+export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout, tags }: TransactionDetailsLayoutDesc1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc1"
-            params={129}
+            tags={tags}
             layout={{ width: 293, height: 30, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -808,15 +756,16 @@ export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout }: Tran
 export interface TransactionDetailsLayoutDesc2ItemProps {
     captionDesc2?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout }: TransactionDetailsLayoutDesc2ItemProps) => {
+export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout, tags }: TransactionDetailsLayoutDesc2ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc2"
-            params={129}
+            tags={tags}
             layout={{ width: 293, height: 57, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -831,15 +780,16 @@ export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout }: Tran
 export interface TransactionDetailsLayoutDesc3ItemProps {
     captionDesc3?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout }: TransactionDetailsLayoutDesc3ItemProps) => {
+export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout, tags }: TransactionDetailsLayoutDesc3ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc3"
-            params={129}
+            tags={tags}
             layout={{ width: 293, height: 30, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -854,13 +804,14 @@ export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout }: Tran
 export interface TransactionDetailsLayoutExtraInfoBubbleTextsProps {
     itemsExtraInfoBubbleTexts?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
+export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout, tags }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
     return (
         <Region
             name="extra_info_bubble_texts"
-            params={8388752}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsExtraInfoBubbleTexts ?? (
@@ -882,14 +833,15 @@ export interface TransactionDetailsLayoutExtraContainerItemProps {
     extraInfoButton?: TransactionDetailsLayoutExtraInfoButtonProps;
     extraPair?: TransactionDetailsLayoutExtraPairProps;
     layout?: BoxLayout;
+    tags?: string[];
     visibleExtraInfoBubble?: boolean;
 }
 
-export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
+export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, tags, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
     return (
         <Region
             name="extra_container"
-            params={144}
+            tags={tags}
             layout={{ width: 380, height: 20, flexShrink: 0, ...layout }}
         >
             <TransactionDetailsLayoutExtraPair {...extraPair} />
@@ -901,7 +853,6 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleText
                 <Bubble
                     variant="7"
                     name="extra_info_bubble"
-                    params={1}
                     pointer="left"
                     layout={{ width: '100%', height: '100%' }}
                 >
@@ -916,13 +867,14 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleText
 export interface TransactionDetailsLayoutKeyValuePairsProps {
     itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: TransactionDetailsLayoutKeyValuePairsProps) => {
+export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout, tags }: TransactionDetailsLayoutKeyValuePairsProps) => {
     return (
         <Region
             name="key_value_pairs"
-            params={8388752}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (
@@ -940,12 +892,10 @@ export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layo
             )}
             <WidgetSlot
                 widgetType="separator"
-                params={144}
                 layout={{ width: 380, height: 5, flexShrink: 0 }}
             />
             <WidgetSlot
                 widgetType="separator"
-                params={144}
                 layout={{ width: 380, height: 5, flexShrink: 0 }}
             />
         </Region>

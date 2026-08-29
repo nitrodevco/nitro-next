@@ -12,7 +12,6 @@ export const MemenuDanceButtonLayout = ({ layout, onDanceButton }: MemenuDanceBu
             <Button
                 variant="1"
                 name="dance_button"
-                params={131089}
                 onPointerTap={onDanceButton}
                 layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 22, minWidth: 145 }}
             />

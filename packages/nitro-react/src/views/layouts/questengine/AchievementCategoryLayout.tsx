@@ -20,31 +20,29 @@ export interface AchievementCategoryLayoutHoverContainerProps {
     captionHeaderTxt?: string;
     layout?: BoxLayout;
     srcCategoryPicBitmap?: string;
+    tags?: string[];
 }
 
-export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, captionHeaderTxt, layout, srcCategoryPicBitmap }: AchievementCategoryLayoutHoverContainerProps) => {
+export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, captionHeaderTxt, layout, srcCategoryPicBitmap, tags }: AchievementCategoryLayoutHoverContainerProps) => {
     return (
         <Region
             name="hover_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 115, top: 1, height: 104, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header_txt"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 65, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionHeaderTxt ?? 'Decoration'} />
             </Region>
             <ThemeImage
                 name="category_pic_bitmap"
-                params={16}
                 src={srcCategoryPicBitmap}
                 layout={{ position: 'absolute', left: 12, width: 86, top: 27, height: 72 }}
             />
             <Region
                 name="completion_txt"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 30, top: 70, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,14 +58,14 @@ export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, 
 export interface AchievementCategoryLayoutCategoryRegionProps {
     layout?: BoxLayout;
     onCategoryRegion?: () => void;
+    tags?: string[];
 }
 
-export const AchievementCategoryLayoutCategoryRegion = ({ layout, onCategoryRegion }: AchievementCategoryLayoutCategoryRegionProps) => {
+export const AchievementCategoryLayoutCategoryRegion = ({ layout, onCategoryRegion, tags }: AchievementCategoryLayoutCategoryRegionProps) => {
     return (
         <Region
             name="category_region"
-            tags={[ 'FIT:achievementsSelectCategory' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onCategoryRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 103, ...layout }}
@@ -84,13 +82,14 @@ export interface AchievementCategoryLayoutAchievementCategoryContainerProps {
     srcCategoryBgAct?: string;
     srcCategoryBgActHover?: string;
     srcCategoryBgInact?: string;
+    tags?: string[];
 }
 
-export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionUnseenCount, categoryRegion, hoverContainer, layout, srcCategoryBgAct, srcCategoryBgActHover, srcCategoryBgInact }: AchievementCategoryLayoutAchievementCategoryContainerProps) => {
+export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionUnseenCount, categoryRegion, hoverContainer, layout, srcCategoryBgAct, srcCategoryBgActHover, srcCategoryBgInact, tags }: AchievementCategoryLayoutAchievementCategoryContainerProps) => {
     return (
         <Region
             name="achievement_category_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 105, ...layout }}
         >
             <Region
@@ -99,7 +98,6 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionU
             >
                 <ThemeImage
                     name="category_bg_act"
-                    params={3089}
                     src={srcCategoryBgAct ?? '${image.library.questing.url}achievement_background_active_1.png'}
                     layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                 />
@@ -110,7 +108,6 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionU
             >
                 <ThemeImage
                     name="category_bg_act_hover"
-                    params={3089}
                     src={srcCategoryBgActHover ?? '${image.library.questing.url}achievement_background_active_2.png'}
                     layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
                 />
@@ -121,23 +118,23 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionU
             >
                 <ThemeImage
                     name="category_bg_inact"
-                    params={3088}
                     src={srcCategoryBgInact ?? '${image.library.questing.url}achievement_category_bkg_empty_3.png'}
                     layout={{ position: 'absolute', left: 0, width: 110, alignSelf: 'center', height: 103 }}
                 />
             </Region>
             <AchievementCategoryLayoutHoverContainer {...hoverContainer} />
-            <AchievementCategoryLayoutCategoryRegion {...categoryRegion} />
+            <AchievementCategoryLayoutCategoryRegion
+                tags={[ 'FIT:achievementsSelectCategory' ]}
+                {...categoryRegion}
+            />
             <Border
                 variant="7"
                 name="unseen_count_border"
-                params={409616}
                 tintColor="#de4537"
                 layout={{ position: 'absolute', right: 23, width: 18, top: 27, height: 20 }}
             >
                 <Region
                     name="unseen_count"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

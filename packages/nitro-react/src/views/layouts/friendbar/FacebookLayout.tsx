@@ -20,25 +20,24 @@ export interface FacebookLayoutFacebookProps {
     captionName?: string;
     layout?: BoxLayout;
     srcIcon?: string;
+    tags?: string[];
 }
 
-export const FacebookLayoutFacebook = ({ captionName, layout, srcIcon }: FacebookLayoutFacebookProps) => {
+export const FacebookLayoutFacebook = ({ captionName, layout, srcIcon, tags }: FacebookLayoutFacebookProps) => {
     return (
         <Region
             name="facebook"
-            params={144}
+            tags={tags}
             backgroundColor="#72893f"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19, ...layout }}
         >
             <ThemeImage
                 name="icon"
-                params={16}
                 src={srcIcon ?? layoutImage('fb_icon_small.png')}
                 layout={{ position: 'absolute', left: 1, width: 14, top: 2, height: 14 }}
             />
             <Region
                 name="name"
-                params={8388752}
                 layout={{ position: 'absolute', left: 32, right: 2, top: -2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -23,7 +23,6 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
     return (
         <Frame
             variant="3"
-            params={98337}
             caption={t('groupforum.compose.window_title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -36,14 +35,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
                 <ContainerButton
                     variant="3"
                     name="cancel_btn"
-                    params={1041}
                     tintColor="#dddddd"
                     onPointerTap={onCancelBtn}
                     layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         name="cancel_btn_label"
-                        params={3935440}
                         layout={{ position: 'absolute', marginLeft: 21.5, marginRight: -21.5, width: 163, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -55,14 +52,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
                 <ContainerButton
                     variant="3"
                     name="post_btn"
-                    params={263249}
                     tintColor="#0a9bc5"
                     onPointerTap={onPostBtn}
                     layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
                 >
                     <Region
                         name="send_message_label"
-                        params={3935440}
                         layout={{ position: 'absolute', marginLeft: 16, marginRight: -16, width: 152, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -74,7 +69,6 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
                 </ContainerButton>
                 <Region
                     name="status_text"
-                    params={787600}
                     layout={{ position: 'absolute', left: 10, right: 21, bottom: 31, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -91,13 +85,14 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
 export interface ComposeMessageViewLayoutTopClickAreaProps {
     layout?: BoxLayout;
     onTopClickArea?: () => void;
+    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea }: ComposeMessageViewLayoutTopClickAreaProps) => {
+export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea, tags }: ComposeMessageViewLayoutTopClickAreaProps) => {
     return (
         <Region
             name="top_click_area"
-            params={145}
+            tags={tags}
             onPointerTap={onTopClickArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
@@ -108,20 +103,20 @@ export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea }:
 /** Named region `icon_background` of ComposeMessageViewLayout - configured through the parent's `iconBackground` prop. */
 export interface ComposeMessageViewLayoutIconBackgroundProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutIconBackground = ({ layout }: ComposeMessageViewLayoutIconBackgroundProps) => {
+export const ComposeMessageViewLayoutIconBackground = ({ layout, tags }: ComposeMessageViewLayoutIconBackgroundProps) => {
     return (
         <Region
             name="icon_background"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
         >
             <WidgetSlot
                 widgetType="badge_image"
                 name="group_icon"
-                params={16}
                 options={{ 'badge_image:type': 'group', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
             />
@@ -136,14 +131,15 @@ export interface ComposeMessageViewLayoutTopPartProps {
     iconBackground?: ComposeMessageViewLayoutIconBackgroundProps;
     layout?: BoxLayout;
     onTopPart?: () => void;
+    tags?: string[];
     topClickArea?: ComposeMessageViewLayoutTopClickAreaProps;
 }
 
-export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: ComposeMessageViewLayoutTopPartProps) => {
+export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, tags, topClickArea }: ComposeMessageViewLayoutTopPartProps) => {
     return (
         <Region
             name="top_part"
-            params={129}
+            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onTopPart}
             cursor="pointer"
@@ -153,7 +149,6 @@ export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionT
             <ComposeMessageViewLayoutIconBackground {...iconBackground} />
             <Region
                 name="top_header_text"
-                params={16}
                 layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -164,7 +159,6 @@ export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionT
             </Region>
             <Region
                 name="top_text"
-                params={144}
                 layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -180,26 +174,25 @@ export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionT
 export interface ComposeMessageViewLayoutThreadSubjectContainerProps {
     captionThreadSubjectHeader?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutThreadSubjectContainer = ({ captionThreadSubjectHeader, layout }: ComposeMessageViewLayoutThreadSubjectContainerProps) => {
+export const ComposeMessageViewLayoutThreadSubjectContainer = ({ captionThreadSubjectHeader, layout, tags }: ComposeMessageViewLayoutThreadSubjectContainerProps) => {
     const t = useTranslation();
     const [ threadSubjectValue, setThreadSubjectValue ] = useState('');
 
     return (
         <Region
             name="thread_subject_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 11, top: 96, height: 48, ...layout }}
         >
             <Region
-                params={145}
                 backgroundColor="#227aad"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
             />
             <Region
                 name="thread_subject_header"
-                params={144}
                 layout={{ position: 'absolute', left: 1, right: -9, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -222,28 +215,27 @@ export interface ComposeMessageViewLayoutMessageTextContainerProps {
     captionMessageTextHeader?: string;
     layout?: BoxLayout;
     onMessageTextContainer?: () => void;
+    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormattingHelp, captionMessageTextHeader, layout, onMessageTextContainer }: ComposeMessageViewLayoutMessageTextContainerProps) => {
+export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormattingHelp, captionMessageTextHeader, layout, onMessageTextContainer, tags }: ComposeMessageViewLayoutMessageTextContainerProps) => {
     const t = useTranslation();
     const [ messageTextValue, setMessageTextValue ] = useState('');
 
     return (
         <Region
             name="message_text_container"
-            params={2193}
+            tags={tags}
             onPointerTap={onMessageTextContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 11, top: 145, bottom: 105, ...layout }}
         >
             <Region
-                params={145}
                 backgroundColor="#227aad"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
             />
             <Region
                 name="message_text_header"
-                params={144}
                 layout={{ position: 'absolute', left: 1, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -261,7 +253,6 @@ export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormatting
             />
             <Region
                 name="formatting_help"
-                params={262145}
                 layout={{ position: 'absolute', right: 4, width: 197, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
             >
                 <ThemeText

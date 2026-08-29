@@ -13,7 +13,6 @@ export const UseProductWidgetFramePlantSeedLayout = ({ layout, onClose }: UsePro
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('useproduct.widget.title.plant_seed')}
             tintColor="#418db0"
             onClose={onClose}

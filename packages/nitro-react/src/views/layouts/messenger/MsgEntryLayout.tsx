@@ -11,7 +11,6 @@ export const MsgEntryLayout = ({ captionAaa, layout }: MsgEntryLayoutProps) => {
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
                 name="aaa"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

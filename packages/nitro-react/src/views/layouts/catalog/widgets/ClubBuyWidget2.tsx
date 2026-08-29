@@ -9,14 +9,14 @@ import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 /** Named region `item_list_hc` of ClubBuyWidget2 - configured through the parent's `itemListHc` prop. */
 export interface ClubBuyWidget2ItemListHcProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ClubBuyWidget2ItemListHc = ({ layout }: ClubBuyWidget2ItemListHcProps) => {
+export const ClubBuyWidget2ItemListHc = ({ layout, tags }: ClubBuyWidget2ItemListHcProps) => {
     return (
         <Region
             name="item_list_hc"
-            tags={[ 'own_items_grid' ]}
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
@@ -25,14 +25,14 @@ export const ClubBuyWidget2ItemListHc = ({ layout }: ClubBuyWidget2ItemListHcPro
 /** Named region `item_list_vip` of ClubBuyWidget2 - configured through the parent's `itemListVip` prop. */
 export interface ClubBuyWidget2ItemListVipProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ClubBuyWidget2ItemListVip = ({ layout }: ClubBuyWidget2ItemListVipProps) => {
+export const ClubBuyWidget2ItemListVip = ({ layout, tags }: ClubBuyWidget2ItemListVipProps) => {
     return (
         <Region
             name="item_list_vip"
-            tags={[ 'own_items_grid' ]}
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
@@ -47,27 +47,25 @@ export interface ClubBuyWidget2Props {
     itemListHc?: ClubBuyWidget2ItemListHcProps;
     itemListVip?: ClubBuyWidget2ItemListVipProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout }: ClubBuyWidget2Props) => {
+export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout, tags }: ClubBuyWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clubBuyWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
-                params={16}
                 tintColor="#dfdfdf"
                 layout={{ position: 'absolute', left: 10, width: 340, top: 0, height: 22, justifyContent: 'center' }}
             >
                 <Region
                     name="club_header"
-                    params={786448}
                     layout={{ position: 'absolute', marginLeft: -16.5, marginRight: 16.5, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -80,13 +78,11 @@ export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClub
             <Border
                 variant="2"
                 name="club_remaining_bg"
-                params={1040}
                 tintColor="#dfdfdf"
                 layout={{ position: 'absolute', left: 10, width: 340, bottom: 25, height: 25 }}
             >
                 <Region
                     name="club_remaining"
-                    params={16}
                     layout={{ position: 'absolute', left: 6, width: 151, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionClubRemaining ?? t('catalog.club.buy.remaining')} />
@@ -94,7 +90,6 @@ export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClub
             </Border>
             <Region
                 name="club_info"
-                params={16}
                 layout={{ position: 'absolute', left: 7, width: 307, top: 30, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -105,14 +100,18 @@ export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClub
             <Icon
                 variant="18"
                 name="icon_vip"
-                params={16}
                 layout={{ position: 'absolute', left: 40, width: 85, top: 104, height: 40 }}
             />
-            <ClubBuyWidget2ItemListHc {...itemListHc} />
-            <ClubBuyWidget2ItemListVip {...itemListVip} />
+            <ClubBuyWidget2ItemListHc
+                tags={[ 'own_items_grid' ]}
+                {...itemListHc}
+            />
+            <ClubBuyWidget2ItemListVip
+                tags={[ 'own_items_grid' ]}
+                {...itemListVip}
+            />
             <Region
                 name="club_link"
-                params={787473}
                 layout={{ position: 'absolute', width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

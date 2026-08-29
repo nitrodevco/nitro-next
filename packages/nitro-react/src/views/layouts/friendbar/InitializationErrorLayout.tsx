@@ -13,13 +13,11 @@ export const InitializationErrorLayout = ({ captionError, layout, srcKittycat }:
             <Region layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 84 }}>
                 <ThemeImage
                     name="kittycat"
-                    params={1311824}
                     src={srcKittycat ?? '${image.library.url}reception/confused.png'}
                     layout={{ position: 'absolute', right: 62, width: 78, bottom: 23, height: 59 }}
                 />
                 <Region
                     name="error"
-                    params={1311824}
                     layout={{ position: 'absolute', right: 10, width: 185, bottom: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

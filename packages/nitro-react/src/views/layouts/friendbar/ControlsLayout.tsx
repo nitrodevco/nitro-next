@@ -22,22 +22,22 @@ export interface ControlsLayoutControlsProps {
     onBtnMessage?: () => void;
     onBtnVisit?: () => void;
     onButtonProfile?: () => void;
+    tags?: string[];
 }
 
-export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnVisit, onButtonProfile }: ControlsLayoutControlsProps) => {
+export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnVisit, onButtonProfile, tags }: ControlsLayoutControlsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="controls"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 120, ...layout }}
         >
             <Button
                 variant="3"
                 name="btn_message"
                 tooltip={t('friend.bar.message.tip')}
-                params={131089}
                 onPointerTap={onBtnMessage}
                 layout={{ position: 'absolute', left: 4, width: 113, top: 4, height: 28, minWidth: 113, maxWidth: 113 }}
             >
@@ -47,7 +47,6 @@ export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnV
                 variant="3"
                 name="btn_visit"
                 tooltip={t('friend.bar.visit.tip')}
-                params={131089}
                 onPointerTap={onBtnVisit}
                 layout={{ position: 'absolute', left: 4, width: 113, top: 34, height: 28, minWidth: 113 }}
             >
@@ -57,7 +56,6 @@ export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnV
                 variant="3"
                 name="btn_game"
                 tooltip={t('friend.bar.game.tip')}
-                params={131089}
                 tintColor="#8ed9ef"
                 onPointerTap={onBtnGame}
                 layout={{ position: 'absolute', left: 4, width: 113, top: 34, height: 28, minWidth: 113 }}
@@ -68,7 +66,6 @@ export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnV
                 variant="3"
                 name="button_profile"
                 tooltip={t('infostand.profile.link.tooltip')}
-                params={131089}
                 onPointerTap={onButtonProfile}
                 layout={{ position: 'absolute', left: 4, width: 113, top: 64, height: 28, minWidth: 113 }}
             >

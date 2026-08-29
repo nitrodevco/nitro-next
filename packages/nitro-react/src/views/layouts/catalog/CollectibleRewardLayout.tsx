@@ -19,7 +19,6 @@ export const CollectibleRewardLayout = ({ bottomContainer, layout, onClose, rari
             variant="3"
             id="CollectibleReward"
             name="CollectibleReward"
-            params={1073774593}
             caption={t('collectibles.reward_box.notif.title')}
             tintColor="#5e696d"
             onClose={onClose}
@@ -29,7 +28,6 @@ export const CollectibleRewardLayout = ({ bottomContainer, layout, onClose, rari
                 <Border
                     variant="3"
                     name="background"
-                    params={2192}
                     tintColor="#5e696d"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
                 />
@@ -45,18 +43,18 @@ export const CollectibleRewardLayout = ({ bottomContainer, layout, onClose, rari
 export interface CollectibleRewardLayoutCollectorHubBackgroundProps {
     layout?: BoxLayout;
     srcGradient?: string;
+    tags?: string[];
 }
 
-export const CollectibleRewardLayoutCollectorHubBackground = ({ layout, srcGradient }: CollectibleRewardLayoutCollectorHubBackgroundProps) => {
+export const CollectibleRewardLayoutCollectorHubBackground = ({ layout, srcGradient, tags }: CollectibleRewardLayoutCollectorHubBackgroundProps) => {
     return (
         <Region
             name="collector_hub_background"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: -2, right: -2, top: 0, height: 565, ...layout }}
         >
             <ThemeImage
                 name="gradient"
-                params={144}
                 src={srcGradient ?? layoutImage('collectables_score_background_gradient.png')}
                 tint="#000000"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 348 }}
@@ -64,7 +62,6 @@ export const CollectibleRewardLayoutCollectorHubBackground = ({ layout, srcGradi
             <Border
                 variant="3"
                 name="dimmer"
-                params={144}
                 tintColor="#000000"
                 blend={0.5}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 348 }}
@@ -78,20 +75,20 @@ export interface CollectibleRewardLayoutTextContainerProps {
     captionProductName?: string;
     captionTitleText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CollectibleRewardLayoutTextContainer = ({ captionProductName, captionTitleText, layout }: CollectibleRewardLayoutTextContainerProps) => {
+export const CollectibleRewardLayoutTextContainer = ({ captionProductName, captionTitleText, layout, tags }: CollectibleRewardLayoutTextContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="text_container"
-            params={16528}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 58, ...layout }}
         >
             <Region
                 name="title_text"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -101,7 +98,6 @@ export const CollectibleRewardLayoutTextContainer = ({ captionProductName, capti
             </Region>
             <Region
                 name="product_name"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 32, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -118,18 +114,18 @@ export const CollectibleRewardLayoutTextContainer = ({ captionProductName, capti
 export interface CollectibleRewardLayoutProductContainerProps {
     layout?: BoxLayout;
     srcRotatingStar?: string;
+    tags?: string[];
 }
 
-export const CollectibleRewardLayoutProductContainer = ({ layout, srcRotatingStar }: CollectibleRewardLayoutProductContainerProps) => {
+export const CollectibleRewardLayoutProductContainer = ({ layout, srcRotatingStar, tags }: CollectibleRewardLayoutProductContainerProps) => {
     return (
         <Region
             name="product_container"
-            params={208}
+            tags={tags}
             layout={{ position: 'absolute', width: 300, top: 25, height: 300, ...layout }}
         >
             <ThemeImage
                 name="rotating_star"
-                params={16}
                 src={srcRotatingStar ?? layoutImage('bg_star_300x300.png')}
                 tint="#ffecac"
                 layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 300 }}
@@ -137,7 +133,6 @@ export const CollectibleRewardLayoutProductContainer = ({ layout, srcRotatingSta
             <WidgetSlot
                 widgetType="product_image"
                 name="product_image"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 300 }}
             />
         </Region>
@@ -149,14 +144,15 @@ export interface CollectibleRewardLayoutTopContainerProps {
     collectorHubBackground?: CollectibleRewardLayoutCollectorHubBackgroundProps;
     layout?: BoxLayout;
     productContainer?: CollectibleRewardLayoutProductContainerProps;
+    tags?: string[];
     textContainer?: CollectibleRewardLayoutTextContainerProps;
 }
 
-export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, layout, productContainer, textContainer }: CollectibleRewardLayoutTopContainerProps) => {
+export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, layout, productContainer, tags, textContainer }: CollectibleRewardLayoutTopContainerProps) => {
     return (
         <Region
             name="top_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 350, justifyContent: 'center', ...layout }}
         >
             <CollectibleRewardLayoutCollectorHubBackground {...collectorHubBackground} />
@@ -170,29 +166,26 @@ export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, la
 export interface CollectibleRewardLayoutBottomContainerProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
+    tags?: string[];
 }
 
-export const CollectibleRewardLayoutBottomContainer = ({ layout, onOkButton }: CollectibleRewardLayoutBottomContainerProps) => {
+export const CollectibleRewardLayoutBottomContainer = ({ layout, onOkButton, tags }: CollectibleRewardLayoutBottomContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bottom_container"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 348, bottom: 35, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="3"
                 name="highlight"
-                params={144}
                 tintColor="#000fff"
                 blend={0.1}
                 layout={{ position: 'absolute', left: 0, right: 0, top: -2, height: 50 }}
             />
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 80, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 80, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('collectibles.reward_box.info')}
                     textOptions={{ fill: '#ffffff', align: 'center' }}
@@ -201,7 +194,6 @@ export const CollectibleRewardLayoutBottomContainer = ({ layout, onOkButton }: C
             <Button
                 variant="3"
                 name="ok_button"
-                params={918737}
                 onPointerTap={onOkButton}
                 layout={{ position: 'absolute', width: 120, bottom: 33, height: 30, minWidth: 120 }}
             >
@@ -217,26 +209,25 @@ export interface CollectibleRewardLayoutRarityContainerProps {
     captionRarityTitle?: string;
     layout?: BoxLayout;
     srcFlagImage?: string;
+    tags?: string[];
 }
 
-export const CollectibleRewardLayoutRarityContainer = ({ captionRarityText, captionRarityTitle, layout, srcFlagImage }: CollectibleRewardLayoutRarityContainerProps) => {
+export const CollectibleRewardLayoutRarityContainer = ({ captionRarityText, captionRarityTitle, layout, srcFlagImage, tags }: CollectibleRewardLayoutRarityContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rarity_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 300, height: 96, ...layout }}
         >
             <ThemeImage
                 name="flag_image"
-                params={144}
                 src={srcFlagImage ?? layoutImage('collectables_reward_rarity_flag.png')}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86 }}
             />
             <Region
                 name="rarity_title"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -246,7 +237,6 @@ export const CollectibleRewardLayoutRarityContainer = ({ captionRarityText, capt
             </Region>
             <Region
                 name="rarity_text"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 50, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

@@ -22,7 +22,6 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
             variant="3"
             id="niko.trophy"
             name="niko.trophy"
-            params={33025}
             caption={t('niko.trophy.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -32,13 +31,11 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
                 <NikoTrophyLayoutNikotrophyBackground {...nikotrophyBackground} />
                 <ThemeImage
                     name="preview_image"
-                    params={16}
                     src={srcPreviewImage}
                     layout={{ position: 'absolute', left: 26, width: 93, top: 30, height: 112 }}
                 />
                 <Region
                     name="html_textbox"
-                    params={1}
                     layout={{ position: 'absolute', left: 153, width: 249, top: 28, height: 64, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -48,7 +45,6 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
                 </Region>
                 <Region
                     name="store_link"
-                    params={1}
                     layout={{ position: 'absolute', left: 153, width: 249, top: 97, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     onPointerTap={onStoreLink}
                     cursor="pointer"
@@ -60,7 +56,6 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
                 </Region>
                 <Region
                     name="date"
-                    params={1}
                     layout={{ position: 'absolute', left: 153, width: 249, top: 130, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -77,13 +72,14 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
 /** Named region `nikotrophy.background` of NikoTrophyLayout - configured through the parent's `nikotrophyBackground` prop. */
 export interface NikoTrophyLayoutNikotrophyBackgroundProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NikoTrophyLayoutNikotrophyBackground = ({ layout }: NikoTrophyLayoutNikotrophyBackgroundProps) => {
+export const NikoTrophyLayoutNikotrophyBackground = ({ layout, tags }: NikoTrophyLayoutNikotrophyBackgroundProps) => {
     return (
         <Region
             name="nikotrophy.background"
-            params={16}
+            tags={tags}
             backgroundColor="#36494e"
             layout={{ position: 'absolute', left: 0, width: 428, top: 0, height: 169, ...layout }}
         />
@@ -95,23 +91,23 @@ export interface NikoTrophyLayoutAppstoreRegionProps {
     layout?: BoxLayout;
     onAppstoreRegion?: () => void;
     srcStoreImage?: string;
+    tags?: string[];
 }
 
-export const NikoTrophyLayoutAppstoreRegion = ({ layout, onAppstoreRegion, srcStoreImage }: NikoTrophyLayoutAppstoreRegionProps) => {
+export const NikoTrophyLayoutAppstoreRegion = ({ layout, onAppstoreRegion, srcStoreImage, tags }: NikoTrophyLayoutAppstoreRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="appstore_region"
+            tags={tags}
             tooltip={t('trophy.niko.link.tooltip')}
-            params={17}
             onPointerTap={onAppstoreRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 38, width: 346, top: 173, height: 110, ...layout }}
         >
             <ThemeImage
                 name="store_image"
-                params={16}
                 src={srcStoreImage}
                 layout={{ position: 'absolute', left: 15, width: 320, top: 10, height: 92 }}
             />

@@ -16,20 +16,15 @@ export interface SnowwarLeaderboardEntryLayoutProps {
 export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, imageRegion, layout, srcAvatarImage, srcDivider, srcHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 356, height: 42, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}>
                 <ThemeImage
                     name="highlight"
                     tags={[ 'bitmap' ]}
-                    params={16}
                     src={srcHighlight ?? layoutImage('leaderboard_highlighter.png')}
                     layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}
                 />
                 <Region
                     name="rank"
-                    params={16}
                     layout={{ position: 'absolute', left: 7, width: 50, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -40,13 +35,11 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 <SnowwarLeaderboardEntryLayoutImageRegion {...imageRegion} />
                 <ThemeImage
                     name="avatarImage"
-                    params={2064}
                     src={srcAvatarImage}
                     layout={{ position: 'absolute', left: 50, width: 44, top: 1, bottom: 1 }}
                 />
                 <Region
                     name="name"
-                    params={16}
                     layout={{ position: 'absolute', left: 98, width: 88, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -56,7 +49,6 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 </Region>
                 <Region
                     name="score"
-                    params={262160}
                     layout={{ position: 'absolute', right: 14, width: 58, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -67,7 +59,6 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 <ThemeImage
                     name="divider"
                     tags={[ 'bitmap' ]}
-                    params={1040}
                     src={srcDivider ?? layoutImage('leaderboard_divider.png')}
                     layout={{ position: 'absolute', left: 0, width: 350, bottom: 0, height: 2 }}
                 />
@@ -80,13 +71,14 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
 export interface SnowwarLeaderboardEntryLayoutImageRegionProps {
     layout?: BoxLayout;
     onImageRegion?: () => void;
+    tags?: string[];
 }
 
-export const SnowwarLeaderboardEntryLayoutImageRegion = ({ layout, onImageRegion }: SnowwarLeaderboardEntryLayoutImageRegionProps) => {
+export const SnowwarLeaderboardEntryLayoutImageRegion = ({ layout, onImageRegion, tags }: SnowwarLeaderboardEntryLayoutImageRegionProps) => {
     return (
         <Region
             name="imageRegion"
-            params={17}
+            tags={tags}
             onPointerTap={onImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 53, width: 44, top: 1, height: 40, ...layout }}

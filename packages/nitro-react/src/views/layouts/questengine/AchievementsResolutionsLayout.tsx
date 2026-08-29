@@ -19,7 +19,6 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
     return (
         <Frame
             variant="100"
-            params={32769}
             caption={t('resolution.title')}
             onClose={onClose}
             layout={{ width: 312, height: 525, ...layout }}
@@ -27,14 +26,12 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Border
                     variant="103"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 310, top: 50, height: 389, minWidth: 310, maxWidth: 310 }}
                 />
                 <AchievementsResolutionsLayoutElementList {...elementList} />
                 <Button
                     variant="102"
                     name="save_button"
-                    params={917521}
                     onPointerTap={onSaveButton}
                     layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 180, top: 395, height: 30, minWidth: 180, maxWidth: 180 }}
                 >
@@ -42,7 +39,6 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
                 </Button>
                 <Region
                     name="disabled.reason"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 5, width: 300, top: 403, height: 15, minWidth: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
@@ -55,7 +51,6 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown_widget"
-                    params={147472}
                     layout={{ position: 'absolute', left: 103, width: 99, top: 444, height: 37 }}
                 />
             </Region>
@@ -67,15 +62,16 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
 export interface AchievementsResolutionsLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout }: AchievementsResolutionsLayoutTitleItemProps) => {
+export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout, tags }: AchievementsResolutionsLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            params={16}
+            tags={tags}
             layout={{ width: 264, height: 50, flexShrink: 0, minHeight: 50, maxHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -89,13 +85,14 @@ export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout }:
 /** Row template `achievements` of AchievementsResolutionsLayout - pass real rows through its `items…` slot. */
 export interface AchievementsResolutionsLayoutAchievementsItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutAchievementsItem = ({ layout }: AchievementsResolutionsLayoutAchievementsItemProps) => {
+export const AchievementsResolutionsLayoutAchievementsItem = ({ layout, tags }: AchievementsResolutionsLayoutAchievementsItemProps) => {
     return (
         <Region
             name="achievements"
-            params={16}
+            tags={tags}
             layout={{ width: 290, height: 230, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 6, ...layout }}
         />
     );
@@ -108,15 +105,16 @@ export interface AchievementsResolutionsLayoutElementListProps {
     captionAchievementName?: string;
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, itemsElementList, layout }: AchievementsResolutionsLayoutElementListProps) => {
+export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, itemsElementList, layout, tags }: AchievementsResolutionsLayoutElementListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="element_list"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 310, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
@@ -125,34 +123,22 @@ export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDes
                     <AchievementsResolutionsLayoutAchievementsItem />
                 </>
             )}
-            <Region
-                params={147472}
-                layout={{ flexShrink: 0, flexDirection: 'row' }}
-            >
-                <Region
-                    params={147472}
-                    layout={{ width: 75, height: 90, flexShrink: 0, justifyContent: 'center' }}
-                >
+            <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
+                <Region layout={{ width: 75, height: 90, flexShrink: 0, justifyContent: 'center' }}>
                     <ThemeImage
-                        params={786448}
                         src={layoutImage('common_star.png')}
                         layout={{ position: 'absolute', width: 75, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
                     />
                     <WidgetSlot
                         widgetType="badge_image"
                         name="achievement_badge"
-                        params={16}
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 13, width: 50, top: 14, height: 50 }}
                     />
                 </Region>
-                <Region
-                    params={147472}
-                    layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}
-                >
+                <Region layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}>
                     <Region
                         name="achievement.name"
-                        params={16}
                         layout={{ width: 220, height: 17, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -163,7 +149,6 @@ export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDes
                     </Region>
                     <Region
                         name="achievement.description"
-                        params={16}
                         layout={{ width: 220, height: 16, flexShrink: 0, minWidth: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -171,19 +156,12 @@ export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDes
                             textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 220, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ width: 153, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
+                    <Region layout={{ width: 220, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
+                        <Region layout={{ width: 153, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText text={t('resolution.achievement.level')} />
                         </Region>
                         <Region
                             name="achievement.level"
-                            params={16}
                             layout={{ width: 173, height: 15, flexShrink: 0, minWidth: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText

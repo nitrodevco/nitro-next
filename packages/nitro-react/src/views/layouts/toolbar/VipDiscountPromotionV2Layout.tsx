@@ -21,14 +21,12 @@ export const VipDiscountPromotionV2Layout = ({ captionTitleTxt, contentItemlist,
         <Region layout={{ position: 'relative', width: 193, height: 216, ...layout }}>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 216 }}
             >
                 <VipDiscountPromotionV2LayoutMinimizeRegion {...minimizeRegion} />
                 <VipDiscountPromotionV2LayoutMaximizeRegion {...maximizeRegion} />
                 <Region
                     name="title_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 13, width: 150, top: 10, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -38,7 +36,6 @@ export const VipDiscountPromotionV2Layout = ({ captionTitleTxt, contentItemlist,
                 </Region>
                 <ThemeImage
                     name="promo_img"
-                    params={1311824}
                     src={srcPromoImg ?? '${image.library.url}talent/citizenship_vip_extend_promo.png'}
                     layout={{ position: 'absolute', right: 7, width: 92, bottom: 1, height: 102 }}
                 />
@@ -52,19 +49,19 @@ export const VipDiscountPromotionV2Layout = ({ captionTitleTxt, contentItemlist,
 export interface VipDiscountPromotionV2LayoutMinimizeRegionProps {
     layout?: BoxLayout;
     onMinimizeRegion?: () => void;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutMinimizeRegion = ({ layout, onMinimizeRegion }: VipDiscountPromotionV2LayoutMinimizeRegionProps) => {
+export const VipDiscountPromotionV2LayoutMinimizeRegion = ({ layout, onMinimizeRegion, tags }: VipDiscountPromotionV2LayoutMinimizeRegionProps) => {
     return (
         <Region
             name="minimize_region"
-            params={17}
+            tags={tags}
             onPointerTap={onMinimizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('messenger_minimize_button.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -76,19 +73,19 @@ export const VipDiscountPromotionV2LayoutMinimizeRegion = ({ layout, onMinimizeR
 export interface VipDiscountPromotionV2LayoutMaximizeRegionProps {
     layout?: BoxLayout;
     onMaximizeRegion?: () => void;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutMaximizeRegion = ({ layout, onMaximizeRegion }: VipDiscountPromotionV2LayoutMaximizeRegionProps) => {
+export const VipDiscountPromotionV2LayoutMaximizeRegion = ({ layout, onMaximizeRegion, tags }: VipDiscountPromotionV2LayoutMaximizeRegionProps) => {
     return (
         <Region
             name="maximize_region"
-            params={17}
+            tags={tags}
             onPointerTap={onMaximizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_maximize.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -100,15 +97,16 @@ export const VipDiscountPromotionV2LayoutMaximizeRegion = ({ layout, onMaximizeR
 export interface VipDiscountPromotionV2LayoutCaptionTxtItemProps {
     captionCaptionTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutCaptionTxtItem = ({ captionCaptionTxt, layout }: VipDiscountPromotionV2LayoutCaptionTxtItemProps) => {
+export const VipDiscountPromotionV2LayoutCaptionTxtItem = ({ captionCaptionTxt, layout, tags }: VipDiscountPromotionV2LayoutCaptionTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="caption_txt"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -123,15 +121,16 @@ export const VipDiscountPromotionV2LayoutCaptionTxtItem = ({ captionCaptionTxt, 
 export interface VipDiscountPromotionV2LayoutInfoTxtItemProps {
     captionInfoTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutInfoTxtItem = ({ captionInfoTxt, layout }: VipDiscountPromotionV2LayoutInfoTxtItemProps) => {
+export const VipDiscountPromotionV2LayoutInfoTxtItem = ({ captionInfoTxt, layout, tags }: VipDiscountPromotionV2LayoutInfoTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_txt"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -146,16 +145,17 @@ export const VipDiscountPromotionV2LayoutInfoTxtItem = ({ captionInfoTxt, layout
 export interface VipDiscountPromotionV2LayoutExtendButtonItemProps {
     layout?: BoxLayout;
     onExtendButton?: () => void;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutExtendButtonItem = ({ layout, onExtendButton }: VipDiscountPromotionV2LayoutExtendButtonItemProps) => {
+export const VipDiscountPromotionV2LayoutExtendButtonItem = ({ layout, onExtendButton, tags }: VipDiscountPromotionV2LayoutExtendButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="extend_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onExtendButton}
             layout={{ width: 187, height: 50, flexShrink: 0, minWidth: 187, maxWidth: 187, ...layout }}
         >
@@ -168,13 +168,14 @@ export const VipDiscountPromotionV2LayoutExtendButtonItem = ({ layout, onExtendB
 export interface VipDiscountPromotionV2LayoutContentItemlistProps {
     itemsContentItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VipDiscountPromotionV2LayoutContentItemlist = ({ itemsContentItemlist, layout }: VipDiscountPromotionV2LayoutContentItemlistProps) => {
+export const VipDiscountPromotionV2LayoutContentItemlist = ({ itemsContentItemlist, layout, tags }: VipDiscountPromotionV2LayoutContentItemlistProps) => {
     return (
         <Region
             name="content_itemlist"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsContentItemlist ?? (

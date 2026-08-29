@@ -29,7 +29,6 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
     return (
         <Frame
             variant="3"
-            params={1}
             caption={t('help.button.cfh')}
             tintColor="#418db0"
             onClose={onClose}
@@ -41,14 +40,12 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
                 <ContainerButton
                     variant="5"
                     name="continue_button"
-                    params={131089}
                     tintColor="#00aa00"
                     onPointerTap={onContinueButton}
                     layout={{ position: 'absolute', left: 229, width: 189, top: 435, height: 41 }}
                 >
                     <Region
                         name="continue_button"
-                        params={16}
                         layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -70,14 +67,12 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
                     <ContainerButton
                         variant="5"
                         name="back_button"
-                        params={131089}
                         tintColor="#aaaaaa"
                         onPointerTap={onBackButton}
                         layout={{ width: '100%', height: '100%' }}
                     >
                         <Region
                             name="button_text"
-                            params={16}
                             layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
@@ -107,47 +102,38 @@ export interface TopicsFlowHelpLayoutStartContainerProps {
     onReportsStatus?: () => void;
     onSanctionInfoLink?: () => void;
     srcReportsStatusBitmap?: string;
+    tags?: string[];
     visibleButtonHabboHelp?: boolean;
     visibleStartContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionReportsStatus, captionSanctionInfoLink, layout, onButtonAccount, onButtonHabboHelp, onButtonUserReport, onFaqLink, onReportsStatus, onSanctionInfoLink, srcReportsStatusBitmap, visibleButtonHabboHelp, visibleStartContainer }: TopicsFlowHelpLayoutStartContainerProps) => {
+export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionReportsStatus, captionSanctionInfoLink, layout, onButtonAccount, onButtonHabboHelp, onButtonUserReport, onFaqLink, onReportsStatus, onSanctionInfoLink, srcReportsStatusBitmap, tags, visibleButtonHabboHelp, visibleStartContainer }: TopicsFlowHelpLayoutStartContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="start_container"
-            params={16}
+            tags={tags}
             visible={visibleStartContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('help_help_duck.png')}
                 layout={{ position: 'absolute', left: 32, width: 124, top: 59, height: 126 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.main.frame.title')}
                     textStyle="text-style-u-headline-big"
                 />
             </Region>
-            <Region
-                params={1}
-                layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.main.frame.description')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}
-            >
+            <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
                 <Region
                     visible={visibleButtonHabboHelp ?? false}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
@@ -155,13 +141,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                     <ContainerButton
                         variant="6"
                         name="button_habbo_help"
-                        params={17}
                         tintColor="#00aa00"
                         onPointerTap={onButtonHabboHelp}
                         layout={{ width: '100%', height: '100%' }}
                     >
                         <Region
-                            params={16}
                             visible={false}
                             layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
@@ -176,15 +160,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                 <ContainerButton
                     variant="6"
                     name="button_user_report"
-                    params={17}
                     tintColor="#00aa00"
                     onPointerTap={onButtonUserReport}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('help.main.bully.subtitle')}
                             textStyle="text-style-u-headline-medium"
@@ -195,15 +175,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                 <ContainerButton
                     variant="6"
                     name="button_account"
-                    params={17}
                     tintColor="#00aa00"
                     onPointerTap={onButtonAccount}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('help.main.self.tips.title')}
                             textStyle="text-style-u-headline-medium"
@@ -213,13 +189,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                 </ContainerButton>
             </Region>
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_link_icon.png')}
                 layout={{ position: 'absolute', left: 32, width: 18, top: 378, height: 19 }}
             />
             <Region
                 name="faq_link"
-                params={1}
                 layout={{ position: 'absolute', left: 54, width: 354, top: 377, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 onPointerTap={onFaqLink}
                 cursor="pointer"
@@ -230,13 +204,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                 />
             </Region>
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_link_icon.png')}
                 layout={{ position: 'absolute', left: 32, width: 18, top: 406, height: 19 }}
             />
             <Region
                 name="sanction_info_link"
-                params={1}
                 layout={{ position: 'absolute', left: 54, width: 354, top: 404, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 onPointerTap={onSanctionInfoLink}
                 cursor="pointer"
@@ -248,13 +220,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
             </Region>
             <ThemeImage
                 name="reports_status_bitmap"
-                params={16}
                 src={srcReportsStatusBitmap ?? layoutImage('icons_link_icon.png')}
                 layout={{ position: 'absolute', left: 32, width: 18, top: 434, height: 19 }}
             />
             <Region
                 name="reports_status"
-                params={1}
                 layout={{ position: 'absolute', left: 54, width: 354, top: 432, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 onPointerTap={onReportsStatus}
                 cursor="pointer"
@@ -274,56 +244,43 @@ export interface TopicsFlowHelpLayoutHelpContainerProps {
     onHabbowayLink?: () => void;
     onInstructionsButton?: () => void;
     onSafetybookletLink?: () => void;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onInstructionsButton, onSafetybookletLink }: TopicsFlowHelpLayoutHelpContainerProps) => {
+export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onInstructionsButton, onSafetybookletLink, tags }: TopicsFlowHelpLayoutHelpContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('help_help_duck.png')}
                 layout={{ position: 'absolute', left: 32, width: 124, top: 59, height: 126 }}
             />
-            <Region
-                params={1}
-                layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.main.self.description')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.main.frame.title')}
                     textStyle="text-style-u-headline-big"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}
-            >
+            <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
                 <ContainerButton
                     variant="6"
                     name="instructions_button"
-                    params={17}
                     tintColor="#00aa00"
                     onPointerTap={onInstructionsButton}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('help.main2.tour.subtitle')}
                             textStyle="text-style-u-headline-medium"
@@ -334,15 +291,11 @@ export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onIn
                 <ContainerButton
                     variant="6"
                     name="safetybooklet_link"
-                    params={17}
                     tintColor="#00aa00"
                     onPointerTap={onSafetybookletLink}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('help.main.button.self_help')}
                             textStyle="text-style-u-headline-medium"
@@ -353,15 +306,11 @@ export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onIn
                 <ContainerButton
                     variant="6"
                     name="habboway_link"
-                    params={17}
                     tintColor="#00aa00"
                     onPointerTap={onHabbowayLink}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('help.main2.habboway.button')}
                             textStyle="text-style-u-headline-medium"
@@ -380,15 +329,16 @@ export interface TopicsFlowHelpLayoutUserPrototypeItemProps {
     captionUserName?: string;
     layout?: BoxLayout;
     onUserPrototype?: () => void;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout, onUserPrototype }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout, onUserPrototype, tags }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_prototype"
-            params={17}
+            tags={tags}
             onPointerTap={onUserPrototype}
             cursor="pointer"
             layout={{ width: 367, height: 57, flexShrink: 0, ...layout }}
@@ -397,12 +347,10 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
                 variant="2"
                 name="user_bg"
                 tags={[ 'BACKGROUND' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 52 }}
             />
             <Region
                 name="user_name"
-                params={16}
                 layout={{ position: 'absolute', left: 61, width: 42, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -412,7 +360,6 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
             </Region>
             <Region
                 name="room_name"
-                params={16}
                 layout={{ position: 'absolute', left: 61, width: 218, top: 24, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -423,7 +370,6 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
             <WidgetSlot
                 widgetType="avatar_image"
                 name="user_avatar"
-                params={16}
                 options={{ 'avatar_image:only_head': 'true' }}
                 layout={{ position: 'absolute', left: -11, width: 90, top: -29, height: 130 }}
             />
@@ -435,9 +381,10 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
 export interface TopicsFlowHelpLayoutUserListProps {
     itemsUserList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout }: TopicsFlowHelpLayoutUserListProps) => {
+export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout, tags }: TopicsFlowHelpLayoutUserListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -445,7 +392,7 @@ export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout }: TopicsFl
         >
             <Region
                 name="user_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsUserList ?? (
@@ -459,31 +406,28 @@ export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout }: TopicsFl
 /** Named region `users_container` of TopicsFlowHelpLayout - configured through the parent's `usersContainer` prop. */
 export interface TopicsFlowHelpLayoutUsersContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
     userList?: TopicsFlowHelpLayoutUserListProps;
     visibleUsersContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutUsersContainer = ({ layout, userList, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
+export const TopicsFlowHelpLayoutUsersContainer = ({ layout, tags, userList, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="users_container"
-            params={16}
+            tags={tags}
             visible={visibleUsersContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 430, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.emergency.main.step.two.title')}
                     textStyle="text-style-u-headline-medium"
                 />
             </Region>
             <Region
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 30, width: 380, top: 60, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -504,39 +448,36 @@ export interface TopicsFlowHelpLayoutUserProps {
     captionUserInfoTitle?: string;
     layout?: BoxLayout;
     onChangeUser?: () => void;
+    tags?: string[];
     visibleUser?: boolean;
 }
 
-export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUserName, captionUserInfoTitle, layout, onChangeUser, visibleUser }: TopicsFlowHelpLayoutUserProps) => {
+export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUserName, captionUserInfoTitle, layout, onChangeUser, tags, visibleUser }: TopicsFlowHelpLayoutUserProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user"
-            params={16}
+            tags={tags}
             visible={visibleUser ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90, ...layout }}
         >
             <Region
-                params={16}
                 backgroundColor="#8899a2"
                 layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90 }}
             />
             <Region
-                params={16}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 446, top: 89, height: 1 }}
             />
             <WidgetSlot
                 widgetType="avatar_image"
                 name="reported_user_avatar"
-                params={16}
                 options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                 layout={{ position: 'absolute', left: 50, width: 33, top: 23, height: 34 }}
             />
             <Region
                 name="user_info_title"
-                params={16}
                 layout={{ position: 'absolute', left: 110, width: 160, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -547,7 +488,6 @@ export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUse
             </Region>
             <Region
                 name="reported_user_name"
-                params={16}
                 layout={{ position: 'absolute', left: 110, width: 93, top: 30, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -558,7 +498,6 @@ export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUse
             </Region>
             <Region
                 name="change_user"
-                params={1}
                 layout={{ position: 'absolute', left: 110, width: 256, top: 60, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 onPointerTap={onChangeUser}
                 cursor="pointer"
@@ -578,21 +517,21 @@ export interface TopicsFlowHelpLayoutReasonPrototypeItemProps {
     captionName?: string;
     layout?: BoxLayout;
     onReasonPrototype?: () => void;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, onReasonPrototype }: TopicsFlowHelpLayoutReasonPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, onReasonPrototype, tags }: TopicsFlowHelpLayoutReasonPrototypeItemProps) => {
     return (
         <ContainerButton
             variant="5"
             name="reason_prototype"
-            params={17}
+            tags={tags}
             tintColor="#aa0000"
             onPointerTap={onReasonPrototype}
             layout={{ width: 355, height: 40, flexShrink: 0, ...layout }}
         >
             <Region
                 name="name"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 335, top: 8, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -609,9 +548,10 @@ export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, o
 export interface TopicsFlowHelpLayoutReasonListProps {
     itemsReasonList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout }: TopicsFlowHelpLayoutReasonListProps) => {
+export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout, tags }: TopicsFlowHelpLayoutReasonListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -619,7 +559,7 @@ export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout }: Topi
         >
             <Region
                 name="reason_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 5, width: '100%' }}
             >
                 {itemsReasonList ?? (
@@ -634,23 +574,21 @@ export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout }: Topi
 export interface TopicsFlowHelpLayoutReasonContainerProps {
     layout?: BoxLayout;
     reasonList?: TopicsFlowHelpLayoutReasonListProps;
+    tags?: string[];
     visibleReasonContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutReasonContainer = ({ layout, reasonList, visibleReasonContainer }: TopicsFlowHelpLayoutReasonContainerProps) => {
+export const TopicsFlowHelpLayoutReasonContainer = ({ layout, reasonList, tags, visibleReasonContainer }: TopicsFlowHelpLayoutReasonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="reason_container"
-            params={16}
+            tags={tags}
             visible={visibleReasonContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 445, top: 90, height: 340, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.cfh.pick.topic')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 405 }}
@@ -666,41 +604,38 @@ export interface TopicsFlowHelpLayoutUnlawfulMessageContentProps {
     captionUnlawfulMessageConfirmLabel?: string;
     layout?: BoxLayout;
     onUnlawfulMessageConfirm?: () => void;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUnlawfulMessageContent = ({ captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm }: TopicsFlowHelpLayoutUnlawfulMessageContentProps) => {
+export const TopicsFlowHelpLayoutUnlawfulMessageContent = ({ captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm, tags }: TopicsFlowHelpLayoutUnlawfulMessageContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unlawful_message_content"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 30, width: 390, top: 230, height: 100, ...layout }}
         >
             <WidgetSlot
                 widgetType="illumina_input"
                 name="help_message_name"
-                params={16}
                 options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.name}' }}
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 29 }}
             />
             <WidgetSlot
                 widgetType="illumina_input"
                 name="help_message_email"
-                params={16}
                 options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.email}' }}
                 layout={{ position: 'absolute', left: 200, width: 188, top: 0, height: 29 }}
             />
             <CheckBox
                 variant="3"
                 name="unlawful_message_confirm"
-                params={17}
                 onPointerTap={onUnlawfulMessageConfirm}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 40, height: 30 }}
             />
             <Region
                 name="unlawful_message_confirm_label"
-                params={2064}
                 layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -717,23 +652,23 @@ export interface TopicsFlowHelpLayoutMessageContainerProps {
     captionMessageContainerDescription?: string;
     captionMessagePhaseTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
     unlawfulMessageContent?: TopicsFlowHelpLayoutUnlawfulMessageContentProps;
     visibleMessageContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, layout, unlawfulMessageContent, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
+export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, layout, tags, unlawfulMessageContent, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="message_container"
-            params={16}
+            tags={tags}
             visible={visibleMessageContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 445, top: 100, height: 330, ...layout }}
         >
             <Region
                 name="message_phase_title"
-                params={16}
                 layout={{ position: 'absolute', left: 30, width: 278, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -743,7 +678,6 @@ export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDe
             </Region>
             <Region
                 name="message_container_description"
-                params={16}
                 layout={{ position: 'absolute', left: 30, width: 380, top: 50, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -754,7 +688,6 @@ export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDe
             <WidgetSlot
                 widgetType="illumina_input"
                 name="help_message"
-                params={16}
                 options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true' }}
                 layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 120 }}
             />
@@ -769,19 +702,19 @@ export interface TopicsFlowHelpLayoutChatPrototypeItemProps {
     layout?: BoxLayout;
     onChatCheck?: () => void;
     onChatText?: () => void;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout, onChatCheck, onChatText }: TopicsFlowHelpLayoutChatPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout, onChatCheck, onChatText, tags }: TopicsFlowHelpLayoutChatPrototypeItemProps) => {
     return (
         <Region
             name="chat_prototype"
-            params={16}
+            tags={tags}
             layout={{ width: 360, height: 20, flexShrink: 0, ...layout }}
         >
             <CheckBox
                 variant="3"
                 name="chat_check"
-                params={17}
                 onPointerTap={onChatCheck}
                 layout={{ position: 'absolute', left: 2, width: 16, top: 2, height: 16 }}
             >
@@ -789,7 +722,6 @@ export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout,
             </CheckBox>
             <Region
                 name="chat_text"
-                params={1}
                 layout={{ position: 'absolute', left: 20, width: 336, top: 2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 onPointerTap={onChatText}
                 cursor="pointer"
@@ -807,9 +739,10 @@ export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout,
 export interface TopicsFlowHelpLayoutChatListProps {
     itemsChatList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout }: TopicsFlowHelpLayoutChatListProps) => {
+export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout, tags }: TopicsFlowHelpLayoutChatListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -817,7 +750,7 @@ export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout }: TopicsFl
         >
             <Region
                 name="chat_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
             >
                 {itemsChatList ?? (
@@ -832,32 +765,27 @@ export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout }: TopicsFl
 export interface TopicsFlowHelpLayoutChatContainerProps {
     chatList?: TopicsFlowHelpLayoutChatListProps;
     layout?: BoxLayout;
+    tags?: string[];
     visibleChatContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
+export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, tags, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chat_container"
-            params={16}
+            tags={tags}
             visible={visibleChatContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 330, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.emergency.chat_report.subtitle')}
                     textStyle="text-style-u-headline-medium"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.emergency.chat_report.description')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
@@ -865,7 +793,6 @@ export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, visibleCha
             </Region>
             <Border
                 variant="105"
-                params={16}
                 layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 220 }}
             >
                 <TopicsFlowHelpLayoutChatList {...chatList} />
@@ -878,32 +805,27 @@ export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, visibleCha
 export interface TopicsFlowHelpLayoutSummaryContainerProps {
     layout?: BoxLayout;
     onSubmitButton?: () => void;
+    tags?: string[];
     visibleSummaryContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, visibleSummaryContainer }: TopicsFlowHelpLayoutSummaryContainerProps) => {
+export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, tags, visibleSummaryContainer }: TopicsFlowHelpLayoutSummaryContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="summary_container"
-            params={16}
+            tags={tags}
             visible={visibleSummaryContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 380, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.cfh.button.send')}
                     textStyle="text-style-u-headline-medium"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.main.summary')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
@@ -912,15 +834,11 @@ export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, v
             <ContainerButton
                 variant="5"
                 name="submit_button"
-                params={131089}
                 tintColor="#aa0000"
                 onPointerTap={onSubmitButton}
                 layout={{ position: 'absolute', left: 229, width: 189, top: 335, height: 41 }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('help.emergency.chat_report.submit.button')}
                         textStyle="text-style-u-headline-medium"

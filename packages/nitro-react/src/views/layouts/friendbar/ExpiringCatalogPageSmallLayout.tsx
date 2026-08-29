@@ -17,18 +17,13 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
     return (
         <Region layout={{ position: 'relative', width: 250, height: 208, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208 }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208, flexDirection: 'column' }}>
                     <Region
                         name="page_header_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ width: 94, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -37,20 +32,17 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                         />
                     </Region>
                     <Region
-                        params={16400}
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 120, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="promo_bitmap"
-                            params={16}
                             src={srcPromoBitmap ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
                             layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 120 }}
                         />
                         <Region
                             name="timer_caption_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 99, width: 146, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
@@ -62,7 +54,6 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                         <WidgetSlot
                             widgetType="countdown"
                             name="countdown_widget"
-                            params={147472}
                             options={{ 'countdown:running': 'true' }}
                             layout={{ position: 'absolute', left: 124, width: 99, top: 41, height: 37 }}
                         />
@@ -70,7 +61,6 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                     <Region
                         name="page_desc_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -81,7 +71,6 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                     <Button
                         variant="100"
                         name="open_catalog_button"
-                        params={131089}
                         onPointerTap={onOpenCatalogButton}
                         layout={{ width: 233, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >

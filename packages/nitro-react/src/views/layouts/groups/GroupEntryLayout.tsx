@@ -20,13 +20,14 @@ export const GroupEntryLayout = ({ groupEntryContainer, layout }: GroupEntryLayo
 export interface GroupEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupEntryLayoutBgRegion = ({ layout, onBgRegion }: GroupEntryLayoutBgRegionProps) => {
+export const GroupEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: GroupEntryLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            params={17}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
@@ -39,23 +40,23 @@ export interface GroupEntryLayoutClearFavouriteProps {
     layout?: BoxLayout;
     onClearFavourite?: () => void;
     srcIcon?: string;
+    tags?: string[];
 }
 
-export const GroupEntryLayoutClearFavourite = ({ layout, onClearFavourite, srcIcon }: GroupEntryLayoutClearFavouriteProps) => {
+export const GroupEntryLayoutClearFavourite = ({ layout, onClearFavourite, srcIcon, tags }: GroupEntryLayoutClearFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clear_favourite"
+            tags={tags}
             tooltip={t('group.clearfavourite')}
-            params={81}
             onPointerTap={onClearFavourite}
             cursor="pointer"
             layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16, ...layout }}
         >
             <ThemeImage
                 name="icon"
-                params={16}
                 src={srcIcon ?? layoutImage('extended_profile_clear_favourite.png')}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
             />
@@ -68,23 +69,23 @@ export interface GroupEntryLayoutMakeFavouriteProps {
     layout?: BoxLayout;
     onMakeFavourite?: () => void;
     srcIcon?: string;
+    tags?: string[];
 }
 
-export const GroupEntryLayoutMakeFavourite = ({ layout, onMakeFavourite, srcIcon }: GroupEntryLayoutMakeFavouriteProps) => {
+export const GroupEntryLayoutMakeFavourite = ({ layout, onMakeFavourite, srcIcon, tags }: GroupEntryLayoutMakeFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="make_favourite"
+            tags={tags}
             tooltip={t('group.makefavourite')}
-            params={81}
             onPointerTap={onMakeFavourite}
             cursor="pointer"
             layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16, ...layout }}
         >
             <ThemeImage
                 name="icon"
-                params={16}
                 src={srcIcon ?? layoutImage('extended_profile_make_favourite.png')}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
             />
@@ -100,31 +101,29 @@ export interface GroupEntryLayoutGroupEntryContainerProps {
     makeFavourite?: GroupEntryLayoutMakeFavouriteProps;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
+    tags?: string[];
 }
 
-export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, layout, makeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap }: GroupEntryLayoutGroupEntryContainerProps) => {
+export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, layout, makeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: GroupEntryLayoutGroupEntryContainerProps) => {
     return (
         <Region
             name="group_entry_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
         >
             <ThemeImage
                 name="bg_selected_bitmap"
-                params={16}
                 src={srcBgSelectedBitmap ?? '${image.library.questing.url}achievement_active.png'}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
             />
             <ThemeImage
                 name="bg_unselected_bitmap"
-                params={17}
                 src={srcBgUnselectedBitmap ?? '${image.library.questing.url}achievement_inactive.png'}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
             />
             <WidgetSlot
                 widgetType="badge_image"
                 name="group_pic_bitmap"
-                params={16}
                 options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 11, width: 40, top: 10, height: 40 }}
             />

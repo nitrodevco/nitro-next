@@ -19,13 +19,14 @@ export const NextQuestTimerLayout = ({ layout, nextQuestTimer }: NextQuestTimerL
 export interface NextQuestTimerLayoutMoreInfoRegionProps {
     layout?: BoxLayout;
     onMoreInfoRegion?: () => void;
+    tags?: string[];
 }
 
-export const NextQuestTimerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion }: NextQuestTimerLayoutMoreInfoRegionProps) => {
+export const NextQuestTimerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion, tags }: NextQuestTimerLayoutMoreInfoRegionProps) => {
     return (
         <Region
             name="more_info_region"
-            params={17}
+            tags={tags}
             onPointerTap={onMoreInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 15, width: 162, top: 86, height: 18, ...layout }}
@@ -41,21 +42,21 @@ export interface NextQuestTimerLayoutContentContProps {
     layout?: BoxLayout;
     moreInfoRegion?: NextQuestTimerLayoutMoreInfoRegionProps;
     srcQuestPicBitmap?: string;
+    tags?: string[];
 }
 
-export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcQuestPicBitmap }: NextQuestTimerLayoutContentContProps) => {
+export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcQuestPicBitmap, tags }: NextQuestTimerLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
-            params={2176}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="quest_header_txt"
-                params={786448}
                 layout={{ position: 'absolute', marginLeft: -10, marginRight: 10, width: 67, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -65,7 +66,6 @@ export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInf
             </Region>
             <Region
                 name="desc_txt"
-                params={129}
                 layout={{ position: 'absolute', left: 71, right: 9, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -75,7 +75,6 @@ export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInf
             </Region>
             <Region
                 name="more_info_txt"
-                params={209}
                 layout={{ position: 'absolute', width: 139, top: 89, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -86,7 +85,6 @@ export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInf
             <NextQuestTimerLayoutMoreInfoRegion {...moreInfoRegion} />
             <ThemeImage
                 name="quest_pic_bitmap"
-                params={16}
                 src={srcQuestPicBitmap ?? '${image.library.questing.url}quest_timer_questionmark.png'}
                 layout={{ position: 'absolute', left: 9, width: 54, top: 32, height: 46 }}
             />
@@ -101,26 +99,25 @@ export interface NextQuestTimerLayoutNextQuestTimerProps {
     onNextQuestTimer?: () => void;
     srcQuestTimerContracted?: string;
     srcQuestTimerExpanded?: string;
+    tags?: string[];
 }
 
-export const NextQuestTimerLayoutNextQuestTimer = ({ contentCont, layout, onNextQuestTimer, srcQuestTimerContracted, srcQuestTimerExpanded }: NextQuestTimerLayoutNextQuestTimerProps) => {
+export const NextQuestTimerLayoutNextQuestTimer = ({ contentCont, layout, onNextQuestTimer, srcQuestTimerContracted, srcQuestTimerExpanded, tags }: NextQuestTimerLayoutNextQuestTimerProps) => {
     return (
         <Region
             name="next_quest_timer"
-            params={33105}
+            tags={tags}
             onPointerTap={onNextQuestTimer}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 116, ...layout }}
         >
             <ThemeImage
                 name="quest_timer_expanded"
-                params={1}
                 src={srcQuestTimerExpanded ?? '${image.library.questing.url}quest_timer_expanded.png'}
                 layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 116 }}
             />
             <ThemeImage
                 name="quest_timer_contracted"
-                params={1}
                 src={srcQuestTimerContracted ?? '${image.library.questing.url}quest_timer_contracted.png'}
                 layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 25 }}
             />

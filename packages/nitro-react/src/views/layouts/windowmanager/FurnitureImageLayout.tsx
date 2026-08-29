@@ -11,13 +11,9 @@ export interface FurnitureImageLayoutProps {
 export const FurnitureImageLayout = ({ layout, region, srcBitmap }: FurnitureImageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 108, height: 130, ...layout }}>
-            <Region
-                params={2196}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="bitmap"
-                    params={2192}
                     src={srcBitmap ?? layoutImage('placeholder_furni.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -31,14 +27,15 @@ export const FurnitureImageLayout = ({ layout, region, srcBitmap }: FurnitureIma
 export interface FurnitureImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const FurnitureImageLayoutRegion = ({ layout, onRegion, visibleRegion }: FurnitureImageLayoutRegionProps) => {
+export const FurnitureImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: FurnitureImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            params={2193}
+            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

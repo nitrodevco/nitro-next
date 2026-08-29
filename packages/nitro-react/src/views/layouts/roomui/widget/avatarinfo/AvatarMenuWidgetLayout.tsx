@@ -15,7 +15,6 @@ export const AvatarMenuWidgetLayout = ({ border, layout }: AvatarMenuWidgetLayou
         <Region layout={{ position: 'relative', width: 151, height: 1462, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 151, bottom: 530, height: 1462 }}
             >
@@ -31,20 +30,20 @@ export interface AvatarMenuWidgetLayoutProfileLinkProps {
     layout?: BoxLayout;
     onProfileLink?: () => void;
     srcRelationshipStatus?: string;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfileLink, srcRelationshipStatus }: AvatarMenuWidgetLayoutProfileLinkProps) => {
+export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfileLink, srcRelationshipStatus, tags }: AvatarMenuWidgetLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={145}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={208}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -55,7 +54,6 @@ export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfi
             </Region>
             <ThemeImage
                 name="relationship_status"
-                params={16}
                 src={srcRelationshipStatus}
                 layout={{ position: 'absolute', left: 5, width: 16, top: 1, height: 14 }}
             />
@@ -68,30 +66,28 @@ export interface AvatarMenuWidgetLayoutOpenProfileItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutOpenProfileItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutOpenProfileItemProps) => {
+export const AvatarMenuWidgetLayoutOpenProfileItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutOpenProfileItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="open_profile"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -110,30 +106,28 @@ export interface AvatarMenuWidgetLayoutFriendItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutFriendItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutFriendItemProps) => {
+export const AvatarMenuWidgetLayoutFriendItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutFriendItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="friend"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -152,30 +146,28 @@ export interface AvatarMenuWidgetLayoutTradeItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutTradeItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutTradeItemProps) => {
+export const AvatarMenuWidgetLayoutTradeItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutTradeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="trade"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -194,30 +186,28 @@ export interface AvatarMenuWidgetLayoutWhisperItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutWhisperItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutWhisperItemProps) => {
+export const AvatarMenuWidgetLayoutWhisperItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutWhisperItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="whisper"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -236,30 +226,28 @@ export interface AvatarMenuWidgetLayoutRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRespectItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutRespectItemProps) => {
+export const AvatarMenuWidgetLayoutRespectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="respect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -278,30 +266,28 @@ export interface AvatarMenuWidgetLayoutReplenishRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutReplenishRespectItemProps) => {
+export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutReplenishRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="replenish_respect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -312,7 +298,6 @@ export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layou
                 </Region>
                 <ThemeImage
                     tags={[ '#icon' ]}
-                    params={16}
                     src={layoutImage('pursearea_duckets_icon.png')}
                     layout={{ position: 'absolute', left: 110, width: 15, top: 10, height: 15 }}
                 />
@@ -326,28 +311,26 @@ export interface AvatarMenuWidgetLayoutBlowItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBlowItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutBlowItemProps) => {
+export const AvatarMenuWidgetLayoutBlowItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBlowItemProps) => {
     return (
         <Region
             name="blow"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -366,30 +349,28 @@ export interface AvatarMenuWidgetLayoutPerformItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutPerformItemProps) => {
+export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPerformItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="perform"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -402,7 +383,6 @@ export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButt
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -415,30 +395,28 @@ export interface AvatarMenuWidgetLayoutRelationshipItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutRelationshipItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="relationship"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -451,7 +429,6 @@ export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, o
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -464,30 +441,28 @@ export interface AvatarMenuWidgetLayoutKickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutKickItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutKickItemProps) => {
+export const AvatarMenuWidgetLayoutKickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutKickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="kick"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -506,30 +481,28 @@ export interface AvatarMenuWidgetLayoutMuteItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutMuteItemProps) => {
+export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMuteItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -542,7 +515,6 @@ export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton 
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -555,30 +527,28 @@ export interface AvatarMenuWidgetLayoutMute2minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMute2minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutMute2minItemProps) => {
+export const AvatarMenuWidgetLayoutMute2minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute2minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_2min"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -597,30 +567,28 @@ export interface AvatarMenuWidgetLayoutMute5minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMute5minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutMute5minItemProps) => {
+export const AvatarMenuWidgetLayoutMute5minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute5minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_5min"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -639,30 +607,28 @@ export interface AvatarMenuWidgetLayoutMute10minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMute10minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutMute10minItemProps) => {
+export const AvatarMenuWidgetLayoutMute10minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute10minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_10min"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -681,30 +647,28 @@ export interface AvatarMenuWidgetLayoutBanWithDurationItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutBanWithDurationItemProps) => {
+export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanWithDurationItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_with_duration"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -717,7 +681,6 @@ export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -730,30 +693,28 @@ export interface AvatarMenuWidgetLayoutBanHourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBanHourItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutBanHourItemProps) => {
+export const AvatarMenuWidgetLayoutBanHourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanHourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_hour"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -772,30 +733,28 @@ export interface AvatarMenuWidgetLayoutBanDayItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBanDayItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutBanDayItemProps) => {
+export const AvatarMenuWidgetLayoutBanDayItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanDayItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_day"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -814,30 +773,28 @@ export interface AvatarMenuWidgetLayoutPermBanItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutPermBanItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutPermBanItemProps) => {
+export const AvatarMenuWidgetLayoutPermBanItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPermBanItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="perm_ban"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -856,30 +813,28 @@ export interface AvatarMenuWidgetLayoutGiveRightsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutGiveRightsItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutGiveRightsItemProps) => {
+export const AvatarMenuWidgetLayoutGiveRightsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutGiveRightsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="give_rights"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -898,30 +853,28 @@ export interface AvatarMenuWidgetLayoutRemoveRightsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRemoveRightsItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutRemoveRightsItemProps) => {
+export const AvatarMenuWidgetLayoutRemoveRightsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRemoveRightsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="remove_rights"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -940,30 +893,28 @@ export interface AvatarMenuWidgetLayoutUnignoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutUnignoreItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutUnignoreItemProps) => {
+export const AvatarMenuWidgetLayoutUnignoreItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutUnignoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unignore"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -982,30 +933,28 @@ export interface AvatarMenuWidgetLayoutIgnoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutIgnoreItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutIgnoreItemProps) => {
+export const AvatarMenuWidgetLayoutIgnoreItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutIgnoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ignore"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1024,30 +973,28 @@ export interface AvatarMenuWidgetLayoutReportItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutReportItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutReportItemProps) => {
+export const AvatarMenuWidgetLayoutReportItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutReportItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report"
-            tags={[ 'moderate' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'moderate' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1066,30 +1013,28 @@ export interface AvatarMenuWidgetLayoutModerateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutModerateItemProps) => {
+export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutModerateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderate"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1102,7 +1047,6 @@ export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onBut
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1114,25 +1058,24 @@ export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onBut
 export interface AvatarMenuWidgetLayoutRelationshipHeartItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipHeartItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipHeartItemProps) => {
     return (
         <Region
             name="relationship_heart"
-            params={16}
+            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 49, top: -3, height: 29 }}
             >
                 <ThemeImage
-                    params={16}
                     src={layoutImage('relationship_status_heart.png')}
                     layout={{ position: 'absolute', left: 0, width: 49, top: 7, height: 17 }}
                 />
@@ -1145,25 +1088,24 @@ export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton }
 export interface AvatarMenuWidgetLayoutRelationshipSmileItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipSmileItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipSmileItemProps) => {
     return (
         <Region
             name="relationship_smile"
-            params={16}
+            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 49, top: -3, height: 29 }}
             >
                 <ThemeImage
-                    params={2192}
                     src={layoutImage('relationship_status_smile.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5 }}
                 />
@@ -1176,25 +1118,24 @@ export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton }
 export interface AvatarMenuWidgetLayoutRelationshipBobbaItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipBobbaItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipBobbaItemProps) => {
     return (
         <Region
             name="relationship_bobba"
-            params={16}
+            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="0"
                 name="button"
-                params={17}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, width: 49, top: -3, height: 29 }}
             >
                 <ThemeImage
-                    params={2192}
                     src={layoutImage('relationship_status_bobba.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 7, bottom: 5 }}
                 />
@@ -1207,14 +1148,14 @@ export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton }
 export interface AvatarMenuWidgetLayoutRelationshipGridItemProps {
     itemsRelationshipGrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipGridItem = ({ itemsRelationshipGrid, layout }: AvatarMenuWidgetLayoutRelationshipGridItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipGridItem = ({ itemsRelationshipGrid, layout, tags }: AvatarMenuWidgetLayoutRelationshipGridItemProps) => {
     return (
         <Region
             name="relationship_grid"
-            tags={[ 'grid' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 25, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         >
             {itemsRelationshipGrid ?? (
@@ -1233,30 +1174,28 @@ export interface AvatarMenuWidgetLayoutNoRelationshipItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutNoRelationshipItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutNoRelationshipItemProps) => {
+export const AvatarMenuWidgetLayoutNoRelationshipItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNoRelationshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_relationship"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1275,30 +1214,28 @@ export interface AvatarMenuWidgetLayoutActionsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutActionsItemProps) => {
+export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutActionsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="actions"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1311,7 +1248,6 @@ export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButt
                     variant="4"
                     name="icon"
                     tags={[ 'arrow_left' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1324,30 +1260,28 @@ export interface AvatarMenuWidgetLayoutPassHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutPassHanditemItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutPassHanditemItemProps) => {
+export const AvatarMenuWidgetLayoutPassHanditemItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPassHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pass_handitem"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1366,30 +1300,28 @@ export interface AvatarMenuWidgetLayoutChangeBotNameItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutChangeBotNameItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutChangeBotNameItemProps) => {
+export const AvatarMenuWidgetLayoutChangeBotNameItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutChangeBotNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_bot_name"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1408,30 +1340,28 @@ export interface AvatarMenuWidgetLayoutDressUpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutDressUpItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutDressUpItemProps) => {
+export const AvatarMenuWidgetLayoutDressUpItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDressUpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dress_up"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1450,30 +1380,28 @@ export interface AvatarMenuWidgetLayoutSetupChatItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutSetupChatItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutSetupChatItemProps) => {
+export const AvatarMenuWidgetLayoutSetupChatItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutSetupChatItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setup_chat"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1492,30 +1420,28 @@ export interface AvatarMenuWidgetLayoutRandomWalkItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRandomWalkItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutRandomWalkItemProps) => {
+export const AvatarMenuWidgetLayoutRandomWalkItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRandomWalkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="random_walk"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1534,30 +1460,28 @@ export interface AvatarMenuWidgetLayoutDanceItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutDanceItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutDanceItemProps) => {
+export const AvatarMenuWidgetLayoutDanceItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDanceItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1576,30 +1500,28 @@ export interface AvatarMenuWidgetLayoutPickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutPickItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutPickItemProps) => {
+export const AvatarMenuWidgetLayoutPickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1618,17 +1540,17 @@ export interface AvatarMenuWidgetLayoutNuxProceed1ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
     visibleNuxProceed1?: boolean;
 }
 
-export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, onButton, visibleNuxProceed1 }: AvatarMenuWidgetLayoutNuxProceed1ItemProps) => {
+export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, onButton, tags, visibleNuxProceed1 }: AvatarMenuWidgetLayoutNuxProceed1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_proceed_1"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             visible={visibleNuxProceed1 ?? false}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
@@ -1636,14 +1558,12 @@ export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, on
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1662,30 +1582,28 @@ export interface AvatarMenuWidgetLayoutNuxTakeTourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutNuxTakeTourItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutNuxTakeTourItemProps) => {
+export const AvatarMenuWidgetLayoutNuxTakeTourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxTakeTourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_take_tour"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1704,30 +1622,28 @@ export interface AvatarMenuWidgetLayoutNuxAgainItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutNuxAgainItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutNuxAgainItemProps) => {
+export const AvatarMenuWidgetLayoutNuxAgainItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxAgainItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_again"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1746,28 +1662,26 @@ export interface AvatarMenuWidgetLayoutNuxRestartItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutNuxRestartItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutNuxRestartItemProps) => {
+export const AvatarMenuWidgetLayoutNuxRestartItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxRestartItemProps) => {
     return (
         <Region
             name="nux_restart"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1786,28 +1700,26 @@ export interface AvatarMenuWidgetLayoutNuxNextDayItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutNuxNextDayItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutNuxNextDayItemProps) => {
+export const AvatarMenuWidgetLayoutNuxNextDayItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxNextDayItemProps) => {
     return (
         <Region
             name="nux_next_day"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1826,15 +1738,15 @@ export interface AvatarMenuWidgetLayoutLinkTemplateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
     visibleLinkTemplate?: boolean;
 }
 
-export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, onButton, visibleLinkTemplate }: AvatarMenuWidgetLayoutLinkTemplateItemProps) => {
+export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, onButton, tags, visibleLinkTemplate }: AvatarMenuWidgetLayoutLinkTemplateItemProps) => {
     return (
         <Region
             name="link_template"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             visible={visibleLinkTemplate ?? false}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
@@ -1842,14 +1754,12 @@ export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, o
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1868,30 +1778,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1904,7 +1812,6 @@ export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onB
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={80}
                     layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -1917,30 +1824,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorAlertItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorAlertItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorAlertItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorAlertItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorAlertItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_alert"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -1959,30 +1864,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorKickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorKickItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorKickItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorKickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorKickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_kick"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2001,30 +1904,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute2minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute2minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute2minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute2minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute2minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_2min"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2043,30 +1944,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute10minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute10minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute10minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute10minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute10minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_10min"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2085,30 +1984,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute15minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute15minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute15minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute15minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute15minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_15min"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2127,30 +2024,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute60minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute60minItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute60minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute60minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute60minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_60min"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2169,30 +2064,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute18hourItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute18hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_18hour"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2211,30 +2104,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute36hourItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute36hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_36hour"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2253,30 +2144,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute72hourItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute72hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_72hour"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2295,30 +2184,28 @@ export interface AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorUnmuteItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorUnmuteItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_unmute"
-            tags={[ 'ambassador' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'ambassador' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2337,30 +2224,28 @@ export interface AvatarMenuWidgetLayoutDonateToAllItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutDonateToAllItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutDonateToAllItemProps) => {
+export const AvatarMenuWidgetLayoutDonateToAllItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDonateToAllItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donate_to_all"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2379,30 +2264,28 @@ export interface AvatarMenuWidgetLayoutDonateToUserItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutDonateToUserItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutDonateToUserItemProps) => {
+export const AvatarMenuWidgetLayoutDonateToUserItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDonateToUserItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donate_to_user"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2421,30 +2304,28 @@ export interface AvatarMenuWidgetLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, onButton }: AvatarMenuWidgetLayoutWiredInspectItemProps) => {
+export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -2462,71 +2343,72 @@ export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, o
 export interface AvatarMenuWidgetLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout }: AvatarMenuWidgetLayoutButtonsProps) => {
+export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout, tags }: AvatarMenuWidgetLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519824}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, right: 2, top: 28, minHeight: 1402, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <AvatarMenuWidgetLayoutOpenProfileItem />
-                    <AvatarMenuWidgetLayoutFriendItem />
-                    <AvatarMenuWidgetLayoutTradeItem />
-                    <AvatarMenuWidgetLayoutWhisperItem />
-                    <AvatarMenuWidgetLayoutRespectItem />
-                    <AvatarMenuWidgetLayoutReplenishRespectItem />
-                    <AvatarMenuWidgetLayoutBlowItem />
-                    <AvatarMenuWidgetLayoutPerformItem />
-                    <AvatarMenuWidgetLayoutRelationshipItem />
-                    <AvatarMenuWidgetLayoutKickItem />
-                    <AvatarMenuWidgetLayoutMuteItem />
-                    <AvatarMenuWidgetLayoutMute2minItem />
-                    <AvatarMenuWidgetLayoutMute5minItem />
-                    <AvatarMenuWidgetLayoutMute10minItem />
-                    <AvatarMenuWidgetLayoutBanWithDurationItem />
-                    <AvatarMenuWidgetLayoutBanHourItem />
-                    <AvatarMenuWidgetLayoutBanDayItem />
-                    <AvatarMenuWidgetLayoutPermBanItem />
-                    <AvatarMenuWidgetLayoutGiveRightsItem />
-                    <AvatarMenuWidgetLayoutRemoveRightsItem />
-                    <AvatarMenuWidgetLayoutUnignoreItem />
-                    <AvatarMenuWidgetLayoutIgnoreItem />
-                    <AvatarMenuWidgetLayoutReportItem />
-                    <AvatarMenuWidgetLayoutModerateItem />
-                    <AvatarMenuWidgetLayoutRelationshipGridItem />
-                    <AvatarMenuWidgetLayoutNoRelationshipItem />
-                    <AvatarMenuWidgetLayoutActionsItem />
-                    <AvatarMenuWidgetLayoutPassHanditemItem />
-                    <AvatarMenuWidgetLayoutChangeBotNameItem />
-                    <AvatarMenuWidgetLayoutDressUpItem />
-                    <AvatarMenuWidgetLayoutSetupChatItem />
-                    <AvatarMenuWidgetLayoutRandomWalkItem />
-                    <AvatarMenuWidgetLayoutDanceItem />
-                    <AvatarMenuWidgetLayoutPickItem />
-                    <AvatarMenuWidgetLayoutNuxProceed1Item />
-                    <AvatarMenuWidgetLayoutNuxTakeTourItem />
-                    <AvatarMenuWidgetLayoutNuxAgainItem />
-                    <AvatarMenuWidgetLayoutNuxRestartItem />
-                    <AvatarMenuWidgetLayoutNuxNextDayItem />
-                    <AvatarMenuWidgetLayoutLinkTemplateItem />
-                    <AvatarMenuWidgetLayoutAmbassadorItem />
-                    <AvatarMenuWidgetLayoutAmbassadorAlertItem />
-                    <AvatarMenuWidgetLayoutAmbassadorKickItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute2minItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute10minItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute15minItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute60minItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute18hourItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute36hourItem />
-                    <AvatarMenuWidgetLayoutAmbassadorMute72hourItem />
-                    <AvatarMenuWidgetLayoutAmbassadorUnmuteItem />
-                    <AvatarMenuWidgetLayoutDonateToAllItem />
-                    <AvatarMenuWidgetLayoutDonateToUserItem />
-                    <AvatarMenuWidgetLayoutWiredInspectItem />
+                    <AvatarMenuWidgetLayoutOpenProfileItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutFriendItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutTradeItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutWhisperItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutRespectItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutReplenishRespectItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutBlowItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutPerformItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutRelationshipItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutKickItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutMuteItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutMute2minItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutMute5minItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutMute10minItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutBanWithDurationItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutBanHourItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutBanDayItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutPermBanItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutGiveRightsItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutRemoveRightsItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutUnignoreItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutIgnoreItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutReportItem tags={[ 'moderate' ]} />
+                    <AvatarMenuWidgetLayoutModerateItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutRelationshipGridItem tags={[ 'grid' ]} />
+                    <AvatarMenuWidgetLayoutNoRelationshipItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutActionsItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutPassHanditemItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutChangeBotNameItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutDressUpItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutSetupChatItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutRandomWalkItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutDanceItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutPickItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutNuxProceed1Item tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutNuxTakeTourItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutNuxAgainItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutNuxRestartItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutNuxNextDayItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutLinkTemplateItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorAlertItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorKickItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute2minItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute10minItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute15minItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute60minItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute18hourItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute36hourItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorMute72hourItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutAmbassadorUnmuteItem tags={[ 'ambassador' ]} />
+                    <AvatarMenuWidgetLayoutDonateToAllItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutDonateToUserItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutWiredInspectItem tags={[ 'action' ]} />
                 </>
             )}
         </Region>
@@ -2537,13 +2419,14 @@ export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout }: AvatarMe
 export interface AvatarMenuWidgetLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize }: AvatarMenuWidgetLayoutMinimizeProps) => {
+export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize, tags }: AvatarMenuWidgetLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1169}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18, justifyContent: 'center', ...layout }}
@@ -2551,7 +2434,6 @@ export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize }: AvatarMen
             <Icon
                 variant="7"
                 name="icon"
-                params={208}
                 layout={{ position: 'absolute', width: 12, top: 7, height: 11 }}
             />
         </Region>
@@ -2564,18 +2446,18 @@ export interface AvatarMenuWidgetLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: AvatarMenuWidgetLayoutMinimizeProps;
     profileLink?: AvatarMenuWidgetLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBorder = ({ buttons, layout, minimize, profileLink }: AvatarMenuWidgetLayoutBorderProps) => {
+export const AvatarMenuWidgetLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: AvatarMenuWidgetLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12583056}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 8, top: 0, height: 1458, ...layout }}
         >
             <AvatarMenuWidgetLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

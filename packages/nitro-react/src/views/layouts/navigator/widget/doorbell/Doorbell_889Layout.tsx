@@ -15,17 +15,13 @@ export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorb
         <Frame
             variant="3"
             tags={[ 'room_widget_doorbell' ]}
-            params={32769}
             caption={t('widgets.doorbell.title')}
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 249, height: 165, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={144}
-                    layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('widgets.doorbell.info')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
@@ -40,9 +36,10 @@ export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorb
 /** Named region `user_list` of Doorbell_889Layout - configured through the parent's `userList` prop. */
 export interface Doorbell_889LayoutUserListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const Doorbell_889LayoutUserList = ({ layout }: Doorbell_889LayoutUserListProps) => {
+export const Doorbell_889LayoutUserList = ({ layout, tags }: Doorbell_889LayoutUserListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -50,7 +47,7 @@ export const Doorbell_889LayoutUserList = ({ layout }: Doorbell_889LayoutUserLis
         >
             <Region
                 name="user_list"
-                params={17}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -60,14 +57,15 @@ export const Doorbell_889LayoutUserList = ({ layout }: Doorbell_889LayoutUserLis
 /** Named region `user_list_container` of Doorbell_889Layout - configured through the parent's `userListContainer` prop. */
 export interface Doorbell_889LayoutUserListContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
     userList?: Doorbell_889LayoutUserListProps;
 }
 
-export const Doorbell_889LayoutUserListContainer = ({ layout, userList }: Doorbell_889LayoutUserListContainerProps) => {
+export const Doorbell_889LayoutUserListContainer = ({ layout, tags, userList }: Doorbell_889LayoutUserListContainerProps) => {
     return (
         <Region
             name="user_list_container"
-            params={16}
+            tags={tags}
             backgroundColor="#eaece8"
             layout={{ position: 'absolute', left: 10, width: 217, top: 48, height: 82, ...layout }}
         >

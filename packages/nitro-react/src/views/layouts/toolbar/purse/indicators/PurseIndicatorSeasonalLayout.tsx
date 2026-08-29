@@ -12,14 +12,10 @@ export interface PurseIndicatorSeasonalLayoutProps {
 export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, captionSeasonalName, layout, visibleChangeOverlay }: PurseIndicatorSeasonalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
-            <Region
-                params={17}
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="9"
                     tags={[ 'BGCOLOR' ]}
-                    params={16}
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -29,7 +25,6 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                 >
                     <Border
                         variant="3"
-                        params={16}
                         tintColor="#201e19"
                         blend={0.8}
                         layout={{ width: '100%', height: '100%' }}
@@ -38,26 +33,22 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                 <Border
                     variant="6"
                     name="seasonal_bg"
-                    params={16}
                     tintColor="#7adde9"
                     layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
                 >
                     <ThemeImage
                         tags={[ 'ICON' ]}
-                        params={16}
                         src={undefined}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                     <Icon
                         variant="27"
                         name="seasonal_icon"
-                        params={4081814}
                         layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                     />
                 </Border>
                 <Region
                     name="seasonal_name"
-                    params={16}
                     layout={{ position: 'absolute', left: 5, width: 105, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -68,7 +59,6 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                 </Region>
                 <Region
                     name="amount"
-                    params={262160}
                     layout={{ position: 'absolute', right: 42, width: 60, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
@@ -84,13 +74,11 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                     <Border
                         variant="6"
                         name="change_overlay"
-                        params={147456}
                         tintColor="#bb7dc3"
                         layout={{ width: '100%', height: '100%' }}
                     >
                         <Region
                             name="change"
-                            params={16}
                             layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText

@@ -6,15 +6,15 @@ export interface MotdNotificationLayoutProps {
     layout?: BoxLayout;
     messageList?: MotdNotificationLayoutMessageListProps;
     onClose?: () => void;
+    onClose2?: () => void;
 }
 
-export const MotdNotificationLayout = ({ layout, messageList, onClose }: MotdNotificationLayoutProps) => {
+export const MotdNotificationLayout = ({ layout, messageList, onClose, onClose2 }: MotdNotificationLayoutProps) => {
     const t = useTranslation();
 
     return (
         <Frame
             variant="1"
-            params={164097}
             caption={t('notifications.motd.title')}
             tintColor="#4c4c4c"
             onClose={onClose}
@@ -24,7 +24,6 @@ export const MotdNotificationLayout = ({ layout, messageList, onClose }: MotdNot
                 <Border
                     variant="0"
                     name="notifications_border"
-                    params={16}
                     layout={{ position: 'absolute', left: 1, width: 420, top: 0, height: 160 }}
                 >
                     <MotdNotificationLayoutMessageList {...messageList} />
@@ -32,8 +31,7 @@ export const MotdNotificationLayout = ({ layout, messageList, onClose }: MotdNot
                 <Button
                     variant="0"
                     name="close"
-                    params={131089}
-                    onPointerTap={onClose}
+                    onPointerTap={onClose2}
                     layout={{ position: 'absolute', left: 200, width: 30, top: 168, height: 26 }}
                 >
                     {t('generic.ok')}
@@ -46,9 +44,10 @@ export const MotdNotificationLayout = ({ layout, messageList, onClose }: MotdNot
 /** Named region `message_list` of MotdNotificationLayout - configured through the parent's `messageList` prop. */
 export interface MotdNotificationLayoutMessageListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MotdNotificationLayoutMessageList = ({ layout }: MotdNotificationLayoutMessageListProps) => {
+export const MotdNotificationLayoutMessageList = ({ layout, tags }: MotdNotificationLayoutMessageListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -56,7 +55,7 @@ export const MotdNotificationLayoutMessageList = ({ layout }: MotdNotificationLa
         >
             <Region
                 name="message_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

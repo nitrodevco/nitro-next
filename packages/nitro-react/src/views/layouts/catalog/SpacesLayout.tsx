@@ -19,24 +19,23 @@ export interface SpacesLayoutDefault3x3Props {
     captionPageText?: string;
     layout?: BoxLayout;
     srcHeadline?: string;
+    tags?: string[];
 }
 
-export const SpacesLayoutDefault3x3 = ({ captionPageText, layout, srcHeadline }: SpacesLayoutDefault3x3Props) => {
+export const SpacesLayoutDefault3x3 = ({ captionPageText, layout, srcHeadline, tags }: SpacesLayoutDefault3x3Props) => {
     return (
         <Region
             name="default_3x3"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 339, top: 0, height: 416, ...layout }}
         >
             <ThemeImage
                 name="headline"
-                params={16}
                 src={srcHeadline}
                 layout={{ position: 'absolute', left: 0, width: 339, top: 0, height: 68 }}
             />
             <Region
                 name="pageText"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 315, top: 73, height: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -9,7 +9,6 @@ export const HoverBitmapLayout = ({ layout }: HoverBitmapLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <ThemeImage
-                params={2197}
                 src={undefined}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />

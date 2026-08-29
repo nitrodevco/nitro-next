@@ -14,7 +14,6 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('habbopedia.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -23,12 +22,10 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="3"
-                    params={2192}
                     layout={{ position: 'absolute', left: 4, right: 26, top: 7, bottom: 55 }}
                 />
                 <Region
                     name="content"
-                    params={2177}
                     layout={{ position: 'absolute', left: 7, right: 29, top: 7, bottom: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

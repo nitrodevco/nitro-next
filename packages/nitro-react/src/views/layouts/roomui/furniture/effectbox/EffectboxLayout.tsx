@@ -18,7 +18,6 @@ export const EffectboxLayout = ({ cancel, effectboxHeaderBackgroundBorder, layou
             variant="3"
             id="effectbox_main_container"
             name="effectbox_main_container"
-            params={32801}
             caption={t('effectbox.name.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -26,15 +25,11 @@ export const EffectboxLayout = ({ cancel, effectboxHeaderBackgroundBorder, layou
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <EffectboxLayoutEffectboxHeaderBackgroundBorder {...effectboxHeaderBackgroundBorder} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: -1, width: 475, top: 101, height: 51 }}
-                >
+                <Region layout={{ position: 'absolute', left: -1, width: 475, top: 101, height: 51 }}>
                     <EffectboxLayoutCancel {...cancel} />
                     <ButtonThick
                         variant="5"
                         name="ok"
-                        params={132113}
                         tintColor="#00aa00"
                         onPointerTap={onOk}
                         layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
@@ -50,13 +45,14 @@ export const EffectboxLayout = ({ cancel, effectboxHeaderBackgroundBorder, layou
 /** Named region `effectbox.header.background.body` of EffectboxLayout - configured through the parent's `effectboxHeaderBackgroundBody` prop. */
 export interface EffectboxLayoutEffectboxHeaderBackgroundBodyProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeaderBackgroundBody = ({ layout }: EffectboxLayoutEffectboxHeaderBackgroundBodyProps) => {
+export const EffectboxLayoutEffectboxHeaderBackgroundBody = ({ layout, tags }: EffectboxLayoutEffectboxHeaderBackgroundBodyProps) => {
     return (
         <Region
             name="effectbox.header.background.body"
-            params={144}
+            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
         />
@@ -68,20 +64,20 @@ export interface EffectboxLayoutEffectboxHeaderProps {
     captionEffectboxHeaderDescription?: string;
     captionEffectboxHeaderTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeader = ({ captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, layout }: EffectboxLayoutEffectboxHeaderProps) => {
+export const EffectboxLayoutEffectboxHeader = ({ captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, layout, tags }: EffectboxLayoutEffectboxHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effectbox.header"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
         >
             <Region
                 name="effectbox.header.title"
-                params={16}
                 layout={{ position: 'absolute', left: 95, width: 260, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -92,7 +88,6 @@ export const EffectboxLayoutEffectboxHeader = ({ captionEffectboxHeaderDescripti
             </Region>
             <Region
                 name="effectbox.header.description"
-                params={16}
                 layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -110,20 +105,20 @@ export interface EffectboxLayoutEffectboxHeaderBackgroundBorderProps {
     effectboxHeaderBackgroundBody?: EffectboxLayoutEffectboxHeaderBackgroundBodyProps;
     layout?: BoxLayout;
     srcEffectboxHeaderIcon?: string;
+    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeaderBackgroundBorder = ({ effectboxHeader, effectboxHeaderBackgroundBody, layout, srcEffectboxHeaderIcon }: EffectboxLayoutEffectboxHeaderBackgroundBorderProps) => {
+export const EffectboxLayoutEffectboxHeaderBackgroundBorder = ({ effectboxHeader, effectboxHeaderBackgroundBody, layout, srcEffectboxHeaderIcon, tags }: EffectboxLayoutEffectboxHeaderBackgroundBorderProps) => {
     return (
         <Region
             name="effectbox.header.background.border"
-            params={144}
+            tags={tags}
             backgroundColor="#376275"
             layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
         >
             <EffectboxLayoutEffectboxHeaderBackgroundBody {...effectboxHeaderBackgroundBody} />
             <ThemeImage
                 name="effectbox.header.icon"
-                params={16}
                 src={srcEffectboxHeaderIcon ?? '${image.library.url}client_static/frank1.png'}
                 layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
             />
@@ -137,22 +132,22 @@ export interface EffectboxLayoutCancelProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancel?: () => void;
+    tags?: string[];
 }
 
-export const EffectboxLayoutCancel = ({ captionCancel, layout, onCancel }: EffectboxLayoutCancelProps) => {
+export const EffectboxLayoutCancel = ({ captionCancel, layout, onCancel, tags }: EffectboxLayoutCancelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel"
-            params={1041}
+            tags={tags}
             onPointerTap={onCancel}
             cursor="pointer"
             layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="cancel"
-                params={3280}
                 layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

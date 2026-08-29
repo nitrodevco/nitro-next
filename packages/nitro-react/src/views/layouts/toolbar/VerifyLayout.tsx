@@ -19,7 +19,6 @@ export const VerifyLayout = ({ inputBorder, layout, onClose, srcPhone, userInput
     return (
         <Frame
             variant="3"
-            params={32801}
             caption={t('phone.number.verify.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -31,20 +30,13 @@ export const VerifyLayout = ({ inputBorder, layout, onClose, srcPhone, userInput
                     layout={{ position: 'absolute', left: -2, width: 476, top: -3, height: 100 }}
                 >
                     <Region
-                        params={2048}
                         backgroundColor="#6f95a4"
                         layout={{ position: 'absolute', left: 2, width: 472, top: 2, bottom: 3 }}
                     />
                 </Region>
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}>
                     <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
+                        <Region layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('phone.number.verify.enter.verification.code')}
                                 textStyle="text-style-u-headline-medium"
@@ -70,21 +62,21 @@ export interface VerifyLayoutInputBorderProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
     srcPen?: string;
+    tags?: string[];
 }
 
-export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen }: VerifyLayoutInputBorderProps) => {
+export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen, tags }: VerifyLayoutInputBorderProps) => {
     const t = useTranslation();
     const [ verificationCodeInputValue, setVerificationCodeInputValue ] = useState('');
 
     return (
         <Region
             name="input_border"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 5, top: 99, height: 50, ...layout }}
         >
             <Border
                 variant="4"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 266, top: 7, height: 35 }}
             >
                 <TextInput
@@ -94,7 +86,6 @@ export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen }: VerifyLa
                 />
                 <ThemeImage
                     name="pen"
-                    params={16}
                     src={srcPen ?? layoutImage('common_small_pen.png')}
                     layout={{ position: 'absolute', left: 243, width: 17, top: 9, height: 18 }}
                 />
@@ -102,7 +93,6 @@ export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen }: VerifyLa
             <ButtonThick
                 variant="5"
                 name="ok_button"
-                params={131089}
                 tintColor="#6fcf6f"
                 onPointerTap={onOkButton}
                 layout={{ position: 'absolute', left: 293, width: 160, top: 5, height: 38 }}
@@ -119,25 +109,24 @@ export interface VerifyLayoutUserInputButtonsContainerProps {
     captionRetryWaitLabel?: string;
     layout?: BoxLayout;
     onDidNotReceiveCodeLink?: () => void;
+    tags?: string[];
 }
 
-export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onDidNotReceiveCodeLink }: VerifyLayoutUserInputButtonsContainerProps) => {
+export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onDidNotReceiveCodeLink, tags }: VerifyLayoutUserInputButtonsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_input_buttons_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="3"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 457, top: 0, height: 42 }}
             />
             <Region
                 name="did_not_receive_code_link"
-                params={786625}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 onPointerTap={onDidNotReceiveCodeLink}
                 cursor="pointer"
@@ -150,7 +139,6 @@ export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCode
             </Region>
             <Region
                 name="retry_wait_label"
-                params={786625}
                 visible={false}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >

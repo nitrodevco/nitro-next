@@ -21,16 +21,16 @@ export const CatalogPromoLayout = ({ catalogPromo, layout }: CatalogPromoLayoutP
 export interface CatalogPromoLayoutCatalogPromoCaptionItemProps {
     captionCatalogPromoCaption?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutCatalogPromoCaptionItem = ({ captionCatalogPromoCaption, layout }: CatalogPromoLayoutCatalogPromoCaptionItemProps) => {
+export const CatalogPromoLayoutCatalogPromoCaptionItem = ({ captionCatalogPromoCaption, layout, tags }: CatalogPromoLayoutCatalogPromoCaptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="catalog_promo_caption"
-            tags={[ 'COLORABLE' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 300, height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -45,16 +45,16 @@ export const CatalogPromoLayoutCatalogPromoCaptionItem = ({ captionCatalogPromoC
 export interface CatalogPromoLayoutCatalogPromoInfoItemProps {
     captionCatalogPromoInfo?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutCatalogPromoInfoItem = ({ captionCatalogPromoInfo, layout }: CatalogPromoLayoutCatalogPromoInfoItemProps) => {
+export const CatalogPromoLayoutCatalogPromoInfoItem = ({ captionCatalogPromoInfo, layout, tags }: CatalogPromoLayoutCatalogPromoInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="catalog_promo_info"
-            tags={[ 'COLORABLE' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 300, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -69,16 +69,17 @@ export const CatalogPromoLayoutCatalogPromoInfoItem = ({ captionCatalogPromoInfo
 export interface CatalogPromoLayoutOpenPageButtonItemProps {
     layout?: BoxLayout;
     onOpenPageButton?: () => void;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutOpenPageButtonItem = ({ layout, onOpenPageButton }: CatalogPromoLayoutOpenPageButtonItemProps) => {
+export const CatalogPromoLayoutOpenPageButtonItem = ({ layout, onOpenPageButton, tags }: CatalogPromoLayoutOpenPageButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="open_page_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onOpenPageButton}
             layout={{ width: 250, height: 48, flexShrink: 0, minWidth: 250, maxWidth: 250, minHeight: 48, maxHeight: 48, ...layout }}
         >
@@ -91,19 +92,20 @@ export const CatalogPromoLayoutOpenPageButtonItem = ({ layout, onOpenPageButton 
 export interface CatalogPromoLayoutInfoContainerProps {
     itemsInfoContainer?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutInfoContainer = ({ itemsInfoContainer, layout }: CatalogPromoLayoutInfoContainerProps) => {
+export const CatalogPromoLayoutInfoContainer = ({ itemsInfoContainer, layout, tags }: CatalogPromoLayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 11, top: 9, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfoContainer ?? (
                 <>
-                    <CatalogPromoLayoutCatalogPromoCaptionItem />
-                    <CatalogPromoLayoutCatalogPromoInfoItem />
+                    <CatalogPromoLayoutCatalogPromoCaptionItem tags={[ 'COLORABLE' ]} />
+                    <CatalogPromoLayoutCatalogPromoInfoItem tags={[ 'COLORABLE' ]} />
                     <CatalogPromoLayoutOpenPageButtonItem />
                 </>
             )}
@@ -116,21 +118,21 @@ export interface CatalogPromoLayoutPictureContainerProps {
     captionCatalogPromoStatus?: string;
     layout?: BoxLayout;
     srcPicture?: string;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutPictureContainer = ({ captionCatalogPromoStatus, layout, srcPicture }: CatalogPromoLayoutPictureContainerProps) => {
+export const CatalogPromoLayoutPictureContainer = ({ captionCatalogPromoStatus, layout, srcPicture, tags }: CatalogPromoLayoutPictureContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="picture_container"
-            params={16400}
+            tags={tags}
             layout={{ position: 'absolute', left: 281, width: 226, top: 11, height: 177, ...layout }}
         >
             <Region
                 name="catalog_promo_status"
                 tags={[ 'COLORABLE' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 145, height: 28, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -140,7 +142,6 @@ export const CatalogPromoLayoutPictureContainer = ({ captionCatalogPromoStatus, 
             </Region>
             <ThemeImage
                 name="picture"
-                params={16}
                 src={srcPicture ?? '${image.library.url}reception/meter_level_0.png'}
                 layout={{ position: 'absolute', left: 20, width: 183, top: 0, height: 144 }}
             />
@@ -153,13 +154,14 @@ export interface CatalogPromoLayoutCatalogPromoProps {
     infoContainer?: CatalogPromoLayoutInfoContainerProps;
     layout?: BoxLayout;
     pictureContainer?: CatalogPromoLayoutPictureContainerProps;
+    tags?: string[];
 }
 
-export const CatalogPromoLayoutCatalogPromo = ({ infoContainer, layout, pictureContainer }: CatalogPromoLayoutCatalogPromoProps) => {
+export const CatalogPromoLayoutCatalogPromo = ({ infoContainer, layout, pictureContainer, tags }: CatalogPromoLayoutCatalogPromoProps) => {
     return (
         <Region
             name="catalog_promo"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 507, top: 0, height: 188, ...layout }}
         >
             <CatalogPromoLayoutInfoContainer {...infoContainer} />

@@ -15,7 +15,6 @@ export const RoomInfoPopupBubbleLayout = ({ layout, mainContent }: RoomInfoPopup
         <Region layout={{ position: 'relative', width: 374, height: 350, ...layout }}>
             <Bubble
                 variant="7"
-                params={1}
                 pointer="left"
                 layout={{ position: 'absolute', left: 0, width: 374, top: 0, height: 350 }}
             >
@@ -29,26 +28,25 @@ export const RoomInfoPopupBubbleLayout = ({ layout, mainContent }: RoomInfoPopup
 export interface RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps {
     layout?: BoxLayout;
     srcRoomThumbnail?: string;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomThumbnailContainerItem = ({ layout, srcRoomThumbnail }: RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomThumbnailContainerItem = ({ layout, srcRoomThumbnail, tags }: RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps) => {
     return (
         <Region
             name="room_thumbnail_container"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 112, height: 112, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="room_thumbnail"
-                params={16}
                 src={srcRoomThumbnail ?? layoutImage('newnavigator_default_room.png')}
                 layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
             />
             <WidgetSlot
                 widgetType="badge_image"
                 name="room_group_badge"
-                params={16}
                 options={{ 'badge_image:type': 'group', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 1, width: 48, top: 1, height: 48 }}
             />
@@ -61,18 +59,18 @@ export interface RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps {
     captionRoomDesc?: string;
     captionRoomName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captionRoomDesc, captionRoomName, layout }: RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captionRoomDesc, captionRoomName, layout, tags }: RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps) => {
     return (
         <Region
             name="room_name_desc_owner_container"
-            params={16}
+            tags={tags}
             layout={{ width: 219, height: 112, flexShrink: 0, ...layout }}
         >
             <Region
                 name="room_name"
-                params={16}
                 layout={{ position: 'absolute', left: 6, width: 214, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -83,7 +81,6 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
             </Region>
             <Region
                 name="room_desc"
-                params={16}
                 layout={{ position: 'absolute', left: 5, width: 214, top: 33, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -99,13 +96,14 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
 export interface RoomInfoPopupBubbleLayoutHeaderTopItemProps {
     itemsHeaderTop?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout }: RoomInfoPopupBubbleLayoutHeaderTopItemProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout, tags }: RoomInfoPopupBubbleLayoutHeaderTopItemProps) => {
     return (
         <Region
             name="header_top"
-            params={16}
+            tags={tags}
             layout={{ width: 329, height: 112, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsHeaderTop ?? (
@@ -122,13 +120,14 @@ export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout 
 export interface RoomInfoPopupBubbleLayoutHeaderContentProps {
     itemsHeaderContent?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, layout }: RoomInfoPopupBubbleLayoutHeaderContentProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, layout, tags }: RoomInfoPopupBubbleLayoutHeaderContentProps) => {
     return (
         <Region
             name="header_content"
-            params={8388624}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 331, top: 6, height: 112, flexDirection: 'column', gap: 7, ...layout }}
         >
             {itemsHeaderContent ?? (
@@ -142,14 +141,15 @@ export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, lay
 export interface RoomInfoPopupBubbleLayoutHeaderItemProps {
     headerContent?: RoomInfoPopupBubbleLayoutHeaderContentProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderItem = ({ headerContent, layout }: RoomInfoPopupBubbleLayoutHeaderItemProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderItem = ({ headerContent, layout, tags }: RoomInfoPopupBubbleLayoutHeaderItemProps) => {
     return (
         <Border
             variant="2"
             name="header"
-            params={16}
+            tags={tags}
             layout={{ width: 345, height: 125, flexShrink: 0, minHeight: 125, maxHeight: 125, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutHeaderContent {...headerContent} />
@@ -162,28 +162,27 @@ export interface RoomInfoPopupBubbleLayoutRoomGroupRegionProps {
     captionGroupName?: string;
     layout?: BoxLayout;
     onRoomGroupRegion?: () => void;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomGroupRegion = ({ captionGroupName, layout, onRoomGroupRegion }: RoomInfoPopupBubbleLayoutRoomGroupRegionProps) => {
+export const RoomInfoPopupBubbleLayoutRoomGroupRegion = ({ captionGroupName, layout, onRoomGroupRegion, tags }: RoomInfoPopupBubbleLayoutRoomGroupRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_group_region"
+            tags={tags}
             tooltip={t('navigator.tooltip.groupinfo.owner')}
-            params={17}
             onPointerTap={onRoomGroupRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 175, width: 170, top: 3, height: 30, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('newnavigator_icon_group.png')}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
             />
             <Region
                 name="group_name"
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 170, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -201,28 +200,27 @@ export interface RoomInfoPopupBubbleLayoutRoomOwnerRegionProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onRoomOwnerRegion?: () => void;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomOwnerRegion = ({ captionOwnerName, layout, onRoomOwnerRegion }: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps) => {
+export const RoomInfoPopupBubbleLayoutRoomOwnerRegion = ({ captionOwnerName, layout, onRoomOwnerRegion, tags }: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_owner_region"
+            tags={tags}
             tooltip={t('navigator.tooltip.roominfo.owner')}
-            params={17}
             onPointerTap={onRoomOwnerRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 150, top: 3, height: 30, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('friend_bar_friendlist_eye.png')}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
             />
             <Region
                 name="owner_name"
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 130, top: -2, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -240,13 +238,14 @@ export interface RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps {
     layout?: BoxLayout;
     roomGroupRegion?: RoomInfoPopupBubbleLayoutRoomGroupRegionProps;
     roomOwnerRegion?: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, roomGroupRegion, roomOwnerRegion }: RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, roomGroupRegion, roomOwnerRegion, tags }: RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps) => {
     return (
         <Region
             name="room_group_owner_container"
-            params={16}
+            tags={tags}
             layout={{ width: 344, height: 30, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutRoomGroupRegion {...roomGroupRegion} />
@@ -258,13 +257,14 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, r
 /** Named region `properties` of RoomInfoPopupBubbleLayout - configured through the parent's `properties` prop. */
 export interface RoomInfoPopupBubbleLayoutPropertiesProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutProperties = ({ layout }: RoomInfoPopupBubbleLayoutPropertiesProps) => {
+export const RoomInfoPopupBubbleLayoutProperties = ({ layout, tags }: RoomInfoPopupBubbleLayoutPropertiesProps) => {
     return (
         <Region
             name="properties"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 263, top: 0, height: 65, flexDirection: 'column', ...layout }}
         />
     );
@@ -274,13 +274,14 @@ export const RoomInfoPopupBubbleLayoutProperties = ({ layout }: RoomInfoPopupBub
 export interface RoomInfoPopupBubbleLayoutMidProps {
     layout?: BoxLayout;
     properties?: RoomInfoPopupBubbleLayoutPropertiesProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMid = ({ layout, properties }: RoomInfoPopupBubbleLayoutMidProps) => {
+export const RoomInfoPopupBubbleLayoutMid = ({ layout, properties, tags }: RoomInfoPopupBubbleLayoutMidProps) => {
     return (
         <Region
             name="mid"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 174, top: 0, height: 65, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutProperties {...properties} />
@@ -293,20 +294,20 @@ export interface RoomInfoPopupBubbleLayoutSettingsRegionProps {
     layout?: BoxLayout;
     onSettingsRegion?: () => void;
     srcSettingsIcon?: string;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegion, srcSettingsIcon }: RoomInfoPopupBubbleLayoutSettingsRegionProps) => {
+export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegion, srcSettingsIcon, tags }: RoomInfoPopupBubbleLayoutSettingsRegionProps) => {
     return (
         <Region
             name="settings_region"
-            params={17}
+            tags={tags}
             onPointerTap={onSettingsRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
                 name="settings_icon"
-                params={16}
                 src={srcSettingsIcon ?? layoutImage('newnavigator_room_settings_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -318,22 +319,20 @@ export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegi
 export interface RoomInfoPopupBubbleLayoutSettingsContainerItemProps {
     layout?: BoxLayout;
     settingsRegion?: RoomInfoPopupBubbleLayoutSettingsRegionProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, settingsRegion }: RoomInfoPopupBubbleLayoutSettingsContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, settingsRegion, tags }: RoomInfoPopupBubbleLayoutSettingsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings_container"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutSettingsRegion {...settingsRegion} />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 235, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 235, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('navigator.room.popup.info.room.settings')} />
             </Region>
         </Region>
@@ -345,20 +344,20 @@ export interface RoomInfoPopupBubbleLayoutReportRegionProps {
     layout?: BoxLayout;
     onReportRegion?: () => void;
     srcReportIcon?: string;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, srcReportIcon }: RoomInfoPopupBubbleLayoutReportRegionProps) => {
+export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, srcReportIcon, tags }: RoomInfoPopupBubbleLayoutReportRegionProps) => {
     return (
         <Region
             name="report_region"
-            params={17}
+            tags={tags}
             onPointerTap={onReportRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
                 name="report_icon"
-                params={16}
                 src={srcReportIcon ?? layoutImage('newnavigator_report_room.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -370,22 +369,20 @@ export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, 
 export interface RoomInfoPopupBubbleLayoutReportContainerItemProps {
     layout?: BoxLayout;
     reportRegion?: RoomInfoPopupBubbleLayoutReportRegionProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, reportRegion }: RoomInfoPopupBubbleLayoutReportContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, reportRegion, tags }: RoomInfoPopupBubbleLayoutReportContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report_container"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutReportRegion {...reportRegion} />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 202, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 202, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('navigator.room.popup.report.room')} />
             </Region>
         </Region>
@@ -397,20 +394,20 @@ export interface RoomInfoPopupBubbleLayoutFavoriteRegionProps {
     layout?: BoxLayout;
     onFavoriteRegion?: () => void;
     srcFavoriteIcon?: string;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutFavoriteRegion = ({ layout, onFavoriteRegion, srcFavoriteIcon }: RoomInfoPopupBubbleLayoutFavoriteRegionProps) => {
+export const RoomInfoPopupBubbleLayoutFavoriteRegion = ({ layout, onFavoriteRegion, srcFavoriteIcon, tags }: RoomInfoPopupBubbleLayoutFavoriteRegionProps) => {
     return (
         <Region
             name="favorite_region"
-            params={17}
+            tags={tags}
             onPointerTap={onFavoriteRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
                 name="favorite_icon"
-                params={16}
                 src={srcFavoriteIcon ?? layoutImage('newnavigator_icon_fav_no.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -423,20 +420,20 @@ export interface RoomInfoPopupBubbleLayoutHomeRegionProps {
     layout?: BoxLayout;
     onHomeRegion?: () => void;
     srcHomeIcon?: string;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHomeRegion = ({ layout, onHomeRegion, srcHomeIcon }: RoomInfoPopupBubbleLayoutHomeRegionProps) => {
+export const RoomInfoPopupBubbleLayoutHomeRegion = ({ layout, onHomeRegion, srcHomeIcon, tags }: RoomInfoPopupBubbleLayoutHomeRegionProps) => {
     return (
         <Region
             name="home_region"
-            params={17}
+            tags={tags}
             onPointerTap={onHomeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
                 name="home_icon"
-                params={16}
                 src={srcHomeIcon ?? layoutImage('newnavigator_icon_home_no.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -450,15 +447,16 @@ export interface RoomInfoPopupBubbleLayoutMidBottomItemlistProps {
     homeRegion?: RoomInfoPopupBubbleLayoutHomeRegionProps;
     itemsMidBottomItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, homeRegion, itemsMidBottomItemlist, layout }: RoomInfoPopupBubbleLayoutMidBottomItemlistProps) => {
+export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, homeRegion, itemsMidBottomItemlist, layout, tags }: RoomInfoPopupBubbleLayoutMidBottomItemlistProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="midBottom_itemlist"
-            params={8388608}
+            tags={tags}
             layout={{ position: 'absolute', left: 12, width: 170, top: 0, height: 80, flexDirection: 'column', ...layout }}
         >
             {itemsMidBottomItemlist ?? (
@@ -467,27 +465,15 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, hom
                     <RoomInfoPopupBubbleLayoutReportContainerItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 170, height: 20, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 170, height: 20, flexShrink: 0 }}>
                 <RoomInfoPopupBubbleLayoutFavoriteRegion {...favoriteRegion} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 20, width: 236, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 20, width: 236, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('navigator.room.popup.room.info.favorite')} />
                 </Region>
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 170, height: 20, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 170, height: 20, flexShrink: 0 }}>
                 <RoomInfoPopupBubbleLayoutHomeRegion {...homeRegion} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 20, width: 224, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 20, width: 224, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('navigator.room.popup.room.info.home')} />
                 </Region>
             </Region>
@@ -499,13 +485,14 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, hom
 export interface RoomInfoPopupBubbleLayoutMidBottomProps {
     layout?: BoxLayout;
     midBottomItemlist?: RoomInfoPopupBubbleLayoutMidBottomItemlistProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMidBottom = ({ layout, midBottomItemlist }: RoomInfoPopupBubbleLayoutMidBottomProps) => {
+export const RoomInfoPopupBubbleLayoutMidBottom = ({ layout, midBottomItemlist, tags }: RoomInfoPopupBubbleLayoutMidBottomProps) => {
     return (
         <Region
             name="midBottom"
-            params={8388608}
+            tags={tags}
             layout={{ position: 'absolute', left: 166, width: 170, top: 0, height: 80, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutMidBottomItemlist {...midBottomItemlist} />
@@ -518,13 +505,14 @@ export interface RoomInfoPopupBubbleLayoutNewMidItemProps {
     layout?: BoxLayout;
     mid?: RoomInfoPopupBubbleLayoutMidProps;
     midBottom?: RoomInfoPopupBubbleLayoutMidBottomProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom }: RoomInfoPopupBubbleLayoutNewMidItemProps) => {
+export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom, tags }: RoomInfoPopupBubbleLayoutNewMidItemProps) => {
     return (
         <Region
             name="newMid"
-            params={16}
+            tags={tags}
             layout={{ width: 344, height: 80, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutMid {...mid} />
@@ -536,13 +524,14 @@ export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom }: 
 /** Named region `tag_list` of RoomInfoPopupBubbleLayout - configured through the parent's `tagList` prop. */
 export interface RoomInfoPopupBubbleLayoutTagListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutTagList = ({ layout }: RoomInfoPopupBubbleLayoutTagListProps) => {
+export const RoomInfoPopupBubbleLayoutTagList = ({ layout, tags }: RoomInfoPopupBubbleLayoutTagListProps) => {
     return (
         <Region
             name="tag_list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
         />
     );
@@ -555,31 +544,29 @@ export interface RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps {
     srcGroupModeFurnish?: string;
     srcGroupModeSize?: string;
     tagList?: RoomInfoPopupBubbleLayoutTagListProps;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ layout, srcGroupModeAdmin, srcGroupModeFurnish, srcGroupModeSize, tagList }: RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps) => {
+export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ layout, srcGroupModeAdmin, srcGroupModeFurnish, srcGroupModeSize, tagList, tags }: RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps) => {
     return (
         <Region
             name="tag_and_group_info"
-            params={16}
+            tags={tags}
             layout={{ width: 345, height: 23, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutTagList {...tagList} />
             <ThemeImage
                 name="group_mode_furnish"
-                params={16}
                 src={srcGroupModeFurnish}
                 layout={{ position: 'absolute', left: 318, width: 18, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="group_mode_admin"
-                params={16}
                 src={srcGroupModeAdmin}
                 layout={{ position: 'absolute', left: 279, width: 18, top: 0, height: 16 }}
             />
             <ThemeImage
                 name="group_mode_size"
-                params={16}
                 src={srcGroupModeSize}
                 layout={{ position: 'absolute', left: 299, width: 18, top: 0, height: 16 }}
             />
@@ -592,26 +579,25 @@ export interface RoomInfoPopupBubbleLayoutEventInfoItemProps {
     captionEventDesc?: string;
     captionEventName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, captionEventName, layout }: RoomInfoPopupBubbleLayoutEventInfoItemProps) => {
+export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, captionEventName, layout, tags }: RoomInfoPopupBubbleLayoutEventInfoItemProps) => {
     return (
         <Border
             variant="3"
             name="event_info"
-            params={16}
+            tags={tags}
             tintColor="#f1a700"
             blend={0.7}
             layout={{ width: 331, height: 55, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('newnavigator_event_icon.png')}
                 layout={{ position: 'absolute', left: 6, width: 42, top: 9, height: 40 }}
             />
             <Region
                 name="event_name"
-                params={16}
                 layout={{ position: 'absolute', left: 54, width: 275, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -622,7 +608,6 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
             </Region>
             <Region
                 name="event_desc"
-                params={16}
                 layout={{ position: 'absolute', left: 54, width: 275, top: 19, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -639,13 +624,14 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
 export interface RoomInfoPopupBubbleLayoutBottomItemlistItemProps {
     itemsBottomItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlist, layout }: RoomInfoPopupBubbleLayoutBottomItemlistItemProps) => {
+export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlist, layout, tags }: RoomInfoPopupBubbleLayoutBottomItemlistItemProps) => {
     return (
         <Region
             name="bottom_itemlist"
-            params={8388608}
+            tags={tags}
             layout={{ width: 345, height: 80, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsBottomItemlist ?? (
@@ -662,13 +648,14 @@ export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlis
 export interface RoomInfoPopupBubbleLayoutMainContentProps {
     itemsMainContent?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMainContent = ({ itemsMainContent, layout }: RoomInfoPopupBubbleLayoutMainContentProps) => {
+export const RoomInfoPopupBubbleLayoutMainContent = ({ itemsMainContent, layout, tags }: RoomInfoPopupBubbleLayoutMainContentProps) => {
     return (
         <Region
             name="main_content"
-            params={8388608}
+            tags={tags}
             layout={{ position: 'absolute', left: 11, width: 345, top: -21, height: 324, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsMainContent ?? (

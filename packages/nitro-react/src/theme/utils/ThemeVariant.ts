@@ -10,7 +10,8 @@ import { TextStyleKey } from './textStyles';
  * (which maps to `variant`) - accepted on every themed component so a layout port can keep it
  * without inventing a place for it. None of it is interpreted yet: `tags` drive Flash-side
  * lookups/recoloring (`RECOLORABLE_*`, `_INTERNAL`, `#icon`, ...), `tooltip` is the
- * `tool_tip_caption` variable, `params` is the raw `WindowParam` bit-field, `dynamicStyle` the
+ * `tool_tip_caption` variable (the Flash `params` bit-field is applied by the generator - anchoring,
+ * auto-sizing, clipping, click targets - and not carried), `dynamicStyle` the
  * hover/press effect name (`lifted_hover`, `brightness_and_shadow_under`, ...). Only `visible`
  * has a runtime effect, and only where a component forwards it to its `Box` (see `Region`).
  */
@@ -18,7 +19,6 @@ export type ThemeLayoutMeta = {
     name?: string;
     tags?: string[];
     tooltip?: string;
-    params?: number;
     dynamicStyle?: string;
     visible?: boolean;
     dropShadow?: DropShadowConfig;

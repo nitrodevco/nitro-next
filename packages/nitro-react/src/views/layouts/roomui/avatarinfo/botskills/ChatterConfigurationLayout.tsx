@@ -16,19 +16,14 @@ export const ChatterConfigurationLayout = ({ configurationItems, layout }: Chatt
         <Region layout={{ position: 'relative', width: 278, height: 369, ...layout }}>
             <Bubble
                 variant="100"
-                params={33025}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 369 }}
             >
                 <Region
-                    params={144}
                     backgroundColor="#000000"
                     layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20, justifyContent: 'center' }}
                 >
-                    <Region
-                        params={786640}
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 199, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('bot.skill.chatter.configuration.title')}
                             textStyle="text-style-u-bold"
@@ -66,21 +61,19 @@ export const ChatterConfigurationLayoutChatTextItem = ({ layout }: ChatterConfig
 export interface ChatterConfigurationLayoutAutoChatContainerItemProps {
     layout?: BoxLayout;
     onAutoChatCheckbox?: () => void;
+    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAutoChatCheckbox }: ChatterConfigurationLayoutAutoChatContainerItemProps) => {
+export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAutoChatCheckbox, tags }: ChatterConfigurationLayoutAutoChatContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="auto_chat_container"
-            params={16}
+            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 207, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 207, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('bot.skill.chatter.configuration.automatic.chat')}
                     textStyle="text-style-u-small"
@@ -90,7 +83,6 @@ export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAuto
             <CheckBox
                 variant="100"
                 name="auto_chat_checkbox"
-                params={17}
                 onPointerTap={onAutoChatCheckbox}
                 layout={{ position: 'absolute', left: 209, width: 39, top: 1, height: 21, minHeight: 21, maxHeight: 21 }}
             />
@@ -102,21 +94,19 @@ export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAuto
 export interface ChatterConfigurationLayoutMarkovContainerItemProps {
     layout?: BoxLayout;
     onMarkovCheckbox?: () => void;
+    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkovCheckbox }: ChatterConfigurationLayoutMarkovContainerItemProps) => {
+export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkovCheckbox, tags }: ChatterConfigurationLayoutMarkovContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="markov_container"
-            params={16}
+            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 175, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 175, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('bot.skill.chatter.configuration.markov')}
                     textStyle="text-style-u-small"
@@ -126,7 +116,6 @@ export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkov
             <CheckBox
                 variant="100"
                 name="markov_checkbox"
-                params={17}
                 onPointerTap={onMarkovCheckbox}
                 layout={{ position: 'absolute', left: 209, width: 39, top: 1, height: 21, minHeight: 21, maxHeight: 21 }}
             />
@@ -137,22 +126,20 @@ export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkov
 /** Row template `chat_delay_container` of ChatterConfigurationLayout - pass real rows through its `items…` slot. */
 export interface ChatterConfigurationLayoutChatDelayContainerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutChatDelayContainerItem = ({ layout }: ChatterConfigurationLayoutChatDelayContainerItemProps) => {
+export const ChatterConfigurationLayoutChatDelayContainerItem = ({ layout, tags }: ChatterConfigurationLayoutChatDelayContainerItemProps) => {
     const t = useTranslation();
     const [ chatDelayTextValue, setChatDelayTextValue ] = useState('');
 
     return (
         <Region
             name="chat_delay_container"
-            params={16}
+            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 188, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 188, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('bot.skill.chatter.configuration.chat.delay')}
                     textStyle="text-style-u-small"
@@ -174,15 +161,16 @@ export interface ChatterConfigurationLayoutHelpLinkItemProps {
     captionHelpLink?: string;
     layout?: BoxLayout;
     onHelpLink?: () => void;
+    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutHelpLinkItem = ({ captionHelpLink, layout, onHelpLink }: ChatterConfigurationLayoutHelpLinkItemProps) => {
+export const ChatterConfigurationLayoutHelpLinkItem = ({ captionHelpLink, layout, onHelpLink, tags }: ChatterConfigurationLayoutHelpLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help_link"
-            params={1}
+            tags={tags}
             layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onHelpLink}
             cursor="pointer"
@@ -202,15 +190,16 @@ export interface ChatterConfigurationLayoutConfigurationItemsProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onSaveButton?: () => void;
+    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton }: ChatterConfigurationLayoutConfigurationItemsProps) => {
+export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton, tags }: ChatterConfigurationLayoutConfigurationItemsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="configuration_items"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 247, top: 25, height: 321, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsConfigurationItems ?? (
@@ -222,28 +211,18 @@ export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfiguratio
                     <ChatterConfigurationLayoutHelpLinkItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 183, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 183, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('bot.skill.chatter.configuration.chat.text')}
                     textStyle="text-style-u-small"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 246, height: 36, flexShrink: 0 }}
-            >
-                <Region
-                    params={262224}
-                    layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}
-                >
+            <Region layout={{ width: 246, height: 36, flexShrink: 0 }}>
+                <Region layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}>
                     <ButtonThick
                         variant="3"
                         name="cancel_button"
-                        params={131089}
                         onPointerTap={onCancelButton}
                         layout={{ width: 60, height: 28, flexShrink: 0, maxWidth: 120 }}
                     >
@@ -252,7 +231,6 @@ export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfiguratio
                     <ButtonThick
                         variant="5"
                         name="save_button"
-                        params={393233}
                         tintColor="#3f9f3f"
                         onPointerTap={onSaveButton}
                         layout={{ width: 60, height: 28, flexShrink: 0, minWidth: 60, maxWidth: 120 }}

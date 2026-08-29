@@ -20,13 +20,11 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
             >
                 <ThemeImage
                     name="item_image"
-                    params={17}
                     src={srcItemImage}
                     layout={{ position: 'absolute', left: 8, width: 190, top: 22, height: 55 }}
                 />
                 <Region
                     name="item_name_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 5, width: 190, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -37,7 +35,6 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                 </Region>
                 <ThemeImage
                     name="arrow_pointer"
-                    params={1}
                     src={srcArrowPointer}
                     layout={{ position: 'absolute', left: 180, width: 18, top: 6, height: 24 }}
                 />
@@ -47,7 +44,6 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                 >
                     <ThemeImage
                         name="nft_overlay_icon"
-                        params={16}
                         src={srcNftOverlayIcon ?? layoutImage('collectables_icon_curator_stamp_small.png')}
                         layout={{ position: 'absolute', left: 17, width: 20, top: 171, height: 20 }}
                     />
@@ -55,13 +51,11 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                 <WidgetSlot
                     widgetType="limited_item_overlay_preview"
                     name="unique_item_overlay_widget"
-                    params={16}
                     layout={{ position: 'absolute', left: 159, width: 40, top: 23, height: 40 }}
                 />
                 <WidgetSlot
                     widgetType="product_image"
                     name="nft_image"
-                    params={16}
                     layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 146 }}
                 />
             </Border>

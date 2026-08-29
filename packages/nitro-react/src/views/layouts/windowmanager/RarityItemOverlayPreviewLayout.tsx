@@ -20,24 +20,23 @@ export interface RarityItemOverlayPreviewLayoutRarityItemWidgetProps {
     captionLevel?: string;
     layout?: BoxLayout;
     srcPlaque?: string;
+    tags?: string[];
 }
 
-export const RarityItemOverlayPreviewLayoutRarityItemWidget = ({ captionLevel, layout, srcPlaque }: RarityItemOverlayPreviewLayoutRarityItemWidgetProps) => {
+export const RarityItemOverlayPreviewLayoutRarityItemWidget = ({ captionLevel, layout, srcPlaque, tags }: RarityItemOverlayPreviewLayoutRarityItemWidgetProps) => {
     return (
         <Region
             name="rarityItemWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 28, ...layout }}
         >
             <ThemeImage
                 name="plaque"
-                params={16}
                 src={srcPlaque ?? layoutImage('rarity_item_rarity_preview_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 28 }}
             />
             <Region
                 name="level"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

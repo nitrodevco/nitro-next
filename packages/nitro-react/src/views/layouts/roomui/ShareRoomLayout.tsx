@@ -18,7 +18,6 @@ export const ShareRoomLayout = ({ embedInfo, layout, onClose, thumbnailEdges }: 
     return (
         <Frame
             variant="3"
-            params={33025}
             caption={t('navigator.embed.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -36,19 +35,19 @@ export const ShareRoomLayout = ({ embedInfo, layout, onClose, thumbnailEdges }: 
 export interface ShareRoomLayoutThumbnailEdgesProps {
     layout?: BoxLayout;
     srcThumbnailImage?: string;
+    tags?: string[];
 }
 
-export const ShareRoomLayoutThumbnailEdges = ({ layout, srcThumbnailImage }: ShareRoomLayoutThumbnailEdgesProps) => {
+export const ShareRoomLayoutThumbnailEdges = ({ layout, srcThumbnailImage, tags }: ShareRoomLayoutThumbnailEdgesProps) => {
     return (
         <Region
             name="thumbnail_edges"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 18, width: 112, top: 19, height: 112, ...layout }}
         >
             <ThemeImage
                 name="thumbnail_image"
-                params={16}
                 src={srcThumbnailImage ?? layoutImage('newnavigator_default_room.png')}
                 layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
             />
@@ -63,21 +62,21 @@ export interface ShareRoomLayoutEmbedInfoProps {
     captionEmbedInfoTxt?: string;
     captionEmbedSrcTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdln, captionEmbedInfoTxt, captionEmbedSrcTxt, layout }: ShareRoomLayoutEmbedInfoProps) => {
+export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdln, captionEmbedInfoTxt, captionEmbedSrcTxt, layout, tags }: ShareRoomLayoutEmbedInfoProps) => {
     const t = useTranslation();
     const [ embedSrcDirectTxtValue, setEmbedSrcDirectTxtValue ] = useState('');
 
     return (
         <Region
             name="embed_info"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 150, width: 285, top: 10, height: 240, ...layout }}
         >
             <Region
                 name="embed_info_hdln"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 281, top: 0, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -88,7 +87,6 @@ export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmb
             </Region>
             <Region
                 name="embed_info_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 286, top: 28, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -99,7 +97,6 @@ export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmb
             </Region>
             <Region
                 name="embed_src_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 286, top: 83, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -110,7 +107,6 @@ export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmb
             </Region>
             <Region
                 name="embed_info_direct_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 286, top: 107, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -17,21 +17,14 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
             variant="3"
             id="out%20of%20credits"
             name="out%20of%20credits"
-            params={33025}
             caption={t('inventory.marketplace.no_credits.title')}
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 252, height: 153, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 37 }}
-                >
-                    <Region
-                        params={2192}
-                        layout={{ position: 'absolute', left: 7, right: 10, top: 12, bottom: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 37 }}>
+                    <Region layout={{ position: 'absolute', left: 7, right: 10, top: 12, bottom: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('inventory.marketplace.no_credits.info')}
                             textOptions={{ wordWrap: true, wordWrapWidth: 223 }}
@@ -40,7 +33,6 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
                     <Button
                         variant="3"
                         name="get_credits_button"
-                        params={132113}
                         onPointerTap={onGetCreditsButton}
                         layout={{ position: 'absolute', left: 10, width: 81, bottom: 6, height: 28, maxWidth: 105 }}
                     >
@@ -49,7 +41,6 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
                     <Button
                         variant="3"
                         name="cancel_no_credits_button"
-                        params={394321}
                         onPointerTap={onCancelNoCreditsButton}
                         layout={{ position: 'absolute', right: 10, width: 50, bottom: 6, height: 28, maxWidth: 105 }}
                     >

@@ -25,7 +25,6 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('floor.plan.editor.title')}
             tintColor="#ff8d00"
             onClose={onClose}
@@ -33,24 +32,18 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
-                    params={144}
                     backgroundColor="#4e4844"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
                 >
                     <Region
-                        params={144}
                         backgroundColor="#2d2724"
                         layout={{ position: 'absolute', left: 3, right: 3, top: 2, height: 45 }}
                     >
                         <ThemeImage
-                            params={16}
                             src={layoutImage('floor_plan_editor_logo.png')}
                             layout={{ position: 'absolute', left: 9, width: 38, top: 5, height: 38 }}
                         />
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
+                        <Region layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('floor.plan.editor.subtitle')}
                                 textStyle="text-style-u-small"
@@ -62,7 +55,6 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                 <Border
                     variant="3"
                     name="heightmap_border"
-                    params={2192}
                     tintColor="#bdbdb5"
                     layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 95 }}
                 >
@@ -70,7 +62,6 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                     <Border
                         variant="3"
                         name="heightmap_bg"
-                        params={2192}
                         tintColor="#000000"
                         layout={{ position: 'absolute', left: 0, right: 12, top: 132, bottom: 12 }}
                     />
@@ -79,17 +70,13 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                     {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
                     {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
                     <FloorPlanEditorBcLayoutZoom {...zoom} />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text="hi :)" />
                     </Region>
                 </Border>
                 <Border
                     variant="3"
                     name="preview_border"
-                    params={2128}
                     tintColor="#bdbdb5"
                     layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
                 >
@@ -98,7 +85,6 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                     <Border
                         variant="3"
                         name="preview_bitmap_border"
-                        params={2064}
                         layout={{ position: 'absolute', left: 0, width: 275, top: 133, bottom: 14 }}
                     />
                     <FloorPlanEditorBcLayoutPreviewWrapper {...previewWrapper} />
@@ -110,7 +96,6 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                     >
                         <ThemeImage
                             name="refresh"
-                            params={17}
                             src={srcRefresh ?? layoutImage('inventory_furni_recycle_icon.png')}
                             layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
                         />
@@ -126,19 +111,19 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
 export interface FloorPlanEditorBcLayoutAddTileItemProps {
     layout?: BoxLayout;
     onAddTile?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutAddTileItem = ({ layout, onAddTile }: FloorPlanEditorBcLayoutAddTileItemProps) => {
+export const FloorPlanEditorBcLayoutAddTileItem = ({ layout, onAddTile, tags }: FloorPlanEditorBcLayoutAddTileItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="add_tile"
-            params={17}
+            tags={tags}
             onPointerTap={onAddTile}
             layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={3932176}
                 src={layoutImage('floor_plan_editor_add_tile.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 40 }}
             />
@@ -150,19 +135,19 @@ export const FloorPlanEditorBcLayoutAddTileItem = ({ layout, onAddTile }: FloorP
 export interface FloorPlanEditorBcLayoutRemoveTileItemProps {
     layout?: BoxLayout;
     onRemoveTile?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutRemoveTileItem = ({ layout, onRemoveTile }: FloorPlanEditorBcLayoutRemoveTileItemProps) => {
+export const FloorPlanEditorBcLayoutRemoveTileItem = ({ layout, onRemoveTile, tags }: FloorPlanEditorBcLayoutRemoveTileItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="remove_tile"
-            params={17}
+            tags={tags}
             onPointerTap={onRemoveTile}
             layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={1835024}
                 src={layoutImage('floor_plan_editor_remove_tile.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, bottom: 1, height: 40 }}
             />
@@ -174,19 +159,19 @@ export const FloorPlanEditorBcLayoutRemoveTileItem = ({ layout, onRemoveTile }: 
 export interface FloorPlanEditorBcLayoutIncreaseHeightItemProps {
     layout?: BoxLayout;
     onIncreaseHeight?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutIncreaseHeightItem = ({ layout, onIncreaseHeight }: FloorPlanEditorBcLayoutIncreaseHeightItemProps) => {
+export const FloorPlanEditorBcLayoutIncreaseHeightItem = ({ layout, onIncreaseHeight, tags }: FloorPlanEditorBcLayoutIncreaseHeightItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="increase_height"
-            params={17}
+            tags={tags}
             onPointerTap={onIncreaseHeight}
             layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={3932176}
                 src={layoutImage('floor_plan_editor_raise_tile.png')}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 40, alignSelf: 'center', height: 40 }}
             />
@@ -198,19 +183,19 @@ export const FloorPlanEditorBcLayoutIncreaseHeightItem = ({ layout, onIncreaseHe
 export interface FloorPlanEditorBcLayoutDecreaseHeightItemProps {
     layout?: BoxLayout;
     onDecreaseHeight?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutDecreaseHeightItem = ({ layout, onDecreaseHeight }: FloorPlanEditorBcLayoutDecreaseHeightItemProps) => {
+export const FloorPlanEditorBcLayoutDecreaseHeightItem = ({ layout, onDecreaseHeight, tags }: FloorPlanEditorBcLayoutDecreaseHeightItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="decrease_height"
-            params={17}
+            tags={tags}
             onPointerTap={onDecreaseHeight}
             layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={3932176}
                 src={layoutImage('floor_plan_editor_sink_tile.png')}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 40, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 40 }}
             />
@@ -222,19 +207,19 @@ export const FloorPlanEditorBcLayoutDecreaseHeightItem = ({ layout, onDecreaseHe
 export interface FloorPlanEditorBcLayoutSetEnterTileItemProps {
     layout?: BoxLayout;
     onSetEnterTile?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutSetEnterTileItem = ({ layout, onSetEnterTile }: FloorPlanEditorBcLayoutSetEnterTileItemProps) => {
+export const FloorPlanEditorBcLayoutSetEnterTileItem = ({ layout, onSetEnterTile, tags }: FloorPlanEditorBcLayoutSetEnterTileItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="set_enter_tile"
-            params={17}
+            tags={tags}
             onPointerTap={onSetEnterTile}
             layout={{ width: 51, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={3932176}
                 src={layoutImage('floor_plan_editor_enter_tile.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 40, alignSelf: 'center', height: 40 }}
             />
@@ -246,13 +231,14 @@ export const FloorPlanEditorBcLayoutSetEnterTileItem = ({ layout, onSetEnterTile
 export interface FloorPlanEditorBcLayoutButtonsItemlistItemProps {
     itemsButtonsItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutButtonsItemlistItem = ({ itemsButtonsItemlist, layout }: FloorPlanEditorBcLayoutButtonsItemlistItemProps) => {
+export const FloorPlanEditorBcLayoutButtonsItemlistItem = ({ itemsButtonsItemlist, layout, tags }: FloorPlanEditorBcLayoutButtonsItemlistItemProps) => {
     return (
         <Region
             name="buttons_itemlist"
-            params={16}
+            tags={tags}
             layout={{ width: 320, height: 52, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonsItemlist ?? (
@@ -265,12 +251,10 @@ export const FloorPlanEditorBcLayoutButtonsItemlistItem = ({ itemsButtonsItemlis
                 </>
             )}
             <ThemeImage
-                params={16}
                 src={layoutImage('landing_view_reception_horizontal.png')}
                 layout={{ width: 2, height: 42, flexShrink: 0 }}
             />
             <ThemeImage
-                params={16}
                 src={layoutImage('landing_view_reception_horizontal.png')}
                 layout={{ width: 2, height: 42, flexShrink: 0 }}
             />
@@ -284,33 +268,31 @@ export interface FloorPlanEditorBcLayoutTileheightControllerContainerItemProps {
     layout?: BoxLayout;
     srcTileHeightColormap?: string;
     srcTileHeightSliderTrack?: string;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutTileheightControllerContainerItem = ({ captionTileHeightText, layout, srcTileHeightColormap, srcTileHeightSliderTrack }: FloorPlanEditorBcLayoutTileheightControllerContainerItemProps) => {
+export const FloorPlanEditorBcLayoutTileheightControllerContainerItem = ({ captionTileHeightText, layout, srcTileHeightColormap, srcTileHeightSliderTrack, tags }: FloorPlanEditorBcLayoutTileheightControllerContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tileheight_controller_container"
-            params={16}
+            tags={tags}
             layout={{ width: 317, height: 48, flexShrink: 0, ...layout }}
         >
             <Region
                 name="tile_height_text"
-                params={1}
                 layout={{ position: 'absolute', left: 0, width: 156, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTileHeightText ?? t('floor.plan.editor.tile.height')} />
             </Region>
             <ThemeImage
                 name="tile_height_colormap"
-                params={17}
                 src={srcTileHeightColormap}
                 layout={{ position: 'absolute', left: 1, width: 315, top: 23, height: 19 }}
             />
             <ThemeImage
                 name="tile_height_slider_track"
-                params={16}
                 src={srcTileHeightSliderTrack ?? layoutImage('avatar_editor_avatar_editor_download_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 12, top: 29, height: 16 }}
             />
@@ -322,15 +304,16 @@ export const FloorPlanEditorBcLayoutTileheightControllerContainerItem = ({ capti
 export interface FloorPlanEditorBcLayoutControlsContainerProps {
     itemsControlsContainer?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContainer, layout }: FloorPlanEditorBcLayoutControlsContainerProps) => {
+export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContainer, layout, tags }: FloorPlanEditorBcLayoutControlsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="controls_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 14, top: 4, height: 127, flexDirection: 'column', ...layout }}
         >
             {itemsControlsContainer ?? (
@@ -339,14 +322,8 @@ export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContaine
                     <FloorPlanEditorBcLayoutTileheightControllerContainerItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 318, height: 24, flexShrink: 0 }}
-            >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+            <Region layout={{ width: 318, height: 24, flexShrink: 0 }}>
+                <Region layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('floor.plan.editor.draw.mode')} />
                 </Region>
             </Region>
@@ -358,13 +335,14 @@ export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContaine
 export interface FloorPlanEditorBcLayoutHeightmapBitmapItemProps {
     layout?: BoxLayout;
     srcHeightmapBitmap?: string;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutHeightmapBitmapItem = ({ layout, srcHeightmapBitmap }: FloorPlanEditorBcLayoutHeightmapBitmapItemProps) => {
+export const FloorPlanEditorBcLayoutHeightmapBitmapItem = ({ layout, srcHeightmapBitmap, tags }: FloorPlanEditorBcLayoutHeightmapBitmapItemProps) => {
     return (
         <ThemeImage
             name="heightmap_bitmap"
-            params={17}
+            tags={tags}
             src={srcHeightmapBitmap}
             layout={{ width: 331, height: 304, flexShrink: 0, ...layout }}
         />
@@ -375,9 +353,10 @@ export const FloorPlanEditorBcLayoutHeightmapBitmapItem = ({ layout, srcHeightma
 export interface FloorPlanEditorBcLayoutHeightmapWrapperProps {
     itemsHeightmapWrapper?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutHeightmapWrapper = ({ itemsHeightmapWrapper, layout }: FloorPlanEditorBcLayoutHeightmapWrapperProps) => {
+export const FloorPlanEditorBcLayoutHeightmapWrapper = ({ itemsHeightmapWrapper, layout, tags }: FloorPlanEditorBcLayoutHeightmapWrapperProps) => {
     return (
         <ScrollArea
             orientation="horizontal"
@@ -385,20 +364,14 @@ export const FloorPlanEditorBcLayoutHeightmapWrapper = ({ itemsHeightmapWrapper,
         >
             <Region
                 name="heightmap_wrapper"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsHeightmapWrapper ?? (
                     <FloorPlanEditorBcLayoutHeightmapBitmapItem />
                 )}
-                <Region
-                    params={16}
-                    layout={{ width: 30, height: 29, flexShrink: 0 }}
-                />
-                <Region
-                    params={16}
-                    layout={{ width: 15, height: 29, flexShrink: 0 }}
-                />
+                <Region layout={{ width: 30, height: 29, flexShrink: 0 }} />
+                <Region layout={{ width: 15, height: 29, flexShrink: 0 }} />
             </Region>
         </ScrollArea>
     );
@@ -408,13 +381,14 @@ export const FloorPlanEditorBcLayoutHeightmapWrapper = ({ itemsHeightmapWrapper,
 export interface FloorPlanEditorBcLayoutMouseCapturerProps {
     layout?: BoxLayout;
     onMouseCapturer?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutMouseCapturer = ({ layout, onMouseCapturer }: FloorPlanEditorBcLayoutMouseCapturerProps) => {
+export const FloorPlanEditorBcLayoutMouseCapturer = ({ layout, onMouseCapturer, tags }: FloorPlanEditorBcLayoutMouseCapturerProps) => {
     return (
         <Region
             name="mouse_capturer"
-            params={2193}
+            tags={tags}
             onPointerTap={onMouseCapturer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12, ...layout }}
@@ -427,20 +401,20 @@ export interface FloorPlanEditorBcLayoutZoomProps {
     layout?: BoxLayout;
     onZoom?: () => void;
     srcZoom?: string;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutZoom = ({ layout, onZoom, srcZoom }: FloorPlanEditorBcLayoutZoomProps) => {
+export const FloorPlanEditorBcLayoutZoom = ({ layout, onZoom, srcZoom, tags }: FloorPlanEditorBcLayoutZoomProps) => {
     return (
         <Region
             name="zoom"
-            params={1041}
+            tags={tags}
             onPointerTap={onZoom}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 20, bottom: 22, height: 26, ...layout }}
         >
             <ThemeImage
                 name="zoom"
-                params={16}
                 src={srcZoom ?? layoutImage('roomtools_magnifier.png')}
                 layout={{ position: 'absolute', left: -4, width: 30, top: -3, height: 30 }}
             />
@@ -453,27 +427,26 @@ export interface FloorPlanEditorBcLayoutEnterdirectionContainerItemProps {
     layout?: BoxLayout;
     onEnterdirectionLeft?: () => void;
     onEnterdirectionRight?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ layout, onEnterdirectionLeft, onEnterdirectionRight }: FloorPlanEditorBcLayoutEnterdirectionContainerItemProps) => {
+export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ layout, onEnterdirectionLeft, onEnterdirectionRight, tags }: FloorPlanEditorBcLayoutEnterdirectionContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="enterdirection_container"
-            params={16}
+            tags={tags}
             layout={{ width: 139, height: 98, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="5"
                 name="enterdirection_left"
-                params={17}
                 onPointerTap={onEnterdirectionLeft}
                 layout={{ position: 'absolute', left: 17, width: 25, top: 46, height: 24 }}
             >
                 <Icon
                     variant="2"
-                    params={16}
                     tintColor="#000000"
                     layout={{ position: 'absolute', left: 7, width: 30, top: 7, height: 30 }}
                 />
@@ -481,13 +454,11 @@ export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ layout, onE
             <ContainerButton
                 variant="5"
                 name="enterdirection_right"
-                params={17}
                 onPointerTap={onEnterdirectionRight}
                 layout={{ position: 'absolute', left: 82, width: 25, top: 46, height: 24 }}
             >
                 <Icon
                     variant="3"
-                    params={16}
                     tintColor="#000000"
                     layout={{ position: 'absolute', left: 9, width: 28, top: 7, height: 29 }}
                 />
@@ -495,14 +466,10 @@ export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ layout, onE
             <WidgetSlot
                 widgetType="avatar_image"
                 name="enterdirection_ghost_avatar"
-                params={16}
                 options={{ 'avatar_image:scale': 'sh' }}
                 layout={{ position: 'absolute', left: 41, width: 45, top: 12, height: 72 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('floor.plan.editor.enter.direction')} />
             </Region>
         </Region>
@@ -515,46 +482,38 @@ export interface FloorPlanEditorBcLayoutRoomControlsItemlistProps {
     layout?: BoxLayout;
     onFloorThicknessDrop?: () => void;
     onWallThicknessDrop?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutRoomControlsItemlist = ({ itemsRoomControlsItemlist, layout, onFloorThicknessDrop, onWallThicknessDrop }: FloorPlanEditorBcLayoutRoomControlsItemlistProps) => {
+export const FloorPlanEditorBcLayoutRoomControlsItemlist = ({ itemsRoomControlsItemlist, layout, onFloorThicknessDrop, onWallThicknessDrop, tags }: FloorPlanEditorBcLayoutRoomControlsItemlistProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_controls_itemlist"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 271, top: 3, height: 98, flexDirection: 'row', ...layout }}
         >
             {itemsRoomControlsItemlist ?? (
                 <FloorPlanEditorBcLayoutEnterdirectionContainerItem />
             )}
             <ThemeImage
-                params={16}
                 src={layoutImage('landing_view_reception_horizontal.png')}
                 layout={{ width: 3, height: 97, flexShrink: 0 }}
             />
-            <Region
-                params={16}
-                layout={{ width: 128, height: 99, flexShrink: 0 }}
-            >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+            <Region layout={{ width: 128, height: 99, flexShrink: 0 }}>
+                <Region layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('floor.plan.editor.room.options')} />
                 </Region>
                 <Dropmenu
                     variant="3"
                     name="wall_thickness_drop"
-                    params={17}
                     onPointerTap={onWallThicknessDrop}
                     layout={{ position: 'absolute', left: 14, width: 114, top: 30, height: 25 }}
                 />
                 <Dropmenu
                     variant="3"
                     name="floor_thickness_drop"
-                    params={17}
                     onPointerTap={onFloorThicknessDrop}
                     layout={{ position: 'absolute', left: 14, width: 114, top: 61, height: 25 }}
                 />
@@ -567,14 +526,15 @@ export const FloorPlanEditorBcLayoutRoomControlsItemlist = ({ itemsRoomControlsI
 export interface FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItemProps {
     layout?: BoxLayout;
     onWallsFixedHeightEnabledCheckbox?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItem = ({ layout, onWallsFixedHeightEnabledCheckbox }: FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItemProps) => {
+export const FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItem = ({ layout, onWallsFixedHeightEnabledCheckbox, tags }: FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItemProps) => {
     return (
         <CheckBox
             variant="3"
             name="walls_fixed_height_enabled_checkbox"
-            params={17}
+            tags={tags}
             onPointerTap={onWallsFixedHeightEnabledCheckbox}
             layout={{ width: 18, height: 17, flexShrink: 0, ...layout }}
         />
@@ -585,15 +545,16 @@ export const FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItem = ({ lay
 export interface FloorPlanEditorBcLayoutWallHeightTextItemProps {
     captionWallHeightText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutWallHeightTextItem = ({ captionWallHeightText, layout }: FloorPlanEditorBcLayoutWallHeightTextItemProps) => {
+export const FloorPlanEditorBcLayoutWallHeightTextItem = ({ captionWallHeightText, layout, tags }: FloorPlanEditorBcLayoutWallHeightTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wall_height_text"
-            params={16}
+            tags={tags}
             layout={{ width: 105, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionWallHeightText ?? t('floor.editor.wall.height')} />
@@ -605,13 +566,14 @@ export const FloorPlanEditorBcLayoutWallHeightTextItem = ({ captionWallHeightTex
 export interface FloorPlanEditorBcLayoutWallHeightNumberItemProps {
     captionWallHeightNumber?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutWallHeightNumberItem = ({ captionWallHeightNumber, layout }: FloorPlanEditorBcLayoutWallHeightNumberItemProps) => {
+export const FloorPlanEditorBcLayoutWallHeightNumberItem = ({ captionWallHeightNumber, layout, tags }: FloorPlanEditorBcLayoutWallHeightNumberItemProps) => {
     return (
         <Region
             name="wall_height_number"
-            params={16}
+            tags={tags}
             layout={{ width: 25, height: 17, flexShrink: 0, maxWidth: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -629,13 +591,14 @@ export interface FloorPlanEditorBcLayoutWallHeightControlsProps {
     layout?: BoxLayout;
     srcWallHeightSlider?: string;
     srcWallHeightSliderTrack?: string;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutWallHeightControls = ({ itemsWallHeightControls, layout, srcWallHeightSlider, srcWallHeightSliderTrack }: FloorPlanEditorBcLayoutWallHeightControlsProps) => {
+export const FloorPlanEditorBcLayoutWallHeightControls = ({ itemsWallHeightControls, layout, srcWallHeightSlider, srcWallHeightSliderTrack, tags }: FloorPlanEditorBcLayoutWallHeightControlsProps) => {
     return (
         <Region
             name="wall_height_controls"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 269, top: 97, height: 30, flexDirection: 'row', ...layout }}
         >
             {itemsWallHeightControls ?? (
@@ -645,19 +608,14 @@ export const FloorPlanEditorBcLayoutWallHeightControls = ({ itemsWallHeightContr
                     <FloorPlanEditorBcLayoutWallHeightNumberItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 118, height: 30, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 118, height: 30, flexShrink: 0 }}>
                 <ThemeImage
                     name="wall_height_slider"
-                    params={17}
                     src={srcWallHeightSlider ?? layoutImage('icons_toolbar_divider.png')}
                     layout={{ position: 'absolute', left: 2, width: 111, top: 0, height: 30 }}
                 />
                 <ThemeImage
                     name="wall_height_slider_track"
-                    params={16}
                     src={srcWallHeightSliderTrack ?? layoutImage('avatar_editor_avatar_editor_download_icon.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 16 }}
                 />
@@ -670,13 +628,14 @@ export const FloorPlanEditorBcLayoutWallHeightControls = ({ itemsWallHeightContr
 export interface FloorPlanEditorBcLayoutPreviewBitmapItemProps {
     layout?: BoxLayout;
     srcPreviewBitmap?: string;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutPreviewBitmapItem = ({ layout, srcPreviewBitmap }: FloorPlanEditorBcLayoutPreviewBitmapItemProps) => {
+export const FloorPlanEditorBcLayoutPreviewBitmapItem = ({ layout, srcPreviewBitmap, tags }: FloorPlanEditorBcLayoutPreviewBitmapItemProps) => {
     return (
         <ThemeImage
             name="preview_bitmap"
-            params={17}
+            tags={tags}
             src={srcPreviewBitmap}
             layout={{ width: 273, height: 300, flexShrink: 0, ...layout }}
         />
@@ -687,9 +646,10 @@ export const FloorPlanEditorBcLayoutPreviewBitmapItem = ({ layout, srcPreviewBit
 export interface FloorPlanEditorBcLayoutPreviewWrapperProps {
     itemsPreviewWrapper?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutPreviewWrapper = ({ itemsPreviewWrapper, layout }: FloorPlanEditorBcLayoutPreviewWrapperProps) => {
+export const FloorPlanEditorBcLayoutPreviewWrapper = ({ itemsPreviewWrapper, layout, tags }: FloorPlanEditorBcLayoutPreviewWrapperProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -697,7 +657,7 @@ export const FloorPlanEditorBcLayoutPreviewWrapper = ({ itemsPreviewWrapper, lay
         >
             <Region
                 name="preview_wrapper"
-                params={2064}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsPreviewWrapper ?? (
@@ -712,16 +672,17 @@ export const FloorPlanEditorBcLayoutPreviewWrapper = ({ itemsPreviewWrapper, lay
 export interface FloorPlanEditorBcLayoutReloadItemProps {
     layout?: BoxLayout;
     onReload?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutReloadItem = ({ layout, onReload }: FloorPlanEditorBcLayoutReloadItemProps) => {
+export const FloorPlanEditorBcLayoutReloadItem = ({ layout, onReload, tags }: FloorPlanEditorBcLayoutReloadItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="reload"
-            params={131089}
+            tags={tags}
             onPointerTap={onReload}
             textStyle="text-style-button-shiny-bold"
             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 100, maxWidth: 120, ...layout }}
@@ -735,13 +696,14 @@ export const FloorPlanEditorBcLayoutReloadItem = ({ layout, onReload }: FloorPla
 export interface FloorPlanEditorBcLayoutLeftButtonsProps {
     itemsLeftButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutLeftButtons = ({ itemsLeftButtons, layout }: FloorPlanEditorBcLayoutLeftButtonsProps) => {
+export const FloorPlanEditorBcLayoutLeftButtons = ({ itemsLeftButtons, layout, tags }: FloorPlanEditorBcLayoutLeftButtonsProps) => {
     return (
         <Region
             name="left_buttons"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 120, top: 0, height: 40, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsLeftButtons ?? (
@@ -755,16 +717,17 @@ export const FloorPlanEditorBcLayoutLeftButtons = ({ itemsLeftButtons, layout }:
 export interface FloorPlanEditorBcLayoutImportExportItemProps {
     layout?: BoxLayout;
     onImportExport?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutImportExportItem = ({ layout, onImportExport }: FloorPlanEditorBcLayoutImportExportItemProps) => {
+export const FloorPlanEditorBcLayoutImportExportItem = ({ layout, onImportExport, tags }: FloorPlanEditorBcLayoutImportExportItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="import_export"
-            params={131089}
+            tags={tags}
             onPointerTap={onImportExport}
             textStyle="text-style-button-shiny-bold"
             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 90, maxWidth: 120, ...layout }}
@@ -778,16 +741,17 @@ export const FloorPlanEditorBcLayoutImportExportItem = ({ layout, onImportExport
 export interface FloorPlanEditorBcLayoutCancelItemProps {
     layout?: BoxLayout;
     onCancel?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutCancelItem = ({ layout, onCancel }: FloorPlanEditorBcLayoutCancelItemProps) => {
+export const FloorPlanEditorBcLayoutCancelItem = ({ layout, onCancel, tags }: FloorPlanEditorBcLayoutCancelItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="cancel"
-            params={131089}
+            tags={tags}
             onPointerTap={onCancel}
             textStyle="text-style-button-shiny-bold"
             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 90, maxWidth: 120, ...layout }}
@@ -801,16 +765,17 @@ export const FloorPlanEditorBcLayoutCancelItem = ({ layout, onCancel }: FloorPla
 export interface FloorPlanEditorBcLayoutSaveItemProps {
     layout?: BoxLayout;
     onSave?: () => void;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutSaveItem = ({ layout, onSave }: FloorPlanEditorBcLayoutSaveItemProps) => {
+export const FloorPlanEditorBcLayoutSaveItem = ({ layout, onSave, tags }: FloorPlanEditorBcLayoutSaveItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="save"
-            params={131089}
+            tags={tags}
             tintColor="#0bb3e3"
             onPointerTap={onSave}
             textStyle="text-style-button-shiny-bold"
@@ -825,13 +790,14 @@ export const FloorPlanEditorBcLayoutSaveItem = ({ layout, onSave }: FloorPlanEdi
 export interface FloorPlanEditorBcLayoutRightButtonsProps {
     itemsRightButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutRightButtons = ({ itemsRightButtons, layout }: FloorPlanEditorBcLayoutRightButtonsProps) => {
+export const FloorPlanEditorBcLayoutRightButtons = ({ itemsRightButtons, layout, tags }: FloorPlanEditorBcLayoutRightButtonsProps) => {
     return (
         <Region
             name="right_buttons"
-            params={262224}
+            tags={tags}
             layout={{ position: 'absolute', right: 2, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8, ...layout }}
         >
             {itemsRightButtons ?? (
@@ -850,13 +816,14 @@ export interface FloorPlanEditorBcLayoutMainButtonsProps {
     layout?: BoxLayout;
     leftButtons?: FloorPlanEditorBcLayoutLeftButtonsProps;
     rightButtons?: FloorPlanEditorBcLayoutRightButtonsProps;
+    tags?: string[];
 }
 
-export const FloorPlanEditorBcLayoutMainButtons = ({ layout, leftButtons, rightButtons }: FloorPlanEditorBcLayoutMainButtonsProps) => {
+export const FloorPlanEditorBcLayoutMainButtons = ({ layout, leftButtons, rightButtons, tags }: FloorPlanEditorBcLayoutMainButtonsProps) => {
     return (
         <Region
             name="main_buttons"
-            params={1168}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 9, bottom: 42, height: 40, ...layout }}
         >
             <FloorPlanEditorBcLayoutLeftButtons {...leftButtons} />

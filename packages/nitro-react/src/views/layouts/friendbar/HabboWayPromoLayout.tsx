@@ -20,18 +20,13 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
     return (
         <Region layout={{ position: 'relative', width: 500, height: 245, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
                 <HabboWayPromoLayoutCol1 {...col1} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 190, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 190, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        params={16}
                         layout={{ width: 307, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -42,7 +37,6 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                     <HabboWayPromoLayoutSpacing {...spacing} />
                     <Region
                         name="info_txt"
-                        params={16}
                         layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -53,7 +47,6 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                     <Button
                         variant="100"
                         name="go_button"
-                        params={131089}
                         onPointerTap={onGoButton}
                         layout={{ width: 220, height: 50, flexShrink: 0 }}
                     >
@@ -61,7 +54,6 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                     </Button>
                     <Region
                         name="ps_title_txt"
-                        params={16}
                         layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -72,18 +64,15 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                     </Region>
                     <Border
                         variant="100"
-                        params={16}
                         layout={{ width: 270, height: 79, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="counter_bg"
-                            params={16}
                             src={srcCounterBg ?? '${image.library.url}album1584/ACH_HabboWayGraduate1.png'}
                             layout={{ position: 'absolute', left: 16, width: 38, top: 17, height: 38 }}
                         />
                         <Region
                             name="info_txt"
-                            params={16}
                             layout={{ position: 'absolute', left: 63, width: 201, top: 15, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -105,33 +94,31 @@ export interface HabboWayPromoLayoutCol1Props {
     layout?: BoxLayout;
     srcCounterBg?: string;
     srcTeaserImage?: string;
+    tags?: string[];
 }
 
-export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterTxt, layout, srcCounterBg, srcTeaserImage }: HabboWayPromoLayoutCol1Props) => {
+export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterTxt, layout, srcCounterBg, srcTeaserImage, tags }: HabboWayPromoLayoutCol1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="col1"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 245, ...layout }}
         >
             <ThemeImage
                 name="teaser_image"
-                params={16}
                 src={srcTeaserImage ?? '${image.library.url}reception/reception_widget_habboway.png'}
                 layout={{ position: 'absolute', left: 0, width: 198, top: 0, height: 158 }}
             />
             <ThemeImage
                 name="counter_bg"
-                params={16}
                 src={srcCounterBg ?? '${image.library.url}reception/reception_counter_bg.png'}
                 layout={{ position: 'absolute', left: 35, width: 137, top: 178, height: 23 }}
             />
             <Region
                 name="counter_info_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 6, width: 201, top: 210, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -142,7 +129,6 @@ export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterT
             </Region>
             <Region
                 name="counter_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 38, width: 140, top: 180, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -157,13 +143,14 @@ export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterT
 /** Named region `spacing` of HabboWayPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboWayPromoLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboWayPromoLayoutSpacing = ({ layout }: HabboWayPromoLayoutSpacingProps) => {
+export const HabboWayPromoLayoutSpacing = ({ layout, tags }: HabboWayPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

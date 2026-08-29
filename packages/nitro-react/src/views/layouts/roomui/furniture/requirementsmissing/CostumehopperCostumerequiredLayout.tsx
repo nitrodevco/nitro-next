@@ -18,7 +18,6 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
     return (
         <Frame
             variant="100"
-            params={163841}
             caption={t('costumehopper.costumerequired.header')}
             onClose={onClose}
             layout={{ width: 310, height: 149, ...layout }}
@@ -26,7 +25,6 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ThemeImage
                     name="illustration"
-                    params={16}
                     src={srcIllustration}
                     layout={{ position: 'absolute', left: 10, width: 1, top: 0, height: 1 }}
                 />
@@ -40,15 +38,16 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
 export interface CostumehopperCostumerequiredLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutTitleItem = ({ captionTitle, layout }: CostumehopperCostumerequiredLayoutTitleItemProps) => {
+export const CostumehopperCostumerequiredLayoutTitleItem = ({ captionTitle, layout, tags }: CostumehopperCostumerequiredLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            params={16}
+            tags={tags}
             layout={{ width: 183, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -64,15 +63,16 @@ export const CostumehopperCostumerequiredLayoutTitleItem = ({ captionTitle, layo
 export interface CostumehopperCostumerequiredLayoutBodytextItemProps {
     captionBodytext?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutBodytextItem = ({ captionBodytext, layout }: CostumehopperCostumerequiredLayoutBodytextItemProps) => {
+export const CostumehopperCostumerequiredLayoutBodytextItem = ({ captionBodytext, layout, tags }: CostumehopperCostumerequiredLayoutBodytextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bodytext"
-            params={16}
+            tags={tags}
             layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -87,13 +87,14 @@ export const CostumehopperCostumerequiredLayoutBodytextItem = ({ captionBodytext
 export interface CostumehopperCostumerequiredLayoutListTopItemProps {
     itemsListTop?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutListTopItem = ({ itemsListTop, layout }: CostumehopperCostumerequiredLayoutListTopItemProps) => {
+export const CostumehopperCostumerequiredLayoutListTopItem = ({ itemsListTop, layout, tags }: CostumehopperCostumerequiredLayoutListTopItemProps) => {
     return (
         <Region
             name="list_top"
-            params={147472}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
@@ -110,13 +111,14 @@ export const CostumehopperCostumerequiredLayoutListTopItem = ({ itemsListTop, la
 export interface CostumehopperCostumerequiredLayoutSpacerItemProps {
     layout?: BoxLayout;
     srcSpacer?: string;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutSpacerItem = ({ layout, srcSpacer }: CostumehopperCostumerequiredLayoutSpacerItemProps) => {
+export const CostumehopperCostumerequiredLayoutSpacerItem = ({ layout, srcSpacer, tags }: CostumehopperCostumerequiredLayoutSpacerItemProps) => {
     return (
         <ThemeImage
             name="spacer"
-            params={16}
+            tags={tags}
             src={srcSpacer}
             layout={{ width: 291, height: 4, flexShrink: 0, ...layout }}
         />
@@ -127,16 +129,17 @@ export const CostumehopperCostumerequiredLayoutSpacerItem = ({ layout, srcSpacer
 export interface CostumehopperCostumerequiredLayoutBuyCostumesItemProps {
     layout?: BoxLayout;
     onBuyCostumes?: () => void;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutBuyCostumesItem = ({ layout, onBuyCostumes }: CostumehopperCostumerequiredLayoutBuyCostumesItemProps) => {
+export const CostumehopperCostumerequiredLayoutBuyCostumesItem = ({ layout, onBuyCostumes, tags }: CostumehopperCostumerequiredLayoutBuyCostumesItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_costumes"
-            params={131281}
+            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyCostumes}
             layout={{ width: 193, height: 32, flexShrink: 0, ...layout }}
@@ -150,13 +153,14 @@ export const CostumehopperCostumerequiredLayoutBuyCostumesItem = ({ layout, onBu
 export interface CostumehopperCostumerequiredLayoutListBottomItemProps {
     itemsListBottom?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBottom, layout }: CostumehopperCostumerequiredLayoutListBottomItemProps) => {
+export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBottom, layout, tags }: CostumehopperCostumerequiredLayoutListBottomItemProps) => {
     return (
         <Region
             name="list_bottom"
-            params={147472}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsListBottom ?? (
@@ -166,7 +170,6 @@ export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBott
                 </>
             )}
             <ThemeImage
-                params={16}
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 291, height: 3, flexShrink: 0 }}
             />
@@ -178,13 +181,14 @@ export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBott
 export interface CostumehopperCostumerequiredLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CostumehopperCostumerequiredLayoutList = ({ itemsList, layout }: CostumehopperCostumerequiredLayoutListProps) => {
+export const CostumehopperCostumerequiredLayoutList = ({ itemsList, layout, tags }: CostumehopperCostumerequiredLayoutListProps) => {
     return (
         <Region
             name="list"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsList ?? (

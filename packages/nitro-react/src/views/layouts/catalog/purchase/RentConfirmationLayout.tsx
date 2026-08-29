@@ -20,7 +20,6 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('rent.confirmation.title.extend')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -29,12 +28,10 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="0"
-                    params={16}
                     layout={{ position: 'absolute', left: 20, width: 160, top: 25, height: 180 }}
                 >
                     <ThemeImage
                         name="image"
-                        params={2192}
                         src={srcImage}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
@@ -42,7 +39,6 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
                 <Button
                     variant="3"
                     name="cancel_button"
-                    params={132113}
                     onPointerTap={onCancelButton}
                     layout={{ position: 'absolute', left: 20, width: 99, bottom: 50, height: 30 }}
                 >
@@ -51,7 +47,6 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
                 <ButtonThick
                     variant="5"
                     name="ok_button"
-                    params={394321}
                     tintColor="#00cc00"
                     onPointerTap={onOkButton}
                     layout={{ position: 'absolute', right: 20, width: 82, bottom: 50, height: 30 }}
@@ -68,15 +63,16 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
 export interface RentConfirmationLayoutRentalDescriptionItemProps {
     captionRentalDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescription, layout }: RentConfirmationLayoutRentalDescriptionItemProps) => {
+export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescription, layout, tags }: RentConfirmationLayoutRentalDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rental_description"
-            params={16}
+            tags={tags}
             layout={{ width: 150, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -91,13 +87,14 @@ export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescr
 export interface RentConfirmationLayoutFurniNameItemProps {
     captionFurniName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RentConfirmationLayoutFurniNameItem = ({ captionFurniName, layout }: RentConfirmationLayoutFurniNameItemProps) => {
+export const RentConfirmationLayoutFurniNameItem = ({ captionFurniName, layout, tags }: RentConfirmationLayoutFurniNameItemProps) => {
     return (
         <Region
             name="furni_name"
-            params={16}
+            tags={tags}
             layout={{ width: 150, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -115,15 +112,16 @@ export interface RentConfirmationLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
     srcPriceType?: string;
+    tags?: string[];
 }
 
-export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsContentList, layout, srcPriceType }: RentConfirmationLayoutContentListProps) => {
+export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsContentList, layout, srcPriceType, tags }: RentConfirmationLayoutContentListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_list"
-            params={3293200}
+            tags={tags}
             layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -40.5, marginBottom: 40.5, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContentList ?? (
@@ -132,14 +130,8 @@ export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsCon
                     <RentConfirmationLayoutFurniNameItem />
                 </>
             )}
-            <Region
-                params={16}
-                layout={{ width: 150, height: 19, flexShrink: 0, flexDirection: 'row', gap: 3 }}
-            >
-                <Region
-                    params={16}
-                    layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+            <Region layout={{ width: 150, height: 19, flexShrink: 0, flexDirection: 'row', gap: 3 }}>
+                <Region layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('catalog.purchase.confirmation.dialog.cost')}
                         textStyle="text-style-u-regular"
@@ -147,7 +139,6 @@ export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsCon
                 </Region>
                 <Region
                     name="price_amount"
-                    params={16}
                     layout={{ width: 22, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -157,7 +148,6 @@ export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsCon
                 </Region>
                 <ThemeImage
                     name="price_type"
-                    params={16}
                     src={srcPriceType ?? layoutImage('toolbar_duckat_icon_0.png')}
                     layout={{ width: 17, height: 18, flexShrink: 0 }}
                 />

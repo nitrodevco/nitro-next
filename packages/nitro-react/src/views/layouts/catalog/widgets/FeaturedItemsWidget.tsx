@@ -11,13 +11,14 @@ import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#b
 export interface FeaturedItemsWidgetEventCatcherRegionProps {
     layout?: BoxLayout;
     onEventCatcherRegion?: () => void;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidgetEventCatcherRegion = ({ layout, onEventCatcherRegion }: FeaturedItemsWidgetEventCatcherRegionProps) => {
+export const FeaturedItemsWidgetEventCatcherRegion = ({ layout, onEventCatcherRegion, tags }: FeaturedItemsWidgetEventCatcherRegionProps) => {
     return (
         <Region
             name="event_catcher_region"
-            params={17}
+            tags={tags}
             onPointerTap={onEventCatcherRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 126, ...layout }}
@@ -31,32 +32,30 @@ export interface FeaturedItemsWidgetFeaturedItemTemplateItemProps {
     eventCatcherRegion?: FeaturedItemsWidgetEventCatcherRegionProps;
     layout?: BoxLayout;
     srcItemImage?: string;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, eventCatcherRegion, layout, srcItemImage }: FeaturedItemsWidgetFeaturedItemTemplateItemProps) => {
+export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, eventCatcherRegion, layout, srcItemImage, tags }: FeaturedItemsWidgetFeaturedItemTemplateItemProps) => {
     return (
         <Region
             name="featured_item_template"
-            params={16}
+            tags={tags}
             layout={{ width: 360, height: 126, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="item_image"
-                params={18}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 126 }}
             />
             <Border
                 variant="3"
                 name="text_container"
-                params={1198099}
                 tintColor="#333333"
                 blend={0.5}
                 layout={{ position: 'absolute', left: 5, width: 346, top: 93, bottom: 3 }}
             >
                 <Region
                     name="item_title"
-                    params={8388627}
                     layout={{ position: 'absolute', left: 5, width: 340, top: 5, maxWidth: 340, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -75,9 +74,10 @@ export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, 
 export interface FeaturedItemsWidgetItemlistFeaturedProps {
     itemsItemlistFeatured?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, layout }: FeaturedItemsWidgetItemlistFeaturedProps) => {
+export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, layout, tags }: FeaturedItemsWidgetItemlistFeaturedProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -85,7 +85,7 @@ export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, lay
         >
             <Region
                 name="itemlist_featured"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 7, width: '100%' }}
             >
                 {itemsItemlistFeatured ?? (
@@ -100,13 +100,14 @@ export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, lay
 export interface FeaturedItemsWidgetEventCatcherRegion2Props {
     layout?: BoxLayout;
     onEventCatcherRegion?: () => void;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidgetEventCatcherRegion2 = ({ layout, onEventCatcherRegion }: FeaturedItemsWidgetEventCatcherRegion2Props) => {
+export const FeaturedItemsWidgetEventCatcherRegion2 = ({ layout, onEventCatcherRegion, tags }: FeaturedItemsWidgetEventCatcherRegion2Props) => {
     return (
         <Region
             name="event_catcher_region"
-            params={17}
+            tags={tags}
             onPointerTap={onEventCatcherRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 422, ...layout }}
@@ -121,34 +122,32 @@ export interface FeaturedItemsWidgetFirstitemProps {
     layout?: BoxLayout;
     onFirstitem?: () => void;
     srcItemImage?: string;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidgetFirstitem = ({ captionItemTitle, eventCatcherRegion, layout, onFirstitem, srcItemImage }: FeaturedItemsWidgetFirstitemProps) => {
+export const FeaturedItemsWidgetFirstitem = ({ captionItemTitle, eventCatcherRegion, layout, onFirstitem, srcItemImage, tags }: FeaturedItemsWidgetFirstitemProps) => {
     return (
         <Region
             name="firstitem"
-            params={17}
+            tags={tags}
             onPointerTap={onFirstitem}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460, ...layout }}
         >
             <ThemeImage
                 name="item_image"
-                params={1073741843}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460, overflow: 'hidden' }}
             />
             <Border
                 variant="3"
                 name="text_container"
-                params={1198099}
                 tintColor="#333333"
                 blend={0.5}
                 layout={{ position: 'absolute', left: 5, width: 174, top: 428, bottom: 3, maxWidth: 174 }}
             >
                 <Region
                     name="item_title"
-                    params={8388627}
                     layout={{ position: 'absolute', left: 5, width: 174, top: 0, maxWidth: 174, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -168,14 +167,14 @@ export interface FeaturedItemsWidgetProps {
     firstitem?: FeaturedItemsWidgetFirstitemProps;
     itemlistFeatured?: FeaturedItemsWidgetItemlistFeaturedProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeaturedItemsWidget = ({ firstitem, itemlistFeatured, layout }: FeaturedItemsWidgetProps) => {
+export const FeaturedItemsWidget = ({ firstitem, itemlistFeatured, layout, tags }: FeaturedItemsWidgetProps) => {
     return (
         <Region
             name="featuredItemsWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16400}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <FeaturedItemsWidgetItemlistFeatured {...itemlistFeatured} />

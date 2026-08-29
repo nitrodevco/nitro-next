@@ -19,24 +19,23 @@ export interface EntryArrowsLayoutEntryArrowsContProps {
     layout?: BoxLayout;
     srcArrow0?: string;
     srcArrow1?: string;
+    tags?: string[];
 }
 
-export const EntryArrowsLayoutEntryArrowsCont = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsLayoutEntryArrowsContProps) => {
+export const EntryArrowsLayoutEntryArrowsCont = ({ layout, srcArrow0, srcArrow1, tags }: EntryArrowsLayoutEntryArrowsContProps) => {
     return (
         <Region
             name="entry_arrows_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="arrow_0"
-                params={2192}
                 src={srcArrow0 ?? '${image.library.questing.url}quest_arrow1.png'}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="arrow_1"
-                params={3280}
                 src={srcArrow1 ?? '${image.library.questing.url}quest_arrow2.png'}
                 layout={{ position: 'absolute', width: 15, alignSelf: 'center', height: 25 }}
             />

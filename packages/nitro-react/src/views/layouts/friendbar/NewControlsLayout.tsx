@@ -19,13 +19,14 @@ export const NewControlsLayout = ({ controls, layout }: NewControlsLayoutProps) 
 export interface NewControlsLayoutBtnChatProps {
     layout?: BoxLayout;
     onBtnChat?: () => void;
+    tags?: string[];
 }
 
-export const NewControlsLayoutBtnChat = ({ layout, onBtnChat }: NewControlsLayoutBtnChatProps) => {
+export const NewControlsLayoutBtnChat = ({ layout, onBtnChat, tags }: NewControlsLayoutBtnChatProps) => {
     return (
         <Region
             name="btn_chat"
-            params={1}
+            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onBtnChat}
             cursor="pointer"
@@ -33,7 +34,6 @@ export const NewControlsLayoutBtnChat = ({ layout, onBtnChat }: NewControlsLayou
         >
             <ThemeImage
                 tags={[ '#icon' ]}
-                params={16}
                 src={layoutImage('friend_bar_friendlist_chat.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
@@ -45,13 +45,14 @@ export const NewControlsLayoutBtnChat = ({ layout, onBtnChat }: NewControlsLayou
 export interface NewControlsLayoutButtonProfileProps {
     layout?: BoxLayout;
     onButtonProfile?: () => void;
+    tags?: string[];
 }
 
-export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile }: NewControlsLayoutButtonProfileProps) => {
+export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile, tags }: NewControlsLayoutButtonProfileProps) => {
     return (
         <Region
             name="button_profile"
-            params={1}
+            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onButtonProfile}
             cursor="pointer"
@@ -59,7 +60,6 @@ export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile }: NewC
         >
             <ThemeImage
                 tags={[ '#icon' ]}
-                params={16}
                 src={layoutImage('friend_bar_friendlist_eye.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
@@ -71,21 +71,20 @@ export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile }: NewC
 export interface NewControlsLayoutBtnVisitProps {
     layout?: BoxLayout;
     onBtnVisit?: () => void;
+    tags?: string[];
 }
 
-export const NewControlsLayoutBtnVisit = ({ layout, onBtnVisit }: NewControlsLayoutBtnVisitProps) => {
+export const NewControlsLayoutBtnVisit = ({ layout, onBtnVisit, tags }: NewControlsLayoutBtnVisitProps) => {
     return (
         <Region
             name="btn_visit"
-            tags={[ '#icon' ]}
-            params={1}
+            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onBtnVisit}
             cursor="pointer"
             layout={{ position: 'absolute', left: 29, width: 25, top: 0, height: 25, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('friend_bar_friendlist_go_room.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
@@ -100,20 +99,24 @@ export interface NewControlsLayoutControlsProps {
     buttonProfile?: NewControlsLayoutButtonProfileProps;
     layout?: BoxLayout;
     onControls?: () => void;
+    tags?: string[];
 }
 
-export const NewControlsLayoutControls = ({ btnChat, btnVisit, buttonProfile, layout, onControls }: NewControlsLayoutControlsProps) => {
+export const NewControlsLayoutControls = ({ btnChat, btnVisit, buttonProfile, layout, onControls, tags }: NewControlsLayoutControlsProps) => {
     return (
         <Region
             name="controls"
-            params={145}
+            tags={tags}
             onPointerTap={onControls}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35, ...layout }}
         >
             <NewControlsLayoutBtnChat {...btnChat} />
             <NewControlsLayoutButtonProfile {...buttonProfile} />
-            <NewControlsLayoutBtnVisit {...btnVisit} />
+            <NewControlsLayoutBtnVisit
+                tags={[ '#icon' ]}
+                {...btnVisit}
+            />
         </Region>
     );
 };

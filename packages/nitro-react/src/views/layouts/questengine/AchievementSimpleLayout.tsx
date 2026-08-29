@@ -19,14 +19,14 @@ export const AchievementSimpleLayout = ({ achievementContainer, layout }: Achiev
 export interface AchievementSimpleLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const AchievementSimpleLayoutBgRegion = ({ layout, onBgRegion }: AchievementSimpleLayoutBgRegionProps) => {
+export const AchievementSimpleLayoutBgRegion = ({ layout, onBgRegion, tags }: AchievementSimpleLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={[ 'FIT:achievementsSelectSpecific' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50, ...layout }}
@@ -40,18 +40,18 @@ export interface AchievementSimpleLayoutAchievementContainerProps {
     layout?: BoxLayout;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
+    tags?: string[];
 }
 
-export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap }: AchievementSimpleLayoutAchievementContainerProps) => {
+export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: AchievementSimpleLayoutAchievementContainerProps) => {
     return (
         <Region
             name="achievement_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50, ...layout }}
         >
             <ThemeImage
                 name="bg_unselected_bitmap"
-                params={17}
                 src={srcBgUnselectedBitmap ?? layoutImage('common_item_unselected.png')}
                 layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50 }}
             />
@@ -61,7 +61,6 @@ export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, 
             >
                 <ThemeImage
                     name="bg_selected_bitmap"
-                    params={16}
                     src={srcBgSelectedBitmap ?? layoutImage('common_item_selected.png')}
                     layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50 }}
                 />
@@ -69,11 +68,13 @@ export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, 
             <WidgetSlot
                 widgetType="badge_image"
                 name="achievement_pic_bitmap"
-                params={16}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 6, width: 40, top: 5, height: 40 }}
             />
-            <AchievementSimpleLayoutBgRegion {...bgRegion} />
+            <AchievementSimpleLayoutBgRegion
+                tags={[ 'FIT:achievementsSelectSpecific' ]}
+                {...bgRegion}
+            />
         </Region>
     );
 };

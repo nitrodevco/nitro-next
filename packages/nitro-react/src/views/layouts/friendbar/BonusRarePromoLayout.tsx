@@ -13,20 +13,13 @@ export interface BonusRarePromoLayoutProps {
 export const BonusRarePromoLayout = ({ buttonContainer, layout, midContainer, teaserImageContainer }: BonusRarePromoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 602, height: 75, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 602, top: 0, height: 75 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 602, top: 0, height: 75 }}>
                 <Border
                     variant="105"
-                    params={4194320}
                     blend={0.2}
                     layout={{ position: 'absolute', left: 1, width: 600, top: 5, height: 63 }}
                 >
-                    <Region
-                        params={4194320}
-                        layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 63, flexDirection: 'row' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 63, flexDirection: 'row' }}>
                         <BonusRarePromoLayoutTeaserImageContainer {...teaserImageContainer} />
                         <BonusRarePromoLayoutMidContainer {...midContainer} />
                         <BonusRarePromoLayoutButtonContainer {...buttonContainer} />
@@ -42,13 +35,14 @@ export interface BonusRarePromoLayoutTeaserImageContainerProps {
     layout?: BoxLayout;
     srcPreview?: string;
     srcPromoImage?: string;
+    tags?: string[];
 }
 
-export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, srcPromoImage }: BonusRarePromoLayoutTeaserImageContainerProps) => {
+export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, srcPromoImage, tags }: BonusRarePromoLayoutTeaserImageContainerProps) => {
     return (
         <Region
             name="teaser_image_container"
-            params={16}
+            tags={tags}
             layout={{ width: 96, height: 63, flexShrink: 0, ...layout }}
         >
             <Region
@@ -57,7 +51,6 @@ export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, s
             >
                 <ThemeImage
                     name="preview"
-                    params={16}
                     src={srcPreview}
                     layout={{ position: 'absolute', left: 27, width: 44, top: 12, height: 38 }}
                 />
@@ -74,14 +67,15 @@ export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, s
 /** Named region `bar_a_bkg` of BonusRarePromoLayout - configured through the parent's `barABkg` prop. */
 export interface BonusRarePromoLayoutBarABkgProps {
     layout?: BoxLayout;
+    tags?: string[];
     visibleBarABkg?: boolean;
 }
 
-export const BonusRarePromoLayoutBarABkg = ({ layout, visibleBarABkg }: BonusRarePromoLayoutBarABkgProps) => {
+export const BonusRarePromoLayoutBarABkg = ({ layout, tags, visibleBarABkg }: BonusRarePromoLayoutBarABkgProps) => {
     return (
         <Region
             name="bar_a_bkg"
-            params={144}
+            tags={tags}
             visible={visibleBarABkg ?? false}
             backgroundColor="#ffff00"
             layout={{ position: 'absolute', left: 4, right: 6, top: 3, height: 17, ...layout }}
@@ -99,51 +93,46 @@ export interface BonusRarePromoLayoutProgressBarContProps {
     srcBarC?: string;
     srcBarL?: string;
     srcBarR?: string;
+    tags?: string[];
 }
 
-export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: BonusRarePromoLayoutProgressBarContProps) => {
+export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR, tags }: BonusRarePromoLayoutProgressBarContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_bar_cont"
-            params={786512}
+            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 302, top: 30, height: 23, ...layout }}
         >
             <ThemeImage
                 name="bar_l"
-                params={16}
                 src={srcBarL ?? layoutImage('achievement_ach_progressbar1.png')}
                 layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 23 }}
             />
             <ThemeImage
                 name="bar_c"
-                params={144}
                 src={srcBarC ?? layoutImage('achievement_ach_progressbar2.png')}
                 layout={{ position: 'absolute', left: 4, right: 7, top: 0, height: 23 }}
             />
             <ThemeImage
                 name="bar_r"
-                params={262224}
                 src={srcBarR ?? layoutImage('achievement_ach_progressbar3.png')}
                 layout={{ position: 'absolute', right: 3, width: 4, top: 0, height: 23 }}
             />
             <BonusRarePromoLayoutBarABkg {...barABkg} />
             <ThemeImage
                 name="bar_a_c"
-                params={16}
                 src={srcBarAC ?? layoutImage('achievement_ach_progressbar4.png')}
                 layout={{ position: 'absolute', left: 4, width: 142, top: 3, height: 17 }}
             />
             <ThemeImage
                 name="bar_a_r"
-                params={16}
                 src={srcBarAR ?? layoutImage('achievement_ach_progressbar5.png')}
                 layout={{ position: 'absolute', left: 145, width: 2, top: 3, height: 17 }}
             />
             <Region
                 name="status"
-                params={786513}
                 layout={{ position: 'absolute', right: 68, width: 178, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -160,21 +149,21 @@ export interface BonusRarePromoLayoutMidContainerProps {
     captionHeader?: string;
     layout?: BoxLayout;
     progressBarCont?: BonusRarePromoLayoutProgressBarContProps;
+    tags?: string[];
 }
 
-export const BonusRarePromoLayoutMidContainer = ({ captionHeader, layout, progressBarCont }: BonusRarePromoLayoutMidContainerProps) => {
+export const BonusRarePromoLayoutMidContainer = ({ captionHeader, layout, progressBarCont, tags }: BonusRarePromoLayoutMidContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mid_container"
-            params={147472}
+            tags={tags}
             layout={{ width: 304, height: 53, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header"
                 tags={[ 'COLORABLE' ]}
-                params={786640}
                 layout={{ position: 'absolute', width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -191,21 +180,21 @@ export const BonusRarePromoLayoutMidContainer = ({ captionHeader, layout, progre
 export interface BonusRarePromoLayoutButtonContainerProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
+    tags?: string[];
 }
 
-export const BonusRarePromoLayoutButtonContainer = ({ layout, onBuyButton }: BonusRarePromoLayoutButtonContainerProps) => {
+export const BonusRarePromoLayoutButtonContainer = ({ layout, onBuyButton, tags }: BonusRarePromoLayoutButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_container"
-            params={147472}
+            tags={tags}
             layout={{ width: 200, height: 56, flexShrink: 0, ...layout }}
         >
             <Button
                 variant="100"
                 name="buy_button"
-                params={131153}
                 onPointerTap={onBuyButton}
                 layout={{ position: 'absolute', right: 0, width: 200, top: 5, height: 51, maxWidth: 200 }}
             >

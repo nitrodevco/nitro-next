@@ -19,25 +19,24 @@ export interface GuildSelectorWidgetItemLayoutGuildItemProps {
     captionGuildName?: string;
     layout?: BoxLayout;
     srcGuildColors?: string;
+    tags?: string[];
 }
 
-export const GuildSelectorWidgetItemLayoutGuildItem = ({ captionGuildName, layout, srcGuildColors }: GuildSelectorWidgetItemLayoutGuildItemProps) => {
+export const GuildSelectorWidgetItemLayoutGuildItem = ({ captionGuildName, layout, srcGuildColors, tags }: GuildSelectorWidgetItemLayoutGuildItemProps) => {
     return (
         <Region
             name="guild_item"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 22, ...layout }}
         >
             <Region
                 name="guild_name"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 72, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionGuildName ?? 'lorem ipsum'} />
             </Region>
             <ThemeImage
                 name="guild_colors"
-                params={16}
                 src={srcGuildColors}
                 layout={{ position: 'absolute', left: 112, width: 21, top: 4, height: 14 }}
             />

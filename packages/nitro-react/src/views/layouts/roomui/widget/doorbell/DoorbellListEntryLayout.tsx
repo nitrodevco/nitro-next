@@ -12,13 +12,11 @@ export const DoorbellListEntryLayout = ({ accept, captionUserName, deny, layout 
     return (
         <Region layout={{ position: 'relative', width: 200, height: 20, ...layout }}>
             <Region
-                params={144}
                 backgroundColor="#eeeeee"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
             >
                 <Region
                     name="user_name"
-                    params={3088}
                     layout={{ position: 'absolute', left: 3, width: 58, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionUserName ?? 'username'} />
@@ -34,20 +32,20 @@ export const DoorbellListEntryLayout = ({ accept, captionUserName, deny, layout 
 export interface DoorbellListEntryLayoutAcceptProps {
     layout?: BoxLayout;
     onAccept?: () => void;
+    tags?: string[];
 }
 
-export const DoorbellListEntryLayoutAccept = ({ layout, onAccept }: DoorbellListEntryLayoutAcceptProps) => {
+export const DoorbellListEntryLayoutAccept = ({ layout, onAccept, tags }: DoorbellListEntryLayoutAcceptProps) => {
     return (
         <Region
             name="accept"
-            params={17}
+            tags={tags}
             onPointerTap={onAccept}
             cursor="pointer"
             layout={{ position: 'absolute', left: 155, width: 18, top: 4, height: 15, ...layout }}
         >
             <Icon
                 variant="8"
-                params={16}
                 tintColor="#00bb00"
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 15 }}
             />
@@ -59,20 +57,20 @@ export const DoorbellListEntryLayoutAccept = ({ layout, onAccept }: DoorbellList
 export interface DoorbellListEntryLayoutDenyProps {
     layout?: BoxLayout;
     onDeny?: () => void;
+    tags?: string[];
 }
 
-export const DoorbellListEntryLayoutDeny = ({ layout, onDeny }: DoorbellListEntryLayoutDenyProps) => {
+export const DoorbellListEntryLayoutDeny = ({ layout, onDeny, tags }: DoorbellListEntryLayoutDenyProps) => {
     return (
         <Region
             name="deny"
-            params={17}
+            tags={tags}
             onPointerTap={onDeny}
             cursor="pointer"
             layout={{ position: 'absolute', left: 180, width: 15, top: 4, height: 13, ...layout }}
         >
             <Icon
                 variant="9"
-                params={16}
                 tintColor="#ff0000"
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
             />

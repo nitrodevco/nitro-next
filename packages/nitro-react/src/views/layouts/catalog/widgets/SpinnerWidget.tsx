@@ -15,22 +15,22 @@ export interface SpinnerWidgetQuantitySelectionProps {
     captionQuantityLabel?: string;
     layout?: BoxLayout;
     srcThumbStar?: string;
+    tags?: string[];
     visibleDiscountContainer?: boolean;
 }
 
-export const SpinnerWidgetQuantitySelection = ({ captionPromoInfo, captionQuantityLabel, layout, srcThumbStar, visibleDiscountContainer }: SpinnerWidgetQuantitySelectionProps) => {
+export const SpinnerWidgetQuantitySelection = ({ captionPromoInfo, captionQuantityLabel, layout, srcThumbStar, tags, visibleDiscountContainer }: SpinnerWidgetQuantitySelectionProps) => {
     const t = useTranslation();
     const [ textValueValue, setTextValueValue ] = useState('');
 
     return (
         <Region
             name="quantitySelection"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 25, ...layout }}
         >
             <Region
                 name="quantityLabel"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 100, top: 3, height: 17, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -45,7 +45,6 @@ export const SpinnerWidgetQuantitySelection = ({ captionPromoInfo, captionQuanti
                 <Border
                     variant="3"
                     name="discountContainer"
-                    params={16}
                     tintColor="#92d27c"
                     layout={{ width: '100%', height: '100%' }}
                 >
@@ -56,7 +55,6 @@ export const SpinnerWidgetQuantitySelection = ({ captionPromoInfo, captionQuanti
                     />
                     <Region
                         name="promo.info"
-                        params={16}
                         layout={{ position: 'absolute', left: 28, width: 82, top: 5, height: 15, maxWidth: 82, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionPromoInfo ?? t('shop.bonus.items.count')} />
@@ -66,7 +64,6 @@ export const SpinnerWidgetQuantitySelection = ({ captionPromoInfo, captionQuanti
             <Border
                 variant="0"
                 name="quantityInput"
-                params={16}
                 layout={{ position: 'absolute', left: 65, width: 30, top: 0, height: 25 }}
             >
                 <TextInput
@@ -86,23 +83,22 @@ export interface SpinnerWidgetProps {
     onButtonLess?: () => void;
     onButtonMore?: () => void;
     quantitySelection?: SpinnerWidgetQuantitySelectionProps;
+    tags?: string[];
     visibleButtonLess?: boolean;
     visibleButtonMore?: boolean;
 }
 
-export const SpinnerWidget = ({ captionTextHeader, layout, onButtonLess, onButtonMore, quantitySelection, visibleButtonLess, visibleButtonMore }: SpinnerWidgetProps) => {
+export const SpinnerWidget = ({ captionTextHeader, layout, onButtonLess, onButtonMore, quantitySelection, tags, visibleButtonLess, visibleButtonMore }: SpinnerWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="spinnerWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={17424}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region
                 name="text_header"
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 7, width: 100, top: 5, height: 15, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
@@ -118,14 +114,12 @@ export const SpinnerWidget = ({ captionTextHeader, layout, onButtonLess, onButto
                 <ContainerButton
                     variant="3"
                     name="button_less"
-                    params={1}
                     onPointerTap={onButtonLess}
                     layout={{ width: '100%', height: '100%' }}
                 >
                     <Icon
                         variant="7"
                         name="icon_less"
-                        params={16}
                         tintColor="#000000"
                         layout={{ position: 'absolute', left: 2, width: 13, top: 4, height: 12 }}
                     />
@@ -138,14 +132,12 @@ export const SpinnerWidget = ({ captionTextHeader, layout, onButtonLess, onButto
                 <ContainerButton
                     variant="3"
                     name="button_more"
-                    params={1}
                     onPointerTap={onButtonMore}
                     layout={{ width: '100%', height: '100%' }}
                 >
                     <Icon
                         variant="6"
                         name="icon_more"
-                        params={16}
                         tintColor="#000000"
                         layout={{ position: 'absolute', left: 2, width: 11, top: 4, height: 11 }}
                     />

@@ -18,13 +18,14 @@ export const GrowingContainerViewLayout = ({ container, layout }: GrowingContain
 export interface GrowingContainerViewLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
+    tags?: string[];
 }
 
-export const GrowingContainerViewLayoutContainer = ({ layout, onContainer }: GrowingContainerViewLayoutContainerProps) => {
+export const GrowingContainerViewLayoutContainer = ({ layout, onContainer, tags }: GrowingContainerViewLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={147473}
+            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 0, ...layout }}

@@ -16,7 +16,6 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
     return (
         <Frame
             variant="0"
-            params={32769}
             caption="Msg to:"
             tintColor="#418db0"
             onClose={onClose}
@@ -26,7 +25,6 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
                 <Dropmenu
                     variant="0"
                     name="msgTemplatesSelect"
-                    params={1}
                     onPointerTap={onMsgTemplatesSelect}
                     layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
                 >
@@ -41,7 +39,6 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
                 <Button
                     variant="0"
                     name="send_message_but"
-                    params={131089}
                     onPointerTap={onSendMessageBut}
                     layout={{ position: 'absolute', left: 0, width: 200, top: 115, height: 21, minWidth: 200, maxWidth: 200 }}
                 >

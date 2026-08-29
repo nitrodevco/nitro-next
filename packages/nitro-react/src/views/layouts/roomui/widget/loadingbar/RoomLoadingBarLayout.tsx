@@ -22,7 +22,6 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region
                 <RoomLoadingBarLayoutRegion {...region} />
                 <Region
                     name="loading_text"
-                    params={1232}
                     layout={{ position: 'absolute', width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -38,13 +37,14 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region
 /** Named region `image` of RoomLoadingBarLayout - configured through the parent's `image` prop. */
 export interface RoomLoadingBarLayoutImageProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomLoadingBarLayoutImage = ({ layout }: RoomLoadingBarLayoutImageProps) => {
+export const RoomLoadingBarLayoutImage = ({ layout, tags }: RoomLoadingBarLayoutImageProps) => {
     return (
         <Region
             name="image"
-            params={2209}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45, ...layout }}
         />
     );
@@ -54,16 +54,17 @@ export const RoomLoadingBarLayoutImage = ({ layout }: RoomLoadingBarLayoutImageP
 export interface RoomLoadingBarLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    tags?: string[];
 }
 
-export const RoomLoadingBarLayoutRegion = ({ layout, onRegion }: RoomLoadingBarLayoutRegionProps) => {
+export const RoomLoadingBarLayoutRegion = ({ layout, onRegion, tags }: RoomLoadingBarLayoutRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="region"
+            tags={tags}
             tooltip={t('ads.interstitial.tooltip')}
-            params={2193}
             onPointerTap={onRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45, ...layout }}

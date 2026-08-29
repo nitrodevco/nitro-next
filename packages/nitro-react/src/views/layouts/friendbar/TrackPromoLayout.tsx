@@ -14,14 +14,10 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
 
     return (
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
-            <Region
-                params={17}
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="9"
                     tags={[ 'BGCOLOR' ]}
-                    params={16}
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -31,7 +27,6 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                 >
                     <Border
                         variant="3"
-                        params={16}
                         tintColor="#201e19"
                         blend={0.8}
                         layout={{ width: '100%', height: '100%' }}
@@ -39,21 +34,18 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                 </Region>
                 <Border
                     variant="6"
-                    params={16}
                     tintColor="#596f8d"
                     layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
                 >
                     <ThemeImage
                         name="pixel_icon"
                         tags={[ 'ICON' ]}
-                        params={22}
                         src={srcPixelIcon ?? layoutImage('toolbar_citizenship_icon.png')}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
                 <Region
                     name="title_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 148, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

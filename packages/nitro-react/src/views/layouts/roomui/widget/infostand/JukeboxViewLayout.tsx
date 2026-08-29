@@ -15,21 +15,16 @@ export interface JukeboxViewLayoutProps {
 export const JukeboxViewLayout = ({ buttonList, infostandElementList, layout, onClose }: JukeboxViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 345, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 345, flexDirection: 'column', gap: 10 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 345, flexDirection: 'column', gap: 10 }}>
                 <Border
                     variant="2"
                     name="info_border"
-                    params={16}
                     tintColor="#3d3d3d"
                     layout={{ width: 190, height: 310, flexShrink: 0 }}
                 >
                     <CloseButton
                         variant="1"
                         tags={[ 'close' ]}
-                        params={17}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -45,13 +40,14 @@ export const JukeboxViewLayout = ({ buttonList, infostandElementList, layout, on
 export interface JukeboxViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutNameTextItem = ({ captionNameText, layout }: JukeboxViewLayoutNameTextItemProps) => {
+export const JukeboxViewLayoutNameTextItem = ({ captionNameText, layout, tags }: JukeboxViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            params={144}
+            tags={tags}
             layout={{ width: 158, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -65,13 +61,14 @@ export const JukeboxViewLayoutNameTextItem = ({ captionNameText, layout }: Jukeb
 /** Row template `images_spacer` of JukeboxViewLayout - pass real rows through its `items…` slot. */
 export interface JukeboxViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutImagesSpacerItem = ({ layout }: JukeboxViewLayoutImagesSpacerItemProps) => {
+export const JukeboxViewLayoutImagesSpacerItem = ({ layout, tags }: JukeboxViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            params={16}
+            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -82,13 +79,14 @@ export const JukeboxViewLayoutImagesSpacerItem = ({ layout }: JukeboxViewLayoutI
 export interface JukeboxViewLayoutImageItemProps {
     layout?: BoxLayout;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutImageItem = ({ layout, srcImage }: JukeboxViewLayoutImageItemProps) => {
+export const JukeboxViewLayoutImageItem = ({ layout, srcImage, tags }: JukeboxViewLayoutImageItemProps) => {
     return (
         <ThemeImage
             name="image"
-            params={16}
+            tags={tags}
             src={srcImage}
             layout={{ width: 140, height: 120, flexShrink: 0, ...layout }}
         />
@@ -98,13 +96,14 @@ export const JukeboxViewLayoutImageItem = ({ layout, srcImage }: JukeboxViewLayo
 /** Row template `owner_spacer` of JukeboxViewLayout - pass real rows through its `items…` slot. */
 export interface JukeboxViewLayoutOwnerSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutOwnerSpacerItem = ({ layout }: JukeboxViewLayoutOwnerSpacerItemProps) => {
+export const JukeboxViewLayoutOwnerSpacerItem = ({ layout, tags }: JukeboxViewLayoutOwnerSpacerItemProps) => {
     return (
         <Region
             name="owner_spacer"
-            params={16}
+            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -116,13 +115,14 @@ export interface JukeboxViewLayoutOwnerRegionItemProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onOwnerRegion?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion }: JukeboxViewLayoutOwnerRegionItemProps) => {
+export const JukeboxViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, tags }: JukeboxViewLayoutOwnerRegionItemProps) => {
     return (
         <Region
             name="owner_region"
-            params={17}
+            tags={tags}
             onPointerTap={onOwnerRegion}
             cursor="pointer"
             layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
@@ -130,12 +130,10 @@ export const JukeboxViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onO
             <Icon
                 variant="21"
                 name="owner_link"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 15 }}
             />
             <Region
                 name="owner_name"
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -150,13 +148,14 @@ export const JukeboxViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onO
 /** Row template `description_spacer` of JukeboxViewLayout - pass real rows through its `items…` slot. */
 export interface JukeboxViewLayoutDescriptionSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutDescriptionSpacerItem = ({ layout }: JukeboxViewLayoutDescriptionSpacerItemProps) => {
+export const JukeboxViewLayoutDescriptionSpacerItem = ({ layout, tags }: JukeboxViewLayoutDescriptionSpacerItemProps) => {
     return (
         <Region
             name="description_spacer"
-            params={16}
+            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -167,15 +166,16 @@ export const JukeboxViewLayoutDescriptionSpacerItem = ({ layout }: JukeboxViewLa
 export interface JukeboxViewLayoutNowPlayingTextItemProps {
     captionNowPlayingText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutNowPlayingTextItem = ({ captionNowPlayingText, layout }: JukeboxViewLayoutNowPlayingTextItemProps) => {
+export const JukeboxViewLayoutNowPlayingTextItem = ({ captionNowPlayingText, layout, tags }: JukeboxViewLayoutNowPlayingTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="now_playing_text"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -191,26 +191,25 @@ export interface JukeboxViewLayoutTracknameContainerItemProps {
     captionTrackNameText?: string;
     layout?: BoxLayout;
     srcIconDisc?: string;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutTracknameContainerItem = ({ captionTrackNameText, layout, srcIconDisc }: JukeboxViewLayoutTracknameContainerItemProps) => {
+export const JukeboxViewLayoutTracknameContainerItem = ({ captionTrackNameText, layout, srcIconDisc, tags }: JukeboxViewLayoutTracknameContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="trackname_container"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 14, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="icon_disc"
-                params={16}
                 src={srcIconDisc ?? layoutImage('jb_icon_disc.png')}
                 layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 14 }}
             />
             <Region
                 name="track_name_text"
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -228,26 +227,25 @@ export interface JukeboxViewLayoutCreatornameContainerItemProps {
     captionTrackCreatorText?: string;
     layout?: BoxLayout;
     srcIconComposer?: string;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutCreatornameContainerItem = ({ captionTrackCreatorText, layout, srcIconComposer }: JukeboxViewLayoutCreatornameContainerItemProps) => {
+export const JukeboxViewLayoutCreatornameContainerItem = ({ captionTrackCreatorText, layout, srcIconComposer, tags }: JukeboxViewLayoutCreatornameContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="creatorname_container"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 15, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="icon_composer"
-                params={16}
                 src={srcIconComposer ?? layoutImage('jb_icon_composer.png')}
                 layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 14 }}
             />
             <Region
                 name="track_creator_text"
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -263,15 +261,16 @@ export const JukeboxViewLayoutCreatornameContainerItem = ({ captionTrackCreatorT
 export interface JukeboxViewLayoutExpirationTextItemProps {
     captionExpirationText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutExpirationTextItem = ({ captionExpirationText, layout }: JukeboxViewLayoutExpirationTextItemProps) => {
+export const JukeboxViewLayoutExpirationTextItem = ({ captionExpirationText, layout, tags }: JukeboxViewLayoutExpirationTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expiration_text"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 23, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -286,17 +285,17 @@ export const JukeboxViewLayoutExpirationTextItem = ({ captionExpirationText, lay
 export interface JukeboxViewLayoutCatalogButtonItemProps {
     layout?: BoxLayout;
     onCatalogButton?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutCatalogButtonItem = ({ layout, onCatalogButton }: JukeboxViewLayoutCatalogButtonItemProps) => {
+export const JukeboxViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, tags }: JukeboxViewLayoutCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="catalog_button"
-            tags={[ 'catalog' ]}
-            params={131089}
+            tags={tags}
             onPointerTap={onCatalogButton}
             textStyle="text-style-button-regular"
             layout={{ width: 60, height: 22, flexShrink: 0, ...layout }}
@@ -310,16 +309,17 @@ export const JukeboxViewLayoutCatalogButtonItem = ({ layout, onCatalogButton }: 
 export interface JukeboxViewLayoutRentButtonItemProps {
     layout?: BoxLayout;
     onRentButton?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutRentButtonItem = ({ layout, onRentButton }: JukeboxViewLayoutRentButtonItemProps) => {
+export const JukeboxViewLayoutRentButtonItem = ({ layout, onRentButton, tags }: JukeboxViewLayoutRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="rent_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onRentButton}
             textStyle="text-style-button-regular"
             layout={{ width: 130, height: 22, flexShrink: 0, ...layout }}
@@ -333,16 +333,17 @@ export const JukeboxViewLayoutRentButtonItem = ({ layout, onRentButton }: Jukebo
 export interface JukeboxViewLayoutExtendButtonItemProps {
     layout?: BoxLayout;
     onExtendButton?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutExtendButtonItem = ({ layout, onExtendButton }: JukeboxViewLayoutExtendButtonItemProps) => {
+export const JukeboxViewLayoutExtendButtonItem = ({ layout, onExtendButton, tags }: JukeboxViewLayoutExtendButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="extend_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onExtendButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -356,16 +357,17 @@ export const JukeboxViewLayoutExtendButtonItem = ({ layout, onExtendButton }: Ju
 export interface JukeboxViewLayoutBuyoutButtonItemProps {
     layout?: BoxLayout;
     onBuyoutButton?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton }: JukeboxViewLayoutBuyoutButtonItemProps) => {
+export const JukeboxViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tags }: JukeboxViewLayoutBuyoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="buyout_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onBuyoutButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -379,18 +381,19 @@ export const JukeboxViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton }: Ju
 export interface JukeboxViewLayoutPurchaseButtonsItemProps {
     itemsPurchaseButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout }: JukeboxViewLayoutPurchaseButtonsItemProps) => {
+export const JukeboxViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout, tags }: JukeboxViewLayoutPurchaseButtonsItemProps) => {
     return (
         <Region
             name="purchase_buttons"
-            params={16}
+            tags={tags}
             layout={{ width: 170, height: 22, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsPurchaseButtons ?? (
                 <>
-                    <JukeboxViewLayoutCatalogButtonItem />
+                    <JukeboxViewLayoutCatalogButtonItem tags={[ 'catalog' ]} />
                     <JukeboxViewLayoutRentButtonItem />
                     <JukeboxViewLayoutExtendButtonItem />
                     <JukeboxViewLayoutBuyoutButtonItem />
@@ -404,13 +407,14 @@ export const JukeboxViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, lay
 export interface JukeboxViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: JukeboxViewLayoutInfostandElementListProps) => {
+export const JukeboxViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: JukeboxViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 290, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -436,16 +440,17 @@ export const JukeboxViewLayoutInfostandElementList = ({ itemsInfostandElementLis
 export interface JukeboxViewLayoutMoveItemProps {
     layout?: BoxLayout;
     onMove?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutMoveItem = ({ layout, onMove }: JukeboxViewLayoutMoveItemProps) => {
+export const JukeboxViewLayoutMoveItem = ({ layout, onMove, tags }: JukeboxViewLayoutMoveItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="move"
-            params={131089}
+            tags={tags}
             onPointerTap={onMove}
             textStyle="text-style-button-regular"
             layout={{ width: 134, height: 25, flexShrink: 0, ...layout }}
@@ -459,16 +464,17 @@ export const JukeboxViewLayoutMoveItem = ({ layout, onMove }: JukeboxViewLayoutM
 export interface JukeboxViewLayoutRotateItemProps {
     layout?: BoxLayout;
     onRotate?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutRotateItem = ({ layout, onRotate }: JukeboxViewLayoutRotateItemProps) => {
+export const JukeboxViewLayoutRotateItem = ({ layout, onRotate, tags }: JukeboxViewLayoutRotateItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="rotate"
-            params={131089}
+            tags={tags}
             onPointerTap={onRotate}
             textStyle="text-style-button-regular"
             layout={{ width: 141, height: 25, flexShrink: 0, ...layout }}
@@ -482,16 +488,17 @@ export const JukeboxViewLayoutRotateItem = ({ layout, onRotate }: JukeboxViewLay
 export interface JukeboxViewLayoutPickupItemProps {
     layout?: BoxLayout;
     onPickup?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutPickupItem = ({ layout, onPickup }: JukeboxViewLayoutPickupItemProps) => {
+export const JukeboxViewLayoutPickupItem = ({ layout, onPickup, tags }: JukeboxViewLayoutPickupItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="pickup"
-            params={131089}
+            tags={tags}
             onPointerTap={onPickup}
             textStyle="text-style-button-regular"
             layout={{ width: 139, height: 25, flexShrink: 0, ...layout }}
@@ -505,16 +512,17 @@ export const JukeboxViewLayoutPickupItem = ({ layout, onPickup }: JukeboxViewLay
 export interface JukeboxViewLayoutUseItemProps {
     layout?: BoxLayout;
     onUse?: () => void;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutUseItem = ({ layout, onUse }: JukeboxViewLayoutUseItemProps) => {
+export const JukeboxViewLayoutUseItem = ({ layout, onUse, tags }: JukeboxViewLayoutUseItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="use"
-            params={131089}
+            tags={tags}
             onPointerTap={onUse}
             textStyle="text-style-button-regular"
             layout={{ width: 126, height: 25, flexShrink: 0, ...layout }}
@@ -528,13 +536,14 @@ export const JukeboxViewLayoutUseItem = ({ layout, onUse }: JukeboxViewLayoutUse
 export interface JukeboxViewLayoutButtonListProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const JukeboxViewLayoutButtonList = ({ itemsButtonList, layout }: JukeboxViewLayoutButtonListProps) => {
+export const JukeboxViewLayoutButtonList = ({ itemsButtonList, layout, tags }: JukeboxViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            params={16}
+            tags={tags}
             layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (

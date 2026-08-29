@@ -11,27 +11,26 @@ export interface TraxPreviewWidgetProps {
     captionPlayPreviewText?: string;
     layout?: BoxLayout;
     onListen?: () => void;
+    tags?: string[];
 }
 
-export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: TraxPreviewWidgetProps) => {
+export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen, tags }: TraxPreviewWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="traxPreviewWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border
                 variant="4"
-                params={16}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 47 }}
             />
             <Button
                 variant="3"
                 name="listen"
-                params={131089}
                 onPointerTap={onListen}
                 layout={{ position: 'absolute', left: 79, width: 66, top: 13, height: 22, minWidth: 66, maxWidth: 66 }}
             >
@@ -39,7 +38,6 @@ export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: 
             </Button>
             <Region
                 name="play_preview_text"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 85, top: 17, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

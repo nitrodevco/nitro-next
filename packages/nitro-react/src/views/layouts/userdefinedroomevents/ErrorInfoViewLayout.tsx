@@ -16,7 +16,6 @@ export const ErrorInfoViewLayout = ({ contents, layout, onClose }: ErrorInfoView
             variant="3"
             id="error_info_frame"
             name="error_info_frame"
-            params={1073790977}
             caption={t('wiredmenu.error_info.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -35,31 +34,29 @@ export interface ErrorInfoViewLayoutContentsProps {
     captionErrorText?: string;
     layout?: BoxLayout;
     srcTypeIcon?: string;
+    tags?: string[];
 }
 
-export const ErrorInfoViewLayoutContents = ({ captionErrorName, captionErrorText, layout, srcTypeIcon }: ErrorInfoViewLayoutContentsProps) => {
+export const ErrorInfoViewLayoutContents = ({ captionErrorName, captionErrorText, layout, srcTypeIcon, tags }: ErrorInfoViewLayoutContentsProps) => {
     return (
         <Region
             name="contents"
-            params={147600}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: 100, minHeight: 100, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="type_icon"
-                params={16}
                 src={srcTypeIcon}
                 layout={{ position: 'absolute', left: 280, width: 40, top: 0, height: 40 }}
             />
             <Region
                 name="error_name"
-                params={3932176}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 101, alignSelf: 'center', marginTop: -30.5, marginBottom: 30.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionErrorName ?? 'EXECUTION_CAP'} />
             </Region>
             <Region
                 name="error_text"
-                params={16400}
                 layout={{ position: 'absolute', left: 0, width: 319, top: 46, height: 50, minHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

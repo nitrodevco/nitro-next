@@ -21,14 +21,15 @@ export interface NewFeatureNotificationPromoLayoutCancelLinkRegionProps {
     onCancelLinkRegion?: () => void;
     srcCancelImg?: string;
     srcCancelImg2?: string;
+    tags?: string[];
     visibleCancelLinkRegion?: boolean;
 }
 
-export const NewFeatureNotificationPromoLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, visibleCancelLinkRegion }: NewFeatureNotificationPromoLayoutCancelLinkRegionProps) => {
+export const NewFeatureNotificationPromoLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, tags, visibleCancelLinkRegion }: NewFeatureNotificationPromoLayoutCancelLinkRegionProps) => {
     return (
         <Region
             name="cancel_link_region"
-            params={17}
+            tags={tags}
             visible={visibleCancelLinkRegion ?? false}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
@@ -36,7 +37,6 @@ export const NewFeatureNotificationPromoLayoutCancelLinkRegion = ({ layout, onCa
         >
             <ThemeImage
                 name="cancel_img"
-                params={16}
                 src={srcCancelImg ?? layoutImage('common_close_x.png')}
                 layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
             />
@@ -46,7 +46,6 @@ export const NewFeatureNotificationPromoLayoutCancelLinkRegion = ({ layout, onCa
             >
                 <ThemeImage
                     name="cancel_img"
-                    params={16}
                     src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
                     tint="#000000"
                     layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
@@ -63,13 +62,14 @@ export interface NewFeatureNotificationPromoLayoutMainRegionProps {
     layout?: BoxLayout;
     onMainRegion?: () => void;
     srcStaticBitmap?: string;
+    tags?: string[];
 }
 
-export const NewFeatureNotificationPromoLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap }: NewFeatureNotificationPromoLayoutMainRegionProps) => {
+export const NewFeatureNotificationPromoLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap, tags }: NewFeatureNotificationPromoLayoutMainRegionProps) => {
     return (
         <Region
             name="main_region"
-            params={1}
+            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onMainRegion}
             cursor="pointer"
@@ -79,21 +79,18 @@ export const NewFeatureNotificationPromoLayoutMainRegion = ({ cancelLinkRegion, 
                 variant="9"
                 name="border"
                 tags={[ '#bg' ]}
-                params={8388624}
                 tintColor="#686661"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 34 }}
             >
                 <ThemeImage
                     name="static_bitmap"
                     tags={[ '#icon' ]}
-                    params={16}
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                 />
                 <Region
                     name="desc"
                     tags={[ '#icon' ]}
-                    params={8388624}
                     layout={{ position: 'absolute', left: 30, width: 148, top: 7, maxWidth: 148, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

@@ -1,18 +1,18 @@
 import { BoxLayout, Region } from '#base/theme';
-import { SoldLtdItemsWidgetLayout, SoldLtdItemsWidgetLayoutProps } from '#base/views/layouts/catalog/SoldLtdItemsWidgetLayout';
+import { SoldLtdItemsWidgetLayout, SoldLtdItemsWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidgetLayout';
 
 /**
  * Catalog widget `soldLtdItemsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
- * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutDefault_1595Layout); each passes its own placement through `layout`.
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 2 pages
+ * (LayoutDefault_1595Layout, LayoutDefault_1725Layout); each passes its own placement through `layout`.
  */
-export type SoldLtdItemsWidgetProps = Omit<SoldLtdItemsWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+export type SoldLtdItemsWidgetProps = Omit<SoldLtdItemsWidgetLayoutProps, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };
 
-export const SoldLtdItemsWidget = ({ layout, ...widget }: SoldLtdItemsWidgetProps) => {
+export const SoldLtdItemsWidget = ({ layout, tags, ...widget }: SoldLtdItemsWidgetProps) => {
     return (
         <Region
             name="soldLtdItemsWidget"
-            params={1024}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <SoldLtdItemsWidgetLayout

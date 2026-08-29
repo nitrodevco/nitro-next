@@ -18,13 +18,14 @@ export const BarLayout = ({ border, layout }: BarLayoutProps) => {
 /** Named region `friendtools` of BarLayout - configured through the parent's `friendtools` prop. */
 export interface BarLayoutFriendtoolsProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BarLayoutFriendtools = ({ layout }: BarLayoutFriendtoolsProps) => {
+export const BarLayoutFriendtools = ({ layout, tags }: BarLayoutFriendtoolsProps) => {
     return (
         <Region
             name="friendtools"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 270, top: 5, height: 32, ...layout }}
         />
     );
@@ -35,13 +36,14 @@ export interface BarLayoutMessengerProps {
     layout?: BoxLayout;
     onMessenger?: () => void;
     srcIcon?: string;
+    tags?: string[];
 }
 
-export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon }: BarLayoutMessengerProps) => {
+export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon, tags }: BarLayoutMessengerProps) => {
     return (
         <Region
             name="messenger"
-            params={17}
+            tags={tags}
             onPointerTap={onMessenger}
             cursor="pointer"
             layout={{ position: 'absolute', left: 280, width: 42, top: 5, height: 42, ...layout }}
@@ -58,13 +60,14 @@ export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon }: BarLayoutMe
 /** Named region `list` of BarLayout - configured through the parent's `list` prop. */
 export interface BarLayoutListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BarLayoutList = ({ layout }: BarLayoutListProps) => {
+export const BarLayoutList = ({ layout, tags }: BarLayoutListProps) => {
     return (
         <Region
             name="list"
-            params={4194320}
+            tags={tags}
             layout={{ position: 'absolute', left: 24, width: 0, top: 0, height: 38, flexDirection: 'row', gap: 3, ...layout }}
         />
     );
@@ -76,13 +79,14 @@ export interface BarLayoutWrapperProps {
     list?: BarLayoutListProps;
     onButtonLeftPage?: () => void;
     onButtonRightPage?: () => void;
+    tags?: string[];
 }
 
-export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRightPage }: BarLayoutWrapperProps) => {
+export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRightPage, tags }: BarLayoutWrapperProps) => {
     return (
         <Region
             name="wrapper"
-            params={208}
+            tags={tags}
             layout={{ position: 'absolute', width: 48, top: 0, height: 38, ...layout }}
         >
             <BarLayoutList {...list} />
@@ -90,13 +94,11 @@ export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRight
                 variant="3"
                 name="button_left_page"
                 tags={[ 'arrow', 'left' ]}
-                params={1}
                 onPointerTap={onButtonLeftPage}
                 layout={{ position: 'absolute', left: 0, width: 24, top: 7, height: 24 }}
             >
                 <Icon
                     variant="2"
-                    params={16}
                     tintColor="#333333"
                     layout={{ position: 'absolute', left: 7, width: 10, top: 7, height: 10 }}
                 />
@@ -105,13 +107,11 @@ export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRight
                 variant="3"
                 name="button_right_page"
                 tags={[ 'arrow', 'right' ]}
-                params={65}
                 onPointerTap={onButtonRightPage}
                 layout={{ position: 'absolute', right: 0, width: 24, top: 7, height: 24 }}
             >
                 <Icon
                     variant="3"
-                    params={16}
                     tintColor="#333333"
                     layout={{ position: 'absolute', left: 7, width: 10, top: 7, height: 10 }}
                 />
@@ -124,14 +124,15 @@ export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRight
 export interface BarLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
+    tags?: string[];
     wrapper?: BarLayoutWrapperProps;
 }
 
-export const BarLayoutContainer = ({ layout, onContainer, wrapper }: BarLayoutContainerProps) => {
+export const BarLayoutContainer = ({ layout, onContainer, tags, wrapper }: BarLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={145}
+            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, right: 10, top: 5, height: 42, justifyContent: 'center', ...layout }}
@@ -148,20 +149,20 @@ export interface BarLayoutBorderProps {
     layout?: BoxLayout;
     messenger?: BarLayoutMessengerProps;
     onBorder?: () => void;
+    tags?: string[];
 }
 
-export const BarLayoutBorder = ({ container, friendtools, layout, messenger, onBorder }: BarLayoutBorderProps) => {
+export const BarLayoutBorder = ({ container, friendtools, layout, messenger, onBorder, tags }: BarLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={1}
+            tags={tags}
             onPointerTap={onBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 48, ...layout }}
         >
             <Border
                 variant="6"
-                params={2176}
                 tintColor="#403c35"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />

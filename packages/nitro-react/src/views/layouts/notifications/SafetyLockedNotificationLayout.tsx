@@ -15,13 +15,11 @@ export const SafetyLockedNotificationLayout = ({ captionInfoText, layout, unlock
         <Region layout={{ position: 'relative', width: 192, height: 80, ...layout }}>
             <Border
                 variant="6"
-                params={273}
                 tintColor="#6f6f6f"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 79 }}
             >
                 <Region
                     name="info_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 8, width: 174, top: 6, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -40,15 +38,16 @@ export interface SafetyLockedNotificationLayoutUnlockLinkRegionProps {
     captionUnlockLink?: string;
     layout?: BoxLayout;
     onUnlockLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const SafetyLockedNotificationLayoutUnlockLinkRegion = ({ captionUnlockLink, layout, onUnlockLinkRegion }: SafetyLockedNotificationLayoutUnlockLinkRegionProps) => {
+export const SafetyLockedNotificationLayoutUnlockLinkRegion = ({ captionUnlockLink, layout, onUnlockLinkRegion, tags }: SafetyLockedNotificationLayoutUnlockLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unlock_link_region"
-            params={131089}
+            tags={tags}
             onPointerTap={onUnlockLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 35, top: 51, height: 18, ...layout }}

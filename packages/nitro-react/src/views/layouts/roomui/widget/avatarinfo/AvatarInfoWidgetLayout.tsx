@@ -20,19 +20,16 @@ export const AvatarInfoWidgetLayout = ({ captionName, changeNameContainer, layou
                 <Bubble
                     variant="5"
                     name="border"
-                    params={1}
                     tintColor="#3d3d3d"
                     layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="relationship_status"
-                        params={16}
                         src={srcRelationshipStatus}
                         layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
                     />
                     <Region
                         name="name"
-                        params={4194320}
                         layout={{ position: 'absolute', left: 16, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -53,23 +50,21 @@ export interface AvatarInfoWidgetLayoutChangeNameContainerProps {
     layout?: BoxLayout;
     onChangeNameContainer?: () => void;
     srcPenIcon?: string;
+    tags?: string[];
 }
 
-export const AvatarInfoWidgetLayoutChangeNameContainer = ({ layout, onChangeNameContainer, srcPenIcon }: AvatarInfoWidgetLayoutChangeNameContainerProps) => {
+export const AvatarInfoWidgetLayoutChangeNameContainer = ({ layout, onChangeNameContainer, srcPenIcon, tags }: AvatarInfoWidgetLayoutChangeNameContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_name_container"
-            params={209}
+            tags={tags}
             onPointerTap={onChangeNameContainer}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 19, height: 18, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 106, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 106, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('widget.avatar.change_name')}
                     textStyle="text-style-u-italic"
@@ -78,7 +73,6 @@ export const AvatarInfoWidgetLayoutChangeNameContainer = ({ layout, onChangeName
             </Region>
             <ThemeImage
                 name="pen_icon"
-                params={16}
                 src={srcPenIcon}
                 layout={{ position: 'absolute', left: 7, width: 12, top: 1, height: 12 }}
             />

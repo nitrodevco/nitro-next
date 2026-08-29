@@ -17,7 +17,6 @@ export const PollAnswerTextInputLayout = ({ layout, srcWriteDeco }: PollAnswerTe
             <Border
                 variant="0"
                 name="poll_answer_border"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 300, top: 12, height: 90 }}
             >
                 <TextInput
@@ -29,7 +28,6 @@ export const PollAnswerTextInputLayout = ({ layout, srcWriteDeco }: PollAnswerTe
                 />
                 <ThemeImage
                     name="write_deco"
-                    params={16}
                     src={srcWriteDeco ?? layoutImage('common_small_pen.png')}
                     layout={{ position: 'absolute', left: 270, width: 17, top: 10, height: 18 }}
                 />

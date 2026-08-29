@@ -20,20 +20,20 @@ export interface InstantFriendRequestLayoutProfileRegionProps {
     captionText?: string;
     layout?: BoxLayout;
     onProfileRegion?: () => void;
+    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, onProfileRegion }: InstantFriendRequestLayoutProfileRegionProps) => {
+export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, onProfileRegion, tags }: InstantFriendRequestLayoutProfileRegionProps) => {
     return (
         <Region
             name="profile_region"
-            params={17}
+            tags={tags}
             onPointerTap={onProfileRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, ...layout }}
         >
             <Region
                 name="text"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -50,23 +50,21 @@ export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, o
 export interface InstantFriendRequestLayoutDeclineButtonProps {
     layout?: BoxLayout;
     onDeclineButton?: () => void;
+    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButton }: InstantFriendRequestLayoutDeclineButtonProps) => {
+export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButton, tags }: InstantFriendRequestLayoutDeclineButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decline_button"
-            params={148497}
+            tags={tags}
             onPointerTap={onDeclineButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('widget.friendrequest.decline')}
                     textStyle="text-style-u-regular"
@@ -85,15 +83,16 @@ export interface InstantFriendRequestLayoutMasterContainerProps {
     onCloseButton?: () => void;
     onMasterContainer?: () => void;
     profileRegion?: InstantFriendRequestLayoutProfileRegionProps;
+    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layout, onAcceptButton, onCloseButton, onMasterContainer, profileRegion }: InstantFriendRequestLayoutMasterContainerProps) => {
+export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layout, onAcceptButton, onCloseButton, onMasterContainer, profileRegion, tags }: InstantFriendRequestLayoutMasterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="master_container"
-            params={33057}
+            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onMasterContainer}
             cursor="pointer"
@@ -101,14 +100,12 @@ export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layou
         >
             <Bubble
                 variant="0"
-                params={2449}
                 tintColor="#fac919"
                 layout={{ position: 'absolute', left: -6, right: -6, top: -6, bottom: 0 }}
             >
                 <Icon
                     variant="21"
                     name="profile_icon"
-                    params={17}
                     layout={{ position: 'absolute', left: 5, width: 15, top: 10, height: 15 }}
                 />
                 <InstantFriendRequestLayoutProfileRegion {...profileRegion} />
@@ -116,20 +113,15 @@ export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layou
                 <ContainerButton
                     variant="3"
                     name="accept_button"
-                    params={1041}
                     onPointerTap={onAcceptButton}
                     layout={{ position: 'absolute', left: 99, width: 90, bottom: 23, height: 24, minWidth: 90, maxWidth: 90 }}
                 >
                     <Icon
                         variant="8"
-                        params={16}
                         tintColor="#00aa00"
                         layout={{ position: 'absolute', left: 6, width: 16, top: 5, height: 15 }}
                     />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 23, width: 65, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 23, width: 65, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('widget.friendrequest.accept')}
                             textStyle="text-style-button-shiny-bold"
@@ -139,7 +131,6 @@ export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layou
                 <CloseButton
                     variant="3"
                     name="close_button"
-                    params={17}
                     onPointerTap={onCloseButton}
                     layout={{ position: 'absolute', left: 171, width: 19, top: 3, height: 20 }}
                 />

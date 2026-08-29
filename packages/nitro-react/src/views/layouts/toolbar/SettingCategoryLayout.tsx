@@ -9,13 +9,9 @@ export interface SettingCategoryLayoutProps {
 export const SettingCategoryLayout = ({ captionButtonLabel, layout }: SettingCategoryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 120, height: 17, ...layout }}>
-            <Region
-                params={17}
-                layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 17 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 17 }}>
                 <Region
                     name="button_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

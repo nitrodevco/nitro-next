@@ -18,7 +18,6 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout, notifications
             >
                 <Region
                     name="title"
-                    params={3145936}
                     layout={{ position: 'absolute', width: 120, alignSelf: 'center', marginTop: -152, marginBottom: 152, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -36,13 +35,14 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout, notifications
 /** Named region `separator` of NotificationsBrowserLayout - configured through the parent's `separator` prop. */
 export interface NotificationsBrowserLayoutSeparatorProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NotificationsBrowserLayoutSeparator = ({ layout }: NotificationsBrowserLayoutSeparatorProps) => {
+export const NotificationsBrowserLayoutSeparator = ({ layout, tags }: NotificationsBrowserLayoutSeparatorProps) => {
     return (
         <Region
             name="separator"
-            params={16}
+            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 5, width: 240, top: 26, height: 1, ...layout }}
         />
@@ -52,13 +52,14 @@ export const NotificationsBrowserLayoutSeparator = ({ layout }: NotificationsBro
 /** Named region `notifications` of NotificationsBrowserLayout - configured through the parent's `notifications` prop. */
 export interface NotificationsBrowserLayoutNotificationsProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NotificationsBrowserLayoutNotifications = ({ layout }: NotificationsBrowserLayoutNotificationsProps) => {
+export const NotificationsBrowserLayoutNotifications = ({ layout, tags }: NotificationsBrowserLayoutNotificationsProps) => {
     return (
         <Region
             name="notifications"
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 11, width: 230, top: 32, height: 290, flexDirection: 'column', ...layout }}
         />
     );

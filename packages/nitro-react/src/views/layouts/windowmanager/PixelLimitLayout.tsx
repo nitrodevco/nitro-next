@@ -11,7 +11,6 @@ export const PixelLimitLayout = ({ layout, srcMeter }: PixelLimitLayoutProps) =>
         <Region layout={{ position: 'relative', width: 73, height: 163, ...layout }}>
             <ThemeImage
                 name="meter"
-                params={16}
                 src={srcMeter ?? '${image.library.url}reception/challenge_meter_20.png'}
                 layout={{ position: 'absolute', left: 0, width: 73, top: 0, height: 163 }}
             />

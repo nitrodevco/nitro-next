@@ -23,13 +23,11 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
             <Border
                 variant="6"
                 name="word_filter_border"
-                params={1}
                 tintColor="#79756e"
                 layout={{ position: 'absolute', left: 1, width: 242, top: 1, height: 248, justifyContent: 'center' }}
             >
                 <Region
                     name="word_filter_title"
-                    params={786640}
                     layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -39,17 +37,10 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
                     />
                 </Region>
                 <CustomWordFilterSettingsLayoutLine {...line} />
-                <Region
-                    params={8388624}
-                    layout={{ position: 'absolute', left: 10, width: 222, top: 35, height: 203, flexDirection: 'column', gap: 7 }}
-                >
-                    <Region
-                        params={262145}
-                        layout={{ width: 222, height: 24, flexShrink: 0 }}
-                    >
+                <Region layout={{ position: 'absolute', left: 10, width: 222, top: 35, height: 203, flexDirection: 'column', gap: 7 }}>
+                    <Region layout={{ width: 222, height: 24, flexShrink: 0 }}>
                         <Border
                             variant="3"
-                            params={144}
                             layout={{ position: 'absolute', left: 0, right: 70, top: 0, height: 24, maxWidth: 160 }}
                         >
                             <TextInput
@@ -61,7 +52,6 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
                         <Button
                             variant="3"
                             name="add_btn"
-                            params={393361}
                             onPointerTap={onAddBtn}
                             layout={{ position: 'absolute', left: 157, right: -1, top: 0, height: 24, minWidth: 66, maxWidth: 66 }}
                         >
@@ -71,7 +61,6 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
                     <Border
                         variant="3"
                         name="wordlist_border"
-                        params={16}
                         layout={{ width: 222, height: 100, flexShrink: 0 }}
                     >
                         <CustomWordFilterSettingsLayoutWordlist {...wordlist} />
@@ -79,7 +68,6 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
                     <Button
                         variant="3"
                         name="remove_btn"
-                        params={131089}
                         onPointerTap={onRemoveBtn}
                         layout={{ width: 210, height: 30, flexShrink: 0, maxWidth: 210 }}
                     >
@@ -88,7 +76,6 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
                     <Button
                         variant="3"
                         name="back_btn"
-                        params={1180785}
                         onPointerTap={onBackBtn}
                         layout={{ width: 60, height: 28, flexShrink: 0, minWidth: 60, maxWidth: 60 }}
                     >
@@ -103,13 +90,14 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
 /** Named region `line` of CustomWordFilterSettingsLayout - configured through the parent's `line` prop. */
 export interface CustomWordFilterSettingsLayoutLineProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutLine = ({ layout }: CustomWordFilterSettingsLayoutLineProps) => {
+export const CustomWordFilterSettingsLayoutLine = ({ layout, tags }: CustomWordFilterSettingsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            params={786640}
+            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', width: 162, top: 24, height: 1, ...layout }}
         />
@@ -120,13 +108,14 @@ export const CustomWordFilterSettingsLayoutLine = ({ layout }: CustomWordFilterS
 export interface CustomWordFilterSettingsLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutBgRegion = ({ layout, onBgRegion }: CustomWordFilterSettingsLayoutBgRegionProps) => {
+export const CustomWordFilterSettingsLayoutBgRegion = ({ layout, onBgRegion, tags }: CustomWordFilterSettingsLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            params={17}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, ...layout }}
@@ -139,14 +128,15 @@ export interface CustomWordFilterSettingsLayoutWordFilterListItemItemProps {
     bgRegion?: CustomWordFilterSettingsLayoutBgRegionProps;
     captionText?: string;
     layout?: BoxLayout;
+    tags?: string[];
     visibleWordFilterListItem?: boolean;
 }
 
-export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion, captionText, layout, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
+export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion, captionText, layout, tags, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
     return (
         <Region
             name="word_filter_list_item"
-            params={16}
+            tags={tags}
             visible={visibleWordFilterListItem ?? false}
             backgroundColor="#ff00ff"
             layout={{ width: 213, height: 18, flexShrink: 0, ...layout }}
@@ -154,7 +144,6 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
             <CustomWordFilterSettingsLayoutBgRegion {...bgRegion} />
             <Region
                 name="text"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionText ?? 'BadWord'} />
@@ -167,9 +156,10 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
 export interface CustomWordFilterSettingsLayoutWordlistProps {
     itemsWordlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout }: CustomWordFilterSettingsLayoutWordlistProps) => {
+export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout, tags }: CustomWordFilterSettingsLayoutWordlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -177,7 +167,7 @@ export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout }
         >
             <Region
                 name="wordlist"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsWordlist ?? (

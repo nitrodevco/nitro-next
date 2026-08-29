@@ -1,18 +1,18 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceWidgetLayout, MarketPlaceWidgetLayoutProps } from '#base/views/layouts/catalog/MarketPlaceWidgetLayout';
+import { MarketPlaceWidgetLayout, MarketPlaceWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/MarketPlaceWidgetLayout';
 
 /**
  * Catalog widget `marketPlaceWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutMarketplace_1633Layout); each passes its own placement through `layout`.
  */
-export type MarketPlaceWidgetProps = Omit<MarketPlaceWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+export type MarketPlaceWidgetProps = Omit<MarketPlaceWidgetLayoutProps, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };
 
-export const MarketPlaceWidget = ({ layout, ...widget }: MarketPlaceWidgetProps) => {
+export const MarketPlaceWidget = ({ layout, tags, ...widget }: MarketPlaceWidgetProps) => {
     return (
         <Region
             name="marketPlaceWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <MarketPlaceWidgetLayout

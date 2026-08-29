@@ -14,7 +14,6 @@ export const ErrorPopupLayout = ({ contentList, layout, onClose }: ErrorPopupLay
     return (
         <Frame
             variant="3"
-            params={32769}
             caption="Title"
             tintColor="#d43d59"
             onClose={onClose}
@@ -31,13 +30,14 @@ export const ErrorPopupLayout = ({ contentList, layout, onClose }: ErrorPopupLay
 export interface ErrorPopupLayoutErrorMsgTextItemProps {
     captionErrorMsgText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutErrorMsgTextItem = ({ captionErrorMsgText, layout }: ErrorPopupLayoutErrorMsgTextItemProps) => {
+export const ErrorPopupLayoutErrorMsgTextItem = ({ captionErrorMsgText, layout, tags }: ErrorPopupLayoutErrorMsgTextItemProps) => {
     return (
         <Region
             name="error_msg_text"
-            params={144}
+            tags={tags}
             layout={{ width: 265, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -52,15 +52,16 @@ export const ErrorPopupLayoutErrorMsgTextItem = ({ captionErrorMsgText, layout }
 export interface ErrorPopupLayoutInfoTextItemProps {
     captionInfoText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutInfoTextItem = ({ captionInfoText, layout }: ErrorPopupLayoutInfoTextItemProps) => {
+export const ErrorPopupLayoutInfoTextItem = ({ captionInfoText, layout, tags }: ErrorPopupLayoutInfoTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_text"
-            params={144}
+            tags={tags}
             layout={{ width: 265, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -74,17 +75,17 @@ export const ErrorPopupLayoutInfoTextItem = ({ captionInfoText, layout }: ErrorP
 /** Row template `error_info_border` of ErrorPopupLayout - pass real rows through its `items…` slot. */
 export interface ErrorPopupLayoutErrorInfoBorderItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutErrorInfoBorderItem = ({ layout }: ErrorPopupLayoutErrorInfoBorderItemProps) => {
+export const ErrorPopupLayoutErrorInfoBorderItem = ({ layout, tags }: ErrorPopupLayoutErrorInfoBorderItemProps) => {
     const [ errorInfoContentsValue, setErrorInfoContentsValue ] = useState('');
 
     return (
         <Border
             variant="105"
             name="error_info_border"
-            tags={[ 'error_info' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 265, height: 136, flexShrink: 0, ...layout }}
         >
             <TextInput
@@ -101,28 +102,25 @@ export const ErrorPopupLayoutErrorInfoBorderItem = ({ layout }: ErrorPopupLayout
 export interface ErrorPopupLayoutDoNotShowContainerItemProps {
     layout?: BoxLayout;
     onDoNotShowCbx?: () => void;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutDoNotShowContainerItem = ({ layout, onDoNotShowCbx }: ErrorPopupLayoutDoNotShowContainerItemProps) => {
+export const ErrorPopupLayoutDoNotShowContainerItem = ({ layout, onDoNotShowCbx, tags }: ErrorPopupLayoutDoNotShowContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="do_not_show_container"
-            params={144}
+            tags={tags}
             layout={{ width: 265, height: 20, flexShrink: 0, ...layout }}
         >
             <CheckBox
                 variant="3"
                 name="do_not_show_cbx"
-                params={17}
                 onPointerTap={onDoNotShowCbx}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 110, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 110, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('error_window.do_not_show')} />
             </Region>
         </Region>
@@ -133,16 +131,17 @@ export const ErrorPopupLayoutDoNotShowContainerItem = ({ layout, onDoNotShowCbx 
 export interface ErrorPopupLayoutOkButtonItemProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutOkButtonItem = ({ layout, onOkButton }: ErrorPopupLayoutOkButtonItemProps) => {
+export const ErrorPopupLayoutOkButtonItem = ({ layout, onOkButton, tags }: ErrorPopupLayoutOkButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="ok_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onOkButton}
             layout={{ width: 125, height: 30, flexShrink: 0, minWidth: 125, ...layout }}
         >
@@ -155,16 +154,17 @@ export const ErrorPopupLayoutOkButtonItem = ({ layout, onOkButton }: ErrorPopupL
 export interface ErrorPopupLayoutCopyButtonItemProps {
     layout?: BoxLayout;
     onCopyButton?: () => void;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutCopyButtonItem = ({ layout, onCopyButton }: ErrorPopupLayoutCopyButtonItemProps) => {
+export const ErrorPopupLayoutCopyButtonItem = ({ layout, onCopyButton, tags }: ErrorPopupLayoutCopyButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="copy_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onCopyButton}
             layout={{ width: 125, height: 30, flexShrink: 0, minWidth: 125, ...layout }}
         >
@@ -177,13 +177,14 @@ export const ErrorPopupLayoutCopyButtonItem = ({ layout, onCopyButton }: ErrorPo
 export interface ErrorPopupLayoutButtonRowItemProps {
     itemsButtonRow?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutButtonRowItem = ({ itemsButtonRow, layout }: ErrorPopupLayoutButtonRowItemProps) => {
+export const ErrorPopupLayoutButtonRowItem = ({ itemsButtonRow, layout, tags }: ErrorPopupLayoutButtonRowItemProps) => {
     return (
         <Region
             name="button_row"
-            params={786640}
+            tags={tags}
             layout={{ width: 265, height: 30, flexShrink: 0, flexDirection: 'row', gap: 15, ...layout }}
         >
             {itemsButtonRow ?? (
@@ -200,20 +201,21 @@ export const ErrorPopupLayoutButtonRowItem = ({ itemsButtonRow, layout }: ErrorP
 export interface ErrorPopupLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ErrorPopupLayoutContentList = ({ itemsContentList, layout }: ErrorPopupLayoutContentListProps) => {
+export const ErrorPopupLayoutContentList = ({ itemsContentList, layout, tags }: ErrorPopupLayoutContentListProps) => {
     return (
         <Region
             name="content_list"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 17, right: 18, top: 10, height: 271, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContentList ?? (
                 <>
                     <ErrorPopupLayoutErrorMsgTextItem />
                     <ErrorPopupLayoutInfoTextItem />
-                    <ErrorPopupLayoutErrorInfoBorderItem />
+                    <ErrorPopupLayoutErrorInfoBorderItem tags={[ 'error_info' ]} />
                     <ErrorPopupLayoutDoNotShowContainerItem />
                     <ErrorPopupLayoutButtonRowItem />
                 </>

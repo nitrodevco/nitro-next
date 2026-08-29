@@ -21,28 +21,26 @@ export interface NewPetsWidget2Props {
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1 }: NewPetsWidget2Props) => {
+export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1, tags }: NewPetsWidget2Props) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
     return (
         <Region
             name="newPetsWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
             <Region
                 name="pet_breed_text"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 74, top: 16, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -52,7 +50,6 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
             </Region>
             <Region
                 name="ctlg_text_3"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 62, top: 326, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -66,7 +63,6 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
             />
             <Region
                 name="ctlg_text_2"
-                params={16}
                 layout={{ position: 'absolute', left: 12, width: 62, top: 363, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -76,7 +72,6 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
             </Region>
             <Border
                 variant="4"
-                params={16}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 10, width: 340, top: 385, height: 25 }}
             >

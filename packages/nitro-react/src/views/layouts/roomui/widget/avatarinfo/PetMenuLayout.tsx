@@ -14,7 +14,6 @@ export const PetMenuLayout = ({ border, layout }: PetMenuLayoutProps) => {
         <Region layout={{ position: 'relative', width: 115, height: 275, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -28, height: 275 }}
             >
@@ -29,20 +28,20 @@ export interface PetMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: PetMenuLayoutProfileLinkProps) => {
+export const PetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: PetMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            params={1}
+            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
-                params={3280}
                 layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -60,30 +59,28 @@ export interface PetMenuLayoutMountItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutMountItem = ({ captionLabel, layout, onButton }: PetMenuLayoutMountItemProps) => {
+export const PetMenuLayoutMountItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutMountItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mount"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -102,30 +99,28 @@ export interface PetMenuLayoutDismountItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutDismountItem = ({ captionLabel, layout, onButton }: PetMenuLayoutDismountItemProps) => {
+export const PetMenuLayoutDismountItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutDismountItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dismount"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -144,30 +139,28 @@ export interface PetMenuLayoutRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutRespectItem = ({ captionLabel, layout, onButton }: PetMenuLayoutRespectItemProps) => {
+export const PetMenuLayoutRespectItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="respect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -186,30 +179,28 @@ export interface PetMenuLayoutTreatItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutTreatItem = ({ captionLabel, layout, onButton }: PetMenuLayoutTreatItemProps) => {
+export const PetMenuLayoutTreatItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutTreatItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="treat"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -228,30 +219,28 @@ export interface PetMenuLayoutPassHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutPassHanditemItem = ({ captionLabel, layout, onButton }: PetMenuLayoutPassHanditemItemProps) => {
+export const PetMenuLayoutPassHanditemItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutPassHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pass_handitem"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -270,30 +259,28 @@ export interface PetMenuLayoutPickUpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutPickUpItem = ({ captionLabel, layout, onButton }: PetMenuLayoutPickUpItemProps) => {
+export const PetMenuLayoutPickUpItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutPickUpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick_up"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -312,30 +299,28 @@ export interface PetMenuLayoutMoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutMoreItem = ({ captionLabel, layout, onButton }: PetMenuLayoutMoreItemProps) => {
+export const PetMenuLayoutMoreItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutMoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="more"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -348,7 +333,6 @@ export const PetMenuLayoutMoreItem = ({ captionLabel, layout, onButton }: PetMen
                     variant="5"
                     name="icon"
                     tags={[ 'arrow_right' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                 />
             </ContainerButton>
@@ -361,30 +345,28 @@ export interface PetMenuLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton }: PetMenuLayoutWiredInspectItemProps) => {
+export const PetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: PetMenuLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={[ 'action' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="button"
                 tags={[ 'action' ]}
-                params={2193}
                 tintColor="#2d2a27"
                 onPointerTap={onButton}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
                 <Region
                     name="label"
-                    params={144}
                     layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -402,25 +384,26 @@ export const PetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton }
 export interface PetMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PetMenuLayoutButtons = ({ itemsButtons, layout }: PetMenuLayoutButtonsProps) => {
+export const PetMenuLayoutButtons = ({ itemsButtons, layout, tags }: PetMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={8519888}
+            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 215, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <PetMenuLayoutMountItem />
-                    <PetMenuLayoutDismountItem />
-                    <PetMenuLayoutRespectItem />
-                    <PetMenuLayoutTreatItem />
-                    <PetMenuLayoutPassHanditemItem />
-                    <PetMenuLayoutPickUpItem />
-                    <PetMenuLayoutMoreItem />
-                    <PetMenuLayoutWiredInspectItem />
+                    <PetMenuLayoutMountItem tags={[ 'action' ]} />
+                    <PetMenuLayoutDismountItem tags={[ 'action' ]} />
+                    <PetMenuLayoutRespectItem tags={[ 'action' ]} />
+                    <PetMenuLayoutTreatItem tags={[ 'action' ]} />
+                    <PetMenuLayoutPassHanditemItem tags={[ 'action' ]} />
+                    <PetMenuLayoutPickUpItem tags={[ 'action' ]} />
+                    <PetMenuLayoutMoreItem tags={[ 'action' ]} />
+                    <PetMenuLayoutWiredInspectItem tags={[ 'action' ]} />
                 </>
             )}
         </Region>
@@ -431,13 +414,14 @@ export const PetMenuLayoutButtons = ({ itemsButtons, layout }: PetMenuLayoutButt
 export interface PetMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const PetMenuLayoutMinimize = ({ layout, onMinimize }: PetMenuLayoutMinimizeProps) => {
+export const PetMenuLayoutMinimize = ({ layout, onMinimize, tags }: PetMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={1041}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 6, height: 18, ...layout }}
@@ -445,7 +429,6 @@ export const PetMenuLayoutMinimize = ({ layout, onMinimize }: PetMenuLayoutMinim
             <Icon
                 variant="7"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
             />
         </Region>
@@ -458,18 +441,18 @@ export interface PetMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: PetMenuLayoutMinimizeProps;
     profileLink?: PetMenuLayoutProfileLinkProps;
+    tags?: string[];
 }
 
-export const PetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: PetMenuLayoutBorderProps) => {
+export const PetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: PetMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 265, justifyContent: 'center', ...layout }}
         >
             <PetMenuLayoutProfileLink {...profileLink} />
             <Region
-                params={144}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />

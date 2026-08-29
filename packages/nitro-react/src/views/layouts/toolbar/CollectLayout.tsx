@@ -21,7 +21,6 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
     return (
         <Frame
             variant="3"
-            params={32801}
             caption={t('phone.number.collect.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -29,12 +28,10 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
-                    params={128}
                     backgroundColor="#96bdcb"
                     layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 198 }}
                 >
                     <Region
-                        params={128}
                         backgroundColor="#6f95a4"
                         layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 194 }}
                     />
@@ -43,27 +40,21 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
                     <ButtonThick
                         variant="5"
                         name="ok_button"
-                        params={917505}
                         tintColor="#4faf4f"
                         onPointerTap={onOkButton}
                         layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 219, top: 266, height: 38, minWidth: 219, maxWidth: 219 }}
                     >
                         {t('phone.number.collect.send.button')}
                     </ButtonThick>
-                    <Region
-                        params={2192}
-                        layout={{ position: 'absolute', left: 8, right: 2, top: 8, bottom: 210 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 8, right: 2, top: 8, bottom: 210 }}>
                         <ThemeImage
                             name="club_icon"
                             tags={[ 'ICON' ]}
-                            params={16}
                             src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_frank.png'}
                             layout={{ position: 'absolute', left: 6, width: 71, top: 0, height: 89 }}
                         />
                         <Region
                             name="collect_summary"
-                            params={1}
                             layout={{ position: 'absolute', left: 90, width: 360, top: 0, height: 178, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -77,7 +68,6 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
                 <Droplist
                     variant="3"
                     name="country_list"
-                    params={49}
                     layout={{ position: 'absolute', left: 8, width: 204, top: 218, height: 38 }}
                 >
                     Choose country
@@ -91,43 +81,34 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
 /** Named region `phone_number_input_border` of CollectLayout - configured through the parent's `phoneNumberInputBorder` prop. */
 export interface CollectLayoutPhoneNumberInputBorderProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CollectLayoutPhoneNumberInputBorder = ({ layout }: CollectLayoutPhoneNumberInputBorderProps) => {
+export const CollectLayoutPhoneNumberInputBorder = ({ layout, tags }: CollectLayoutPhoneNumberInputBorderProps) => {
     const t = useTranslation();
     const [ phoneNumberInputValue, setPhoneNumberInputValue ] = useState('');
 
     return (
         <Region
             name="phone_number_input_border"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: -1, top: 200, height: 61, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('phone.number.collect.select.country')}
                     textStyle="text-style-u-bold"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('phone.number.collect.input.number')}
                     textStyle="text-style-u-bold"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}
-            >
+            <Region layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}>
                 <Border
                     variant="4"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 244, top: 0, height: 38 }}
                 >
                     <TextInput
@@ -136,7 +117,6 @@ export const CollectLayoutPhoneNumberInputBorder = ({ layout }: CollectLayoutPho
                         layout={{ position: 'absolute', left: 7, width: 180, top: 6, height: 26, maxWidth: 240 }}
                     />
                     <ThemeImage
-                        params={16}
                         src={layoutImage('common_small_pen.png')}
                         layout={{ position: 'absolute', left: 222, width: 17, top: 11, height: 18 }}
                     />
@@ -153,20 +133,20 @@ export interface CollectLayoutUserInputButtonsProps {
     layout?: BoxLayout;
     onNeverLink?: () => void;
     onSkipLink?: () => void;
+    tags?: string[];
 }
 
-export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLink, layout, onNeverLink, onSkipLink }: CollectLayoutUserInputButtonsProps) => {
+export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLink, layout, onNeverLink, onSkipLink, tags }: CollectLayoutUserInputButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_input_buttons"
-            params={933904}
+            tags={tags}
             layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 460, top: 15, height: 64, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="skip_link"
-                params={786433}
                 layout={{ position: 'absolute', width: 460, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 onPointerTap={onSkipLink}
                 cursor="pointer"
@@ -178,7 +158,6 @@ export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLin
             </Region>
             <Region
                 name="never_link"
-                params={786433}
                 layout={{ position: 'absolute', width: 460, top: 34, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 onPointerTap={onNeverLink}
                 cursor="pointer"
@@ -196,19 +175,19 @@ export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLin
 /** Named region `user_input_buttons_container` of CollectLayout - configured through the parent's `userInputButtonsContainer` prop. */
 export interface CollectLayoutUserInputButtonsContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
     userInputButtons?: CollectLayoutUserInputButtonsProps;
 }
 
-export const CollectLayoutUserInputButtonsContainer = ({ layout, userInputButtons }: CollectLayoutUserInputButtonsContainerProps) => {
+export const CollectLayoutUserInputButtonsContainer = ({ layout, tags, userInputButtons }: CollectLayoutUserInputButtonsContainerProps) => {
     return (
         <Region
             name="user_input_buttons_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="3"
-                params={16}
                 layout={{ position: 'absolute', left: 4, width: 461, top: 8, height: 78 }}
             />
             <CollectLayoutUserInputButtons {...userInputButtons} />

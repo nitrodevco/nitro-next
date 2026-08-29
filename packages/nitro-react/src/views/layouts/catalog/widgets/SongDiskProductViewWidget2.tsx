@@ -11,20 +11,20 @@ export interface SongDiskProductViewWidget2PlayPreviewContainerProps {
     captionPlayPreviewText?: string;
     layout?: BoxLayout;
     onListen?: () => void;
+    tags?: string[];
 }
 
-export const SongDiskProductViewWidget2PlayPreviewContainer = ({ captionPlayPreviewText, layout, onListen }: SongDiskProductViewWidget2PlayPreviewContainerProps) => {
+export const SongDiskProductViewWidget2PlayPreviewContainer = ({ captionPlayPreviewText, layout, onListen, tags }: SongDiskProductViewWidget2PlayPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="playPreviewContainer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 175, top: 195, height: 36, ...layout }}
         >
             <Border
                 variant="2"
-                params={16}
                 tintColor="#cccccc"
                 blend={0.5}
                 layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 36 }}
@@ -32,7 +32,6 @@ export const SongDiskProductViewWidget2PlayPreviewContainer = ({ captionPlayPrev
             <Button
                 variant="3"
                 name="listen"
-                params={131089}
                 onPointerTap={onListen}
                 layout={{ position: 'absolute', left: 102, width: 66, top: 8, height: 22, minWidth: 66, maxWidth: 66 }}
             >
@@ -40,7 +39,6 @@ export const SongDiskProductViewWidget2PlayPreviewContainer = ({ captionPlayPrev
             </Button>
             <Region
                 name="play_preview_text"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 64, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,27 +58,25 @@ export interface SongDiskProductViewWidget2Props {
     layout?: BoxLayout;
     playPreviewContainer?: SongDiskProductViewWidget2PlayPreviewContainerProps;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, layout, playPreviewContainer, srcCtlgTeaserimg1 }: SongDiskProductViewWidget2Props) => {
+export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, layout, playPreviewContainer, srcCtlgTeaserimg1, tags }: SongDiskProductViewWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="songDiskProductViewWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
             <Region
                 name="ctlg_product_name"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 175, top: 16, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -91,7 +87,6 @@ export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlg
             </Region>
             <Region
                 name="ctlg_description"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 62, top: 34, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -101,7 +96,6 @@ export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlg
             </Region>
             <Region
                 name="ctlg_song_length"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 31, top: 53, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -18,11 +18,13 @@ export const ToolbarHoverLayout = ({ itemList, layout }: ToolbarHoverLayoutProps
                 <Border
                     variant="6"
                     name="toolbar_hover"
-                    params={147457}
                     tintColor="#79756e"
                     layout={{ width: '100%', height: '100%' }}
                 >
-                    <ToolbarHoverLayoutItemList {...itemList} />
+                    <ToolbarHoverLayoutItemList
+                        tags={[ 'SIMPLE_ITEM' ]}
+                        {...itemList}
+                    />
                 </Border>
             </Region>
         </Region>
@@ -34,14 +36,14 @@ export interface ToolbarHoverLayoutItemBasicItemProps {
     captionText?: string;
     layout?: BoxLayout;
     onItemBasic?: () => void;
+    tags?: string[];
 }
 
-export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBasic }: ToolbarHoverLayoutItemBasicItemProps) => {
+export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBasic, tags }: ToolbarHoverLayoutItemBasicItemProps) => {
     return (
         <Region
             name="item_basic"
-            tags={[ 'SIMPLE_ITEM' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onItemBasic}
             cursor="pointer"
             layout={{ width: 238, height: 25, flexShrink: 0, ...layout }}
@@ -49,13 +51,11 @@ export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBas
             <Border
                 variant="2"
                 name="background"
-                params={16}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 20 }}
             />
             <Region
                 name="text"
-                params={18}
                 layout={{ position: 'absolute', left: 7, width: 75, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -72,18 +72,18 @@ export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBas
 export interface ToolbarHoverLayoutItemListProps {
     itemsItemList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ToolbarHoverLayoutItemList = ({ itemsItemList, layout }: ToolbarHoverLayoutItemListProps) => {
+export const ToolbarHoverLayoutItemList = ({ itemsItemList, layout, tags }: ToolbarHoverLayoutItemListProps) => {
     return (
         <Region
             name="item_list"
-            tags={[ 'SIMPLE_ITEM' ]}
-            params={8519698}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column', ...layout }}
         >
             {itemsItemList ?? (
-                <ToolbarHoverLayoutItemBasicItem />
+                <ToolbarHoverLayoutItemBasicItem tags={[ 'SIMPLE_ITEM' ]} />
             )}
         </Region>
     );

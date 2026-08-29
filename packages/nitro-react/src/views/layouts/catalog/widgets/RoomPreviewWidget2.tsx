@@ -11,30 +11,28 @@ export interface RoomPreviewWidget2Props {
     srcCatalogFloorPreviewExample?: string;
     srcCatalogSpacePreviewWindow?: string;
     srcCatalogWallPreviewBRight?: string;
+    tags?: string[];
 }
 
-export const RoomPreviewWidget2 = ({ layout, srcCatalogFloorPreviewExample, srcCatalogSpacePreviewWindow, srcCatalogWallPreviewBRight }: RoomPreviewWidget2Props) => {
+export const RoomPreviewWidget2 = ({ layout, srcCatalogFloorPreviewExample, srcCatalogSpacePreviewWindow, srcCatalogWallPreviewBRight, tags }: RoomPreviewWidget2Props) => {
     return (
         <Region
             name="roomPreviewWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="catalog_floor_preview_example"
-                params={16}
                 src={srcCatalogFloorPreviewExample}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
             <ThemeImage
                 name="catalog_wall_preview_b_right"
-                params={16}
                 src={srcCatalogWallPreviewBRight}
                 layout={{ position: 'absolute', left: 29, width: 288, top: 21, height: 147 }}
             />
             <ThemeImage
                 name="catalog_space_preview_window"
-                params={16}
                 src={srcCatalogSpacePreviewWindow}
                 layout={{ position: 'absolute', left: 123, width: 120, top: 51, height: 118 }}
             />

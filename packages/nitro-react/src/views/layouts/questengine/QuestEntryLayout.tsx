@@ -17,13 +17,14 @@ export const QuestEntryLayout = ({ entryContainer, layout }: QuestEntryLayoutPro
 /** Named region `entry_container` of QuestEntryLayout - configured through the parent's `entryContainer` prop. */
 export interface QuestEntryLayoutEntryContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const QuestEntryLayoutEntryContainer = ({ layout }: QuestEntryLayoutEntryContainerProps) => {
+export const QuestEntryLayoutEntryContainer = ({ layout, tags }: QuestEntryLayoutEntryContainerProps) => {
     return (
         <Region
             name="entry_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 135, top: 0, height: 122, ...layout }}
         />
     );

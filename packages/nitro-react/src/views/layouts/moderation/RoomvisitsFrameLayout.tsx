@@ -13,7 +13,6 @@ export const RoomvisitsFrameLayout = ({ layout, onClose, visitsCont }: Roomvisit
     return (
         <Frame
             variant="0"
-            params={98305}
             caption="Room visits"
             tintColor="#418db0"
             onClose={onClose}
@@ -32,32 +31,30 @@ export interface RoomvisitsFrameLayoutVisitrowItemProps {
     captionTimeTxt?: string;
     captionViewRoomTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionTimeTxt, captionViewRoomTxt, layout }: RoomvisitsFrameLayoutVisitrowItemProps) => {
+export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionTimeTxt, captionViewRoomTxt, layout, tags }: RoomvisitsFrameLayoutVisitrowItemProps) => {
     return (
         <Region
             name="visitrow"
-            params={144}
+            tags={tags}
             layout={{ width: 263, height: 14, flexShrink: 0, ...layout }}
         >
             <Region
                 name="time_txt"
-                params={80}
                 layout={{ position: 'absolute', right: 44, width: 30, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTimeTxt ?? '15:14'} />
             </Region>
             <Region
                 name="room_name_txt"
-                params={145}
                 layout={{ position: 'absolute', left: 5, right: 73, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionRoomNameTxt ?? 'Funky room'} />
             </Region>
             <Region
                 name="view_room_txt"
-                params={81}
                 layout={{ position: 'absolute', right: 1, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionViewRoomTxt ?? 'Enter'} />
@@ -70,9 +67,10 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
 export interface RoomvisitsFrameLayoutVisitsListProps {
     itemsVisitsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout }: RoomvisitsFrameLayoutVisitsListProps) => {
+export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout, tags }: RoomvisitsFrameLayoutVisitsListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -80,7 +78,7 @@ export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout }: Roo
         >
             <Region
                 name="visits_list"
-                params={2193}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsVisitsList ?? (
@@ -94,14 +92,15 @@ export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout }: Roo
 /** Named region `visits_cont` of RoomvisitsFrameLayout - configured through the parent's `visitsCont` prop. */
 export interface RoomvisitsFrameLayoutVisitsContProps {
     layout?: BoxLayout;
+    tags?: string[];
     visitsList?: RoomvisitsFrameLayoutVisitsListProps;
 }
 
-export const RoomvisitsFrameLayoutVisitsCont = ({ layout, visitsList }: RoomvisitsFrameLayoutVisitsContProps) => {
+export const RoomvisitsFrameLayoutVisitsCont = ({ layout, tags, visitsList }: RoomvisitsFrameLayoutVisitsContProps) => {
     return (
         <Region
             name="visits_cont"
-            params={2192}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, ...layout }}
         >

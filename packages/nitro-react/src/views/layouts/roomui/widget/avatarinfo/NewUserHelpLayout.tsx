@@ -17,12 +17,10 @@ export const NewUserHelpLayout = ({ captionHelp, layout, visibleBorder }: NewUse
                 <Bubble
                     variant="1"
                     name="border"
-                    params={1}
                     layout={{ width: '100%', height: '100%' }}
                 >
                     <Region
                         name="help"
-                        params={12582928}
                         layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText

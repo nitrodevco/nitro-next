@@ -18,13 +18,14 @@ export const OpenedToWebPopupLayout = ({ layout, openedToWebMain }: OpenedToWebP
 /** Named region `cont` of OpenedToWebPopupLayout - configured through the parent's `cont` prop. */
 export interface OpenedToWebPopupLayoutContProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const OpenedToWebPopupLayoutCont = ({ layout }: OpenedToWebPopupLayoutContProps) => {
+export const OpenedToWebPopupLayoutCont = ({ layout, tags }: OpenedToWebPopupLayoutContProps) => {
     return (
         <Region
             name="cont"
-            params={16}
+            tags={tags}
             backgroundColor="#ffcc66"
             layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 41, ...layout }}
         />
@@ -37,21 +38,22 @@ export interface OpenedToWebPopupLayoutOpenedToWebMainProps {
     cont?: OpenedToWebPopupLayoutContProps;
     layout?: BoxLayout;
     srcOpenedToWeb?: string;
+    tags?: string[];
 }
 
-export const OpenedToWebPopupLayoutOpenedToWebMain = ({ captionInfoText, cont, layout, srcOpenedToWeb }: OpenedToWebPopupLayoutOpenedToWebMainProps) => {
+export const OpenedToWebPopupLayoutOpenedToWebMain = ({ captionInfoText, cont, layout, srcOpenedToWeb, tags }: OpenedToWebPopupLayoutOpenedToWebMainProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="opened_to_web_main"
+            tags={tags}
             backgroundColor="#cc6600"
             layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 45, ...layout }}
         >
             <OpenedToWebPopupLayoutCont {...cont} />
             <Region
                 name="info_text"
-                params={1}
                 layout={{ position: 'absolute', left: 50, width: 100, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -61,7 +63,6 @@ export const OpenedToWebPopupLayoutOpenedToWebMain = ({ captionInfoText, cont, l
             </Region>
             <ThemeImage
                 name="opened_to_web"
-                params={17}
                 src={srcOpenedToWeb}
                 layout={{ position: 'absolute', left: 5, width: 43, top: 6, height: 34 }}
             />

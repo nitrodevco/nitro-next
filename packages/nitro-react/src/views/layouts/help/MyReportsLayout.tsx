@@ -26,7 +26,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
     return (
         <Frame
             variant="3"
-            params={165889}
             caption={t('report.status.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -41,31 +40,20 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                     <Bubble
                         variant="7"
                         name="status_info_bubble"
-                        params={1}
                         pointer="left"
                         layout={{ width: '100%', height: '100%' }}
                     >
-                        <Region
-                            params={8388624}
-                            layout={{ position: 'absolute', left: 8, width: 260, top: 8, height: 158, flexDirection: 'column' }}
-                        >
-                            <Region
-                                params={16}
-                                layout={{ width: 155, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
+                        <Region layout={{ position: 'absolute', left: 8, width: 260, top: 8, height: 158, flexDirection: 'column' }}>
+                            <Region layout={{ width: 155, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                 <ThemeText
                                     text={t('report.status.info.title')}
                                     textStyle="text-style-u-bold"
                                 />
                             </Region>
                             <MyReportsLayoutSpacer {...spacer} />
-                            <Region
-                                params={16}
-                                layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}
-                            >
+                            <Region layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
                                 <Region
                                     name="created_key_txt"
-                                    params={16}
                                     layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
@@ -75,20 +63,13 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                 </Region>
                                 <Region
                                     name="reported_date_txt"
-                                    params={16}
                                     layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text={captionReportedDateTxt ?? '18.09.2024'} />
                                 </Region>
                             </Region>
-                            <Region
-                                params={16}
-                                layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}
-                            >
-                                <Region
-                                    params={16}
-                                    layout={{ width: 154, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
+                            <Region layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
+                                <Region layout={{ width: 154, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                     <ThemeText
                                         text={t('report.status.info.decision')}
                                         textStyle="text-style-u-bold"
@@ -96,7 +77,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                 </Region>
                                 <Region
                                     name="decision_date_txt"
-                                    params={16}
                                     layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText text={captionDecisionDateTxt ?? '18.09.2024'} />
@@ -105,7 +85,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             <MyReportsLayoutSpacer2 {...spacer2} />
                             <Region
                                 name="action_txt"
-                                params={16}
                                 layout={{ width: 143, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
@@ -115,7 +94,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             </Region>
                             <Region
                                 name="action_desc_txt"
-                                params={144}
                                 layout={{ width: 260, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
@@ -126,7 +104,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             <MyReportsLayoutSpacer3 {...spacer3} />
                             <Region
                                 name="sanction_info_txt"
-                                params={129}
                                 layout={{ width: 260, height: 17, flexShrink: 0, minWidth: 260, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
@@ -138,7 +115,6 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             <Button
                                 variant="3"
                                 name="appeal_button"
-                                params={131281}
                                 onPointerTap={onAppealButton}
                                 layout={{ width: 173, height: 30, flexShrink: 0 }}
                             >
@@ -155,13 +131,14 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
 /** Named region `reports_table_cont` of MyReportsLayout - configured through the parent's `reportsTableCont` prop. */
 export interface MyReportsLayoutReportsTableContProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MyReportsLayoutReportsTableCont = ({ layout }: MyReportsLayoutReportsTableContProps) => {
+export const MyReportsLayoutReportsTableCont = ({ layout, tags }: MyReportsLayoutReportsTableContProps) => {
     return (
         <Region
             name="reports_table_cont"
-            params={12585104}
+            tags={tags}
             layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41, ...layout }}
         />
     );
@@ -170,13 +147,14 @@ export const MyReportsLayoutReportsTableCont = ({ layout }: MyReportsLayoutRepor
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer = ({ layout }: MyReportsLayoutSpacerProps) => {
+export const MyReportsLayoutSpacer = ({ layout, tags }: MyReportsLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );
@@ -185,13 +163,14 @@ export const MyReportsLayoutSpacer = ({ layout }: MyReportsLayoutSpacerProps) =>
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer2Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer2 = ({ layout }: MyReportsLayoutSpacer2Props) => {
+export const MyReportsLayoutSpacer2 = ({ layout, tags }: MyReportsLayoutSpacer2Props) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );
@@ -200,14 +179,15 @@ export const MyReportsLayoutSpacer2 = ({ layout }: MyReportsLayoutSpacer2Props) 
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer3Props {
     layout?: BoxLayout;
+    tags?: string[];
     visibleSpacer?: boolean;
 }
 
-export const MyReportsLayoutSpacer3 = ({ layout, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
+export const MyReportsLayoutSpacer3 = ({ layout, tags, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             visible={visibleSpacer ?? false}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
@@ -217,13 +197,14 @@ export const MyReportsLayoutSpacer3 = ({ layout, visibleSpacer }: MyReportsLayou
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer4Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer4 = ({ layout }: MyReportsLayoutSpacer4Props) => {
+export const MyReportsLayoutSpacer4 = ({ layout, tags }: MyReportsLayoutSpacer4Props) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );

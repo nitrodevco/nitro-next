@@ -13,21 +13,18 @@ export const VideoOfferPromotionLayout = ({ layout, srcPromoIcon, textRegion }: 
             <Border
                 variant="6"
                 name="promo_bar_border"
-                params={16}
                 tintColor="#6f6f6f"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 40 }}
             >
                 <VideoOfferPromotionLayoutTextRegion {...textRegion} />
                 <ThemeImage
                     name="promo_icon"
-                    params={16}
                     src={srcPromoIcon}
                     layout={{ position: 'absolute', left: 6, width: 19, top: 7, height: 20, minHeight: 20, maxHeight: 20 }}
                 />
                 <Icon
                     variant="9"
                     name="promo_close_icon"
-                    params={262161}
                     tintColor="#666666"
                     layout={{ position: 'absolute', right: 3, width: 16, top: 7, height: 16 }}
                 />
@@ -42,20 +39,20 @@ export interface VideoOfferPromotionLayoutTextRegionProps {
     captionPromoTextShadow?: string;
     layout?: BoxLayout;
     onTextRegion?: () => void;
+    tags?: string[];
 }
 
-export const VideoOfferPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion }: VideoOfferPromotionLayoutTextRegionProps) => {
+export const VideoOfferPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, tags }: VideoOfferPromotionLayoutTextRegionProps) => {
     return (
         <Region
             name="text_region"
-            params={8388625}
+            tags={tags}
             onPointerTap={onTextRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 26, width: 145, top: 6, height: 30, ...layout }}
         >
             <Region
                 name="promo_text_shadow"
-                params={16}
                 layout={{ position: 'absolute', left: 1, width: 136, top: 1, height: 17, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -65,7 +62,6 @@ export const VideoOfferPromotionLayoutTextRegion = ({ captionPromoText, captionP
             </Region>
             <Region
                 name="promo_text"
-                params={8388624}
                 layout={{ position: 'absolute', left: 0, width: 136, top: 0, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

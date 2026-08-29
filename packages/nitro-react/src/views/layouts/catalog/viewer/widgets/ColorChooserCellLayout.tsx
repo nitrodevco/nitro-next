@@ -21,13 +21,14 @@ export interface ColorChooserCellLayoutColorChooserCellProps {
     srcBorder?: string;
     srcChosen?: string;
     srcColor?: string;
+    tags?: string[];
 }
 
-export const ColorChooserCellLayoutColorChooserCell = ({ layout, onColorChooserCell, srcBorder, srcChosen, srcColor }: ColorChooserCellLayoutColorChooserCellProps) => {
+export const ColorChooserCellLayoutColorChooserCell = ({ layout, onColorChooserCell, srcBorder, srcChosen, srcColor, tags }: ColorChooserCellLayoutColorChooserCellProps) => {
     return (
         <Region
             name="color_chooser_cell"
-            params={17}
+            tags={tags}
             onPointerTap={onColorChooserCell}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 32, ...layout }}
@@ -35,21 +36,18 @@ export const ColorChooserCellLayoutColorChooserCell = ({ layout, onColorChooserC
             <ThemeImage
                 name="border"
                 tags={[ 'BG_BORDER' ]}
-                params={2192}
                 src={srcBorder}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="color"
                 tags={[ 'COLOR_IMAGE' ]}
-                params={2192}
                 src={srcColor}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="chosen"
                 tags={[ 'COLOR_CHOSEN' ]}
-                params={2192}
                 src={srcChosen}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />

@@ -15,13 +15,9 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
         <Region layout={{ position: 'relative', width: 192, height: 90, ...layout }}>
             <Border
                 variant="1"
-                params={64}
                 layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 90 }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 11, width: 170, top: 9, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 11, width: 170, top: 9, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('toolbar.logout.confirmation')}
                         textStyle="text-style-il-regular-white"
@@ -31,7 +27,6 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
                 <Button
                     variant="4"
                     name="confirm"
-                    params={131089}
                     onPointerTap={onConfirm}
                     layout={{ position: 'absolute', left: 7, width: 85, top: 58, height: 25, minWidth: 85, maxWidth: 85, maxHeight: 25 }}
                 >
@@ -40,7 +35,6 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
                 <Button
                     variant="4"
                     name="cancel"
-                    params={131089}
                     onPointerTap={onCancel}
                     layout={{ position: 'absolute', left: 99, width: 85, top: 58, height: 25, minWidth: 85, maxWidth: 85, maxHeight: 25 }}
                 >

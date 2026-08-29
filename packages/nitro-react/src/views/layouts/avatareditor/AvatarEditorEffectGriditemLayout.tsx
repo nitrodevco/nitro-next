@@ -12,17 +12,13 @@ export interface AvatarEditorEffectGriditemLayoutProps {
 export const AvatarEditorEffectGriditemLayout = ({ durationContainer, effectAmountBg1, layout, srcBitmap }: AvatarEditorEffectGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
-            <Region
-                params={17}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}>
                 <Region
                     visible={false}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                 >
                     <ThemeImage
                         tags={[ 'BG_COLOR' ]}
-                        params={16}
                         src={layoutImage('avatar_editor_parts_hilite.png')}
                         layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                     />
@@ -30,7 +26,6 @@ export const AvatarEditorEffectGriditemLayout = ({ durationContainer, effectAmou
                 <ThemeImage
                     name="bitmap"
                     tags={[ 'BITMAP' ]}
-                    params={3935440}
                     src={srcBitmap}
                     layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40, maxWidth: 50, maxHeight: 50 }}
                 />
@@ -45,19 +40,19 @@ export const AvatarEditorEffectGriditemLayout = ({ durationContainer, effectAmou
 export interface AvatarEditorEffectGriditemLayoutEffectAmountBg2Props {
     captionEffectAmount?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AvatarEditorEffectGriditemLayoutEffectAmountBg2 = ({ captionEffectAmount, layout }: AvatarEditorEffectGriditemLayoutEffectAmountBg2Props) => {
+export const AvatarEditorEffectGriditemLayoutEffectAmountBg2 = ({ captionEffectAmount, layout, tags }: AvatarEditorEffectGriditemLayoutEffectAmountBg2Props) => {
     return (
         <Region
             name="effect_amount_bg2"
-            params={16}
+            tags={tags}
             backgroundColor="#666666"
             layout={{ position: 'absolute', left: 1, width: 16, top: 1, height: 12, ...layout }}
         >
             <Region
                 name="effect_amount"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -73,13 +68,14 @@ export const AvatarEditorEffectGriditemLayoutEffectAmountBg2 = ({ captionEffectA
 export interface AvatarEditorEffectGriditemLayoutEffectAmountBg1Props {
     effectAmountBg2?: AvatarEditorEffectGriditemLayoutEffectAmountBg2Props;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AvatarEditorEffectGriditemLayoutEffectAmountBg1 = ({ effectAmountBg2, layout }: AvatarEditorEffectGriditemLayoutEffectAmountBg1Props) => {
+export const AvatarEditorEffectGriditemLayoutEffectAmountBg1 = ({ effectAmountBg2, layout, tags }: AvatarEditorEffectGriditemLayoutEffectAmountBg1Props) => {
     return (
         <Region
             name="effect_amount_bg1"
-            params={16}
+            tags={tags}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 30, width: 18, top: 2, height: 14, ...layout }}
         >
@@ -92,21 +88,21 @@ export const AvatarEditorEffectGriditemLayoutEffectAmountBg1 = ({ effectAmountBg
 export interface AvatarEditorEffectGriditemLayoutDurationContainerProps {
     layout?: BoxLayout;
     srcProgressBar?: string;
+    tags?: string[];
     visibleDurationContainer?: boolean;
 }
 
-export const AvatarEditorEffectGriditemLayoutDurationContainer = ({ layout, srcProgressBar, visibleDurationContainer }: AvatarEditorEffectGriditemLayoutDurationContainerProps) => {
+export const AvatarEditorEffectGriditemLayoutDurationContainer = ({ layout, srcProgressBar, tags, visibleDurationContainer }: AvatarEditorEffectGriditemLayoutDurationContainerProps) => {
     return (
         <Region
             name="duration_container"
-            params={16}
+            tags={tags}
             visible={visibleDurationContainer ?? false}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 4, width: 42, top: 41, height: 5, ...layout }}
         >
             <ThemeImage
                 name="progress_bar"
-                params={16}
                 src={srcProgressBar}
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 3 }}
             />

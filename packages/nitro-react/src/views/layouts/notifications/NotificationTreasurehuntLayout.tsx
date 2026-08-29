@@ -18,7 +18,6 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
             <Border
                 variant="2"
                 tags={[ 'border' ]}
-                params={131073}
                 tintColor="#664e16"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 87 }}
             >
@@ -26,7 +25,6 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
                 <Region
                     name="description"
                     tags={[ 'notification_text' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 58, width: 119, top: 29, height: 52, minHeight: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -36,7 +34,6 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
                 </Region>
                 <ThemeImage
                     tags={[ 'notification_icon' ]}
-                    params={16}
                     src={undefined}
                     layout={{ position: 'absolute', left: 7, width: 50, top: 30, height: 50 }}
                 />
@@ -49,32 +46,28 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
 /** Named region `header` of NotificationTreasurehuntLayout - configured through the parent's `header` prop. */
 export interface NotificationTreasurehuntLayoutHeaderProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NotificationTreasurehuntLayoutHeader = ({ layout }: NotificationTreasurehuntLayoutHeaderProps) => {
+export const NotificationTreasurehuntLayoutHeader = ({ layout, tags }: NotificationTreasurehuntLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
         >
             <Border
                 variant="2"
-                params={144}
                 tintColor="#382b0c"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
             />
             <Region
-                params={144}
                 backgroundColor="#382b0c"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 7, width: 115, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 7, width: 115, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('treasure_hunt.title')}
                     textOptions={{ fill: '#ffffff' }}
@@ -87,23 +80,22 @@ export const NotificationTreasurehuntLayoutHeader = ({ layout }: NotificationTre
 /** Named region `treasure_hunt_image` of NotificationTreasurehuntLayout - configured through the parent's `treasureHuntImage` prop. */
 export interface NotificationTreasurehuntLayoutTreasureHuntImageProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NotificationTreasurehuntLayoutTreasureHuntImage = ({ layout }: NotificationTreasurehuntLayoutTreasureHuntImageProps) => {
+export const NotificationTreasurehuntLayoutTreasureHuntImage = ({ layout, tags }: NotificationTreasurehuntLayoutTreasureHuntImageProps) => {
     return (
         <Region
             name="treasure_hunt_image"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 39, top: 33, height: 39, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('mysterybox_key_base.png')}
                 tint="#f0b834"
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />
             <ThemeImage
-                params={16}
                 src={layoutImage('mysterybox_key_overlay.png')}
                 layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
             />

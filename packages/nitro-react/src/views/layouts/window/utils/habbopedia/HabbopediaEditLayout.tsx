@@ -16,7 +16,6 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
     return (
         <Frame
             variant="100"
-            params={98305}
             caption="Habbopedia Editor"
             onClose={onClose}
             layout={{ width: 385, height: 355, ...layout }}
@@ -24,7 +23,6 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="105"
-                    params={2193}
                     layout={{ position: 'absolute', left: 8, right: 9, top: 7, bottom: 72 }}
                 >
                     <TextInput
@@ -37,7 +35,6 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                 <Button
                     variant="101"
                     name="revert"
-                    params={132113}
                     tintColor="#bbbbbb"
                     onPointerTap={onRevert}
                     layout={{ position: 'absolute', left: -3, width: 83, bottom: 30, height: 46 }}
@@ -47,7 +44,6 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                 <Button
                     variant="101"
                     name="save"
-                    params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSave}
                     layout={{ position: 'absolute', right: -2, width: 73, bottom: 30, height: 46 }}

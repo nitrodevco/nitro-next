@@ -15,13 +15,11 @@ export const FeedEntityLayout = ({ contentList, layout, srcIcon }: FeedEntityLay
             <Border
                 variant="3"
                 name="item"
-                params={16528}
                 tintColor="#f9f9f9"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 172 }}
             >
                 <ThemeImage
                     name="icon"
-                    params={16}
                     src={srcIcon}
                     layout={{ position: 'absolute', left: 4, width: 50, top: 5, height: 60 }}
                 />
@@ -35,13 +33,14 @@ export const FeedEntityLayout = ({ contentList, layout, srcIcon }: FeedEntityLay
 export interface FeedEntityLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutTitleItem = ({ captionTitle, layout }: FeedEntityLayoutTitleItemProps) => {
+export const FeedEntityLayoutTitleItem = ({ captionTitle, layout, tags }: FeedEntityLayoutTitleItemProps) => {
     return (
         <Region
             name="title"
-            params={8405136}
+            tags={tags}
             layout={{ width: 170, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -57,13 +56,14 @@ export const FeedEntityLayoutTitleItem = ({ captionTitle, layout }: FeedEntityLa
 export interface FeedEntityLayoutTimeItemProps {
     captionTime?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutTimeItem = ({ captionTime, layout }: FeedEntityLayoutTimeItemProps) => {
+export const FeedEntityLayoutTimeItem = ({ captionTime, layout, tags }: FeedEntityLayoutTimeItemProps) => {
     return (
         <Region
             name="time"
-            params={1168}
+            tags={tags}
             layout={{ width: 100, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -79,13 +79,14 @@ export const FeedEntityLayoutTimeItem = ({ captionTime, layout }: FeedEntityLayo
 export interface FeedEntityLayoutMessageItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutMessageItem = ({ captionMessage, layout }: FeedEntityLayoutMessageItemProps) => {
+export const FeedEntityLayoutMessageItem = ({ captionMessage, layout, tags }: FeedEntityLayoutMessageItemProps) => {
     return (
         <Region
             name="message"
-            params={8388752}
+            tags={tags}
             layout={{ width: 168, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -101,13 +102,14 @@ export const FeedEntityLayoutMessageItem = ({ captionMessage, layout }: FeedEnti
 export interface FeedEntityLayoutDecorationItemProps {
     layout?: BoxLayout;
     srcDecoration?: string;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration }: FeedEntityLayoutDecorationItemProps) => {
+export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration, tags }: FeedEntityLayoutDecorationItemProps) => {
     return (
         <ThemeImage
             name="decoration"
-            params={8388624}
+            tags={tags}
             src={srcDecoration}
             layout={{ width: 178, flexShrink: 0, ...layout }}
         />
@@ -118,14 +120,15 @@ export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration }: FeedEn
 export interface FeedEntityLayoutActionButtonItemProps {
     layout?: BoxLayout;
     onActionButton?: () => void;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton }: FeedEntityLayoutActionButtonItemProps) => {
+export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton, tags }: FeedEntityLayoutActionButtonItemProps) => {
     return (
         <Button
             variant="3"
             name="action_button"
-            params={8536081}
+            tags={tags}
             onPointerTap={onActionButton}
             layout={{ width: 65, height: 22, flexShrink: 0, ...layout }}
         >
@@ -138,13 +141,14 @@ export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton }: Fee
 export interface FeedEntityLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedEntityLayoutContentList = ({ itemsContentList, layout }: FeedEntityLayoutContentListProps) => {
+export const FeedEntityLayoutContentList = ({ itemsContentList, layout, tags }: FeedEntityLayoutContentListProps) => {
     return (
         <Region
             name="content_list"
-            params={8538256}
+            tags={tags}
             layout={{ position: 'absolute', left: 50, right: 1, top: 4, bottom: 6, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsContentList ?? (

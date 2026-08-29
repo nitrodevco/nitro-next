@@ -11,7 +11,6 @@ export const AvatarImage_56Layout = ({ layout }: AvatarImage_56LayoutProps) => {
             <WidgetSlot
                 widgetType="avatar_image"
                 name="avatar_image"
-                params={1040}
                 layout={{ position: 'absolute', left: 0, width: 90, bottom: 0, height: 130 }}
             />
         </Region>

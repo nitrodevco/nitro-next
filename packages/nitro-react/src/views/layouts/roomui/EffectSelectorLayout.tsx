@@ -13,7 +13,6 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
     return (
         <Frame
             variant="3"
-            params={110593}
             caption="Show effect on avatar"
             tintColor="#418db0"
             onClose={onClose}
@@ -21,7 +20,6 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
-                    params={2224}
                     backgroundColor="#ffffff"
                     layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
                 />
@@ -35,13 +33,14 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
 export interface EffectSelectorLayout_0ItemProps {
     caption_0?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectSelectorLayout_0Item = ({ caption_0, layout }: EffectSelectorLayout_0ItemProps) => {
+export const EffectSelectorLayout_0Item = ({ caption_0, layout, tags }: EffectSelectorLayout_0ItemProps) => {
     return (
         <Region
             name="0"
-            params={145}
+            tags={tags}
             layout={{ width: 256, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -56,9 +55,10 @@ export const EffectSelectorLayout_0Item = ({ caption_0, layout }: EffectSelector
 export interface EffectSelectorLayoutEffectListProps {
     itemsEffectList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout }: EffectSelectorLayoutEffectListProps) => {
+export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout, tags }: EffectSelectorLayoutEffectListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -66,7 +66,7 @@ export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout }: Effe
         >
             <Region
                 name="effect_list"
-                params={2224}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsEffectList ?? (

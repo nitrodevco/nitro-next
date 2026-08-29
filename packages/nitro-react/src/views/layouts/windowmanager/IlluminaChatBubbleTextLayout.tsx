@@ -11,7 +11,6 @@ export const IlluminaChatBubbleTextLayout = ({ captionMessage, layout }: Illumin
         <Region layout={{ position: 'relative', width: 207, height: 4, ...layout }}>
             <Region
                 name="message"
-                params={17}
                 layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 4, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

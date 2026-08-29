@@ -15,20 +15,15 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
 
     return (
         <Region layout={{ position: 'relative', width: 478, height: 68, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 68 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 68 }}>
                 <Border
                     variant="102"
-                    params={17}
                     tintColor="#27556a"
                     layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 68 }}
                 />
                 <Button
                     variant="3"
                     name="button_continue"
-                    params={131089}
                     onPointerTap={onButtonContinue}
                     layout={{ position: 'absolute', left: 7, width: 70, top: 36, height: 28 }}
                 >
@@ -37,7 +32,6 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                 <Button
                     variant="3"
                     name="button_cancel"
-                    params={393233}
                     onPointerTap={onButtonCancel}
                     layout={{ position: 'absolute', right: 10, width: 56, top: 36, height: 28 }}
                 >
@@ -46,7 +40,6 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                 <Region
                     name="help_text"
                     tags={[ 'HELP_TEXT' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 42, width: 421, top: 8, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -56,7 +49,6 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                     />
                 </Region>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('icons_panic.png')}
                     layout={{ position: 'absolute', left: 11, width: 30, top: 6, height: 30 }}
                 />

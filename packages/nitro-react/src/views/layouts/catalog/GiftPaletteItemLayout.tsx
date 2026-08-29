@@ -22,13 +22,14 @@ export interface GiftPaletteItemLayoutColorContainerProps {
     srcBorder?: string;
     srcColor?: string;
     srcSelection?: string;
+    tags?: string[];
 }
 
-export const GiftPaletteItemLayoutColorContainer = ({ layout, onColorContainer, srcBorder, srcColor, srcSelection }: GiftPaletteItemLayoutColorContainerProps) => {
+export const GiftPaletteItemLayoutColorContainer = ({ layout, onColorContainer, srcBorder, srcColor, srcSelection, tags }: GiftPaletteItemLayoutColorContainerProps) => {
     return (
         <Region
             name="color_container"
-            params={17}
+            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onColorContainer}
             cursor="pointer"
@@ -36,19 +37,16 @@ export const GiftPaletteItemLayoutColorContainer = ({ layout, onColorContainer, 
         >
             <ThemeImage
                 name="color"
-                params={16}
                 src={srcColor ?? layoutImage('catalogue_color_picker_27x22_color.png')}
                 layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 22 }}
             />
             <ThemeImage
                 name="border"
-                params={16}
                 src={srcBorder ?? layoutImage('catalogue_color_picker_27x22_border.png')}
                 layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 22 }}
             />
             <ThemeImage
                 name="selection"
-                params={16}
                 src={srcSelection ?? layoutImage('catalogue_color_picker_27x22_selection.png')}
                 layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 22 }}
             />

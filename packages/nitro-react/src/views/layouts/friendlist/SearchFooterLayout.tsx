@@ -22,23 +22,23 @@ export interface SearchFooterLayoutFooterProps {
     layout?: BoxLayout;
     onSearchBut?: () => void;
     srcSearch?: string;
+    tags?: string[];
 }
 
-export const SearchFooterLayoutFooter = ({ layout, onSearchBut, srcSearch }: SearchFooterLayoutFooterProps) => {
+export const SearchFooterLayoutFooter = ({ layout, onSearchBut, srcSearch, tags }: SearchFooterLayoutFooterProps) => {
     const t = useTranslation();
     const [ searchStrValue, setSearchStrValue ] = useState('');
 
     return (
         <Region
             name="footer"
-            params={16}
+            tags={tags}
             backgroundColor="#b6b6b6"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 41, ...layout }}
         >
             <Border
                 variant="0"
                 name="border"
-                params={144}
                 tintColor="#848484"
                 layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
@@ -51,20 +51,15 @@ export const SearchFooterLayoutFooter = ({ layout, onSearchBut, srcSearch }: Sea
                 <ContainerButton
                     variant="0"
                     name="search_but"
-                    params={81}
                     onPointerTap={onSearchBut}
                     layout={{ position: 'absolute', right: 7, width: 70, top: 5, height: 21 }}
                 >
                     <ThemeImage
                         name="search"
-                        params={131089}
                         src={srcSearch}
                         layout={{ position: 'absolute', left: 5, width: 12, top: 4, height: 12 }}
                     />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 20, width: 50, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 20, width: 50, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('generic.search')} />
                     </Region>
                 </ContainerButton>

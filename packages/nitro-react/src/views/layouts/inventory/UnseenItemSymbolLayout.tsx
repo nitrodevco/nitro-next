@@ -11,13 +11,11 @@ export const UnseenItemSymbolLayout = ({ captionText, layout }: UnseenItemSymbol
         <Region layout={{ position: 'relative', width: 108, height: 14, ...layout }}>
             <Border
                 variant="0"
-                params={16}
                 tintColor="#52a900"
                 layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 14 }}
             >
                 <Region
                     name="text"
-                    params={4194320}
                     layout={{ position: 'absolute', left: 4, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

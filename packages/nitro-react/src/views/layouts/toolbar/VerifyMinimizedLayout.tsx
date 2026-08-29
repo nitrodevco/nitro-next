@@ -20,15 +20,16 @@ export interface VerifyMinimizedLayoutVerifyMinimizedProps {
     layout?: BoxLayout;
     onVerifyMinimized?: () => void;
     srcClubIcon?: string;
+    tags?: string[];
 }
 
-export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized, srcClubIcon }: VerifyMinimizedLayoutVerifyMinimizedProps) => {
+export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized, srcClubIcon, tags }: VerifyMinimizedLayoutVerifyMinimizedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="verify_minimized"
-            params={17}
+            tags={tags}
             onPointerTap={onVerifyMinimized}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
@@ -36,7 +37,6 @@ export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized
             <Border
                 variant="6"
                 tags={[ 'BGCOLOR' ]}
-                params={16}
                 tintColor="#686661"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
@@ -47,7 +47,6 @@ export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ width: '100%', height: '100%' }}
@@ -55,7 +54,6 @@ export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized
             </Region>
             <Border
                 variant="6"
-                params={16}
                 tintColor="#96bdcb"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
@@ -63,15 +61,11 @@ export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized
                 <ThemeImage
                     name="club_icon"
                     tags={[ 'ICON' ]}
-                    params={16}
                     src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_smaller.png'}
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                 />
             </Border>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('phone.number.verify.title')}
                     textStyle="text-style-il-regular-white"

@@ -17,19 +17,16 @@ export const DailyQuestLayout = ({ captionTitleTxt, contentContainer, difficulty
     return (
         <Region layout={{ position: 'relative', width: 500, height: 194, ...layout }}>
             <Region
-                params={16}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 194 }}
             >
                 <ThemeImage
                     name="border_bar"
-                    params={16}
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 7, width: 12, top: 10, height: 4 }}
                 />
                 <Region
                     name="title_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 18, width: 43, top: 3, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -39,13 +36,11 @@ export const DailyQuestLayout = ({ captionTitleTxt, contentContainer, difficulty
                 </Region>
                 <ThemeImage
                     name="hdr_line"
-                    params={16}
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 100, width: 400, top: 10, height: 4 }}
                 />
                 <ThemeImage
                     name="bitmap"
-                    params={16}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 10, width: 20, top: 10, height: 20 }}
                 />
@@ -61,20 +56,20 @@ export interface DailyQuestLayoutNextQuestRegionProps {
     captionNextQuestTxt?: string;
     layout?: BoxLayout;
     onNextQuestRegion?: () => void;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutNextQuestRegion = ({ captionNextQuestTxt, layout, onNextQuestRegion }: DailyQuestLayoutNextQuestRegionProps) => {
+export const DailyQuestLayoutNextQuestRegion = ({ captionNextQuestTxt, layout, onNextQuestRegion, tags }: DailyQuestLayoutNextQuestRegionProps) => {
     return (
         <Region
             name="next_quest_region"
-            params={17}
+            tags={tags}
             onPointerTap={onNextQuestRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 253, top: 139, height: 19, ...layout }}
         >
             <Region
                 name="next_quest_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionNextQuestTxt ?? 'PH: Show me another easy quest'} />
@@ -88,22 +83,22 @@ export interface DailyQuestLayoutCancelQuestRegionProps {
     captionCancelQuestTxt?: string;
     layout?: BoxLayout;
     onCancelQuestRegion?: () => void;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, layout, onCancelQuestRegion }: DailyQuestLayoutCancelQuestRegionProps) => {
+export const DailyQuestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, layout, onCancelQuestRegion, tags }: DailyQuestLayoutCancelQuestRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_quest_region"
-            params={17}
+            tags={tags}
             onPointerTap={onCancelQuestRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 253, top: 152, height: 19, ...layout }}
         >
             <Region
                 name="cancel_quest_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')} />
@@ -122,21 +117,21 @@ export interface DailyQuestLayoutContentContainerProps {
     nextQuestRegion?: DailyQuestLayoutNextQuestRegionProps;
     onAcceptButton?: () => void;
     onGoButton?: () => void;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCaptionTxt, captionCurrentQuestTxt, captionInfoTxt, layout, nextQuestRegion, onAcceptButton, onGoButton }: DailyQuestLayoutContentContainerProps) => {
+export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCaptionTxt, captionCurrentQuestTxt, captionInfoTxt, layout, nextQuestRegion, onAcceptButton, onGoButton, tags }: DailyQuestLayoutContentContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_container"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 194, ...layout }}
         >
             <Region
                 name="caption_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 94, top: 32, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -146,7 +141,6 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
             </Region>
             <Region
                 name="info_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 270, top: 61, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -157,7 +151,6 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
             <Button
                 variant="100"
                 name="accept_button"
-                params={131089}
                 onPointerTap={onAcceptButton}
                 layout={{ position: 'absolute', left: -11, width: 178, top: 91, height: 50 }}
             >
@@ -168,13 +161,11 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
             <Border
                 variant="100"
                 name="current_quest_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 271, top: 101, height: 46 }}
             >
                 <Button
                     variant="100"
                     name="go_button"
-                    params={131153}
                     onPointerTap={onGoButton}
                     layout={{ position: 'absolute', right: -1, width: 88, top: -2, height: 50, minWidth: 88, maxWidth: 88 }}
                 >
@@ -182,7 +173,6 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
                 </Button>
                 <Region
                     name="current_quest_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 13, width: 174, top: 10, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -200,22 +190,22 @@ export interface DailyQuestLayoutEasyRegionProps {
     captionLabelTxt?: string;
     layout?: BoxLayout;
     onEasyRegion?: () => void;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutEasyRegion = ({ captionLabelTxt, layout, onEasyRegion }: DailyQuestLayoutEasyRegionProps) => {
+export const DailyQuestLayoutEasyRegion = ({ captionLabelTxt, layout, onEasyRegion, tags }: DailyQuestLayoutEasyRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="easy_region"
-            params={17}
+            tags={tags}
             onPointerTap={onEasyRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18, ...layout }}
         >
             <Region
                 name="label_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionLabelTxt ?? t('landing.view.quest.easy')} />
@@ -229,22 +219,22 @@ export interface DailyQuestLayoutHardRegionProps {
     captionLabelTxt?: string;
     layout?: BoxLayout;
     onHardRegion?: () => void;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutHardRegion = ({ captionLabelTxt, layout, onHardRegion }: DailyQuestLayoutHardRegionProps) => {
+export const DailyQuestLayoutHardRegion = ({ captionLabelTxt, layout, onHardRegion, tags }: DailyQuestLayoutHardRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hard_region"
-            params={17}
+            tags={tags}
             onPointerTap={onHardRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18, ...layout }}
         >
             <Region
                 name="label_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 99, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionLabelTxt ?? t('landing.view.quest.hard')} />
@@ -259,19 +249,19 @@ export interface DailyQuestLayoutDifficultyContainerProps {
     hardRegion?: DailyQuestLayoutHardRegionProps;
     layout?: BoxLayout;
     srcDivider?: string;
+    tags?: string[];
 }
 
-export const DailyQuestLayoutDifficultyContainer = ({ easyRegion, hardRegion, layout, srcDivider }: DailyQuestLayoutDifficultyContainerProps) => {
+export const DailyQuestLayoutDifficultyContainer = ({ easyRegion, hardRegion, layout, srcDivider, tags }: DailyQuestLayoutDifficultyContainerProps) => {
     return (
         <Region
             name="difficulty_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 285, width: 211, top: 3, height: 17, ...layout }}
         >
             <DailyQuestLayoutEasyRegion {...easyRegion} />
             <ThemeImage
                 name="divider"
-                params={2128}
                 src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
                 layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
             />

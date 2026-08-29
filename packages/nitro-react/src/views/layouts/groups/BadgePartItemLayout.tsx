@@ -20,13 +20,14 @@ export interface BadgePartItemLayoutContainerProps {
     onContainer?: () => void;
     srcPart?: string;
     srcSelected?: string;
+    tags?: string[];
 }
 
-export const BadgePartItemLayoutContainer = ({ layout, onContainer, srcPart, srcSelected }: BadgePartItemLayoutContainerProps) => {
+export const BadgePartItemLayoutContainer = ({ layout, onContainer, srcPart, srcSelected, tags }: BadgePartItemLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={17}
+            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onContainer}
             cursor="pointer"
@@ -35,19 +36,16 @@ export const BadgePartItemLayoutContainer = ({ layout, onContainer, srcPart, src
             <Border
                 variant="3"
                 name="background"
-                params={16}
                 tintColor="#e9e9e1"
                 layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 41 }}
             />
             <ThemeImage
                 name="part"
-                params={2192}
                 src={srcPart}
                 layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 2 }}
             />
             <ThemeImage
                 name="selected"
-                params={2192}
                 src={srcSelected}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />

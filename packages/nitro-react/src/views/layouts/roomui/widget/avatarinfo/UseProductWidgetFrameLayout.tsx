@@ -13,7 +13,6 @@ export const UseProductWidgetFrameLayout = ({ layout, onClose }: UseProductWidge
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('useproduct.widget.title')}
             tintColor="#418db0"
             onClose={onClose}

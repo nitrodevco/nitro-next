@@ -18,18 +18,13 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
     return (
         <Region layout={{ position: 'relative', width: 500, height: 245, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
                 <PixelRemovalPromoLayoutCol1 {...col1} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        params={16}
                         layout={{ width: 329, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -40,7 +35,6 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     <PixelRemovalPromoLayoutSpacing {...spacing} />
                     <Region
                         name="title_txt"
-                        params={16}
                         layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -51,7 +45,6 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="info_txt"
-                        params={16}
                         layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -62,7 +55,6 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     <Button
                         variant="100"
                         name="go_button"
-                        params={131089}
                         onPointerTap={onGoButton}
                         layout={{ width: 246, height: 50, flexShrink: 0 }}
                     >
@@ -78,19 +70,19 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
 export interface PixelRemovalPromoLayoutCol1Props {
     layout?: BoxLayout;
     srcTeaserImage?: string;
+    tags?: string[];
 }
 
-export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage }: PixelRemovalPromoLayoutCol1Props) => {
+export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: PixelRemovalPromoLayoutCol1Props) => {
     return (
         <Region
             name="col1"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
         >
             <ThemeImage
                 name="teaser_image"
-                params={16}
                 src={srcTeaserImage ?? '${image.library.url}reception/pixrem_promo.png'}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 30, height: 170 }}
             />
@@ -101,13 +93,14 @@ export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage }: PixelRem
 /** Named region `spacing` of PixelRemovalPromoLayout - configured through the parent's `spacing` prop. */
 export interface PixelRemovalPromoLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PixelRemovalPromoLayoutSpacing = ({ layout }: PixelRemovalPromoLayoutSpacingProps) => {
+export const PixelRemovalPromoLayoutSpacing = ({ layout, tags }: PixelRemovalPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

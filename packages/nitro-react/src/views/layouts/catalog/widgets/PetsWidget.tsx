@@ -4,12 +4,12 @@ import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Dropmenu, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { AddOnBadgeViewWidget, AddOnBadgeViewWidgetProps } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
-import { PurchaseWidget2, PurchaseWidget2Props } from '#base/views/layouts/catalog/widgets/PurchaseWidget2';
+import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 
 /**
  * Catalog widget `petsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutPets_1697Layout); each passes its own placement through `layout`.
+ * (LayoutPets_1592Layout); each passes its own placement through `layout`.
  */
 /** Named region `petsWidget` of PetsWidget - configured through the parent's `petsWidget` prop. */
 export interface PetsWidgetProps {
@@ -20,30 +20,37 @@ export interface PetsWidgetProps {
     colourGridWidget?: ColourGridWidgetProps;
     layout?: BoxLayout;
     onTypeDropMenu?: () => void;
-    purchaseWidget?: PurchaseWidget2Props;
+    purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlgText2, captionCtlgText3, colourGridWidget, layout, onTypeDropMenu, purchaseWidget, srcCtlgTeaserimg1 }: PetsWidgetProps) => {
+export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlgText2, captionCtlgText3, colourGridWidget, layout, onTypeDropMenu, purchaseWidget, srcCtlgTeaserimg1, tags }: PetsWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
     return (
         <Region
             name="petsWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 127 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+            />
+            <AddOnBadgeViewWidget
+                layout={{ position: 'absolute', left: 307, width: 40, top: 178, height: 40 }}
+                {...addOnBadgeViewWidget}
+            />
+            <ColourGridWidget
+                layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 80 }}
+                {...colourGridWidget}
             />
             <Region
                 name="ctlg_text_1"
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 62, top: 270, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, width: 62, top: 380, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgText1 ?? t('lorem.title')}
@@ -52,8 +59,7 @@ export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlg
             </Region>
             <Region
                 name="ctlg_text_2"
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 62, top: 135, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, width: 62, top: 225, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgText2 ?? t('lorem.title')}
@@ -62,8 +68,7 @@ export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlg
             </Region>
             <Region
                 name="ctlg_text_3"
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 62, top: 226, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, width: 62, top: 326, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgText3 ?? t('lorem.title')}
@@ -73,15 +78,13 @@ export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlg
             <Dropmenu
                 variant="3"
                 name="type_drop_menu"
-                params={17}
                 onPointerTap={onTypeDropMenu}
-                layout={{ position: 'absolute', left: 10, width: 340, top: 244, height: 25 }}
+                layout={{ position: 'absolute', left: 10, width: 340, top: 344, height: 25 }}
             />
             <Border
                 variant="4"
-                params={16}
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 10, width: 340, top: 288, height: 25 }}
+                layout={{ position: 'absolute', left: 10, width: 340, top: 398, height: 25 }}
             >
                 <TextInput
                     value={nameInputTextValue}
@@ -90,17 +93,9 @@ export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlg
                     layout={{ position: 'absolute', left: 4, width: 325, top: 4, height: 17 }}
                 />
             </Border>
-            <ColourGridWidget
-                layout={{ position: 'absolute', left: 7, width: 347, top: 152, height: 73 }}
-                {...colourGridWidget}
-            />
-            <PurchaseWidget2
-                layout={{ position: 'absolute', left: 0, width: 360, top: 345, height: 30 }}
+            <PurchaseWidget
+                layout={{ position: 'absolute', left: 0, width: 360, bottom: 1, height: 30 }}
                 {...purchaseWidget}
-            />
-            <AddOnBadgeViewWidget
-                layout={{ position: 'absolute', left: 30, width: 40, top: 85, height: 40 }}
-                {...addOnBadgeViewWidget}
             />
         </Region>
     );

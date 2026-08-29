@@ -15,14 +15,10 @@ export interface InventoryThumbCreditsLayoutProps {
 export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap }: InventoryThumbCreditsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
-            <Region
-                params={17}
-                layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
                 <Border
                     variant="5"
                     tags={[ 'BG_COLOR' ]}
-                    params={16}
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
@@ -32,7 +28,6 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     >
                         <ThemeImage
                             name="unique_item_background_bitmap"
-                            params={16}
                             src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                         />
@@ -40,14 +35,12 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     <ThemeImage
                         name="bitmap"
                         tags={[ 'BITMAP' ]}
-                        params={16}
                         src={srcBitmap}
                         layout={{ position: 'absolute', left: 1, width: 38, top: 18, height: 35, minWidth: 40, maxWidth: 38 }}
                     />
                     <WidgetSlot
                         widgetType="badge_image"
                         name="badge"
-                        params={16}
                         visible={false}
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
@@ -58,7 +51,6 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     >
                         <ThemeImage
                             name="recyclable_container"
-                            params={16}
                             src={srcRecyclableContainer ?? layoutImage('inventory_thumb_icon_recycle.png')}
                             layout={{ position: 'absolute', left: 2, width: 16, top: 3, height: 16 }}
                         />
@@ -66,25 +58,25 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     <WidgetSlot
                         widgetType="limited_item_overlay_grid"
                         name="unique_item_overlay_container"
-                        params={16}
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
                     <WidgetSlot
                         widgetType="rarity_item_overlay_grid"
                         name="rarity_item_overlay_container"
-                        params={16}
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                    <InventoryThumbCreditsLayoutNumberContainer {...numberContainer} />
+                    <InventoryThumbCreditsLayoutNumberContainer
+                        tags={[ 'COUNT' ]}
+                        {...numberContainer}
+                    />
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
                     >
                         <ThemeImage
                             name="rent_state"
-                            params={16}
                             src={srcRentState ?? layoutImage('inventory_thumb_rent_started.png')}
                             layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
                         />
@@ -92,7 +84,6 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                 </Border>
                 <ThemeImage
                     name="outline"
-                    params={16}
                     src={srcOutline ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                 />
@@ -105,20 +96,19 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
 export interface InventoryThumbCreditsLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryThumbCreditsLayoutNumberContainer = ({ captionNumber, layout }: InventoryThumbCreditsLayoutNumberContainerProps) => {
+export const InventoryThumbCreditsLayoutNumberContainer = ({ captionNumber, layout, tags }: InventoryThumbCreditsLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={[ 'COUNT' ]}
-            params={393360}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20, ...layout }}
         >
             <Region
                 name="number"
                 tags={[ 'NUMBER', 'COUNT' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 17, maxWidth: 38, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

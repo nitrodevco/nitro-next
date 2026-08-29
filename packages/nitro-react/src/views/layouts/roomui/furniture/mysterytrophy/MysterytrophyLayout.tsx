@@ -22,7 +22,6 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
             variant="3"
             id="mysterytrophy_main_container"
             name="mysterytrophy_main_container"
-            params={32801}
             caption={t('mysterytrophy.name.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -30,14 +29,10 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder {...mysterytrophyHeaderBackgroundBorder} />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}>
                     <Border
                         variant="0"
                         name="input_border"
-                        params={16}
                         layout={{ position: 'absolute', left: 17, width: 417, top: 15, height: 65 }}
                     >
                         <TextInput
@@ -48,21 +43,16 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
                             layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 50 }}
                         />
                         <ThemeImage
-                            params={16}
                             src={layoutImage('common_small_pen.png')}
                             layout={{ position: 'absolute', left: 390, width: 17, top: 20, height: 18 }}
                         />
                     </Border>
                 </Region>
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: -1, width: 475, top: 186, height: 51 }}
-                >
+                <Region layout={{ position: 'absolute', left: -1, width: 475, top: 186, height: 51 }}>
                     <MysterytrophyLayoutCancel {...cancel} />
                     <ButtonThick
                         variant="5"
                         name="ok"
-                        params={132113}
                         tintColor="#00aa00"
                         onPointerTap={onOk}
                         layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
@@ -78,13 +68,14 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
 /** Named region `mysterytrophy.header.background.body` of MysterytrophyLayout - configured through the parent's `mysterytrophyHeaderBackgroundBody` prop. */
 export interface MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBody = ({ layout }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps) => {
+export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBody = ({ layout, tags }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps) => {
     return (
         <Region
             name="mysterytrophy.header.background.body"
-            params={144}
+            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
         />
@@ -96,20 +87,20 @@ export interface MysterytrophyLayoutMysterytrophyHeaderProps {
     captionMysterytrophyHeaderDescription?: string;
     captionMysterytrophyHeaderTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MysterytrophyLayoutMysterytrophyHeader = ({ captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout }: MysterytrophyLayoutMysterytrophyHeaderProps) => {
+export const MysterytrophyLayoutMysterytrophyHeader = ({ captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout, tags }: MysterytrophyLayoutMysterytrophyHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mysterytrophy.header"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
         >
             <Region
                 name="mysterytrophy.header.title"
-                params={16}
                 layout={{ position: 'absolute', left: 95, width: 317, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -120,7 +111,6 @@ export const MysterytrophyLayoutMysterytrophyHeader = ({ captionMysterytrophyHea
             </Region>
             <Region
                 name="mysterytrophy.header.description"
-                params={16}
                 layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -138,20 +128,20 @@ export interface MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps {
     mysterytrophyHeader?: MysterytrophyLayoutMysterytrophyHeaderProps;
     mysterytrophyHeaderBackgroundBody?: MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps;
     srcMysterytrophyHeaderIcon?: string;
+    tags?: string[];
 }
 
-export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder = ({ layout, mysterytrophyHeader, mysterytrophyHeaderBackgroundBody, srcMysterytrophyHeaderIcon }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps) => {
+export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder = ({ layout, mysterytrophyHeader, mysterytrophyHeaderBackgroundBody, srcMysterytrophyHeaderIcon, tags }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps) => {
     return (
         <Region
             name="mysterytrophy.header.background.border"
-            params={144}
+            tags={tags}
             backgroundColor="#376275"
             layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
         >
             <MysterytrophyLayoutMysterytrophyHeaderBackgroundBody {...mysterytrophyHeaderBackgroundBody} />
             <ThemeImage
                 name="mysterytrophy.header.icon"
-                params={16}
                 src={srcMysterytrophyHeaderIcon ?? '${image.library.url}client_static/alert_mystTrophy.png'}
                 layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
             />
@@ -165,22 +155,22 @@ export interface MysterytrophyLayoutCancelProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancel?: () => void;
+    tags?: string[];
 }
 
-export const MysterytrophyLayoutCancel = ({ captionCancel, layout, onCancel }: MysterytrophyLayoutCancelProps) => {
+export const MysterytrophyLayoutCancel = ({ captionCancel, layout, onCancel, tags }: MysterytrophyLayoutCancelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel"
-            params={1041}
+            tags={tags}
             onPointerTap={onCancel}
             cursor="pointer"
             layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="cancel"
-                params={3280}
                 layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -18,7 +18,6 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, midd
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('wiredmenu.variable_management.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -37,15 +36,16 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, midd
 export interface VariablesManagementOverviewLayoutVariableNameKeyItemProps {
     captionVariableNameKey?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVariableNameKey, layout }: VariablesManagementOverviewLayoutVariableNameKeyItemProps) => {
+export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVariableNameKey, layout, tags }: VariablesManagementOverviewLayoutVariableNameKeyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_name_key"
-            params={16}
+            tags={tags}
             layout={{ width: 88, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')} />
@@ -57,13 +57,14 @@ export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVa
 export interface VariablesManagementOverviewLayoutVariableNameValueItemProps {
     captionVariableNameValue?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ captionVariableNameValue, layout }: VariablesManagementOverviewLayoutVariableNameValueItemProps) => {
+export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ captionVariableNameValue, layout, tags }: VariablesManagementOverviewLayoutVariableNameValueItemProps) => {
     return (
         <Region
             name="variable_name_value"
-            params={16}
+            tags={tags}
             layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionVariableNameValue ?? 'name'} />
@@ -75,13 +76,14 @@ export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ caption
 export interface VariablesManagementOverviewLayoutPairItemProps {
     itemsPair?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout }: VariablesManagementOverviewLayoutPairItemProps) => {
+export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout, tags }: VariablesManagementOverviewLayoutPairItemProps) => {
     return (
         <Region
             name="pair"
-            params={16}
+            tags={tags}
             layout={{ width: 125, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             {itemsPair ?? (
@@ -98,13 +100,14 @@ export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout }:
 export interface VariablesManagementOverviewLayoutKeyValuePairsProps {
     itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: VariablesManagementOverviewLayoutKeyValuePairsProps) => {
+export const VariablesManagementOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout, tags }: VariablesManagementOverviewLayoutKeyValuePairsProps) => {
     return (
         <Region
             name="key_value_pairs"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 400, top: 55, height: 20, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (
@@ -119,20 +122,20 @@ export interface VariablesManagementOverviewLayoutUserTypeContProps {
     captionUserTypeKey?: string;
     layout?: BoxLayout;
     onUserTypeMenu?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeKey, layout, onUserTypeMenu }: VariablesManagementOverviewLayoutUserTypeContProps) => {
+export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeKey, layout, onUserTypeMenu, tags }: VariablesManagementOverviewLayoutUserTypeContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_type_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 217, top: 80, height: 25, ...layout }}
         >
             <Region
                 name="user_type_key"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')} />
@@ -140,7 +143,6 @@ export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeK
             <Dropmenu
                 variant="3"
                 name="user_type_menu"
-                params={17}
                 onPointerTap={onUserTypeMenu}
                 layout={{ position: 'absolute', left: 68, width: 131, top: 0, height: 25 }}
             />
@@ -153,20 +155,20 @@ export interface VariablesManagementOverviewLayoutSortTypeContProps {
     captionSortTypeKey?: string;
     layout?: BoxLayout;
     onSortTypeMenu?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeKey, layout, onSortTypeMenu }: VariablesManagementOverviewLayoutSortTypeContProps) => {
+export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeKey, layout, onSortTypeMenu, tags }: VariablesManagementOverviewLayoutSortTypeContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="sort_type_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 247, width: 217, top: 80, height: 25, ...layout }}
         >
             <Region
                 name="sort_type_key"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')} />
@@ -174,7 +176,6 @@ export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeK
             <Dropmenu
                 variant="3"
                 name="sort_type_menu"
-                params={17}
                 onPointerTap={onSortTypeMenu}
                 layout={{ position: 'absolute', left: 53, width: 135, top: 0, height: 25 }}
             />
@@ -189,27 +190,26 @@ export interface VariablesManagementOverviewLayoutHeaderProps {
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
     sortTypeCont?: VariablesManagementOverviewLayoutSortTypeContProps;
+    tags?: string[];
     userTypeCont?: VariablesManagementOverviewLayoutUserTypeContProps;
     visibleSearchingIcon?: boolean;
 }
 
-export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyValuePairs, layout, onRefreshBtn, sortTypeCont, userTypeCont, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
+export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyValuePairs, layout, onRefreshBtn, sortTypeCont, tags, userTypeCont, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
         >
             <Border
                 variant="4"
-                params={16}
                 layout={{ position: 'absolute', left: 8, width: 603, top: 7, height: 38 }}
             >
                 <Region
                     name="info_text"
-                    params={2185}
                     layout={{ position: 'absolute', left: 1, right: 2, top: 3, bottom: 3, minWidth: 600, maxWidth: 600, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -224,7 +224,6 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
             <Button
                 variant="3"
                 name="refresh_btn"
-                params={393297}
                 onPointerTap={onRefreshBtn}
                 layout={{ position: 'absolute', right: 17, width: 62, top: 12, height: 30 }}
             >
@@ -237,7 +236,6 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
                 <Icon
                     variant="23"
                     name="searching_icon"
-                    params={16}
                     layout={{ width: '100%', height: '100%' }}
                 />
             </Region>
@@ -248,13 +246,14 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
 /** Named region `table_view` of VariablesManagementOverviewLayout - configured through the parent's `tableView` prop. */
 export interface VariablesManagementOverviewLayoutTableViewProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutTableView = ({ layout }: VariablesManagementOverviewLayoutTableViewProps) => {
+export const VariablesManagementOverviewLayoutTableView = ({ layout, tags }: VariablesManagementOverviewLayoutTableViewProps) => {
     return (
         <Region
             name="table_view"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -264,13 +263,14 @@ export const VariablesManagementOverviewLayoutTableView = ({ layout }: Variables
 export interface VariablesManagementOverviewLayoutMiddleProps {
     layout?: BoxLayout;
     tableView?: VariablesManagementOverviewLayoutTableViewProps;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView }: VariablesManagementOverviewLayoutMiddleProps) => {
+export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView, tags }: VariablesManagementOverviewLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 117, bottom: 95, ...layout }}
         >
             <VariablesManagementOverviewLayoutTableView {...tableView} />
@@ -282,26 +282,25 @@ export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView }: V
 export interface VariablesManagementOverviewLayoutFirstPageBtnItemProps {
     layout?: BoxLayout;
     onFirstPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: VariablesManagementOverviewLayoutFirstPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tags }: VariablesManagementOverviewLayoutFirstPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="first_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onFirstPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -313,20 +312,20 @@ export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFi
 export interface VariablesManagementOverviewLayoutPrevPageBtnItemProps {
     layout?: BoxLayout;
     onPrevPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: VariablesManagementOverviewLayoutPrevPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags }: VariablesManagementOverviewLayoutPrevPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="prev_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onPrevPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 22, width: 10, top: 10, height: 10 }}
             />
@@ -338,13 +337,14 @@ export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPre
 export interface VariablesManagementOverviewLayoutFooterButtonsLeftProps {
     itemsFooterButtonsLeft?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: VariablesManagementOverviewLayoutFooterButtonsLeftProps) => {
+export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout, tags }: VariablesManagementOverviewLayoutFooterButtonsLeftProps) => {
     return (
         <Region
             name="footer_buttons_left"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
         >
             {itemsFooterButtonsLeft ?? (
@@ -361,20 +361,20 @@ export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooter
 export interface VariablesManagementOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
     onNextPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: VariablesManagementOverviewLayoutNextPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags }: VariablesManagementOverviewLayoutNextPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="next_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onNextPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 23, width: 10, top: 10, height: 10 }}
             />
@@ -386,26 +386,25 @@ export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNex
 export interface VariablesManagementOverviewLayoutLastPageBtnItemProps {
     layout?: BoxLayout;
     onLastPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: VariablesManagementOverviewLayoutLastPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags }: VariablesManagementOverviewLayoutLastPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="last_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onLastPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -417,13 +416,14 @@ export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLas
 export interface VariablesManagementOverviewLayoutFooterButtonsRightProps {
     itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: VariablesManagementOverviewLayoutFooterButtonsRightProps) => {
+export const VariablesManagementOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout, tags }: VariablesManagementOverviewLayoutFooterButtonsRightProps) => {
     return (
         <Region
             name="footer_buttons_right"
-            params={262224}
+            tags={tags}
             layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsFooterButtonsRight ?? (
@@ -443,26 +443,23 @@ export interface VariablesManagementOverviewLayoutPaginationProps {
     footerButtonsLeft?: VariablesManagementOverviewLayoutFooterButtonsLeftProps;
     footerButtonsRight?: VariablesManagementOverviewLayoutFooterButtonsRightProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: VariablesManagementOverviewLayoutPaginationProps) => {
+export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout, tags }: VariablesManagementOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="pagination"
-            params={1168}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
             <VariablesManagementOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
             <VariablesManagementOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
-            <Region
-                params={786640}
-                layout={{ position: 'absolute', width: 226, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
-            >
+            <Region layout={{ position: 'absolute', width: 226, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"
-                    params={16}
                     layout={{ width: 175, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextStart ?? 'X entries found. Showing page '} />
@@ -474,7 +471,6 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
                 />
                 <Region
                     name="pagina_text_end"
-                    params={16}
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextEnd ?? 'of Y'} />
@@ -488,13 +484,14 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
 export interface VariablesManagementOverviewLayoutFooterProps {
     layout?: BoxLayout;
     pagination?: VariablesManagementOverviewLayoutPaginationProps;
+    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooter = ({ layout, pagination }: VariablesManagementOverviewLayoutFooterProps) => {
+export const VariablesManagementOverviewLayoutFooter = ({ layout, pagination, tags }: VariablesManagementOverviewLayoutFooterProps) => {
     return (
         <Region
             name="footer"
-            params={1049744}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
         >
             <VariablesManagementOverviewLayoutPagination {...pagination} />

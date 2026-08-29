@@ -13,7 +13,6 @@ export const UseProductWidgetFrameMonsterplantRebreedLayout = ({ layout, onClose
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('useproduct.widget.title.monsterplant_rebreed')}
             tintColor="#418db0"
             onClose={onClose}

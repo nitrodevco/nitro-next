@@ -18,14 +18,14 @@ export const AchievementLayout = ({ achievementContainer, layout }: AchievementL
 export interface AchievementLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const AchievementLayoutBgRegion = ({ layout, onBgRegion }: AchievementLayoutBgRegionProps) => {
+export const AchievementLayoutBgRegion = ({ layout, onBgRegion, tags }: AchievementLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={[ 'FIT:achievementsSelectSpecific' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
@@ -39,18 +39,18 @@ export interface AchievementLayoutAchievementContainerProps {
     layout?: BoxLayout;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
+    tags?: string[];
 }
 
-export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap }: AchievementLayoutAchievementContainerProps) => {
+export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: AchievementLayoutAchievementContainerProps) => {
     return (
         <Region
             name="achievement_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
         >
             <ThemeImage
                 name="bg_unselected_bitmap"
-                params={17}
                 src={srcBgUnselectedBitmap ?? '${image.library.questing.url}achievement_inactive.png'}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
             />
@@ -60,7 +60,6 @@ export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgS
             >
                 <ThemeImage
                     name="bg_selected_bitmap"
-                    params={16}
                     src={srcBgSelectedBitmap ?? '${image.library.questing.url}achievement_active.png'}
                     layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
                 />
@@ -68,11 +67,13 @@ export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgS
             <WidgetSlot
                 widgetType="badge_image"
                 name="achievement_pic_bitmap"
-                params={16}
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 11, width: 40, top: 10, height: 40 }}
             />
-            <AchievementLayoutBgRegion {...bgRegion} />
+            <AchievementLayoutBgRegion
+                tags={[ 'FIT:achievementsSelectSpecific' ]}
+                {...bgRegion}
+            />
         </Region>
     );
 };

@@ -17,19 +17,16 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, list, noEffects, onC
         <Region layout={{ position: 'relative', width: 190, height: 85, ...layout }}>
             <Border
                 variant="6"
-                params={1081633}
                 tintColor="#5b5953"
                 layout={{ position: 'absolute', left: 0, width: 190, bottom: 0, height: 85 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#292929"
                     layout={{ position: 'absolute', left: 5, width: 157, top: 5, height: 22 }}
                 />
                 <Region
                     name="title"
-                    params={16}
                     layout={{ position: 'absolute', left: 3, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -41,7 +38,6 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, list, noEffects, onC
                 <CloseButton
                     variant="3"
                     name="close"
-                    params={17}
                     onPointerTap={onClose}
                     layout={{ position: 'absolute', left: 165, width: 20, top: 6, height: 20 }}
                 />
@@ -55,9 +51,10 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, list, noEffects, onC
 /** Named region `list` of EffectsWidgetLayout - configured through the parent's `list` prop. */
 export interface EffectsWidgetLayoutListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectsWidgetLayoutList = ({ layout }: EffectsWidgetLayoutListProps) => {
+export const EffectsWidgetLayoutList = ({ layout, tags }: EffectsWidgetLayoutListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -65,7 +62,7 @@ export const EffectsWidgetLayoutList = ({ layout }: EffectsWidgetLayoutListProps
         >
             <Region
                 name="list"
-                params={8388624}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -75,21 +72,19 @@ export const EffectsWidgetLayoutList = ({ layout }: EffectsWidgetLayoutListProps
 /** Named region `no_effects` of EffectsWidgetLayout - configured through the parent's `noEffects` prop. */
 export interface EffectsWidgetLayoutNoEffectsProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EffectsWidgetLayoutNoEffects = ({ layout }: EffectsWidgetLayoutNoEffectsProps) => {
+export const EffectsWidgetLayoutNoEffects = ({ layout, tags }: EffectsWidgetLayoutNoEffectsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_effects"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 190, top: 30, height: 48, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('widget.memenu.effects.info')}
                     textOptions={{ fill: '#ffffff', align: 'center' }}

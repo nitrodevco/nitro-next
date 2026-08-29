@@ -20,21 +20,19 @@ export const FeedDisplayLayout = ({ layout, notifications }: FeedDisplayLayoutPr
 export interface FeedDisplayLayoutSettingsToggleProps {
     layout?: BoxLayout;
     onSettingsToggle?: () => void;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSettingsToggle = ({ layout, onSettingsToggle }: FeedDisplayLayoutSettingsToggleProps) => {
+export const FeedDisplayLayoutSettingsToggle = ({ layout, onSettingsToggle, tags }: FeedDisplayLayoutSettingsToggleProps) => {
     return (
         <Region
             name="settings_toggle"
-            params={145}
+            tags={tags}
             onPointerTap={onSettingsToggle}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 15, top: 5, height: 25, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <ThemeText
                     text="_settings"
                     textStyle="text-style-u-regular"
@@ -50,13 +48,14 @@ export interface FeedDisplayLayoutInfoProps {
     layout?: BoxLayout;
     onInfo?: () => void;
     onInfoToggle?: () => void;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutInfo = ({ layout, onInfo, onInfoToggle }: FeedDisplayLayoutInfoProps) => {
+export const FeedDisplayLayoutInfo = ({ layout, onInfo, onInfoToggle, tags }: FeedDisplayLayoutInfoProps) => {
     return (
         <Region
             name="info"
-            params={1197137}
+            tags={tags}
             onPointerTap={onInfo}
             cursor="pointer"
             layout={{ position: 'absolute', right: 12, width: 48, bottom: 15, height: 25, ...layout }}
@@ -64,7 +63,6 @@ export const FeedDisplayLayoutInfo = ({ layout, onInfo, onInfoToggle }: FeedDisp
             <Button
                 variant="3"
                 name="info_toggle"
-                params={131089}
                 onPointerTap={onInfoToggle}
                 layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 25 }}
             >
@@ -77,13 +75,14 @@ export const FeedDisplayLayoutInfo = ({ layout, onInfo, onInfoToggle }: FeedDisp
 /** Row template `list_urgent` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutListUrgentItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutListUrgentItem = ({ layout }: FeedDisplayLayoutListUrgentItemProps) => {
+export const FeedDisplayLayoutListUrgentItem = ({ layout, tags }: FeedDisplayLayoutListUrgentItemProps) => {
     return (
         <Region
             name="list_urgent"
-            params={8536208}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
@@ -92,13 +91,14 @@ export const FeedDisplayLayoutListUrgentItem = ({ layout }: FeedDisplayLayoutLis
 /** Row template `list_actions` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutListActionsItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutListActionsItem = ({ layout }: FeedDisplayLayoutListActionsItemProps) => {
+export const FeedDisplayLayoutListActionsItem = ({ layout, tags }: FeedDisplayLayoutListActionsItemProps) => {
     return (
         <Region
             name="list_actions"
-            params={8536208}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
@@ -107,13 +107,14 @@ export const FeedDisplayLayoutListActionsItem = ({ layout }: FeedDisplayLayoutLi
 /** Row template `list_persistent` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutListPersistentItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutListPersistentItem = ({ layout }: FeedDisplayLayoutListPersistentItemProps) => {
+export const FeedDisplayLayoutListPersistentItem = ({ layout, tags }: FeedDisplayLayoutListPersistentItemProps) => {
     return (
         <Region
             name="list_persistent"
-            params={8536208}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
@@ -122,13 +123,14 @@ export const FeedDisplayLayoutListPersistentItem = ({ layout }: FeedDisplayLayou
 /** Row template `list_notifications` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutListNotificationsItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutListNotificationsItem = ({ layout }: FeedDisplayLayoutListNotificationsItemProps) => {
+export const FeedDisplayLayoutListNotificationsItem = ({ layout, tags }: FeedDisplayLayoutListNotificationsItemProps) => {
     return (
         <Region
             name="list_notifications"
-            params={8536208}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         />
     );
@@ -138,9 +140,10 @@ export const FeedDisplayLayoutListNotificationsItem = ({ layout }: FeedDisplayLa
 export interface FeedDisplayLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutList = ({ itemsList, layout }: FeedDisplayLayoutListProps) => {
+export const FeedDisplayLayoutList = ({ itemsList, layout, tags }: FeedDisplayLayoutListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -148,7 +151,7 @@ export const FeedDisplayLayoutList = ({ itemsList, layout }: FeedDisplayLayoutLi
         >
             <Region
                 name="list"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsList ?? (
@@ -168,13 +171,14 @@ export const FeedDisplayLayoutList = ({ itemsList, layout }: FeedDisplayLayoutLi
 export interface FeedDisplayLayoutPaneNotificationsProps {
     layout?: BoxLayout;
     list?: FeedDisplayLayoutListProps;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutPaneNotifications = ({ layout, list }: FeedDisplayLayoutPaneNotificationsProps) => {
+export const FeedDisplayLayoutPaneNotifications = ({ layout, list, tags }: FeedDisplayLayoutPaneNotificationsProps) => {
     return (
         <Region
             name="pane_notifications"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <FeedDisplayLayoutList {...list} />
@@ -186,9 +190,10 @@ export const FeedDisplayLayoutPaneNotifications = ({ layout, list }: FeedDisplay
 /** Named region `list` of FeedDisplayLayout - configured through the parent's `list` prop. */
 export interface FeedDisplayLayoutList2Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutList2 = ({ layout }: FeedDisplayLayoutList2Props) => {
+export const FeedDisplayLayoutList2 = ({ layout, tags }: FeedDisplayLayoutList2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -196,7 +201,7 @@ export const FeedDisplayLayoutList2 = ({ layout }: FeedDisplayLayoutList2Props) 
         >
             <Region
                 name="list"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -207,13 +212,14 @@ export const FeedDisplayLayoutList2 = ({ layout }: FeedDisplayLayoutList2Props) 
 export interface FeedDisplayLayoutPaneStreamProps {
     layout?: BoxLayout;
     list?: FeedDisplayLayoutList2Props;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutPaneStream = ({ layout, list }: FeedDisplayLayoutPaneStreamProps) => {
+export const FeedDisplayLayoutPaneStream = ({ layout, list, tags }: FeedDisplayLayoutPaneStreamProps) => {
     return (
         <Region
             name="pane_stream"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <FeedDisplayLayoutList2 {...list} />
@@ -227,13 +233,14 @@ export interface FeedDisplayLayoutPaneFeedsProps {
     layout?: BoxLayout;
     paneNotifications?: FeedDisplayLayoutPaneNotificationsProps;
     paneStream?: FeedDisplayLayoutPaneStreamProps;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutPaneFeeds = ({ layout, paneNotifications, paneStream }: FeedDisplayLayoutPaneFeedsProps) => {
+export const FeedDisplayLayoutPaneFeeds = ({ layout, paneNotifications, paneStream, tags }: FeedDisplayLayoutPaneFeedsProps) => {
     return (
         <Region
             name="pane_feeds"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 50, ...layout }}
         >
             <FeedDisplayLayoutPaneNotifications {...paneNotifications} />
@@ -246,13 +253,14 @@ export const FeedDisplayLayoutPaneFeeds = ({ layout, paneNotifications, paneStre
 export interface FeedDisplayLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutTitleItem = ({ captionTitle, layout }: FeedDisplayLayoutTitleItemProps) => {
+export const FeedDisplayLayoutTitleItem = ({ captionTitle, layout, tags }: FeedDisplayLayoutTitleItemProps) => {
     return (
         <Region
             name="title"
-            params={12583056}
+            tags={tags}
             layout={{ flexShrink: 0, minWidth: 260, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -268,13 +276,14 @@ export const FeedDisplayLayoutTitleItem = ({ captionTitle, layout }: FeedDisplay
 export interface FeedDisplayLayoutSpaceIngressItemProps {
     layout?: BoxLayout;
     onSpaceIngress?: () => void;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSpaceIngressItem = ({ layout, onSpaceIngress }: FeedDisplayLayoutSpaceIngressItemProps) => {
+export const FeedDisplayLayoutSpaceIngressItem = ({ layout, onSpaceIngress, tags }: FeedDisplayLayoutSpaceIngressItemProps) => {
     return (
         <Region
             name="space_ingress"
-            params={8519825}
+            tags={tags}
             onPointerTap={onSpaceIngress}
             cursor="pointer"
             layout={{ width: 194, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, ...layout }}
@@ -286,13 +295,14 @@ export const FeedDisplayLayoutSpaceIngressItem = ({ layout, onSpaceIngress }: Fe
 export interface FeedDisplayLayoutIngressItemProps {
     captionIngress?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout }: FeedDisplayLayoutIngressItemProps) => {
+export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout, tags }: FeedDisplayLayoutIngressItemProps) => {
     return (
         <Region
             name="ingress"
-            params={8388752}
+            tags={tags}
             layout={{ width: 200, flexShrink: 0, minWidth: 220, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -308,13 +318,14 @@ export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout }: FeedDis
 export interface FeedDisplayLayoutSpaceDescriptionItemProps {
     layout?: BoxLayout;
     onSpaceDescription?: () => void;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSpaceDescriptionItem = ({ layout, onSpaceDescription }: FeedDisplayLayoutSpaceDescriptionItemProps) => {
+export const FeedDisplayLayoutSpaceDescriptionItem = ({ layout, onSpaceDescription, tags }: FeedDisplayLayoutSpaceDescriptionItemProps) => {
     return (
         <Region
             name="space_description"
-            params={8519825}
+            tags={tags}
             onPointerTap={onSpaceDescription}
             cursor="pointer"
             layout={{ width: 200, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, ...layout }}
@@ -326,13 +337,14 @@ export const FeedDisplayLayoutSpaceDescriptionItem = ({ layout, onSpaceDescripti
 export interface FeedDisplayLayoutDescriptionItemProps {
     captionDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutDescriptionItem = ({ captionDescription, layout }: FeedDisplayLayoutDescriptionItemProps) => {
+export const FeedDisplayLayoutDescriptionItem = ({ captionDescription, layout, tags }: FeedDisplayLayoutDescriptionItemProps) => {
     return (
         <Region
             name="description"
-            params={16}
+            tags={tags}
             layout={{ width: 99, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -347,13 +359,14 @@ export const FeedDisplayLayoutDescriptionItem = ({ captionDescription, layout }:
 /** Row template `space_ok` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutSpaceOkItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSpaceOkItem = ({ layout }: FeedDisplayLayoutSpaceOkItemProps) => {
+export const FeedDisplayLayoutSpaceOkItem = ({ layout, tags }: FeedDisplayLayoutSpaceOkItemProps) => {
     return (
         <Region
             name="space_ok"
-            params={16}
+            tags={tags}
             layout={{ width: 200, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -364,21 +377,21 @@ export interface FeedDisplayLayoutInfoOkItemProps {
     captionFeedInfoOkText?: string;
     layout?: BoxLayout;
     onInfoOk?: () => void;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutInfoOkItem = ({ captionFeedInfoOkText, layout, onInfoOk }: FeedDisplayLayoutInfoOkItemProps) => {
+export const FeedDisplayLayoutInfoOkItem = ({ captionFeedInfoOkText, layout, onInfoOk, tags }: FeedDisplayLayoutInfoOkItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="info_ok"
-            params={131281}
+            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onInfoOk}
             layout={{ width: 150, height: 36, flexShrink: 0, minWidth: 150, maxWidth: 150, ...layout }}
         >
             <Region
                 name="feed_info_ok_text"
-                params={12585104}
                 layout={{ position: 'absolute', left: 0, top: 4, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -394,13 +407,14 @@ export const FeedDisplayLayoutInfoOkItem = ({ captionFeedInfoOkText, layout, onI
 export interface FeedDisplayLayoutWelcomeListProps {
     itemsWelcomeList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutWelcomeList = ({ itemsWelcomeList, layout }: FeedDisplayLayoutWelcomeListProps) => {
+export const FeedDisplayLayoutWelcomeList = ({ itemsWelcomeList, layout, tags }: FeedDisplayLayoutWelcomeListProps) => {
     return (
         <Region
             name="welcome_list"
-            params={133264}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 12, flexDirection: 'column', ...layout }}
         >
             {itemsWelcomeList ?? (
@@ -421,22 +435,22 @@ export const FeedDisplayLayoutWelcomeList = ({ itemsWelcomeList, layout }: FeedD
 /** Named region `pane_info` of FeedDisplayLayout - configured through the parent's `paneInfo` prop. */
 export interface FeedDisplayLayoutPaneInfoProps {
     layout?: BoxLayout;
+    tags?: string[];
     visiblePaneInfo?: boolean;
     welcomeList?: FeedDisplayLayoutWelcomeListProps;
 }
 
-export const FeedDisplayLayoutPaneInfo = ({ layout, visiblePaneInfo, welcomeList }: FeedDisplayLayoutPaneInfoProps) => {
+export const FeedDisplayLayoutPaneInfo = ({ layout, tags, visiblePaneInfo, welcomeList }: FeedDisplayLayoutPaneInfoProps) => {
     return (
         <Region
             name="pane_info"
-            params={2192}
+            tags={tags}
             visible={visiblePaneInfo ?? false}
             layout={{ position: 'absolute', left: 40, right: 0, top: 25, bottom: 10, ...layout }}
         >
             <Border
                 variant="0"
                 name="page_welcome_texts"
-                params={2192}
                 layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 5 }}
             >
                 <FeedDisplayLayoutWelcomeList {...welcomeList} />
@@ -448,20 +462,17 @@ export const FeedDisplayLayoutPaneInfo = ({ layout, visiblePaneInfo, welcomeList
 /** Named region `settings_all` of FeedDisplayLayout - configured through the parent's `settingsAll` prop. */
 export interface FeedDisplayLayoutSettingsAllProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSettingsAll = ({ layout }: FeedDisplayLayoutSettingsAllProps) => {
+export const FeedDisplayLayoutSettingsAll = ({ layout, tags }: FeedDisplayLayoutSettingsAllProps) => {
     return (
         <Region
             name="settings_all"
-            tags={[ 'FRIENDS', 'ME', 'HOTEL' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="_show_all"
                     textStyle="text-style-u-regular"
@@ -471,7 +482,6 @@ export const FeedDisplayLayoutSettingsAll = ({ layout }: FeedDisplayLayoutSettin
                 variant="8"
                 name="selected"
                 tags={[ 'selected' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
             />
         </Region>
@@ -481,20 +491,17 @@ export const FeedDisplayLayoutSettingsAll = ({ layout }: FeedDisplayLayoutSettin
 /** Named region `settings_friends` of FeedDisplayLayout - configured through the parent's `settingsFriends` prop. */
 export interface FeedDisplayLayoutSettingsFriendsProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSettingsFriends = ({ layout }: FeedDisplayLayoutSettingsFriendsProps) => {
+export const FeedDisplayLayoutSettingsFriends = ({ layout, tags }: FeedDisplayLayoutSettingsFriendsProps) => {
     return (
         <Region
             name="settings_friends"
-            tags={[ 'FRIENDS' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="_show_friends"
                     textStyle="text-style-u-regular"
@@ -504,7 +511,6 @@ export const FeedDisplayLayoutSettingsFriends = ({ layout }: FeedDisplayLayoutSe
                 variant="8"
                 name="selected"
                 tags={[ 'selected' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
             />
         </Region>
@@ -514,20 +520,17 @@ export const FeedDisplayLayoutSettingsFriends = ({ layout }: FeedDisplayLayoutSe
 /** Named region `settings_me` of FeedDisplayLayout - configured through the parent's `settingsMe` prop. */
 export interface FeedDisplayLayoutSettingsMeProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSettingsMe = ({ layout }: FeedDisplayLayoutSettingsMeProps) => {
+export const FeedDisplayLayoutSettingsMe = ({ layout, tags }: FeedDisplayLayoutSettingsMeProps) => {
     return (
         <Region
             name="settings_me"
-            tags={[ 'ME' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="_show_me"
                     textStyle="text-style-u-regular"
@@ -537,7 +540,6 @@ export const FeedDisplayLayoutSettingsMe = ({ layout }: FeedDisplayLayoutSetting
                 variant="8"
                 name="selected"
                 tags={[ 'selected' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
             />
         </Region>
@@ -547,20 +549,17 @@ export const FeedDisplayLayoutSettingsMe = ({ layout }: FeedDisplayLayoutSetting
 /** Named region `settings_hotel` of FeedDisplayLayout - configured through the parent's `settingsHotel` prop. */
 export interface FeedDisplayLayoutSettingsHotelProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutSettingsHotel = ({ layout }: FeedDisplayLayoutSettingsHotelProps) => {
+export const FeedDisplayLayoutSettingsHotel = ({ layout, tags }: FeedDisplayLayoutSettingsHotelProps) => {
     return (
         <Region
             name="settings_hotel"
-            tags={[ 'HOTEL' ]}
-            params={144}
+            tags={tags}
             layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
         >
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="_show_hotel"
                     textStyle="text-style-u-regular"
@@ -570,7 +569,6 @@ export const FeedDisplayLayoutSettingsHotel = ({ layout }: FeedDisplayLayoutSett
                 variant="8"
                 name="selected"
                 tags={[ 'selected' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
             />
         </Region>
@@ -584,21 +582,21 @@ export interface FeedDisplayLayoutPaneSettingsProps {
     settingsFriends?: FeedDisplayLayoutSettingsFriendsProps;
     settingsHotel?: FeedDisplayLayoutSettingsHotelProps;
     settingsMe?: FeedDisplayLayoutSettingsMeProps;
+    tags?: string[];
     visiblePaneSettings?: boolean;
 }
 
-export const FeedDisplayLayoutPaneSettings = ({ layout, settingsAll, settingsFriends, settingsHotel, settingsMe, visiblePaneSettings }: FeedDisplayLayoutPaneSettingsProps) => {
+export const FeedDisplayLayoutPaneSettings = ({ layout, settingsAll, settingsFriends, settingsHotel, settingsMe, tags, visiblePaneSettings }: FeedDisplayLayoutPaneSettingsProps) => {
     return (
         <Region
             name="pane_settings"
-            params={2192}
+            tags={tags}
             visible={visiblePaneSettings ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 2, ...layout }}
         >
             <Border
                 variant="3"
                 name="modal_overlay"
-                params={2192}
                 tintColor="#000000"
                 blend={0.6}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -2 }}
@@ -606,17 +604,25 @@ export const FeedDisplayLayoutPaneSettings = ({ layout, settingsAll, settingsFri
             <Border
                 variant="3"
                 name="item_list_border"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 220 }}
             />
-            <Region
-                params={144}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 252, flexDirection: 'column' }}
-            >
-                <FeedDisplayLayoutSettingsAll {...settingsAll} />
-                <FeedDisplayLayoutSettingsFriends {...settingsFriends} />
-                <FeedDisplayLayoutSettingsMe {...settingsMe} />
-                <FeedDisplayLayoutSettingsHotel {...settingsHotel} />
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 252, flexDirection: 'column' }}>
+                <FeedDisplayLayoutSettingsAll
+                    tags={[ 'FRIENDS', 'ME', 'HOTEL' ]}
+                    {...settingsAll}
+                />
+                <FeedDisplayLayoutSettingsFriends
+                    tags={[ 'FRIENDS' ]}
+                    {...settingsFriends}
+                />
+                <FeedDisplayLayoutSettingsMe
+                    tags={[ 'ME' ]}
+                    {...settingsMe}
+                />
+                <FeedDisplayLayoutSettingsHotel
+                    tags={[ 'HOTEL' ]}
+                    {...settingsHotel}
+                />
             </Region>
         </Region>
     );
@@ -633,26 +639,25 @@ export interface FeedDisplayLayoutNotificationsProps {
     paneInfo?: FeedDisplayLayoutPaneInfoProps;
     paneSettings?: FeedDisplayLayoutPaneSettingsProps;
     settingsToggle?: FeedDisplayLayoutSettingsToggleProps;
+    tags?: string[];
 }
 
-export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle, onNotificationFeedButton, onStreamFeedButton, paneFeeds, paneInfo, paneSettings, settingsToggle }: FeedDisplayLayoutNotificationsProps) => {
+export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle, onNotificationFeedButton, onStreamFeedButton, paneFeeds, paneInfo, paneSettings, settingsToggle, tags }: FeedDisplayLayoutNotificationsProps) => {
     return (
         <Region
             name="notifications"
-            params={2112}
+            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 300, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="1"
                 name="pane_status"
-                params={32785}
                 tintColor="#58544d"
                 layout={{ position: 'absolute', left: 10, width: 50, top: 150, height: 100 }}
             >
                 <Button
                     variant="0"
                     name="minimize_toggle"
-                    params={131089}
                     onPointerTap={onMinimizeToggle}
                     layout={{ position: 'absolute', left: 1, width: 29, top: 2, height: 21 }}
                 >
@@ -661,7 +666,6 @@ export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle,
                 <Button
                     variant="0"
                     name="notification_feed_button"
-                    params={131089}
                     onPointerTap={onNotificationFeedButton}
                     layout={{ position: 'absolute', left: 1, width: 37, top: 24, height: 21 }}
                 >
@@ -670,7 +674,6 @@ export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle,
                 <Button
                     variant="0"
                     name="stream_feed_button"
-                    params={131089}
                     onPointerTap={onStreamFeedButton}
                     layout={{ position: 'absolute', left: 1, width: 42, top: 45, height: 21 }}
                 >
@@ -680,7 +683,6 @@ export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle,
             <Border
                 variant="1"
                 name="main_view"
-                params={34961}
                 tintColor="#58544d"
                 layout={{ position: 'absolute', left: 40, right: 0, top: 0, bottom: 0 }}
             >
@@ -688,7 +690,6 @@ export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle,
                 <Icon
                     variant="7"
                     name="settings_drop_icon"
-                    params={16}
                     layout={{ position: 'absolute', left: 213, width: 10, top: 13, height: 10 }}
                 />
                 <FeedDisplayLayoutInfo {...info} />

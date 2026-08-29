@@ -21,20 +21,20 @@ export interface UserEntryLayoutExtraLinkRegionProps {
     layout?: BoxLayout;
     onExtraLinkRegion?: () => void;
     srcExtraLinkIcon?: string;
+    tags?: string[];
 }
 
-export const UserEntryLayoutExtraLinkRegion = ({ layout, onExtraLinkRegion, srcExtraLinkIcon }: UserEntryLayoutExtraLinkRegionProps) => {
+export const UserEntryLayoutExtraLinkRegion = ({ layout, onExtraLinkRegion, srcExtraLinkIcon, tags }: UserEntryLayoutExtraLinkRegionProps) => {
     return (
         <Region
             name="extra_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onExtraLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 26, top: 112, height: 24, ...layout }}
         >
             <ThemeImage
                 name="extra_link_icon"
-                params={16}
                 src={srcExtraLinkIcon ?? layoutImage('icons_go_to_room_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 26, top: 0, height: 24 }}
             />
@@ -47,16 +47,17 @@ export interface UserEntryLayoutBgRegionProps {
     extraLinkRegion?: UserEntryLayoutExtraLinkRegionProps;
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const UserEntryLayoutBgRegion = ({ extraLinkRegion, layout, onBgRegion }: UserEntryLayoutBgRegionProps) => {
+export const UserEntryLayoutBgRegion = ({ extraLinkRegion, layout, onBgRegion, tags }: UserEntryLayoutBgRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bg_region"
+            tags={tags}
             tooltip={t('group.members.showinfo')}
-            params={17}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 158, ...layout }}
@@ -64,7 +65,6 @@ export const UserEntryLayoutBgRegion = ({ extraLinkRegion, layout, onBgRegion }:
             <WidgetSlot
                 widgetType="avatar_image"
                 name="avatar_image_widget"
-                params={16}
                 layout={{ position: 'absolute', left: -23, width: 90, top: -15, height: 130 }}
             />
             <UserEntryLayoutExtraLinkRegion {...extraLinkRegion} />

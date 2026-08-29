@@ -19,25 +19,24 @@ export interface BadgeLayerLayoutPreviewContainerProps {
     layout?: BoxLayout;
     onPartButton?: () => void;
     srcPartPreview?: string;
+    tags?: string[];
 }
 
-export const BadgeLayerLayoutPreviewContainer = ({ layout, onPartButton, srcPartPreview }: BadgeLayerLayoutPreviewContainerProps) => {
+export const BadgeLayerLayoutPreviewContainer = ({ layout, onPartButton, srcPartPreview, tags }: BadgeLayerLayoutPreviewContainerProps) => {
     return (
         <Region
             name="preview_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 51, top: 0, height: 49, ...layout }}
         >
             <ButtonThick
                 variant="3"
                 name="part_button"
-                params={131089}
                 onPointerTap={onPartButton}
                 layout={{ position: 'absolute', left: 0, width: 49, top: 0, height: 49 }}
             />
             <ThemeImage
                 name="part_preview"
-                params={16}
                 src={srcPartPreview}
                 layout={{ position: 'absolute', left: 5, width: 39, top: 5, height: 39 }}
             />
@@ -50,24 +49,23 @@ export interface BadgeLayerLayoutPositionContainerProps {
     layout?: BoxLayout;
     srcPositionGrid?: string;
     srcPositionPicker?: string;
+    tags?: string[];
 }
 
-export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, srcPositionPicker }: BadgeLayerLayoutPositionContainerProps) => {
+export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, srcPositionPicker, tags }: BadgeLayerLayoutPositionContainerProps) => {
     return (
         <Region
             name="position_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 67, width: 43, top: 3, height: 43, ...layout }}
         >
             <ThemeImage
                 name="position_grid"
-                params={17}
                 src={srcPositionGrid}
                 layout={{ position: 'absolute', left: 0, width: 43, top: 0, height: 43 }}
             />
             <ThemeImage
                 name="position_picker"
-                params={16}
                 src={srcPositionPicker}
                 layout={{ position: 'absolute', left: 1, width: 13, top: 1, height: 13 }}
             />
@@ -78,13 +76,14 @@ export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, src
 /** Named region `color_selector` of BadgeLayerLayout - configured through the parent's `colorSelector` prop. */
 export interface BadgeLayerLayoutColorSelectorProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BadgeLayerLayoutColorSelector = ({ layout }: BadgeLayerLayoutColorSelectorProps) => {
+export const BadgeLayerLayoutColorSelector = ({ layout, tags }: BadgeLayerLayoutColorSelectorProps) => {
     return (
         <Region
             name="color_selector"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 124, width: 120, top: 2, height: 45, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -96,19 +95,19 @@ export interface BadgeLayerLayoutContainerProps {
     layout?: BoxLayout;
     positionContainer?: BadgeLayerLayoutPositionContainerProps;
     previewContainer?: BadgeLayerLayoutPreviewContainerProps;
+    tags?: string[];
 }
 
-export const BadgeLayerLayoutContainer = ({ colorSelector, layout, positionContainer, previewContainer }: BadgeLayerLayoutContainerProps) => {
+export const BadgeLayerLayoutContainer = ({ colorSelector, layout, positionContainer, previewContainer, tags }: BadgeLayerLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 49, ...layout }}
         >
             <Border
                 variant="3"
                 name="border"
-                params={16}
                 tintColor="#bebba5"
                 layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 49 }}
             />

@@ -17,19 +17,19 @@ export const AvatarImageViewLayout = ({ avatarImageView, layout }: AvatarImageVi
 /** Named region `avatar_image_view` of AvatarImageViewLayout - configured through the parent's `avatarImageView` prop. */
 export interface AvatarImageViewLayoutAvatarImageViewProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AvatarImageViewLayoutAvatarImageView = ({ layout }: AvatarImageViewLayoutAvatarImageViewProps) => {
+export const AvatarImageViewLayoutAvatarImageView = ({ layout, tags }: AvatarImageViewLayoutAvatarImageViewProps) => {
     return (
         <Region
             name="avatar_image_view"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 90, top: 0, height: 120, ...layout }}
         >
             <WidgetSlot
                 widgetType="avatar_image"
                 name="avatar_image"
-                params={16}
                 options={{ 'avatar_image:direction': 'south' }}
                 layout={{ position: 'absolute', left: 0, width: 90, top: -10, height: 130 }}
             />

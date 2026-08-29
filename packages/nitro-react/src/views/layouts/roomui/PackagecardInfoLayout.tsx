@@ -17,17 +17,13 @@ export const PackagecardInfoLayout = ({ elementList, layout, onClose }: Packagec
     return (
         <Frame
             variant="3"
-            params={33025}
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 342, height: 298, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={147472}
-                    layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}>
                     <PackagecardInfoLayoutElementList {...elementList} />
                 </Region>
             </Region>
@@ -40,23 +36,23 @@ export interface PackagecardInfoLayoutAvatarImageRegionProps {
     layout?: BoxLayout;
     onAvatarImageRegion?: () => void;
     srcAvatarImage?: string;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage }: PackagecardInfoLayoutAvatarImageRegionProps) => {
+export const PackagecardInfoLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage, tags }: PackagecardInfoLayoutAvatarImageRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="avatar_image_region"
+            tags={tags}
             tooltip={t('widget.furni.present.sender.profile_tooltip')}
-            params={3935441}
             onPointerTap={onAvatarImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149, ...layout }}
         >
             <ThemeImage
                 name="avatar_image"
-                params={16}
                 src={srcAvatarImage}
                 layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 149 }}
             />
@@ -68,13 +64,14 @@ export const PackagecardInfoLayoutAvatarImageRegion = ({ layout, onAvatarImageRe
 export interface PackagecardInfoLayoutAvatarImageContainerProps {
     avatarImageRegion?: PackagecardInfoLayoutAvatarImageRegionProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutAvatarImageContainer = ({ avatarImageRegion, layout }: PackagecardInfoLayoutAvatarImageContainerProps) => {
+export const PackagecardInfoLayoutAvatarImageContainer = ({ avatarImageRegion, layout, tags }: PackagecardInfoLayoutAvatarImageContainerProps) => {
     return (
         <Region
             name="avatar_image_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 60, top: 5, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center', ...layout }}
         >
             <PackagecardInfoLayoutAvatarImageRegion {...avatarImageRegion} />
@@ -90,27 +87,26 @@ export interface PackagecardInfoLayoutGiftCardContainerItemProps {
     layout?: BoxLayout;
     onMessageFrom?: () => void;
     srcGiftCard?: string;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContainer, captionMessageFrom, captionMessageText, layout, onMessageFrom, srcGiftCard }: PackagecardInfoLayoutGiftCardContainerItemProps) => {
+export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContainer, captionMessageFrom, captionMessageText, layout, onMessageFrom, srcGiftCard, tags }: PackagecardInfoLayoutGiftCardContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="gift_card_container"
-            params={12583120}
+            tags={tags}
             layout={{ width: 330, height: 159, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="gift_card"
-                params={16}
                 src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
                 layout={{ position: 'absolute', left: 10, width: 306, top: 10, height: 149 }}
             />
             <PackagecardInfoLayoutAvatarImageContainer {...avatarImageContainer} />
             <Region
                 name="message_text"
-                params={1}
                 layout={{ position: 'absolute', left: 95, width: 190, top: 31, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -122,7 +118,6 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContaine
             <Region
                 name="message_from"
                 tooltip={t('widget.furni.present.sender.profile_tooltip')}
-                params={1}
                 layout={{ position: 'absolute', left: 95, width: 190, top: 123, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 onPointerTap={onMessageFrom}
                 cursor="pointer"
@@ -141,16 +136,17 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContaine
 export interface PackagecardInfoLayoutOpenGiftButtonItemProps {
     layout?: BoxLayout;
     onOpenGiftButton?: () => void;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutOpenGiftButtonItem = ({ layout, onOpenGiftButton }: PackagecardInfoLayoutOpenGiftButtonItemProps) => {
+export const PackagecardInfoLayoutOpenGiftButtonItem = ({ layout, onOpenGiftButton, tags }: PackagecardInfoLayoutOpenGiftButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="open_gift_button"
-            params={147665}
+            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onOpenGiftButton}
             layout={{ width: 206, height: 28, flexShrink: 0, minWidth: 206, maxWidth: 328, minHeight: 28, ...layout }}
@@ -164,16 +160,17 @@ export const PackagecardInfoLayoutOpenGiftButtonItem = ({ layout, onOpenGiftButt
 export interface PackagecardInfoLayoutGiveGiftButtonItemProps {
     layout?: BoxLayout;
     onGiveGiftButton?: () => void;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutGiveGiftButtonItem = ({ layout, onGiveGiftButton }: PackagecardInfoLayoutGiveGiftButtonItemProps) => {
+export const PackagecardInfoLayoutGiveGiftButtonItem = ({ layout, onGiveGiftButton, tags }: PackagecardInfoLayoutGiveGiftButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="give_gift_button"
-            params={131281}
+            tags={tags}
             onPointerTap={onGiveGiftButton}
             layout={{ width: 206, height: 28, flexShrink: 0, minWidth: 206, maxWidth: 330, minHeight: 28, ...layout }}
         >
@@ -186,13 +183,14 @@ export const PackagecardInfoLayoutGiveGiftButtonItem = ({ layout, onGiveGiftButt
 export interface PackagecardInfoLayoutButtonListItemProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutButtonListItem = ({ itemsButtonList, layout }: PackagecardInfoLayoutButtonListItemProps) => {
+export const PackagecardInfoLayoutButtonListItem = ({ itemsButtonList, layout, tags }: PackagecardInfoLayoutButtonListItemProps) => {
     return (
         <Region
             name="button_list"
-            params={12730385}
+            tags={tags}
             layout={{ flexShrink: 0, minWidth: 330, maxWidth: 360, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
@@ -208,13 +206,14 @@ export const PackagecardInfoLayoutButtonListItem = ({ itemsButtonList, layout }:
 /** Row template `separator` of PackagecardInfoLayout - pass real rows through its `items…` slot. */
 export interface PackagecardInfoLayoutSeparatorItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutSeparatorItem = ({ layout }: PackagecardInfoLayoutSeparatorItemProps) => {
+export const PackagecardInfoLayoutSeparatorItem = ({ layout, tags }: PackagecardInfoLayoutSeparatorItemProps) => {
     return (
         <Region
             name="separator"
-            params={16}
+            tags={tags}
             layout={{ width: 336, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -224,13 +223,14 @@ export const PackagecardInfoLayoutSeparatorItem = ({ layout }: PackagecardInfoLa
 export interface PackagecardInfoLayoutElementListProps {
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PackagecardInfoLayoutElementList = ({ itemsElementList, layout }: PackagecardInfoLayoutElementListProps) => {
+export const PackagecardInfoLayoutElementList = ({ itemsElementList, layout, tags }: PackagecardInfoLayoutElementListProps) => {
     return (
         <Region
             name="element_list"
-            params={13516817}
+            tags={tags}
             layout={{ position: 'absolute', top: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

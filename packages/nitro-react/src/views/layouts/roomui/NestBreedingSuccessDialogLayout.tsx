@@ -18,16 +18,12 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
     return (
         <Frame
             variant="100"
-            params={1}
             caption={t('breedpets.nestbreeding.success.header')}
             onClose={onClose}
             layout={{ width: 323, height: 221, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 39, width: 252, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <Region layout={{ position: 'absolute', left: 39, width: 252, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('breedpets.nestbreeding.success.title')}
                         textOptions={{ align: 'center' }}
@@ -35,7 +31,6 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                 </Region>
                 <Region
                     name="pet.name"
-                    params={16}
                     layout={{ position: 'absolute', left: 42, width: 252, top: 116, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -46,7 +41,6 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                 </Region>
                 <Region
                     name="pet.raritycategory"
-                    params={16}
                     layout={{ position: 'absolute', left: 42, width: 252, top: 127, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -57,20 +51,17 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                 <Button
                     variant="102"
                     name="button.ok"
-                    params={917521}
                     onPointerTap={onButtonOk}
                     layout={{ position: 'absolute', marginLeft: 9.5, marginRight: -9.5, width: 172, top: 143, height: 32, minWidth: 100 }}
                 >
                     {t('breedpets.nestbreeding.success.button.ok')}
                 </Button>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('icons_hilighter_yellow.png')}
                     layout={{ position: 'absolute', left: 127, width: 82, top: 33, height: 83 }}
                 />
                 <ThemeImage
                     name="pet_image"
-                    params={16}
                     src={srcPetImage}
                     layout={{ position: 'absolute', left: 146, width: 40, top: 54, height: 40 }}
                 />

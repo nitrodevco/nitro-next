@@ -11,13 +11,11 @@ export const GenericWidgetLayout = ({ contentContainer, layout, srcBitmap }: Gen
     return (
         <Region layout={{ position: 'relative', width: 250, height: 30, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 30 }}
             >
                 <ThemeImage
                     name="bitmap"
-                    params={16}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 10, width: 20, top: 10, height: 20 }}
                 />
@@ -30,13 +28,14 @@ export const GenericWidgetLayout = ({ contentContainer, layout, srcBitmap }: Gen
 /** Named region `content_container` of GenericWidgetLayout - configured through the parent's `contentContainer` prop. */
 export interface GenericWidgetLayoutContentContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GenericWidgetLayoutContentContainer = ({ layout }: GenericWidgetLayoutContentContainerProps) => {
+export const GenericWidgetLayoutContentContainer = ({ layout, tags }: GenericWidgetLayoutContentContainerProps) => {
     return (
         <Region
             name="content_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 20, flexDirection: 'column', ...layout }}
         />
     );

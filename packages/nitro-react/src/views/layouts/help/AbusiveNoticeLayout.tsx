@@ -17,44 +17,32 @@ export const AbusiveNoticeLayout = ({ layout, onClose, onCloseButton }: AbusiveN
             variant="100"
             id="abusive_notice"
             name="abusive_notice"
-            params={163841}
             caption={t('help.emergency.abusive.title')}
             onClose={onClose}
             layout={{ width: 309, height: 153, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}
-                >
-                    <Region
-                        params={16}
-                        layout={{ width: 216, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
+                    <Region layout={{ width: 216, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.emergency.abusive.subtitle')}
                             textStyle="text-style-il-heading-1"
                             textOptions={{ fill: '#c30000' }}
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.emergency.abusive.description')}
                             textOptions={{ wordWrap: true, wordWrapWidth: 291 }}
                         />
                     </Region>
                     <ThemeImage
-                        params={16}
                         src={layoutImage('illumina_horizontal_separator.png')}
                         layout={{ width: 291, height: 13, flexShrink: 0 }}
                     />
                     <Button
                         variant="101"
                         name="close_button"
-                        params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
                         layout={{ width: 196, height: 48, flexShrink: 0 }}

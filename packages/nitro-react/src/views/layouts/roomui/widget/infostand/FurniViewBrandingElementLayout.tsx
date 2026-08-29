@@ -15,18 +15,15 @@ export const FurniViewBrandingElementLayout = ({ captionElementName, layout }: F
         <Region layout={{ position: 'relative', width: 180, height: 65, ...layout }}>
             <Region
                 tags={[ 'branding_element' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 65 }}
             >
                 <Border
                     variant="1"
                     name="element_border"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 65 }}
                 >
                     <Region
                         name="element_name"
-                        params={144}
                         layout={{ position: 'absolute', left: 0, right: 20, top: 0, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText

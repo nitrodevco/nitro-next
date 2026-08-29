@@ -18,13 +18,14 @@ export const SearchEntryLayout = ({ entry, layout }: SearchEntryLayoutProps) => 
 export interface SearchEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion }: SearchEntryLayoutBgRegionProps) => {
+export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: SearchEntryLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            params={145}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
@@ -35,25 +36,24 @@ export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion }: SearchEntryLay
 /** Named region `user_info_region` of SearchEntryLayout - configured through the parent's `userInfoRegion` prop. */
 export interface SearchEntryLayoutUserInfoRegionProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SearchEntryLayoutUserInfoRegion = ({ layout }: SearchEntryLayoutUserInfoRegionProps) => {
+export const SearchEntryLayoutUserInfoRegion = ({ layout, tags }: SearchEntryLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 21, width: 15, top: 5, height: 11, ...layout }}
         >
             <Icon
                 variant="21"
                 name="icon_eye_off"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
             />
             <Icon
                 variant="22"
                 name="icon_eye_over"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
             />
         </Region>
@@ -70,14 +70,15 @@ export interface SearchEntryLayoutEntryProps {
     srcAskForFriend?: string;
     srcFace?: string;
     srcStartChat?: string;
+    tags?: string[];
     userInfoRegion?: SearchEntryLayoutUserInfoRegionProps;
 }
 
-export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, layout, onEntry, srcAskForFriend, srcFace, srcStartChat, userInfoRegion }: SearchEntryLayoutEntryProps) => {
+export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, layout, onEntry, srcAskForFriend, srcFace, srcStartChat, tags, userInfoRegion }: SearchEntryLayoutEntryProps) => {
     return (
         <Region
             name="entry"
-            params={17}
+            tags={tags}
             backgroundColor="#eeeeff"
             onPointerTap={onEntry}
             cursor="pointer"
@@ -86,7 +87,6 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
             <SearchEntryLayoutBgRegion {...bgRegion} />
             <Region
                 name="caption"
-                params={16}
                 layout={{ position: 'absolute', left: 5, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionCaption ?? 'PH CAPTION'} />
@@ -94,26 +94,22 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
             <SearchEntryLayoutUserInfoRegion {...userInfoRegion} />
             <Region
                 name="name"
-                params={16}
                 layout={{ position: 'absolute', left: 37, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionName ?? 'PH Avatar Name'} />
             </Region>
             <ThemeImage
                 name="face"
-                params={16}
                 src={srcFace}
                 layout={{ position: 'absolute', left: -2, width: 20, top: 0, height: 20 }}
             />
             <ThemeImage
                 name="ask_for_friend"
-                params={81}
                 src={srcAskForFriend}
                 layout={{ position: 'absolute', right: 5, width: 17, top: 2, height: 16 }}
             />
             <ThemeImage
                 name="start_chat"
-                params={81}
                 src={srcStartChat}
                 layout={{ position: 'absolute', right: 4, width: 16, top: 3, height: 14 }}
             />

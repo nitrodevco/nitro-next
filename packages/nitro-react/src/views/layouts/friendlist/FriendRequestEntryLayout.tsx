@@ -18,13 +18,14 @@ export const FriendRequestEntryLayout = ({ cont26981, layout }: FriendRequestEnt
 export interface FriendRequestEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+    tags?: string[];
 }
 
-export const FriendRequestEntryLayoutBgRegion = ({ layout, onBgRegion }: FriendRequestEntryLayoutBgRegionProps) => {
+export const FriendRequestEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: FriendRequestEntryLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            params={145}
+            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
@@ -35,25 +36,24 @@ export const FriendRequestEntryLayoutBgRegion = ({ layout, onBgRegion }: FriendR
 /** Named region `user_info_region` of FriendRequestEntryLayout - configured through the parent's `userInfoRegion` prop. */
 export interface FriendRequestEntryLayoutUserInfoRegionProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FriendRequestEntryLayoutUserInfoRegion = ({ layout }: FriendRequestEntryLayoutUserInfoRegionProps) => {
+export const FriendRequestEntryLayoutUserInfoRegion = ({ layout, tags }: FriendRequestEntryLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 15, top: 5, height: 11, ...layout }}
         >
             <Icon
                 variant="21"
                 name="icon_eye_off"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
             />
             <Icon
                 variant="22"
                 name="icon_eye_over"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
             />
         </Region>
@@ -64,13 +64,14 @@ export const FriendRequestEntryLayoutUserInfoRegion = ({ layout }: FriendRequest
 export interface FriendRequestEntryLayoutAcceptProps {
     layout?: BoxLayout;
     onAccept?: () => void;
+    tags?: string[];
 }
 
-export const FriendRequestEntryLayoutAccept = ({ layout, onAccept }: FriendRequestEntryLayoutAcceptProps) => {
+export const FriendRequestEntryLayoutAccept = ({ layout, onAccept, tags }: FriendRequestEntryLayoutAcceptProps) => {
     return (
         <Region
             name="accept"
-            params={81}
+            tags={tags}
             onPointerTap={onAccept}
             cursor="pointer"
             layout={{ position: 'absolute', right: 25, width: 16, top: 4, height: 14, ...layout }}
@@ -78,7 +79,6 @@ export const FriendRequestEntryLayoutAccept = ({ layout, onAccept }: FriendReque
             <Icon
                 variant="8"
                 name="icon"
-                params={16}
                 tintColor="#33cc00"
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 14 }}
             />
@@ -90,13 +90,14 @@ export const FriendRequestEntryLayoutAccept = ({ layout, onAccept }: FriendReque
 export interface FriendRequestEntryLayoutRejectProps {
     layout?: BoxLayout;
     onReject?: () => void;
+    tags?: string[];
 }
 
-export const FriendRequestEntryLayoutReject = ({ layout, onReject }: FriendRequestEntryLayoutRejectProps) => {
+export const FriendRequestEntryLayoutReject = ({ layout, onReject, tags }: FriendRequestEntryLayoutRejectProps) => {
     return (
         <Region
             name="reject"
-            params={81}
+            tags={tags}
             onPointerTap={onReject}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 16, top: 4, height: 14, ...layout }}
@@ -104,7 +105,6 @@ export const FriendRequestEntryLayoutReject = ({ layout, onReject }: FriendReque
             <Icon
                 variant="9"
                 name="icon"
-                params={16}
                 tintColor="#ff3333"
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 14 }}
             />
@@ -121,14 +121,15 @@ export interface FriendRequestEntryLayoutCont26981Props {
     layout?: BoxLayout;
     onCont26981?: () => void;
     reject?: FriendRequestEntryLayoutRejectProps;
+    tags?: string[];
     userInfoRegion?: FriendRequestEntryLayoutUserInfoRegionProps;
 }
 
-export const FriendRequestEntryLayoutCont26981 = ({ accept, bgRegion, captionInfoText, captionRequesterNameText, layout, onCont26981, reject, userInfoRegion }: FriendRequestEntryLayoutCont26981Props) => {
+export const FriendRequestEntryLayoutCont26981 = ({ accept, bgRegion, captionInfoText, captionRequesterNameText, layout, onCont26981, reject, tags, userInfoRegion }: FriendRequestEntryLayoutCont26981Props) => {
     return (
         <Region
             name="cont_26981"
-            params={17}
+            tags={tags}
             backgroundColor="#9a9773"
             onPointerTap={onCont26981}
             cursor="pointer"
@@ -138,14 +139,12 @@ export const FriendRequestEntryLayoutCont26981 = ({ accept, bgRegion, captionInf
             <FriendRequestEntryLayoutUserInfoRegion {...userInfoRegion} />
             <Region
                 name="requester_name_text"
-                params={16}
                 layout={{ position: 'absolute', left: 17, width: 101, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionRequesterNameText ?? 'PH Requester Name'} />
             </Region>
             <Region
                 name="info_text"
-                params={80}
                 layout={{ position: 'absolute', right: 13, width: 67, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionInfoText ?? 'PH Info Text'} />

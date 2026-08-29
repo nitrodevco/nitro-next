@@ -11,7 +11,10 @@ export interface BottomBarLeftLayoutProps {
 export const BottomBarLeftLayout = ({ layout, mainToolbar }: BottomBarLeftLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 623, height: 46, ...layout }}>
-            <BottomBarLeftLayoutMainToolbar {...mainToolbar} />
+            <BottomBarLeftLayoutMainToolbar
+                tags={[ 'FIT:toolbar' ]}
+                {...mainToolbar}
+            />
         </Region>
     );
 };
@@ -21,13 +24,14 @@ export interface BottomBarLeftLayoutCollapseLeftProps {
     layout?: BoxLayout;
     onCollapseLeft?: () => void;
     srcIconsToolbarCollapseLeft?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolbarCollapseLeft }: BottomBarLeftLayoutCollapseLeftProps) => {
+export const BottomBarLeftLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolbarCollapseLeft, tags }: BottomBarLeftLayoutCollapseLeftProps) => {
     return (
         <Region
             name="collapse_left"
-            params={1}
+            tags={tags}
             onPointerTap={onCollapseLeft}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 45, justifyContent: 'center', ...layout }}
@@ -35,7 +39,6 @@ export const BottomBarLeftLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIco
             <ThemeImage
                 name="icons_toolbar_collapse_left"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
                 layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
             />
@@ -47,14 +50,14 @@ export const BottomBarLeftLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIco
 export interface BottomBarLeftLayoutArrowContainerLeftProps {
     collapseLeft?: BottomBarLeftLayoutCollapseLeftProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutArrowContainerLeft = ({ collapseLeft, layout }: BottomBarLeftLayoutArrowContainerLeftProps) => {
+export const BottomBarLeftLayoutArrowContainerLeft = ({ collapseLeft, layout, tags }: BottomBarLeftLayoutArrowContainerLeftProps) => {
     return (
         <Region
             name="arrow_container_left"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarCollapseLeft' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 15, top: 1, height: 46, ...layout }}
         >
             <BottomBarLeftLayoutCollapseLeft {...collapseLeft} />
@@ -67,13 +70,14 @@ export interface BottomBarLeftLayoutCollapseRightProps {
     layout?: BoxLayout;
     onCollapseRight?: () => void;
     srcIconsToolbarCollapseRight?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutCollapseRight = ({ layout, onCollapseRight, srcIconsToolbarCollapseRight }: BottomBarLeftLayoutCollapseRightProps) => {
+export const BottomBarLeftLayoutCollapseRight = ({ layout, onCollapseRight, srcIconsToolbarCollapseRight, tags }: BottomBarLeftLayoutCollapseRightProps) => {
     return (
         <Region
             name="collapse_right"
-            params={1}
+            tags={tags}
             onPointerTap={onCollapseRight}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 46, justifyContent: 'center', ...layout }}
@@ -81,7 +85,6 @@ export const BottomBarLeftLayoutCollapseRight = ({ layout, onCollapseRight, srcI
             <ThemeImage
                 name="icons_toolbar_collapse_right"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
                 layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
             />
@@ -93,14 +96,14 @@ export const BottomBarLeftLayoutCollapseRight = ({ layout, onCollapseRight, srcI
 export interface BottomBarLeftLayoutArrowContainerRightProps {
     collapseRight?: BottomBarLeftLayoutCollapseRightProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutArrowContainerRight = ({ collapseRight, layout }: BottomBarLeftLayoutArrowContainerRightProps) => {
+export const BottomBarLeftLayoutArrowContainerRight = ({ collapseRight, layout, tags }: BottomBarLeftLayoutArrowContainerRightProps) => {
     return (
         <Region
             name="arrow_container_right"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarCollapseRight' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 15, top: 1, height: 46, ...layout }}
         >
             <BottomBarLeftLayoutCollapseRight {...collapseRight} />
@@ -113,15 +116,15 @@ export interface BottomBarLeftLayoutRECEPTIONProps {
     layout?: BoxLayout;
     onRECEPTION?: () => void;
     srcIconsToolbarReception?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutRECEPTION = ({ layout, onRECEPTION, srcIconsToolbarReception }: BottomBarLeftLayoutRECEPTIONProps) => {
+export const BottomBarLeftLayoutRECEPTION = ({ layout, onRECEPTION, srcIconsToolbarReception, tags }: BottomBarLeftLayoutRECEPTIONProps) => {
     return (
         <Region
             name="RECEPTION"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarReception', 'RECEPTION' ]}
+            tags={tags}
             tooltip="${toolbar.icon.tooltip.exitroom.hotelview)"
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onRECEPTION}
             cursor="pointer"
@@ -130,7 +133,6 @@ export const BottomBarLeftLayoutRECEPTION = ({ layout, onRECEPTION, srcIconsTool
             <ThemeImage
                 name="icons_toolbar_reception"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarReception ?? layoutImage('bottom_bar_logo.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 28, top: 5, height: 28 }}
             />
@@ -143,17 +145,17 @@ export interface BottomBarLeftLayoutHOMEProps {
     layout?: BoxLayout;
     onHOME?: () => void;
     srcIconsToolbarHome?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutHOME = ({ layout, onHOME, srcIconsToolbarHome }: BottomBarLeftLayoutHOMEProps) => {
+export const BottomBarLeftLayoutHOME = ({ layout, onHOME, srcIconsToolbarHome, tags }: BottomBarLeftLayoutHOMEProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="HOME"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarHome', 'HOME', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.tooltip.exitroom.home')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onHOME}
             cursor="pointer"
@@ -162,7 +164,6 @@ export const BottomBarLeftLayoutHOME = ({ layout, onHOME, srcIconsToolbarHome }:
             <ThemeImage
                 name="icons_toolbar_home"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarHome ?? layoutImage('bottom_bar_home.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 32, top: 5, height: 30 }}
             />
@@ -175,17 +176,17 @@ export interface BottomBarLeftLayoutNAVIGATORProps {
     layout?: BoxLayout;
     onNAVIGATOR?: () => void;
     srcIconsToolbarNavigator?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutNAVIGATOR = ({ layout, onNAVIGATOR, srcIconsToolbarNavigator }: BottomBarLeftLayoutNAVIGATORProps) => {
+export const BottomBarLeftLayoutNAVIGATOR = ({ layout, onNAVIGATOR, srcIconsToolbarNavigator, tags }: BottomBarLeftLayoutNAVIGATORProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="NAVIGATOR"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarNavigator', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.navigator')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onNAVIGATOR}
             cursor="pointer"
@@ -194,7 +195,6 @@ export const BottomBarLeftLayoutNAVIGATOR = ({ layout, onNAVIGATOR, srcIconsTool
             <ThemeImage
                 name="icons_toolbar_navigator"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarNavigator ?? layoutImage('bottom_bar_navigator.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 5, height: 30 }}
             />
@@ -207,17 +207,17 @@ export interface BottomBarLeftLayoutPROGRESSIONProps {
     layout?: BoxLayout;
     onPROGRESSION?: () => void;
     srcIconsToolbarProgression?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutPROGRESSION = ({ layout, onPROGRESSION, srcIconsToolbarProgression }: BottomBarLeftLayoutPROGRESSIONProps) => {
+export const BottomBarLeftLayoutPROGRESSION = ({ layout, onPROGRESSION, srcIconsToolbarProgression, tags }: BottomBarLeftLayoutPROGRESSIONProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="PROGRESSION"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT', 'toolbarProgression' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.progression')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onPROGRESSION}
             cursor="pointer"
@@ -226,7 +226,6 @@ export const BottomBarLeftLayoutPROGRESSION = ({ layout, onPROGRESSION, srcIcons
             <ThemeImage
                 name="icons_toolbar_progression"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarProgression ?? layoutImage('bottom_bar_progression.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 37 }}
             />
@@ -239,17 +238,17 @@ export interface BottomBarLeftLayoutGAMESProps {
     layout?: BoxLayout;
     onGAMES?: () => void;
     srcIconsToolbarGames?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutGAMES = ({ layout, onGAMES, srcIconsToolbarGames }: BottomBarLeftLayoutGAMESProps) => {
+export const BottomBarLeftLayoutGAMES = ({ layout, onGAMES, srcIconsToolbarGames, tags }: BottomBarLeftLayoutGAMESProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="GAMES"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarGames' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.games')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onGAMES}
             cursor="pointer"
@@ -258,7 +257,6 @@ export const BottomBarLeftLayoutGAMES = ({ layout, onGAMES, srcIconsToolbarGames
             <ThemeImage
                 name="icons_toolbar_games"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarGames ?? layoutImage('bottom_bar_games.png')}
                 layout={{ position: 'absolute', width: 33, top: 0, height: 43 }}
             />
@@ -271,17 +269,17 @@ export interface BottomBarLeftLayoutSTORIESProps {
     layout?: BoxLayout;
     onSTORIES?: () => void;
     srcIconsToolbarStories?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutSTORIES = ({ layout, onSTORIES, srcIconsToolbarStories }: BottomBarLeftLayoutSTORIESProps) => {
+export const BottomBarLeftLayoutSTORIES = ({ layout, onSTORIES, srcIconsToolbarStories, tags }: BottomBarLeftLayoutSTORIESProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="STORIES"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarStories' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.stories')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onSTORIES}
             cursor="pointer"
@@ -290,7 +288,6 @@ export const BottomBarLeftLayoutSTORIES = ({ layout, onSTORIES, srcIconsToolbarS
             <ThemeImage
                 name="icons_toolbar_stories"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarStories ?? layoutImage('bottom_bar_stories.png')}
                 layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
             />
@@ -303,17 +300,17 @@ export interface BottomBarLeftLayoutCATALOGUEProps {
     layout?: BoxLayout;
     onCATALOGUE?: () => void;
     srcIconsToolbarCatalogue?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutCATALOGUE = ({ layout, onCATALOGUE, srcIconsToolbarCatalogue }: BottomBarLeftLayoutCATALOGUEProps) => {
+export const BottomBarLeftLayoutCATALOGUE = ({ layout, onCATALOGUE, srcIconsToolbarCatalogue, tags }: BottomBarLeftLayoutCATALOGUEProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="CATALOGUE"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarCatalogue', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.catalogue')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onCATALOGUE}
             cursor="pointer"
@@ -322,7 +319,6 @@ export const BottomBarLeftLayoutCATALOGUE = ({ layout, onCATALOGUE, srcIconsTool
             <ThemeImage
                 name="icons_toolbar_catalogue"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarCatalogue ?? layoutImage('bottom_bar_shop.png')}
                 layout={{ position: 'absolute', width: 37, top: 1, height: 37 }}
             />
@@ -335,17 +331,17 @@ export interface BottomBarLeftLayoutBUILDERProps {
     layout?: BoxLayout;
     onBUILDER?: () => void;
     srcIconsToolbarBuilder?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutBUILDER = ({ layout, onBUILDER, srcIconsToolbarBuilder }: BottomBarLeftLayoutBUILDERProps) => {
+export const BottomBarLeftLayoutBUILDER = ({ layout, onBUILDER, srcIconsToolbarBuilder, tags }: BottomBarLeftLayoutBUILDERProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="BUILDER"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_COLLAPSED', 'FIT:toolbarCatalogue', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.builder')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onBUILDER}
             cursor="pointer"
@@ -354,7 +350,6 @@ export const BottomBarLeftLayoutBUILDER = ({ layout, onBUILDER, srcIconsToolbarB
             <ThemeImage
                 name="icons_toolbar_builder"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarBuilder ?? layoutImage('bottom_bar_buildersclub.png')}
                 layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
             />
@@ -367,17 +362,17 @@ export interface BottomBarLeftLayoutINVENTORYProps {
     layout?: BoxLayout;
     onINVENTORY?: () => void;
     srcIconsToolbarInventory?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutINVENTORY = ({ layout, onINVENTORY, srcIconsToolbarInventory }: BottomBarLeftLayoutINVENTORYProps) => {
+export const BottomBarLeftLayoutINVENTORY = ({ layout, onINVENTORY, srcIconsToolbarInventory, tags }: BottomBarLeftLayoutINVENTORYProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="INVENTORY"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'FIT:toolbarInventory', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.inventory')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onINVENTORY}
             cursor="pointer"
@@ -386,7 +381,6 @@ export const BottomBarLeftLayoutINVENTORY = ({ layout, onINVENTORY, srcIconsTool
             <ThemeImage
                 name="icons_toolbar_inventory"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarInventory ?? layoutImage('bottom_bar_inventory.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 41 }}
             />
@@ -399,31 +393,29 @@ export interface BottomBarLeftLayoutMEMENUProps {
     layout?: BoxLayout;
     onMEMENU?: () => void;
     srcIconMeMenu?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutMEMENU = ({ layout, onMEMENU, srcIconMeMenu }: BottomBarLeftLayoutMEMENUProps) => {
+export const BottomBarLeftLayoutMEMENU = ({ layout, onMEMENU, srcIconMeMenu, tags }: BottomBarLeftLayoutMEMENUProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="MEMENU"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarMeMenu', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.memenu')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onMEMENU}
             cursor="pointer"
             layout={{ position: 'absolute', left: 477, width: 45, top: 1, height: 45, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('bottom_bar_memenu_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 45, top: -1, height: 45 }}
             />
             <ThemeImage
                 name="icon_me_menu"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconMeMenu}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 44, top: -1, height: 41 }}
             />
@@ -440,17 +432,17 @@ export interface BottomBarLeftLayoutWIREDMENUProps {
     layout?: BoxLayout;
     onWIREDMENU?: () => void;
     srcIconsToolbarWiredMenu?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutWIREDMENU = ({ layout, onWIREDMENU, srcIconsToolbarWiredMenu }: BottomBarLeftLayoutWIREDMENUProps) => {
+export const BottomBarLeftLayoutWIREDMENU = ({ layout, onWIREDMENU, srcIconsToolbarWiredMenu, tags }: BottomBarLeftLayoutWIREDMENUProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="WIRED_MENU"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('toolbar.icon.label.wired_menu')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onWIREDMENU}
             cursor="pointer"
@@ -459,7 +451,6 @@ export const BottomBarLeftLayoutWIREDMENU = ({ layout, onWIREDMENU, srcIconsTool
             <ThemeImage
                 name="icons_toolbar_wired_menu"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarWiredMenu ?? layoutImage('bottom_bar_wired_menu.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
             />
@@ -472,17 +463,17 @@ export interface BottomBarLeftLayoutCAMERAProps {
     layout?: BoxLayout;
     onCAMERA?: () => void;
     srcIconsToolbarCamera?: string;
+    tags?: string[];
 }
 
-export const BottomBarLeftLayoutCAMERA = ({ layout, onCAMERA, srcIconsToolbarCamera }: BottomBarLeftLayoutCAMERAProps) => {
+export const BottomBarLeftLayoutCAMERA = ({ layout, onCAMERA, srcIconsToolbarCamera, tags }: BottomBarLeftLayoutCAMERAProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="CAMERA"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'VISIBLE_NOOB' ]}
+            tags={tags}
             tooltip={t('camera.interface.title')}
-            params={1}
             dynamicStyle="lifted_hover"
             onPointerTap={onCAMERA}
             cursor="pointer"
@@ -491,7 +482,6 @@ export const BottomBarLeftLayoutCAMERA = ({ layout, onCAMERA, srcIconsToolbarCam
             <ThemeImage
                 name="icons_toolbar_camera"
                 tags={[ 'ICON_BMP', '#icon' ]}
-                params={208}
                 src={srcIconsToolbarCamera ?? layoutImage('bottom_bar_camera.png')}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
             />
@@ -514,31 +504,67 @@ export interface BottomBarLeftLayoutToolbarItemsProps {
     rECEPTION?: BottomBarLeftLayoutRECEPTIONProps;
     srcLine?: string;
     sTORIES?: BottomBarLeftLayoutSTORIESProps;
+    tags?: string[];
     wIREDMENU?: BottomBarLeftLayoutWIREDMENUProps;
 }
 
-export const BottomBarLeftLayoutToolbarItems = ({ bUILDER, cAMERA, cATALOGUE, gAMES, hOME, iNVENTORY, layout, mEMENU, nAVIGATOR, pROGRESSION, rECEPTION, srcLine, sTORIES, wIREDMENU }: BottomBarLeftLayoutToolbarItemsProps) => {
+export const BottomBarLeftLayoutToolbarItems = ({ bUILDER, cAMERA, cATALOGUE, gAMES, hOME, iNVENTORY, layout, mEMENU, nAVIGATOR, pROGRESSION, rECEPTION, srcLine, sTORIES, tags, wIREDMENU }: BottomBarLeftLayoutToolbarItemsProps) => {
     return (
         <Region
             name="toolbar_items"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 19, width: 607, top: 0, height: 46, ...layout }}
         >
-            <BottomBarLeftLayoutRECEPTION {...rECEPTION} />
-            <BottomBarLeftLayoutHOME {...hOME} />
-            <BottomBarLeftLayoutNAVIGATOR {...nAVIGATOR} />
-            <BottomBarLeftLayoutPROGRESSION {...pROGRESSION} />
-            <BottomBarLeftLayoutGAMES {...gAMES} />
-            <BottomBarLeftLayoutSTORIES {...sTORIES} />
-            <BottomBarLeftLayoutCATALOGUE {...cATALOGUE} />
-            <BottomBarLeftLayoutBUILDER {...bUILDER} />
-            <BottomBarLeftLayoutINVENTORY {...iNVENTORY} />
-            <BottomBarLeftLayoutMEMENU {...mEMENU} />
-            <BottomBarLeftLayoutWIREDMENU {...wIREDMENU} />
-            <BottomBarLeftLayoutCAMERA {...cAMERA} />
+            <BottomBarLeftLayoutRECEPTION
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarReception', 'RECEPTION' ]}
+                {...rECEPTION}
+            />
+            <BottomBarLeftLayoutHOME
+                tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarHome', 'HOME', 'VISIBLE_NOOB' ]}
+                {...hOME}
+            />
+            <BottomBarLeftLayoutNAVIGATOR
+                tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarNavigator', 'VISIBLE_NOOB' ]}
+                {...nAVIGATOR}
+            />
+            <BottomBarLeftLayoutPROGRESSION
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT', 'toolbarProgression' ]}
+                {...pROGRESSION}
+            />
+            <BottomBarLeftLayoutGAMES
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarGames' ]}
+                {...gAMES}
+            />
+            <BottomBarLeftLayoutSTORIES
+                tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarStories' ]}
+                {...sTORIES}
+            />
+            <BottomBarLeftLayoutCATALOGUE
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarCatalogue', 'VISIBLE_NOOB' ]}
+                {...cATALOGUE}
+            />
+            <BottomBarLeftLayoutBUILDER
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_COLLAPSED', 'FIT:toolbarCatalogue', 'VISIBLE_NOOB' ]}
+                {...bUILDER}
+            />
+            <BottomBarLeftLayoutINVENTORY
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'FIT:toolbarInventory', 'VISIBLE_NOOB' ]}
+                {...iNVENTORY}
+            />
+            <BottomBarLeftLayoutMEMENU
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarMeMenu', 'VISIBLE_NOOB' ]}
+                {...mEMENU}
+            />
+            <BottomBarLeftLayoutWIREDMENU
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'VISIBLE_NOOB' ]}
+                {...wIREDMENU}
+            />
+            <BottomBarLeftLayoutCAMERA
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_COLLAPSED', 'VISIBLE_NOOB' ]}
+                {...cAMERA}
+            />
             <ThemeImage
                 name="line"
-                params={16}
                 src={srcLine ?? layoutImage('bottom_bar_divider_1px.png')}
                 layout={{ position: 'absolute', left: 636, width: 1, top: 1, height: 40 }}
             />
@@ -551,14 +577,15 @@ export interface BottomBarLeftLayoutMainToolbarProps {
     arrowContainerLeft?: BottomBarLeftLayoutArrowContainerLeftProps;
     arrowContainerRight?: BottomBarLeftLayoutArrowContainerRightProps;
     layout?: BoxLayout;
+    tags?: string[];
     toolbarItems?: BottomBarLeftLayoutToolbarItemsProps;
 }
 
-export const BottomBarLeftLayoutMainToolbar = ({ arrowContainerLeft, arrowContainerRight, layout, toolbarItems }: BottomBarLeftLayoutMainToolbarProps) => {
+export const BottomBarLeftLayoutMainToolbar = ({ arrowContainerLeft, arrowContainerRight, layout, tags, toolbarItems }: BottomBarLeftLayoutMainToolbarProps) => {
     return (
         <Region
             name="main_toolbar"
-            tags={[ 'FIT:toolbar' ]}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 623, top: 0, height: 46, ...layout }}
         >
             <Region
@@ -566,17 +593,21 @@ export const BottomBarLeftLayoutMainToolbar = ({ arrowContainerLeft, arrowContai
                 layout={{ position: 'absolute', left: 60, width: 35, top: 25, height: 16 }}
             >
                 <ThemeImage
-                    params={16}
                     src={layoutImage('common_beta_sign.png')}
                     layout={{ position: 'absolute', left: 60, width: 35, top: 25, height: 16 }}
                 />
             </Region>
-            <BottomBarLeftLayoutArrowContainerLeft {...arrowContainerLeft} />
-            <BottomBarLeftLayoutArrowContainerRight {...arrowContainerRight} />
+            <BottomBarLeftLayoutArrowContainerLeft
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarCollapseLeft' ]}
+                {...arrowContainerLeft}
+            />
+            <BottomBarLeftLayoutArrowContainerRight
+                tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'VISIBLE_COLLAPSED', 'FIT:toolbarCollapseRight' ]}
+                {...arrowContainerRight}
+            />
             <BottomBarLeftLayoutToolbarItems {...toolbarItems} />
             <Border
                 variant="2"
-                params={16}
                 tintColor="#3b3933"
                 layout={{ position: 'absolute', left: -6, width: 20, top: 0, height: 43 }}
             />

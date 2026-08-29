@@ -16,29 +16,20 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
     return (
         <Frame
             variant="3"
-            params={32769}
             tintColor="#67a3bf"
             onClose={onClose}
             layout={{ width: 306, height: 92, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={12730384}
-                    layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}
-                >
+                <Region layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}>
                     <ThemeImage
                         name="illustration"
-                        params={16}
                         src={srcIllustration}
                         layout={{ width: 1, height: 1, flexShrink: 0 }}
                     />
-                    <Region
-                        params={8536080}
-                        layout={{ flexShrink: 0, flexDirection: 'column' }}
-                    >
+                    <Region layout={{ flexShrink: 0, flexDirection: 'column' }}>
                         <Region
                             name="message"
-                            params={16}
                             layout={{ width: 293, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -48,7 +39,6 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
                         </Region>
                         <Region
                             name="link"
-                            params={16385}
                             visible={false}
                             layout={{ width: 293, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                             onPointerTap={onLink}
@@ -66,7 +56,6 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
                             <Button
                                 variant="3"
                                 name="action"
-                                params={131281}
                                 onPointerTap={onAction}
                                 layout={{ width: '100%', height: '100%' }}
                             />

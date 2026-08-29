@@ -24,15 +24,11 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
 
     return (
         <Region layout={{ position: 'relative', width: 510, height: 385, ...layout }}>
-            <Region
-                params={32771}
-                layout={{ position: 'absolute', left: 120, width: 510, top: 120, height: 385, minWidth: 282, minHeight: 275 }}
-            >
+            <Region layout={{ position: 'absolute', left: 120, width: 510, top: 120, height: 385, minWidth: 282, minHeight: 275 }}>
                 <Frame
                     variant="100"
                     id="frame"
                     name="frame"
-                    params={12648449}
                     caption={t('messenger.window.title')}
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 385, minWidth: 282, minHeight: 275 }}
@@ -43,12 +39,10 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                         <MessengerLayoutAvatarsScrollRight {...avatarsScrollRight} />
                         <WidgetSlot
                             widgetType="separator"
-                            params={144}
                             layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
                         >
                             <Region
                                 name="separator_label"
-                                params={3088}
                                 layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
@@ -62,7 +56,6 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                         <CloseButton
                             variant="100"
                             name="close_conversation_button"
-                            params={65}
                             onPointerTap={onCloseConversationButton}
                             layout={{ position: 'absolute', right: 9, width: 20, top: 57, height: 20 }}
                         />
@@ -71,13 +64,11 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                             variant="102"
                             name="habbicon_button"
                             tooltip={t('messenger.habbicons.tooltip')}
-                            params={1105}
                             onPointerTap={onHabbiconButton}
                             layout={{ position: 'absolute', right: 9, width: 30, bottom: 52, height: 28 }}
                         >
                             <ThemeImage
                                 name="habbicon_button_icon"
-                                params={16}
                                 src={srcHabbiconButtonIcon ?? layoutImage('habbicons_habbicons_dm.png')}
                                 layout={{ position: 'absolute', left: 8, width: 14, top: 7, height: 14 }}
                             />
@@ -85,7 +76,6 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                         <WidgetSlot
                             widgetType="illumina_input"
                             name="input_widget"
-                            params={1168}
                             options={{ 'illumina_input:empty_message': '${messenger.window.input.default}', 'illumina_input:max_chars': '120' }}
                             layout={{ position: 'absolute', left: 7, right: 43, bottom: 50, height: 30 }}
                         />
@@ -100,13 +90,14 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
 export interface MessengerLayoutAvatarClickRegionProps {
     layout?: BoxLayout;
     onAvatarClickRegion?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutAvatarClickRegion = ({ layout, onAvatarClickRegion }: MessengerLayoutAvatarClickRegionProps) => {
+export const MessengerLayoutAvatarClickRegion = ({ layout, onAvatarClickRegion, tags }: MessengerLayoutAvatarClickRegionProps) => {
     return (
         <Region
             name="avatar_click_region"
-            params={17}
+            tags={tags}
             onPointerTap={onAvatarClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35, ...layout }}
@@ -119,31 +110,29 @@ export interface MessengerLayoutAvatarListProps {
     avatarClickRegion?: MessengerLayoutAvatarClickRegionProps;
     layout?: BoxLayout;
     srcChatIndicator?: string;
+    tags?: string[];
 }
 
-export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIndicator }: MessengerLayoutAvatarListProps) => {
+export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIndicator, tags }: MessengerLayoutAvatarListProps) => {
     return (
         <Region
             name="avatar_list"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40, ...layout }}
         >
             <Border
                 variant="102"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
             >
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image"
-                    params={16}
                     options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true' }}
                     layout={{ position: 'absolute', left: -3, width: 45, top: -14, height: 72 }}
                 />
                 <WidgetSlot
                     widgetType="badge_image"
                     name="group_badge_image"
-                    params={16}
                     visible={false}
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '0.5', 'badge_image:zoom_y': '0.5', 'badge_image:fit_size_to_contents': 'true' }}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 8, height: 20 }}
@@ -154,7 +143,6 @@ export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIn
                 >
                     <ThemeImage
                         name="chat_indicator"
-                        params={16}
                         src={srcChatIndicator ?? layoutImage('common_chat_indicator.png')}
                         layout={{ position: 'absolute', left: 19, width: 13, top: 6, height: 12 }}
                     />
@@ -169,19 +157,19 @@ export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIn
 export interface MessengerLayoutAvatarsScrollLeftProps {
     layout?: BoxLayout;
     onAvatarsScrollLeft?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft }: MessengerLayoutAvatarsScrollLeftProps) => {
+export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft, tags }: MessengerLayoutAvatarsScrollLeftProps) => {
     return (
         <Region
             name="avatars_scroll_left"
-            params={17}
+            tags={tags}
             onPointerTap={onAvatarsScrollLeft}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('help_habboway_prev.png')}
                 layout={{ position: 'absolute', left: 7, width: 8, top: 0, height: 35 }}
             />
@@ -193,19 +181,19 @@ export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft }
 export interface MessengerLayoutAvatarsScrollRightProps {
     layout?: BoxLayout;
     onAvatarsScrollRight?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight }: MessengerLayoutAvatarsScrollRightProps) => {
+export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight, tags }: MessengerLayoutAvatarsScrollRightProps) => {
     return (
         <Region
             name="avatars_scroll_right"
-            params={81}
+            tags={tags}
             onPointerTap={onAvatarsScrollRight}
             cursor="pointer"
             layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('help_habboway_next.png')}
                 layout={{ position: 'absolute', left: 1, width: 8, top: 0, height: 35 }}
             />
@@ -217,23 +205,23 @@ export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight
 export interface MessengerLayoutFollowButtonItemProps {
     layout?: BoxLayout;
     onFollowButton?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton }: MessengerLayoutFollowButtonItemProps) => {
+export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton, tags }: MessengerLayoutFollowButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="102"
             name="follow_button"
+            tags={tags}
             tooltip={t('messenger.followfriend.tooltip')}
-            params={131089}
             onPointerTap={onFollowButton}
             layout={{ width: 21, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
         >
             Follow
             <ThemeImage
-                params={16}
                 src={layoutImage('messenger_visit_icon.png')}
                 layout={{ position: 'absolute', left: 6, width: 9, top: 5, height: 10 }}
             />
@@ -245,23 +233,23 @@ export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton }: Mess
 export interface MessengerLayoutProfileButtonItemProps {
     layout?: BoxLayout;
     onProfileButton?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton }: MessengerLayoutProfileButtonItemProps) => {
+export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton, tags }: MessengerLayoutProfileButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="102"
             name="profile_button"
+            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
-            params={131089}
             onPointerTap={onProfileButton}
             layout={{ width: 30, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
         >
             Profile
             <ThemeImage
-                params={16}
                 src={layoutImage('messenger_profile_icon.png')}
                 layout={{ position: 'absolute', left: 7, width: 16, top: 4, height: 12 }}
             />
@@ -273,17 +261,18 @@ export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton }: Me
 export interface MessengerLayoutReportButtonItemProps {
     layout?: BoxLayout;
     onReportButton?: () => void;
+    tags?: string[];
 }
 
-export const MessengerLayoutReportButtonItem = ({ layout, onReportButton }: MessengerLayoutReportButtonItemProps) => {
+export const MessengerLayoutReportButtonItem = ({ layout, onReportButton, tags }: MessengerLayoutReportButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="102"
             name="report_button"
+            tags={tags}
             tooltip={t('messenger.window.button.report.tooltip')}
-            params={131089}
             onPointerTap={onReportButton}
             textStyle="text-style-il-button"
             layout={{ width: 193, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
@@ -297,13 +286,14 @@ export const MessengerLayoutReportButtonItem = ({ layout, onReportButton }: Mess
 export interface MessengerLayoutButtonStripProps {
     itemsButtonStrip?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout }: MessengerLayoutButtonStripProps) => {
+export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout, tags }: MessengerLayoutButtonStripProps) => {
     return (
         <Region
             name="button_strip"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsButtonStrip ?? (
@@ -320,14 +310,15 @@ export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout }: Messeng
 /** Row template `msg_normal` of MessengerLayout - pass real rows through its `items…` slot. */
 export interface MessengerLayoutMsgNormalItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutMsgNormalItem = ({ layout }: MessengerLayoutMsgNormalItemProps) => {
+export const MessengerLayoutMsgNormalItem = ({ layout, tags }: MessengerLayoutMsgNormalItemProps) => {
     return (
         <WidgetSlot
             widgetType="illumina_chat_bubble"
             name="msg_normal"
-            params={147472}
+            tags={tags}
             options={{ 'illumina_chat_bubble:figure': 'hd-180-1.ch-210-66.lg-270-82.sh-290-81' }}
             layout={{ width: 259, height: 60, flexShrink: 0, ...layout }}
         />
@@ -338,24 +329,23 @@ export const MessengerLayoutMsgNormalItem = ({ layout }: MessengerLayoutMsgNorma
 export interface MessengerLayoutMsgNotificationItemProps {
     captionContent?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout }: MessengerLayoutMsgNotificationItemProps) => {
+export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout, tags }: MessengerLayoutMsgNotificationItemProps) => {
     return (
         <Border
             variant="105"
             name="msg_notification"
-            params={147472}
+            tags={tags}
             layout={{ width: 255, height: 50, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('messenger_caution.png')}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
             <Region
                 name="content"
-                params={3088}
                 layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -371,25 +361,24 @@ export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout }: M
 export interface MessengerLayoutMsgInvitationItemProps {
     captionContent?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout }: MessengerLayoutMsgInvitationItemProps) => {
+export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout, tags }: MessengerLayoutMsgInvitationItemProps) => {
     return (
         <Border
             variant="105"
             name="msg_invitation"
-            params={147472}
+            tags={tags}
             tintColor="#d1efde"
             layout={{ width: 255, height: 50, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('messenger_notification_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
             <Region
                 name="content"
-                params={3088}
                 layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -405,18 +394,18 @@ export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout }: Mes
 export interface MessengerLayoutMsgInfoItemProps {
     captionContent?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutMsgInfoItem = ({ captionContent, layout }: MessengerLayoutMsgInfoItemProps) => {
+export const MessengerLayoutMsgInfoItem = ({ captionContent, layout, tags }: MessengerLayoutMsgInfoItemProps) => {
     return (
         <Region
             name="msg_info"
-            params={147472}
+            tags={tags}
             layout={{ width: 255, height: 24, flexShrink: 0, ...layout }}
         >
             <Region
                 name="content"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 255, top: 0, height: 24, minWidth: 255, maxWidth: 255, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -432,9 +421,10 @@ export const MessengerLayoutMsgInfoItem = ({ captionContent, layout }: Messenger
 export interface MessengerLayoutConversationProps {
     itemsConversation?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MessengerLayoutConversation = ({ itemsConversation, layout }: MessengerLayoutConversationProps) => {
+export const MessengerLayoutConversation = ({ itemsConversation, layout, tags }: MessengerLayoutConversationProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -442,7 +432,7 @@ export const MessengerLayoutConversation = ({ itemsConversation, layout }: Messe
         >
             <Region
                 name="conversation"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsConversation ?? (

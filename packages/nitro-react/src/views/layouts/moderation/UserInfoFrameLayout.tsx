@@ -10,7 +10,6 @@ export const UserInfoFrameLayout = ({ layout, onClose }: UserInfoFrameLayoutProp
     return (
         <Frame
             variant="0"
-            params={32769}
             caption="User info"
             tintColor="#418db0"
             onClose={onClose}

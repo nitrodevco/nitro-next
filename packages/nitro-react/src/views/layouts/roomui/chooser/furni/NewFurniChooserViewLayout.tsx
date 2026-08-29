@@ -22,7 +22,6 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -31,12 +30,10 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="105"
-                    params={16}
                     layout={{ position: 'absolute', left: 6, width: 229, top: 18, height: 26 }}
                 >
                     <Region
                         name="search_placeholder"
-                        params={16}
                         layout={{ position: 'absolute', left: 6, width: 116, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -55,14 +52,12 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                 <Dropmenu
                     variant="3"
                     name="username_dropdown"
-                    params={17}
                     onPointerTap={onUsernameDropdown}
                     layout={{ position: 'absolute', left: 244, width: 152, top: 18, height: 25 }}
                 />
                 <NewFurniChooserViewLayoutTableContainer {...tableContainer} />
                 <Region
                     name="amount_indicator"
-                    params={1040}
                     layout={{ position: 'absolute', left: 6, width: 215, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')} />
@@ -76,21 +71,21 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
 export interface NewFurniChooserViewLayoutClearButtonProps {
     layout?: BoxLayout;
     onClearButton?: () => void;
+    tags?: string[];
     visibleClearButton?: boolean;
 }
 
-export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, visibleClearButton }: NewFurniChooserViewLayoutClearButtonProps) => {
+export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, tags, visibleClearButton }: NewFurniChooserViewLayoutClearButtonProps) => {
     return (
         <Region
             name="clear_button"
-            params={17}
+            tags={tags}
             visible={visibleClearButton ?? false}
             onPointerTap={onClearButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 206, width: 20, top: 3, height: 20, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_close.png')}
                 layout={{ position: 'absolute', left: 4, width: 11, top: 4, height: 12 }}
             />
@@ -101,13 +96,14 @@ export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, vi
 /** Named region `table_container` of NewFurniChooserViewLayout - configured through the parent's `tableContainer` prop. */
 export interface NewFurniChooserViewLayoutTableContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const NewFurniChooserViewLayoutTableContainer = ({ layout }: NewFurniChooserViewLayoutTableContainerProps) => {
+export const NewFurniChooserViewLayoutTableContainer = ({ layout, tags }: NewFurniChooserViewLayoutTableContainerProps) => {
     return (
         <Region
             name="table_container"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61, ...layout }}
         />
     );

@@ -11,10 +11,7 @@ export interface SnowwarTimerLayoutProps {
 export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, layout, visibleChecksumIndicator }: SnowwarTimerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 100, height: 46, ...layout }}>
-            <Region
-                params={64}
-                layout={{ position: 'absolute', right: 0, width: 100, top: 0, height: 46 }}
-            >
+            <Region layout={{ position: 'absolute', right: 0, width: 100, top: 0, height: 46 }}>
                 <Region
                     visible={visibleChecksumIndicator ?? false}
                     layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
@@ -22,14 +19,12 @@ export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, lay
                     <Border
                         variant="0"
                         name="checksumIndicator"
-                        params={16}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Region
                     name="time_left_stroke"
                     tags={[ 'stroke' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -39,7 +34,6 @@ export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, lay
                 </Region>
                 <Region
                     name="time_left"
-                    params={16}
                     layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

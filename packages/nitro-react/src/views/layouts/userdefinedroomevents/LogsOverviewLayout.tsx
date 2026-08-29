@@ -18,7 +18,6 @@ export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: 
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('wiredmenu.logs_overview.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -37,28 +36,27 @@ export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: 
 export interface LogsOverviewLayoutFilterContProps {
     captionFilterKey?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutFilterCont = ({ captionFilterKey, layout }: LogsOverviewLayoutFilterContProps) => {
+export const LogsOverviewLayoutFilterCont = ({ captionFilterKey, layout, tags }: LogsOverviewLayoutFilterContProps) => {
     const t = useTranslation();
     const [ filterInputValue, setFilterInputValue ] = useState('');
 
     return (
         <Region
             name="filter_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 314, top: 60, height: 25, ...layout }}
         >
             <Region
                 name="filter_key"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 38, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionFilterKey ?? t('wiredmenu.logs_overview.filter')} />
             </Region>
             <Border
                 variant="4"
-                params={16}
                 layout={{ position: 'absolute', left: 45, width: 269, top: 0, height: 25 }}
             >
                 <TextInput
@@ -77,20 +75,20 @@ export interface LogsOverviewLayoutLogSourceContProps {
     captionLogSourceKey?: string;
     layout?: BoxLayout;
     onLogSourceMenu?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, onLogSourceMenu }: LogsOverviewLayoutLogSourceContProps) => {
+export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, onLogSourceMenu, tags }: LogsOverviewLayoutLogSourceContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="log_source_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 349, width: 164, top: 60, height: 25, ...layout }}
         >
             <Region
                 name="log_source_key"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 68, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionLogSourceKey ?? t('wiredmenu.logs_overview.log_source')} />
@@ -98,7 +96,6 @@ export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, o
             <Dropmenu
                 variant="3"
                 name="log_source_menu"
-                params={17}
                 onPointerTap={onLogSourceMenu}
                 layout={{ position: 'absolute', left: 74, width: 90, top: 0, height: 25 }}
             />
@@ -111,20 +108,20 @@ export interface LogsOverviewLayoutLogLevelContProps {
     captionLogLevelKey?: string;
     layout?: BoxLayout;
     onLogLevelMenu?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onLogLevelMenu }: LogsOverviewLayoutLogLevelContProps) => {
+export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onLogLevelMenu, tags }: LogsOverviewLayoutLogLevelContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="log_level_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 534, width: 154, top: 60, height: 25, ...layout }}
         >
             <Region
                 name="log_level_key"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 56, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionLogLevelKey ?? t('wiredmenu.logs_overview.log_level')} />
@@ -132,7 +129,6 @@ export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onL
             <Dropmenu
                 variant="3"
                 name="log_level_menu"
-                params={17}
                 onPointerTap={onLogLevelMenu}
                 layout={{ position: 'absolute', left: 62, width: 90, top: 0, height: 25 }}
             />
@@ -148,25 +144,24 @@ export interface LogsOverviewLayoutHeaderProps {
     logLevelCont?: LogsOverviewLayoutLogLevelContProps;
     logSourceCont?: LogsOverviewLayoutLogSourceContProps;
     onAutoRefreshCbx?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, logLevelCont, logSourceCont, onAutoRefreshCbx }: LogsOverviewLayoutHeaderProps) => {
+export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, logLevelCont, logSourceCont, onAutoRefreshCbx, tags }: LogsOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
         >
             <Border
                 variant="4"
-                params={16}
                 layout={{ position: 'absolute', left: 8, width: 580, top: 7, height: 38 }}
             >
                 <Region
                     name="info_text"
-                    params={2185}
                     layout={{ position: 'absolute', left: 1, right: 1, top: 3, bottom: 3, minWidth: 578, maxWidth: 578, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -179,14 +174,10 @@ export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, 
             <CheckBox
                 variant="3"
                 name="auto_refresh_cbx"
-                params={17}
                 onPointerTap={onAutoRefreshCbx}
                 layout={{ position: 'absolute', left: 596, width: 15, top: 19, height: 15 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 614, width: 90, top: 18, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 614, width: 90, top: 18, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.logs_overview.auto_refresh')} />
             </Region>
             <LogsOverviewLayoutLogSourceCont {...logSourceCont} />
@@ -198,13 +189,14 @@ export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, 
 /** Named region `table_view` of LogsOverviewLayout - configured through the parent's `tableView` prop. */
 export interface LogsOverviewLayoutTableViewProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutTableView = ({ layout }: LogsOverviewLayoutTableViewProps) => {
+export const LogsOverviewLayoutTableView = ({ layout, tags }: LogsOverviewLayoutTableViewProps) => {
     return (
         <Region
             name="table_view"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -214,13 +206,14 @@ export const LogsOverviewLayoutTableView = ({ layout }: LogsOverviewLayoutTableV
 export interface LogsOverviewLayoutMiddleProps {
     layout?: BoxLayout;
     tableView?: LogsOverviewLayoutTableViewProps;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutMiddle = ({ layout, tableView }: LogsOverviewLayoutMiddleProps) => {
+export const LogsOverviewLayoutMiddle = ({ layout, tableView, tags }: LogsOverviewLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 97, bottom: 95, ...layout }}
         >
             <LogsOverviewLayoutTableView {...tableView} />
@@ -232,26 +225,25 @@ export const LogsOverviewLayoutMiddle = ({ layout, tableView }: LogsOverviewLayo
 export interface LogsOverviewLayoutFirstPageBtnItemProps {
     layout?: BoxLayout;
     onFirstPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: LogsOverviewLayoutFirstPageBtnItemProps) => {
+export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tags }: LogsOverviewLayoutFirstPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="first_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onFirstPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -263,20 +255,20 @@ export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: L
 export interface LogsOverviewLayoutPrevPageBtnItemProps {
     layout?: BoxLayout;
     onPrevPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: LogsOverviewLayoutPrevPageBtnItemProps) => {
+export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags }: LogsOverviewLayoutPrevPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="prev_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onPrevPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="4"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 22, width: 10, top: 10, height: 10 }}
             />
@@ -288,13 +280,14 @@ export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: Log
 export interface LogsOverviewLayoutFooterButtonsLeftProps {
     itemsFooterButtonsLeft?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: LogsOverviewLayoutFooterButtonsLeftProps) => {
+export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout, tags }: LogsOverviewLayoutFooterButtonsLeftProps) => {
     return (
         <Region
             name="footer_buttons_left"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
         >
             {itemsFooterButtonsLeft ?? (
@@ -311,20 +304,20 @@ export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, la
 export interface LogsOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
     onNextPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: LogsOverviewLayoutNextPageBtnItemProps) => {
+export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags }: LogsOverviewLayoutNextPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="next_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onNextPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 23, width: 10, top: 10, height: 10 }}
             />
@@ -336,26 +329,25 @@ export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: Log
 export interface LogsOverviewLayoutLastPageBtnItemProps {
     layout?: BoxLayout;
     onLastPageBtn?: () => void;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: LogsOverviewLayoutLastPageBtnItemProps) => {
+export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags }: LogsOverviewLayoutLastPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="last_page_btn"
-            params={17}
+            tags={tags}
             onPointerTap={onLastPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 18, width: 10, top: 10, height: 10 }}
             />
             <Icon
                 variant="5"
-                params={16}
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 27, width: 10, top: 10, height: 10 }}
             />
@@ -367,13 +359,14 @@ export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: Log
 export interface LogsOverviewLayoutFooterButtonsRightProps {
     itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: LogsOverviewLayoutFooterButtonsRightProps) => {
+export const LogsOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout, tags }: LogsOverviewLayoutFooterButtonsRightProps) => {
     return (
         <Region
             name="footer_buttons_right"
-            params={262224}
+            tags={tags}
             layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsFooterButtonsRight ?? (
@@ -393,26 +386,23 @@ export interface LogsOverviewLayoutPaginationProps {
     footerButtonsLeft?: LogsOverviewLayoutFooterButtonsLeftProps;
     footerButtonsRight?: LogsOverviewLayoutFooterButtonsRightProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: LogsOverviewLayoutPaginationProps) => {
+export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout, tags }: LogsOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="pagination"
-            params={1168}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
             <LogsOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
             <LogsOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
-            <Region
-                params={786640}
-                layout={{ position: 'absolute', width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}
-            >
+            <Region layout={{ position: 'absolute', width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"
-                    params={16}
                     layout={{ width: 159, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextStart ?? 'X logs found. Showing page '} />
@@ -424,7 +414,6 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
                 />
                 <Region
                     name="pagina_text_end"
-                    params={16}
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionPaginaTextEnd ?? 'of Y'} />
@@ -438,13 +427,14 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
 export interface LogsOverviewLayoutFooterProps {
     layout?: BoxLayout;
     pagination?: LogsOverviewLayoutPaginationProps;
+    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooter = ({ layout, pagination }: LogsOverviewLayoutFooterProps) => {
+export const LogsOverviewLayoutFooter = ({ layout, pagination, tags }: LogsOverviewLayoutFooterProps) => {
     return (
         <Region
             name="footer"
-            params={1049744}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
         >
             <LogsOverviewLayoutPagination {...pagination} />

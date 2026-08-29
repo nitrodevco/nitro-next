@@ -11,7 +11,6 @@ export const MinimizedMenuLayout = ({ layout, minimize }: MinimizedMenuLayoutPro
         <Region layout={{ position: 'relative', width: 45, height: 35, ...layout }}>
             <Bubble
                 variant="0"
-                params={1048865}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 45, bottom: -1, height: 35 }}
             >
@@ -25,13 +24,14 @@ export const MinimizedMenuLayout = ({ layout, minimize }: MinimizedMenuLayoutPro
 export interface MinimizedMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
+    tags?: string[];
 }
 
-export const MinimizedMenuLayoutMinimize = ({ layout, onMinimize }: MinimizedMenuLayoutMinimizeProps) => {
+export const MinimizedMenuLayoutMinimize = ({ layout, onMinimize, tags }: MinimizedMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            params={17}
+            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 30, ...layout }}
@@ -39,7 +39,6 @@ export const MinimizedMenuLayoutMinimize = ({ layout, onMinimize }: MinimizedMen
             <Icon
                 variant="6"
                 name="icon"
-                params={16}
                 layout={{ position: 'absolute', left: 14, width: 15, top: 11, height: 15 }}
             />
         </Region>

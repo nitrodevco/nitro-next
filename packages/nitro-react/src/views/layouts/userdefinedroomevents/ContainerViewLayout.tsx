@@ -17,13 +17,14 @@ export const ContainerViewLayout = ({ container, layout }: ContainerViewLayoutPr
 /** Named region `container` of ContainerViewLayout - configured through the parent's `container` prop. */
 export interface ContainerViewLayoutContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ContainerViewLayoutContainer = ({ layout }: ContainerViewLayoutContainerProps) => {
+export const ContainerViewLayoutContainer = ({ layout, tags }: ContainerViewLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 0, top: 0, height: 0, ...layout }}
         />
     );

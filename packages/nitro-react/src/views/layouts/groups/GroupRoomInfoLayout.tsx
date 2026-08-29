@@ -14,10 +14,7 @@ export interface GroupRoomInfoLayoutProps {
 export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, srcBgContracted, srcBgExpanded, titleRegion }: GroupRoomInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 195, height: 119, ...layout }}>
-            <Region
-                params={80}
-                layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 119 }}
-            >
+            <Region layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 119 }}>
                 <ThemeImage
                     name="bg_expanded"
                     src={srcBgExpanded ?? '${image.library.url}guilds/group_bg.png'}
@@ -40,13 +37,14 @@ export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, srcBgCont
 export interface GroupRoomInfoLayoutTitleRegionProps {
     layout?: BoxLayout;
     onTitleRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion }: GroupRoomInfoLayoutTitleRegionProps) => {
+export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion, tags }: GroupRoomInfoLayoutTitleRegionProps) => {
     return (
         <Region
             name="title_region"
-            params={145}
+            tags={tags}
             onPointerTap={onTitleRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, ...layout }}
@@ -58,13 +56,14 @@ export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion }: GroupR
 export interface GroupRoomInfoLayoutInfoRegionProps {
     layout?: BoxLayout;
     onInfoRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutInfoRegion = ({ layout, onInfoRegion }: GroupRoomInfoLayoutInfoRegionProps) => {
+export const GroupRoomInfoLayoutInfoRegion = ({ layout, onInfoRegion, tags }: GroupRoomInfoLayoutInfoRegionProps) => {
     return (
         <Region
             name="info_region"
-            params={145}
+            tags={tags}
             onPointerTap={onInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 28, height: 47, ...layout }}
@@ -82,20 +81,21 @@ export interface GroupRoomInfoLayoutContentContProps {
     onRequestMembershipButton?: () => void;
     srcGroupBaseIcon?: string;
     srcGroupIcon?: string;
+    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHeaderTxt, layout, onJoinButton, onManageButton, onRequestMembershipButton, srcGroupBaseIcon, srcGroupIcon }: GroupRoomInfoLayoutContentContProps) => {
+export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHeaderTxt, layout, onJoinButton, onManageButton, onRequestMembershipButton, srcGroupBaseIcon, srcGroupIcon, tags }: GroupRoomInfoLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 119, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header_txt"
-                params={786448}
                 layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -105,7 +105,6 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             </Region>
             <Region
                 name="group_name_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 59, width: 125, top: 27, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -116,21 +115,18 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             </Region>
             <ThemeImage
                 name="group_base_icon"
-                params={16}
                 src={srcGroupBaseIcon ?? '${image.library.url}guilds/group_base_icon.png'}
                 layout={{ position: 'absolute', left: 5, width: 21, top: 3, height: 16 }}
             />
             <WidgetSlot
                 widgetType="badge_image"
                 name="group_logo"
-                params={16}
                 options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 12, width: 39, top: 32, height: 39 }}
             />
             <ButtonThick
                 variant="3"
                 name="join_button"
-                params={131089}
                 onPointerTap={onJoinButton}
                 layout={{ position: 'absolute', left: 10, width: 175, top: 79, height: 29, minWidth: 175, maxWidth: 175 }}
             >
@@ -139,7 +135,6 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             <ButtonThick
                 variant="3"
                 name="request_membership_button"
-                params={131089}
                 onPointerTap={onRequestMembershipButton}
                 layout={{ position: 'absolute', left: 10, width: 175, top: 79, height: 29, minWidth: 175, maxWidth: 175 }}
             >
@@ -148,7 +143,6 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             <ButtonThick
                 variant="3"
                 name="manage_button"
-                params={131089}
                 onPointerTap={onManageButton}
                 layout={{ position: 'absolute', left: 10, width: 175, top: 79, height: 29, minWidth: 175, maxWidth: 175 }}
             >
@@ -156,7 +150,6 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             </ButtonThick>
             <ThemeImage
                 name="group_icon"
-                params={16}
                 src={srcGroupIcon}
                 layout={{ position: 'absolute', left: 5, width: 16, top: 2, height: 19 }}
             />

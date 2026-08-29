@@ -20,24 +20,23 @@ export interface RarityItemOverlayGriditemLayoutRarityItemOverlayContainerIntern
     layout?: BoxLayout;
     srcRarityItemOverlayPlaqueNumberBitmap?: string;
     srcRarityItemPlaqueBitmap?: string;
+    tags?: string[];
 }
 
-export const RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternal = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap }: RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternalProps) => {
+export const RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternal = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap, tags }: RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternalProps) => {
     return (
         <Region
             name="rarity_item_overlay_container_internal"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
         >
             <ThemeImage
                 name="rarity_item_plaque_bitmap"
-                params={16}
                 src={srcRarityItemPlaqueBitmap ?? layoutImage('rarity_item_rarity_item_plaque.png')}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 27, height: 9 }}
             />
             <ThemeImage
                 name="rarity_item_overlay_plaque_number_bitmap"
-                params={16}
                 src={srcRarityItemOverlayPlaqueNumberBitmap}
                 layout={{ position: 'absolute', left: 6, width: 24, top: 29, height: 5 }}
             />

@@ -13,13 +13,11 @@ export const ClubDiscountPromotionLayout = ({ layout, srcFlashingAnimation, text
             <Border
                 variant="9"
                 name="club_promo_bar_border"
-                params={16}
                 tintColor="#686661"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 44 }}
             >
                 <ThemeImage
                     name="flashing_animation"
-                    params={16}
                     src={srcFlashingAnimation}
                     layout={{ position: 'absolute', left: 3, width: 46, top: 3, height: 37 }}
                 />
@@ -27,7 +25,6 @@ export const ClubDiscountPromotionLayout = ({ layout, srcFlashingAnimation, text
                 <Icon
                     variant="14"
                     name="club_icon"
-                    params={16}
                     layout={{ position: 'absolute', left: 6, width: 16, top: 7, height: 16 }}
                 />
             </Border>
@@ -41,20 +38,20 @@ export interface ClubDiscountPromotionLayoutTextRegionProps {
     captionPromoTextShadow?: string;
     layout?: BoxLayout;
     onTextRegion?: () => void;
+    tags?: string[];
 }
 
-export const ClubDiscountPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion }: ClubDiscountPromotionLayoutTextRegionProps) => {
+export const ClubDiscountPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, tags }: ClubDiscountPromotionLayoutTextRegionProps) => {
     return (
         <Region
             name="text_region"
-            params={8388625}
+            tags={tags}
             onPointerTap={onTextRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 26, width: 161, top: 6, height: 30, ...layout }}
         >
             <Region
                 name="promo_text_shadow"
-                params={16}
                 layout={{ position: 'absolute', left: 1, width: 160, top: 1, height: 30, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -64,7 +61,6 @@ export const ClubDiscountPromotionLayoutTextRegion = ({ captionPromoText, captio
             </Region>
             <Region
                 name="promo_text"
-                params={8388624}
                 layout={{ position: 'absolute', left: 0, width: 160, top: 0, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -11,24 +11,23 @@ export interface SingleViewWidgetProps {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: SingleViewWidgetProps) => {
+export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tags }: SingleViewWidgetProps) => {
     return (
         <Region
             name="singleViewWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 162 }}
             />
             <Region
                 name="ctlg_product_name"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 71, top: 156, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -38,7 +37,6 @@ export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             </Region>
             <Region
                 name="ctlg_description"
-                params={16}
                 layout={{ position: 'absolute', left: -2, width: 162, top: 173, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

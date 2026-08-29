@@ -16,7 +16,6 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
     return (
         <Frame
             variant="3"
-            params={163841}
             caption="caption"
             tintColor="#418db0"
             onClose={onClose}
@@ -25,7 +24,6 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ThemeImage
                     name="illustration"
-                    params={16}
                     src={srcIllustration}
                     layout={{ position: 'absolute', left: 10, width: 1, top: 8, height: 1 }}
                 />
@@ -39,13 +37,14 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
 export interface SimpleAlert_2678LayoutSubtitleItemProps {
     captionSubtitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout }: SimpleAlert_2678LayoutSubtitleItemProps) => {
+export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout, tags }: SimpleAlert_2678LayoutSubtitleItemProps) => {
     return (
         <Region
             name="subtitle"
-            params={16}
+            tags={tags}
             layout={{ width: 54, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -61,13 +60,14 @@ export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout }: 
 export interface SimpleAlert_2678LayoutMessageItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout }: SimpleAlert_2678LayoutMessageItemProps) => {
+export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout, tags }: SimpleAlert_2678LayoutMessageItemProps) => {
     return (
         <Region
             name="message"
-            params={16}
+            tags={tags}
             layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -82,13 +82,14 @@ export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout }: Si
 export interface SimpleAlert_2678LayoutListTopItemProps {
     itemsListTop?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout }: SimpleAlert_2678LayoutListTopItemProps) => {
+export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout, tags }: SimpleAlert_2678LayoutListTopItemProps) => {
     return (
         <Region
             name="list_top"
-            params={147472}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
@@ -105,16 +106,17 @@ export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout }: Simp
 export interface SimpleAlert_2678LayoutCloseButtonItemProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutCloseButtonItem = ({ layout, onCloseButton }: SimpleAlert_2678LayoutCloseButtonItemProps) => {
+export const SimpleAlert_2678LayoutCloseButtonItem = ({ layout, onCloseButton, tags }: SimpleAlert_2678LayoutCloseButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="close_button"
-            params={131281}
+            tags={tags}
             tintColor="#efefef"
             onPointerTap={onCloseButton}
             layout={{ width: 126, height: 28, flexShrink: 0, ...layout }}
@@ -129,13 +131,14 @@ export interface SimpleAlert_2678LayoutLinkItemProps {
     captionLink?: string;
     layout?: BoxLayout;
     onLink?: () => void;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink }: SimpleAlert_2678LayoutLinkItemProps) => {
+export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink, tags }: SimpleAlert_2678LayoutLinkItemProps) => {
     return (
         <Region
             name="link"
-            params={193}
+            tags={tags}
             layout={{ width: 262, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             onPointerTap={onLink}
             cursor="pointer"
@@ -152,13 +155,14 @@ export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink }: 
 export interface SimpleAlert_2678LayoutListBottomItemProps {
     itemsListBottom?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }: SimpleAlert_2678LayoutListBottomItemProps) => {
+export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout, tags }: SimpleAlert_2678LayoutListBottomItemProps) => {
     return (
         <Region
             name="list_bottom"
-            params={147472}
+            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsListBottom ?? (
@@ -168,7 +172,6 @@ export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }
                 </>
             )}
             <ThemeImage
-                params={16}
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 1000, height: 13, flexShrink: 0 }}
             />
@@ -180,13 +183,14 @@ export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }
 export interface SimpleAlert_2678LayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutList = ({ itemsList, layout }: SimpleAlert_2678LayoutListProps) => {
+export const SimpleAlert_2678LayoutList = ({ itemsList, layout, tags }: SimpleAlert_2678LayoutListProps) => {
     return (
         <Region
             name="list"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 8, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsList ?? (

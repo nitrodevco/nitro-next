@@ -22,13 +22,14 @@ export interface PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps {
     layout?: BoxLayout;
     onPollAnswerCheckbox?: () => void;
     onPollAnswerEntity?: () => void;
+    tags?: string[];
 }
 
-export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerCheckbox, onPollAnswerEntity }: PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps) => {
+export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerCheckbox, onPollAnswerEntity, tags }: PollAnswerCheckboxInputLayoutPollAnswerEntityItemProps) => {
     return (
         <Region
             name="poll_answer_entity"
-            params={131217}
+            tags={tags}
             onPointerTap={onPollAnswerEntity}
             cursor="pointer"
             layout={{ width: 365, height: 32, flexShrink: 0, ...layout }}
@@ -37,13 +38,11 @@ export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollA
                 variant="0"
                 name="poll_answer_checkbox"
                 tags={[ 'POLL_SELECTABLE_ITEM' ]}
-                params={17}
                 onPointerTap={onPollAnswerCheckbox}
                 layout={{ position: 'absolute', left: 7, width: 20, top: 5, height: 16 }}
             />
             <Region
                 name="poll_answer_entity_text"
-                params={16}
                 layout={{ position: 'absolute', left: 24, width: 341, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -60,13 +59,14 @@ export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollA
 export interface PollAnswerCheckboxInputLayoutPollAnswerItemlistProps {
     itemsPollAnswerItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PollAnswerCheckboxInputLayoutPollAnswerItemlist = ({ itemsPollAnswerItemlist, layout }: PollAnswerCheckboxInputLayoutPollAnswerItemlistProps) => {
+export const PollAnswerCheckboxInputLayoutPollAnswerItemlist = ({ itemsPollAnswerItemlist, layout, tags }: PollAnswerCheckboxInputLayoutPollAnswerItemlistProps) => {
     return (
         <Region
             name="poll_answer_itemlist"
-            params={131217}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 7, top: 0, minHeight: 125, flexDirection: 'column', ...layout }}
         >
             {itemsPollAnswerItemlist ?? (
@@ -81,13 +81,14 @@ export interface PollAnswerCheckboxInputLayoutPollAnswerContentProps {
     layout?: BoxLayout;
     onPollAnswerContent?: () => void;
     pollAnswerItemlist?: PollAnswerCheckboxInputLayoutPollAnswerItemlistProps;
+    tags?: string[];
 }
 
-export const PollAnswerCheckboxInputLayoutPollAnswerContent = ({ layout, onPollAnswerContent, pollAnswerItemlist }: PollAnswerCheckboxInputLayoutPollAnswerContentProps) => {
+export const PollAnswerCheckboxInputLayoutPollAnswerContent = ({ layout, onPollAnswerContent, pollAnswerItemlist, tags }: PollAnswerCheckboxInputLayoutPollAnswerContentProps) => {
     return (
         <Region
             name="poll_answer_content"
-            params={131217}
+            tags={tags}
             onPointerTap={onPollAnswerContent}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125, ...layout }}

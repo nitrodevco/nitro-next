@@ -11,7 +11,6 @@ export const BitmapWrapperViewLayout = ({ layout, srcBitmapView }: BitmapWrapper
         <Region layout={{ position: 'relative', width: 212, height: 105, ...layout }}>
             <ThemeImage
                 name="bitmap_view"
-                params={17}
                 src={srcBitmapView}
                 layout={{ position: 'absolute', left: 0, width: 212, top: 0, height: 105 }}
             />

@@ -17,7 +17,6 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
     return (
         <Frame
             variant="0"
-            params={229377}
             caption="Issue handling"
             tintColor="#418db0"
             onClose={onClose}
@@ -27,7 +26,6 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
                 <Dropmenu
                     variant="100"
                     name="cfh_topics"
-                    params={17}
                     onPointerTap={onCfhTopics}
                     layout={{ position: 'absolute', left: 410, width: 320, top: 15, height: 20 }}
                 >
@@ -46,18 +44,18 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
 export interface IssueHandlerLayoutSanctioninfoProps {
     captionSanctionLabel?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutSanctioninfo = ({ captionSanctionLabel, layout }: IssueHandlerLayoutSanctioninfoProps) => {
+export const IssueHandlerLayoutSanctioninfo = ({ captionSanctionLabel, layout, tags }: IssueHandlerLayoutSanctioninfoProps) => {
     return (
         <Region
             name="sanctioninfo"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 524, width: 215, top: 42, height: 18, maxHeight: 47, ...layout }}
         >
             <Region
                 name="sanction_label"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -78,19 +76,19 @@ export interface IssueHandlerLayoutButtonsProps {
     onCloseUseless?: () => void;
     onHandleNextCheckbox?: () => void;
     onRelease?: () => void;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease }: IssueHandlerLayoutButtonsProps) => {
+export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease, tags }: IssueHandlerLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 444, top: 15, height: 75, ...layout }}
         >
             <Button
                 variant="0"
                 name="close_useless"
-                params={131089}
                 tintColor="#ff9090"
                 onPointerTap={onCloseUseless}
                 layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 22, minWidth: 110, maxWidth: 110 }}
@@ -100,7 +98,6 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
             <Button
                 variant="0"
                 name="close_resolved"
-                params={131089}
                 onPointerTap={onCloseResolved}
                 layout={{ position: 'absolute', left: 0, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
             >
@@ -109,7 +106,6 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
             <Button
                 variant="0"
                 name="release"
-                params={131089}
                 onPointerTap={onRelease}
                 layout={{ position: 'absolute', left: 316, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
             >
@@ -118,7 +114,6 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
             <CheckBox
                 variant="0"
                 name="handle_next_checkbox"
-                params={17}
                 onPointerTap={onHandleNextCheckbox}
                 layout={{ position: 'absolute', left: 120, width: 17, top: 53, height: 17 }}
             >
@@ -126,7 +121,6 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
             </CheckBox>
             <Region
                 name="handle_next_text"
-                params={16}
                 layout={{ position: 'absolute', left: 138, width: 153, top: 53, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -137,7 +131,6 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
             <Button
                 variant="0"
                 name="close_sanction"
-                params={131089}
                 onPointerTap={onCloseSanction}
                 layout={{ position: 'absolute', left: 120, width: 110, top: 25, height: 22, minWidth: 110, maxWidth: 110 }}
             >
@@ -150,46 +143,35 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
 /** Row template `issues_header` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutIssuesHeaderItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayoutIssuesHeaderItemProps) => {
+export const IssueHandlerLayoutIssuesHeaderItem = ({ layout, tags }: IssueHandlerLayoutIssuesHeaderItemProps) => {
     return (
         <Region
             name="issues_header"
-            params={16}
+            tags={tags}
             layout={{ width: 280, height: 13, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
-                params={786449}
-                layout={{ position: 'absolute', marginLeft: -101, marginRight: 101, width: 78, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: -101, marginRight: 101, width: 78, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Reporter"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                params={786449}
-                layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Category"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                params={786449}
-                layout={{ position: 'absolute', marginLeft: 78, marginRight: -78, width: 60, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: 78, marginRight: -78, width: 60, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Type"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                params={786449}
-                layout={{ position: 'absolute', marginLeft: 124, marginRight: -124, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', marginLeft: 124, marginRight: -124, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Open"
                     textOptions={{ fill: '#ffffff' }}
@@ -206,9 +188,10 @@ export interface IssueHandlerLayoutIssuesItemListItemProps {
     captionTimeOpen?: string;
     captionType?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionReporter, captionTimeOpen, captionType, layout }: IssueHandlerLayoutIssuesItemListItemProps) => {
+export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionReporter, captionTimeOpen, captionType, layout, tags }: IssueHandlerLayoutIssuesItemListItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -216,38 +199,31 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
         >
             <Region
                 name="issues_item_list"
-                params={17}
+                tags={tags}
                 backgroundColor="#ffffff"
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
-                <Region
-                    params={17}
-                    layout={{ width: 280, height: 16, flexShrink: 0 }}
-                >
+                <Region layout={{ width: 280, height: 16, flexShrink: 0 }}>
                     <Region
                         name="reporter"
-                        params={16}
                         layout={{ position: 'absolute', left: 0, width: 78, top: 0, height: 13, maxWidth: 78, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionReporter ?? 'reporter'} />
                     </Region>
                     <Region
                         name="category"
-                        params={16}
                         layout={{ position: 'absolute', left: 78, width: 110, top: 0, height: 13, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionCategory ?? 'category'} />
                     </Region>
                     <Region
                         name="type"
-                        params={16}
                         layout={{ position: 'absolute', left: 188, width: 60, top: 0, height: 13, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionType ?? 'type'} />
                     </Region>
                     <Region
                         name="time_open"
-                        params={16}
                         layout={{ position: 'absolute', left: 248, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionTimeOpen ?? '00:00'} />
@@ -261,13 +237,14 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
 /** Row template `caller_user_info` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutCallerUserInfoItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutCallerUserInfoItem = ({ layout }: IssueHandlerLayoutCallerUserInfoItemProps) => {
+export const IssueHandlerLayoutCallerUserInfoItem = ({ layout, tags }: IssueHandlerLayoutCallerUserInfoItemProps) => {
     return (
         <Region
             name="caller_user_info"
-            params={16}
+            tags={tags}
             layout={{ width: 280, height: 207, flexShrink: 0, ...layout }}
         />
     );
@@ -276,9 +253,10 @@ export const IssueHandlerLayoutCallerUserInfoItem = ({ layout }: IssueHandlerLay
 /** Row template `msg_item_list` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutMsgItemListItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutMsgItemListItem = ({ layout }: IssueHandlerLayoutMsgItemListItemProps) => {
+export const IssueHandlerLayoutMsgItemListItem = ({ layout, tags }: IssueHandlerLayoutMsgItemListItemProps) => {
     const [ inputValue, setInputValue ] = useState('');
 
     return (
@@ -288,7 +266,7 @@ export const IssueHandlerLayoutMsgItemListItem = ({ layout }: IssueHandlerLayout
         >
             <Region
                 name="msg_item_list"
-                params={17}
+                tags={tags}
                 backgroundColor="#ffffff"
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
@@ -307,13 +285,14 @@ export const IssueHandlerLayoutMsgItemListItem = ({ layout }: IssueHandlerLayout
 export interface IssueHandlerLayoutReportedUserInfoCaptionItemProps {
     captionReportedUserInfoCaption?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedUserInfoCaption, layout }: IssueHandlerLayoutReportedUserInfoCaptionItemProps) => {
+export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedUserInfoCaption, layout, tags }: IssueHandlerLayoutReportedUserInfoCaptionItemProps) => {
     return (
         <Region
             name="reported_user_info_caption"
-            params={786449}
+            tags={tags}
             layout={{ width: 120, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -327,13 +306,14 @@ export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedU
 /** Row template `reported_user_info` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutReportedUserInfoItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutReportedUserInfoItem = ({ layout }: IssueHandlerLayoutReportedUserInfoItemProps) => {
+export const IssueHandlerLayoutReportedUserInfoItem = ({ layout, tags }: IssueHandlerLayoutReportedUserInfoItemProps) => {
     return (
         <Region
             name="reported_user_info"
-            params={16}
+            tags={tags}
             layout={{ width: 280, height: 207, flexShrink: 0, ...layout }}
         />
     );
@@ -343,13 +323,14 @@ export const IssueHandlerLayoutReportedUserInfoItem = ({ layout }: IssueHandlerL
 export interface IssueHandlerLayoutIssueContProps {
     itemsIssueCont?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHandlerLayoutIssueContProps) => {
+export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout, tags }: IssueHandlerLayoutIssueContProps) => {
     return (
         <Region
             name="issue_cont"
-            params={2193}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 465, top: 0, bottom: 26, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsIssueCont ?? (
@@ -362,19 +343,13 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHan
                     <IssueHandlerLayoutReportedUserInfoItem />
                 </>
             )}
-            <Region
-                params={786448}
-                layout={{ width: 100, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 100, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Caller User Info"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                params={786448}
-                layout={{ width: 60, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 60, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Messages"
                     textOptions={{ fill: '#ffffff' }}
@@ -387,9 +362,10 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHan
 /** Named region `evidence_list` of IssueHandlerLayout - configured through the parent's `evidenceList` prop. */
 export interface IssueHandlerLayoutEvidenceListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutEvidenceList = ({ layout }: IssueHandlerLayoutEvidenceListProps) => {
+export const IssueHandlerLayoutEvidenceList = ({ layout, tags }: IssueHandlerLayoutEvidenceListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -397,7 +373,7 @@ export const IssueHandlerLayoutEvidenceList = ({ layout }: IssueHandlerLayoutEvi
         >
             <Region
                 name="evidence_list"
-                params={2064}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -408,13 +384,14 @@ export const IssueHandlerLayoutEvidenceList = ({ layout }: IssueHandlerLayoutEvi
 export interface IssueHandlerLayoutChatContProps {
     evidenceList?: IssueHandlerLayoutEvidenceListProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IssueHandlerLayoutChatCont = ({ evidenceList, layout }: IssueHandlerLayoutChatContProps) => {
+export const IssueHandlerLayoutChatCont = ({ evidenceList, layout, tags }: IssueHandlerLayoutChatContProps) => {
     return (
         <Region
             name="chat_cont"
-            params={2064}
+            tags={tags}
             backgroundColor="#418db0"
             layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75, ...layout }}
         >

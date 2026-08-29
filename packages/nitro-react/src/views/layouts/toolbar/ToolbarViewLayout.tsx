@@ -21,7 +21,6 @@ export const ToolbarViewLayout = ({ layout, toolbarItems }: ToolbarViewLayoutPro
                     variant="6"
                     name="main_toolbar"
                     tags={[ 'FIT:toolbar' ]}
-                    params={147456}
                     tintColor="#79756e"
                     layout={{ width: '100%', height: '100%' }}
                 >
@@ -37,14 +36,14 @@ export interface ToolbarViewLayoutRECEPTIONItemProps {
     layout?: BoxLayout;
     onRECEPTION?: () => void;
     srcIconsToolbarReception?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutRECEPTIONItem = ({ layout, onRECEPTION, srcIconsToolbarReception }: ToolbarViewLayoutRECEPTIONItemProps) => {
+export const ToolbarViewLayoutRECEPTIONItem = ({ layout, onRECEPTION, srcIconsToolbarReception, tags }: ToolbarViewLayoutRECEPTIONItemProps) => {
     return (
         <Region
             name="RECEPTION"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarReception', 'RECEPTION' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onRECEPTION}
             cursor="pointer"
             layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
@@ -53,20 +52,17 @@ export const ToolbarViewLayoutRECEPTIONItem = ({ layout, onRECEPTION, srcIconsTo
                 variant="2"
                 name="bg_reception"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_reception"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarReception ?? layoutImage('icons_toolbar_reception_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_toolbar_divider.png')}
                 layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
             />
@@ -79,14 +75,14 @@ export interface ToolbarViewLayoutHOMEItemProps {
     layout?: BoxLayout;
     onHOME?: () => void;
     srcIconsToolbarHome?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutHOMEItem = ({ layout, onHOME, srcIconsToolbarHome }: ToolbarViewLayoutHOMEItemProps) => {
+export const ToolbarViewLayoutHOMEItem = ({ layout, onHOME, srcIconsToolbarHome, tags }: ToolbarViewLayoutHOMEItemProps) => {
     return (
         <Region
             name="HOME"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarHome', 'HOME' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onHOME}
             cursor="pointer"
             layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
@@ -95,20 +91,17 @@ export const ToolbarViewLayoutHOMEItem = ({ layout, onHOME, srcIconsToolbarHome 
                 variant="2"
                 name="bg_home"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_home"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarHome ?? layoutImage('icons_toolbar_home_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
                 />
             </Border>
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_toolbar_divider.png')}
                 layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
             />
@@ -122,16 +115,16 @@ export interface ToolbarViewLayoutNAVIGATORItemProps {
     layout?: BoxLayout;
     onNAVIGATOR?: () => void;
     srcIconsToolbarNavigator?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutNAVIGATORItem = ({ captionText, layout, onNAVIGATOR, srcIconsToolbarNavigator }: ToolbarViewLayoutNAVIGATORItemProps) => {
+export const ToolbarViewLayoutNAVIGATORItem = ({ captionText, layout, onNAVIGATOR, srcIconsToolbarNavigator, tags }: ToolbarViewLayoutNAVIGATORItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="NAVIGATOR"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarNavigator' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onNAVIGATOR}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -140,21 +133,18 @@ export const ToolbarViewLayoutNAVIGATORItem = ({ captionText, layout, onNAVIGATO
                 variant="2"
                 name="bg_navigator"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_navigator"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarNavigator ?? layoutImage('icons_toolbar_navigator_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -172,16 +162,16 @@ export interface ToolbarViewLayoutQUESTSItemProps {
     layout?: BoxLayout;
     onQUESTS?: () => void;
     srcIconsToolbarQuests?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutQUESTSItem = ({ captionText, layout, onQUESTS, srcIconsToolbarQuests }: ToolbarViewLayoutQUESTSItemProps) => {
+export const ToolbarViewLayoutQUESTSItem = ({ captionText, layout, onQUESTS, srcIconsToolbarQuests, tags }: ToolbarViewLayoutQUESTSItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="QUESTS"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT:toolbarQuests' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onQUESTS}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -190,21 +180,18 @@ export const ToolbarViewLayoutQUESTSItem = ({ captionText, layout, onQUESTS, src
                 variant="2"
                 name="bg_quests"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_quests"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarQuests ?? layoutImage('icons_toolbar_quests_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -222,16 +209,16 @@ export interface ToolbarViewLayoutGAMESItemProps {
     layout?: BoxLayout;
     onGAMES?: () => void;
     srcIconsToolbarGames?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutGAMESItem = ({ captionText, layout, onGAMES, srcIconsToolbarGames }: ToolbarViewLayoutGAMESItemProps) => {
+export const ToolbarViewLayoutGAMESItem = ({ captionText, layout, onGAMES, srcIconsToolbarGames, tags }: ToolbarViewLayoutGAMESItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="GAMES"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarGames' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onGAMES}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -240,21 +227,18 @@ export const ToolbarViewLayoutGAMESItem = ({ captionText, layout, onGAMES, srcIc
                 variant="2"
                 name="bg_games"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_games"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarGames ?? layoutImage('icons_toolbar_games_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -272,16 +256,16 @@ export interface ToolbarViewLayoutSTORIESItemProps {
     layout?: BoxLayout;
     onSTORIES?: () => void;
     srcIconsToolbarStories?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutSTORIESItem = ({ captionText, layout, onSTORIES, srcIconsToolbarStories }: ToolbarViewLayoutSTORIESItemProps) => {
+export const ToolbarViewLayoutSTORIESItem = ({ captionText, layout, onSTORIES, srcIconsToolbarStories, tags }: ToolbarViewLayoutSTORIESItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="STORIES"
-            tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarStories' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onSTORIES}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -290,21 +274,18 @@ export const ToolbarViewLayoutSTORIESItem = ({ captionText, layout, onSTORIES, s
                 variant="2"
                 name="bg_stories"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_stories"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarStories ?? layoutImage('icons_toolbar_stories_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -322,16 +303,16 @@ export interface ToolbarViewLayoutACHIEVEMENTSItemProps {
     layout?: BoxLayout;
     onACHIEVEMENTS?: () => void;
     srcIconsToolbarAchievements?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutACHIEVEMENTSItem = ({ captionText, layout, onACHIEVEMENTS, srcIconsToolbarAchievements }: ToolbarViewLayoutACHIEVEMENTSItemProps) => {
+export const ToolbarViewLayoutACHIEVEMENTSItem = ({ captionText, layout, onACHIEVEMENTS, srcIconsToolbarAchievements, tags }: ToolbarViewLayoutACHIEVEMENTSItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ACHIEVEMENTS"
-            tags={[ 'TOGGLE', 'FIT:toolbarAchievements' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onACHIEVEMENTS}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -340,21 +321,18 @@ export const ToolbarViewLayoutACHIEVEMENTSItem = ({ captionText, layout, onACHIE
                 variant="2"
                 name="bg_achievements"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_achievements"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarAchievements ?? layoutImage('icons_toolbar_achievements_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -372,16 +350,16 @@ export interface ToolbarViewLayoutCATALOGUEItemProps {
     layout?: BoxLayout;
     onCATALOGUE?: () => void;
     srcIconsToolbarCatalogue?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutCATALOGUEItem = ({ captionText, layout, onCATALOGUE, srcIconsToolbarCatalogue }: ToolbarViewLayoutCATALOGUEItemProps) => {
+export const ToolbarViewLayoutCATALOGUEItem = ({ captionText, layout, onCATALOGUE, srcIconsToolbarCatalogue, tags }: ToolbarViewLayoutCATALOGUEItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="CATALOGUE"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarCatalogue' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onCATALOGUE}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -390,21 +368,18 @@ export const ToolbarViewLayoutCATALOGUEItem = ({ captionText, layout, onCATALOGU
                 variant="2"
                 name="bg_catalogue"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_catalogue"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarCatalogue ?? layoutImage('icons_toolbar_catalogue_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -422,16 +397,16 @@ export interface ToolbarViewLayoutBUILDERItemProps {
     layout?: BoxLayout;
     onBUILDER?: () => void;
     srcIconsToolbarBuilder?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutBUILDERItem = ({ captionText, layout, onBUILDER, srcIconsToolbarBuilder }: ToolbarViewLayoutBUILDERItemProps) => {
+export const ToolbarViewLayoutBUILDERItem = ({ captionText, layout, onBUILDER, srcIconsToolbarBuilder, tags }: ToolbarViewLayoutBUILDERItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="BUILDER"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarCatalogue' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onBUILDER}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -440,21 +415,18 @@ export const ToolbarViewLayoutBUILDERItem = ({ captionText, layout, onBUILDER, s
                 variant="2"
                 name="bg_builder"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_builder"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarBuilder ?? layoutImage('icons_toolbar_builder_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -472,16 +444,16 @@ export interface ToolbarViewLayoutINVENTORYItemProps {
     layout?: BoxLayout;
     onINVENTORY?: () => void;
     srcIconsToolbarInventory?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutINVENTORYItem = ({ captionText, layout, onINVENTORY, srcIconsToolbarInventory }: ToolbarViewLayoutINVENTORYItemProps) => {
+export const ToolbarViewLayoutINVENTORYItem = ({ captionText, layout, onINVENTORY, srcIconsToolbarInventory, tags }: ToolbarViewLayoutINVENTORYItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="INVENTORY"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT:toolbarInventory' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onINVENTORY}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -490,21 +462,18 @@ export const ToolbarViewLayoutINVENTORYItem = ({ captionText, layout, onINVENTOR
                 variant="2"
                 name="bg_inventory"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icons_toolbar_inventory"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconsToolbarInventory ?? layoutImage('icons_toolbar_inventory_normal.png')}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -523,16 +492,16 @@ export interface ToolbarViewLayoutMEMENUItemProps {
     onMEMENU?: () => void;
     srcGuideIcon?: string;
     srcIconMeMenu?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, srcGuideIcon, srcIconMeMenu }: ToolbarViewLayoutMEMENUItemProps) => {
+export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, srcGuideIcon, srcIconMeMenu, tags }: ToolbarViewLayoutMEMENUItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="MEMENU"
-            tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarMeMenu' ]}
-            params={17}
+            tags={tags}
             onPointerTap={onMEMENU}
             cursor="pointer"
             layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
@@ -541,21 +510,18 @@ export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, src
                 variant="2"
                 name="bg_memenu"
                 tags={[ 'ICON_BORDER' ]}
-                params={2064}
                 tintColor="#57544d"
                 layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="icon_me_menu"
                     tags={[ 'ICON_BMP' ]}
-                    params={208}
                     src={srcIconMeMenu}
                     layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
                 />
             </Border>
             <Region
                 name="text"
-                params={263184}
                 layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -569,7 +535,6 @@ export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, src
             >
                 <ThemeImage
                     name="guide_icon"
-                    params={16}
                     src={srcGuideIcon ?? layoutImage('help_guide_icon.png')}
                     layout={{ position: 'absolute', left: 60, width: 13, top: 38, height: 26 }}
                 />
@@ -582,13 +547,14 @@ export const ToolbarViewLayoutMEMENUItem = ({ captionText, layout, onMEMENU, src
 export interface ToolbarViewLayoutBottomPaddingItemProps {
     layout?: BoxLayout;
     srcBottomPadding?: string;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutBottomPaddingItem = ({ layout, srcBottomPadding }: ToolbarViewLayoutBottomPaddingItemProps) => {
+export const ToolbarViewLayoutBottomPaddingItem = ({ layout, srcBottomPadding, tags }: ToolbarViewLayoutBottomPaddingItemProps) => {
     return (
         <ThemeImage
             name="bottom_padding"
-            params={16}
+            tags={tags}
             src={srcBottomPadding}
             layout={{ width: 76, height: 10, flexShrink: 0, ...layout }}
         />
@@ -599,28 +565,29 @@ export const ToolbarViewLayoutBottomPaddingItem = ({ layout, srcBottomPadding }:
 export interface ToolbarViewLayoutToolbarItemsProps {
     itemsToolbarItems?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ToolbarViewLayoutToolbarItems = ({ itemsToolbarItems, layout }: ToolbarViewLayoutToolbarItemsProps) => {
+export const ToolbarViewLayoutToolbarItems = ({ itemsToolbarItems, layout, tags }: ToolbarViewLayoutToolbarItemsProps) => {
     return (
         <Region
             name="toolbar_items"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 5, flexDirection: 'column', ...layout }}
         >
             {itemsToolbarItems ?? (
                 <>
-                    <ToolbarViewLayoutRECEPTIONItem />
-                    <ToolbarViewLayoutHOMEItem />
-                    <ToolbarViewLayoutNAVIGATORItem />
-                    <ToolbarViewLayoutQUESTSItem />
-                    <ToolbarViewLayoutGAMESItem />
-                    <ToolbarViewLayoutSTORIESItem />
-                    <ToolbarViewLayoutACHIEVEMENTSItem />
-                    <ToolbarViewLayoutCATALOGUEItem />
-                    <ToolbarViewLayoutBUILDERItem />
-                    <ToolbarViewLayoutINVENTORYItem />
-                    <ToolbarViewLayoutMEMENUItem />
+                    <ToolbarViewLayoutRECEPTIONItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarReception', 'RECEPTION' ]} />
+                    <ToolbarViewLayoutHOMEItem tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarHome', 'HOME' ]} />
+                    <ToolbarViewLayoutNAVIGATORItem tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'VISIBLE_ROOM', 'VISIBLE_GAME_CENTER', 'FIT:toolbarNavigator' ]} />
+                    <ToolbarViewLayoutQUESTSItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT:toolbarQuests' ]} />
+                    <ToolbarViewLayoutGAMESItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarGames' ]} />
+                    <ToolbarViewLayoutSTORIESItem tags={[ 'TOGGLE', 'VISIBLE_HOTEL', 'FIT:toolbarStories' ]} />
+                    <ToolbarViewLayoutACHIEVEMENTSItem tags={[ 'TOGGLE', 'FIT:toolbarAchievements' ]} />
+                    <ToolbarViewLayoutCATALOGUEItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarCatalogue' ]} />
+                    <ToolbarViewLayoutBUILDERItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'FIT:toolbarCatalogue' ]} />
+                    <ToolbarViewLayoutINVENTORYItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'FIT:toolbarInventory' ]} />
+                    <ToolbarViewLayoutMEMENUItem tags={[ 'TOGGLE', 'VISIBLE_ROOM', 'VISIBLE_HOTEL', 'VISIBLE_GAME_CENTER', 'FIT:toolbarMeMenu' ]} />
                     <ToolbarViewLayoutBottomPaddingItem />
                 </>
             )}

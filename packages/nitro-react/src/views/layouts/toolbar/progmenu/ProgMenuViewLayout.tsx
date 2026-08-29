@@ -19,18 +19,11 @@ export const ProgMenuViewLayout = ({ achievements, dailytasks, introduction, lay
             <Border
                 variant="6"
                 name="buttons"
-                params={147457}
                 tintColor="#3b3933"
                 layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 53 }}
             >
-                <Region
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 53 }}
-                >
-                    <Region
-                        params={147472}
-                        layout={{ position: 'absolute', left: 3, width: 359, top: 3, height: 50 }}
-                    >
+                <Region layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 53 }}>
+                    <Region layout={{ position: 'absolute', left: 3, width: 359, top: 3, height: 50 }}>
                         <ProgMenuViewLayoutDailytasks {...dailytasks} />
                         <ProgMenuViewLayoutQuests {...quests} />
                         <ProgMenuViewLayoutAchievements {...achievements} />
@@ -51,28 +44,27 @@ export interface ProgMenuViewLayoutDailytasksProps {
     onDailytasks?: () => void;
     srcDailytasksIconColor?: string;
     srcDailytasksIconGrey?: string;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutDailytasks = ({ captionFieldText, layout, onDailytasks, srcDailytasksIconColor, srcDailytasksIconGrey }: ProgMenuViewLayoutDailytasksProps) => {
+export const ProgMenuViewLayoutDailytasks = ({ captionFieldText, layout, onDailytasks, srcDailytasksIconColor, srcDailytasksIconGrey, tags }: ProgMenuViewLayoutDailytasksProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dailytasks"
-            params={17}
+            tags={tags}
             onPointerTap={onDailytasks}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="dailytasks_icon_color"
-                params={16}
                 src={srcDailytasksIconColor ?? layoutImage('prog_menu_daily_tasks.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -83,7 +75,6 @@ export const ProgMenuViewLayoutDailytasks = ({ captionFieldText, layout, onDaily
             </Region>
             <ThemeImage
                 name="dailytasks_icon_grey"
-                params={16}
                 src={srcDailytasksIconGrey ?? layoutImage('prog_menu_daily_tasks.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -98,28 +89,27 @@ export interface ProgMenuViewLayoutQuestsProps {
     onQuests?: () => void;
     srcQuestsIconColor?: string;
     srcQuestsIconGrey?: string;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutQuests = ({ captionFieldText, layout, onQuests, srcQuestsIconColor, srcQuestsIconGrey }: ProgMenuViewLayoutQuestsProps) => {
+export const ProgMenuViewLayoutQuests = ({ captionFieldText, layout, onQuests, srcQuestsIconColor, srcQuestsIconGrey, tags }: ProgMenuViewLayoutQuestsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="quests"
-            params={17}
+            tags={tags}
             onPointerTap={onQuests}
             cursor="pointer"
             layout={{ position: 'absolute', left: 80, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="quests_icon_color"
-                params={16}
                 src={srcQuestsIconColor ?? layoutImage('prog_menu_quests.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -130,7 +120,6 @@ export const ProgMenuViewLayoutQuests = ({ captionFieldText, layout, onQuests, s
             </Region>
             <ThemeImage
                 name="quests_icon_grey"
-                params={16}
                 src={srcQuestsIconGrey ?? layoutImage('prog_menu_quests.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -145,28 +134,27 @@ export interface ProgMenuViewLayoutAchievementsProps {
     onAchievements?: () => void;
     srcAchievementsIconColor?: string;
     srcAchievementsIconGrey?: string;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutAchievements = ({ captionFieldText, layout, onAchievements, srcAchievementsIconColor, srcAchievementsIconGrey }: ProgMenuViewLayoutAchievementsProps) => {
+export const ProgMenuViewLayoutAchievements = ({ captionFieldText, layout, onAchievements, srcAchievementsIconColor, srcAchievementsIconGrey, tags }: ProgMenuViewLayoutAchievementsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements"
-            params={17}
+            tags={tags}
             onPointerTap={onAchievements}
             cursor="pointer"
             layout={{ position: 'absolute', left: 148, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="achievements_icon_color"
-                params={16}
                 src={srcAchievementsIconColor ?? layoutImage('me_menu_me_achv.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -177,7 +165,6 @@ export const ProgMenuViewLayoutAchievements = ({ captionFieldText, layout, onAch
             </Region>
             <ThemeImage
                 name="achievements_icon_grey"
-                params={16}
                 src={srcAchievementsIconGrey ?? layoutImage('me_menu_me_achv.png')}
                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
             />
@@ -192,28 +179,27 @@ export interface ProgMenuViewLayoutLeaderboardsProps {
     onLeaderboards?: () => void;
     srcLeaderboardsIconColor?: string;
     srcLeaderboardsIconGrey?: string;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutLeaderboards = ({ captionFieldText, layout, onLeaderboards, srcLeaderboardsIconColor, srcLeaderboardsIconGrey }: ProgMenuViewLayoutLeaderboardsProps) => {
+export const ProgMenuViewLayoutLeaderboards = ({ captionFieldText, layout, onLeaderboards, srcLeaderboardsIconColor, srcLeaderboardsIconGrey, tags }: ProgMenuViewLayoutLeaderboardsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="leaderboards"
-            params={17}
+            tags={tags}
             onPointerTap={onLeaderboards}
             cursor="pointer"
             layout={{ position: 'absolute', left: 216, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="leaderboards_icon_color"
-                params={16}
                 src={srcLeaderboardsIconColor ?? layoutImage('prog_menu_leaderboards.png')}
                 layout={{ position: 'absolute', left: 17, width: 25, top: 4, height: 25 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -224,7 +210,6 @@ export const ProgMenuViewLayoutLeaderboards = ({ captionFieldText, layout, onLea
             </Region>
             <ThemeImage
                 name="leaderboards_icon_grey"
-                params={16}
                 src={srcLeaderboardsIconGrey ?? layoutImage('prog_menu_leaderboards.png')}
                 layout={{ position: 'absolute', left: 17, width: 25, top: 4, height: 25 }}
             />
@@ -239,28 +224,27 @@ export interface ProgMenuViewLayoutIntroductionProps {
     onIntroduction?: () => void;
     srcIntroductionIconColor?: string;
     srcIntroductionIconGrey?: string;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onIntroduction, srcIntroductionIconColor, srcIntroductionIconGrey }: ProgMenuViewLayoutIntroductionProps) => {
+export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onIntroduction, srcIntroductionIconColor, srcIntroductionIconGrey, tags }: ProgMenuViewLayoutIntroductionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="introduction"
-            params={17}
+            tags={tags}
             onPointerTap={onIntroduction}
             cursor="pointer"
             layout={{ position: 'absolute', left: 284, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="introduction_icon_color"
-                params={16}
                 src={srcIntroductionIconColor ?? layoutImage('prog_menu_introduction.png')}
                 layout={{ position: 'absolute', left: 14, width: 33, top: 0, height: 32 }}
             />
             <Region
                 name="field_text"
-                params={786640}
                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -271,7 +255,6 @@ export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onInt
             </Region>
             <ThemeImage
                 name="introduction_icon_grey"
-                params={16}
                 src={srcIntroductionIconGrey ?? layoutImage('prog_menu_introduction.png')}
                 layout={{ position: 'absolute', left: 14, width: 33, top: 0, height: 32 }}
             />
@@ -282,13 +265,14 @@ export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onInt
 /** Named region `spacer` of ProgMenuViewLayout - configured through the parent's `spacer` prop. */
 export interface ProgMenuViewLayoutSpacerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ProgMenuViewLayoutSpacer = ({ layout }: ProgMenuViewLayoutSpacerProps) => {
+export const ProgMenuViewLayoutSpacer = ({ layout, tags }: ProgMenuViewLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 352, width: 7, top: 2, height: 30, ...layout }}
         />
     );

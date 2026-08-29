@@ -29,13 +29,11 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                 <Border
                     variant="1"
                     name="dont_show_again_container"
-                    params={128}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86, justifyContent: 'center' }}
                 >
                     <Region
                         name="dont_show_info_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={786640}
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -47,7 +45,6 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     <Region
                         name="dont_show_again_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={3145936}
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, alignSelf: 'center', marginTop: 5.5, marginBottom: -5.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -61,12 +58,10 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                 <Border
                     variant="104"
                     name="normal_container"
-                    params={128}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 96 }}
                 >
                     <Region
                         name="caption_txt"
-                        params={144}
                         layout={{ position: 'absolute', left: 57, right: 141, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -79,7 +74,6 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     <Button
                         variant="100"
                         name="action_button"
-                        params={393297}
                         onPointerTap={onActionButton}
                         layout={{ position: 'absolute', right: 3, width: 150, top: 24, height: 55, minWidth: 150, maxWidth: 150 }}
                     >
@@ -88,20 +82,17 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     <RoomCompetitionLayoutCloseRegion {...closeRegion} />
                     <ThemeImage
                         name="vote_image"
-                        params={16}
                         src={srcVoteImage ?? '${image.library.url}reception/vote_placeholder.png'}
                         layout={{ position: 'absolute', left: 3, width: 55, top: 16, height: 52 }}
                     />
                     <ThemeImage
                         name="submit_image"
-                        params={16}
                         src={srcSubmitImage ?? '${image.library.url}reception/your_room_placeholder.png'}
                         layout={{ position: 'absolute', left: 2, width: 55, top: 9, height: 60 }}
                     />
                     <RoomCompetitionLayoutRequiredFurnisItemgrid {...requiredFurnisItemgrid} />
                     <Region
                         name="button_info_txt"
-                        params={262224}
                         layout={{ position: 'absolute', right: 1, width: 153, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -119,13 +110,14 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
 export interface RoomCompetitionLayoutDontShowAgainRegionProps {
     layout?: BoxLayout;
     onDontShowAgainRegion?: () => void;
+    tags?: string[];
 }
 
-export const RoomCompetitionLayoutDontShowAgainRegion = ({ layout, onDontShowAgainRegion }: RoomCompetitionLayoutDontShowAgainRegionProps) => {
+export const RoomCompetitionLayoutDontShowAgainRegion = ({ layout, onDontShowAgainRegion, tags }: RoomCompetitionLayoutDontShowAgainRegionProps) => {
     return (
         <Region
             name="dont_show_again_region"
-            params={145}
+            tags={tags}
             onPointerTap={onDontShowAgainRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 46, height: 21, ...layout }}
@@ -138,13 +130,14 @@ export interface RoomCompetitionLayoutInfoRegionProps {
     captionInfoTxt?: string;
     layout?: BoxLayout;
     onInfoRegion?: () => void;
+    tags?: string[];
 }
 
-export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, layout, onInfoRegion }: RoomCompetitionLayoutInfoRegionProps) => {
+export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, layout, onInfoRegion, tags }: RoomCompetitionLayoutInfoRegionProps) => {
     return (
         <Region
             name="info_region"
-            params={17}
+            tags={tags}
             onPointerTap={onInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 57, width: 250, top: 46, height: 50, ...layout }}
@@ -152,7 +145,6 @@ export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, layout, onInfo
             <Region
                 name="info_txt"
                 tags={[ 'COLORABLE' ]}
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -169,20 +161,20 @@ export interface RoomCompetitionLayoutCloseRegionProps {
     layout?: BoxLayout;
     onCloseRegion?: () => void;
     srcCloseIcon?: string;
+    tags?: string[];
 }
 
-export const RoomCompetitionLayoutCloseRegion = ({ layout, onCloseRegion, srcCloseIcon }: RoomCompetitionLayoutCloseRegionProps) => {
+export const RoomCompetitionLayoutCloseRegion = ({ layout, onCloseRegion, srcCloseIcon, tags }: RoomCompetitionLayoutCloseRegionProps) => {
     return (
         <Region
             name="close_region"
-            params={262225}
+            tags={tags}
             onPointerTap={onCloseRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 11, top: 5, height: 12, ...layout }}
         >
             <ThemeImage
                 name="close_icon"
-                params={16}
                 src={srcCloseIcon ?? layoutImage('icons_close.png')}
                 layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 12 }}
             />
@@ -195,29 +187,27 @@ export interface RoomCompetitionLayoutFurniContainerItemProps {
     layout?: BoxLayout;
     srcFurniIcon?: string;
     srcTickIcon?: string;
+    tags?: string[];
 }
 
-export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, srcTickIcon }: RoomCompetitionLayoutFurniContainerItemProps) => {
+export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, srcTickIcon, tags }: RoomCompetitionLayoutFurniContainerItemProps) => {
     return (
         <Region
             name="furni_container"
-            params={16}
+            tags={tags}
             layout={{ width: 32, height: 35, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_chisel.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 4, height: 31 }}
             />
             <ThemeImage
                 name="furni_icon"
-                params={16}
                 src={srcFurniIcon}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 4, height: 31 }}
             />
             <ThemeImage
                 name="tick_icon"
-                params={16}
                 src={srcTickIcon ?? layoutImage('icons_tickmark.png')}
                 layout={{ position: 'absolute', left: 21, width: 11, top: 0, height: 10 }}
             />
@@ -229,13 +219,14 @@ export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, 
 export interface RoomCompetitionLayoutRequiredFurnisItemgridProps {
     itemsRequiredFurnisItemgrid?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RoomCompetitionLayoutRequiredFurnisItemgrid = ({ itemsRequiredFurnisItemgrid, layout }: RoomCompetitionLayoutRequiredFurnisItemgridProps) => {
+export const RoomCompetitionLayoutRequiredFurnisItemgrid = ({ itemsRequiredFurnisItemgrid, layout, tags }: RoomCompetitionLayoutRequiredFurnisItemgridProps) => {
     return (
         <Region
             name="required_furnis_itemgrid"
-            params={8781904}
+            tags={tags}
             layout={{ position: 'absolute', right: 18, minWidth: 115, top: 32, minHeight: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 5, ...layout }}
         >
             {itemsRequiredFurnisItemgrid ?? (

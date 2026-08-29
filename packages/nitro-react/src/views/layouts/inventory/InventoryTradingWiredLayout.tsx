@@ -22,21 +22,16 @@ export interface InventoryTradingWiredLayoutProps {
 export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, captionInfoText, layout, offers0, offers1, offers1PaymentPlaceholder, requirementsButton, srcLock0, srcTradeTypeSplitter, visibleTradeRequirementsBubble }: InventoryTradingWiredLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 478, height: 274, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 274 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 274 }}>
                 <Border
                     variant="102"
                     name="trade_container"
-                    params={17}
                     tintColor="#27556a"
                     layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 233 }}
                 >
                     <Region
                         name="info_text"
                         tags={[ 'HELP_TEXT' ]}
-                        params={16400}
                         layout={{ position: 'absolute', left: 38, width: 401, top: 7, height: 17, maxWidth: 461, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -48,7 +43,6 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
                     <ThemeImage
                         name="lock_0"
                         tags={[ 'OWN_USER_LOCK' ]}
-                        params={16}
                         src={srcLock0 ?? layoutImage('inventory_trading_trading_unlocked_icon.png')}
                         layout={{ position: 'absolute', left: 223, width: 32, top: 192, height: 34 }}
                     />
@@ -56,13 +50,11 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
                     <InventoryTradingWiredLayoutOffers1PaymentPlaceholder {...offers1PaymentPlaceholder} />
                     <ThemeImage
                         name="trade_type_splitter"
-                        params={16}
                         src={srcTradeTypeSplitter ?? layoutImage('inventory_trading_trading_split_icon.png')}
                         layout={{ position: 'absolute', left: 212, width: 53, top: 95, height: 42 }}
                     />
                     <WidgetSlot
                         widgetType="separator"
-                        params={16}
                         visible={false}
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 224, width: 30, top: 40, height: 160 }}
@@ -75,14 +67,12 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
                         <Bubble
                             variant="7"
                             name="trade_requirements_bubble"
-                            params={1}
                             pointer="left"
                             layout={{ width: '100%', height: '100%' }}
                         >
                             <Border
                                 variant="2"
                                 name="highlight_border"
-                                params={2192}
                                 tintColor="#4fbce3"
                                 blend={0}
                                 layout={{ position: 'absolute', left: 0, right: 15, top: 0, bottom: 15 }}
@@ -101,15 +91,16 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
 export interface InventoryTradingWiredLayoutPlainTextItemProps {
     captionPlainText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutPlainTextItem = ({ captionPlainText, layout }: InventoryTradingWiredLayoutPlainTextItemProps) => {
+export const InventoryTradingWiredLayoutPlainTextItem = ({ captionPlainText, layout, tags }: InventoryTradingWiredLayoutPlainTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plain_text"
-            params={16}
+            tags={tags}
             layout={{ width: 95, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.wired_trading.offering')} />
@@ -121,13 +112,14 @@ export const InventoryTradingWiredLayoutPlainTextItem = ({ captionPlainText, lay
 export interface InventoryTradingWiredLayoutTextList0Props {
     itemsTextList0?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutTextList0 = ({ itemsTextList0, layout }: InventoryTradingWiredLayoutTextList0Props) => {
+export const InventoryTradingWiredLayoutTextList0 = ({ itemsTextList0, layout, tags }: InventoryTradingWiredLayoutTextList0Props) => {
     return (
         <Region
             name="text_list_0"
-            params={934033}
+            tags={tags}
             layout={{ position: 'absolute', left: 52, right: 53, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
         >
             {itemsTextList0 ?? (
@@ -140,76 +132,67 @@ export const InventoryTradingWiredLayoutTextList0 = ({ itemsTextList0, layout }:
 /** Named region `item_grid_0` of InventoryTradingWiredLayout - configured through the parent's `itemGrid0` prop. */
 export interface InventoryTradingWiredLayoutItemGrid0Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutItemGrid0 = ({ layout }: InventoryTradingWiredLayoutItemGrid0Props) => {
+export const InventoryTradingWiredLayoutItemGrid0 = ({ layout, tags }: InventoryTradingWiredLayoutItemGrid0Props) => {
     return (
         <Region
             name="item_grid_0"
-            tags={[ 'OWN_USER_GRID' ]}
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 132, top: 4, height: 132, flexDirection: 'row', flexWrap: 'wrap', gap: 4, ...layout }}
         >
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OWN_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
@@ -221,17 +204,20 @@ export const InventoryTradingWiredLayoutItemGrid0 = ({ layout }: InventoryTradin
 export interface InventoryTradingWiredLayoutItemGridBorder0Props {
     itemGrid0?: InventoryTradingWiredLayoutItemGrid0Props;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutItemGridBorder0 = ({ itemGrid0, layout }: InventoryTradingWiredLayoutItemGridBorder0Props) => {
+export const InventoryTradingWiredLayoutItemGridBorder0 = ({ itemGrid0, layout, tags }: InventoryTradingWiredLayoutItemGridBorder0Props) => {
     return (
         <Region
             name="item_grid_border_0"
-            tags={[ 'OWN_USER_BORDER' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 32, width: 136, top: 22, height: 136, ...layout }}
         >
-            <InventoryTradingWiredLayoutItemGrid0 {...itemGrid0} />
+            <InventoryTradingWiredLayoutItemGrid0
+                tags={[ 'OWN_USER_GRID' ]}
+                {...itemGrid0}
+            />
         </Region>
     );
 };
@@ -243,24 +229,27 @@ export interface InventoryTradingWiredLayoutOffers0Props {
     captionInfoText0?: string;
     itemGridBorder0?: InventoryTradingWiredLayoutItemGridBorder0Props;
     layout?: BoxLayout;
+    tags?: string[];
     textList0?: InventoryTradingWiredLayoutTextList0Props;
 }
 
-export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, textList0 }: InventoryTradingWiredLayoutOffers0Props) => {
+export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, tags, textList0 }: InventoryTradingWiredLayoutOffers0Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offers_0"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 200, top: 29, height: 200, ...layout }}
         >
             <InventoryTradingWiredLayoutTextList0 {...textList0} />
-            <InventoryTradingWiredLayoutItemGridBorder0 {...itemGridBorder0} />
+            <InventoryTradingWiredLayoutItemGridBorder0
+                tags={[ 'OWN_USER_BORDER' ]}
+                {...itemGridBorder0}
+            />
             <Region
                 name="info_text_0"
                 tags={[ 'OTHER_USER_MESSAGE' ]}
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -271,7 +260,6 @@ export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, capti
             </Region>
             <Region
                 name="content_text_1_a"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 200, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -281,7 +269,6 @@ export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, capti
             </Region>
             <Region
                 name="content_text_1_b"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 200, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -297,15 +284,16 @@ export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, capti
 export interface InventoryTradingWiredLayoutPlainTextItem2Props {
     captionPlainText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutPlainTextItem2 = ({ captionPlainText, layout }: InventoryTradingWiredLayoutPlainTextItem2Props) => {
+export const InventoryTradingWiredLayoutPlainTextItem2 = ({ captionPlainText, layout, tags }: InventoryTradingWiredLayoutPlainTextItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plain_text"
-            params={16}
+            tags={tags}
             layout={{ width: 90, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.wired_trading.receiving')} />
@@ -317,13 +305,14 @@ export const InventoryTradingWiredLayoutPlainTextItem2 = ({ captionPlainText, la
 export interface InventoryTradingWiredLayoutTextList1Props {
     itemsTextList1?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutTextList1 = ({ itemsTextList1, layout }: InventoryTradingWiredLayoutTextList1Props) => {
+export const InventoryTradingWiredLayoutTextList1 = ({ itemsTextList1, layout, tags }: InventoryTradingWiredLayoutTextList1Props) => {
     return (
         <Region
             name="text_list_1"
-            params={934033}
+            tags={tags}
             layout={{ position: 'absolute', left: 54, right: 56, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
         >
             {itemsTextList1 ?? (
@@ -336,76 +325,67 @@ export const InventoryTradingWiredLayoutTextList1 = ({ itemsTextList1, layout }:
 /** Named region `item_grid_1` of InventoryTradingWiredLayout - configured through the parent's `itemGrid1` prop. */
 export interface InventoryTradingWiredLayoutItemGrid1Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutItemGrid1 = ({ layout }: InventoryTradingWiredLayoutItemGrid1Props) => {
+export const InventoryTradingWiredLayoutItemGrid1 = ({ layout, tags }: InventoryTradingWiredLayoutItemGrid1Props) => {
     return (
         <Region
             name="item_grid_1"
-            tags={[ 'OTHER_USER_GRID' ]}
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 132, top: 4, height: 132, flexDirection: 'row', flexWrap: 'wrap', gap: 4, ...layout }}
         >
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
                 tags={[ 'OTHER_USER_ITEM' ]}
-                params={16}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
@@ -417,17 +397,20 @@ export const InventoryTradingWiredLayoutItemGrid1 = ({ layout }: InventoryTradin
 export interface InventoryTradingWiredLayoutItemGridBorder1Props {
     itemGrid1?: InventoryTradingWiredLayoutItemGrid1Props;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutItemGridBorder1 = ({ itemGrid1, layout }: InventoryTradingWiredLayoutItemGridBorder1Props) => {
+export const InventoryTradingWiredLayoutItemGridBorder1 = ({ itemGrid1, layout, tags }: InventoryTradingWiredLayoutItemGridBorder1Props) => {
     return (
         <Region
             name="item_grid_border_1"
-            tags={[ 'OTHER_USER_BORDER' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 32, width: 180, top: 22, height: 136, ...layout }}
         >
-            <InventoryTradingWiredLayoutItemGrid1 {...itemGrid1} />
+            <InventoryTradingWiredLayoutItemGrid1
+                tags={[ 'OTHER_USER_GRID' ]}
+                {...itemGrid1}
+            />
         </Region>
     );
 };
@@ -439,24 +422,27 @@ export interface InventoryTradingWiredLayoutOffers1Props {
     captionInfoText1?: string;
     itemGridBorder1?: InventoryTradingWiredLayoutItemGridBorder1Props;
     layout?: BoxLayout;
+    tags?: string[];
     textList1?: InventoryTradingWiredLayoutTextList1Props;
 }
 
-export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, textList1 }: InventoryTradingWiredLayoutOffers1Props) => {
+export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, tags, textList1 }: InventoryTradingWiredLayoutOffers1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offers_1"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, ...layout }}
         >
             <InventoryTradingWiredLayoutTextList1 {...textList1} />
-            <InventoryTradingWiredLayoutItemGridBorder1 {...itemGridBorder1} />
+            <InventoryTradingWiredLayoutItemGridBorder1
+                tags={[ 'OTHER_USER_BORDER' ]}
+                {...itemGridBorder1}
+            />
             <Region
                 name="info_text_1"
                 tags={[ 'OTHER_USER_MESSAGE' ]}
-                params={16}
                 visible={false}
                 layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -467,7 +453,6 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
             </Region>
             <Region
                 name="content_text_2_a"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 200, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -477,7 +462,6 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
             </Region>
             <Region
                 name="content_text_2_b"
-                params={16400}
                 layout={{ position: 'absolute', left: 0, width: 200, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -493,20 +477,20 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
 export interface InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps {
     layout?: BoxLayout;
     srcPaymentLayoutImage?: string;
+    tags?: string[];
     visibleOffers1PaymentPlaceholder?: boolean;
 }
 
-export const InventoryTradingWiredLayoutOffers1PaymentPlaceholder = ({ layout, srcPaymentLayoutImage, visibleOffers1PaymentPlaceholder }: InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps) => {
+export const InventoryTradingWiredLayoutOffers1PaymentPlaceholder = ({ layout, srcPaymentLayoutImage, tags, visibleOffers1PaymentPlaceholder }: InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps) => {
     return (
         <Region
             name="offers_1_payment_placeholder"
-            params={16}
+            tags={tags}
             visible={visibleOffers1PaymentPlaceholder ?? false}
             layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="payment_layout_image"
-                params={3932176}
                 src={srcPaymentLayoutImage ?? layoutImage('wired_chests_images_generic_payments.png')}
                 layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, alignSelf: 'center', marginTop: -4.5, marginBottom: 4.5, height: 173 }}
             />
@@ -518,19 +502,19 @@ export const InventoryTradingWiredLayoutOffers1PaymentPlaceholder = ({ layout, s
 export interface InventoryTradingWiredLayoutRequirementsButtonProps {
     layout?: BoxLayout;
     onRequirementsButton?: () => void;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRequirementsButton = ({ layout, onRequirementsButton }: InventoryTradingWiredLayoutRequirementsButtonProps) => {
+export const InventoryTradingWiredLayoutRequirementsButton = ({ layout, onRequirementsButton, tags }: InventoryTradingWiredLayoutRequirementsButtonProps) => {
     return (
         <Region
             name="requirements_button"
-            params={17}
+            tags={tags}
             onPointerTap={onRequirementsButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 453, width: 18, top: 6, height: 18, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_info_grey.png')}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
             />
@@ -542,15 +526,16 @@ export const InventoryTradingWiredLayoutRequirementsButton = ({ layout, onRequir
 export interface InventoryTradingWiredLayoutBubbleTitleItemProps {
     captionBubbleTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutBubbleTitleItem = ({ captionBubbleTitle, layout }: InventoryTradingWiredLayoutBubbleTitleItemProps) => {
+export const InventoryTradingWiredLayoutBubbleTitleItem = ({ captionBubbleTitle, layout, tags }: InventoryTradingWiredLayoutBubbleTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bubble_title"
-            params={144}
+            tags={tags}
             layout={{ width: 390, height: 17, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -564,13 +549,14 @@ export const InventoryTradingWiredLayoutBubbleTitleItem = ({ captionBubbleTitle,
 /** Row template `bubble_title_spacing` of InventoryTradingWiredLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingWiredLayoutBubbleTitleSpacingItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutBubbleTitleSpacingItem = ({ layout }: InventoryTradingWiredLayoutBubbleTitleSpacingItemProps) => {
+export const InventoryTradingWiredLayoutBubbleTitleSpacingItem = ({ layout, tags }: InventoryTradingWiredLayoutBubbleTitleSpacingItemProps) => {
     return (
         <Region
             name="bubble_title_spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -580,13 +566,14 @@ export const InventoryTradingWiredLayoutBubbleTitleSpacingItem = ({ layout }: In
 export interface InventoryTradingWiredLayoutAndTextItemProps {
     captionAndText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutAndTextItem = ({ captionAndText, layout }: InventoryTradingWiredLayoutAndTextItemProps) => {
+export const InventoryTradingWiredLayoutAndTextItem = ({ captionAndText, layout, tags }: InventoryTradingWiredLayoutAndTextItemProps) => {
     return (
         <Region
             name="and_text"
-            params={16}
+            tags={tags}
             layout={{ width: 12, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAndText ?? '&'} />
@@ -598,13 +585,14 @@ export const InventoryTradingWiredLayoutAndTextItem = ({ captionAndText, layout 
 export interface InventoryTradingWiredLayoutAmountTextItemProps {
     captionAmountText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutAmountTextItem = ({ captionAmountText, layout }: InventoryTradingWiredLayoutAmountTextItemProps) => {
+export const InventoryTradingWiredLayoutAmountTextItem = ({ captionAmountText, layout, tags }: InventoryTradingWiredLayoutAmountTextItemProps) => {
     return (
         <Region
             name="amount_text"
-            params={16}
+            tags={tags}
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountText ?? '2x'} />
@@ -616,24 +604,23 @@ export const InventoryTradingWiredLayoutAmountTextItem = ({ captionAmountText, l
 export interface InventoryTradingWiredLayoutRuleIconItemProps {
     layout?: BoxLayout;
     srcCoinIcon?: string;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRuleIconItem = ({ layout, srcCoinIcon }: InventoryTradingWiredLayoutRuleIconItemProps) => {
+export const InventoryTradingWiredLayoutRuleIconItem = ({ layout, srcCoinIcon, tags }: InventoryTradingWiredLayoutRuleIconItemProps) => {
     return (
         <Region
             name="rule_icon"
-            params={16}
+            tags={tags}
             layout={{ width: 36, height: 36, flexShrink: 0, minWidth: 32, maxWidth: 36, ...layout }}
         >
             <WidgetSlot
                 widgetType="product_icon"
                 name="furni_icon"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
             />
             <ThemeImage
                 name="coin_icon"
-                params={16}
                 src={srcCoinIcon ?? layoutImage('pursearea_credits_icon2.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 2, height: 36 }}
             />
@@ -645,13 +632,14 @@ export const InventoryTradingWiredLayoutRuleIconItem = ({ layout, srcCoinIcon }:
 export interface InventoryTradingWiredLayoutRuleNodeTemplateItemProps {
     itemsRuleNodeTemplate?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRuleNodeTemplateItem = ({ itemsRuleNodeTemplate, layout }: InventoryTradingWiredLayoutRuleNodeTemplateItemProps) => {
+export const InventoryTradingWiredLayoutRuleNodeTemplateItem = ({ itemsRuleNodeTemplate, layout, tags }: InventoryTradingWiredLayoutRuleNodeTemplateItemProps) => {
     return (
         <Region
             name="rule_node_template"
-            params={16}
+            tags={tags}
             layout={{ width: 67, height: 40, flexShrink: 0, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsRuleNodeTemplate ?? (
@@ -669,13 +657,14 @@ export const InventoryTradingWiredLayoutRuleNodeTemplateItem = ({ itemsRuleNodeT
 export interface InventoryTradingWiredLayoutRuleNodeColumnsTemplateItemProps {
     itemsRuleNodeColumnsTemplate?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRuleNodeColumnsTemplateItem = ({ itemsRuleNodeColumnsTemplate, layout }: InventoryTradingWiredLayoutRuleNodeColumnsTemplateItemProps) => {
+export const InventoryTradingWiredLayoutRuleNodeColumnsTemplateItem = ({ itemsRuleNodeColumnsTemplate, layout, tags }: InventoryTradingWiredLayoutRuleNodeColumnsTemplateItemProps) => {
     return (
         <Region
             name="rule_node_columns_template"
-            params={16}
+            tags={tags}
             layout={{ width: 67, height: 40, flexShrink: 0, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsRuleNodeColumnsTemplate ?? (
@@ -689,13 +678,14 @@ export const InventoryTradingWiredLayoutRuleNodeColumnsTemplateItem = ({ itemsRu
 export interface InventoryTradingWiredLayoutRuleNodesRowsProps {
     itemsRuleNodesRows?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRuleNodesRows = ({ itemsRuleNodesRows, layout }: InventoryTradingWiredLayoutRuleNodesRowsProps) => {
+export const InventoryTradingWiredLayoutRuleNodesRows = ({ itemsRuleNodesRows, layout, tags }: InventoryTradingWiredLayoutRuleNodesRowsProps) => {
     return (
         <Region
             name="rule_nodes_rows"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 32, right: 0, top: 0, height: 40, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsRuleNodesRows ?? (
@@ -710,20 +700,20 @@ export interface InventoryTradingWiredLayoutRuleTemplateItemProps {
     captionOrText?: string;
     layout?: BoxLayout;
     ruleNodesRows?: InventoryTradingWiredLayoutRuleNodesRowsProps;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRuleTemplateItem = ({ captionOrText, layout, ruleNodesRows }: InventoryTradingWiredLayoutRuleTemplateItemProps) => {
+export const InventoryTradingWiredLayoutRuleTemplateItem = ({ captionOrText, layout, ruleNodesRows, tags }: InventoryTradingWiredLayoutRuleTemplateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rule_template"
-            params={144}
+            tags={tags}
             layout={{ width: 178, height: 40, flexShrink: 0, ...layout }}
         >
             <Region
                 name="or_text"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 11, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -740,13 +730,14 @@ export const InventoryTradingWiredLayoutRuleTemplateItem = ({ captionOrText, lay
 export interface InventoryTradingWiredLayoutRulesListProps {
     itemsRulesList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRulesList = ({ itemsRulesList, layout }: InventoryTradingWiredLayoutRulesListProps) => {
+export const InventoryTradingWiredLayoutRulesList = ({ itemsRulesList, layout, tags }: InventoryTradingWiredLayoutRulesListProps) => {
     return (
         <Region
             name="rules_list"
-            params={3145872}
+            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 40, flexDirection: 'column', ...layout }}
         >
             {itemsRulesList ?? (
@@ -765,20 +756,20 @@ export interface InventoryTradingWiredLayoutOfferingRequirementsTemplateProps {
     captionOfferingsTitle?: string;
     layout?: BoxLayout;
     rulesList?: InventoryTradingWiredLayoutRulesListProps;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captionAnyAllText, captionAnyCoinsText, captionAnyFurniText, captionCustomText, captionOfferingsTitle, layout, rulesList }: InventoryTradingWiredLayoutOfferingRequirementsTemplateProps) => {
+export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captionAnyAllText, captionAnyCoinsText, captionAnyFurniText, captionCustomText, captionOfferingsTitle, layout, rulesList, tags }: InventoryTradingWiredLayoutOfferingRequirementsTemplateProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offering_requirements_template"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="offerings_title"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -789,13 +780,11 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
             <Border
                 variant="0"
                 name="requirements_definition"
-                params={2192}
                 tintColor="#f7f7f7"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 24, bottom: 2 }}
             >
                 <Region
                     name="custom_text"
-                    params={3145872}
                     visible={false}
                     layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
@@ -806,7 +795,6 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 </Region>
                 <Region
                     name="any_furni_text"
-                    params={3145872}
                     visible={false}
                     layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
@@ -817,7 +805,6 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 </Region>
                 <Region
                     name="any_coins_text"
-                    params={3145872}
                     visible={false}
                     layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
@@ -828,7 +815,6 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 </Region>
                 <Region
                     name="any_all_text"
-                    params={3145872}
                     visible={false}
                     layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
@@ -847,13 +833,14 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
 export interface InventoryTradingWiredLayoutYouGiveContainerItemProps {
     layout?: BoxLayout;
     offeringRequirementsTemplate?: InventoryTradingWiredLayoutOfferingRequirementsTemplateProps;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ layout, offeringRequirementsTemplate }: InventoryTradingWiredLayoutYouGiveContainerItemProps) => {
+export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ layout, offeringRequirementsTemplate, tags }: InventoryTradingWiredLayoutYouGiveContainerItemProps) => {
     return (
         <Region
             name="you_give_container"
-            params={16}
+            tags={tags}
             layout={{ width: 180, height: 179, flexShrink: 0, ...layout }}
         >
             <InventoryTradingWiredLayoutOfferingRequirementsTemplate {...offeringRequirementsTemplate} />
@@ -864,14 +851,15 @@ export const InventoryTradingWiredLayoutYouGiveContainerItem = ({ layout, offeri
 /** Row template `offering_containers_separator` of InventoryTradingWiredLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingWiredLayoutOfferingContainersSeparatorItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutOfferingContainersSeparatorItem = ({ layout }: InventoryTradingWiredLayoutOfferingContainersSeparatorItemProps) => {
+export const InventoryTradingWiredLayoutOfferingContainersSeparatorItem = ({ layout, tags }: InventoryTradingWiredLayoutOfferingContainersSeparatorItemProps) => {
     return (
         <WidgetSlot
             widgetType="separator"
             name="offering_containers_separator"
-            params={16}
+            tags={tags}
             options={{ 'separator:vertical': 'true' }}
             layout={{ width: 30, height: 153, flexShrink: 0, minHeight: 80, ...layout }}
         />
@@ -881,13 +869,14 @@ export const InventoryTradingWiredLayoutOfferingContainersSeparatorItem = ({ lay
 /** Row template `you_get_container` of InventoryTradingWiredLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingWiredLayoutYouGetContainerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutYouGetContainerItem = ({ layout }: InventoryTradingWiredLayoutYouGetContainerItemProps) => {
+export const InventoryTradingWiredLayoutYouGetContainerItem = ({ layout, tags }: InventoryTradingWiredLayoutYouGetContainerItemProps) => {
     return (
         <Region
             name="you_get_container"
-            params={16}
+            tags={tags}
             layout={{ width: 180, height: 180, flexShrink: 0, ...layout }}
         />
     );
@@ -897,13 +886,14 @@ export const InventoryTradingWiredLayoutYouGetContainerItem = ({ layout }: Inven
 export interface InventoryTradingWiredLayoutOfferingsItemProps {
     itemsOfferings?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutOfferingsItem = ({ itemsOfferings, layout }: InventoryTradingWiredLayoutOfferingsItemProps) => {
+export const InventoryTradingWiredLayoutOfferingsItem = ({ itemsOfferings, layout, tags }: InventoryTradingWiredLayoutOfferingsItemProps) => {
     return (
         <Region
             name="offerings"
-            params={786640}
+            tags={tags}
             layout={{ width: 390, height: 180, flexShrink: 0, minHeight: 180, maxHeight: 180, flexDirection: 'row', ...layout }}
         >
             {itemsOfferings ?? (
@@ -922,21 +912,21 @@ export interface InventoryTradingWiredLayoutRequirementsMetContainerItemProps {
     captionReqMetText?: string;
     layout?: BoxLayout;
     srcReqMetIcon?: string;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captionReqMetText, layout, srcReqMetIcon }: InventoryTradingWiredLayoutRequirementsMetContainerItemProps) => {
+export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captionReqMetText, layout, srcReqMetIcon, tags }: InventoryTradingWiredLayoutRequirementsMetContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="requirements_met_container"
-            params={144}
+            tags={tags}
             backgroundColor="#d9d9d9"
             layout={{ width: 390, height: 30, flexShrink: 0, minWidth: 220, ...layout }}
         >
             <Region
                 name="req_met_text"
-                params={8388737}
                 layout={{ position: 'absolute', left: 5, right: 43, top: 7, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -946,7 +936,6 @@ export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captio
             </Region>
             <ThemeImage
                 name="req_met_icon"
-                params={80}
                 src={srcReqMetIcon ?? layoutImage('common_cross_mark.png')}
                 layout={{ position: 'absolute', right: 1, width: 30, top: 0, height: 30 }}
             />
@@ -958,15 +947,16 @@ export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captio
 export interface InventoryTradingWiredLayoutAdditionalTextItemProps {
     captionAdditionalText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditionalText, layout }: InventoryTradingWiredLayoutAdditionalTextItemProps) => {
+export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditionalText, layout, tags }: InventoryTradingWiredLayoutAdditionalTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="additional_text"
-            params={129}
+            tags={tags}
             visible={false}
             layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -982,15 +972,16 @@ export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditiona
 export interface InventoryTradingWiredLayoutDisclaimerTextItemProps {
     captionDisclaimerText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutDisclaimerTextItem = ({ captionDisclaimerText, layout }: InventoryTradingWiredLayoutDisclaimerTextItemProps) => {
+export const InventoryTradingWiredLayoutDisclaimerTextItem = ({ captionDisclaimerText, layout, tags }: InventoryTradingWiredLayoutDisclaimerTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disclaimer_text"
-            params={129}
+            tags={tags}
             visible={false}
             layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -1006,13 +997,14 @@ export const InventoryTradingWiredLayoutDisclaimerTextItem = ({ captionDisclaime
 export interface InventoryTradingWiredLayoutBubbleContentsProps {
     itemsBubbleContents?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutBubbleContents = ({ itemsBubbleContents, layout }: InventoryTradingWiredLayoutBubbleContentsProps) => {
+export const InventoryTradingWiredLayoutBubbleContents = ({ itemsBubbleContents, layout, tags }: InventoryTradingWiredLayoutBubbleContentsProps) => {
     return (
         <Region
             name="bubble_contents"
-            params={12582928}
+            tags={tags}
             layout={{ position: 'absolute', left: 13, width: 390, top: 7, height: 246, minWidth: 390, maxWidth: 390, flexDirection: 'column', gap: 6, ...layout }}
         >
             {itemsBubbleContents ?? (
@@ -1035,25 +1027,22 @@ export interface InventoryTradingWiredLayoutButtonContainerProps {
     layout?: BoxLayout;
     onButtonAccept?: () => void;
     onButtonCancel?: () => void;
+    tags?: string[];
 }
 
-export const InventoryTradingWiredLayoutButtonContainer = ({ captionSecondsLeftText, layout, onButtonAccept, onButtonCancel }: InventoryTradingWiredLayoutButtonContainerProps) => {
+export const InventoryTradingWiredLayoutButtonContainer = ({ captionSecondsLeftText, layout, onButtonAccept, onButtonCancel, tags }: InventoryTradingWiredLayoutButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 478, top: 240, height: 32, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 5, width: 299, top: 0, height: 28, flexDirection: 'row', gap: 6 }}
-            >
+            <Region layout={{ position: 'absolute', left: 5, width: 299, top: 0, height: 28, flexDirection: 'row', gap: 6 }}>
                 <Button
                     variant="3"
                     name="button_accept"
-                    params={131089}
                     onPointerTap={onButtonAccept}
                     layout={{ width: 157, height: 28, flexShrink: 0 }}
                 >
@@ -1061,7 +1050,6 @@ export const InventoryTradingWiredLayoutButtonContainer = ({ captionSecondsLeftT
                 </Button>
                 <Region
                     name="seconds_left_text"
-                    params={16}
                     layout={{ width: 136, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -1073,7 +1061,6 @@ export const InventoryTradingWiredLayoutButtonContainer = ({ captionSecondsLeftT
             <Button
                 variant="3"
                 name="button_cancel"
-                params={393233}
                 onPointerTap={onButtonCancel}
                 layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
             >

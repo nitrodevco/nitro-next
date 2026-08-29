@@ -10,13 +10,9 @@ export interface BadgeImageLayoutProps {
 export const BadgeImageLayout = ({ layout, region, srcBitmap }: BadgeImageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
-            <Region
-                params={2196}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="bitmap"
-                    params={2192}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -30,14 +26,15 @@ export const BadgeImageLayout = ({ layout, region, srcBitmap }: BadgeImageLayout
 export interface BadgeImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const BadgeImageLayoutRegion = ({ layout, onRegion, visibleRegion }: BadgeImageLayoutRegionProps) => {
+export const BadgeImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: BadgeImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            params={2193}
+            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

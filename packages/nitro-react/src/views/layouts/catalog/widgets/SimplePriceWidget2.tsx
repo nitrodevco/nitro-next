@@ -8,13 +8,14 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `simplePriceWidget` of SimplePriceWidget2 - configured through the parent's `simplePriceWidget` prop. */
 export interface SimplePriceWidget2Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SimplePriceWidget2 = ({ layout }: SimplePriceWidget2Props) => {
+export const SimplePriceWidget2 = ({ layout, tags }: SimplePriceWidget2Props) => {
     return (
         <Region
             name="simplePriceWidget"
-            params={1024}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

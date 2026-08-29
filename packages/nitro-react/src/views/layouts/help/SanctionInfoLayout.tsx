@@ -18,7 +18,6 @@ export const SanctionInfoLayout = ({ bottom, layout, mainContentsList, onClose }
     return (
         <Frame
             variant="3"
-            params={35073}
             caption={t('help.sanction.info.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -36,13 +35,14 @@ export const SanctionInfoLayout = ({ bottom, layout, mainContentsList, onClose }
 export interface SanctionInfoLayoutSanctionInfoItemProps {
     captionSanctionInfo?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout }: SanctionInfoLayoutSanctionInfoItemProps) => {
+export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout, tags }: SanctionInfoLayoutSanctionInfoItemProps) => {
     return (
         <Region
             name="sanction_info"
-            params={8536080}
+            tags={tags}
             layout={{ width: 404, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -56,14 +56,15 @@ export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout
 /** Row template `divider` of SanctionInfoLayout - pass real rows through its `items…` slot. */
 export interface SanctionInfoLayoutDividerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SanctionInfoLayoutDividerItem = ({ layout }: SanctionInfoLayoutDividerItemProps) => {
+export const SanctionInfoLayoutDividerItem = ({ layout, tags }: SanctionInfoLayoutDividerItemProps) => {
     return (
         <Border
             variant="3"
             name="divider"
-            params={16}
+            tags={tags}
             tintColor="#000000"
             layout={{ width: 404, height: 1, flexShrink: 0, ...layout }}
         />
@@ -74,9 +75,10 @@ export const SanctionInfoLayoutDividerItem = ({ layout }: SanctionInfoLayoutDivi
 export interface SanctionInfoLayoutMainContentsListProps {
     itemsMainContentsList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layout }: SanctionInfoLayoutMainContentsListProps) => {
+export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layout, tags }: SanctionInfoLayoutMainContentsListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -84,7 +86,7 @@ export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layo
         >
             <Region
                 name="main_contents_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsMainContentsList ?? (
@@ -105,20 +107,20 @@ export interface SanctionInfoLayoutBottomProps {
     layout?: BoxLayout;
     onFaqLink?: () => void;
     onOkButton?: () => void;
+    tags?: string[];
 }
 
-export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDisclaimer, layout, onFaqLink, onOkButton }: SanctionInfoLayoutBottomProps) => {
+export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDisclaimer, layout, onFaqLink, onOkButton, tags }: SanctionInfoLayoutBottomProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bottom"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 426, top: 270, height: 40, ...layout }}
         >
             <Region
                 name="sanction_info_disclaimer"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -126,18 +128,13 @@ export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDi
                     textOptions={{ fill: '#696969' }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 420, top: 19, height: 30, flexDirection: 'row' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 420, top: 19, height: 30, flexDirection: 'row' }}>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('icons_link_icon.png')}
                     layout={{ width: 22, height: 19, flexShrink: 0 }}
                 />
                 <Region
                     name="faq_link"
-                    params={147457}
                     layout={{ width: 389, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     onPointerTap={onFaqLink}
                     cursor="pointer"
@@ -151,7 +148,6 @@ export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDi
             <ButtonThick
                 variant="5"
                 name="ok_button"
-                params={393297}
                 tintColor="#009900"
                 onPointerTap={onOkButton}
                 layout={{ position: 'absolute', right: 0, width: 99, top: 0, height: 40, minWidth: 99 }}

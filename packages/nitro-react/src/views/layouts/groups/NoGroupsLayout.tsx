@@ -23,20 +23,20 @@ export interface NoGroupsLayoutNoGroupsContProps {
     onViewGroupsButton?: () => void;
     srcExtProfileGrouppic?: string;
     srcGroupBaseIcon?: string;
+    tags?: string[];
 }
 
-export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGroupsInfo, layout, onViewGroupsButton, srcExtProfileGrouppic, srcGroupBaseIcon }: NoGroupsLayoutNoGroupsContProps) => {
+export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGroupsInfo, layout, onViewGroupsButton, srcExtProfileGrouppic, srcGroupBaseIcon, tags }: NoGroupsLayoutNoGroupsContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_groups_cont"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 343, top: 0, height: 214, ...layout }}
         >
             <Region
                 name="no_groups_caption"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 125, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -46,13 +46,11 @@ export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGr
             </Region>
             <ThemeImage
                 name="ext_profile_grouppic"
-                params={16}
                 src={srcExtProfileGrouppic ?? '${image.library.url}guilds/ext_profile_grouppic.png'}
                 layout={{ position: 'absolute', left: 15, width: 311, top: 21, height: 136 }}
             />
             <Region
                 name="no_groups_info"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 174, top: 164, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -63,20 +61,15 @@ export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGr
             <ContainerButton
                 variant="0"
                 name="view_groups_button"
-                params={17}
                 onPointerTap={onViewGroupsButton}
                 layout={{ position: 'absolute', left: 62, width: 216, top: 184, height: 30 }}
             >
                 <ThemeImage
                     name="group_base_icon"
-                    params={16}
                     src={srcGroupBaseIcon ?? '${image.library.url}guilds/group_base_icon.png'}
                     layout={{ position: 'absolute', left: 11, width: 24, top: 7, height: 17 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 42, width: 215, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 42, width: 215, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('extendedprofile.nogroups.viewgroups')}
                         textStyle="text-style-u-regular"

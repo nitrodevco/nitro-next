@@ -22,20 +22,13 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
     return (
         <Frame
             variant="100"
-            params={1}
             caption={t('talent.track.common.levelup.caption')}
             onClose={onClose}
             layout={{ width: 430, height: 362, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}
-                >
-                    <Region
-                        params={16}
-                        layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}>
+                    <Region layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('talent.track.common.levelup.title')}
                             textStyle="text-style-il-heading-title"
@@ -43,7 +36,6 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                     </Region>
                     <Region
                         name="level_up_message"
-                        params={16}
                         layout={{ width: 410, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -54,7 +46,6 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                     </Region>
                     <Border
                         variant="102"
-                        params={147472}
                         layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}
                     >
                         <LevelUpLayoutLevelUpLayout {...levelUpLayout} />
@@ -62,7 +53,6 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                     <Button
                         variant="101"
                         name="talent_button"
-                        params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onTalentButton}
                         layout={{ width: 221, height: 53, flexShrink: 0 }}
@@ -71,7 +61,6 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                     </Button>
                     <Region
                         name="close_button"
-                        params={193}
                         layout={{ width: 94, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         onPointerTap={onCloseButton}
                         cursor="pointer"
@@ -81,7 +70,6 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                 </Region>
                 <ThemeImage
                     name="level_decoration"
-                    params={1024}
                     src={srcLevelDecoration}
                     layout={{ position: 'absolute', left: 280, width: 260, bottom: 13, height: 260 }}
                 />
@@ -94,13 +82,14 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
 export interface LevelUpLayoutLevelTitleItemProps {
     captionLevelTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutLevelTitleItem = ({ captionLevelTitle, layout }: LevelUpLayoutLevelTitleItemProps) => {
+export const LevelUpLayoutLevelTitleItem = ({ captionLevelTitle, layout, tags }: LevelUpLayoutLevelTitleItemProps) => {
     return (
         <Region
             name="level_title"
-            params={16}
+            tags={tags}
             layout={{ width: 340, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -116,13 +105,14 @@ export const LevelUpLayoutLevelTitleItem = ({ captionLevelTitle, layout }: Level
 export interface LevelUpLayoutLevelDescriptionItemProps {
     captionLevelDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutLevelDescriptionItem = ({ captionLevelDescription, layout }: LevelUpLayoutLevelDescriptionItemProps) => {
+export const LevelUpLayoutLevelDescriptionItem = ({ captionLevelDescription, layout, tags }: LevelUpLayoutLevelDescriptionItemProps) => {
     return (
         <Region
             name="level_description"
-            params={16}
+            tags={tags}
             layout={{ width: 309, height: 65, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -137,23 +127,22 @@ export const LevelUpLayoutLevelDescriptionItem = ({ captionLevelDescription, lay
 export interface LevelUpLayoutRewardVipTemplateItemProps {
     captionVipLength?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout }: LevelUpLayoutRewardVipTemplateItemProps) => {
+export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout, tags }: LevelUpLayoutRewardVipTemplateItemProps) => {
     return (
         <Region
             name="reward_vip_template"
-            params={147472}
+            tags={tags}
             layout={{ width: 93, height: 33, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('talent_vip_reward.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 33 }}
             />
             <Region
                 name="vip_length"
-                params={3088}
                 layout={{ position: 'absolute', left: 37, width: 56, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -170,13 +159,14 @@ export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout }:
 export interface LevelUpLayoutRewardProductTemplateItemProps {
     layout?: BoxLayout;
     srcRewardProductTemplate?: string;
+    tags?: string[];
 }
 
-export const LevelUpLayoutRewardProductTemplateItem = ({ layout, srcRewardProductTemplate }: LevelUpLayoutRewardProductTemplateItemProps) => {
+export const LevelUpLayoutRewardProductTemplateItem = ({ layout, srcRewardProductTemplate, tags }: LevelUpLayoutRewardProductTemplateItemProps) => {
     return (
         <ThemeImage
             name="reward_product_template"
-            params={16}
+            tags={tags}
             src={srcRewardProductTemplate}
             layout={{ width: 35, height: 35, flexShrink: 0, ...layout }}
         />
@@ -187,25 +177,24 @@ export const LevelUpLayoutRewardProductTemplateItem = ({ layout, srcRewardProduc
 export interface LevelUpLayoutRewardPerkTemplateItemProps {
     captionPerkName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout }: LevelUpLayoutRewardPerkTemplateItemProps) => {
+export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout, tags }: LevelUpLayoutRewardPerkTemplateItemProps) => {
     return (
         <Region
             name="reward_perk_template"
-            params={147472}
+            tags={tags}
             layout={{ width: 99, height: 35, flexShrink: 0, ...layout }}
         >
             <WidgetSlot
                 widgetType="badge_image"
                 name="perk_image"
-                params={16}
                 options={{ 'badge_image:type': 'perk', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
             />
             <Region
                 name="perk_name"
-                params={3088}
                 layout={{ position: 'absolute', left: 37, width: 62, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -222,13 +211,14 @@ export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout }:
 export interface LevelUpLayoutPlusTemplateItemProps {
     captionPlusTemplate?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutPlusTemplateItem = ({ captionPlusTemplate, layout }: LevelUpLayoutPlusTemplateItemProps) => {
+export const LevelUpLayoutPlusTemplateItem = ({ captionPlusTemplate, layout, tags }: LevelUpLayoutPlusTemplateItemProps) => {
     return (
         <Region
             name="plus_template"
-            params={3088}
+            tags={tags}
             layout={{ width: 22, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -244,13 +234,14 @@ export const LevelUpLayoutPlusTemplateItem = ({ captionPlusTemplate, layout }: L
 export interface LevelUpLayoutRewardListProps {
     itemsRewardList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutRewardList = ({ itemsRewardList, layout }: LevelUpLayoutRewardListProps) => {
+export const LevelUpLayoutRewardList = ({ itemsRewardList, layout, tags }: LevelUpLayoutRewardListProps) => {
     return (
         <Region
             name="reward_list"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 370, top: 34, height: 35, flexDirection: 'row', ...layout }}
         >
             {itemsRewardList ?? (
@@ -269,26 +260,23 @@ export const LevelUpLayoutRewardList = ({ itemsRewardList, layout }: LevelUpLayo
 export interface LevelUpLayoutLevelRewardsItemProps {
     layout?: BoxLayout;
     rewardList?: LevelUpLayoutRewardListProps;
+    tags?: string[];
 }
 
-export const LevelUpLayoutLevelRewardsItem = ({ layout, rewardList }: LevelUpLayoutLevelRewardsItemProps) => {
+export const LevelUpLayoutLevelRewardsItem = ({ layout, rewardList, tags }: LevelUpLayoutLevelRewardsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="level_rewards"
-            params={16}
+            tags={tags}
             layout={{ width: 378, height: 80, flexShrink: 0, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 2 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 4, width: 185, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 4, width: 185, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('talent.track.common.levelup.rewards')}
                     textStyle="text-style-il-border"
@@ -304,13 +292,14 @@ export const LevelUpLayoutLevelRewardsItem = ({ layout, rewardList }: LevelUpLay
 export interface LevelUpLayoutLevelUpLayoutProps {
     itemsLevelUpLayout?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LevelUpLayoutLevelUpLayout = ({ itemsLevelUpLayout, layout }: LevelUpLayoutLevelUpLayoutProps) => {
+export const LevelUpLayoutLevelUpLayout = ({ itemsLevelUpLayout, layout, tags }: LevelUpLayoutLevelUpLayoutProps) => {
     return (
         <Region
             name="level_up_layout"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 14, top: 12, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsLevelUpLayout ?? (

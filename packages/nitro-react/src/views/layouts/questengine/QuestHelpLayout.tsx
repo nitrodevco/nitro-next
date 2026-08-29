@@ -23,27 +23,26 @@ export interface QuestHelpLayoutHelpHeaderProps {
     captionHelpHeaderTitle?: string;
     layout?: BoxLayout;
     srcHelpHeaderImg?: string;
+    tags?: string[];
 }
 
-export const QuestHelpLayoutHelpHeader = ({ captionHelpHeaderShort, captionHelpHeaderTitle, layout, srcHelpHeaderImg }: QuestHelpLayoutHelpHeaderProps) => {
+export const QuestHelpLayoutHelpHeader = ({ captionHelpHeaderShort, captionHelpHeaderTitle, layout, srcHelpHeaderImg, tags }: QuestHelpLayoutHelpHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help.header"
-            params={16}
+            tags={tags}
             backgroundColor="#e0e0e0"
             layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 27, ...layout }}
         >
             <ThemeImage
                 name="help.header.img"
-                params={16}
                 src={srcHelpHeaderImg}
                 layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 27 }}
             />
             <Region
                 name="help.header.title"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 208, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -53,7 +52,6 @@ export const QuestHelpLayoutHelpHeader = ({ captionHelpHeaderShort, captionHelpH
             </Region>
             <Region
                 name="help.header.short"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 208, top: 12, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -69,15 +67,16 @@ export const QuestHelpLayoutHelpHeader = ({ captionHelpHeaderShort, captionHelpH
 export interface QuestHelpLayoutHelpDescriptionItemProps {
     captionHelpDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const QuestHelpLayoutHelpDescriptionItem = ({ captionHelpDescription, layout }: QuestHelpLayoutHelpDescriptionItemProps) => {
+export const QuestHelpLayoutHelpDescriptionItem = ({ captionHelpDescription, layout, tags }: QuestHelpLayoutHelpDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help.description"
-            params={16}
+            tags={tags}
             layout={{ width: 208, height: 330, flexShrink: 0, minHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -92,9 +91,10 @@ export const QuestHelpLayoutHelpDescriptionItem = ({ captionHelpDescription, lay
 export interface QuestHelpLayoutHelpContentItemlistProps {
     itemsHelpContentItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const QuestHelpLayoutHelpContentItemlist = ({ itemsHelpContentItemlist, layout }: QuestHelpLayoutHelpContentItemlistProps) => {
+export const QuestHelpLayoutHelpContentItemlist = ({ itemsHelpContentItemlist, layout, tags }: QuestHelpLayoutHelpContentItemlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -102,7 +102,7 @@ export const QuestHelpLayoutHelpContentItemlist = ({ itemsHelpContentItemlist, l
         >
             <Region
                 name="help.content.itemlist"
-                params={17}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsHelpContentItemlist ?? (
@@ -119,13 +119,14 @@ export interface QuestHelpLayoutHelpContainerProps {
     helpHeader?: QuestHelpLayoutHelpHeaderProps;
     layout?: BoxLayout;
     onHelpContainer?: () => void;
+    tags?: string[];
 }
 
-export const QuestHelpLayoutHelpContainer = ({ helpContentItemlist, helpHeader, layout, onHelpContainer }: QuestHelpLayoutHelpContainerProps) => {
+export const QuestHelpLayoutHelpContainer = ({ helpContentItemlist, helpHeader, layout, onHelpContainer, tags }: QuestHelpLayoutHelpContainerProps) => {
     return (
         <Region
             name="help.container"
-            params={2065}
+            tags={tags}
             onPointerTap={onHelpContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 208, top: 0, bottom: 0, ...layout }}

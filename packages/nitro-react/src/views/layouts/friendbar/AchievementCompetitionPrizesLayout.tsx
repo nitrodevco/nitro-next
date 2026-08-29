@@ -24,20 +24,15 @@ export interface AchievementCompetitionPrizesLayoutProps {
 export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionInfoTxt, captionRank1InfoTxt, captionRank1Txt, captionRank2InfoTxt, captionRank2Txt, captionRank3InfoTxt, captionRank3Txt, captionRewardInfoTxt, captionRewardNameTxt, captionUserRankInfoTxt, captionUserRankTxt, layout, srcBorderBar, srcBorderBar2, srcRewardImage }: AchievementCompetitionPrizesLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 270, height: 352, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 352 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 352 }}>
                 <ThemeImage
                     name="border_bar"
-                    params={16}
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 11, width: 244, top: 2, height: 4 }}
                 />
                 <Region
                     name="caption_txt"
                     tags={[ 'COLORABLE' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 8, width: 95, top: 31, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -48,7 +43,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                 <Region
                     name="info_txt"
                     tags={[ 'COLORABLE' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 8, width: 245, top: 52, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -58,13 +52,11 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                 </Region>
                 <Border
                     variant="100"
-                    params={16}
                     layout={{ position: 'absolute', left: 7, width: 244, top: 85, height: 235 }}
                 >
                     <Region
                         name="reward_name_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ position: 'absolute', left: 89, width: 107, top: 22, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -75,7 +67,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                     <Region
                         name="reward_info_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ position: 'absolute', left: 88, width: 146, top: 36, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -85,18 +76,13 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                     </Region>
                     <ThemeImage
                         name="border_bar"
-                        params={16}
                         src={srcBorderBar2 ?? layoutImage('illumina_light_border_top_center.png')}
                         layout={{ position: 'absolute', left: 91, width: 145, top: 89, height: 4 }}
                     />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 85, width: 150, top: 98, height: 46 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 85, width: 150, top: 98, height: 46 }}>
                         <Region
                             name="rank_1_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -107,7 +93,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="rank_1_info_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 54, width: 95, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
@@ -118,7 +103,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="rank_2_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 0, width: 41, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -129,7 +113,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="rank_2_info_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 54, width: 95, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
@@ -140,7 +123,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="rank_3_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 0, width: 41, top: 30, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -151,7 +133,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="rank_3_info_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 54, width: 95, top: 30, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                         >
                             <ThemeText
@@ -163,20 +144,17 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                     <Border
                         variant="100"
                         name="user_rank_border"
-                        params={16}
                         layout={{ position: 'absolute', left: 13, width: 220, top: 161, height: 67 }}
                     >
                         <WidgetSlot
                             widgetType="avatar_image"
                             name="avatar_image"
-                            params={1040}
                             options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                             layout={{ position: 'absolute', left: 10, width: 33, bottom: 19, height: 34 }}
                         />
                         <Region
                             name="user_rank_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 59, width: 118, top: 11, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -187,7 +165,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                         <Region
                             name="user_rank_info_txt"
                             tags={[ 'COLORABLE' ]}
-                            params={16}
                             layout={{ position: 'absolute', left: 59, width: 151, top: 27, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -198,7 +175,6 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                     </Border>
                     <ThemeImage
                         name="reward_image"
-                        params={16}
                         src={srcRewardImage}
                         layout={{ position: 'absolute', left: 18, width: 53, top: 22, height: 125 }}
                     />

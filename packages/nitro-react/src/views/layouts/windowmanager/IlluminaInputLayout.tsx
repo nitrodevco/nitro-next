@@ -16,20 +16,17 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
         <Region layout={{ position: 'relative', width: 244, height: 28, ...layout }}>
             <Border
                 variant="105"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 28 }}
             >
                 <Button
                     variant="101"
                     name="submit"
-                    params={394321}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmit}
                     layout={{ position: 'absolute', right: -7, width: 86, bottom: -7, height: 42, maxHeight: 42 }}
                 />
                 <Region
                     name="empty_message"
-                    params={16}
                     layout={{ position: 'absolute', left: 6, width: 66, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

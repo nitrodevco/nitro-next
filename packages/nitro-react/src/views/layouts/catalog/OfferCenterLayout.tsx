@@ -14,17 +14,13 @@ export const OfferCenterLayout = ({ layout, onClose, rewardList }: OfferCenterLa
     return (
         <Frame
             variant="3"
-            params={98305}
             caption={t('offers.center.title')}
             tintColor="#67a3bf"
             onClose={onClose}
             layout={{ width: 377, height: 412, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
-                    params={208}
-                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('offers.center.rewards.label')}
                         textStyle="text-style-u-headline-small"
@@ -32,7 +28,6 @@ export const OfferCenterLayout = ({ layout, onClose, rewardList }: OfferCenterLa
                 </Region>
                 <Border
                     variant="0"
-                    params={2064}
                     tintColor="#bbbbb4"
                     layout={{ position: 'absolute', left: 14, width: 348, top: 31, bottom: 45 }}
                 >
@@ -49,9 +44,10 @@ export interface OfferCenterLayoutRewardListProps {
     captionRewardName?: string;
     layout?: BoxLayout;
     srcRewardIcon?: string;
+    tags?: string[];
 }
 
-export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardName, layout, srcRewardIcon }: OfferCenterLayoutRewardListProps) => {
+export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardName, layout, srcRewardIcon, tags }: OfferCenterLayoutRewardListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -59,29 +55,25 @@ export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardNa
         >
             <Region
                 name="reward_list"
-                params={2064}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Border
                     variant="0"
-                    params={16}
                     layout={{ width: 313, height: 64, flexShrink: 0 }}
                 >
                     <Border
                         variant="3"
-                        params={16}
                         tintColor="#8bc9d9"
                         layout={{ position: 'absolute', left: 4, width: 305, top: 4, height: 56 }}
                     >
                         <Border
                             variant="3"
-                            params={16}
                             tintColor="#aadde6"
                             layout={{ position: 'absolute', left: 3, width: 299, top: 3, height: 25 }}
                         />
                         <Region
                             name="reward_date"
-                            params={16}
                             layout={{ position: 'absolute', left: 7, width: 86, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -92,7 +84,6 @@ export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardNa
                         </Region>
                         <Region
                             name="reward_name"
-                            params={16}
                             layout={{ position: 'absolute', left: 9, width: 80, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -104,7 +95,6 @@ export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardNa
                     </Border>
                     <ThemeImage
                         name="reward_icon"
-                        params={16}
                         src={srcRewardIcon}
                         layout={{ position: 'absolute', left: 211, width: 80, top: 4, height: 56 }}
                     />

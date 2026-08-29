@@ -17,7 +17,6 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
     return (
         <Frame
             variant="100"
-            params={49153}
             caption={t('friend.furniture.confirm.lock.caption')}
             onClose={onClose}
             layout={{ width: 309, height: 198, ...layout }}
@@ -33,15 +32,16 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
 export interface LockConfirmLayoutSubtitleItemProps {
     captionSubtitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const LockConfirmLayoutSubtitleItem = ({ captionSubtitle, layout }: LockConfirmLayoutSubtitleItemProps) => {
+export const LockConfirmLayoutSubtitleItem = ({ captionSubtitle, layout, tags }: LockConfirmLayoutSubtitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="subtitle"
-            params={786512}
+            tags={tags}
             layout={{ width: 249, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -58,26 +58,25 @@ export interface LockConfirmLayoutOtherLockedContainerItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
     srcLock?: string;
+    tags?: string[];
 }
 
-export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layout, srcLock }: LockConfirmLayoutOtherLockedContainerItemProps) => {
+export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layout, srcLock, tags }: LockConfirmLayoutOtherLockedContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="other_locked_container"
-            params={16}
+            tags={tags}
             layout={{ width: 290, height: 65, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="lock"
-                params={16}
                 src={srcLock ?? '${image.library.url}furniextras/unlocked_image.png'}
                 layout={{ position: 'absolute', left: 122, width: 44, top: 4, height: 44 }}
             />
             <Region
                 name="message"
-                params={1049616}
                 layout={{ position: 'absolute', left: 0, width: 291, bottom: -8, height: 24, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -95,15 +94,16 @@ export interface LockConfirmLayoutTopListProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onConfirmButton?: () => void;
+    tags?: string[];
 }
 
-export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton, onConfirmButton }: LockConfirmLayoutTopListProps) => {
+export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton, onConfirmButton, tags }: LockConfirmLayoutTopListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_list"
-            params={8536080}
+            tags={tags}
             layout={{ position: 'absolute', left: 9, top: 1, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsTopList ?? (
@@ -113,18 +113,13 @@ export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton,
                 </>
             )}
             <ThemeImage
-                params={16}
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 285, height: 2, flexShrink: 0 }}
             />
-            <Region
-                params={16}
-                layout={{ width: 288, height: 46, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 288, height: 46, flexShrink: 0 }}>
                 <Button
                     variant="101"
                     name="cancel_button"
-                    params={131089}
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelButton}
                     layout={{ position: 'absolute', left: 0, width: 140, top: -2, height: 48, maxWidth: 140 }}
@@ -134,7 +129,6 @@ export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton,
                 <Button
                     variant="101"
                     name="confirm_button"
-                    params={393297}
                     tintColor="#bbbbbb"
                     onPointerTap={onConfirmButton}
                     layout={{ position: 'absolute', right: 4, width: 140, top: -2, height: 48, maxWidth: 140 }}

@@ -18,13 +18,14 @@ export const MemenuSettingsMenu_1079Layout = ({ danceContainer, layout }: Memenu
 /** Named region `line` of MemenuSettingsMenu_1079Layout - configured through the parent's `line` prop. */
 export interface MemenuSettingsMenu_1079LayoutLineProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MemenuSettingsMenu_1079LayoutLine = ({ layout }: MemenuSettingsMenu_1079LayoutLineProps) => {
+export const MemenuSettingsMenu_1079LayoutLine = ({ layout, tags }: MemenuSettingsMenu_1079LayoutLineProps) => {
     return (
         <Region
             name="line"
-            params={16}
+            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1, ...layout }}
         />
@@ -40,20 +41,20 @@ export interface MemenuSettingsMenu_1079LayoutDanceContainerProps {
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
+    tags?: string[];
 }
 
-export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings }: MemenuSettingsMenu_1079LayoutDanceContainerProps) => {
+export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings, tags }: MemenuSettingsMenu_1079LayoutDanceContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 135, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="settings_title"
-                params={786640}
                 layout={{ position: 'absolute', width: 144, top: 5, height: 13, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -65,7 +66,6 @@ export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityTex
             <Button
                 variant="1"
                 name="character_settings"
-                params={131089}
                 onPointerTap={onCharacterSettings}
                 layout={{ position: 'absolute', left: 5, width: 160, top: 55, height: 22, minWidth: 160, maxWidth: 160 }}
             >
@@ -74,7 +74,6 @@ export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityTex
             <Button
                 variant="1"
                 name="sound_settings"
-                params={131089}
                 onPointerTap={onSoundSettings}
                 layout={{ position: 'absolute', left: 5, width: 160, top: 30, height: 22, minWidth: 160, maxWidth: 160 }}
             >
@@ -82,7 +81,6 @@ export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityTex
             </Button>
             <Region
                 name="identity_text"
-                params={16}
                 layout={{ position: 'absolute', left: 6, width: 159, top: 81, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -93,7 +91,6 @@ export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityTex
             <Button
                 variant="1"
                 name="back"
-                params={131089}
                 onPointerTap={onBack}
                 layout={{ position: 'absolute', left: 5, width: 60, top: 106, height: 22, minWidth: 60, maxWidth: 60 }}
             >

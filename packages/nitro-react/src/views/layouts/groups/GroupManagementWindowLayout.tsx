@@ -29,7 +29,6 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
             variant="3"
             id="groups_main_window"
             name="groups_main_window"
-            params={32769}
             caption={t('group.window.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -46,7 +45,6 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
                     <ButtonThick
                         variant="3"
                         name="reset_badge"
-                        params={131089}
                         onPointerTap={onResetBadge}
                         layout={{ width: '100%', height: '100%' }}
                     >
@@ -61,7 +59,6 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
                     <ButtonThick
                         variant="3"
                         name="reset_colors"
-                        params={131089}
                         onPointerTap={onResetColors}
                         layout={{ width: '100%', height: '100%' }}
                     >
@@ -92,76 +89,67 @@ export interface GroupManagementWindowLayoutStepsHeaderContProps {
     srcGcreate40?: string;
     srcGcreate41?: string;
     srcGcreateIconCredit?: string;
+    tags?: string[];
     visibleStepsHeaderCont?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, layout, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, visibleStepsHeaderCont }: GroupManagementWindowLayoutStepsHeaderContProps) => {
+export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, layout, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, tags, visibleStepsHeaderCont }: GroupManagementWindowLayoutStepsHeaderContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="steps_header_cont"
-            params={144}
+            tags={tags}
             visible={visibleStepsHeaderCont ?? false}
             layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33, ...layout }}
         >
             <ThemeImage
                 name="gcreate_1_0"
-                params={16}
                 src={srcGcreate10 ?? '${image.library.url}guilds/gcreate_1_0.png'}
                 layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_1_1"
-                params={16}
                 src={srcGcreate11 ?? '${image.library.url}guilds/gcreate_1_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_2_0"
-                params={16}
                 src={srcGcreate20 ?? '${image.library.url}guilds/gcreate_2_0.png'}
                 layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_2_1"
-                params={16}
                 src={srcGcreate21 ?? '${image.library.url}guilds/gcreate_2_1.png'}
                 layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_3_0"
-                params={16}
                 src={srcGcreate30 ?? '${image.library.url}guilds/gcreate_2_0.png'}
                 layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_3_1"
-                params={16}
                 src={srcGcreate31 ?? '${image.library.url}guilds/gcreate_2_1.png'}
                 layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_4_0"
-                params={16}
                 src={srcGcreate40 ?? '${image.library.url}guilds/gcreate_4_0.png'}
                 layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_4_1"
-                params={16}
                 src={srcGcreate41 ?? '${image.library.url}guilds/gcreate_4_1.png'}
                 layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
             />
             <ThemeImage
                 name="gcreate_icon_credit"
-                params={16}
                 src={srcGcreateIconCredit ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
                 layout={{ position: 'absolute', left: 335, width: 21, top: 0, height: 20 }}
             />
             <Region
                 name="step_title_1"
-                params={786560}
                 layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -171,7 +159,6 @@ export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, 
             </Region>
             <Region
                 name="step_title_2"
-                params={786560}
                 layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -181,7 +168,6 @@ export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, 
             </Region>
             <Region
                 name="step_title_3"
-                params={786560}
                 layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -191,7 +177,6 @@ export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, 
             </Region>
             <Region
                 name="step_title_4"
-                params={786560}
                 layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -219,32 +204,30 @@ export interface GroupManagementWindowLayoutHeaderContProps {
     srcHeaderPicBitmapStep5?: string;
     srcHeaderPicBitmapStep6?: string;
     stepsHeaderCont?: GroupManagementWindowLayoutStepsHeaderContProps;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt, captionHeaderDescTxt, layout, onEditTab1, onEditTab2, onEditTab3, onEditTab5, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, stepsHeaderCont }: GroupManagementWindowLayoutHeaderContProps) => {
+export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt, captionHeaderDescTxt, layout, onEditTab1, onEditTab2, onEditTab3, onEditTab5, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, stepsHeaderCont, tags }: GroupManagementWindowLayoutHeaderContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_cont"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110, ...layout }}
         >
             <Region
-                params={2192}
                 backgroundColor="#b3b099"
                 layout={{ position: 'absolute', left: 1, right: 0, top: 0, bottom: 0 }}
             />
             <TabContext
                 variant="0"
                 name="edit_guild_tab_context"
-                params={2193}
                 layout={{ position: 'absolute', left: -6, right: -5, top: 89, bottom: 0 }}
             >
                 <TabButton
                     variant="0"
                     name="edit_tab_1"
-                    params={131089}
                     onPointerTap={onEditTab1}
                     layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 22 }}
                 >
@@ -253,7 +236,6 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
                 <TabButton
                     variant="0"
                     name="edit_tab_2"
-                    params={131089}
                     onPointerTap={onEditTab2}
                     layout={{ position: 'absolute', left: 97, width: 101, top: 0, height: 22 }}
                 >
@@ -262,7 +244,6 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
                 <TabButton
                     variant="0"
                     name="edit_tab_3"
-                    params={131089}
                     onPointerTap={onEditTab3}
                     layout={{ position: 'absolute', left: 198, width: 101, top: 0, height: 22 }}
                 >
@@ -271,7 +252,6 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
                 <TabButton
                     variant="0"
                     name="edit_tab_5"
-                    params={131089}
                     onPointerTap={onEditTab5}
                     layout={{ position: 'absolute', left: 299, width: 101, top: 0, height: 22 }}
                 >
@@ -281,43 +261,36 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
             <GroupManagementWindowLayoutStepsHeaderCont {...stepsHeaderCont} />
             <ThemeImage
                 name="header_pic_bitmap_step_1"
-                params={16}
                 src={srcHeaderPicBitmapStep1 ?? '${image.library.url}guilds/group_UI_identity.png'}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="header_pic_bitmap_step_2"
-                params={16}
                 src={srcHeaderPicBitmapStep2 ?? '${image.library.url}guilds/group_UI_badge.png'}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="header_pic_bitmap_step_3"
-                params={16}
                 src={srcHeaderPicBitmapStep3 ?? '${image.library.url}guilds/group_UI_colors.png'}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="header_pic_bitmap_step_4"
-                params={16}
                 src={srcHeaderPicBitmapStep4 ?? '${image.library.url}guilds/group_UI_ready.png'}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="header_pic_bitmap_step_5"
-                params={16}
                 src={srcHeaderPicBitmapStep5 ?? '${image.library.url}guilds/group_UI_ready.png'}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="header_pic_bitmap_step_6"
-                params={16}
                 src={srcHeaderPicBitmapStep6}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
             <Region
                 name="header_caption_txt"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -327,7 +300,6 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
             </Region>
             <Region
                 name="header_desc_txt"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -344,20 +316,20 @@ export interface GroupManagementWindowLayoutStep1MembersRegionProps {
     captionStep1MembersTxt?: string;
     layout?: BoxLayout;
     onStep1MembersRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutStep1MembersRegion = ({ captionStep1MembersTxt, layout, onStep1MembersRegion }: GroupManagementWindowLayoutStep1MembersRegionProps) => {
+export const GroupManagementWindowLayoutStep1MembersRegion = ({ captionStep1MembersTxt, layout, onStep1MembersRegion, tags }: GroupManagementWindowLayoutStep1MembersRegionProps) => {
     return (
         <Region
             name="step_1_members_region"
-            params={17}
+            tags={tags}
             onPointerTap={onStep1MembersRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="step_1_members_txt"
-                params={786448}
                 layout={{ position: 'absolute', width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -374,22 +346,22 @@ export interface GroupManagementWindowLayoutCreateRoomLinkRegionProps {
     captionCreateRoomLinkTxt?: string;
     layout?: BoxLayout;
     onCreateRoomLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateRoomLinkTxt, layout, onCreateRoomLinkRegion }: GroupManagementWindowLayoutCreateRoomLinkRegionProps) => {
+export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateRoomLinkTxt, layout, onCreateRoomLinkRegion, tags }: GroupManagementWindowLayoutCreateRoomLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="create_room_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onCreateRoomLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, ...layout }}
         >
             <Region
                 name="create_room_link_txt"
-                params={128}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -412,9 +384,10 @@ export interface GroupManagementWindowLayoutStepCont1Props {
     layout?: BoxLayout;
     onBaseDropmenu?: () => void;
     step1MembersRegion?: GroupManagementWindowLayoutStep1MembersRegionProps;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, captionBaseWarning, captionDescLabel, captionNameLabel, createRoomLinkRegion, layout, onBaseDropmenu, step1MembersRegion }: GroupManagementWindowLayoutStepCont1Props) => {
+export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, captionBaseWarning, captionDescLabel, captionNameLabel, createRoomLinkRegion, layout, onBaseDropmenu, step1MembersRegion, tags }: GroupManagementWindowLayoutStepCont1Props) => {
     const t = useTranslation();
     const [ nameTxtValue, setNameTxtValue ] = useState('');
     const [ descTxtValue, setDescTxtValue ] = useState('');
@@ -422,25 +395,22 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
     return (
         <Region
             name="step_cont_1"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310, ...layout }}
         >
             <Border
                 variant="0"
                 name="step_1_badge"
-                params={16}
                 layout={{ position: 'absolute', left: 17, width: 94, top: 11, height: 94 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 86, top: 4, height: 86 }}
                 />
                 <WidgetSlot
                     widgetType="badge_image"
                     name="group_logo"
-                    params={16}
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                     layout={{ position: 'absolute', left: 27, width: 39, top: 27, height: 39 }}
                 />
@@ -448,7 +418,6 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
             <GroupManagementWindowLayoutStep1MembersRegion {...step1MembersRegion} />
             <Region
                 name="name_label"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionNameLabel ?? t('group.edit.name')} />
@@ -461,7 +430,6 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
             />
             <Region
                 name="desc_label"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionDescLabel ?? t('group.edit.desc')} />
@@ -474,7 +442,6 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
             />
             <Region
                 name="base_label"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionBaseLabel ?? t('group.edit.base')} />
@@ -482,13 +449,11 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
             <Dropmenu
                 variant="0"
                 name="base_dropmenu"
-                params={129}
                 onPointerTap={onBaseDropmenu}
                 layout={{ position: 'absolute', left: 126, right: 0, top: 188, height: 26 }}
             />
             <Region
                 name="base_warning"
-                params={129}
                 layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -505,14 +470,15 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
 /** Named region `step_cont_2` of GroupManagementWindowLayout - configured through the parent's `stepCont2` prop. */
 export interface GroupManagementWindowLayoutStepCont2Props {
     layout?: BoxLayout;
+    tags?: string[];
     visibleStepCont2?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont2 = ({ layout, visibleStepCont2 }: GroupManagementWindowLayoutStepCont2Props) => {
+export const GroupManagementWindowLayoutStepCont2 = ({ layout, tags, visibleStepCont2 }: GroupManagementWindowLayoutStepCont2Props) => {
     return (
         <Region
             name="step_cont_2"
-            params={144}
+            tags={tags}
             visible={visibleStepCont2 ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
         />
@@ -522,13 +488,14 @@ export const GroupManagementWindowLayoutStepCont2 = ({ layout, visibleStepCont2 
 /** Named region `guild_primary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildPrimaryColorSelector` prop. */
 export interface GroupManagementWindowLayoutGuildPrimaryColorSelectorProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps) => {
+export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout, tags }: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps) => {
     return (
         <Region
             name="guild_primary_color_selector"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 138, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -537,13 +504,14 @@ export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout }:
 /** Named region `guild_secondary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildSecondaryColorSelector` prop. */
 export interface GroupManagementWindowLayoutGuildSecondaryColorSelectorProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGuildSecondaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps) => {
+export const GroupManagementWindowLayoutGuildSecondaryColorSelector = ({ layout, tags }: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps) => {
     return (
         <Region
             name="guild_secondary_color_selector"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 94, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -561,22 +529,22 @@ export interface GroupManagementWindowLayoutStepCont3Props {
     srcGuildColorPrimaryColorTop?: string;
     srcGuildColorSecondaryColorBtm?: string;
     srcGuildColorSecondaryColorTop?: string;
+    tags?: string[];
     visibleStepCont3?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, guildPrimaryColorSelector, guildSecondaryColorSelector, layout, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, visibleStepCont3 }: GroupManagementWindowLayoutStepCont3Props) => {
+export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, guildPrimaryColorSelector, guildSecondaryColorSelector, layout, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, tags, visibleStepCont3 }: GroupManagementWindowLayoutStepCont3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_3"
-            params={144}
+            tags={tags}
             visible={visibleStepCont3 ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
         >
             <Region
                 name="label_guild_color"
-                params={1048592}
                 layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -587,36 +555,30 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
             </Region>
             <Border
                 variant="5"
-                params={16}
                 layout={{ position: 'absolute', left: 13, width: 92, top: 29, height: 46 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
                 >
                     <ThemeImage
                         name="guild_color_primary_color_btm"
-                        params={16}
                         src={srcGuildColorPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
                         layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="guild_color_primary_color_top"
-                        params={16}
                         src={srcGuildColorPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
                         layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="guild_color_secondary_color_btm"
-                        params={16}
                         src={srcGuildColorSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
                         layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="guild_color_secondary_color_top"
-                        params={16}
                         src={srcGuildColorSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
                         layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
                     />
@@ -624,7 +586,6 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
             </Border>
             <Region
                 name="label_primary"
-                params={1048592}
                 layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -635,7 +596,6 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
             </Region>
             <Region
                 name="label_secondary"
-                params={1048592}
                 layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -647,7 +607,6 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
             <Border
                 variant="3"
                 name="border"
-                params={16}
                 tintColor="#bebba5"
                 layout={{ position: 'absolute', left: 128, width: 142, top: 29, height: 277 }}
             >
@@ -656,7 +615,6 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
             <Border
                 variant="3"
                 name="border"
-                params={16}
                 tintColor="#bebba5"
                 layout={{ position: 'absolute', left: 280, width: 96, top: 29, height: 277 }}
             >
@@ -670,13 +628,14 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
 export interface GroupManagementWindowLayoutVipRequiredRegionProps {
     layout?: BoxLayout;
     onVipRequiredRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutVipRequiredRegion = ({ layout, onVipRequiredRegion }: GroupManagementWindowLayoutVipRequiredRegionProps) => {
+export const GroupManagementWindowLayoutVipRequiredRegion = ({ layout, onVipRequiredRegion, tags }: GroupManagementWindowLayoutVipRequiredRegionProps) => {
     return (
         <Region
             name="vip_required_region"
-            params={17}
+            tags={tags}
             onPointerTap={onVipRequiredRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 248, top: 0, height: 39, ...layout }}
@@ -698,23 +657,23 @@ export interface GroupManagementWindowLayoutStepCont4Props {
     srcBadgePreviewPrimaryColorTop?: string;
     srcBadgePreviewSecondaryColorBtm?: string;
     srcBadgePreviewSecondaryColorTop?: string;
+    tags?: string[];
     vipRequiredRegion?: GroupManagementWindowLayoutVipRequiredRegionProps;
     visibleStepCont4?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaption, captionConfirmationDesc, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionVipRequiredTxt, layout, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, vipRequiredRegion, visibleStepCont4 }: GroupManagementWindowLayoutStepCont4Props) => {
+export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaption, captionConfirmationDesc, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionVipRequiredTxt, layout, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, tags, vipRequiredRegion, visibleStepCont4 }: GroupManagementWindowLayoutStepCont4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_4"
-            params={144}
+            tags={tags}
             visible={visibleStepCont4 ?? false}
             layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
         >
             <Region
                 name="confirmation_caption"
-                params={1}
                 layout={{ position: 'absolute', left: 126, width: 256, top: 8, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -724,7 +683,6 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
             </Region>
             <Region
                 name="confirmation_desc"
-                params={1}
                 layout={{ position: 'absolute', left: 126, width: 260, top: 46, height: 215, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -735,18 +693,15 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
             <Border
                 variant="0"
                 name="badge_border"
-                params={16}
                 layout={{ position: 'absolute', left: 15, width: 92, top: 50, height: 92 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 84 }}
                 />
                 <ThemeImage
                     name="badge_preview_image"
-                    params={16}
                     src={srcBadgePreviewImage}
                     layout={{ position: 'absolute', left: 26, width: 39, top: 26, height: 39 }}
                 />
@@ -773,36 +728,30 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
             </Region>
             <Border
                 variant="5"
-                params={16}
                 layout={{ position: 'absolute', left: 15, width: 92, top: 172, height: 46 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
                 >
                     <ThemeImage
                         name="badge_preview_primary_color_btm"
-                        params={16}
                         src={srcBadgePreviewPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
                         layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="badge_preview_primary_color_top"
-                        params={16}
                         src={srcBadgePreviewPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
                         layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="badge_preview_secondary_color_btm"
-                        params={16}
                         src={srcBadgePreviewSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
                         layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
                     />
                     <ThemeImage
                         name="badge_preview_secondary_color_top"
-                        params={16}
                         src={srcBadgePreviewSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
                         layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
                     />
@@ -811,7 +760,6 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
             <Border
                 variant="0"
                 name="vip_required_border"
-                params={16}
                 tintColor="#cc0000"
                 layout={{ position: 'absolute', left: 126, width: 248, top: 253, height: 39 }}
             >
@@ -819,12 +767,10 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                 <Icon
                     variant="14"
                     name="vip_icon"
-                    params={16}
                     layout={{ position: 'absolute', left: 14, width: 16, top: 11, height: 17 }}
                 />
                 <Region
                     name="vip_required_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 38, width: 192, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -834,7 +780,6 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                 </Region>
                 <Region
                     name="get_vip_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 38, width: 160, top: 20, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -852,22 +797,22 @@ export interface GroupManagementWindowLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GroupManagementWindowLayoutCancelLinkRegionProps) => {
+export const GroupManagementWindowLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: GroupManagementWindowLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
         >
             <Region
                 name="cancel_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionCancelLink ?? t('cancel')} />
@@ -881,22 +826,22 @@ export interface GroupManagementWindowLayoutPreviousStepLinkRegionProps {
     captionPreviousStepLink?: string;
     layout?: BoxLayout;
     onPreviousStepLinkRegion?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutPreviousStepLinkRegion = ({ captionPreviousStepLink, layout, onPreviousStepLinkRegion }: GroupManagementWindowLayoutPreviousStepLinkRegionProps) => {
+export const GroupManagementWindowLayoutPreviousStepLinkRegion = ({ captionPreviousStepLink, layout, onPreviousStepLinkRegion, tags }: GroupManagementWindowLayoutPreviousStepLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="previous_step_link_region"
-            params={17}
+            tags={tags}
             onPointerTap={onPreviousStepLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
         >
             <Region
                 name="previous_step_link"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionPreviousStepLink ?? t('group.create.previousstep')} />
@@ -914,16 +859,17 @@ export interface GroupManagementWindowLayoutFooterContProps {
     onNextStepButton?: () => void;
     previousStepLinkRegion?: GroupManagementWindowLayoutPreviousStepLinkRegionProps;
     srcBuyCreditIcon?: string;
+    tags?: string[];
     visibleFooterCont?: boolean;
 }
 
-export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captionBuyTxt, layout, onBuyButton, onNextStepButton, previousStepLinkRegion, srcBuyCreditIcon, visibleFooterCont }: GroupManagementWindowLayoutFooterContProps) => {
+export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captionBuyTxt, layout, onBuyButton, onNextStepButton, previousStepLinkRegion, srcBuyCreditIcon, tags, visibleFooterCont }: GroupManagementWindowLayoutFooterContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer_cont"
-            params={1168}
+            tags={tags}
             visible={visibleFooterCont ?? false}
             layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42, ...layout }}
         >
@@ -932,13 +878,11 @@ export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captio
             <Border
                 variant="0"
                 name="buy_border"
-                params={16}
                 tintColor="#ffc300"
                 layout={{ position: 'absolute', left: 126, width: 248, top: 0, height: 39 }}
             >
                 <ThemeImage
                     name="buy_credit_icon"
-                    params={16}
                     src={srcBuyCreditIcon ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
                     layout={{ position: 'absolute', left: 9, width: 21, top: 11, height: 20 }}
                 />
@@ -954,7 +898,6 @@ export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captio
                 <ButtonThick
                     variant="3"
                     name="buy_button"
-                    params={131153}
                     onPointerTap={onBuyButton}
                     layout={{ position: 'absolute', right: 4, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
                 >
@@ -964,7 +907,6 @@ export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captio
             <ButtonThick
                 variant="3"
                 name="next_step_button"
-                params={131089}
                 onPointerTap={onNextStepButton}
                 layout={{ position: 'absolute', left: 256, width: 120, top: 13, height: 29, minWidth: 120, maxWidth: 120 }}
             >
@@ -979,23 +921,23 @@ export interface GroupManagementWindowLayoutGrouptypeRegion0Props {
     layout?: BoxLayout;
     onGrouptypeRegion0?: () => void;
     srcGrouptypeIcon0?: string;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0 }: GroupManagementWindowLayoutGrouptypeRegion0Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0, tags }: GroupManagementWindowLayoutGrouptypeRegion0Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_0"
+            tags={tags}
             tooltip={t('group.edit.settings.type.regular.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion0}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 16, top: 22, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_0"
-                params={16}
                 src={srcGrouptypeIcon0 ?? '${image.library.url}guilds/grouptype_icon_0.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -1008,23 +950,23 @@ export interface GroupManagementWindowLayoutGrouptypeRegion1Props {
     layout?: BoxLayout;
     onGrouptypeRegion1?: () => void;
     srcGrouptypeIcon1?: string;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1 }: GroupManagementWindowLayoutGrouptypeRegion1Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1, tags }: GroupManagementWindowLayoutGrouptypeRegion1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_1"
+            tags={tags}
             tooltip={t('group.edit.settings.type.exclusive.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion1}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 16, top: 82, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_1"
-                params={16}
                 src={srcGrouptypeIcon1 ?? '${image.library.url}guilds/grouptype_icon_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -1037,23 +979,23 @@ export interface GroupManagementWindowLayoutGrouptypeRegion2Props {
     layout?: BoxLayout;
     onGrouptypeRegion2?: () => void;
     srcGrouptypeIcon2?: string;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2 }: GroupManagementWindowLayoutGrouptypeRegion2Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2, tags }: GroupManagementWindowLayoutGrouptypeRegion2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_2"
+            tags={tags}
             tooltip={t('group.edit.settings.type.private.help')}
-            params={17}
             onPointerTap={onGrouptypeRegion2}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 16, top: 142, height: 16, ...layout }}
         >
             <ThemeImage
                 name="grouptype_icon_2"
-                params={16}
                 src={srcGrouptypeIcon2 ?? '${image.library.url}guilds/grouptype_icon_2.png'}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
             />
@@ -1070,38 +1012,32 @@ export interface GroupManagementWindowLayoutGroupTypeSelectorProps {
     onRbTypeExclusive?: () => void;
     onRbTypePrivate?: () => void;
     onRbTypeRegular?: () => void;
+    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0, grouptypeRegion1, grouptypeRegion2, layout, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular }: GroupManagementWindowLayoutGroupTypeSelectorProps) => {
+export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0, grouptypeRegion1, grouptypeRegion2, layout, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular, tags }: GroupManagementWindowLayoutGroupTypeSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="group_type_selector"
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 152, top: 5, height: 191, ...layout }}
         >
             <RadioButton
                 variant="0"
                 name="rb_type_regular"
-                params={17}
                 onPointerTap={onRbTypeRegular}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 2, height: 15 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.regular.label')}
                     textStyle="text-style-u-bold"
                 />
             </Region>
             <GroupManagementWindowLayoutGrouptypeRegion0 {...grouptypeRegion0} />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.regular.help')}
                     textStyle="text-style-u-regular"
@@ -1111,24 +1047,17 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0,
             <RadioButton
                 variant="0"
                 name="rb_type_exclusive"
-                params={17}
                 onPointerTap={onRbTypeExclusive}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 62, height: 15 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.exclusive.label')}
                     textStyle="text-style-u-bold"
                 />
             </Region>
             <GroupManagementWindowLayoutGrouptypeRegion1 {...grouptypeRegion1} />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.exclusive.help')}
                     textStyle="text-style-u-regular"
@@ -1138,24 +1067,17 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0,
             <RadioButton
                 variant="0"
                 name="rb_type_private"
-                params={17}
                 onPointerTap={onRbTypePrivate}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 122, height: 15 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.private.label')}
                     textStyle="text-style-u-bold"
                 />
             </Region>
             <GroupManagementWindowLayoutGrouptypeRegion2 {...grouptypeRegion2} />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('group.edit.settings.type.private.help')}
                     textStyle="text-style-u-regular"
@@ -1173,22 +1095,22 @@ export interface GroupManagementWindowLayoutStepCont5Props {
     groupTypeSelector?: GroupManagementWindowLayoutGroupTypeSelectorProps;
     layout?: BoxLayout;
     onCbMemberRights?: () => void;
+    tags?: string[];
     visibleStepCont5?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, captionGuildType, groupTypeSelector, layout, onCbMemberRights, visibleStepCont5 }: GroupManagementWindowLayoutStepCont5Props) => {
+export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, captionGuildType, groupTypeSelector, layout, onCbMemberRights, tags, visibleStepCont5 }: GroupManagementWindowLayoutStepCont5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_5"
-            params={144}
+            tags={tags}
             visible={visibleStepCont5 ?? false}
             layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
         >
             <Region
                 name="guild_type"
-                params={1048592}
                 layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -1199,12 +1121,10 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
             </Region>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 199 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 191 }}
                 >
@@ -1213,7 +1133,6 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
             </Border>
             <Region
                 name="guild_rights"
-                params={1048592}
                 layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -1224,35 +1143,26 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
             </Region>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 207, width: 170, top: 29, height: 144 }}
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 135 }}
                 >
                     <CheckBox
                         variant="0"
                         name="cb_member_rights"
-                        params={17}
                         onPointerTap={onCbMemberRights}
                         layout={{ position: 'absolute', left: 5, width: 16, top: 5, height: 16 }}
                     />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('group.edit.settings.rights.members.label')}
                             textStyle="text-style-u-bold"
                         />
                     </Region>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('group.edit.settings.rights.members.help')}
                             textStyle="text-style-u-regular"

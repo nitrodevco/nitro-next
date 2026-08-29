@@ -20,7 +20,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
     return (
         <Frame
             variant="0"
-            params={32769}
             caption="Mod action on:"
             tintColor="#418db0"
             onClose={onClose}
@@ -30,7 +29,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 <Dropmenu
                     variant="100"
                     name="cfh_topics"
-                    params={17}
                     onPointerTap={onCfhTopics}
                     layout={{ position: 'absolute', left: 20, width: 320, top: 15, height: 20 }}
                 >
@@ -39,7 +37,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 <Dropmenu
                     variant="100"
                     name="sanction_type"
-                    params={17}
                     onPointerTap={onSanctionType}
                     layout={{ position: 'absolute', left: 20, width: 320, top: 45, height: 20 }}
                 >
@@ -47,7 +44,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 </Dropmenu>
                 <Region
                     name="message_info"
-                    params={16}
                     layout={{ position: 'absolute', left: 20, width: 320, top: 80, height: 20, maxWidth: 320, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -64,7 +60,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 <Button
                     variant="0"
                     name="default_sanction_button"
-                    params={131089}
                     onPointerTap={onDefaultSanctionButton}
                     layout={{ position: 'absolute', left: 20, width: 100, top: 165, height: 21, minWidth: 100, maxWidth: 100 }}
                 >
@@ -72,7 +67,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 </Button>
                 <Region
                     name="default_sanction_label"
-                    params={16}
                     layout={{ position: 'absolute', left: 125, width: 240, top: 167, height: 20, maxWidth: 240, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -83,7 +77,6 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 <Button
                     variant="0"
                     name="custom_sanction_button"
-                    params={131089}
                     onPointerTap={onCustomSanctionButton}
                     layout={{ position: 'absolute', left: 20, width: 100, top: 205, height: 21, minWidth: 100, maxWidth: 100 }}
                 >

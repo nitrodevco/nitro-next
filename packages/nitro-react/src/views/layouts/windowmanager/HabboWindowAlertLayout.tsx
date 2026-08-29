@@ -16,7 +16,6 @@ export const HabboWindowAlertLayout = ({ alertButtonList, captionAlertSummary, l
             variant="3"
             id="_alert_frame"
             name="_alert_frame"
-            params={32769}
             caption="Alert"
             tintColor="#418db0"
             onClose={onClose}
@@ -26,7 +25,6 @@ export const HabboWindowAlertLayout = ({ alertButtonList, captionAlertSummary, l
                 <Region
                     name="_alert_summary"
                     tags={[ 'DESCRIPTION' ]}
-                    params={8388624}
                     layout={{ position: 'absolute', left: 27, width: 210, top: 14, minHeight: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -46,13 +44,14 @@ export interface HabboWindowAlertLayoutAlertButtonCancelItemProps {
     captionAlertButtonCancel?: string;
     layout?: BoxLayout;
     onAlertButtonCancel?: () => void;
+    tags?: string[];
 }
 
-export const HabboWindowAlertLayoutAlertButtonCancelItem = ({ captionAlertButtonCancel, layout, onAlertButtonCancel }: HabboWindowAlertLayoutAlertButtonCancelItemProps) => {
+export const HabboWindowAlertLayoutAlertButtonCancelItem = ({ captionAlertButtonCancel, layout, onAlertButtonCancel, tags }: HabboWindowAlertLayoutAlertButtonCancelItemProps) => {
     return (
         <Region
             name="_alert_button_cancel"
-            params={131073}
+            tags={tags}
             layout={{ width: 51, height: 17, flexShrink: 0, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
             onPointerTap={onAlertButtonCancel}
             cursor="pointer"
@@ -70,14 +69,15 @@ export const HabboWindowAlertLayoutAlertButtonCancelItem = ({ captionAlertButton
 export interface HabboWindowAlertLayoutAlertButtonCustomItemProps {
     layout?: BoxLayout;
     onAlertButtonCustom?: () => void;
+    tags?: string[];
 }
 
-export const HabboWindowAlertLayoutAlertButtonCustomItem = ({ layout, onAlertButtonCustom }: HabboWindowAlertLayoutAlertButtonCustomItemProps) => {
+export const HabboWindowAlertLayoutAlertButtonCustomItem = ({ layout, onAlertButtonCustom, tags }: HabboWindowAlertLayoutAlertButtonCustomItemProps) => {
     return (
         <Button
             variant="3"
             name="_alert_button_custom"
-            params={131089}
+            tags={tags}
             onPointerTap={onAlertButtonCustom}
             layout={{ width: 50, height: 24, flexShrink: 0, minWidth: 50, ...layout }}
         >
@@ -90,14 +90,15 @@ export const HabboWindowAlertLayoutAlertButtonCustomItem = ({ layout, onAlertBut
 export interface HabboWindowAlertLayoutAlertButtonOkItemProps {
     layout?: BoxLayout;
     onAlertButtonOk?: () => void;
+    tags?: string[];
 }
 
-export const HabboWindowAlertLayoutAlertButtonOkItem = ({ layout, onAlertButtonOk }: HabboWindowAlertLayoutAlertButtonOkItemProps) => {
+export const HabboWindowAlertLayoutAlertButtonOkItem = ({ layout, onAlertButtonOk, tags }: HabboWindowAlertLayoutAlertButtonOkItemProps) => {
     return (
         <ButtonThick
             variant="3"
             name="_alert_button_ok"
-            params={131089}
+            tags={tags}
             onPointerTap={onAlertButtonOk}
             layout={{ width: 50, height: 24, flexShrink: 0, minWidth: 50, ...layout }}
         >
@@ -110,13 +111,14 @@ export const HabboWindowAlertLayoutAlertButtonOkItem = ({ layout, onAlertButtonO
 export interface HabboWindowAlertLayoutAlertButtonListProps {
     itemsAlertButtonList?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboWindowAlertLayoutAlertButtonList = ({ itemsAlertButtonList, layout }: HabboWindowAlertLayoutAlertButtonListProps) => {
+export const HabboWindowAlertLayoutAlertButtonList = ({ itemsAlertButtonList, layout, tags }: HabboWindowAlertLayoutAlertButtonListProps) => {
     return (
         <Region
             name="_alert_button_list"
-            params={787664}
+            tags={tags}
             layout={{ position: 'absolute', marginLeft: -5.5, marginRight: 5.5, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32, ...layout }}
         >
             {itemsAlertButtonList ?? (

@@ -20,43 +20,38 @@ export interface FriendRequestsFooterLayoutFooterProps {
     layout?: BoxLayout;
     onAcceptAllBut?: () => void;
     onRejectAllBut?: () => void;
+    tags?: string[];
 }
 
-export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRejectAllBut }: FriendRequestsFooterLayoutFooterProps) => {
+export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRejectAllBut, tags }: FriendRequestsFooterLayoutFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer"
-            params={16}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 67, ...layout }}
         >
             <Border
                 variant="0"
                 name="border"
-                params={144}
                 tintColor="#d9d9d9"
                 layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 57 }}
             >
                 <ContainerButton
                     variant="0"
                     name="reject_all_but"
-                    params={145}
                     onPointerTap={onRejectAllBut}
                     layout={{ position: 'absolute', left: 5, right: 5, top: 30, height: 21 }}
                 >
                     <Icon
                         variant="9"
                         name="icon"
-                        params={131089}
                         tintColor="#ff3333"
                         layout={{ position: 'absolute', left: 9, width: 16, top: 4, height: 14 }}
                     />
-                    <Region
-                        params={144}
-                        layout={{ position: 'absolute', left: 30, right: 13, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 30, right: 13, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('friendlist.requests.dismissall')}
                             textOptions={{ fill: '#000000' }}
@@ -66,21 +61,16 @@ export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRej
                 <ContainerButton
                     variant="0"
                     name="accept_all_but"
-                    params={145}
                     onPointerTap={onAcceptAllBut}
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 21 }}
                 >
                     <Icon
                         variant="8"
                         name="icon"
-                        params={131089}
                         tintColor="#33cc00"
                         layout={{ position: 'absolute', left: 9, width: 16, top: 4, height: 14 }}
                     />
-                    <Region
-                        params={144}
-                        layout={{ position: 'absolute', left: 32, right: 11, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 32, right: 11, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('friendlist.requests.acceptall')}
                             textOptions={{ fill: '#000000' }}

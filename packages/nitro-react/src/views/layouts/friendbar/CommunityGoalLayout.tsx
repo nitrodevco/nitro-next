@@ -22,16 +22,16 @@ export const CommunityGoalLayout = ({ communityGoal, layout }: CommunityGoalLayo
 export interface CommunityGoalLayoutGoalCaptionItemProps {
     captionGoalCaption?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, layout }: CommunityGoalLayoutGoalCaptionItemProps) => {
+export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, layout, tags }: CommunityGoalLayoutGoalCaptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_caption"
-            tags={[ 'COLORABLE' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 300, height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -46,16 +46,16 @@ export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, layout 
 export interface CommunityGoalLayoutGoalInfoItemProps {
     captionGoalInfo?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, layout }: CommunityGoalLayoutGoalInfoItemProps) => {
+export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, layout, tags }: CommunityGoalLayoutGoalInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_info"
-            tags={[ 'COLORABLE' ]}
-            params={16}
+            tags={tags}
             layout={{ width: 300, height: 16, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -70,16 +70,17 @@ export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, layout }: Com
 export interface CommunityGoalLayoutCommunityCatalogButtonItemProps {
     layout?: BoxLayout;
     onCommunityCatalogButton?: () => void;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommunityCatalogButton }: CommunityGoalLayoutCommunityCatalogButtonItemProps) => {
+export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommunityCatalogButton, tags }: CommunityGoalLayoutCommunityCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="community_catalog_button"
-            params={131089}
+            tags={tags}
             onPointerTap={onCommunityCatalogButton}
             layout={{ width: 250, height: 48, flexShrink: 0, minWidth: 250, maxWidth: 250, minHeight: 48, maxHeight: 48, ...layout }}
         >
@@ -92,19 +93,20 @@ export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommun
 export interface CommunityGoalLayoutInfoContainerProps {
     itemsInfoContainer?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutInfoContainer = ({ itemsInfoContainer, layout }: CommunityGoalLayoutInfoContainerProps) => {
+export const CommunityGoalLayoutInfoContainer = ({ itemsInfoContainer, layout, tags }: CommunityGoalLayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfoContainer ?? (
                 <>
-                    <CommunityGoalLayoutGoalCaptionItem />
-                    <CommunityGoalLayoutGoalInfoItem />
+                    <CommunityGoalLayoutGoalCaptionItem tags={[ 'COLORABLE' ]} />
+                    <CommunityGoalLayoutGoalInfoItem tags={[ 'COLORABLE' ]} />
                     <CommunityGoalLayoutCommunityCatalogButtonItem />
                 </>
             )}
@@ -127,21 +129,21 @@ export interface CommunityGoalLayoutMeterContainerProps {
     srcMeterLevel3Icon?: string;
     srcMeterLevel3IconLocked?: string;
     srcMeterNeedle?: string;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle }: CommunityGoalLayoutMeterContainerProps) => {
+export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle, tags }: CommunityGoalLayoutMeterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="meter_container"
-            params={16400}
+            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 226, top: 0, height: 200, ...layout }}
         >
             <Region
                 name="community_total_status"
                 tags={[ 'COLORABLE' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 145, height: 16, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -151,13 +153,11 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             </Region>
             <ThemeImage
                 name="meter_level_0"
-                params={16}
                 src={srcMeterLevel0 ?? '${image.library.url}reception/meter_level_0.png'}
                 layout={{ position: 'absolute', left: 20, width: 183, top: 0, height: 144 }}
             />
             <ThemeImage
                 name="meter_level_1"
-                params={16}
                 src={srcMeterLevel1 ?? '${image.library.url}reception/meter_level_1.png'}
                 layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
             />
@@ -167,7 +167,6 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_1_icon"
-                    params={16}
                     src={srcMeterLevel1Icon}
                     layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
                 />
@@ -178,14 +177,12 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_1_icon_locked"
-                    params={16}
                     src={srcMeterLevel1IconLocked}
                     layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
                 />
             </Region>
             <ThemeImage
                 name="meter_level_2"
-                params={16}
                 src={srcMeterLevel2 ?? '${image.library.url}reception/meter_level_2.png'}
                 layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
             />
@@ -195,7 +192,6 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_2_icon"
-                    params={16}
                     src={srcMeterLevel2Icon}
                     layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
                 />
@@ -206,14 +202,12 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_2_icon_locked"
-                    params={16}
                     src={srcMeterLevel2IconLocked}
                     layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
                 />
             </Region>
             <ThemeImage
                 name="meter_level_3"
-                params={16}
                 src={srcMeterLevel3 ?? '${image.library.url}reception/meter_level_3.png'}
                 layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
             />
@@ -223,7 +217,6 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_3_icon"
-                    params={16}
                     src={srcMeterLevel3Icon}
                     layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
                 />
@@ -234,14 +227,12 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             >
                 <ThemeImage
                     name="meter_level_3_icon_locked"
-                    params={16}
                     src={srcMeterLevel3IconLocked}
                     layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
                 />
             </Region>
             <ThemeImage
                 name="meter_needle"
-                params={16}
                 src={srcMeterNeedle ?? layoutImage('landing_view_needle_meter_needle0.png')}
                 layout={{ position: 'absolute', left: 60, width: 96, top: 48, height: 85 }}
             />
@@ -257,27 +248,26 @@ export interface CommunityGoalLayoutCommunityGoalProps {
     meterContainer?: CommunityGoalLayoutMeterContainerProps;
     srcBorderBar?: string;
     srcHdrLine?: string;
+    tags?: string[];
 }
 
-export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine }: CommunityGoalLayoutCommunityGoalProps) => {
+export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine, tags }: CommunityGoalLayoutCommunityGoalProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="community_goal"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 516, top: 0, height: 200, ...layout }}
         >
             <ThemeImage
                 name="border_bar"
-                params={16}
                 src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                 layout={{ position: 'absolute', left: 7, width: 12, top: 10, height: 4 }}
             />
             <Region
                 name="community_title"
                 tags={[ 'COLORABLE' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 24, width: 154, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -287,7 +277,6 @@ export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, infoCo
             </Region>
             <ThemeImage
                 name="hdr_line"
-                params={16}
                 src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                 layout={{ position: 'absolute', left: 193, width: 310, top: 10, height: 4 }}
             />

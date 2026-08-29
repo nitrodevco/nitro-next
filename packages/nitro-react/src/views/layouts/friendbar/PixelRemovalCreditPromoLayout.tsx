@@ -20,37 +20,31 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
     return (
         <Region layout={{ position: 'relative', width: 350, height: 340, ...layout }}>
             <Region
-                params={16}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 340 }}
             >
                 <ThemeImage
                     name="lift_header"
-                    params={16}
                     src={srcLiftHeader ?? '${image.library.url}reception/silverscreen250_top.png'}
                     layout={{ position: 'absolute', left: 0, width: 250, top: 39, height: 33 }}
                 />
                 <ThemeImage
                     name="left_mid"
-                    params={2064}
                     src={srcLeftMid ?? '${image.library.url}reception/silverscreen250_mid2.png'}
                     layout={{ position: 'absolute', left: 0, width: 250, top: 72, bottom: 35, minHeight: 1 }}
                 />
                 <ThemeImage
                     name="lift_bottom"
-                    params={1049616}
                     src={srcLiftBottom ?? '${image.library.url}reception/silverscreen250_btm.png'}
                     layout={{ position: 'absolute', left: 0, width: 250, bottom: -1, height: 37 }}
                 />
                 <ThemeImage
                     name="promo_bitmap"
-                    params={16}
                     src={srcPromoBitmap}
                     layout={{ position: 'absolute', left: 5, width: 120, top: 157, height: 135 }}
                 />
                 <Region
                     name="page_header_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 120, width: 120, top: 161, height: 43, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -61,7 +55,6 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 </Region>
                 <Region
                     name="page_desc_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 120, width: 120, top: 198, height: 78, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -72,7 +65,6 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 <Button
                     variant="100"
                     name="open_catalog_button"
-                    params={3277841}
                     onPointerTap={onOpenCatalogButton}
                     layout={{ position: 'absolute', left: 115, width: 125, bottom: 31, height: 48, maxWidth: 125, minHeight: 48, maxHeight: 48 }}
                 >
@@ -80,12 +72,10 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 </Button>
                 <WidgetSlot
                     widgetType="separator"
-                    params={16}
                     layout={{ position: 'absolute', left: 19, width: 210, top: 121, height: 31 }}
                 />
                 <Region
                     name="pixel_removal_title"
-                    params={16}
                     layout={{ position: 'absolute', left: 9, width: 233, top: 69, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -96,7 +86,6 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 <WidgetSlot
                     widgetType="countdown"
                     name="pixels_countdown_widget"
-                    params={147472}
                     layout={{ position: 'absolute', left: 75, width: 99, top: 86, height: 37 }}
                 />
             </Region>

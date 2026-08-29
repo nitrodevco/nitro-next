@@ -1,18 +1,18 @@
 import { BoxLayout, Region } from '#base/theme';
-import { GuildSelectorWidgetLayout, GuildSelectorWidgetLayoutProps } from '#base/views/layouts/catalog/GuildSelectorWidgetLayout';
+import { GuildSelectorWidgetLayout, GuildSelectorWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/GuildSelectorWidgetLayout';
 
 /**
  * Catalog widget `guildSelectorWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
- * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutGuildCustomFurni_1680Layout); each passes its own placement through `layout`.
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 2 pages
+ * (LayoutGuildCustomFurni_1586Layout, LayoutGuildCustomFurni_1680Layout); each passes its own placement through `layout`.
  */
-export type GuildSelectorWidgetProps = Omit<GuildSelectorWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+export type GuildSelectorWidgetProps = Omit<GuildSelectorWidgetLayoutProps, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };
 
-export const GuildSelectorWidget = ({ layout, ...widget }: GuildSelectorWidgetProps) => {
+export const GuildSelectorWidget = ({ layout, tags, ...widget }: GuildSelectorWidgetProps) => {
     return (
         <Region
             name="guildSelectorWidget"
-            params={1040}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <GuildSelectorWidgetLayout

@@ -18,13 +18,14 @@ export const DiscountValueItemLayout = ({ discountValueContainer, layout }: Disc
 /** Named region `total_value_backgroundbackground` of DiscountValueItemLayout - configured through the parent's `totalValueBackgroundbackground` prop. */
 export interface DiscountValueItemLayoutTotalValueBackgroundbackgroundProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutTotalValueBackgroundbackground = ({ layout }: DiscountValueItemLayoutTotalValueBackgroundbackgroundProps) => {
+export const DiscountValueItemLayoutTotalValueBackgroundbackground = ({ layout, tags }: DiscountValueItemLayoutTotalValueBackgroundbackgroundProps) => {
     return (
         <Region
             name="total_value_backgroundbackground"
-            params={128}
+            tags={tags}
             backgroundColor="#737373"
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, ...layout }}
         />
@@ -34,13 +35,14 @@ export const DiscountValueItemLayoutTotalValueBackgroundbackground = ({ layout }
 /** Named region `discount_value_backgroundbackground` of DiscountValueItemLayout - configured through the parent's `discountValueBackgroundbackground` prop. */
 export interface DiscountValueItemLayoutDiscountValueBackgroundbackgroundProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutDiscountValueBackgroundbackground = ({ layout }: DiscountValueItemLayoutDiscountValueBackgroundbackgroundProps) => {
+export const DiscountValueItemLayoutDiscountValueBackgroundbackground = ({ layout, tags }: DiscountValueItemLayoutDiscountValueBackgroundbackgroundProps) => {
     return (
         <Region
             name="discount_value_backgroundbackground"
-            params={128}
+            tags={tags}
             backgroundColor="#009100"
             layout={{ position: 'absolute', left: 0, right: 0, top: 17, height: 15, ...layout }}
         />
@@ -52,13 +54,14 @@ export interface DiscountValueItemLayoutHeaderContainerProps {
     layout?: BoxLayout;
     srcIconBitmap?: string;
     srcIconSplashBitmap?: string;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutHeaderContainer = ({ layout, srcIconBitmap, srcIconSplashBitmap }: DiscountValueItemLayoutHeaderContainerProps) => {
+export const DiscountValueItemLayoutHeaderContainer = ({ layout, srcIconBitmap, srcIconSplashBitmap, tags }: DiscountValueItemLayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
-            params={262160}
+            tags={tags}
             layout={{ position: 'absolute', right: 152, width: 28, top: 2, height: 31, ...layout }}
         >
             <ThemeImage
@@ -78,12 +81,14 @@ export const DiscountValueItemLayoutHeaderContainer = ({ layout, srcIconBitmap, 
 /** Named region `striketrough_total_currency_left` of DiscountValueItemLayout - configured through the parent's `striketroughTotalCurrencyLeft` prop. */
 export interface DiscountValueItemLayoutStriketroughTotalCurrencyLeftProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutStriketroughTotalCurrencyLeft = ({ layout }: DiscountValueItemLayoutStriketroughTotalCurrencyLeftProps) => {
+export const DiscountValueItemLayoutStriketroughTotalCurrencyLeft = ({ layout, tags }: DiscountValueItemLayoutStriketroughTotalCurrencyLeftProps) => {
     return (
         <Region
             name="striketrough_total_currency_left"
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 25, width: 55, top: 7, height: 2, ...layout }}
         />
@@ -93,12 +98,14 @@ export const DiscountValueItemLayoutStriketroughTotalCurrencyLeft = ({ layout }:
 /** Named region `striketrough_total_currency_right` of DiscountValueItemLayout - configured through the parent's `striketroughTotalCurrencyRight` prop. */
 export interface DiscountValueItemLayoutStriketroughTotalCurrencyRightProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutStriketroughTotalCurrencyRight = ({ layout }: DiscountValueItemLayoutStriketroughTotalCurrencyRightProps) => {
+export const DiscountValueItemLayoutStriketroughTotalCurrencyRight = ({ layout, tags }: DiscountValueItemLayoutStriketroughTotalCurrencyRightProps) => {
     return (
         <Region
             name="striketrough_total_currency_right"
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 92, width: 55, top: 7, height: 2, ...layout }}
         />
@@ -113,15 +120,16 @@ export interface DiscountValueItemLayoutTotalValueContainerProps {
     layout?: BoxLayout;
     striketroughTotalCurrencyLeft?: DiscountValueItemLayoutStriketroughTotalCurrencyLeftProps;
     striketroughTotalCurrencyRight?: DiscountValueItemLayoutStriketroughTotalCurrencyRightProps;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrencyValueLeft, captionTotalCurrencyValueRight, captionTotalText, layout, striketroughTotalCurrencyLeft, striketroughTotalCurrencyRight }: DiscountValueItemLayoutTotalValueContainerProps) => {
+export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrencyValueLeft, captionTotalCurrencyValueRight, captionTotalText, layout, striketroughTotalCurrencyLeft, striketroughTotalCurrencyRight, tags }: DiscountValueItemLayoutTotalValueContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="total_value_container"
-            params={80}
+            tags={tags}
             layout={{ position: 'absolute', right: -3, width: 155, top: 1, height: 15, ...layout }}
         >
             <Region
@@ -170,15 +178,16 @@ export interface DiscountValueItemLayoutDiscountValueContainer2Props {
     captionDiscountCurrencyValueRight?: string;
     captionDiscountText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountValueItemLayoutDiscountValueContainer2 = ({ captionDiscountCurrencyValueLeft, captionDiscountCurrencyValueRight, captionDiscountText, layout }: DiscountValueItemLayoutDiscountValueContainer2Props) => {
+export const DiscountValueItemLayoutDiscountValueContainer2 = ({ captionDiscountCurrencyValueLeft, captionDiscountCurrencyValueRight, captionDiscountText, layout, tags }: DiscountValueItemLayoutDiscountValueContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="discount_value_container"
-            params={80}
+            tags={tags}
             layout={{ position: 'absolute', right: -3, width: 155, top: 17, height: 15, ...layout }}
         >
             <Region
@@ -228,15 +237,16 @@ export interface DiscountValueItemLayoutDiscountValueContainerProps {
     discountValueContainer?: DiscountValueItemLayoutDiscountValueContainer2Props;
     headerContainer?: DiscountValueItemLayoutHeaderContainerProps;
     layout?: BoxLayout;
+    tags?: string[];
     totalValueBackgroundbackground?: DiscountValueItemLayoutTotalValueBackgroundbackgroundProps;
     totalValueContainer?: DiscountValueItemLayoutTotalValueContainerProps;
 }
 
-export const DiscountValueItemLayoutDiscountValueContainer = ({ discountValueBackgroundbackground, discountValueContainer, headerContainer, layout, totalValueBackgroundbackground, totalValueContainer }: DiscountValueItemLayoutDiscountValueContainerProps) => {
+export const DiscountValueItemLayoutDiscountValueContainer = ({ discountValueBackgroundbackground, discountValueContainer, headerContainer, layout, tags, totalValueBackgroundbackground, totalValueContainer }: DiscountValueItemLayoutDiscountValueContainerProps) => {
     return (
         <Region
             name="discount_value_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 37, minHeight: 37, maxHeight: 37, ...layout }}
         >
             <DiscountValueItemLayoutTotalValueBackgroundbackground {...totalValueBackgroundbackground} />

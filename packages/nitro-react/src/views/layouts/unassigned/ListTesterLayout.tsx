@@ -12,7 +12,6 @@ export const ListTesterLayout = ({ layout, listHorizontal, listVertical, onClose
     return (
         <Frame
             variant="0"
-            params={98305}
             caption="Tester"
             tintColor="#418db0"
             onClose={onClose}
@@ -21,15 +20,11 @@ export const ListTesterLayout = ({ layout, listHorizontal, listVertical, onClose
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Border
                     variant="0"
-                    params={2192}
                     layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
                 >
                     <ListTesterLayoutListVertical {...listVertical} />
                     {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
-                    <Region
-                        params={1168}
-                        layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}>
                         <ListTesterLayoutListHorizontal {...listHorizontal} />
                         {/* <scrollbar_horizontal> for _list_horizontal - rendered by that list's ScrollArea */}
                     </Region>
@@ -42,9 +37,10 @@ export const ListTesterLayout = ({ layout, listHorizontal, listVertical, onClose
 /** Named region `_list_vertical` of ListTesterLayout - configured through the parent's `listVertical` prop. */
 export interface ListTesterLayoutListVerticalProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ListTesterLayoutListVertical = ({ layout }: ListTesterLayoutListVerticalProps) => {
+export const ListTesterLayoutListVertical = ({ layout, tags }: ListTesterLayoutListVerticalProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -52,7 +48,7 @@ export const ListTesterLayoutListVertical = ({ layout }: ListTesterLayoutListVer
         >
             <Region
                 name="_list_vertical"
-                params={2064}
+                tags={tags}
                 backgroundColor="#eeeeee"
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
@@ -63,9 +59,10 @@ export const ListTesterLayoutListVertical = ({ layout }: ListTesterLayoutListVer
 /** Named region `_list_horizontal` of ListTesterLayout - configured through the parent's `listHorizontal` prop. */
 export interface ListTesterLayoutListHorizontalProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ListTesterLayoutListHorizontal = ({ layout }: ListTesterLayoutListHorizontalProps) => {
+export const ListTesterLayoutListHorizontal = ({ layout, tags }: ListTesterLayoutListHorizontalProps) => {
     return (
         <ScrollArea
             orientation="horizontal"
@@ -73,7 +70,7 @@ export const ListTesterLayoutListHorizontal = ({ layout }: ListTesterLayoutListH
         >
             <Region
                 name="_list_horizontal"
-                params={144}
+                tags={tags}
                 backgroundColor="#cceeee"
                 layout={{ flexDirection: 'row', width: '100%' }}
             />

@@ -21,13 +21,14 @@ export interface SnowwarLobbyPlayerLayoutRegionProps {
     onRegion?: () => void;
     srcBgImage?: string;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const SnowwarLobbyPlayerLayoutRegion = ({ layout, onRegion, srcBgImage, srcImage }: SnowwarLobbyPlayerLayoutRegionProps) => {
+export const SnowwarLobbyPlayerLayoutRegion = ({ layout, onRegion, srcBgImage, srcImage, tags }: SnowwarLobbyPlayerLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            params={17}
+            tags={tags}
             onPointerTap={onRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63, ...layout }}
@@ -35,14 +36,12 @@ export const SnowwarLobbyPlayerLayoutRegion = ({ layout, onRegion, srcBgImage, s
             <ThemeImage
                 name="bg_image"
                 tags={[ 'bitmap' ]}
-                params={16}
                 src={srcBgImage ?? layoutImage('blue_square.png')}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63 }}
             />
             <ThemeImage
                 name="image"
                 tags={[ 'bitmap' ]}
-                params={16}
                 src={srcImage}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63 }}
             />

@@ -21,20 +21,17 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
     return (
         <Region layout={{ position: 'relative', width: 500, height: 186, ...layout }}>
             <Region
-                params={16}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 186, maxWidth: 500 }}
             >
                 <ThemeImage
                     name="border_bar"
-                    params={16}
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 7, width: 12, top: 10, height: 4, minHeight: 4, maxHeight: 4 }}
                 />
                 <Region
                     name="page_expiry_title"
                     tags={[ 'COLORABLE' ]}
-                    params={16}
                     layout={{ position: 'absolute', left: 24, width: 133, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -44,18 +41,13 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 </Region>
                 <ThemeImage
                     name="hdr_line"
-                    params={16}
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 167, width: 330, top: 10, height: 4, minHeight: 4, maxHeight: 4 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 239, width: 259, top: 19, height: 155, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 239, width: 259, top: 19, height: 155, flexDirection: 'column' }}>
                     <WidgetSlot
                         widgetType="countdown"
                         name="countdown_widget"
-                        params={147472}
                         options={{ 'countdown:running': 'true' }}
                         layout={{ width: 99, height: 37, flexShrink: 0 }}
                     />
@@ -63,7 +55,6 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                     <Region
                         name="page_header_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ width: 183, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -74,7 +65,6 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                     <Region
                         name="page_desc_txt"
                         tags={[ 'COLORABLE' ]}
-                        params={16}
                         layout={{ width: 260, height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -85,7 +75,6 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                     <Button
                         variant="100"
                         name="open_catalog_button"
-                        params={131089}
                         onPointerTap={onOpenCatalogButton}
                         layout={{ width: 233, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >
@@ -94,7 +83,6 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 </Region>
                 <ThemeImage
                     name="promo_bitmap"
-                    params={16}
                     src={srcPromoBitmap ?? '${image.library.catalogue.url}kitchen_teaser_de.gif'}
                     layout={{ position: 'absolute', left: 52, width: 162, top: 20, height: 162 }}
                 />
@@ -106,13 +94,14 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
 /** Named region `spacing` of ExpiringCatalogPageLayout - configured through the parent's `spacing` prop. */
 export interface ExpiringCatalogPageLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ExpiringCatalogPageLayoutSpacing = ({ layout }: ExpiringCatalogPageLayoutSpacingProps) => {
+export const ExpiringCatalogPageLayoutSpacing = ({ layout, tags }: ExpiringCatalogPageLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );

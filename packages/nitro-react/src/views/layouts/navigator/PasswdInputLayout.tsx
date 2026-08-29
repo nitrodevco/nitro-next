@@ -20,7 +20,6 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
     return (
         <Frame
             variant="3"
-            params={32801}
             caption={t('navigator.password.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -29,14 +28,12 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
                     name="room_name"
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionRoomName ?? 'Room name'} />
                 </Region>
                 <Region
                     name="info"
-                    params={16}
                     layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -44,10 +41,7 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
                         textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
                     />
                 </Region>
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('navigator.password.enter')} />
                 </Region>
                 <TextInput
@@ -56,7 +50,6 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
                     layout={{ position: 'absolute', left: 113, width: 100, top: 107, height: 19 }}
                 />
                 <Region
-                    params={16}
                     backgroundColor="#eaece8"
                     layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34 }}
                 >
@@ -64,7 +57,6 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
                     <Button
                         variant="3"
                         name="try"
-                        params={131089}
                         onPointerTap={onTry}
                         layout={{ position: 'absolute', left: 110, width: 188, top: 3, height: 28 }}
                     >
@@ -81,22 +73,22 @@ export interface PasswdInputLayoutCancelRegionProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancelRegion?: () => void;
+    tags?: string[];
 }
 
-export const PasswdInputLayoutCancelRegion = ({ captionCancel, layout, onCancelRegion }: PasswdInputLayoutCancelRegionProps) => {
+export const PasswdInputLayoutCancelRegion = ({ captionCancel, layout, onCancelRegion, tags }: PasswdInputLayoutCancelRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_region"
-            params={131221}
+            tags={tags}
             onPointerTap={onCancelRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26, ...layout }}
         >
             <Region
                 name="cancel"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 83, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionCancel ?? t('generic.cancel')} />

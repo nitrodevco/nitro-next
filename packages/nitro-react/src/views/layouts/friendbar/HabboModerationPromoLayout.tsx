@@ -25,19 +25,16 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
     return (
         <Region layout={{ position: 'relative', width: 250, height: 192, ...layout }}>
             <Region
-                params={147472}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 192 }}
             >
                 <ThemeImage
                     name="border_bar"
-                    params={16}
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
                 <Region
                     name="title_txt"
-                    params={16}
                     layout={{ position: 'absolute', left: 18, width: 162, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -47,17 +44,12 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                 </Region>
                 <ThemeImage
                     name="hdr_line"
-                    params={16}
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 150, width: 100, top: 10, height: 4 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 29, height: 163, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 29, height: 163, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        params={16}
                         layout={{ width: 316, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -68,7 +60,6 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <HabboModerationPromoLayoutSpacing {...spacing} />
                     <Region
                         name="info_txt"
-                        params={16}
                         layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -79,7 +70,6 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <HabboModerationPromoLayoutSpacing2 {...spacing2} />
                     <Region
                         name="cursing_caption_txt"
-                        params={16}
                         layout={{ width: 237, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -90,7 +80,6 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     </Region>
                     <Region
                         name="cursing_info_txt"
-                        params={16}
                         layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -101,7 +90,6 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <HabboModerationPromoLayoutSpacing3 {...spacing3} />
                     <Region
                         name="wrongdoers_caption_txt"
-                        params={16}
                         layout={{ width: 150, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -112,7 +100,6 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     </Region>
                     <Region
                         name="wrongdoers_info_txt"
-                        params={16}
                         layout={{ width: 250, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -129,13 +116,14 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing = ({ layout }: HabboModerationPromoLayoutSpacingProps) => {
+export const HabboModerationPromoLayoutSpacing = ({ layout, tags }: HabboModerationPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />
@@ -145,13 +133,14 @@ export const HabboModerationPromoLayoutSpacing = ({ layout }: HabboModerationPro
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacing2Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing2 = ({ layout }: HabboModerationPromoLayoutSpacing2Props) => {
+export const HabboModerationPromoLayoutSpacing2 = ({ layout, tags }: HabboModerationPromoLayoutSpacing2Props) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
         />
@@ -161,13 +150,14 @@ export const HabboModerationPromoLayoutSpacing2 = ({ layout }: HabboModerationPr
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacing3Props {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing3 = ({ layout }: HabboModerationPromoLayoutSpacing3Props) => {
+export const HabboModerationPromoLayoutSpacing3 = ({ layout, tags }: HabboModerationPromoLayoutSpacing3Props) => {
     return (
         <Region
             name="spacing"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
         />

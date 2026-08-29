@@ -21,30 +21,28 @@ export interface ChestOverlayGriditemLayoutChestOverlayContainerInternalProps {
     srcChestOverlayGlazeBitmap?: string;
     srcChestPlaqueBitmap?: string;
     srcChestPlaqueNumberBitmap?: string;
+    tags?: string[];
 }
 
-export const ChestOverlayGriditemLayoutChestOverlayContainerInternal = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap }: ChestOverlayGriditemLayoutChestOverlayContainerInternalProps) => {
+export const ChestOverlayGriditemLayoutChestOverlayContainerInternal = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap, tags }: ChestOverlayGriditemLayoutChestOverlayContainerInternalProps) => {
     return (
         <Region
             name="chest_overlay_container_internal"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
         >
             <ThemeImage
                 name="chest_plaque_bitmap"
-                params={16}
                 src={srcChestPlaqueBitmap ?? layoutImage('chest_overlay_brown_plaque.png')}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             />
             <ThemeImage
                 name="chest_plaque_number_bitmap"
-                params={16}
                 src={srcChestPlaqueNumberBitmap}
                 layout={{ position: 'absolute', left: 6, width: 24, top: 28, height: 5 }}
             />
             <ThemeImage
                 name="chest_overlay_glaze_bitmap"
-                params={16}
                 src={srcChestOverlayGlazeBitmap ?? layoutImage('chest_overlay_shine.png')}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             />

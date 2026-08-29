@@ -13,7 +13,6 @@ export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) 
             <ThemeImage
                 name="counterBitmap"
                 tags={[ 'bitmap' ]}
-                params={3264}
                 src={srcCounterBitmap ?? layoutImage('explosion001.png')}
                 layout={{ position: 'absolute', marginLeft: 171, marginRight: -171, width: 164, alignSelf: 'center', marginTop: 131, marginBottom: -131, height: 164, minWidth: 164, minHeight: 164 }}
             />

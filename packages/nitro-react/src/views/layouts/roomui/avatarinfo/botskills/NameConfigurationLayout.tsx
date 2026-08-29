@@ -16,19 +16,14 @@ export const NameConfigurationLayout = ({ configurationItems, layout }: NameConf
         <Region layout={{ position: 'relative', width: 209, height: 119, ...layout }}>
             <Bubble
                 variant="100"
-                params={33025}
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 209, top: 0, height: 119 }}
             >
                 <Region
-                    params={144}
                     backgroundColor="#000000"
                     layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20, justifyContent: 'center' }}
                 >
-                    <Region
-                        params={786640}
-                        layout={{ position: 'absolute', width: 189, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', width: 189, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('bot.skill.name.configuration.title')}
                             textStyle="text-style-u-bold"
@@ -66,42 +61,33 @@ export interface NameConfigurationLayoutConfigurationItemsProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onSaveButton?: () => void;
+    tags?: string[];
 }
 
-export const NameConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton }: NameConfigurationLayoutConfigurationItemsProps) => {
+export const NameConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton, tags }: NameConfigurationLayoutConfigurationItemsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="configuration_items"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 183, top: 25, height: 81, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsConfigurationItems ?? (
                 <NameConfigurationLayoutNameInputItem />
             )}
-            <Region
-                params={16}
-                layout={{ width: 181, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 181, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('bot.skill.name.configuration.new.name')}
                     textStyle="text-style-u-small"
                     textOptions={{ fill: '#eeeeee' }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 181, height: 36, flexShrink: 0 }}
-            >
-                <Region
-                    params={262224}
-                    layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}
-                >
+            <Region layout={{ width: 181, height: 36, flexShrink: 0 }}>
+                <Region layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}>
                     <ButtonThick
                         variant="3"
                         name="cancel_button"
-                        params={131089}
                         onPointerTap={onCancelButton}
                         layout={{ width: 60, height: 28, flexShrink: 0, maxWidth: 120 }}
                     >
@@ -110,7 +96,6 @@ export const NameConfigurationLayoutConfigurationItems = ({ itemsConfigurationIt
                     <ButtonThick
                         variant="5"
                         name="save_button"
-                        params={393233}
                         tintColor="#3f9f3f"
                         onPointerTap={onSaveButton}
                         layout={{ width: 60, height: 28, flexShrink: 0, minWidth: 60, maxWidth: 120 }}

@@ -13,26 +13,18 @@ export const PromoDucketsLayout = ({ closeButton, layout }: PromoDucketsLayoutPr
 
     return (
         <Region layout={{ position: 'relative', width: 278, height: 44, ...layout }}>
-            <Region
-                params={16448}
-                layout={{ position: 'absolute', right: 0, width: 278, top: 0, height: 44 }}
-            >
+            <Region layout={{ position: 'absolute', right: 0, width: 278, top: 0, height: 44 }}>
                 <Border
                     variant="6"
-                    params={12582928}
                     tintColor="#757575"
                     layout={{ position: 'absolute', left: 0, width: 267, top: 0, height: 44 }}
                 >
                     <Border
                         variant="3"
-                        params={12730384}
                         tintColor="#24231e"
                         layout={{ position: 'absolute', left: 3, width: 261, top: 3, height: 37 }}
                     >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 30, width: 231, top: 0, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
+                        <Region layout={{ position: 'absolute', left: 30, width: 231, top: 0, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('purse.duckets.promo')}
                                 textStyle="text-style-u-italic"
@@ -43,7 +35,6 @@ export const PromoDucketsLayout = ({ closeButton, layout }: PromoDucketsLayoutPr
                     </Border>
                 </Border>
                 <ThemeImage
-                    params={80}
                     src={layoutImage('common_promo_arrow_top_right.png')}
                     layout={{ position: 'absolute', right: 0, width: 17, top: 0, height: 30 }}
                 />
@@ -56,19 +47,19 @@ export const PromoDucketsLayout = ({ closeButton, layout }: PromoDucketsLayoutPr
 export interface PromoDucketsLayoutCloseButtonProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
+    tags?: string[];
 }
 
-export const PromoDucketsLayoutCloseButton = ({ layout, onCloseButton }: PromoDucketsLayoutCloseButtonProps) => {
+export const PromoDucketsLayoutCloseButton = ({ layout, onCloseButton, tags }: PromoDucketsLayoutCloseButtonProps) => {
     return (
         <Region
             name="close_button"
-            params={17}
+            tags={tags}
             onPointerTap={onCloseButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('common_promo_arrow_close.png')}
                 layout={{ position: 'absolute', left: 5, width: 11, top: 4, height: 11 }}
             />

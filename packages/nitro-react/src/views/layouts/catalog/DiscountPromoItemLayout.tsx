@@ -17,13 +17,14 @@ export const DiscountPromoItemLayout = ({ layout, promoContainer }: DiscountProm
 /** Named region `background` of DiscountPromoItemLayout - configured through the parent's `background` prop. */
 export interface DiscountPromoItemLayoutBackgroundProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutBackground = ({ layout }: DiscountPromoItemLayoutBackgroundProps) => {
+export const DiscountPromoItemLayoutBackground = ({ layout, tags }: DiscountPromoItemLayoutBackgroundProps) => {
     return (
         <Region
             name="background"
-            params={128}
+            tags={tags}
             backgroundColor="#009100"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
         />
@@ -34,13 +35,14 @@ export const DiscountPromoItemLayoutBackground = ({ layout }: DiscountPromoItemL
 export interface DiscountPromoItemLayoutClickRegionProps {
     layout?: BoxLayout;
     onClickRegion?: () => void;
+    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutClickRegion = ({ layout, onClickRegion }: DiscountPromoItemLayoutClickRegionProps) => {
+export const DiscountPromoItemLayoutClickRegion = ({ layout, onClickRegion, tags }: DiscountPromoItemLayoutClickRegionProps) => {
     return (
         <Region
             name="click_region"
-            params={17}
+            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 25, width: 152, top: 0, height: 20, ...layout }}
@@ -56,13 +58,14 @@ export interface DiscountPromoItemLayoutPromoContainerProps {
     clickRegion?: DiscountPromoItemLayoutClickRegionProps;
     layout?: BoxLayout;
     srcIconBitmap?: string;
+    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutPromoContainer = ({ background, captionPromoText, captionPromoTextEffect, clickRegion, layout, srcIconBitmap }: DiscountPromoItemLayoutPromoContainerProps) => {
+export const DiscountPromoItemLayoutPromoContainer = ({ background, captionPromoText, captionPromoTextEffect, clickRegion, layout, srcIconBitmap, tags }: DiscountPromoItemLayoutPromoContainerProps) => {
     return (
         <Region
             name="promo_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 20, minHeight: 20, maxHeight: 20, ...layout }}
         >
             <DiscountPromoItemLayoutBackground {...background} />

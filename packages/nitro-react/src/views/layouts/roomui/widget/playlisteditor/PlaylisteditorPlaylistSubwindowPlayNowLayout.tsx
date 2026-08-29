@@ -12,14 +12,10 @@ export const PlaylisteditorPlaylistSubwindowPlayNowLayout = ({ layout, onPlayNow
 
     return (
         <Region layout={{ position: 'relative', width: 261, height: 56, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56 }}>
                 <ButtonThick
                     variant="5"
                     name="play_now_button"
-                    params={131089}
                     tintColor="#22bb00"
                     onPointerTap={onPlayNowButton}
                     layout={{ position: 'absolute', left: 6, width: 250, top: 3, height: 50, minWidth: 250, maxWidth: 250 }}

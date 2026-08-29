@@ -17,7 +17,6 @@ export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas }: ProfilerTaskL
         <Region layout={{ position: 'relative', width: 430, height: 38, ...layout }}>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 430, top: 0, height: 38 }}
             >
                 <TextInput
@@ -33,14 +32,12 @@ export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas }: ProfilerTaskL
                 />
                 <ThemeImage
                     name="canvas"
-                    params={1073741904}
                     src={srcCanvas}
                     layout={{ position: 'absolute', right: 10, width: 66, top: 3, height: 33, overflow: 'hidden' }}
                 />
                 <CheckBox
                     variant="0"
                     name="check"
-                    params={17}
                     onPointerTap={onCheck}
                     layout={{ position: 'absolute', left: 5, width: 16, top: 5, height: 16 }}
                 />

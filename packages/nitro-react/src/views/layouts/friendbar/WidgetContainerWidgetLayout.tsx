@@ -9,7 +9,6 @@ export const WidgetContainerWidgetLayout = ({ layout }: WidgetContainerWidgetLay
     return (
         <Region layout={{ position: 'relative', width: 250, height: 30, ...layout }}>
             <Region
-                params={16}
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 30 }}
             />

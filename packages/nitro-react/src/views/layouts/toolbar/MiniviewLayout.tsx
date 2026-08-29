@@ -18,21 +18,21 @@ export const MiniviewLayout = ({ layout, returnusergifting }: MiniviewLayoutProp
 /** Named region `returnusergifting` of MiniviewLayout - configured through the parent's `returnusergifting` prop. */
 export interface MiniviewLayoutReturnusergiftingProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MiniviewLayoutReturnusergifting = ({ layout }: MiniviewLayoutReturnusergiftingProps) => {
+export const MiniviewLayoutReturnusergifting = ({ layout, tags }: MiniviewLayoutReturnusergiftingProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="returnusergifting"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
         >
             <Border
                 variant="6"
                 tags={[ 'BGCOLOR' ]}
-                params={16}
                 tintColor="#686661"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
@@ -40,14 +40,10 @@ export const MiniviewLayoutReturnusergifting = ({ layout }: MiniviewLayoutReturn
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown"
-                    params={147472}
                     options={{ 'countdown:running': 'true' }}
                     layout={{ position: 'absolute', left: 124, width: 99, top: 3, height: 37 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('next.gift.in')}
                         textStyle="text-style-il-regular-white"

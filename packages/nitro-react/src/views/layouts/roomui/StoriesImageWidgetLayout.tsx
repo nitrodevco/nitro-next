@@ -32,10 +32,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
 
     return (
         <Region layout={{ position: 'relative', width: 502, height: 455, ...layout }}>
-            <Region
-                params={33025}
-                layout={{ position: 'absolute', left: 0, width: 502, top: 0, height: 455 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 502, top: 0, height: 455 }}>
                 <Region
                     visible={visiblePhotoWidgetBg ?? false}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
@@ -43,27 +40,23 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     <Border
                         variant="2"
                         name="photo_widget_bg"
-                        params={2192}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
                 <Border
                     variant="1"
                     name="bgBorder"
-                    params={147472}
                     tintColor="#000000"
                     blend={0.65}
                     layout={{ position: 'absolute', left: 13, width: 340, top: 13, height: 43 }}
                 />
                 <ThemeImage
                     name="imageLoader"
-                    params={272}
                     src={srcImageLoader}
                     layout={{ position: 'absolute', left: 0, width: 322, top: 0, height: 322 }}
                 />
                 <Region
                     name="moderationText"
-                    params={147473}
                     visible={false}
                     layout={{ position: 'absolute', left: 87, width: 129, top: 74, height: 16, minWidth: 308, maxWidth: 308, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
@@ -81,7 +74,6 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     <Button
                         variant="5"
                         name="makeOwnButton"
-                        params={131089}
                         tintColor="#4eaac1"
                         onPointerTap={onMakeOwnButton}
                         layout={{ width: '100%', height: '100%' }}
@@ -97,19 +89,12 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     <Border
                         variant="2"
                         name="shareArea"
-                        params={147472}
                         tintColor="#24231e"
                         blend={0.7}
                         layout={{ width: '100%', height: '100%' }}
                     >
-                        <Region
-                            params={147472}
-                            layout={{ position: 'absolute', left: 0, width: 218, top: 0, height: 116 }}
-                        >
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
+                        <Region layout={{ position: 'absolute', left: 0, width: 218, top: 0, height: 116 }}>
+                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <ThemeText
                                     text={t('info.share.link.info')}
                                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
@@ -120,26 +105,17 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                                 onChange={setUrlFieldValue}
                                 layout={{ position: 'absolute', left: 8, width: 200, top: 30, height: 17, minWidth: 200, maxWidth: 200 }}
                             />
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
+                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <ThemeText
                                     text={t('info.share.button.info')}
                                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
                                 />
                             </Region>
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 8, width: 200, top: 74, height: 32, minWidth: 200 }}
-                            >
+                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 74, height: 32, minWidth: 200 }}>
                                 <StoriesImageWidgetLayoutFbShare {...fbShare} />
                                 <StoriesImageWidgetLayoutTwitterShare {...twitterShare} />
                             </Region>
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 8, width: 210, top: 111, height: 5 }}
-                            />
+                            <Region layout={{ position: 'absolute', left: 8, width: 210, top: 111, height: 5 }} />
                         </Region>
                     </Border>
                 </Region>
@@ -147,7 +123,6 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                 <StoriesImageWidgetLayoutNameCopyWrapper {...nameCopyWrapper} />
                 <Region
                     name="creationDate"
-                    params={16}
                     layout={{ position: 'absolute', left: 38, width: 91, top: 17, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -164,12 +139,10 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     <Border
                         variant="4"
                         name="captionContainer"
-                        params={16}
                         layout={{ width: '100%', height: '100%' }}
                     >
                         <Region
                             name="captionText"
-                            params={16}
                             layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -188,25 +161,24 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
 export interface StoriesImageWidgetLayoutReportButtonContainerProps {
     layout?: BoxLayout;
     onReportButton?: () => void;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReportButton }: StoriesImageWidgetLayoutReportButtonContainerProps) => {
+export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReportButton, tags }: StoriesImageWidgetLayoutReportButtonContainerProps) => {
     return (
         <Region
             name="reportButtonContainer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, width: 20, top: 5, height: 25, ...layout }}
         >
             <Button
                 variant="5"
                 name="reportButton"
-                params={131089}
                 tintColor="#de4537"
                 onPointerTap={onReportButton}
                 layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 20, minWidth: 19, maxWidth: 19 }}
             />
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_flag.png')}
                 layout={{ position: 'absolute', left: 3, width: 14, top: 3, height: 16 }}
             />
@@ -218,26 +190,25 @@ export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReport
 export interface StoriesImageWidgetLayoutRemoveButtonContainerProps {
     layout?: BoxLayout;
     onRemovebutton?: () => void;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutRemoveButtonContainer = ({ layout, onRemovebutton }: StoriesImageWidgetLayoutRemoveButtonContainerProps) => {
+export const StoriesImageWidgetLayoutRemoveButtonContainer = ({ layout, onRemovebutton, tags }: StoriesImageWidgetLayoutRemoveButtonContainerProps) => {
     return (
         <Region
             name="removeButtonContainer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 33, width: 19, top: 5, height: 24, ...layout }}
         >
             <Button
                 variant="5"
                 name="removebutton"
-                params={131089}
                 tintColor="#de4537"
                 onPointerTap={onRemovebutton}
                 layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 20, minWidth: 19, maxWidth: 19 }}
             />
             <ThemeImage
                 tags={[ '#icon' ]}
-                params={16}
                 src={layoutImage('common_trashcan_small.png')}
                 layout={{ position: 'absolute', left: 3, width: 14, top: 4, height: 11 }}
             />
@@ -251,13 +222,14 @@ export interface StoriesImageWidgetLayoutButtonContainerProps {
     onClosebutton?: () => void;
     removeButtonContainer?: StoriesImageWidgetLayoutRemoveButtonContainerProps;
     reportButtonContainer?: StoriesImageWidgetLayoutReportButtonContainerProps;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton, removeButtonContainer, reportButtonContainer }: StoriesImageWidgetLayoutButtonContainerProps) => {
+export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton, removeButtonContainer, reportButtonContainer, tags }: StoriesImageWidgetLayoutButtonContainerProps) => {
     return (
         <Region
             name="buttonContainer"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 27, width: 84, top: 68, height: 40, ...layout }}
         >
             <StoriesImageWidgetLayoutReportButtonContainer {...reportButtonContainer} />
@@ -265,15 +237,11 @@ export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton,
             <CloseButton
                 variant="3"
                 name="closebutton"
-                params={131089}
                 tintColor="#de4537"
                 onPointerTap={onClosebutton}
                 layout={{ position: 'absolute', left: 57, width: 19, top: 5, height: 28, minWidth: 19, maxWidth: 19 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 81, width: 3, top: 5, height: 35 }}
-            />
+            <Region layout={{ position: 'absolute', left: 81, width: 3, top: 5, height: 35 }} />
         </Region>
     );
 };
@@ -282,16 +250,17 @@ export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton,
 export interface StoriesImageWidgetLayoutShareButtonContainerProps {
     layout?: BoxLayout;
     onShareButton?: () => void;
+    tags?: string[];
     visibleShareButtonContainer?: boolean;
 }
 
-export const StoriesImageWidgetLayoutShareButtonContainer = ({ layout, onShareButton, visibleShareButtonContainer }: StoriesImageWidgetLayoutShareButtonContainerProps) => {
+export const StoriesImageWidgetLayoutShareButtonContainer = ({ layout, onShareButton, tags, visibleShareButtonContainer }: StoriesImageWidgetLayoutShareButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="shareButtonContainer"
-            params={16}
+            tags={tags}
             visible={visibleShareButtonContainer ?? false}
             layout={{ position: 'absolute', left: 84, width: 26, top: 8, height: 28, ...layout }}
         >
@@ -299,13 +268,11 @@ export const StoriesImageWidgetLayoutShareButtonContainer = ({ layout, onShareBu
                 variant="5"
                 name="shareButton"
                 tooltip={t('info.share.button')}
-                params={131089}
                 tintColor="#4eaac1"
                 onPointerTap={onShareButton}
                 layout={{ position: 'absolute', left: 0, width: 24, top: 0, height: 28 }}
             />
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_share.png')}
                 layout={{ position: 'absolute', left: 4, width: 22, top: 4, height: 20 }}
             />
@@ -318,13 +285,14 @@ export interface StoriesImageWidgetLayoutFbShareProps {
     layout?: BoxLayout;
     onFbShare?: () => void;
     srcFacebookIcon?: string;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutFbShare = ({ layout, onFbShare, srcFacebookIcon }: StoriesImageWidgetLayoutFbShareProps) => {
+export const StoriesImageWidgetLayoutFbShare = ({ layout, onFbShare, srcFacebookIcon, tags }: StoriesImageWidgetLayoutFbShareProps) => {
     return (
         <Region
             name="fbShare"
-            params={131073}
+            tags={tags}
             onPointerTap={onFbShare}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32, ...layout }}
@@ -332,7 +300,6 @@ export const StoriesImageWidgetLayoutFbShare = ({ layout, onFbShare, srcFacebook
             <ThemeImage
                 name="facebookIcon"
                 tags={[ '#icon' ]}
-                params={16}
                 src={srcFacebookIcon ?? layoutImage('icons_facebook.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
             />
@@ -345,13 +312,14 @@ export interface StoriesImageWidgetLayoutTwitterShareProps {
     layout?: BoxLayout;
     onTwitterShare?: () => void;
     srcTwitterIcon?: string;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutTwitterShare = ({ layout, onTwitterShare, srcTwitterIcon }: StoriesImageWidgetLayoutTwitterShareProps) => {
+export const StoriesImageWidgetLayoutTwitterShare = ({ layout, onTwitterShare, srcTwitterIcon, tags }: StoriesImageWidgetLayoutTwitterShareProps) => {
     return (
         <Region
             name="twitterShare"
-            params={131073}
+            tags={tags}
             onPointerTap={onTwitterShare}
             cursor="pointer"
             layout={{ position: 'absolute', left: 38, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32, ...layout }}
@@ -359,7 +327,6 @@ export const StoriesImageWidgetLayoutTwitterShare = ({ layout, onTwitterShare, s
             <ThemeImage
                 name="twitterIcon"
                 tags={[ '#icon' ]}
-                params={16}
                 src={srcTwitterIcon ?? layoutImage('icons_twitter.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
             />
@@ -372,20 +339,20 @@ export interface StoriesImageWidgetLayoutSenderNameButtonProps {
     captionSenderName?: string;
     layout?: BoxLayout;
     onSenderNameButton?: () => void;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, layout, onSenderNameButton }: StoriesImageWidgetLayoutSenderNameButtonProps) => {
+export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, layout, onSenderNameButton, tags }: StoriesImageWidgetLayoutSenderNameButtonProps) => {
     return (
         <Region
             name="senderNameButton"
-            params={147473}
+            tags={tags}
             onPointerTap={onSenderNameButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 26, ...layout }}
         >
             <Region
                 name="senderName"
-                params={262160}
                 layout={{ position: 'absolute', right: 0, width: 129, top: 2, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -400,12 +367,14 @@ export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, la
 /** Named region `name_copy_wrapper` of StoriesImageWidgetLayout - configured through the parent's `nameCopyWrapper` prop. */
 export interface StoriesImageWidgetLayoutNameCopyWrapperProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout }: StoriesImageWidgetLayoutNameCopyWrapperProps) => {
+export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout, tags }: StoriesImageWidgetLayoutNameCopyWrapperProps) => {
     return (
         <Region
             name="name_copy_wrapper"
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 28, ...layout }}
         />
     );
@@ -415,19 +384,19 @@ export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout }: StoriesImage
 export interface StoriesImageWidgetLayoutNextButtonProps {
     layout?: BoxLayout;
     onNextButton?: () => void;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton }: StoriesImageWidgetLayoutNextButtonProps) => {
+export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton, tags }: StoriesImageWidgetLayoutNextButtonProps) => {
     return (
         <Region
             name="nextButton"
-            params={131089}
+            tags={tags}
             onPointerTap={onNextButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 300, width: 64, top: 80, height: 64, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('camera_browse_ffwd.png')}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 64 }}
             />
@@ -439,19 +408,19 @@ export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton }: Sto
 export interface StoriesImageWidgetLayoutPreviousButtonProps {
     layout?: BoxLayout;
     onPreviousButton?: () => void;
+    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutPreviousButton = ({ layout, onPreviousButton }: StoriesImageWidgetLayoutPreviousButtonProps) => {
+export const StoriesImageWidgetLayoutPreviousButton = ({ layout, onPreviousButton, tags }: StoriesImageWidgetLayoutPreviousButtonProps) => {
     return (
         <Region
             name="previousButton"
-            params={131089}
+            tags={tags}
             onPointerTap={onPreviousButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 240, width: 64, top: 80, height: 64, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('camera_browse_ffwd.png')}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 64 }}
             />

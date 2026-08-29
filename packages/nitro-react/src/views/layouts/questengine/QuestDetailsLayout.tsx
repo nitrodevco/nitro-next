@@ -13,7 +13,6 @@ export const QuestDetailsLayout = ({ layout, onClose }: QuestDetailsLayoutProps)
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('quests.details.caption')}
             tintColor="#418db0"
             onClose={onClose}

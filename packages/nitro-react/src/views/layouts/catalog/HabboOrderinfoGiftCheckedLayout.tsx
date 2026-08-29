@@ -21,9 +21,10 @@ export const HabboOrderinfoGiftCheckedLayout = ({ giftInfoContainer, layout }: H
 export interface HabboOrderinfoGiftCheckedLayoutGiftInfoContainerProps {
     layout?: BoxLayout;
     onBuyAsGift?: () => void;
+    tags?: string[];
 }
 
-export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuyAsGift }: HabboOrderinfoGiftCheckedLayoutGiftInfoContainerProps) => {
+export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuyAsGift, tags }: HabboOrderinfoGiftCheckedLayoutGiftInfoContainerProps) => {
     const t = useTranslation();
     const [ receiverValue, setReceiverValue ] = useState('');
     const [ messageValue, setMessageValue ] = useState('');
@@ -31,20 +32,16 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
     return (
         <Region
             name="giftInfoContainer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 282, top: 105, height: 127, ...layout }}
         >
             <CheckBox
                 variant="3"
                 name="buyAsGift"
-                params={17}
                 onPointerTap={onBuyAsGift}
                 layout={{ position: 'absolute', left: 21, width: 20, top: 0, height: 20 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 43, width: 78, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 43, width: 78, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('catalog.purchase.confirmation.dialog.buyasgift.checkbox')}
                     textStyle="text-style-u-small"
@@ -52,7 +49,6 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
             </Region>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 25, width: 220, top: 24, height: 20 }}
             >
                 <TextInput
@@ -63,7 +59,6 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
             </Border>
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 25, width: 220, top: 72, height: 50 }}
             >
                 <TextInput
@@ -72,10 +67,7 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
                     layout={{ position: 'absolute', left: 5, width: 200, top: 5, height: 40 }}
                 />
             </Border>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 25, width: 213, top: 47, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 25, width: 213, top: 47, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('catalog.purchase.confirmation.dialog.buyasgift.greetings.info')}
                     textStyle="text-style-u-small"

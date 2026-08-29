@@ -22,20 +22,20 @@ export interface HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsP
     layout?: BoxLayout;
     onButtonCancel?: () => void;
     onSubscribe?: () => void;
+    tags?: string[];
 }
 
-export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onSubscribe }: HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsProps) => {
+export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onSubscribe, tags }: HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habbo_orderinfo_cantbuycredits"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 125, ...layout }}
         >
             <Region
                 name="habbo_message_text_a"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 250, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -45,7 +45,6 @@ export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({
             </Region>
             <Region
                 name="habbo_message_text_b"
-                params={16}
                 layout={{ position: 'absolute', left: 16, width: 250, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -56,7 +55,6 @@ export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({
             <Button
                 variant="3"
                 name="subscribe"
-                params={393361}
                 onPointerTap={onSubscribe}
                 layout={{ position: 'absolute', left: 100, right: 151, top: 89, height: 123, maxWidth: 120 }}
             >
@@ -65,7 +63,6 @@ export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({
             <Button
                 variant="3"
                 name="button_cancel"
-                params={393361}
                 onPointerTap={onButtonCancel}
                 layout={{ position: 'absolute', left: 154, right: 76, top: 92, height: 22, maxWidth: 130 }}
             >

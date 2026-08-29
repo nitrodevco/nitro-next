@@ -20,31 +20,24 @@ export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionIn
     return (
         <Frame
             variant="3"
-            params={1}
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 1033, height: 607, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region
-                    params={2192}
                     backgroundColor="#0e0f1f"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <CalendarLayoutSpinnerContainer {...spinnerContainer} />
                 </Region>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('campaign_calendar_icon.png')}
                     layout={{ position: 'absolute', left: 31, width: 47, top: 32, height: 51 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 95, width: 500, top: 28, height: 50, maxHeight: 120, flexDirection: 'column', gap: 3 }}
-                >
+                <Region layout={{ position: 'absolute', left: 95, width: 500, top: 28, height: 50, maxHeight: 120, flexDirection: 'column', gap: 3 }}>
                     <Region
                         name="info_heading"
-                        params={9584688}
                         layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -55,7 +48,6 @@ export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionIn
                     </Region>
                     <Region
                         name="info_body"
-                        params={9437232}
                         layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -73,7 +65,6 @@ export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionIn
                     <Button
                         variant="6"
                         name="btn_force_open"
-                        params={131089}
                         tintColor="#299f3a"
                         onPointerTap={onBtnForceOpen}
                         layout={{ width: '100%', height: '100%' }}
@@ -93,18 +84,18 @@ export interface CalendarLayoutBtnPresentProps {
     srcBitmapIcon?: string;
     srcBitmapIcon2?: string;
     srcBitmapOpenedBg?: string;
+    tags?: string[];
 }
 
-export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapOpenedBg }: CalendarLayoutBtnPresentProps) => {
+export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapOpenedBg, tags }: CalendarLayoutBtnPresentProps) => {
     return (
         <Region
             name="btn_present"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="bitmap_bg"
-                params={4079635}
                 src={srcBitmapBg}
                 layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
             />
@@ -114,20 +105,17 @@ export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, s
             >
                 <ThemeImage
                     name="bitmap_opened_bg"
-                    params={4079635}
                     src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
                     layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
                 />
             </Region>
             <ThemeImage
                 name="bitmap_icon2"
-                params={4079635}
                 src={srcBitmapIcon2}
                 layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
             />
             <ThemeImage
                 name="bitmap_icon"
-                params={4079635}
                 src={srcBitmapIcon}
                 layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
             />
@@ -142,27 +130,26 @@ export interface CalendarLayoutBtnSlotItemProps {
     onBtnSlot?: () => void;
     srcBitmapItem?: string;
     srcBitmapLock?: string;
+    tags?: string[];
 }
 
-export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBitmapItem, srcBitmapLock }: CalendarLayoutBtnSlotItemProps) => {
+export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBitmapItem, srcBitmapLock, tags }: CalendarLayoutBtnSlotItemProps) => {
     return (
         <Region
             name="btn_slot"
-            params={21}
+            tags={tags}
             onPointerTap={onBtnSlot}
             cursor="pointer"
             layout={{ width: 202, height: 447, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="bitmap_item"
-                params={19}
                 src={srcBitmapItem ?? layoutImage('campaign_calendar_day_generic_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
             />
             <CalendarLayoutBtnPresent {...btnPresent} />
             <ThemeImage
                 name="bitmap_lock"
-                params={4079635}
                 src={srcBitmapLock ?? layoutImage('campaign_calendar_generic_lock.png')}
                 layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 47, alignSelf: 'center', marginTop: -198, marginBottom: 198, height: 51 }}
             />
@@ -174,54 +161,39 @@ export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBi
 export interface CalendarLayoutCalendarItemlistProps {
     itemsCalendarItemlist?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const CalendarLayoutCalendarItemlist = ({ itemsCalendarItemlist, layout }: CalendarLayoutCalendarItemlistProps) => {
+export const CalendarLayoutCalendarItemlist = ({ itemsCalendarItemlist, layout, tags }: CalendarLayoutCalendarItemlistProps) => {
     return (
         <Region
             name="calendar_itemlist"
-            params={149}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 447, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsCalendarItemlist ?? (
                 <CalendarLayoutBtnSlotItem />
             )}
-            <Region
-                params={16}
-                layout={{ width: 202, height: 447, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('campaign_calendar_day_generic_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 202, height: 447, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('campaign_calendar_day_generic_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 202, height: 447, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('campaign_calendar_day_generic_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 202, height: 447, flexShrink: 0 }}
-            >
+            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
                 <ThemeImage
-                    params={16}
                     src={layoutImage('campaign_calendar_day_generic_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
                 />
@@ -236,25 +208,24 @@ export interface CalendarLayoutSpinnerContainerProps {
     layout?: BoxLayout;
     srcGradient1?: string;
     srcGradient2?: string;
+    tags?: string[];
 }
 
-export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGradient1, srcGradient2 }: CalendarLayoutSpinnerContainerProps) => {
+export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGradient1, srcGradient2, tags }: CalendarLayoutSpinnerContainerProps) => {
     return (
         <Region
             name="spinner_container"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 106, height: 463, ...layout }}
         >
             <CalendarLayoutCalendarItemlist {...calendarItemlist} />
             <ThemeImage
                 name="gradient1"
-                params={2064}
                 src={srcGradient1}
                 layout={{ position: 'absolute', left: 0, width: 408, top: 15, bottom: 1 }}
             />
             <ThemeImage
                 name="gradient2"
-                params={2048}
                 src={srcGradient2}
                 layout={{ position: 'absolute', left: 618, width: 408, top: 15, bottom: 1 }}
             />
@@ -266,19 +237,19 @@ export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGr
 export interface CalendarLayoutBtnForwardProps {
     layout?: BoxLayout;
     onBtnForward?: () => void;
+    tags?: string[];
 }
 
-export const CalendarLayoutBtnForward = ({ layout, onBtnForward }: CalendarLayoutBtnForwardProps) => {
+export const CalendarLayoutBtnForward = ({ layout, onBtnForward, tags }: CalendarLayoutBtnForwardProps) => {
     return (
         <Region
             name="btn_forward"
-            params={147457}
+            tags={tags}
             onPointerTap={onBtnForward}
             cursor="pointer"
             layout={{ position: 'absolute', left: 991, width: 33, top: 325, height: 34, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_forward.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
             />
@@ -290,19 +261,19 @@ export const CalendarLayoutBtnForward = ({ layout, onBtnForward }: CalendarLayou
 export interface CalendarLayoutBtnBackProps {
     layout?: BoxLayout;
     onBtnBack?: () => void;
+    tags?: string[];
 }
 
-export const CalendarLayoutBtnBack = ({ layout, onBtnBack }: CalendarLayoutBtnBackProps) => {
+export const CalendarLayoutBtnBack = ({ layout, onBtnBack, tags }: CalendarLayoutBtnBackProps) => {
     return (
         <Region
             name="btn_back"
-            params={147457}
+            tags={tags}
             onPointerTap={onBtnBack}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 33, top: 325, height: 34, ...layout }}
         >
             <ThemeImage
-                params={16}
                 src={layoutImage('icons_back.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
             />

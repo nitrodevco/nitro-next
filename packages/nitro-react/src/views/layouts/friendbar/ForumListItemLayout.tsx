@@ -17,19 +17,19 @@ export const ForumListItemLayout = ({ layout, mainBox }: ForumListItemLayoutProp
 /** Named region `left_button_container` of ForumListItemLayout - configured through the parent's `leftButtonContainer` prop. */
 export interface ForumListItemLayoutLeftButtonContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ForumListItemLayoutLeftButtonContainer = ({ layout }: ForumListItemLayoutLeftButtonContainerProps) => {
+export const ForumListItemLayoutLeftButtonContainer = ({ layout, tags }: ForumListItemLayoutLeftButtonContainerProps) => {
     return (
         <Region
             name="left_button_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 41, ...layout }}
         >
             <WidgetSlot
                 widgetType="badge_image"
                 name="group_icon"
-                params={16}
                 options={{ 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 1, width: 39, top: 1, height: 39 }}
             />
@@ -42,20 +42,20 @@ export interface ForumListItemLayoutHeaderRegionProps {
     captionHeader?: string;
     layout?: BoxLayout;
     onHeaderRegion?: () => void;
+    tags?: string[];
 }
 
-export const ForumListItemLayoutHeaderRegion = ({ captionHeader, layout, onHeaderRegion }: ForumListItemLayoutHeaderRegionProps) => {
+export const ForumListItemLayoutHeaderRegion = ({ captionHeader, layout, onHeaderRegion, tags }: ForumListItemLayoutHeaderRegionProps) => {
     return (
         <Region
             name="header_region"
-            params={131089}
+            tags={tags}
             onPointerTap={onHeaderRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 17, ...layout }}
         >
             <Region
                 name="header"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionHeader ?? 'Some group header'} />
@@ -69,20 +69,19 @@ export interface ForumListItemLayoutTextsContainerProps {
     captionDetails?: string;
     headerRegion?: ForumListItemLayoutHeaderRegionProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ForumListItemLayoutTextsContainer = ({ captionDetails, headerRegion, layout }: ForumListItemLayoutTextsContainerProps) => {
+export const ForumListItemLayoutTextsContainer = ({ captionDetails, headerRegion, layout, tags }: ForumListItemLayoutTextsContainerProps) => {
     return (
         <Region
             name="texts_container"
-            tags={[ 'relative(1)' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 42, width: 357, top: 0, height: 40, ...layout }}
         >
             <ForumListItemLayoutHeaderRegion {...headerRegion} />
             <Region
                 name="details"
-                params={1073741825}
                 layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'} />
@@ -95,13 +94,14 @@ export const ForumListItemLayoutTextsContainer = ({ captionDetails, headerRegion
 export interface ForumListItemLayoutUnreadRegionProps {
     layout?: BoxLayout;
     onUnreadRegion?: () => void;
+    tags?: string[];
 }
 
-export const ForumListItemLayoutUnreadRegion = ({ layout, onUnreadRegion }: ForumListItemLayoutUnreadRegionProps) => {
+export const ForumListItemLayoutUnreadRegion = ({ layout, onUnreadRegion, tags }: ForumListItemLayoutUnreadRegionProps) => {
     return (
         <Region
             name="unread_region"
-            params={145}
+            tags={tags}
             onPointerTap={onUnreadRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 40, ...layout }}
@@ -114,20 +114,20 @@ export interface ForumListItemLayoutUnreadTextsContainerProps {
     captionMessages1?: string;
     captionMessages2?: string;
     layout?: BoxLayout;
+    tags?: string[];
     unreadRegion?: ForumListItemLayoutUnreadRegionProps;
 }
 
-export const ForumListItemLayoutUnreadTextsContainer = ({ captionMessages1, captionMessages2, layout, unreadRegion }: ForumListItemLayoutUnreadTextsContainerProps) => {
+export const ForumListItemLayoutUnreadTextsContainer = ({ captionMessages1, captionMessages2, layout, tags, unreadRegion }: ForumListItemLayoutUnreadTextsContainerProps) => {
     return (
         <Region
             name="unread_texts_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 400, width: 100, top: 0, height: 40, ...layout }}
         >
             <ForumListItemLayoutUnreadRegion {...unreadRegion} />
             <Region
                 name="messages1"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -137,7 +137,6 @@ export const ForumListItemLayoutUnreadTextsContainer = ({ captionMessages1, capt
             </Region>
             <Region
                 name="messages2"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -153,20 +152,24 @@ export const ForumListItemLayoutUnreadTextsContainer = ({ captionMessages1, capt
 export interface ForumListItemLayoutMainBoxProps {
     layout?: BoxLayout;
     leftButtonContainer?: ForumListItemLayoutLeftButtonContainerProps;
+    tags?: string[];
     textsContainer?: ForumListItemLayoutTextsContainerProps;
     unreadTextsContainer?: ForumListItemLayoutUnreadTextsContainerProps;
 }
 
-export const ForumListItemLayoutMainBox = ({ layout, leftButtonContainer, textsContainer, unreadTextsContainer }: ForumListItemLayoutMainBoxProps) => {
+export const ForumListItemLayoutMainBox = ({ layout, leftButtonContainer, tags, textsContainer, unreadTextsContainer }: ForumListItemLayoutMainBoxProps) => {
     return (
         <Region
             name="main_box"
-            params={16}
+            tags={tags}
             backgroundColor="#eefeff"
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 41, ...layout }}
         >
             <ForumListItemLayoutLeftButtonContainer {...leftButtonContainer} />
-            <ForumListItemLayoutTextsContainer {...textsContainer} />
+            <ForumListItemLayoutTextsContainer
+                tags={[ 'relative(1)' ]}
+                {...textsContainer}
+            />
             <ForumListItemLayoutUnreadTextsContainer {...unreadTextsContainer} />
         </Region>
     );

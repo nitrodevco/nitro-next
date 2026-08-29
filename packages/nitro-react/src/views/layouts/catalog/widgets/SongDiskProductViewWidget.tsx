@@ -11,27 +11,26 @@ export interface SongDiskProductViewWidgetPlayPreviewContainerProps {
     captionPlayPreviewText?: string;
     layout?: BoxLayout;
     onListen?: () => void;
+    tags?: string[];
 }
 
-export const SongDiskProductViewWidgetPlayPreviewContainer = ({ captionPlayPreviewText, layout, onListen }: SongDiskProductViewWidgetPlayPreviewContainerProps) => {
+export const SongDiskProductViewWidgetPlayPreviewContainer = ({ captionPlayPreviewText, layout, onListen, tags }: SongDiskProductViewWidgetPlayPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="playPreviewContainer"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 175, top: 235, height: 36, ...layout }}
         >
             <Border
                 variant="2"
-                params={16}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 36 }}
             />
             <Button
                 variant="3"
                 name="listen"
-                params={131089}
                 onPointerTap={onListen}
                 layout={{ position: 'absolute', left: 102, width: 66, top: 8, height: 22, minWidth: 66, maxWidth: 66 }}
             >
@@ -39,7 +38,6 @@ export const SongDiskProductViewWidgetPlayPreviewContainer = ({ captionPlayPrevi
             </Button>
             <Region
                 name="play_preview_text"
-                params={16}
                 layout={{ position: 'absolute', left: 9, width: 85, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -60,27 +58,25 @@ export interface SongDiskProductViewWidgetProps {
     layout?: BoxLayout;
     playPreviewContainer?: SongDiskProductViewWidgetPlayPreviewContainerProps;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, layout, playPreviewContainer, srcCtlgTeaserimg1 }: SongDiskProductViewWidgetProps) => {
+export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, layout, playPreviewContainer, srcCtlgTeaserimg1, tags }: SongDiskProductViewWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="songDiskProductViewWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 176 }}
             />
             <Region
                 name="ctlg_product_name"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 175, top: 176, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -91,7 +87,6 @@ export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgP
             </Region>
             <Region
                 name="ctlg_description"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 194, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -101,7 +96,6 @@ export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgP
             </Region>
             <Region
                 name="ctlg_song_length"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 31, top: 213, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -20,13 +20,14 @@ export const MemenuDanceLayout = ({ danceContainer, layout }: MemenuDanceLayoutP
 /** Named region `line` of MemenuDanceLayout - configured through the parent's `line` prop. */
 export interface MemenuDanceLayoutLineProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MemenuDanceLayoutLine = ({ layout }: MemenuDanceLayoutLineProps) => {
+export const MemenuDanceLayoutLine = ({ layout, tags }: MemenuDanceLayoutLineProps) => {
     return (
         <Region
             name="line"
-            params={16}
+            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 5, width: 152, top: 22, height: 1, ...layout }}
         />
@@ -37,15 +38,16 @@ export const MemenuDanceLayoutLine = ({ layout }: MemenuDanceLayoutLineProps) =>
 export interface MemenuDanceLayoutClubInfoItemProps {
     captionClubInfo?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout }: MemenuDanceLayoutClubInfoItemProps) => {
+export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout, tags }: MemenuDanceLayoutClubInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="club_info"
-            params={16}
+            tags={tags}
             layout={{ width: 145, height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -60,13 +62,14 @@ export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout }: Memen
 export interface MemenuDanceLayoutButtonContainerProps {
     itemsButtonContainer?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MemenuDanceLayoutButtonContainer = ({ itemsButtonContainer, layout }: MemenuDanceLayoutButtonContainerProps) => {
+export const MemenuDanceLayoutButtonContainer = ({ itemsButtonContainer, layout, tags }: MemenuDanceLayoutButtonContainerProps) => {
     return (
         <Region
             name="buttonContainer"
-            params={17}
+            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 145, top: 33, height: 140, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsButtonContainer ?? (
@@ -84,26 +87,25 @@ export interface MemenuDanceLayoutDanceContainerProps {
     line?: MemenuDanceLayoutLineProps;
     onBackBtn?: () => void;
     onStopDancingButton?: () => void;
+    tags?: string[];
 }
 
-export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceTitle, layout, line, onBackBtn, onStopDancingButton }: MemenuDanceLayoutDanceContainerProps) => {
+export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceTitle, layout, line, onBackBtn, onStopDancingButton, tags }: MemenuDanceLayoutDanceContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 163, top: 0, height: 208, ...layout }}
         >
             <Border
                 variant="1"
                 name="dance_border"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 163, top: 0, height: 181, justifyContent: 'center' }}
             >
                 <Region
                     name="dance_title"
-                    params={786640}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 5, height: 13, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -117,7 +119,6 @@ export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceT
             <Button
                 variant="1"
                 name="back_btn"
-                params={131089}
                 onPointerTap={onBackBtn}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 182, height: 22 }}
             >
@@ -126,7 +127,6 @@ export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceT
             <Button
                 variant="1"
                 name="stop_dancing_button"
-                params={131089}
                 onPointerTap={onStopDancingButton}
                 layout={{ position: 'absolute', left: 52, width: 110, top: 182, height: 22 }}
             >

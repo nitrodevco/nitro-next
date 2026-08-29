@@ -17,13 +17,14 @@ export const RadioGroupViewLayout = ({ layout, radioSelectorView }: RadioGroupVi
 /** Named region `radio_button_list` of RadioGroupViewLayout - configured through the parent's `radioButtonList` prop. */
 export interface RadioGroupViewLayoutRadioButtonListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RadioGroupViewLayoutRadioButtonList = ({ layout }: RadioGroupViewLayoutRadioButtonListProps) => {
+export const RadioGroupViewLayoutRadioButtonList = ({ layout, tags }: RadioGroupViewLayoutRadioButtonListProps) => {
     return (
         <Region
             name="radio_button_list"
-            params={149648}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column', ...layout }}
         />
     );
@@ -33,13 +34,14 @@ export const RadioGroupViewLayoutRadioButtonList = ({ layout }: RadioGroupViewLa
 export interface RadioGroupViewLayoutRadioSelectorViewProps {
     layout?: BoxLayout;
     radioButtonList?: RadioGroupViewLayoutRadioButtonListProps;
+    tags?: string[];
 }
 
-export const RadioGroupViewLayoutRadioSelectorView = ({ layout, radioButtonList }: RadioGroupViewLayoutRadioSelectorViewProps) => {
+export const RadioGroupViewLayoutRadioSelectorView = ({ layout, radioButtonList, tags }: RadioGroupViewLayoutRadioSelectorViewProps) => {
     return (
         <Region
             name="radio_selector_view"
-            params={147473}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 0, ...layout }}
         >
             <RadioGroupViewLayoutRadioButtonList {...radioButtonList} />

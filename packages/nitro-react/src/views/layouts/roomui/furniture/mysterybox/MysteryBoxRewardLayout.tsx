@@ -15,27 +15,19 @@ export const MysteryBoxRewardLayout = ({ bitmapContainer, layout, onClose, onClo
     return (
         <Frame
             variant="100"
-            params={1}
             caption={t('mysterybox.reward.text')}
             onClose={onClose}
             layout={{ width: 430, height: 234, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}
-                >
-                    <Region
-                        params={208}
-                        layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
+                <Region layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}>
+                    <Region layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('mysterybox.reward.title')} />
                     </Region>
                     <MysteryBoxRewardLayoutBitmapContainer {...bitmapContainer} />
                     <Button
                         variant="100"
                         name="close_button"
-                        params={131281}
                         onPointerTap={onCloseButton}
                         layout={{ width: 175, height: 52, flexShrink: 0 }}
                     >
@@ -51,23 +43,22 @@ export const MysteryBoxRewardLayout = ({ bitmapContainer, layout, onClose, onClo
 export interface MysteryBoxRewardLayoutBitmapContainerProps {
     layout?: BoxLayout;
     srcRewardImage?: string;
+    tags?: string[];
 }
 
-export const MysteryBoxRewardLayoutBitmapContainer = ({ layout, srcRewardImage }: MysteryBoxRewardLayoutBitmapContainerProps) => {
+export const MysteryBoxRewardLayoutBitmapContainer = ({ layout, srcRewardImage, tags }: MysteryBoxRewardLayoutBitmapContainerProps) => {
     return (
         <Region
             name="bitmap_container"
-            params={208}
+            tags={tags}
             layout={{ width: 109, height: 109, flexShrink: 0, minWidth: 109, minHeight: 109, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
-                params={3280}
                 src="${image.library.url}Quests/ach_receive_star.png"
                 layout={{ position: 'absolute', width: 109, alignSelf: 'center', height: 109 }}
             />
             <ThemeImage
                 name="reward_image"
-                params={3280}
                 src={srcRewardImage}
                 layout={{ position: 'absolute', width: 1, alignSelf: 'center', height: 1 }}
             />

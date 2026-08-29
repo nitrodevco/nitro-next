@@ -22,13 +22,14 @@ export const TableViewLayout = ({ layout, tableContainer }: TableViewLayoutProps
 export interface TableViewLayoutColumnNameItemProps {
     captionColumnName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutColumnNameItem = ({ captionColumnName, layout }: TableViewLayoutColumnNameItemProps) => {
+export const TableViewLayoutColumnNameItem = ({ captionColumnName, layout, tags }: TableViewLayoutColumnNameItemProps) => {
     return (
         <Region
             name="column_name"
-            params={16}
+            tags={tags}
             layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionColumnName ?? 'col1'} />
@@ -40,13 +41,14 @@ export const TableViewLayoutColumnNameItem = ({ captionColumnName, layout }: Tab
 export interface TableViewLayoutTableTitlerowItemProps {
     itemsTableTitlerow?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutTableTitlerowItem = ({ itemsTableTitlerow, layout }: TableViewLayoutTableTitlerowItemProps) => {
+export const TableViewLayoutTableTitlerowItem = ({ itemsTableTitlerow, layout, tags }: TableViewLayoutTableTitlerowItemProps) => {
     return (
         <Region
             name="table_titlerow"
-            params={16}
+            tags={tags}
             layout={{ width: 440, height: 23, flexShrink: 0, minHeight: 23, maxHeight: 23, flexDirection: 'row', ...layout }}
         >
             {itemsTableTitlerow ?? (
@@ -59,13 +61,14 @@ export const TableViewLayoutTableTitlerowItem = ({ itemsTableTitlerow, layout }:
 /** Row template `splitter` of TableViewLayout - pass real rows through its `items…` slot. */
 export interface TableViewLayoutSplitterItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutSplitterItem = ({ layout }: TableViewLayoutSplitterItemProps) => {
+export const TableViewLayoutSplitterItem = ({ layout, tags }: TableViewLayoutSplitterItemProps) => {
     return (
         <Region
             name="splitter"
-            params={16}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 440, height: 1, flexShrink: 0, ...layout }}
         />
@@ -75,13 +78,14 @@ export const TableViewLayoutSplitterItem = ({ layout }: TableViewLayoutSplitterI
 /** Row template `top_spacer` of TableViewLayout - pass real rows through its `items…` slot. */
 export interface TableViewLayoutTopSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutTopSpacerItem = ({ layout }: TableViewLayoutTopSpacerItemProps) => {
+export const TableViewLayoutTopSpacerItem = ({ layout, tags }: TableViewLayoutTopSpacerItemProps) => {
     return (
         <Region
             name="top_spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 0, flexShrink: 0, ...layout }}
         />
     );
@@ -92,14 +96,15 @@ export interface TableViewLayoutLinkContainerProps {
     captionElementLink?: string;
     layout?: BoxLayout;
     onLinkContainer?: () => void;
+    tags?: string[];
     visibleLinkContainer?: boolean;
 }
 
-export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLinkContainer, visibleLinkContainer }: TableViewLayoutLinkContainerProps) => {
+export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLinkContainer, tags, visibleLinkContainer }: TableViewLayoutLinkContainerProps) => {
     return (
         <Region
             name="link_container"
-            params={934129}
+            tags={tags}
             visible={visibleLinkContainer ?? false}
             onPointerTap={onLinkContainer}
             cursor="pointer"
@@ -107,7 +112,6 @@ export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLin
         >
             <Region
                 name="element_link"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -124,20 +128,20 @@ export interface TableViewLayoutExtraButtonProps {
     layout?: BoxLayout;
     onExtraButton?: () => void;
     srcExtraButtonBitmap?: string;
+    tags?: string[];
 }
 
-export const TableViewLayoutExtraButton = ({ layout, onExtraButton, srcExtraButtonBitmap }: TableViewLayoutExtraButtonProps) => {
+export const TableViewLayoutExtraButton = ({ layout, onExtraButton, srcExtraButtonBitmap, tags }: TableViewLayoutExtraButtonProps) => {
     return (
         <Region
             name="extra_button"
-            params={81}
+            tags={tags}
             onPointerTap={onExtraButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
         >
             <ThemeImage
                 name="extra_button_bitmap"
-                params={16}
                 src={srcExtraButtonBitmap ?? layoutImage('icons_info_grey.png')}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
             />
@@ -152,16 +156,17 @@ export interface TableViewLayoutTableElementItemProps {
     layout?: BoxLayout;
     linkContainer?: TableViewLayoutLinkContainerProps;
     onTableElement?: () => void;
+    tags?: string[];
     visibleHighlightBorder?: boolean;
 }
 
-export const TableViewLayoutTableElementItem = ({ captionElementText, extraButton, layout, linkContainer, onTableElement, visibleHighlightBorder }: TableViewLayoutTableElementItemProps) => {
+export const TableViewLayoutTableElementItem = ({ captionElementText, extraButton, layout, linkContainer, onTableElement, tags, visibleHighlightBorder }: TableViewLayoutTableElementItemProps) => {
     const [ elementInputValue, setElementInputValue ] = useState('');
 
     return (
         <Region
             name="table_element"
-            params={17}
+            tags={tags}
             onPointerTap={onTableElement}
             cursor="pointer"
             layout={{ width: 101, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, justifyContent: 'center', ...layout }}
@@ -173,7 +178,6 @@ export const TableViewLayoutTableElementItem = ({ captionElementText, extraButto
                 <Border
                     variant="2"
                     name="highlight_border"
-                    params={144}
                     tintColor="#4fbce3"
                     blend={0.4}
                     layout={{ width: '100%', height: '100%' }}
@@ -181,7 +185,6 @@ export const TableViewLayoutTableElementItem = ({ captionElementText, extraButto
             </Region>
             <Region
                 name="element_text"
-                params={144}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionElementText ?? 'elem1'} />
@@ -201,13 +204,14 @@ export const TableViewLayoutTableElementItem = ({ captionElementText, extraButto
 export interface TableViewLayoutTableRowItemProps {
     itemsTableRow?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutTableRowItem = ({ itemsTableRow, layout }: TableViewLayoutTableRowItemProps) => {
+export const TableViewLayoutTableRowItem = ({ itemsTableRow, layout, tags }: TableViewLayoutTableRowItemProps) => {
     return (
         <Region
             name="table_row"
-            params={2065}
+            tags={tags}
             backgroundColor="#eaeaea"
             layout={{ width: 440, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, flexDirection: 'row', ...layout }}
         >
@@ -221,13 +225,14 @@ export const TableViewLayoutTableRowItem = ({ itemsTableRow, layout }: TableView
 /** Row template `bottom_spacer` of TableViewLayout - pass real rows through its `items…` slot. */
 export interface TableViewLayoutBottomSpacerItemProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutBottomSpacerItem = ({ layout }: TableViewLayoutBottomSpacerItemProps) => {
+export const TableViewLayoutBottomSpacerItem = ({ layout, tags }: TableViewLayoutBottomSpacerItemProps) => {
     return (
         <Region
             name="bottom_spacer"
-            params={16}
+            tags={tags}
             layout={{ width: 0, height: 0, flexShrink: 0, ...layout }}
         />
     );
@@ -237,9 +242,10 @@ export const TableViewLayoutBottomSpacerItem = ({ layout }: TableViewLayoutBotto
 export interface TableViewLayoutTableItemsItemProps {
     itemsTableItems?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutTableItemsItem = ({ itemsTableItems, layout }: TableViewLayoutTableItemsItemProps) => {
+export const TableViewLayoutTableItemsItem = ({ itemsTableItems, layout, tags }: TableViewLayoutTableItemsItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -247,7 +253,7 @@ export const TableViewLayoutTableItemsItem = ({ itemsTableItems, layout }: Table
         >
             <Region
                 name="table_items"
-                params={144}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsTableItems ?? (
@@ -266,13 +272,14 @@ export const TableViewLayoutTableItemsItem = ({ itemsTableItems, layout }: Table
 export interface TableViewLayoutTableContentsProps {
     itemsTableContents?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutTableContents = ({ itemsTableContents, layout }: TableViewLayoutTableContentsProps) => {
+export const TableViewLayoutTableContents = ({ itemsTableContents, layout, tags }: TableViewLayoutTableContentsProps) => {
     return (
         <Region
             name="table_contents"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5, flexDirection: 'column', ...layout }}
         >
             {itemsTableContents ?? (
@@ -290,20 +297,20 @@ export const TableViewLayoutTableContents = ({ itemsTableContents, layout }: Tab
 export interface TableViewLayoutEmptyContainerProps {
     captionNothingToDisplayText?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const TableViewLayoutEmptyContainer = ({ captionNothingToDisplayText, layout }: TableViewLayoutEmptyContainerProps) => {
+export const TableViewLayoutEmptyContainer = ({ captionNothingToDisplayText, layout, tags }: TableViewLayoutEmptyContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="empty_container"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="nothing_to_display_text"
-                params={3280}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -320,19 +327,19 @@ export interface TableViewLayoutTableContainerProps {
     emptyContainer?: TableViewLayoutEmptyContainerProps;
     layout?: BoxLayout;
     tableContents?: TableViewLayoutTableContentsProps;
+    tags?: string[];
 }
 
-export const TableViewLayoutTableContainer = ({ emptyContainer, layout, tableContents }: TableViewLayoutTableContainerProps) => {
+export const TableViewLayoutTableContainer = ({ emptyContainer, layout, tableContents, tags }: TableViewLayoutTableContainerProps) => {
     return (
         <Region
             name="table_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 472, top: 0, height: 177, ...layout }}
         >
             <Border
                 variant="0"
                 name="table_border"
-                params={2192}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <TableViewLayoutTableContents {...tableContents} />

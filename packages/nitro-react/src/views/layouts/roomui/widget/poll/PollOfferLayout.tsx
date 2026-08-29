@@ -21,7 +21,6 @@ export const PollOfferLayout = ({ headerContainer, layout, onClose, pollOfferSum
             variant="3"
             id="poll_offer_frame"
             name="poll_offer_frame"
-            params={32769}
             caption={t('poll_offer_window')}
             tintColor="#418db0"
             onClose={onClose}
@@ -32,7 +31,6 @@ export const PollOfferLayout = ({ headerContainer, layout, onClose, pollOfferSum
                 <Border
                     variant="2"
                     name="poll_offer_border"
-                    params={2192}
                     layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
                 >
                     <PollOfferLayoutPollOfferSummaryWrapper {...pollOfferSummaryWrapper} />
@@ -47,15 +45,16 @@ export const PollOfferLayout = ({ headerContainer, layout, onClose, pollOfferSum
 export interface PollOfferLayoutPollOfferHeadlineItemProps {
     captionPollOfferHeadline?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PollOfferLayoutPollOfferHeadlineItem = ({ captionPollOfferHeadline, layout }: PollOfferLayoutPollOfferHeadlineItemProps) => {
+export const PollOfferLayoutPollOfferHeadlineItem = ({ captionPollOfferHeadline, layout, tags }: PollOfferLayoutPollOfferHeadlineItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="poll_offer_headline"
-            params={144}
+            tags={tags}
             layout={{ width: 250, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -71,13 +70,14 @@ export const PollOfferLayoutPollOfferHeadlineItem = ({ captionPollOfferHeadline,
 export interface PollOfferLayoutPollOfferHeaderWrapperProps {
     itemsPollOfferHeaderWrapper?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PollOfferLayoutPollOfferHeaderWrapper = ({ itemsPollOfferHeaderWrapper, layout }: PollOfferLayoutPollOfferHeaderWrapperProps) => {
+export const PollOfferLayoutPollOfferHeaderWrapper = ({ itemsPollOfferHeaderWrapper, layout, tags }: PollOfferLayoutPollOfferHeaderWrapperProps) => {
     return (
         <Region
             name="poll_offer_header_wrapper"
-            params={2193}
+            tags={tags}
             layout={{ position: 'absolute', left: 110, right: 20, top: 25, bottom: 10, flexDirection: 'column', ...layout }}
         >
             {itemsPollOfferHeaderWrapper ?? (
@@ -93,13 +93,14 @@ export interface PollOfferLayoutHeaderContainerProps {
     onHeaderContainer?: () => void;
     pollOfferHeaderWrapper?: PollOfferLayoutPollOfferHeaderWrapperProps;
     srcPreviewImageBg?: string;
+    tags?: string[];
 }
 
-export const PollOfferLayoutHeaderContainer = ({ layout, onHeaderContainer, pollOfferHeaderWrapper, srcPreviewImageBg }: PollOfferLayoutHeaderContainerProps) => {
+export const PollOfferLayoutHeaderContainer = ({ layout, onHeaderContainer, pollOfferHeaderWrapper, srcPreviewImageBg, tags }: PollOfferLayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
-            params={1}
+            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onHeaderContainer}
             cursor="pointer"
@@ -108,7 +109,6 @@ export const PollOfferLayoutHeaderContainer = ({ layout, onHeaderContainer, poll
             <ThemeImage
                 name="preview_image_bg"
                 tags={[ 'bitmap' ]}
-                params={16}
                 src={srcPreviewImageBg ?? layoutImage('poll_poll_prompt_frank.png')}
                 layout={{ position: 'absolute', left: 10, width: 80, top: 7, height: 80 }}
             />
@@ -121,15 +121,16 @@ export const PollOfferLayoutHeaderContainer = ({ layout, onHeaderContainer, poll
 export interface PollOfferLayoutPollOfferSummaryItemProps {
     captionPollOfferSummary?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PollOfferLayoutPollOfferSummaryItem = ({ captionPollOfferSummary, layout }: PollOfferLayoutPollOfferSummaryItemProps) => {
+export const PollOfferLayoutPollOfferSummaryItem = ({ captionPollOfferSummary, layout, tags }: PollOfferLayoutPollOfferSummaryItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="poll_offer_summary"
-            params={144}
+            tags={tags}
             layout={{ width: 355, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -145,13 +146,14 @@ export const PollOfferLayoutPollOfferSummaryItem = ({ captionPollOfferSummary, l
 export interface PollOfferLayoutPollOfferSummaryWrapperProps {
     itemsPollOfferSummaryWrapper?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const PollOfferLayoutPollOfferSummaryWrapper = ({ itemsPollOfferSummaryWrapper, layout }: PollOfferLayoutPollOfferSummaryWrapperProps) => {
+export const PollOfferLayoutPollOfferSummaryWrapper = ({ itemsPollOfferSummaryWrapper, layout, tags }: PollOfferLayoutPollOfferSummaryWrapperProps) => {
     return (
         <Region
             name="poll_offer_summary_wrapper"
-            params={2193}
+            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 7, top: 10, bottom: 90, flexDirection: 'column', ...layout }}
         >
             {itemsPollOfferSummaryWrapper ?? (
@@ -167,20 +169,20 @@ export interface PollOfferLayoutPollOptionsContainerProps {
     captionPollOfferButtonLater?: string;
     layout?: BoxLayout;
     onPollOfferButtonOk?: () => void;
+    tags?: string[];
 }
 
-export const PollOfferLayoutPollOptionsContainer = ({ captionPollOfferButtonCancel, captionPollOfferButtonLater, layout, onPollOfferButtonOk }: PollOfferLayoutPollOptionsContainerProps) => {
+export const PollOfferLayoutPollOptionsContainer = ({ captionPollOfferButtonCancel, captionPollOfferButtonLater, layout, onPollOfferButtonOk, tags }: PollOfferLayoutPollOptionsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="poll_options_container"
-            params={9700368}
+            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 250, bottom: 41, height: 42, ...layout }}
         >
             <Region
                 name="poll_offer_button_cancel"
-                params={131073}
                 layout={{ position: 'absolute', left: 1, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -191,7 +193,6 @@ export const PollOfferLayoutPollOptionsContainer = ({ captionPollOfferButtonCanc
             </Region>
             <Region
                 name="poll_offer_button_later"
-                params={131073}
                 layout={{ position: 'absolute', left: 75, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -203,7 +204,6 @@ export const PollOfferLayoutPollOptionsContainer = ({ captionPollOfferButtonCanc
             <ButtonThick
                 variant="5"
                 name="poll_offer_button_ok"
-                params={131089}
                 tintColor="#00aa00"
                 onPointerTap={onPollOfferButtonOk}
                 layout={{ position: 'absolute', left: 166, width: 80, top: 0, height: 40, minWidth: 80, maxWidth: 80 }}

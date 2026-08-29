@@ -8,9 +8,10 @@ import { BoxLayout, Region, ScrollArea } from '#base/theme';
 /** Named region `bundleGrid` of BundleGridScrollWidget - configured through the parent's `bundleGrid` prop. */
 export interface BundleGridScrollWidgetBundleGridProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BundleGridScrollWidgetBundleGrid = ({ layout }: BundleGridScrollWidgetBundleGridProps) => {
+export const BundleGridScrollWidgetBundleGrid = ({ layout, tags }: BundleGridScrollWidgetBundleGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -18,7 +19,7 @@ export const BundleGridScrollWidgetBundleGrid = ({ layout }: BundleGridScrollWid
         >
             <Region
                 name="bundleGrid"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -29,14 +30,14 @@ export const BundleGridScrollWidgetBundleGrid = ({ layout }: BundleGridScrollWid
 export interface BundleGridScrollWidgetProps {
     bundleGrid?: BundleGridScrollWidgetBundleGridProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BundleGridScrollWidget = ({ bundleGrid, layout }: BundleGridScrollWidgetProps) => {
+export const BundleGridScrollWidget = ({ bundleGrid, layout, tags }: BundleGridScrollWidgetProps) => {
     return (
         <Region
             name="bundleGridScrollWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BundleGridScrollWidgetBundleGrid {...bundleGrid} />

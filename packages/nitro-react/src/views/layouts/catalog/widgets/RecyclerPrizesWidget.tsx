@@ -9,9 +9,10 @@ import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/them
 /** Named region `itemList` of RecyclerPrizesWidget - configured through the parent's `itemList` prop. */
 export interface RecyclerPrizesWidgetItemListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetItemList = ({ layout }: RecyclerPrizesWidgetItemListProps) => {
+export const RecyclerPrizesWidgetItemList = ({ layout, tags }: RecyclerPrizesWidgetItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -19,7 +20,7 @@ export const RecyclerPrizesWidgetItemList = ({ layout }: RecyclerPrizesWidgetIte
         >
             <Region
                 name="itemList"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -29,9 +30,10 @@ export const RecyclerPrizesWidgetItemList = ({ layout }: RecyclerPrizesWidgetIte
 /** Named region `bundleGrid` of RecyclerPrizesWidget - configured through the parent's `bundleGrid` prop. */
 export interface RecyclerPrizesWidgetBundleGridProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetBundleGrid = ({ layout }: RecyclerPrizesWidgetBundleGridProps) => {
+export const RecyclerPrizesWidgetBundleGrid = ({ layout, tags }: RecyclerPrizesWidgetBundleGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -39,7 +41,7 @@ export const RecyclerPrizesWidgetBundleGrid = ({ layout }: RecyclerPrizesWidgetB
         >
             <Region
                 name="bundleGrid"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -53,26 +55,25 @@ export interface RecyclerPrizesWidgetProductViewProps {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetProductView = ({ bundleGrid, captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: RecyclerPrizesWidgetProductViewProps) => {
+export const RecyclerPrizesWidgetProductView = ({ bundleGrid, captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tags }: RecyclerPrizesWidgetProductViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="productView"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 180, width: 180, top: 0, height: 277, ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
-                params={16}
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 162 }}
             />
             <Region
                 name="ctlg_product_name"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 74, top: 166, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -82,7 +83,6 @@ export const RecyclerPrizesWidgetProductView = ({ bundleGrid, captionCtlgDescrip
             </Region>
             <Region
                 name="ctlg_description"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 183, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -101,13 +101,14 @@ export interface RecyclerPrizesWidgetProps {
     itemList?: RecyclerPrizesWidgetItemListProps;
     layout?: BoxLayout;
     productView?: RecyclerPrizesWidgetProductViewProps;
+    tags?: string[];
 }
 
-export const RecyclerPrizesWidget = ({ itemList, layout, productView }: RecyclerPrizesWidgetProps) => {
+export const RecyclerPrizesWidget = ({ itemList, layout, productView, tags }: RecyclerPrizesWidgetProps) => {
     return (
         <Region
             name="recyclerPrizesWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <RecyclerPrizesWidgetItemList {...itemList} />

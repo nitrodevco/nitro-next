@@ -18,19 +18,14 @@ export const RejectedWindowLayout = ({ captionHeading, captionMessage, layout, o
             variant="100"
             id="rejected_window"
             name="rejected_window"
-            params={32769}
             caption={t('guide.help.request.rejected.title')}
             onClose={onClose}
             layout={{ width: 242, height: 147, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    params={8538128}
-                    layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}
-                >
+                <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}>
                     <Region
                         name="heading"
-                        params={16}
                         layout={{ width: 221, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -41,7 +36,6 @@ export const RejectedWindowLayout = ({ captionHeading, captionMessage, layout, o
                     </Region>
                     <Region
                         name="message"
-                        params={16}
                         layout={{ width: 221, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -52,7 +46,6 @@ export const RejectedWindowLayout = ({ captionHeading, captionMessage, layout, o
                     <Button
                         variant="101"
                         name="close_button"
-                        params={131281}
                         tintColor="#bbbbbb"
                         onPointerTap={onCloseButton}
                         layout={{ width: 221, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}

@@ -25,7 +25,6 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
             <Border
                 variant="6"
                 name="frame"
-                params={1}
                 tintColor="#a5cd5d"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 101, height: 36 }}
             >
@@ -38,13 +37,11 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
                     <Bubble
                         variant="0"
                         name="bubble"
-                        params={1}
                         tintColor="#9dbf5a"
                         layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                     >
                         <Region
                             name="bubble_title"
-                            params={8388752}
                             layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
@@ -55,7 +52,6 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
                         </Region>
                         <Region
                             name="bubble_message"
-                            params={8388752}
                             layout={{ position: 'absolute', left: 5, right: 24, top: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                         >
                             <ThemeText
@@ -67,27 +63,23 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
                         <CloseButton
                             variant="3"
                             name="bubble_button_close"
-                            params={81}
                             onPointerTap={onBubbleButtonClose}
                             layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
                         />
                         <ContainerButton
                             variant="3"
                             name="bubble_button_accept"
-                            params={394449}
                             onPointerTap={onBubbleButtonAccept}
                             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
                         >
                             <Icon
                                 variant="8"
                                 name="bubble_icon"
-                                params={16}
                                 tintColor="#00a900"
                                 layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
                             />
                             <Region
                                 name="bubble_caption"
-                                params={16}
                                 layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
@@ -108,13 +100,14 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
 /** Named region `icons` of EntityLayout - configured through the parent's `icons` prop. */
 export interface EntityLayoutIconsProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EntityLayoutIcons = ({ layout }: EntityLayoutIconsProps) => {
+export const EntityLayoutIcons = ({ layout, tags }: EntityLayoutIconsProps) => {
     return (
         <Region
             name="icons"
-            params={262224}
+            tags={tags}
             layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2, ...layout }}
         />
     );
@@ -125,24 +118,21 @@ export interface EntityLayoutRegionProfileProps {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
+    tags?: string[];
 }
 
-export const EntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: EntityLayoutRegionProfileProps) => {
+export const EntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas, tags }: EntityLayoutRegionProfileProps) => {
     return (
         <Region
             name="region_profile"
-            params={145}
+            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24, ...layout }}
         >
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}
-            >
+            <Region layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}>
                 <ThemeImage
                     name="canvas"
-                    params={3932160}
                     src={srcCanvas}
                     layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
                 />
@@ -157,13 +147,14 @@ export interface EntityLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     regionProfile?: EntityLayoutRegionProfileProps;
+    tags?: string[];
 }
 
-export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile }: EntityLayoutHeaderItemProps) => {
+export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile, tags }: EntityLayoutHeaderItemProps) => {
     return (
         <Region
             name="header"
-            params={145}
+            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 119, height: 24, flexShrink: 0, ...layout }}
@@ -171,7 +162,6 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionPr
             <Region
                 name="name"
                 tags={[ 'label' ]}
-                params={16}
                 layout={{ position: 'absolute', left: 33, width: 86, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -189,13 +179,14 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionPr
 export interface EntityLayoutPiecesProps {
     itemsPieces?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const EntityLayoutPieces = ({ itemsPieces, layout }: EntityLayoutPiecesProps) => {
+export const EntityLayoutPieces = ({ itemsPieces, layout, tags }: EntityLayoutPiecesProps) => {
     return (
         <Region
             name="pieces"
-            params={2192}
+            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column', ...layout }}
         >
             {itemsPieces ?? (
@@ -210,22 +201,22 @@ export interface EntityLayoutBubbleClickRegionRejectProps {
     captionBubbleLinkReject?: string;
     layout?: BoxLayout;
     onBubbleClickRegionReject?: () => void;
+    tags?: string[];
 }
 
-export const EntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject }: EntityLayoutBubbleClickRegionRejectProps) => {
+export const EntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject, tags }: EntityLayoutBubbleClickRegionRejectProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bubble_click_region_reject"
-            params={1233}
+            tags={tags}
             onPointerTap={onBubbleClickRegionReject}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15, ...layout }}
         >
             <Region
                 name="bubble_link_reject"
-                params={4194320}
                 layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

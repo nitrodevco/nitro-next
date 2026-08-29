@@ -18,7 +18,6 @@ export const VideoViewerLayout = ({ layout, onClose, rightPane, videoBackground 
             variant="3"
             id="video_viewer"
             name="video_viewer"
-            params={98305}
             tintColor="#67a3bf"
             onClose={onClose}
             layout={{ width: 738, height: 356, ...layout }}
@@ -34,14 +33,15 @@ export const VideoViewerLayout = ({ layout, onClose, rightPane, videoBackground 
 /** Named region `video_wrapper` of VideoViewerLayout - configured through the parent's `videoWrapper` prop. */
 export interface VideoViewerLayoutVideoWrapperProps {
     layout?: BoxLayout;
+    tags?: string[];
     visibleVideoWrapper?: boolean;
 }
 
-export const VideoViewerLayoutVideoWrapper = ({ layout, visibleVideoWrapper }: VideoViewerLayoutVideoWrapperProps) => {
+export const VideoViewerLayoutVideoWrapper = ({ layout, tags, visibleVideoWrapper }: VideoViewerLayoutVideoWrapperProps) => {
     return (
         <Region
             name="video_wrapper"
-            params={2176}
+            tags={tags}
             visible={visibleVideoWrapper ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -52,22 +52,22 @@ export const VideoViewerLayoutVideoWrapper = ({ layout, visibleVideoWrapper }: V
 export interface VideoViewerLayoutVideoBackgroundProps {
     captionNoVideosLabel?: string;
     layout?: BoxLayout;
+    tags?: string[];
     videoWrapper?: VideoViewerLayoutVideoWrapperProps;
 }
 
-export const VideoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, videoWrapper }: VideoViewerLayoutVideoBackgroundProps) => {
+export const VideoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, tags, videoWrapper }: VideoViewerLayoutVideoBackgroundProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="video_background"
-            params={18448}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="no_videos_label"
-                params={3280}
                 layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -84,13 +84,14 @@ export const VideoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout,
 export interface VideoViewerLayoutItemTitleItemProps {
     captionItemTitle?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutItemTitleItem = ({ captionItemTitle, layout }: VideoViewerLayoutItemTitleItemProps) => {
+export const VideoViewerLayoutItemTitleItem = ({ captionItemTitle, layout, tags }: VideoViewerLayoutItemTitleItemProps) => {
     return (
         <Region
             name="item_title"
-            params={16}
+            tags={tags}
             layout={{ width: 57, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -105,13 +106,14 @@ export const VideoViewerLayoutItemTitleItem = ({ captionItemTitle, layout }: Vid
 export interface VideoViewerLayoutItemDescriptionItemProps {
     captionItemDescription?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutItemDescriptionItem = ({ captionItemDescription, layout }: VideoViewerLayoutItemDescriptionItemProps) => {
+export const VideoViewerLayoutItemDescriptionItem = ({ captionItemDescription, layout, tags }: VideoViewerLayoutItemDescriptionItemProps) => {
     return (
         <Region
             name="item_description"
-            params={16}
+            tags={tags}
             layout={{ width: 256, height: 101, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -127,13 +129,14 @@ export const VideoViewerLayoutItemDescriptionItem = ({ captionItemDescription, l
 export interface VideoViewerLayoutItemContentsProps {
     itemsItemContents?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutItemContents = ({ itemsItemContents, layout }: VideoViewerLayoutItemContentsProps) => {
+export const VideoViewerLayoutItemContents = ({ itemsItemContents, layout, tags }: VideoViewerLayoutItemContentsProps) => {
     return (
         <Region
             name="item_contents"
-            params={147472}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
         >
             {itemsItemContents ?? (
@@ -151,13 +154,14 @@ export interface VideoViewerLayoutItemItemProps {
     itemContents?: VideoViewerLayoutItemContentsProps;
     layout?: BoxLayout;
     onItem?: () => void;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutItemItem = ({ itemContents, layout, onItem }: VideoViewerLayoutItemItemProps) => {
+export const VideoViewerLayoutItemItem = ({ itemContents, layout, onItem, tags }: VideoViewerLayoutItemItemProps) => {
     return (
         <Region
             name="item"
-            params={147473}
+            tags={tags}
             onPointerTap={onItem}
             cursor="pointer"
             layout={{ width: 278, height: 121, flexShrink: 0, ...layout }}
@@ -165,7 +169,6 @@ export const VideoViewerLayoutItemItem = ({ itemContents, layout, onItem }: Vide
             <Border
                 variant="103"
                 name="item_background"
-                params={147472}
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 121 }}
             >
                 <VideoViewerLayoutItemContents {...itemContents} />
@@ -178,9 +181,10 @@ export const VideoViewerLayoutItemItem = ({ itemContents, layout, onItem }: Vide
 export interface VideoViewerLayoutPlaylistsProps {
     itemsPlaylists?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutPlaylists = ({ itemsPlaylists, layout }: VideoViewerLayoutPlaylistsProps) => {
+export const VideoViewerLayoutPlaylists = ({ itemsPlaylists, layout, tags }: VideoViewerLayoutPlaylistsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -188,7 +192,7 @@ export const VideoViewerLayoutPlaylists = ({ itemsPlaylists, layout }: VideoView
         >
             <Region
                 name="playlists"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsPlaylists ?? (
@@ -205,27 +209,26 @@ export interface VideoViewerLayoutRightPaneProps {
     onPlaylistNext?: () => void;
     onPlaylistPrev?: () => void;
     playlists?: VideoViewerLayoutPlaylistsProps;
+    tags?: string[];
 }
 
-export const VideoViewerLayoutRightPane = ({ layout, onPlaylistNext, onPlaylistPrev, playlists }: VideoViewerLayoutRightPaneProps) => {
+export const VideoViewerLayoutRightPane = ({ layout, onPlaylistNext, onPlaylistPrev, playlists, tags }: VideoViewerLayoutRightPaneProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="right_pane"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 48, ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="playlist_prev"
                 tooltip={t('widget.furni.video_viewer.tooltip.prev')}
-                params={17}
                 onPointerTap={onPlaylistPrev}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 29, justifyContent: 'center' }}
             >
                 <ThemeImage
-                    params={3280}
                     src={layoutImage('icons_next.png')}
                     layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
                 />
@@ -234,20 +237,15 @@ export const VideoViewerLayoutRightPane = ({ layout, onPlaylistNext, onPlaylistP
                 variant="3"
                 name="playlist_next"
                 tooltip={t('widget.furni.video_viewer.tooltip.next')}
-                params={17}
                 onPointerTap={onPlaylistNext}
                 layout={{ position: 'absolute', left: 44, width: 40, top: 0, height: 29, justifyContent: 'center' }}
             >
                 <ThemeImage
-                    params={3280}
                     src={layoutImage('icons_next.png')}
                     layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
                 />
             </ContainerButton>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('widget.furni.video_viewer.playlists')} />
             </Region>
             <VideoViewerLayoutPlaylists {...playlists} />

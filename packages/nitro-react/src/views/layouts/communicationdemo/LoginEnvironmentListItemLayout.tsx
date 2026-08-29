@@ -11,13 +11,9 @@ export interface LoginEnvironmentListItemLayoutProps {
 export const LoginEnvironmentListItemLayout = ({ captionTitle, layout, srcIcon }: LoginEnvironmentListItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 172, height: 20, ...layout }}>
-            <Region
-                params={131089}
-                layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 20, minWidth: 172, maxWidth: 172 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 20, minWidth: 172, maxWidth: 172 }}>
                 <Region
                     name="title"
-                    params={16}
                     layout={{ position: 'absolute', left: 20, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -28,7 +24,6 @@ export const LoginEnvironmentListItemLayout = ({ captionTitle, layout, srcIcon }
                 </Region>
                 <ThemeImage
                     name="icon"
-                    params={16}
                     src={srcIcon ?? layoutImage('illumina_light_separator.png')}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 />

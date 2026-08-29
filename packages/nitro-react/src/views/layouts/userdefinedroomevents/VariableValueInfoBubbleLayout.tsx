@@ -21,13 +21,11 @@ export const VariableValueInfoBubbleLayout = ({ captionValue, layout, visibleBor
                     layout={{ width: '100%', height: '100%' }}
                 >
                     <ThemeImage
-                        params={16}
                         src={undefined}
                         layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
                     />
                     <Region
                         name="value"
-                        params={4194320}
                         layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText

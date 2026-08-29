@@ -13,36 +13,25 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
 
     return (
         <Region layout={{ position: 'relative', width: 261, height: 56, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56 }}>
                 <ThemeImage
                     name="background_image"
-                    params={16}
                     src={srcBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 56 }}
                 />
                 <ThemeImage
                     name="add_songs_icon_image"
                     tags={[ 'ICON' ]}
-                    params={16}
                     src={srcAddSongsIconImage}
                     layout={{ position: 'absolute', left: 8, width: 46, top: 3, height: 46 }}
                 />
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 63, width: 270, top: 1, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 63, width: 270, top: 1, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('playlist.editor.add.songs.to.your.playlist')}
                         textStyle="text-style-bold"
                     />
                 </Region>
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: 63, width: 200, top: 21, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 63, width: 200, top: 21, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('playlist.editor.text.click.song.to.choose.click.again.to.move')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}

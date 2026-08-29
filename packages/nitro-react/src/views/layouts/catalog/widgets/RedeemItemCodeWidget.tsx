@@ -12,21 +12,21 @@ import { Border, BoxLayout, Button, Region, TextInput } from '#base/theme';
 export interface RedeemItemCodeWidgetProps {
     layout?: BoxLayout;
     onRedeem?: () => void;
+    tags?: string[];
 }
 
-export const RedeemItemCodeWidget = ({ layout, onRedeem }: RedeemItemCodeWidgetProps) => {
+export const RedeemItemCodeWidget = ({ layout, onRedeem, tags }: RedeemItemCodeWidgetProps) => {
     const t = useTranslation();
     const [ voucherCodeValue, setVoucherCodeValue ] = useState('');
 
     return (
         <Region
             name="redeemItemCodeWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border
                 variant="0"
-                params={16}
                 layout={{ position: 'absolute', left: 10, width: 216, top: 5, height: 25 }}
             >
                 <TextInput
@@ -39,7 +39,6 @@ export const RedeemItemCodeWidget = ({ layout, onRedeem }: RedeemItemCodeWidgetP
             <Button
                 variant="3"
                 name="redeem"
-                params={393361}
                 onPointerTap={onRedeem}
                 layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
             >

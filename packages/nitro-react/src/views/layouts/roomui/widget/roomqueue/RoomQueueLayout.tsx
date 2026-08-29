@@ -18,7 +18,6 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
     return (
         <Frame
             variant="3"
-            params={32769}
             caption={t('room.queue.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -27,7 +26,6 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="info_text"
-                    params={16}
                     layout={{ position: 'absolute', left: 0, width: 217, top: 21, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -38,7 +36,6 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                 </Region>
                 <Region
                     name="spectator_info"
-                    params={16}
                     visible={false}
                     layout={{ position: 'absolute', left: 21, width: 266, top: 68, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
@@ -50,7 +47,6 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                 <Button
                     variant="3"
                     name="cancel_button"
-                    params={917521}
                     onPointerTap={onCancelButton}
                     layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 154, top: 50, height: 27 }}
                 >
@@ -63,7 +59,6 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                     <Button
                         variant="3"
                         name="change_button"
-                        params={917521}
                         onPointerTap={onChangeButton}
                         layout={{ width: '100%', height: '100%' }}
                     >

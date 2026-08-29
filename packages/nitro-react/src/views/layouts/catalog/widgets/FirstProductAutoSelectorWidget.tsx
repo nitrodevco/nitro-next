@@ -8,13 +8,14 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `firstProductAutoSelectorWidget` of FirstProductAutoSelectorWidget - configured through the parent's `firstProductAutoSelectorWidget` prop. */
 export interface FirstProductAutoSelectorWidgetProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const FirstProductAutoSelectorWidget = ({ layout }: FirstProductAutoSelectorWidgetProps) => {
+export const FirstProductAutoSelectorWidget = ({ layout, tags }: FirstProductAutoSelectorWidgetProps) => {
     return (
         <Region
             name="firstProductAutoSelectorWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

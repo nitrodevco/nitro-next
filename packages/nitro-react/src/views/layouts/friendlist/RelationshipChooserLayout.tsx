@@ -14,7 +14,6 @@ export const RelationshipChooserLayout = ({ items, layout }: RelationshipChooser
         <Region layout={{ position: 'relative', width: 30, height: 68, ...layout }}>
             <Border
                 variant="100"
-                params={131072}
                 tintColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 68 }}
             >
@@ -29,13 +28,14 @@ export interface RelationshipChooserLayoutItemNoneItemProps {
     layout?: BoxLayout;
     onItemNone?: () => void;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemNoneItem = ({ layout, onItemNone, srcImage }: RelationshipChooserLayoutItemNoneItemProps) => {
+export const RelationshipChooserLayoutItemNoneItem = ({ layout, onItemNone, srcImage, tags }: RelationshipChooserLayoutItemNoneItemProps) => {
     return (
         <Region
             name="item_none"
-            params={17}
+            tags={tags}
             backgroundColor="#ececec"
             onPointerTap={onItemNone}
             cursor="pointer"
@@ -43,7 +43,6 @@ export const RelationshipChooserLayoutItemNoneItem = ({ layout, onItemNone, srcI
         >
             <ThemeImage
                 name="image"
-                params={16}
                 src={srcImage ?? layoutImage('relationship_status_none.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
             />
@@ -56,13 +55,14 @@ export interface RelationshipChooserLayoutItemHeartItemProps {
     layout?: BoxLayout;
     onItemHeart?: () => void;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemHeartItem = ({ layout, onItemHeart, srcImage }: RelationshipChooserLayoutItemHeartItemProps) => {
+export const RelationshipChooserLayoutItemHeartItem = ({ layout, onItemHeart, srcImage, tags }: RelationshipChooserLayoutItemHeartItemProps) => {
     return (
         <Region
             name="item_heart"
-            params={17}
+            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onItemHeart}
             cursor="pointer"
@@ -70,7 +70,6 @@ export const RelationshipChooserLayoutItemHeartItem = ({ layout, onItemHeart, sr
         >
             <ThemeImage
                 name="image"
-                params={16}
                 src={srcImage ?? layoutImage('relationship_status_heart.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
             />
@@ -83,13 +82,14 @@ export interface RelationshipChooserLayoutItemSmileItemProps {
     layout?: BoxLayout;
     onItemSmile?: () => void;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, srcImage }: RelationshipChooserLayoutItemSmileItemProps) => {
+export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, srcImage, tags }: RelationshipChooserLayoutItemSmileItemProps) => {
     return (
         <Region
             name="item_smile"
-            params={17}
+            tags={tags}
             backgroundColor="#ececec"
             onPointerTap={onItemSmile}
             cursor="pointer"
@@ -97,7 +97,6 @@ export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, sr
         >
             <ThemeImage
                 name="image"
-                params={16}
                 src={srcImage ?? layoutImage('relationship_status_smile.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
             />
@@ -110,13 +109,14 @@ export interface RelationshipChooserLayoutItemBobbaItemProps {
     layout?: BoxLayout;
     onItemBobba?: () => void;
     srcImage?: string;
+    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, srcImage }: RelationshipChooserLayoutItemBobbaItemProps) => {
+export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, srcImage, tags }: RelationshipChooserLayoutItemBobbaItemProps) => {
     return (
         <Region
             name="item_bobba"
-            params={17}
+            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onItemBobba}
             cursor="pointer"
@@ -124,7 +124,6 @@ export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, sr
         >
             <ThemeImage
                 name="image"
-                params={16}
                 src={srcImage ?? layoutImage('relationship_status_bobba.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
             />
@@ -136,13 +135,14 @@ export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, sr
 export interface RelationshipChooserLayoutItemsProps {
     itemsItems?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItems = ({ itemsItems, layout }: RelationshipChooserLayoutItemsProps) => {
+export const RelationshipChooserLayoutItems = ({ itemsItems, layout, tags }: RelationshipChooserLayoutItemsProps) => {
     return (
         <Region
             name="items"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 25, top: 2, height: 63, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsItems ?? (

@@ -19,13 +19,14 @@ export const BundlesInfoItemLayout = ({ infoContainer, layout }: BundlesInfoItem
 /** Named region `underline_container` of BundlesInfoItemLayout - configured through the parent's `underlineContainer` prop. */
 export interface BundlesInfoItemLayoutUnderlineContainerProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BundlesInfoItemLayoutUnderlineContainer = ({ layout }: BundlesInfoItemLayoutUnderlineContainerProps) => {
+export const BundlesInfoItemLayoutUnderlineContainer = ({ layout, tags }: BundlesInfoItemLayoutUnderlineContainerProps) => {
     return (
         <Region
             name="underline_container"
-            params={16}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 45, width: 88, top: 84, height: 1, ...layout }}
         />
@@ -36,13 +37,14 @@ export const BundlesInfoItemLayoutUnderlineContainer = ({ layout }: BundlesInfoI
 export interface BundlesInfoItemLayoutClickRegionProps {
     layout?: BoxLayout;
     onClickRegion?: () => void;
+    tags?: string[];
 }
 
-export const BundlesInfoItemLayoutClickRegion = ({ layout, onClickRegion }: BundlesInfoItemLayoutClickRegionProps) => {
+export const BundlesInfoItemLayoutClickRegion = ({ layout, onClickRegion, tags }: BundlesInfoItemLayoutClickRegionProps) => {
     return (
         <Region
             name="click_region"
-            params={17}
+            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 182, top: 1, height: 142, ...layout }}
@@ -60,20 +62,21 @@ export interface BundlesInfoItemLayoutInfoContainerProps {
     layout?: BoxLayout;
     srcBackgroundBitmap?: string;
     srcFormulaBitmap?: string;
+    tags?: string[];
     underlineContainer?: BundlesInfoItemLayoutUnderlineContainerProps;
 }
 
-export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, captionFooterText, captionFreeText, captionHeaderText, clickRegion, layout, srcBackgroundBitmap, srcFormulaBitmap, underlineContainer }: BundlesInfoItemLayoutInfoContainerProps) => {
+export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, captionFooterText, captionFreeText, captionHeaderText, clickRegion, layout, srcBackgroundBitmap, srcFormulaBitmap, tags, underlineContainer }: BundlesInfoItemLayoutInfoContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_container"
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 182, top: 0, height: 142, ...layout }}
         >
             <ThemeImage
                 name="background_bitmap"
-                params={16}
                 src={srcBackgroundBitmap ?? layoutImage('catalogue_clakboard.png')}
                 layout={{ position: 'absolute', left: 0, width: 182, top: 0, height: 142 }}
             />
@@ -88,14 +91,12 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             </Region>
             <ThemeImage
                 name="formula_bitmap"
-                params={16}
                 src={srcFormulaBitmap ?? '${image.library.catalogue.url}clakboard_formula.png'}
                 layout={{ position: 'absolute', left: 33, width: 115, top: 44, height: 41 }}
             />
             <BundlesInfoItemLayoutUnderlineContainer {...underlineContainer} />
             <Region
                 name="free_text"
-                params={16}
                 layout={{ position: 'absolute', left: 103, width: 166, top: 67, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -105,7 +106,6 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             </Region>
             <Region
                 name="equals_bundle_text"
-                params={16}
                 layout={{ position: 'absolute', left: 34, width: 116, top: 85, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

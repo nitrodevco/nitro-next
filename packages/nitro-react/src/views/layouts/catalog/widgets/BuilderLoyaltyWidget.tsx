@@ -9,13 +9,14 @@ import { Border, BoxLayout, ButtonThick, Region, ScrollArea, ThemeImage, ThemeTe
 /** Named region `item_cost_box` of BuilderLoyaltyWidget - configured through the parent's `itemCostBox` prop. */
 export interface BuilderLoyaltyWidgetItemCostBoxProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BuilderLoyaltyWidgetItemCostBox = ({ layout }: BuilderLoyaltyWidgetItemCostBoxProps) => {
+export const BuilderLoyaltyWidgetItemCostBox = ({ layout, tags }: BuilderLoyaltyWidgetItemCostBoxProps) => {
     return (
         <Region
             name="item_cost_box"
-            params={147472}
+            tags={tags}
             layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -27,9 +28,10 @@ export interface BuilderLoyaltyWidgetLoyaltyListProps {
     itemCostBox?: BuilderLoyaltyWidgetItemCostBoxProps;
     layout?: BoxLayout;
     onItemBuy?: () => void;
+    tags?: string[];
 }
 
-export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox, layout, onItemBuy }: BuilderLoyaltyWidgetLoyaltyListProps) => {
+export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox, layout, onItemBuy, tags }: BuilderLoyaltyWidgetLoyaltyListProps) => {
     const t = useTranslation();
 
     return (
@@ -39,29 +41,25 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
         >
             <Region
                 name="loyalty_list"
-                params={2064}
+                tags={tags}
                 layout={{ flexDirection: 'column', gap: 12, width: '100%' }}
             >
                 <Border
                     variant="2"
-                    params={16}
                     tintColor="#d7d7cf"
                     layout={{ width: 269, height: 77, flexShrink: 0 }}
                 >
                     <Border
                         variant="3"
-                        params={16}
                         tintColor="#afafa9"
                         layout={{ position: 'absolute', left: 5, width: 260, top: 5, height: 25 }}
                     >
                         <ThemeImage
-                            params={16}
                             src="${image.library.url}/catalogue/icon_193.png"
                             layout={{ position: 'absolute', left: 8, width: 15, top: 5, height: 15 }}
                         />
                         <Region
                             name="item_header"
-                            params={16}
                             layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -71,16 +69,12 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
                             />
                         </Region>
                     </Border>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 9, width: 125, top: 45, height: 24, flexDirection: 'row', gap: 3 }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 9, width: 125, top: 45, height: 24, flexDirection: 'row', gap: 3 }}>
                         <BuilderLoyaltyWidgetItemCostBox {...itemCostBox} />
                     </Region>
                     <ButtonThick
                         variant="5"
                         name="item_buy"
-                        params={393233}
                         tintColor="#0a9bc5"
                         onPointerTap={onItemBuy}
                         layout={{ position: 'absolute', right: 4, width: 142, top: 37, height: 35, minWidth: 40 }}
@@ -97,13 +91,14 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
 export interface BuilderLoyaltyWidgetProps {
     layout?: BoxLayout;
     loyaltyList?: BuilderLoyaltyWidgetLoyaltyListProps;
+    tags?: string[];
 }
 
-export const BuilderLoyaltyWidget = ({ layout, loyaltyList }: BuilderLoyaltyWidgetProps) => {
+export const BuilderLoyaltyWidget = ({ layout, loyaltyList, tags }: BuilderLoyaltyWidgetProps) => {
     return (
         <Region
             name="builderLoyaltyWidget"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BuilderLoyaltyWidgetLoyaltyList {...loyaltyList} />

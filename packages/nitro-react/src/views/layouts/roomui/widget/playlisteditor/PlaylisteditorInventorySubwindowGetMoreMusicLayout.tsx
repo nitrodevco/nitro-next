@@ -20,48 +20,38 @@ export interface PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicC
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     srcGetMoreMusicBackgroundImage?: string;
+    tags?: string[];
 }
 
-export const PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainer = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainerProps) => {
+export const PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainer = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage, tags }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="get_more_music_container"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110, ...layout }}
         >
             <ThemeImage
                 name="get_more_music_background_image"
-                params={16}
                 src={srcGetMoreMusicBackgroundImage}
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
             />
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 15, width: 236, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 15, width: 236, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('playlist.editor.text.get.more.music')}
                     textStyle="text-style-bold"
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('playlist.editor.text.you.have.no.songdisks.available')} />
             </Region>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 15, width: 319, top: 50, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 15, width: 319, top: 50, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('playlist.editor.text.you.can.buy.some.from.the.catalogue')} />
             </Region>
             <ButtonThick
                 variant="3"
                 name="open_catalog_button"
-                params={131089}
                 onPointerTap={onOpenCatalogButton}
                 layout={{ position: 'absolute', left: 15, width: 233, top: 73, height: 29 }}
             >

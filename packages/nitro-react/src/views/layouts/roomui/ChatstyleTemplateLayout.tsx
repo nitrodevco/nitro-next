@@ -19,13 +19,14 @@ export interface ChatstyleTemplateLayoutChatstyleRegionProps {
     layout?: BoxLayout;
     onChatstyleRegion?: () => void;
     srcBubblePreview?: string;
+    tags?: string[];
 }
 
-export const ChatstyleTemplateLayoutChatstyleRegion = ({ layout, onChatstyleRegion, srcBubblePreview }: ChatstyleTemplateLayoutChatstyleRegionProps) => {
+export const ChatstyleTemplateLayoutChatstyleRegion = ({ layout, onChatstyleRegion, srcBubblePreview, tags }: ChatstyleTemplateLayoutChatstyleRegionProps) => {
     return (
         <Region
             name="chatstyle_region"
-            params={17}
+            tags={tags}
             onPointerTap={onChatstyleRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 34, ...layout }}
@@ -33,12 +34,10 @@ export const ChatstyleTemplateLayoutChatstyleRegion = ({ layout, onChatstyleRegi
             <Border
                 variant="2"
                 name="background_color"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 34 }}
             />
             <ThemeImage
                 name="bubble_preview"
-                params={3148816}
                 src={srcBubblePreview}
                 layout={{ position: 'absolute', left: 0, width: 55, alignSelf: 'center', height: 24 }}
             />

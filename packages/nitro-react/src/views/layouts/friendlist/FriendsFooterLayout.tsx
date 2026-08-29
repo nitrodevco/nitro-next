@@ -21,26 +21,25 @@ export const FriendsFooterLayout = ({ footer, layout }: FriendsFooterLayoutProps
 export interface FriendsFooterLayoutClearInputRegionProps {
     layout?: BoxLayout;
     onClearInputRegion?: () => void;
+    tags?: string[];
     visibleClearInputRegion?: boolean;
 }
 
-export const FriendsFooterLayoutClearInputRegion = ({ layout, onClearInputRegion, visibleClearInputRegion }: FriendsFooterLayoutClearInputRegionProps) => {
+export const FriendsFooterLayoutClearInputRegion = ({ layout, onClearInputRegion, tags, visibleClearInputRegion }: FriendsFooterLayoutClearInputRegionProps) => {
     return (
         <Region
             name="clear_input_region"
-            params={65}
+            tags={tags}
             visible={visibleClearInputRegion ?? false}
             onPointerTap={onClearInputRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 35, width: 16, top: 7, height: 16, ...layout }}
         >
             <Region
-                params={16}
                 backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 2, width: 11, top: 2, height: 11 }}
             />
             <ThemeImage
-                params={80}
                 src={layoutImage('var_picker_cancel_search.png')}
                 layout={{ position: 'absolute', right: 4, width: 9, top: 3, height: 9 }}
             />
@@ -62,23 +61,23 @@ export interface FriendsFooterLayoutFooterProps {
     srcIcon3?: string;
     srcIcon4?: string;
     srcIcon5?: string;
+    tags?: string[];
     visibleButtonOpenMinimail?: boolean;
 }
 
-export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, visibleButtonOpenMinimail }: FriendsFooterLayoutFooterProps) => {
+export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, tags, visibleButtonOpenMinimail }: FriendsFooterLayoutFooterProps) => {
     const [ friendSearchValue, setFriendSearchValue ] = useState('');
 
     return (
         <Region
             name="footer"
-            params={16}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 41, ...layout }}
         >
             <Border
                 variant="0"
                 name="border"
-                params={144}
                 tintColor="#d9d9d9"
                 layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
@@ -89,13 +88,11 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                     <ContainerButton
                         variant="0"
                         name="button_open_minimail"
-                        params={17}
                         onPointerTap={onButtonOpenMinimail}
                         layout={{ width: '100%', height: '100%' }}
                     >
                         <ThemeImage
                             name="icon"
-                            params={16}
                             src={srcIcon}
                             layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
                         />
@@ -104,13 +101,11 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 <ContainerButton
                     variant="0"
                     name="button_room_invite"
-                    params={17}
                     onPointerTap={onButtonRoomInvite}
                     layout={{ position: 'absolute', left: 5, width: 32, top: 4, height: 22 }}
                 >
                     <ThemeImage
                         name="icon"
-                        params={16}
                         src={srcIcon2}
                         layout={{ position: 'absolute', left: 6, width: 19, top: 4, height: 13 }}
                     />
@@ -118,13 +113,11 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 <ContainerButton
                     variant="0"
                     name="button_open_homepage"
-                    params={17}
                     onPointerTap={onButtonOpenHomepage}
                     layout={{ position: 'absolute', left: 41, width: 27, top: 4, height: 22 }}
                 >
                     <ThemeImage
                         name="icon"
-                        params={16}
                         src={srcIcon3}
                         layout={{ position: 'absolute', left: 7, width: 13, top: 5, height: 11 }}
                     />
@@ -132,13 +125,11 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 <ContainerButton
                     variant="0"
                     name="button_search"
-                    params={81}
                     onPointerTap={onButtonSearch}
                     layout={{ position: 'absolute', right: 32, width: 23, top: 4, height: 22 }}
                 >
                     <ThemeImage
                         name="icon"
-                        params={16}
                         src={srcIcon4}
                         layout={{ position: 'absolute', left: 5, width: 13, top: 4, height: 13 }}
                     />
@@ -152,13 +143,11 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 <ContainerButton
                     variant="0"
                     name="button_remove_friend"
-                    params={81}
                     onPointerTap={onButtonRemoveFriend}
                     layout={{ position: 'absolute', right: 5, width: 23, top: 4, height: 22 }}
                 >
                     <ThemeImage
                         name="icon"
-                        params={16}
                         src={srcIcon5}
                         layout={{ position: 'absolute', left: 5, width: 13, top: 4, height: 13 }}
                     />

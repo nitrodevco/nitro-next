@@ -11,13 +11,9 @@ export interface PetImageLayoutProps {
 export const PetImageLayout = ({ layout, region, srcBitmap }: PetImageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 58, height: 49, ...layout }}>
-            <Region
-                params={2196}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="bitmap"
-                    params={2192}
                     src={srcBitmap ?? layoutImage('placeholder_pet.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -31,14 +27,15 @@ export const PetImageLayout = ({ layout, region, srcBitmap }: PetImageLayoutProp
 export interface PetImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const PetImageLayoutRegion = ({ layout, onRegion, visibleRegion }: PetImageLayoutRegionProps) => {
+export const PetImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: PetImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            params={2193}
+            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

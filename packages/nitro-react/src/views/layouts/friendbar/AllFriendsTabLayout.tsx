@@ -16,7 +16,6 @@ export const AllFriendsTabLayout = ({ layout, tabContent }: AllFriendsTabLayoutP
             <Border
                 variant="6"
                 name="frame"
-                params={1}
                 tintColor="#74dbfa"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 0, height: 36 }}
             >
@@ -32,29 +31,28 @@ export interface AllFriendsTabLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     srcIcon?: string;
+    tags?: string[];
 }
 
-export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon }: AllFriendsTabLayoutHeaderItemProps) => {
+export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon, tags }: AllFriendsTabLayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            params={145}
+            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 112, height: 31, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="icon"
-                params={1310720}
                 src={srcIcon ?? layoutImage('add_friends_icon.png')}
                 layout={{ position: 'absolute', right: 81, width: 35, bottom: 2, height: 33 }}
             />
             <Region
                 name="title"
                 tags={[ 'label' ]}
-                params={3148816}
                 layout={{ position: 'absolute', left: 33, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -71,13 +69,14 @@ export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
 export interface AllFriendsTabLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const AllFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: AllFriendsTabLayoutTabContentProps) => {
+export const AllFriendsTabLayoutTabContent = ({ itemsTabContent, layout, tags }: AllFriendsTabLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            params={8388752}
+            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (

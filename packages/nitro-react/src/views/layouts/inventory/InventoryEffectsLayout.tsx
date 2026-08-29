@@ -21,13 +21,14 @@ export const InventoryEffectsLayout = ({ effectsContent, layout }: InventoryEffe
 export interface InventoryEffectsLayoutInactiveItemsImageItemProps {
     layout?: BoxLayout;
     srcInactiveItemsImage?: string;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutInactiveItemsImageItem = ({ layout, srcInactiveItemsImage }: InventoryEffectsLayoutInactiveItemsImageItemProps) => {
+export const InventoryEffectsLayoutInactiveItemsImageItem = ({ layout, srcInactiveItemsImage, tags }: InventoryEffectsLayoutInactiveItemsImageItemProps) => {
     return (
         <ThemeImage
             name="inactive_items_image"
-            params={17}
+            tags={tags}
             src={srcInactiveItemsImage}
             layout={{ width: 172, height: 157, flexShrink: 0, ...layout }}
         />
@@ -38,9 +39,10 @@ export const InventoryEffectsLayoutInactiveItemsImageItem = ({ layout, srcInacti
 export interface InventoryEffectsLayoutInactiveItemsProps {
     itemsInactiveItems?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutInactiveItems = ({ itemsInactiveItems, layout }: InventoryEffectsLayoutInactiveItemsProps) => {
+export const InventoryEffectsLayoutInactiveItems = ({ itemsInactiveItems, layout, tags }: InventoryEffectsLayoutInactiveItemsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -48,7 +50,7 @@ export const InventoryEffectsLayoutInactiveItems = ({ itemsInactiveItems, layout
         >
             <Region
                 name="inactive_items"
-                params={2192}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsInactiveItems ?? (
@@ -63,13 +65,14 @@ export const InventoryEffectsLayoutInactiveItems = ({ itemsInactiveItems, layout
 export interface InventoryEffectsLayoutActiveItemsImageItemProps {
     layout?: BoxLayout;
     srcActiveItemsImage?: string;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutActiveItemsImageItem = ({ layout, srcActiveItemsImage }: InventoryEffectsLayoutActiveItemsImageItemProps) => {
+export const InventoryEffectsLayoutActiveItemsImageItem = ({ layout, srcActiveItemsImage, tags }: InventoryEffectsLayoutActiveItemsImageItemProps) => {
     return (
         <ThemeImage
             name="active_items_image"
-            params={17}
+            tags={tags}
             src={srcActiveItemsImage}
             layout={{ width: 128, height: 157, flexShrink: 0, ...layout }}
         />
@@ -80,13 +83,14 @@ export const InventoryEffectsLayoutActiveItemsImageItem = ({ layout, srcActiveIt
 export interface InventoryEffectsLayoutActiveItemsProps {
     itemsActiveItems?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutActiveItems = ({ itemsActiveItems, layout }: InventoryEffectsLayoutActiveItemsProps) => {
+export const InventoryEffectsLayoutActiveItems = ({ itemsActiveItems, layout, tags }: InventoryEffectsLayoutActiveItemsProps) => {
     return (
         <Region
             name="active_items"
-            params={2128}
+            tags={tags}
             layout={{ position: 'absolute', right: 30, width: 128, top: 25, bottom: 65, flexDirection: 'column', ...layout }}
         >
             {itemsActiveItems ?? (
@@ -102,27 +106,26 @@ export interface InventoryEffectsLayoutDescriptionAreaProps {
     layout?: BoxLayout;
     onActivateEffectButton?: () => void;
     srcEffectDescriptionImage?: string;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutDescriptionArea = ({ captionEffectDescriptionText, layout, onActivateEffectButton, srcEffectDescriptionImage }: InventoryEffectsLayoutDescriptionAreaProps) => {
+export const InventoryEffectsLayoutDescriptionArea = ({ captionEffectDescriptionText, layout, onActivateEffectButton, srcEffectDescriptionImage, tags }: InventoryEffectsLayoutDescriptionAreaProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="descriptionArea"
-            params={1168}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: -52, bottom: 0, height: 55, ...layout }}
         >
             <ThemeImage
                 name="effectDescriptionImage"
-                params={16}
                 src={srcEffectDescriptionImage}
                 layout={{ position: 'absolute', left: 15, width: 50, top: 0, height: 50 }}
             />
             <Button
                 variant="3"
                 name="activateEffect_button"
-                params={131153}
                 onPointerTap={onActivateEffectButton}
                 layout={{ position: 'absolute', right: 109, width: 66, top: 0, height: 28 }}
             >
@@ -130,7 +133,6 @@ export const InventoryEffectsLayoutDescriptionArea = ({ captionEffectDescription
             </Button>
             <Region
                 name="effectDescriptionText"
-                params={144}
                 layout={{ position: 'absolute', left: 75, right: 189, top: 0, height: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -151,18 +153,18 @@ export interface InventoryEffectsLayoutEffectsContentProps {
     descriptionArea?: InventoryEffectsLayoutDescriptionAreaProps;
     inactiveItems?: InventoryEffectsLayoutInactiveItemsProps;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const InventoryEffectsLayoutEffectsContent = ({ activeItems, captionActiveTitle, captionMyEffectsTitle, descriptionArea, inactiveItems, layout }: InventoryEffectsLayoutEffectsContentProps) => {
+export const InventoryEffectsLayoutEffectsContent = ({ activeItems, captionActiveTitle, captionMyEffectsTitle, descriptionArea, inactiveItems, layout, tags }: InventoryEffectsLayoutEffectsContentProps) => {
     return (
         <Region
             name="effects_content"
-            params={2064}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ActiveTitle"
-                params={786512}
                 layout={{ position: 'absolute', right: 110, width: 42, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -176,7 +178,6 @@ export const InventoryEffectsLayoutEffectsContent = ({ activeItems, captionActiv
             {/* <scrollbar_vertical> for inactive_items - rendered by that list's ScrollArea */}
             <Region
                 name="myEffectsTitle"
-                params={786576}
                 layout={{ position: 'absolute', left: 6, right: 396, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

@@ -1,18 +1,18 @@
 import { BoxLayout, Region } from '#base/theme';
-import { ColourGridWidgetLayout, ColourGridWidgetLayoutProps } from '#base/views/layouts/catalog/ColourGridWidgetLayout';
+import { ColourGridWidgetLayout, ColourGridWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/ColourGridWidgetLayout';
 
 /**
  * Catalog widget `colourGridWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
- * layout reserves a container by that name and the client attaches the widget to it. Shared by 4 pages
- * (LayoutTrophies_1610Layout, LayoutTrophies_1695Layout, NewPetsWidget, PetsWidget); each passes its own placement through `layout`.
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 5 pages
+ * (LayoutDefault_1595Layout, LayoutTrophies_1610Layout, LayoutTrophies_1695Layout, NewPetsWidget, PetsWidget); each passes its own placement through `layout`.
  */
-export type ColourGridWidgetProps = Omit<ColourGridWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+export type ColourGridWidgetProps = Omit<ColourGridWidgetLayoutProps, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };
 
-export const ColourGridWidget = ({ layout, ...widget }: ColourGridWidgetProps) => {
+export const ColourGridWidget = ({ layout, tags, ...widget }: ColourGridWidgetProps) => {
     return (
         <Region
             name="colourGridWidget"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ColourGridWidgetLayout

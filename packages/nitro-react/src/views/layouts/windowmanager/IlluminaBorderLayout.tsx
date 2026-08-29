@@ -10,13 +10,9 @@ export interface IlluminaBorderLayoutProps {
 export const IlluminaBorderLayout = ({ children, layout, srcCanvas }: IlluminaBorderLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
-            >
+            <Region layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}>
                 <ThemeImage
                     name="canvas"
-                    params={16}
                     src={srcCanvas}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 />
@@ -29,13 +25,14 @@ export const IlluminaBorderLayout = ({ children, layout, srcCanvas }: IlluminaBo
 /** Named region `children` of IlluminaBorderLayout - configured through the parent's `children` prop. */
 export interface IlluminaBorderLayoutChildrenProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const IlluminaBorderLayoutChildren = ({ layout }: IlluminaBorderLayoutChildrenProps) => {
+export const IlluminaBorderLayoutChildren = ({ layout, tags }: IlluminaBorderLayoutChildrenProps) => {
     return (
         <Region
             name="children"
-            params={16}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}
         />
     );

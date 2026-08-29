@@ -19,7 +19,6 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
             variant="2"
             id="messenger_window"
             name="messenger_window"
-            params={98305}
             caption={t('messenger.title')}
             onClose={onClose}
             layout={{ width: 212, height: 405, ...layout }}
@@ -42,13 +41,14 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
 export interface MainWindow_3100LayoutConversationstabProps {
     layout?: BoxLayout;
     onConversationstab?: () => void;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutConversationstab = ({ layout, onConversationstab }: MainWindow_3100LayoutConversationstabProps) => {
+export const MainWindow_3100LayoutConversationstab = ({ layout, onConversationstab, tags }: MainWindow_3100LayoutConversationstabProps) => {
     return (
         <Region
             name="conversationstab"
-            params={145}
+            tags={tags}
             onPointerTap={onConversationstab}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 600, ...layout }}
@@ -65,15 +65,16 @@ export interface MainWindow_3100LayoutHdrProps {
     srcClose?: string;
     srcIcon?: string;
     srcIcon2?: string;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, srcClose, srcIcon, srcIcon2 }: MainWindow_3100LayoutHdrProps) => {
+export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, srcClose, srcIcon, srcIcon2, tags }: MainWindow_3100LayoutHdrProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hdr"
-            params={144}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 32, ...layout }}
         >
@@ -81,13 +82,11 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
                 variant="0"
                 name="button_minimail"
                 tooltip={t('messenger.minimail.tooltip')}
-                params={17}
                 onPointerTap={onButtonMinimail}
                 layout={{ position: 'absolute', left: 36, width: 32, top: 5, height: 22 }}
             >
                 <ThemeImage
                     name="icon"
-                    params={16}
                     src={srcIcon}
                     layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
                 />
@@ -96,13 +95,11 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
                 variant="0"
                 name="button_follow_friend"
                 tooltip={t('messenger.followfriend.tooltip')}
-                params={17}
                 onPointerTap={onButtonFollowFriend}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 5, height: 22 }}
             >
                 <ThemeImage
                     name="icon"
-                    params={16}
                     src={srcIcon2}
                     layout={{ position: 'absolute', left: 7, width: 16, top: 4, height: 14 }}
                 />
@@ -111,20 +108,17 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
                 variant="0"
                 name="button_extended_profile"
                 tooltip={t('infostand.profile.link.tooltip')}
-                params={17}
                 onPointerTap={onButtonExtendedProfile}
                 layout={{ position: 'absolute', left: 72, width: 32, top: 5, height: 22 }}
             >
                 <Icon
                     variant="21"
                     name="icon_eye_off"
-                    params={16}
                     layout={{ position: 'absolute', left: 9, width: 15, top: 6, height: 11 }}
                 />
             </ContainerButton>
             <ThemeImage
                 name="close"
-                params={81}
                 src={srcClose}
                 layout={{ position: 'absolute', right: 1, width: 13, top: 6, height: 13 }}
             />
@@ -135,13 +129,14 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
 /** Named region `msg_list` of MainWindow_3100Layout - configured through the parent's `msgList` prop. */
 export interface MainWindow_3100LayoutMsgListProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutMsgList = ({ layout }: MainWindow_3100LayoutMsgListProps) => {
+export const MainWindow_3100LayoutMsgList = ({ layout, tags }: MainWindow_3100LayoutMsgListProps) => {
     return (
         <Region
             name="msg_list"
-            params={2193}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 22, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         />
@@ -152,13 +147,14 @@ export const MainWindow_3100LayoutMsgList = ({ layout }: MainWindow_3100LayoutMs
 export interface MainWindow_3100LayoutListProps {
     layout?: BoxLayout;
     msgList?: MainWindow_3100LayoutMsgListProps;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutList = ({ layout, msgList }: MainWindow_3100LayoutListProps) => {
+export const MainWindow_3100LayoutList = ({ layout, msgList, tags }: MainWindow_3100LayoutListProps) => {
     return (
         <Region
             name="list"
-            params={2192}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 32, bottom: 1, ...layout }}
         >
@@ -173,13 +169,14 @@ export interface MainWindow_3100LayoutConversationProps {
     hdr?: MainWindow_3100LayoutHdrProps;
     layout?: BoxLayout;
     list?: MainWindow_3100LayoutListProps;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutConversation = ({ hdr, layout, list }: MainWindow_3100LayoutConversationProps) => {
+export const MainWindow_3100LayoutConversation = ({ hdr, layout, list, tags }: MainWindow_3100LayoutConversationProps) => {
     return (
         <Region
             name="conversation"
-            params={2192}
+            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 5, right: 5, top: 31, bottom: 5, ...layout }}
         >
@@ -192,13 +189,14 @@ export const MainWindow_3100LayoutConversation = ({ hdr, layout, list }: MainWin
 /** Named region `bg` of MainWindow_3100Layout - configured through the parent's `bg` prop. */
 export interface MainWindow_3100LayoutBgProps {
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutBg = ({ layout }: MainWindow_3100LayoutBgProps) => {
+export const MainWindow_3100LayoutBg = ({ layout, tags }: MainWindow_3100LayoutBgProps) => {
     return (
         <Region
             name="bg"
-            params={1168}
+            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 1, ...layout }}
         />
@@ -213,13 +211,14 @@ export interface MainWindow_3100LayoutContentProps {
     layout?: BoxLayout;
     onContent?: () => void;
     srcConvoBg?: string;
+    tags?: string[];
 }
 
-export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationstab, layout, onContent, srcConvoBg }: MainWindow_3100LayoutContentProps) => {
+export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationstab, layout, onContent, srcConvoBg, tags }: MainWindow_3100LayoutContentProps) => {
     return (
         <Region
             name="content"
-            params={2193}
+            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onContent}
             cursor="pointer"
@@ -227,7 +226,6 @@ export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationsta
         >
             <ThemeImage
                 name="convo_bg"
-                params={144}
                 src={srcConvoBg}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31 }}
             />

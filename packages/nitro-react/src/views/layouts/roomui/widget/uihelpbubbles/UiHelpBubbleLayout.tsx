@@ -19,20 +19,20 @@ export interface UiHelpBubbleLayoutProfileRegionProps {
     captionHelpBubbleText?: string;
     layout?: BoxLayout;
     onProfileRegion?: () => void;
+    tags?: string[];
 }
 
-export const UiHelpBubbleLayoutProfileRegion = ({ captionHelpBubbleText, layout, onProfileRegion }: UiHelpBubbleLayoutProfileRegionProps) => {
+export const UiHelpBubbleLayoutProfileRegion = ({ captionHelpBubbleText, layout, onProfileRegion, tags }: UiHelpBubbleLayoutProfileRegionProps) => {
     return (
         <Region
             name="profile_region"
-            params={2193}
+            tags={tags}
             onPointerTap={onProfileRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, right: 18, top: 2, bottom: 58, maxWidth: 200, ...layout }}
         >
             <Region
                 name="help_bubble_text"
-                params={12585104}
                 layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -50,14 +50,15 @@ export interface UiHelpBubbleLayoutMasterContainerProps {
     layout?: BoxLayout;
     onHelpBubbleBtnOk?: () => void;
     profileRegion?: UiHelpBubbleLayoutProfileRegionProps;
+    tags?: string[];
     visibleBubble?: boolean;
 }
 
-export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, profileRegion, visibleBubble }: UiHelpBubbleLayoutMasterContainerProps) => {
+export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, profileRegion, tags, visibleBubble }: UiHelpBubbleLayoutMasterContainerProps) => {
     return (
         <Region
             name="master_container"
-            params={96}
+            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 500, maxWidth: 180, ...layout }}
         >
             <Region
@@ -67,14 +68,12 @@ export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, p
                 <Bubble
                     variant="7"
                     name="bubble"
-                    params={2433}
                     layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
                 >
                     <UiHelpBubbleLayoutProfileRegion {...profileRegion} />
                     <Button
                         variant="5"
                         name="help_bubble_btn_ok"
-                        params={917713}
                         tintColor="#33cc33"
                         onPointerTap={onHelpBubbleBtnOk}
                         layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 41, top: 441, height: 28 }}

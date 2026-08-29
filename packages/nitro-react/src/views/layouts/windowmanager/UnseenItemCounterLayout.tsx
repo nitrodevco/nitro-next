@@ -12,13 +12,11 @@ export const UnseenItemCounterLayout = ({ captionCount, layout }: UnseenItemCoun
             <Border
                 variant="7"
                 name="unseen_item_container"
-                params={262160}
                 tintColor="#ee2924"
                 layout={{ position: 'absolute', right: -3, width: 29, top: 0, height: 18 }}
             >
                 <Region
                     name="count"
-                    params={4194320}
                     layout={{ position: 'absolute', left: 4, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

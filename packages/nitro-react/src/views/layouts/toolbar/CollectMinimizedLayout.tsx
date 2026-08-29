@@ -20,15 +20,16 @@ export interface CollectMinimizedLayoutCollectMinimizedProps {
     layout?: BoxLayout;
     onCollectMinimized?: () => void;
     srcClubIcon?: string;
+    tags?: string[];
 }
 
-export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimized, srcClubIcon }: CollectMinimizedLayoutCollectMinimizedProps) => {
+export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimized, srcClubIcon, tags }: CollectMinimizedLayoutCollectMinimizedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collect_minimized"
-            params={17}
+            tags={tags}
             onPointerTap={onCollectMinimized}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
@@ -36,7 +37,6 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
             <Border
                 variant="6"
                 tags={[ 'BGCOLOR' ]}
-                params={16}
                 tintColor="#686661"
                 blend={1}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
@@ -47,7 +47,6 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
             >
                 <Border
                     variant="3"
-                    params={16}
                     tintColor="#201e19"
                     blend={0.8}
                     layout={{ width: '100%', height: '100%' }}
@@ -55,7 +54,6 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
             </Region>
             <Border
                 variant="6"
-                params={16}
                 tintColor="#96bdcb"
                 blend={1}
                 layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
@@ -63,15 +61,11 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
                 <ThemeImage
                     name="club_icon"
                     tags={[ 'ICON' ]}
-                    params={16}
                     src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_smaller.png'}
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                 />
             </Border>
-            <Region
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('phone.number.collect.title')}
                     textStyle="text-style-il-regular-white"

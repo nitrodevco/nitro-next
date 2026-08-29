@@ -20,18 +20,18 @@ export interface ListTesterItemLayoutChatlineProps {
     captionMsgTxt?: string;
     captionTimeTxt?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout }: ListTesterItemLayoutChatlineProps) => {
+export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout, tags }: ListTesterItemLayoutChatlineProps) => {
     return (
         <Region
             name="chatline"
-            params={144}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 41, ...layout }}
         >
             <Region
                 name="time_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -41,7 +41,6 @@ export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt,
             </Region>
             <Region
                 name="chatter_txt"
-                params={17}
                 layout={{ position: 'absolute', left: 30, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -51,7 +50,6 @@ export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt,
             </Region>
             <Region
                 name="msg_txt"
-                params={16}
                 layout={{ position: 'absolute', left: 140, width: 230, top: 0, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText

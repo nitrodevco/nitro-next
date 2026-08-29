@@ -19,7 +19,6 @@ export const BullyReportLayout = ({ layout, onClose, onSubmitButton, userPanel }
             variant="100"
             id="emergency_help_request"
             name="emergency_help_request"
-            params={32769}
             caption={t('help.bully.title')}
             onClose={onClose}
             layout={{ width: 289, height: 491, ...layout }}
@@ -29,7 +28,6 @@ export const BullyReportLayout = ({ layout, onClose, onSubmitButton, userPanel }
                 <Button
                     variant="101"
                     name="submit_button"
-                    params={131281}
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmitButton}
                     layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 135, top: 409, height: 43 }}
@@ -46,9 +44,10 @@ export interface BullyReportLayoutUserListItemProps {
     captionRoomName?: string;
     captionUserName?: string;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName, layout }: BullyReportLayoutUserListItemProps) => {
+export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName, layout, tags }: BullyReportLayoutUserListItemProps) => {
     const t = useTranslation();
 
     return (
@@ -58,17 +57,15 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
         >
             <Region
                 name="user_list"
-                params={16}
+                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Border
                     variant="102"
-                    params={17}
                     layout={{ width: 257, height: 43, flexShrink: 0 }}
                 >
                     <Region
                         name="user_name"
-                        params={16}
                         layout={{ position: 'absolute', left: 37, width: 42, top: 8, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -78,7 +75,6 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
                     </Region>
                     <Region
                         name="room_name"
-                        params={16}
                         layout={{ position: 'absolute', left: 37, width: 218, top: 21, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -89,7 +85,6 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
                     <WidgetSlot
                         widgetType="avatar_image"
                         name="user_avatar"
-                        params={16}
                         options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                         layout={{ position: 'absolute', left: 3, width: 33, top: 4, height: 34 }}
                     />
@@ -103,34 +98,29 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
 export interface BullyReportLayoutUserPanelProps {
     itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
+    tags?: string[];
 }
 
-export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout }: BullyReportLayoutUserPanelProps) => {
+export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout, tags }: BullyReportLayoutUserPanelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_panel"
-            params={131088}
+            tags={tags}
             layout={{ position: 'absolute', left: 9, minWidth: 282, top: 8, minHeight: 388, flexDirection: 'column', gap: 8, ...layout }}
         >
             {itemsUserPanel ?? (
                 <BullyReportLayoutUserListItem />
             )}
-            <Region
-                params={16}
-                layout={{ width: 122, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 122, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.bully.subtitle')}
                     textStyle="text-style-il-heading-1"
                     textOptions={{ fill: '#555555' }}
                 />
             </Region>
-            <Region
-                params={16}
-                layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+            <Region layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.bully.description')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 270 }}

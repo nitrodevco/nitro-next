@@ -16,7 +16,6 @@ export const StripClubItemsInfoLayout = ({ border, layout, onClose }: StripClubI
             variant="3"
             id="_frame"
             name="_frame"
-            params={32769}
             caption={t('avatareditor.invalidclubitems.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -35,21 +34,21 @@ export interface StripClubItemsInfoLayoutBorderProps {
     layout?: BoxLayout;
     onStripButtonClubInfo?: () => void;
     onStripButtonOk?: () => void;
+    tags?: string[];
 }
 
-export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout, onStripButtonClubInfo, onStripButtonOk }: StripClubItemsInfoLayoutBorderProps) => {
+export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout, onStripButtonClubInfo, onStripButtonOk, tags }: StripClubItemsInfoLayoutBorderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="_border"
-            params={8390800}
+            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="_strip_description"
                 tags={[ 'DESCRIPTION' ]}
-                params={8388624}
                 layout={{ position: 'absolute', left: 27, width: 210, top: 10, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -61,7 +60,6 @@ export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout
                 variant="3"
                 name="strip_button_club_info"
                 tags={[ 'OK' ]}
-                params={132113}
                 onPointerTap={onStripButtonClubInfo}
                 layout={{ position: 'absolute', left: 110, width: 244, bottom: 7, height: 22, minWidth: 50 }}
             >
@@ -71,7 +69,6 @@ export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout
                 variant="3"
                 name="strip_button_ok"
                 tags={[ 'OK' ]}
-                params={918545}
                 onPointerTap={onStripButtonOk}
                 layout={{ position: 'absolute', marginLeft: -76, marginRight: 76, width: 78, bottom: 7, height: 22, minWidth: 50 }}
             >
